@@ -41,8 +41,9 @@ class TransactionStatusUpdateManager
     public function __construct(
         PayoneQueryContainerInterface $queryContainer,
         PayoneStandardParameterTransfer $standardParameter,
-        HashGenerator $hashGenerator)
-    {
+        HashGenerator $hashGenerator
+    ) {
+
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
         $this->hashGenerator = $hashGenerator;

@@ -54,9 +54,9 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     public function addErrorMessage(MessageTransfer $message)
     {
         self::getFlashMessagesTransfer()->addErrorMessage(
-             $this->translate(
-               $message->getValue(),
-               $message->getParameters()
+            $this->translate(
+                $message->getValue(),
+                $message->getParameters()
             )
         );
     }

@@ -71,13 +71,13 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
 
         foreach ($options as $option) {
             $oldOption = $this->filterOutNotCopiedFields(
-                 $option->toArray(),
-                 $this->notCopiedOrderItemOptionFields
-             );
+                $option->toArray(),
+                $this->notCopiedOrderItemOptionFields
+            );
             $copyOfOptions = $this->filterOutNotCopiedFields(
-                 $option->getCreatedCopy()->toArray(),
-                 $this->notCopiedOrderItemOptionFields
-             );
+                $option->getCreatedCopy()->toArray(),
+                $this->notCopiedOrderItemOptionFields
+            );
 
             $this->assertEquals($oldOption, $copyOfOptions);
         }

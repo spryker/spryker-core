@@ -121,7 +121,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
      *
      * @return void
      */
-    protected function updateTransferUrl(UrlTransfer $urlTransfer, $url, $idResource=null, $idLocale=null)
+    protected function updateTransferUrl(UrlTransfer $urlTransfer, $url, $idResource = null, $idLocale = null)
     {
         $urlTransfer->setResourceType(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE);
 

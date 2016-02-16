@@ -41,7 +41,8 @@ abstract class AbstractPropelCollectorPlugin
      *
      * @return void
      */
-    public function run(SpyTouchQuery $baseQuery,
+    public function run(
+        SpyTouchQuery $baseQuery,
         LocaleTransfer $locale,
         BatchResultInterface $result,
         WriterInterface $dataWriter,

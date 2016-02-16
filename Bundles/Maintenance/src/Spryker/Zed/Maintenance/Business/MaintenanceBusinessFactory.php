@@ -678,7 +678,8 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      *
      * @return array
      */
-    public function createEngineBundleList() {
+    public function createEngineBundleList()
+    {
         return $this->getEngineBundleList();
     }
 

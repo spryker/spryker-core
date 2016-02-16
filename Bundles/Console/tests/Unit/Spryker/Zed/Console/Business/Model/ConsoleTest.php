@@ -19,7 +19,8 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $console = $this->getConsole();
         $console->setFactory($this->getCommunicationFactoryMock());
 
-        $this->assertInstanceOf('Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
+        $this->assertInstanceOf(
+            'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
             $console->getFactory()
         );
     }
@@ -53,7 +54,8 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $console = $this->getConsole();
         $console->setQueryContainer($this->getQueryContainerMock());
 
-        $this->assertInstanceOf('Spryker\Zed\Kernel\Persistence\AbstractQueryContainer',
+        $this->assertInstanceOf(
+            'Spryker\Zed\Kernel\Persistence\AbstractQueryContainer',
             $console->getQueryContainer()
         );
     }
@@ -63,8 +65,12 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
      */
     private function getCommunicationFactoryMock()
     {
-        return $this->getMock('Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory', [], [],
-            '', false
+        return $this->getMock(
+            'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
+            [],
+            [],
+            '',
+            false
         );
     }
 

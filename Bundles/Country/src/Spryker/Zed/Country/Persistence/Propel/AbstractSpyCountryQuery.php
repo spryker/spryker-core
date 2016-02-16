@@ -19,4 +19,3 @@ use Orm\Zed\Country\Persistence\Base\SpyCountryQuery as BaseSpyCountryQuery;
 abstract class AbstractSpyCountryQuery extends BaseSpyCountryQuery
 {
 } // SpyCountryQuery
-

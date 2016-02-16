@@ -64,8 +64,7 @@ class GroupForm extends AbstractType
                 $defaultData = $form->getConfig()->getData();
                 $submittedData = $form->getData();
 
-                if (
-                    array_key_exists(self::FIELD_TITLE, $defaultData) === false ||
+                if (array_key_exists(self::FIELD_TITLE, $defaultData) === false ||
                     $defaultData[self::FIELD_TITLE] !== $submittedData[self::FIELD_TITLE]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_GROUP_CHECK];

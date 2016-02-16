@@ -19,4 +19,3 @@ use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionTypeTranslationQuery 
 abstract class AbstractSpyProductOptionTypeTranslationQuery extends BaseSpyProductOptionTypeTranslationQuery
 {
 } // SpyProductOptionTypeTranslationQuery
-

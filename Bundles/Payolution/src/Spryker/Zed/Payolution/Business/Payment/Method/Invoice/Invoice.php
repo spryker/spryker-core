@@ -97,7 +97,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         $requestData = $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
-            null);
+            null
+        );
         $this->addRequestData(
             $requestData,
             [
@@ -134,7 +135,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -148,7 +150,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -162,7 +165,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -176,7 +180,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
 }

@@ -19,4 +19,3 @@ use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionTypeQuery as BaseSpyP
 abstract class AbstractSpyProductOptionTypeQuery extends BaseSpyProductOptionTypeQuery
 {
 } // SpyProductOptionTypeQuery
-

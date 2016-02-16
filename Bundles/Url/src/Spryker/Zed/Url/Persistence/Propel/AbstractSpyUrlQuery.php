@@ -20,4 +20,3 @@ use Orm\Zed\Url\Persistence\Base\SpyUrlQuery as BaseSpyUrlQuery;
 abstract class AbstractSpyUrlQuery extends BaseSpyUrlQuery
 {
 } // SpyUrlQuery
-

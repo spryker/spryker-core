@@ -34,8 +34,7 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
         return $this->bindMultipleNestedFilter($fieldName, [
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-name', $nestedFieldName),
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-value', $nestedFieldValue),
-            ]
-        );
+            ]);
     }
 
     /**
@@ -50,8 +49,7 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
         return $this->bindMultipleNestedFilter($fieldName, [
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-name', $nestedFieldName),
                 $this->filterBuilder->createTermsFilter($fieldName . '.facet-value', $nestedFieldValues),
-            ]
-        );
+            ]);
     }
 
     /**
@@ -75,8 +73,7 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
         return $this->bindMultipleNestedFilter($fieldName, [
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-name', $nestedFieldName),
                 $this->filterBuilder->createRangeFilter($fieldName . '.facet-value', $minValue, $maxValue, $greaterParam, $lessParam),
-            ]
-        );
+            ]);
     }
 
     /**

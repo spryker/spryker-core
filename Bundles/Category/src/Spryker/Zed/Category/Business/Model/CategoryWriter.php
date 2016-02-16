@@ -173,7 +173,9 @@ class CategoryWriter implements CategoryWriterInterface
      *
      * @return void
      */
-    protected function saveCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale,
+    protected function saveCategoryAttribute(
+        CategoryTransfer $category,
+        LocaleTransfer $locale,
         SpyCategoryAttribute $categoryAttributeEntity
     ) {
         $categoryAttributeEntity->fromArray($category->toArray());

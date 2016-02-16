@@ -741,8 +741,8 @@ abstract class AbstractTable
         $query->where(sprintf(
             "%s = '%s'",
             $searchColumns[$column->getData()],
-            $value)
-        );
+            $value
+        ));
     }
 
 }

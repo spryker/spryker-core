@@ -19,4 +19,3 @@ use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionTypeUsageQuery as Bas
 abstract class AbstractSpyProductOptionTypeUsageQuery extends BaseSpyProductOptionTypeUsageQuery
 {
 } // SpyProductOptionTypeUsageQuery
-

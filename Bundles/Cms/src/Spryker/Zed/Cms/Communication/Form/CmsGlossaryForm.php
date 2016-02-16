@@ -67,7 +67,7 @@ class CmsGlossaryForm extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults([
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
 
                 if (!isset($defaultData[self::FIELD_ID_KEY_MAPPING])) {

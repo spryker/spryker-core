@@ -97,8 +97,13 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
      */
     public function open($savePath, $sessionName)
     {
-        $this->connection = new \Couchbase($this->hosts, $this->user, $this->password, $this->bucketName,
-            $this->persistent);
+        $this->connection = new \Couchbase(
+            $this->hosts,
+            $this->user,
+            $this->password,
+            $this->bucketName,
+            $this->persistent
+        );
 
         return $this->connection ? true : false;
     }

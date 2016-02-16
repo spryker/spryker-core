@@ -83,7 +83,9 @@ class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatche
         }
 
         return [
-            '_controller' => function ($url) { return new RedirectResponse($url, 301); },
+            '_controller' => function ($url) {
+                return new RedirectResponse($url, 301);
+            },
             '_route' => null,
             'url' => $url,
         ];

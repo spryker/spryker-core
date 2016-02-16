@@ -19,4 +19,3 @@ use Orm\Zed\ProductCategory\Persistence\Base\SpyProductCategoryQuery as BaseSpyP
 abstract class AbstractSpyProductCategoryQuery extends BaseSpyProductCategoryQuery
 {
 } // SpyProductCategoryQuery
-

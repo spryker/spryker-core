@@ -96,7 +96,8 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function createNewXml($schemaDatabase, $schemaNamespace, $schemaPackage)
     {
-        return new \SimpleXMLElement(sprintf('<database
+        return new \SimpleXMLElement(sprintf(
+            '<database
             name="%s"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"

@@ -100,7 +100,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_AMOUNT_ELEMENT,
                             ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->convertCentsToDecimal(
-                                    $checkoutRequestTransfer
+                                $checkoutRequestTransfer
                                         ->getCart()
                                         ->getTotals()
                                         ->getGrandTotal()
@@ -188,7 +188,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
         $requestData = $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
-            null);
+            null
+        );
         $this->addRequestData(
             $requestData,
             [
@@ -232,7 +233,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -246,7 +248,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -260,7 +263,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -274,7 +278,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
 }

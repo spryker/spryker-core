@@ -20,4 +20,3 @@ use Orm\Zed\Oms\Persistence\Base\SpyOmsEventTimeoutQuery as BaseSpyOmsEventTimeo
 abstract class AbstractSpyOmsEventTimeoutQuery extends BaseSpyOmsEventTimeoutQuery
 {
 } // SpyOmsEventTimeoutQuery
-

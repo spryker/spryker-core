@@ -524,7 +524,8 @@ class ProductManager implements ProductManagerInterface
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
         $productConcreteQuery = $this->productQueryContainer->queryProductWithAttributesAndProductAbstract(
-            $concreteSku, $localeTransfer->getIdLocale()
+            $concreteSku,
+            $localeTransfer->getIdLocale()
         );
 
         $productConcreteQuery->select([

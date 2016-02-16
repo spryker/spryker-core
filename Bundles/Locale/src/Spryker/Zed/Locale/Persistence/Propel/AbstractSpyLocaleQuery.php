@@ -19,4 +19,3 @@ use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery as BaseSpyLocaleQuery;
 abstract class AbstractSpyLocaleQuery extends BaseSpyLocaleQuery
 {
 } // SpyLocaleQuery
-

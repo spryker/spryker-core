@@ -19,4 +19,3 @@ use Orm\Zed\Acl\Persistence\Base\SpyAclGroupsHasRolesQuery as BaseSpyAclGroupsHa
 abstract class AbstractSpyAclGroupsHasRolesQuery extends BaseSpyAclGroupsHasRolesQuery
 {
 } // SpyAclGroupsHasRolesQuery
-

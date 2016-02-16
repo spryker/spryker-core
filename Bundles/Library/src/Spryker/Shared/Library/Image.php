@@ -81,7 +81,6 @@ class Image
                 Store::getInstance()->getStoreName(),
                 Config::get(LibraryConstants::PRODUCT_IMAGE_IMAGE_URL_PREFIX), $urlKey,
             ]
-
         );
     }
 
