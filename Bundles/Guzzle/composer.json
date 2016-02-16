@@ -1,7 +1,8 @@
 {
   "name": "spryker/guzzle",
   "require": {
-    "guzzle/http": "~3.8.0"
+    "guzzle/guzzle": "~3.8.0",
+    "guzzlehttp/guzzle": "~6.1.1"
   },
   "description": "guzzle bundle",
   "license": "proprietary",
