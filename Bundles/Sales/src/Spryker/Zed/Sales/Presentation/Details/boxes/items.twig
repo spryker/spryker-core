@@ -7,7 +7,6 @@
 
                 <div>
                     {% for event in allEvents %}
-                           {#href="/oms/trigger/trigger-event-for-order?id-sales-order={{ idOrder }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}"#}
                         <a class="btn btn-primary trigger-order-event" data-id-sales-order="{{ idOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
                     {% endfor %}
                 </div>
@@ -74,9 +73,7 @@
                     <td>
                         {% if events[orderItem.IdSalesOrderItem] | length > 0 %}
                             {% for event in events[orderItem.IdSalesOrderItem] %}
-                                <a class="btn btn-sm btn-primary"
-                                   href="/oms/trigger/trigger-event-for-order-items?id-sales-order-item={{ orderItem.IdSalesOrderItem }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
-                                    {{ event }}</a>
+                                <a class="btn btn-primary btn-sm trigger-order-single-event" data-id-item="{{ orderItem.idSalesOrderItem }}" data-id-sales-order="{{ idOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
                             {% endfor %}
                         {% else -%}
                             -

@@ -1,7 +1,9 @@
 [{
     "priority": 80,
     "assets": {
-        "js": [],
+        "js": [
+            "/js/sales.js"
+        ],
         "css": [
             "/scss/order-navigation.scss",
             "/scss/order-details.scss"
