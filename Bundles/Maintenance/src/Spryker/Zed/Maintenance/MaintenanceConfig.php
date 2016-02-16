@@ -85,7 +85,7 @@ class MaintenanceConfig extends AbstractBundleConfig
             'pimple/pimple' => 'spryker/pimple',
             'mandrill/mandrill' => 'spryker/mandrill',
             'predis/predis' => 'spryker/redis',
-            'guzzle/http' => 'spryker/guzzle',
+            'guzzle/guzzle' => 'spryker/guzzle',
             'league/csv' => 'spryker/csv',
             'monolog/monolog' => 'spryker/monolog',
             'ruflin/elastica' => 'spryker/elastica',
