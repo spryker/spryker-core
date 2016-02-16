@@ -19,4 +19,3 @@ use Orm\Zed\Price\Persistence\Base\SpyPriceTypeQuery as BaseSpyPriceTypeQuery;
 abstract class AbstractSpyPriceTypeQuery extends BaseSpyPriceTypeQuery
 {
 } // SpyPriceTypeQuery
-

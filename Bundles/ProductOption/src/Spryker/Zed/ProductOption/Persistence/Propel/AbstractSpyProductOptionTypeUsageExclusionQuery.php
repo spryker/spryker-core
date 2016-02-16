@@ -19,4 +19,3 @@ use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionTypeUsageExclusionQue
 abstract class AbstractSpyProductOptionTypeUsageExclusionQuery extends BaseSpyProductOptionTypeUsageExclusionQuery
 {
 } // SpyProductOptionTypeUsageExclusionQuery
-

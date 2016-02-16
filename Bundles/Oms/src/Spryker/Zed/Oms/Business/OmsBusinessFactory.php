@@ -51,12 +51,10 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderStateMachine(
             $this->getQueryContainer(),
-
             $this->createOrderStateMachineBuilder(),
             $this->createUtilTransitionLog($logContext),
             $this->createOrderStateMachineTimeout(),
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
-
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS)
         );

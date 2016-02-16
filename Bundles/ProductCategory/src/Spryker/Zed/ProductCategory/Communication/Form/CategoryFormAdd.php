@@ -87,7 +87,7 @@ class CategoryFormAdd extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
-        ]);
+            ]);
 
         return $this;
     }

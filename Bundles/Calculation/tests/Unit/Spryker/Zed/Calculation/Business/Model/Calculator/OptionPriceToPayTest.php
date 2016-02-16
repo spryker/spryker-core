@@ -55,8 +55,8 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountForAnOrderWithOneItemWithCouponDiscountAmount(
-    ) {
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountForAnOrderWithOneItemWithCouponDiscountAmount()
+    {
         $order = $this->getOrderWithFixtureData();
 
         $item = $this->getItemWithFixtureData();
@@ -88,8 +88,8 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithOneItemAndBothDiscounts(
-    ) {
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithOneItemAndBothDiscounts()
+    {
         $order = $this->getOrderWithFixtureData();
 
         $item = $this->getItemWithFixtureData();
@@ -125,8 +125,8 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithTwoItemsAndBothDiscounts(
-    ) {
+    public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithTwoItemsAndBothDiscounts()
+    {
         $order = $this->getOrderWithFixtureData();
 
         $item = $this->getItemWithFixtureData();

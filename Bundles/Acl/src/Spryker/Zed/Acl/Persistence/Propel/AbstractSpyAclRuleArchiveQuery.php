@@ -19,4 +19,3 @@ use Orm\Zed\Acl\Persistence\Base\SpyAclRuleArchiveQuery as BaseSpyAclRuleArchive
 abstract class AbstractSpyAclRuleArchiveQuery extends BaseSpyAclRuleArchiveQuery
 {
 } // SpyAclRuleArchiveQuery
-

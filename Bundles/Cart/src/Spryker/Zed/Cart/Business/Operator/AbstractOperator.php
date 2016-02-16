@@ -56,8 +56,8 @@ abstract class AbstractOperator implements OperatorInterface
         CartToCalculationInterface $cartCalculator,
         CartToItemGrouperInterface $itemGrouperFacade,
         LoggerInterface $messenger = null //@todo to be discussed
-)
-    {
+    ) {
+
         $this->storageProvider = $storageProvider;
         $this->messenger = $messenger;
         $this->cartCalculator = $cartCalculator;

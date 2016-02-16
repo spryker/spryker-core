@@ -15,7 +15,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
  * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
  * @method \Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory getFactory()
  */
-class RefundPlugin  extends AbstractPlugin implements CommandByOrderInterface
+class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**

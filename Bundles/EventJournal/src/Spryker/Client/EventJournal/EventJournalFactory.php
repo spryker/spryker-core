@@ -7,7 +7,7 @@ namespace Spryker\Client\EventJournal;
 
 use Spryker\Client\Kernel\AbstractFactory;
 
-class EventJournalFactory extends  AbstractFactory
+class EventJournalFactory extends AbstractFactory
 {
 
     /**

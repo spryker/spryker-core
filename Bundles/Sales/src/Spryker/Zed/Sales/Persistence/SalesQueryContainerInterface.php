@@ -67,7 +67,7 @@ interface SalesQueryContainerInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria=null);
+    public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria = null);
 
     /**
      * @param int $idSalesOrder

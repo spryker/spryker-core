@@ -89,8 +89,9 @@ class PaymentManager implements PaymentManagerInterface
         PayoneStandardParameterTransfer $standardParameter,
         HashGenerator $hashGenerator,
         SequenceNumberProviderInterface $sequenceNumberProvider,
-        ModeDetectorInterface $modeDetector)
-    {
+        ModeDetectorInterface $modeDetector
+    ) {
+
         $this->executionAdapter = $executionAdapter;
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;

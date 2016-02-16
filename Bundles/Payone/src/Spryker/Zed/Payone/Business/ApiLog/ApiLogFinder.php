@@ -236,8 +236,7 @@ class ApiLogFinder
         }
 
         // we have transaction id in payment and api log
-        if (
-            // authorization is success on APPROVED and REDIRECT
+        if (// authorization is success on APPROVED and REDIRECT
             $apiLogEntity->getStatus() === PayoneApiConstants::RESPONSE_TYPE_APPROVED ||
             $apiLogEntity->getStatus() === PayoneApiConstants::RESPONSE_TYPE_REDIRECT
         ) {

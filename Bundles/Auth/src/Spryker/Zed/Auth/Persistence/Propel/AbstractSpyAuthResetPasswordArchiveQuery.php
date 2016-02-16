@@ -19,4 +19,3 @@ use Orm\Zed\Auth\Persistence\Base\SpyAuthResetPasswordArchiveQuery as BaseSpyAut
 abstract class AbstractSpyAuthResetPasswordArchiveQuery extends BaseSpyAuthResetPasswordArchiveQuery
 {
 } // SpyAuthResetPasswordArchiveQuery
-

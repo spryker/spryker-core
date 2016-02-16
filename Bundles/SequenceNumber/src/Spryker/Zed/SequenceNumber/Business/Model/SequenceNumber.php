@@ -77,7 +77,8 @@ class SequenceNumber implements SequenceNumberInterface
             $this->connection->rollback();
 
             throw new InvalidSequenceNumberException(
-                'Could not generate sequence number. Make sure your settings are complete. Error: ' . $e->getMessage());
+                'Could not generate sequence number. Make sure your settings are complete. Error: ' . $e->getMessage()
+            );
         }
 
         return $idCurrent;
