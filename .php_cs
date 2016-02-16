@@ -55,7 +55,6 @@ return Symfony\CS\Config\Config::create()
             'short_array_syntax',
             'short_tag',
             'spaces_before_semicolon',
-            'spaces_cast',
             'standardize_not_equal',
             'strict',
             'ternary_spaces',
