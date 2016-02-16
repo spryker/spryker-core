@@ -1,6 +1,15 @@
-# Zed Package
+# SalesCheckoutConnector Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/SalesCheckoutConnector
+```
+
+## Documentation
+
+[SalesCheckoutConnector Documentation](https://spryker.github.io/sales-checkout-connector/index.html)
+
+
+
+

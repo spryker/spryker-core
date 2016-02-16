@@ -1,7 +1,15 @@
-Spryker Graph
-=============
+# Graph Bundle
 
-The Graph Tool provides a basic interface to interact with Graph's.
+## Installation
 
-For detailed installation instructions see
-* [Installation - https://academy.spryker.com/display/AC/Installation](https://academy.spryker.com/display/AC/Installation)
+```
+composer require spryker/Graph
+```
+
+## Documentation
+
+[Graph Documentation](https://spryker.github.io/graph/index.html)
+
+
+
+

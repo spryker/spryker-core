@@ -1,6 +1,15 @@
-# Zed Package
+# Checkout Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/Checkout
+```
+
+## Documentation
+
+[Checkout Documentation](https://spryker.github.io/checkout/index.html)
+
+
+
+

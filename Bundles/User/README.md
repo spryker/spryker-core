@@ -1,6 +1,15 @@
-# Zed Package
+# User Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/User
+```
+
+## Documentation
+
+[User Documentation](https://spryker.github.io/user/index.html)
+
+
+
+

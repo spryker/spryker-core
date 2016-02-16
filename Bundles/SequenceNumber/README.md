@@ -1,6 +1,15 @@
-# Zed Package
+# SequenceNumber Bundle
 
-## 1.0.0
-*2015-10-02 | Mark Scherer*
+## Installation
 
-- Spryker init
+```
+composer require spryker/SequenceNumber
+```
+
+## Documentation
+
+[SequenceNumber Documentation](https://spryker.github.io/sequence-number/index.html)
+
+
+
+

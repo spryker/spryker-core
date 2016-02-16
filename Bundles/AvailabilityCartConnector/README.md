@@ -1,6 +1,15 @@
-# Zed Package
+# AvailabilityCartConnector Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/AvailabilityCartConnector
+```
+
+## Documentation
+
+[AvailabilityCartConnector Documentation](https://spryker.github.io/availability-cart-connector/index.html)
+
+
+
+

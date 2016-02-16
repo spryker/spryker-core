@@ -1,6 +1,15 @@
-# Zed Package
+# Search Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/Search
+```
+
+## Documentation
+
+[Search Documentation](https://spryker.github.io/search/index.html)
+
+
+
+

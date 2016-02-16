@@ -1,6 +1,15 @@
-# Zed Package
+# Auth Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/Auth
+```
+
+## Documentation
+
+[Auth Documentation](https://spryker.github.io/auth/index.html)
+
+
+
+

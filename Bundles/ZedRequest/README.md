@@ -1,6 +1,15 @@
-# Zed Package
+# ZedRequest Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/ZedRequest
+```
+
+## Documentation
+
+[ZedRequest Documentation](https://spryker.github.io/zed-request/index.html)
+
+
+
+

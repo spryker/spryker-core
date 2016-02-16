@@ -1,6 +1,15 @@
-# Zed Package
+# Kernel Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/Kernel
+```
+
+## Documentation
+
+[Kernel Documentation](https://spryker.github.io/kernel/index.html)
+
+
+
+

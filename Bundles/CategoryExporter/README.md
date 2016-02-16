@@ -1,6 +1,15 @@
-# Zed Package
+# CategoryExporter Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/CategoryExporter
+```
+
+## Documentation
+
+[CategoryExporter Documentation](https://spryker.github.io/category-exporter/index.html)
+
+
+
+

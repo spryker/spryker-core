@@ -1,6 +1,15 @@
-# Zed Package
+# Stock Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/Stock
+```
+
+## Documentation
+
+[Stock Documentation](https://spryker.github.io/stock/index.html)
+
+
+
+

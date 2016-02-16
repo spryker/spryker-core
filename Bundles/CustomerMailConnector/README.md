@@ -1,6 +1,15 @@
-# Zed Package
+# CustomerMailConnector Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/CustomerMailConnector
+```
+
+## Documentation
+
+[CustomerMailConnector Documentation](https://spryker.github.io/customer-mail-connector/index.html)
+
+
+
+

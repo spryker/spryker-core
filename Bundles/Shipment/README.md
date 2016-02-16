@@ -1,5 +1,15 @@
-# Zed Package
+# Shipment Bundle
 
-The Shipment bundle should offer the possibility to create and edit the
-delivery methods (shipping) for the store. The shipment methods are offered to
-customers during the checkout.
+## Installation
+
+```
+composer require spryker/Shipment
+```
+
+## Documentation
+
+[Shipment Documentation](https://spryker.github.io/shipment/index.html)
+
+
+
+
