@@ -9,9 +9,8 @@
 
 // external dependencies
 require('jquery');
-require('jquery-ui-bundle');
+require('jquery-ui');
 require('bootstrap-sass');
-require('jquery-slimscroll/jquery.slimscroll');
 require('metismenu');
 require('pace');
 require('datatables.net');
