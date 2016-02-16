@@ -8,17 +8,21 @@ namespace Spryker\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Library\Copy;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface;
 
 class OrderDetailsManager
 {
@@ -41,10 +45,13 @@ class OrderDetailsManager
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param array $logReceiverPluginStack
+     * @param array|\Spryker\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface[] $logReceiverPluginStack
      */
-    public function __construct(SalesQueryContainerInterface $queryContainer, SalesToOmsInterface $omsFacade, array $logReceiverPluginStack)
-    {
+    public function __construct(
+        SalesQueryContainerInterface $queryContainer,
+        SalesToOmsInterface $omsFacade,
+        array $logReceiverPluginStack
+    ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
         $this->logReceiverPluginStack = $logReceiverPluginStack;
@@ -123,6 +130,25 @@ class OrderDetailsManager
     }
 
     /**
+     * @param int $idOrder
+     *
+     * @return array
+     */
+    public function getUniqueOrderStates($idOrder)
+    {
+        $orderItems = $this->queryContainer
+            ->querySalesOrderItemsByIdSalesOrder($idOrder)
+            ->find();
+
+        $status = [];
+        foreach ($orderItems as $orderItem) {
+            $status[$orderItem->getState()->getName()] = $orderItem->getState()->getName();
+        }
+
+        return $status;
+    }
+
+    /**
      * @param string $idOrder
      *
      * @return array
@@ -150,14 +176,22 @@ class OrderDetailsManager
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
         $orderEntity = $this->queryContainer
-            ->querySalesOrderDetails($orderTransfer->getIdSalesOrder(), $orderTransfer->getFkCustomer())
+            ->querySalesOrderDetails($orderTransfer->getIdSalesOrder())
             ->findOne();
 
         if ($orderEntity === null) {
             throw new InvalidSalesOrderException();
         }
 
+        foreach ($orderEntity->getItems() as $orderItem) {
+            $criteria = new Criteria();
+            $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
+            $orderItem->getStateHistoriesJoinState($criteria);
+            $orderItem->resetPartialStateHistories(false);
+        }
+
         $orderTransfer = $this->convertOrderDetailsEntityIntoTransfer($orderEntity);
+        $orderTransfer = $this->addTotalOrderCount($orderTransfer);
 
         return $orderTransfer;
     }
@@ -173,13 +207,9 @@ class OrderDetailsManager
         $orderTransfer->fromArray($orderEntity->toArray(), true);
 
         $this->addOrderItemsToOrderTransfer($orderEntity, $orderTransfer);
-
         $this->addBillingAddressToOrderTransfer($orderEntity, $orderTransfer);
-
         $this->addShippingAddressToOrderTransfer($orderEntity, $orderTransfer);
-
         $this->addShipmentMethodToOrderTransfer($orderEntity, $orderTransfer);
-
         $this->addExpensesToOrderTransfer($orderEntity, $orderTransfer);
 
         return $orderTransfer;
@@ -208,10 +238,13 @@ class OrderDetailsManager
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->fromArray($orderItemEntity->toArray(), true);
+        $itemTransfer->setUnitGrossPrice($orderItemEntity->getGrossPrice());
+        $this->addStateHistory($orderItemEntity, $itemTransfer);
 
-        foreach ($orderItemEntity->getOptions() as $orderItemOption) {
+        foreach ($orderItemEntity->getOptions() as $orderItemOptionEntity) {
             $productOptionsTransfer = new ProductOptionTransfer();
-            $productOptionsTransfer->fromArray($orderItemOption->toArray(), true);
+            $productOptionsTransfer->setUnitGrossPrice($orderItemOptionEntity->getGrossPrice());
+            $productOptionsTransfer->fromArray($orderItemOptionEntity->toArray(), true);
             $itemTransfer->addProductOption($productOptionsTransfer);
         }
 
@@ -255,7 +288,9 @@ class OrderDetailsManager
     protected function addShipmentMethodToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
-        $shipmentMethodTransfer->fromArray($orderEntity->getShipmentMethod()->toArray(), true);
+        $shipmentMethodEntity = $orderEntity->getShipmentMethod();
+        $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
+        $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier()->getName());
         $orderTransfer->setShipmentMethod($shipmentMethodTransfer);
     }
 
@@ -267,13 +302,12 @@ class OrderDetailsManager
      */
     protected function addExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
-        $expensesTransfer = new ExpensesTransfer();
         foreach ($orderEntity->getExpenses() as $expenseEntity) {
             $expenseTransfer = new ExpenseTransfer();
             $expenseTransfer->fromArray($expenseEntity->toArray(), true);
-            $expensesTransfer->addCalculationExpense($expenseTransfer);
+            $expenseTransfer->setUnitGrossPrice($expenseEntity->getGrossPrice());
+            $orderTransfer->addExpense($expenseTransfer);
         }
-        $orderTransfer->setExpenses($expensesTransfer);
     }
 
     /**
@@ -301,6 +335,39 @@ class OrderDetailsManager
 
             $expenseEntity->setFkRefund($idRefund);
             $expenseEntity->save();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function addTotalOrderCount(OrderTransfer $orderTransfer)
+    {
+        $totalOrderCount = $this->queryContainer
+            ->querySalesOrder()
+            ->filterByFkCustomer($orderTransfer->getFkCustomer())->count();
+
+        $orderTransfer->setTotalOrderCount($totalOrderCount);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addStateHistory(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer)
+    {
+        foreach ($orderItemEntity->getStateHistories() as $stateHistoryEntity) {
+            $itemStateTransfer = new ItemStateTransfer();
+            $itemStateTransfer->fromArray($stateHistoryEntity->toArray(), true);
+            $itemStateTransfer->setState($stateHistoryEntity->getState()->getName());
+            $itemStateTransfer->setIdSalesOrder($orderItemEntity->getFkSalesOrder());
+            $itemTransfer->addStateHistory($itemStateTransfer);
         }
     }
 

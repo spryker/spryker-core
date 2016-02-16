@@ -29,6 +29,7 @@
         <property name="validTo" type="string" />
         <property name="collectorLogicalOperator" type="string" />
         <property name="discountCollectors" type="DiscountCollector[]" />
+        <property name="type" type="string" />
     </transfer>
 
     <transfer name="calculatedDiscount">
@@ -146,6 +147,8 @@
         <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
         <property name="unitGrossPriceWithDiscounts" type="int"/>
         <property name="sumGrossPriceWithDiscounts" type="int" />
+        <property name="unitTotalDiscountAmount"  type="int" />
+        <property name="sumTotalDiscountAmount" type="int" />
     </transfer>
 
     <transfer name="Expense">
@@ -153,6 +156,8 @@
         <property name="sumGrossPriceWithDiscounts" type="int" />
         <property name="unitTaxAmountWithDiscounts" type="int" />
         <property name="sumTaxAmountWithDiscounts" type="int" />
+        <property name="unitTotalDiscountAmount"  type="int" />
+        <property name="sumTotalDiscountAmount" type="int" />
     </transfer>
 
 </transfers>

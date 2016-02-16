@@ -6,11 +6,9 @@
 
 namespace Spryker\Zed\Sales\Communication\Controller;
 
-use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
@@ -29,68 +27,25 @@ class DetailsController extends AbstractController
     {
         $idSalesOrder = $request->get('id-sales-order');
 
-        $salesOrderEntity = $this->getQueryContainer()
-            ->querySalesOrderById($idSalesOrder)
-            ->findOne();
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setIdSalesOrder($idSalesOrder);
+        $orderTransfer = $this->getFacade()->getOrderDetails($orderTransfer);
+        $orderTransfer = $this->getFacade()->getOrderTotalByOrderTransfer($orderTransfer);
 
-        if ($salesOrderEntity === null) {
-            throw new NotFoundHttpException(sprintf('Sales order with id "%d" not found!', $idSalesOrder));
-        }
-
-        foreach ($salesOrderEntity->getItems() as $orderItem) {
-            $criteria = new Criteria();
-            $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
-            $orderItem->getStateHistoriesJoinState($criteria);
-            $orderItem->resetPartialStateHistories(false);
-        }
-
-
-        $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($salesOrderEntity->getItems());
+        $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
+        $uniqueOrderStates = $this->getFacade()->getUniqueOrderStates($idSalesOrder);
         $events = $this->getFacade()->getArrayWithManualEvents($idSalesOrder);
         $allEvents = $this->groupEvents($events);
-
-        $expenses = $this->getQueryContainer()
-            ->querySalesExpensesByOrderId($idSalesOrder)
-            ->find();
-
-        $shippingAddress = $this->getQueryContainer()
-            ->querySalesOrderAddressById($salesOrderEntity->getFkSalesOrderAddressShipping())
-            ->findOne();
-
-        if ($salesOrderEntity->getFkSalesOrderAddressShipping() === $salesOrderEntity->getFkSalesOrderAddressBilling()) {
-            $billingAddress = $shippingAddress;
-        } else {
-            $billingAddress = $this->getQueryContainer()
-                ->querySalesOrderAddressById($salesOrderEntity->getFkSalesOrderAddressBilling())
-                ->findOne();
-        }
-
         $logs = $this->getFacade()->getPaymentLogs($idSalesOrder);
-
         $refunds = $this->getFacade()->getRefunds($idSalesOrder);
 
-        $itemsInProgress = $this->getFactory()->getOmsFacade()->getItemsWithFlag($salesOrderEntity, 'in progress');
-        $itemsPaid = $this->getFactory()->getOmsFacade()->getItemsWithFlag($salesOrderEntity, 'paid');
-        $itemsCancelled = $this->getFactory()->getOmsFacade()->getItemsWithFlag($salesOrderEntity, 'cancelled');
-
-        //@todo details page should use quote for data display, change this!
-        $orderTransfer = $this->getFacade()->getOrderTotalsByIdSalesOrder($idSalesOrder);
-
         return [
-            'idOrder' => $idSalesOrder,
-            'orderDetails' => $salesOrderEntity,
-            'orderItems' => $salesOrderEntity->getItems(),
             'events' => $events,
             'allEvents' => $allEvents,
-            'expenses' => $expenses,
+            'uniqueOrderStates' => $uniqueOrderStates,
             'logs' => $logs,
             'refunds' => $refunds,
-            'billingAddress' => $billingAddress,
-            'shippingAddress' => $shippingAddress,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
-            'itemsInProgress' => $itemsInProgress,
-            'itemsPaid' => $itemsPaid,
-            'itemsCancelled' => $itemsCancelled,
             'order' => $orderTransfer,
         ];
     }

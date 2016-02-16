@@ -5,47 +5,54 @@
 
             {% block widget_content %}
 
-                <div class="row">
+            <div class="row">
                     <div class="col-md-6">
                         <table class="table">
                             <caption>Voucher</caption>
-                            <tr>
-                                <th>Name</th>
-                                <td class="text-right">--</td>
-                            </tr>
-                            <tr>
-                                <th>Amount</th>
-                                <td class="text-right">--</td>
-                            </tr>
-                            <tr>
-                                <th>Voucher code</th>
-                                <td class="text-right">--</td>
-                            </tr>
-                            <tr>
-                                <th>Description</th>
-                                <td class="text-right">--</td>
-                            </tr>
+                             {% for calculatedDiscount in order.calculatedDiscounts %}
+                                    {% if calculatedDiscount.voucherCode  %}
+                                        <tr>
+                                            <th>Name</th>
+                                            <td class="text-right">{{ calculatedDiscount.displayName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Value</th>
+                                            <td class="text-right">{{ calculatedDiscount.sumGrossAmount | currency }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Voucher Code</th>
+                                            <td class="text-right">{{ calculatedDiscount.voucherCode }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Description</th>
+                                            <td class="text-right">{{ calculatedDiscount.description }}</td>
+                                        </tr>
+                                    {% endif %}
+                             {% endfor %}
                         </table>
                     </div>
                     <div class="col-md-6">
                         <table class="table">
                             <caption>Cart Rules</caption>
-                            <tr>
-                                <th>Name</th>
-                                <td class="text-right">---</td>
-                            </tr>
-                            <tr>
-                                <th>Value</th>
-                                <td class="text-right">---</td>
-                            </tr>
-                            <tr>
-                                <th>Description</th>
-                                <td class="text-right">---</td>
-                            </tr>
+                            {% for calculatedDiscount in order.calculatedDiscounts %}
+                                {% if calculatedDiscount.voucherCode is empty  %}
+                                    <tr>
+                                        <th>Name</th>
+                                        <td class="text-right">{{ calculatedDiscount.displayName }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Value</th>
+                                        <td class="text-right">{{ calculatedDiscount.sumGrossAmount | currency }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Description</th>
+                                        <td class="text-right">{{ calculatedDiscount.description }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
                         </table>
                     </div>
-                </div>
-
+            </div>
             {% endblock %}
 
         {% endembed %}

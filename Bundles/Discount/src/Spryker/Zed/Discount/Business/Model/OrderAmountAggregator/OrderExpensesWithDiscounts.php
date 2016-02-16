@@ -8,6 +8,7 @@ namespace Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -55,6 +56,7 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
     {
         return $this->discountQueryContainer
             ->querySalesDisount()
+            ->where(SpySalesDiscountTableMap::COL_FK_SALES_EXPENSE . ' IS NOT NULL')
             ->findByFkSalesOrder($orderTransfer->getIdSalesOrder());
     }
 
@@ -97,7 +99,16 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
                 $salesOrderDiscountEntity,
                 $expenseTransfer->getQuantity()
             );
+
             $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
+
+            $expenseTransfer->setUnitTotalDiscountAmount(
+                $expenseTransfer->getUnitTotalDiscountAmount() + $calculatedDiscountTransfer->getUnitGrossAmount()
+            );
+
+            $expenseTransfer->setSumTotalDiscountAmount(
+                $expenseTransfer->getSumTotalDiscountAmount() + $calculatedDiscountTransfer->getSumGrossAmount()
+            );
 
             $this->updateExpenseGrossPriceWithDiscounts($expenseTransfer, $calculatedDiscountTransfer);
             $this->setExpenseRefundableAmount($expenseTransfer, $calculatedDiscountTransfer);

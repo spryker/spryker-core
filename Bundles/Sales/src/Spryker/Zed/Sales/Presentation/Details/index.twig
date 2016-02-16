@@ -1,7 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% block section_title %}
-    {{ 'Order ID:' | trans }} {{ idOrder }} ({{ orderDetails.CreatedAt.date | date('Y-m-d G:i:s', false) }})
+    {{ 'Order ID:' | trans }} {{ order.idSalesOrder }} ({{ order.createdAt | date('Y-m-d G:i:s', false) }})
 {% endblock %}
 
 {% block content %}

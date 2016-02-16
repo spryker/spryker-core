@@ -23,6 +23,10 @@
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="unitGrossPriceWithDiscounts" type="int"/>
         <property name="sumGrossPriceWithDiscounts" type="int" />
+        <property name="unitTotalDiscountAmount"  type="int" />
+        <property name="sumTotalDiscountAmount" type="int" />
+        <property name="unitTotalDiscountAmountWithProductOption" type="int" />
+        <property name="sumTotalDiscountAmountWithProductOption" type="int" />
     </transfer>
 
     <transfer name="ProductOption">

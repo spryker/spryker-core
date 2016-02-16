@@ -51,7 +51,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createVoucherFormDataProvider()
     {
-        return new VoucherFormDataProvider($this->getQueryContainer(), $this->getConfig());
+        return new VoucherFormDataProvider($this->getQueryContainer(), $this->getCalculatorPlugins());
     }
 
     /**

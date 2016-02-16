@@ -53,22 +53,19 @@ class DiscountOrderSaver implements DiscountSaverInterface
      */
     public function saveDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->saveOrderItemDiscounts($quoteTransfer, $checkoutResponseTransfer);
+        $this->saveOrderItemDiscounts($checkoutResponseTransfer);
         $this->saveOrderExpenseDiscounts($quoteTransfer, $checkoutResponseTransfer);
         $this->voucherCode->useCodes($this->voucherCodesUsed);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    protected function saveOrderItemDiscounts(
-        QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer $checkoutResponseTransfer
-    ) {
-        $orderItemCollection = $quoteTransfer->getItems();
+    protected function saveOrderItemDiscounts(CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        $orderItemCollection = $checkoutResponseTransfer->getSaveOrder()->getOrderItems();
         $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();
         foreach ($orderItemCollection as $orderItemTransfer) {
             $discountCollection = $orderItemTransfer->getCalculatedDiscounts();
@@ -132,6 +129,7 @@ class DiscountOrderSaver implements DiscountSaverInterface
         SpySalesDiscount $salesDiscountEntity,
         CalculatedDiscountTransfer $calculatedDiscountTransfer
     ) {
+        $salesDiscountEntity->setAmount($calculatedDiscountTransfer->getUnitGrossAmount());
         $this->persistSalesDiscount($salesDiscountEntity);
 
         if ($this->haveVoucherCode($calculatedDiscountTransfer)) {

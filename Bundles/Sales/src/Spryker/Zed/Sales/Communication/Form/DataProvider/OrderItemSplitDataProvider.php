@@ -6,22 +6,21 @@
 
 namespace Spryker\Zed\Sales\Communication\Form\DataProvider;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 
 class OrderItemSplitDataProvider
 {
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
-     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer
      * @return array
      */
-    public function getData(SpySalesOrderItem $orderItemEntity)
+    public function getData(ItemTransfer $orderItemTransfer)
     {
         return [
-            OrderItemSplitForm::FIELD_ID_ORDER_ITEM => $orderItemEntity->getIdSalesOrderItem(),
-            OrderItemSplitForm::FIELD_ID_ORDER => $orderItemEntity->getFkSalesOrder(),
+            OrderItemSplitForm::FIELD_ID_ORDER_ITEM => $orderItemTransfer->getIdSalesOrderItem(),
+            OrderItemSplitForm::FIELD_ID_ORDER => $orderItemTransfer->getFkSalesOrder(),
         ];
     }
 

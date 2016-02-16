@@ -35,6 +35,9 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         $totalDiscountUnitGrossAmount = $this->getCalculatedDiscountsUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
         $totalDiscountSumGrossAmount = $this->getCalculatedDiscountsSumGrossAmount($itemTransfer->getCalculatedDiscounts());
 
+        $itemTransfer->setUnitTotalDiscountAmount($totalDiscountUnitGrossAmount);
+        $itemTransfer->setSumTotalDiscountAmount($totalDiscountSumGrossAmount);
+
         $itemTransfer->setUnitGrossPriceWithDiscounts(
             $itemTransfer->getUnitGrossPrice() - $totalDiscountUnitGrossAmount
         );
@@ -45,6 +48,9 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
 
         $totalDiscountUnitGrossAmount += $this->getProductOptionGrossUnitTotalAmount($itemTransfer->getProductOptions());
         $totalDiscountSumGrossAmount += $this->getProductOptionGrossSumTotalAmount($itemTransfer->getProductOptions());
+
+        $itemTransfer->setUnitTotalDiscountAmountWithProductOption($totalDiscountUnitGrossAmount);
+        $itemTransfer->setSumTotalDiscountAmountWithProductOption($totalDiscountSumGrossAmount);
 
         $itemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(
             $itemTransfer->getSumGrossPriceWithProductOptions() - $totalDiscountSumGrossAmount
@@ -159,6 +165,9 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
             $this->setCalculatedDiscountsSumGrossAmount($expenseTransfer->getCalculatedDiscounts());
             $unitAmount = $this->getCalculatedDiscountsUnitGrossAmount($expenseTransfer->getCalculatedDiscounts());
             $sumAmount = $this->getCalculatedDiscountsSumGrossAmount($expenseTransfer->getCalculatedDiscounts());
+
+            $expenseTransfer->setUnitTotalDiscountAmount($unitAmount);
+            $expenseTransfer->setSumTotalDiscountAmount($sumAmount);
 
             $expenseTransfer->setUnitGrossPriceWithDiscounts(
                 $expenseTransfer->getUnitGrossPrice() - $unitAmount

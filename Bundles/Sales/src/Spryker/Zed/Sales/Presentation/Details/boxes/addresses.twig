@@ -1,6 +1,6 @@
 {% macro address(order, addr, messageIfEmpty) %}
 
-    {% if addr is empty %}
+    {% if addr is not defined %}
         {{ messageIfEmpty | trans }}
     {% else %}
     <div class="panel panel-default">
@@ -28,10 +28,10 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                {{ show.address(order, billingAddress, 'Billing address not provided') }}
+                {{ show.address(order, order.billingAddress, 'Billing address not provided') }}
             </div>
             <div class="col-xs-12 col-sm-6">
-                {{ show.address(order, shippingAddress, 'Shipping address not provided') }}
+                {{ show.address(order, order.shippingAddress, 'Shipping address not provided') }}
             </div>
         </div>
 

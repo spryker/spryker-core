@@ -6,6 +6,8 @@
     <transfer name="Item">
         <property name="unitGrossPriceWithProductOptionAndDiscountAmounts" type="int" />
         <property name="sumGrossPriceWithProductOptionAndDiscountAmounts" type="int" />
+        <property name="unitTotalDiscountAmountWithProductOption" type="int" />
+        <property name="sumTotalDiscountAmountWithProductOption" type="int" />
         <property name="unitTaxAmountWithProductOptionAndDiscountAmounts" type="int" />
         <property name="sumTaxAmountWithProductOptionAndDiscountAmounts" type="int" />
     </transfer>

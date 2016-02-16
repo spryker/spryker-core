@@ -59,6 +59,7 @@ class ExpenseTotal implements OrderAmountAggregatorInterface
      */
     protected function hydrateOrderExpenseTransfer(ObjectCollection $salesOrderExpenses, OrderTransfer $orderTransfer)
     {
+        $orderTransfer->setExpenses(new \ArrayObject());
         foreach ($salesOrderExpenses as $salesOrderExpenseEntity) {
             $orderExpenseTransfer = new ExpenseTransfer();
             $orderExpenseTransfer->fromArray($salesOrderExpenseEntity->toArray(), true);

@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Sales\Communication;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\Form\CommentForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
@@ -97,19 +98,19 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return array
      */
-    public function createOrderItemSplitFormCollection(ObjectCollection $orderItems)
+    public function createOrderItemSplitFormCollection(\ArrayObject $orderItems)
     {
         $formCollectionArray = [];
         $orderItemSplitDataProvider = $this->createOrderItemSplitDataProvider();
-        foreach ($orderItems as $item) {
+        foreach ($orderItems as $itemTransfer) {
             $formType = new OrderItemSplitForm();
-            $formCollectionArray[$item->getIdSalesOrderItem()] = $this
+            $formCollectionArray[$itemTransfer->getIdSalesOrderItem()] = $this
                 ->getFormFactory()
-                ->create($formType, $orderItemSplitDataProvider->getData($item), $orderItemSplitDataProvider->getOptions())
+                ->create($formType, $orderItemSplitDataProvider->getData($itemTransfer), $orderItemSplitDataProvider->getOptions())
                 ->createView();
         }
         return $formCollectionArray;

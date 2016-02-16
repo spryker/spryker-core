@@ -102,6 +102,14 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
             $itemTransfer->getQuantity()
         );
 
+        $itemTransfer->setUnitTotalDiscountAmount(
+            $itemTransfer->getUnitTotalDiscountAmount() + $calculatedDiscountTransfer->getUnitGrossAmount()
+        );
+
+        $itemTransfer->setSumTotalDiscountAmount(
+            $itemTransfer->getSumTotalDiscountAmount() + $calculatedDiscountTransfer->getSumGrossAmount()
+        );
+
         $this->updateItemGrossPriceWithDiscounts($itemTransfer, $calculatedDiscountTransfer);
 
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
@@ -173,7 +181,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array|int[]
      */

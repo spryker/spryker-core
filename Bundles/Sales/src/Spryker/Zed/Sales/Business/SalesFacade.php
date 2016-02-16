@@ -58,6 +58,18 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idOrder
+     *
+     * @return array
+     */
+    public function getUniqueOrderStates($idOrder)
+    {
+        $orderManager = $this->getFactory()->createOrderDetailsManager();
+
+        return $orderManager->getUniqueOrderStates($idOrder);
+    }
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderDetailsCommentsTransfer

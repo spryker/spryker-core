@@ -35,12 +35,13 @@
                 <th>{{ 'Tax amount' | trans }}</th>
                 <th>{{ 'Tax %' | trans }}</th>
                 <th>{{ 'Discount amount' | trans }}</th>
+                <th>{{ 'Item total' | trans }}</th>
                 <th>{{ 'Status' | trans }}</th>
                 <th>{{ 'Trigger event' | trans }}</th>
             </tr>
             </thead>
             <tbody>
-            {% for orderItem in orderItems %}
+            {% for orderItem in order.items %}
                 <tr>
                     <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
                     <td>-image-</td>
@@ -49,21 +50,22 @@
                         <a href="#" target="_blank">{{ 'Zed View' }}</a>
                     </td>
                     <td>{{ orderItem.Sku }}</td>
-                    <td>{{ orderItem.GrossPrice | currency }}</td>
+                    <td>{{ orderItem.unitGrossPriceWithProductOptions | currency }}</td>
                     <td><a href="javascript:void(0);" onclick="{{ "$('#split_form_row_" ~ orderItem.IdSalesOrderItem ~ "').toggle();" }}">{{ orderItem.quantity }}</a></td>
-                    <td>{{ (orderItem.GrossPrice * orderItem.quantity) | currency }}</td>
-                    <td>--tax amount--</td>
-                    <td>--tax %--</td>
-                    <td>--discount amount--</td>
+                    <td>{{ orderItem.sumGrossPriceWithProductOptions | currency }}</td>
+                    <td>{{ orderItem.sumTaxAmountWithProductOptionAndDiscountAmounts | currency }}</td>
+                    <td>{{ orderItem.taxRate|default(0) }} %</td>
+                    <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | currency }} </td>
+                    <td>{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | currency }} </td>
                     <td>
-                        {% for stateHistory in orderItem.StateHistories | slice(0, 3) %}
-                            <div>{{ stateHistory.State.Name }} ({{ stateHistory.CreatedAt | date('Y-m-d G:i:s', false) }})</div>
+                        {% for stateHistory in orderItem.stateHistory | slice(0, 3) %}
+                            <div>{{ stateHistory.state }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
                         {% endfor %}
 
-                        {% if orderItem.StateHistories | length > 3 %}
+                        {% if orderItem.stateHistory | length > 3 %}
                             <div id="history_details_{{ orderItem.IdSalesOrderItem }}" style="display: none">
-                                {% for stateHistory in orderItem.StateHistories | slice(3) %}
-                                    <div>{{ stateHistory.State.Name }} ({{ stateHistory.CreatedAt | date('Y-m-d G:i:s', false) }})</div>
+                                {% for stateHistory in orderItem.stateHistory | slice(3) %}
+                                    <div>{{ stateHistory.state }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
                                 {% endfor %}
                             </div>
 
@@ -81,10 +83,10 @@
                     </td>
                 </tr>
                 {% if orderItemSplitFormCollection is defined %}
-                <tr style="display: none;" id="split_form_row_{{ orderItem.IdSalesOrderItem }}">
+                <tr style="display: none;" id="split_form_row_{{ orderItem.idSalesOrderItem }}">
                     <td colspan="12">
                         <h4>{{ 'Split order items' | trans }}</h4>
-                        {{ form(orderItemSplitFormCollection[orderItem.IdSalesOrderItem]) }}
+                        {{ form(orderItemSplitFormCollection[orderItem.idSalesOrderItem]) }}
                     </td>
                 </tr>
                 {% endif %}

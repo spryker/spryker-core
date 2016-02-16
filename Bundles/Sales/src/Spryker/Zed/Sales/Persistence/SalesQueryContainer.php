@@ -143,23 +143,19 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
     /**
      * @param int $idSalesOrder
-     * @param int $idCustomer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function querySalesOrderDetails($idSalesOrder, $idCustomer)
+    public function querySalesOrderDetails($idSalesOrder)
     {
-        $query = $this->getFactory()->createSalesOrderQuery();
-        $query
-            ->filterByIdSalesOrder($idSalesOrder)
-            ->filterByFkCustomer($idCustomer);
-
-        $query
-            ->innerJoinWith('order.BillingAddress billingAddress')
-            ->innerJoinWith('billingAddress.Country billingCountry')
-            ->innerJoinWith('order.ShippingAddress shippingAddress')
-            ->innerJoinWith('shippingAddress.Country shippingCountry')
-            ->innerJoinWithShipmentMethod();
+        $query = $this->getFactory()->createSalesOrderQuery()
+         ->setModelAlias('order')
+         ->filterByIdSalesOrder($idSalesOrder)
+         ->innerJoinWith('order.BillingAddress billingAddress')
+         ->innerJoinWith('billingAddress.Country billingCountry')
+         ->innerJoinWith('order.ShippingAddress shippingAddress')
+         ->innerJoinWith('shippingAddress.Country shippingCountry')
+         ->innerJoinWithShipmentMethod();
 
         return $query;
     }
