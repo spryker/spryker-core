@@ -14,7 +14,10 @@
     "spryker/application": "^1.0.0",
     "spryker/kernel": "^1.0.0",
     "spryker/library": "^1.0.0",
-    "spryker/transfer": "^1.0.0"
+    "spryker/transfer": "^1.0.0",
+    "spryker/propel": "^1.0.0",
+    "spryker/symfony": "^1.0.0",
+    "spryker/twig": "^1.0.0"
   },
   "require-dev": {},
   "description": "gui bundle",

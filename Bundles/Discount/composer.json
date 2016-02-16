@@ -20,7 +20,9 @@
     "spryker/messenger": "^1.0.0",
     "spryker/propel": "^1.0.0",
     "spryker/sales": "^1.0.0",
-    "spryker/transfer": "^1.0.0"
+    "spryker/transfer": "^1.0.0",
+    "spryker/symfony": "^1.0.0",
+    "spryker/zend": "^1.0.0"
   },
   "require-dev": {},
   "description": "discount bundle",

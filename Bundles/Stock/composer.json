@@ -14,7 +14,10 @@
     "spryker/application": "^1.0.0",
     "spryker/kernel": "^1.0.0",
     "spryker/product": "^1.0.0",
-    "spryker/touch": "^1.0.0"
+    "spryker/touch": "^1.0.0",
+    "spryker/guzzle": "^1.0.0",
+    "spryker/propel": "^1.0.0",
+    "spryker/symfony": "^1.0.0"
   },
   "require-dev": {},
   "description": "stock bundle",

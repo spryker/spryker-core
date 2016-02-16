@@ -13,7 +13,8 @@
   "require": {
     "spryker/kernel": "^1.0.0",
     "spryker/sales": "^1.0.0",
-    "spryker/shipment": "^1.0.0"
+    "spryker/shipment": "^1.0.0",
+    "spryker/propel": "^1.0.0"
   },
   "require-dev": {},
   "description": "shipment checkout connector bundle",

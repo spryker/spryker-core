@@ -10,7 +10,8 @@
   },
   "require": {
     "spryker/kernel": "^1.0.0",
-    "spryker/product": "^1.0.0"
+    "spryker/product": "^1.0.0",
+    "spryker/propel": "^1.0.0"
   },
   "require-dev": {},
   "description": "tax product connector bundle",

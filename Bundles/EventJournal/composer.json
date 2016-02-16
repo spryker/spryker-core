@@ -13,7 +13,8 @@
   "require": {
     "spryker/kernel": "^1.0.0",
     "spryker/library": "^1.0.0",
-    "spryker/new-relic": "^1.0.0"
+    "spryker/new-relic": "^1.0.0",
+    "spryker/symfony": "^1.0.0"
   },
   "require-dev": {},
   "description": "event journal bundle",

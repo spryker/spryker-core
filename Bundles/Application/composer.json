@@ -23,7 +23,13 @@
     "spryker/propel": "^1.0.0",
     "spryker/session": "^1.0.0",
     "spryker/user": "^1.0.0",
-    "spryker/zed-request": "^1.0.0"
+    "spryker/zed-request": "^1.0.0",
+    "spryker/log": "^1.0.0",
+    "spryker/monolog": "^1.0.0",
+    "spryker/silex": "^1.0.0",
+    "spryker/symfony": "^1.0.0",
+    "spryker/twig": "^1.0.0",
+    "spryker/zend": "^1.0.0"
   },
   "require-dev": {},
   "description": "application bundle",

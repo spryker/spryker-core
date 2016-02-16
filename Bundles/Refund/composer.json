@@ -17,7 +17,9 @@
     "spryker/library": "^1.0.0",
     "spryker/oms": "^1.0.0",
     "spryker/payone": "^1.0.0",
-    "spryker/sales": "^1.0.0"
+    "spryker/sales": "^1.0.0",
+    "spryker/propel": "^1.0.0",
+    "spryker/symfony": "^1.0.0"
   },
   "require-dev": {},
   "description": "refund bundle",

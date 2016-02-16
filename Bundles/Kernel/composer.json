@@ -19,7 +19,10 @@
     "spryker/session": "^1.0.0",
     "spryker/storage": "^1.0.0",
     "spryker/transfer": "^1.0.0",
-    "spryker/zed-request": "^1.0.0"
+    "spryker/zed-request": "^1.0.0",
+    "spryker/silex": "^1.0.0",
+    "spryker/symfony": "^1.0.0",
+    "spryker/zend": "^1.0.0"
   },
   "require-dev": {},
   "description": "kernel bundle",

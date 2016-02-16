@@ -17,7 +17,8 @@
     "spryker/library": "^1.0.0",
     "spryker/session": "^1.0.0",
     "spryker/tax": "^1.0.0",
-    "spryker/zed-request": "^1.0.0"
+    "spryker/zed-request": "^1.0.0",
+    "spryker/symfony": "^1.0.0"
   },
   "require-dev": {},
   "description": "shipment bundle",

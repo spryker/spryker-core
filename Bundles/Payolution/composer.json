@@ -18,7 +18,10 @@
     "spryker/library": "^1.0.0",
     "spryker/mail": "^1.0.0",
     "spryker/oms": "^1.0.0",
-    "spryker/zed-request": "^1.0.0"
+    "spryker/zed-request": "^1.0.0",
+    "spryker/guzzle": "^1.0.0",
+    "spryker/propel": "^1.0.0",
+    "spryker/symfony": "^1.0.0"
   },
   "require-dev": {},
   "description": "payolution bundle",

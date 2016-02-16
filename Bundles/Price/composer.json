@@ -17,7 +17,8 @@
     "spryker/library": "^1.0.0",
     "spryker/messenger": "^1.0.0",
     "spryker/product": "^1.0.0",
-    "spryker/touch": "^1.0.0"
+    "spryker/touch": "^1.0.0",
+    "spryker/twig": "^1.0.0"
   },
   "require-dev": {},
   "description": "price bundle",

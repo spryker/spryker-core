@@ -1,5 +1,20 @@
 {
   "name": "spryker/graph",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Acceptance": "tests/",
+      "Function": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/",
+      "YvesUnit": "tests/"
+    }
+  },
+  "require": {
+    "spryker/kernel": "^1.0.0",
+    "spryker/graphviz": "^1.0.0"
+  },
+  "require-dev": {},
   "description": "graph bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
