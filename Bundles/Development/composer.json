@@ -13,12 +13,6 @@
     "spryker/abstract-sniffs": "^1.0.0",
     "spryker/console": "^1.0.0",
     "spryker/kernel": "^1.0.0",
-    "spryker/two": "^1.0.0",
-    "spryker/two-five": "^1.0.0",
-    "spryker/two-four": "^1.0.0",
-    "spryker/two-three": "^1.0.0",
-    "spryker/two-two": "^1.0.0",
-    "spryker/x": "^1.0.0",
     "spryker/symfony": "^1.0.0",
     "spryker/zend": "^1.0.0"
   },
