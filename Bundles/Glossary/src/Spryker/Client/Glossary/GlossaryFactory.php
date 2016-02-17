@@ -28,7 +28,7 @@ class GlossaryFactory extends AbstractFactory
     }
 
     /**
-     * @param $localeName
+     * @param string $localeName
      *
      * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */
