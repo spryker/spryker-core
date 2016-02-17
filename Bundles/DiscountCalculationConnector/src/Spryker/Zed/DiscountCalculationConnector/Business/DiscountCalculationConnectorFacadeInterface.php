@@ -1,40 +1,41 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
+use Generated\Shared\Transfer\QuoteTransfer;
 
-use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
+/**
+ * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorBusinessFactory getFactory()
+ */
 interface DiscountCalculationConnectorFacadeInterface
 {
-
     /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
-     * @param \ArrayObject $discountableContainers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateDiscountTotals(TotalsTransfer $totalsTransfer, CalculableInterface $discountableContainer, \ArrayObject $discountableContainers);
+    public function calculateDiscountTotals(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
-     * @param \ArrayObject $items
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateGrandTotalWithDiscountsTotals(TotalsTransfer $totalsTransfer, CalculableInterface $container, \ArrayObject $items);
+    public function removeAllCalculatedDiscounts(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateRemoveAllCalculatedDiscounts(CalculableInterface $container);
+    public function calculateGrandTotalWithDiscounts(QuoteTransfer $quoteTransfer);
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateSumGrossCalculatedDiscountAmount(QuoteTransfer $quoteTransfer);
 }

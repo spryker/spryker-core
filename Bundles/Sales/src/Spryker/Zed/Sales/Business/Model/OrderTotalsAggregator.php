@@ -61,9 +61,9 @@ class OrderTotalsAggregator
     /**
      * @param int $idSalesOrderItem
      *
-     * @throws OrderTotalHydrationException
+     * @throws \Spryker\Zed\Sales\Business\Exception\OrderTotalHydrationException
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     public function aggregateByIdSalesOrderItem($idSalesOrderItem)
     {
@@ -100,9 +100,9 @@ class OrderTotalsAggregator
 
     /**
      * @param int $idSalesOrder
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      *
-     * @throws OrderTotalHydrationException
+     * @throws \Spryker\Zed\Sales\Business\Exception\OrderTotalHydrationException
      */
     protected function hydrateOrderTransfer($idSalesOrder)
     {
@@ -155,9 +155,9 @@ class OrderTotalsAggregator
     }
 
     /**
-     * @param SpySalesOrderItem $salesOrderItemEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getHydratedSaleOrderItemTransfer(SpySalesOrderItem $salesOrderItemEntity)
     {

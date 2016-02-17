@@ -400,7 +400,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OrderExpensesWithDiscounts
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpensesWithDiscounts
      */
     public function createOrderExpenseWithDiscountsAggregator()
     {

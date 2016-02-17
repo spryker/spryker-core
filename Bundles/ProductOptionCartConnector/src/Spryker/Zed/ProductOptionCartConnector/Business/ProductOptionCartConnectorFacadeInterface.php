@@ -6,23 +6,23 @@
 
 namespace Spryker\Zed\ProductOptionCartConnector\Business;
 
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface ProductOptionCartConnectorFacadeInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
+     * @param CartChangeTransfer $change
      *
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return CartChangeTransfer
      */
-    public function expandProductOptions(ChangeTransfer $change);
+    public function expandProductOptions(CartChangeTransfer $change);
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
+     * @param CartChangeTransfer $change
      *
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return CartChangeTransfer
      */
-    public function expandGroupKey(ChangeTransfer $change);
+    public function expandGroupKey(CartChangeTransfer $change);
 
 }

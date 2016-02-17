@@ -12,7 +12,7 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
 class PaymentBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return PaymentPluginExecutor
+     * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor
      */
     public function createCheckoutPaymentPluginExecutor()
     {

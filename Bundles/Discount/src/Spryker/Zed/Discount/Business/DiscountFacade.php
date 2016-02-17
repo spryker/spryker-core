@@ -459,7 +459,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     public function aggregateOrderExpensesWithDiscounts(OrderTransfer $orderTransfer)
     {

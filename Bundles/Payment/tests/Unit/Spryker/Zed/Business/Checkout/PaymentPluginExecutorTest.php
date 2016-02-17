@@ -83,7 +83,7 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
      * @param null $orderSavePluginMock
      * @param null $postCheckPluginMock
      *
-     * @return PaymentPluginExecutor
+     * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor
      */
     protected function createPaymenPluginExecutor(
         $preCheckPluginMock = null,
@@ -128,7 +128,7 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CheckoutPreConditionInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface
      */
     protected function createPreCheckPluginMock()
     {
@@ -136,7 +136,7 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CheckoutSaveOrderInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface
      */
     protected function createSavePluginMock()
     {
@@ -144,7 +144,7 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CheckoutPostSaveHookInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface
      */
     protected function createPostSavePluginMock()
     {
@@ -152,7 +152,7 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer()
     {

@@ -14,12 +14,12 @@ class CartToCalculationBridge implements CartToCalculationInterface
 {
 
     /**
-     * @var CalculationFacadeInterface
+     * @var \Spryker\Zed\Calculation\Business\CalculationFacadeInterface
      */
     protected $calculationFacade;
 
     /**
-     * @param CalculationFacadeInterface $calculationFacade
+     * @param \Spryker\Zed\Calculation\Business\CalculationFacadeInterface $calculationFacade
      */
     public function __construct($calculationFacade)
     {
