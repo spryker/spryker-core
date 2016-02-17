@@ -15,6 +15,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class ProductOptionDiscounts implements OrderAmountAggregatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
@@ -39,6 +40,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
 
         if (count($salesOrderDiscounts) === 0) {
             $this->addProductOptionWithDiscountsGrossPriceAmountDefaults($orderTransfer);
+
             return;
         }
 
@@ -73,7 +75,6 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
         ItemTransfer $itemTransfer,
         SpySalesDiscount $salesOrderDiscountEntity
     ) {
-
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             if ($salesOrderDiscountEntity->getFkSalesOrderItemOption() !== $productOptionTransfer->getIdSalesOrderItemOption()) {
                 continue;
@@ -182,7 +183,6 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
     protected function addProductOptionWithDiscountsGrossPriceAmountDefaults(OrderTransfer $orderTransfer)
     {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-
             $totalItemUnitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
             $totalItemSumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount($itemTransfer->getCalculatedDiscounts());
 
@@ -229,6 +229,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
                 $productOptionTransfer->getCalculatedDiscounts()
             );
         }
+
         return $productOptionSumAmount;
     }
 
@@ -246,7 +247,6 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
 
         return $saleOrderItemIds;
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -267,6 +267,5 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
             ->where(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM_OPTION . ' IS NOT NULL')
             ->find();
     }
-
 
 }

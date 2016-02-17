@@ -19,3 +19,4 @@ use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionConfigurationPresetVa
 abstract class AbstractSpyProductOptionConfigurationPresetValueQuery extends BaseSpyProductOptionConfigurationPresetValueQuery
 {
 } // SpyProductOptionConfigurationPresetValueQuery
+

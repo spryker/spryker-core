@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 
 class Subtotal implements OrderAmountAggregatorInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -40,6 +41,8 @@ class Subtotal implements OrderAmountAggregatorInterface
             $itemTransfer->requireSumGrossPrice();
             $subTotal += $itemTransfer->getSumGrossPrice();
         }
+
         return $subTotal;
     }
+
 }

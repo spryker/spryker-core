@@ -52,8 +52,10 @@ abstract class AbstractRuleForm extends AbstractType
             ['', '', ' '],
             $decisionRuleName
         );
+
         return mb_convert_case($decisionRuleName, MB_CASE_TITLE, 'UTF-8');
     }
+
     /**
      * @return array
      */
@@ -64,8 +66,10 @@ abstract class AbstractRuleForm extends AbstractType
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);
         }
+
         return $plugins;
     }
+
     /**
      * @return array
      */
@@ -76,8 +80,10 @@ abstract class AbstractRuleForm extends AbstractType
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);
         }
+
         return $plugins;
     }
+
     /**
      * @return array
      */
@@ -88,8 +94,10 @@ abstract class AbstractRuleForm extends AbstractType
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);
         }
+
         return $plugins;
     }
+
     /**
      * @return array|string[]
      */

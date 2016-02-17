@@ -3,14 +3,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
-use Generated\Shared\Transfer\QuoteTransfer;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorBusinessFactory getFactory()
  */
 interface DiscountCalculationConnectorFacadeInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -38,4 +39,5 @@ interface DiscountCalculationConnectorFacadeInterface
      * @return void
      */
     public function calculateSumGrossCalculatedDiscountAmount(QuoteTransfer $quoteTransfer);
+
 }

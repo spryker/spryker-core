@@ -24,4 +24,5 @@ class OrderExpenseTaxAmountAggregatorPlugin extends AbstractPlugin implements Or
     {
         $this->getFacade()->aggregateOrderExpenseTaxAmountAggregator($orderTransfer);
     }
+
 }

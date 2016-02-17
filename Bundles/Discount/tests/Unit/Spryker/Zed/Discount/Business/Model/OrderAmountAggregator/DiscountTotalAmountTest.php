@@ -14,6 +14,7 @@ use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmoun
 
 class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -62,4 +63,5 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
     {
         return new DiscountTotalAmount();
     }
+
 }

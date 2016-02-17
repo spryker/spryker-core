@@ -16,6 +16,7 @@ use Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnect
 
 class SumGrossCalculatedDiscountAmountCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -25,4 +26,5 @@ class SumGrossCalculatedDiscountAmountCalculatorPlugin extends AbstractPlugin im
     {
         $this->getFacade()->calculateSumGrossCalculatedDiscountAmount($quoteTransfer);
     }
+
 }

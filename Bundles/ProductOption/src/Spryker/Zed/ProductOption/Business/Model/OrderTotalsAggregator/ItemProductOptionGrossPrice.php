@@ -14,6 +14,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -171,9 +172,11 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
         if (empty($saleOrderItemIds)) {
             return [];
         }
+
         return $this->salesQueryContainer
             ->querySalesOrderItem()
             ->filterByIdSalesOrderItem($saleOrderItemIds)
             ->find();
     }
+
 }

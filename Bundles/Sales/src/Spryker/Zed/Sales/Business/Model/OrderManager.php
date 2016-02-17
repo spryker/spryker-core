@@ -27,6 +27,7 @@ use Spryker\Zed\Sales\SalesConfig;
 
 class OrderManager
 {
+
     const TEST_CUSTOMER_FIRST_NAME = 'test order';
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
@@ -77,9 +78,10 @@ class OrderManager
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     *
      * @throws \Exception
      *
+     * @return \Generated\Shared\Transfer\OrderTransfer
      * @return void
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
@@ -103,7 +105,6 @@ class OrderManager
             Propel::getConnection()->commit();
 
             $this->populateCheckoutResponseTransfer($checkoutResponseTransfer, $orderTransfer);
-
         } catch (\Exception $e) {
             Propel::getConnection()->rollBack();
             throw $e;
@@ -139,7 +140,6 @@ class OrderManager
         OrderTransfer $orderTransfer
     ) {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-
             $this->assertItemRequirements($itemTransfer);
 
             $processName = $this->salesConfiguration->determineProcessForOrderItem($quoteTransfer, $itemTransfer);
@@ -278,7 +278,6 @@ class OrderManager
         SpySalesOrderItem $salesOrderItemEntity,
         ItemTransfer $itemTransfer
     ) {
-
         $salesOrderItemEntity->fromArray($itemTransfer->toArray());
         $salesOrderItemEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItemEntity->setFkOmsOrderItemState(
@@ -316,6 +315,7 @@ class OrderManager
         $orderItems = clone $orderTransfer->getItems();
         $saveOrderTransfer->setOrderItems($orderItems);
     }
+
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -424,4 +424,5 @@ class OrderManager
         $quoteTransfer->requireItems()
             ->requireTotals();
     }
+
 }

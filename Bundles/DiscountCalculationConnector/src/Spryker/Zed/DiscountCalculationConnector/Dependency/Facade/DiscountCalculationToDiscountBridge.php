@@ -7,7 +7,6 @@ namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscountInterface
 {

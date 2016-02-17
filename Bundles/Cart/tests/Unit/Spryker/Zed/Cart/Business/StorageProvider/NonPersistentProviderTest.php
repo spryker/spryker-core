@@ -4,10 +4,8 @@ namespace Unit\Spryker\Zed\Cart\Business\StorageProvider;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Shared\Transfer\AbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
-use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 
 /**
  * @group SprykerFeature
@@ -27,6 +25,9 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      */
     private $provider;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -35,6 +36,9 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
 
     //@todo test with more then 1 item
 
+    /**
+     * @return void
+     */
     public function testAddExistingItem()
     {
         $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
@@ -58,6 +62,9 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testAddNewItem()
     {
         $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
@@ -91,6 +98,9 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($existingQuantity, $existingItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveExistingItem()
     {
         $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
@@ -103,6 +113,9 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $changedCart->getItems());
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveNotExistingItem()
     {
         $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
@@ -120,6 +133,9 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($existingQuantity, $item->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testReduceWithMoreThenExists()
     {
         $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
@@ -135,6 +151,8 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
      * @expectedExceptionMessage Could not change cart item "123" with "-3" as value.
+     *
+     * @return void
      */
     public function testIncreaseWithNegativeValue()
     {
@@ -151,6 +169,8 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
      * @expectedExceptionMessage Could not change cart item "123" with "0" as value.
+     *
+     * @return void
      */
     public function testIncreaseWithZeroValue()
     {
@@ -167,6 +187,8 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
      * @expectedExceptionMessage Could not change cart item "123" with "-3" as value.
+     *
+     * @return void
      */
     public function testDecreaseWithNegativeValue()
     {
@@ -183,6 +205,8 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
      * @expectedExceptionMessage Could not change cart item "123" with "0" as value.
+     *
+     * @return void
      */
     public function testDecreaseWithZeroValue()
     {

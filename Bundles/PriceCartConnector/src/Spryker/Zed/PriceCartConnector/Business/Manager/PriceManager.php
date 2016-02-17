@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\PriceCartConnector\Business\Manager;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;

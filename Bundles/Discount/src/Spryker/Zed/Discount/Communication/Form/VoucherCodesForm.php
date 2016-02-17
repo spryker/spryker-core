@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class VoucherCodesForm extends AbstractRuleForm
 {
+
     const FIELD_NAME = 'name';
     const FIELD_VOUCHER_POOL_CATEGORY = 'voucher_pool_category';
     const FIELD_IS_ACTIVE = 'is_active';
@@ -22,7 +23,6 @@ class VoucherCodesForm extends AbstractRuleForm
     const FIELD_COLLECTOR_PLUGINS = 'collector_plugins';
     const FIELD_DECISION_RULES = 'decision_rules';
     const FIELD_COLLECTOR_LOGICAL_OPERATOR = 'collector_logical_operator';
-
 
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
@@ -71,6 +71,7 @@ class VoucherCodesForm extends AbstractRuleForm
     {
         return 'voucher_codes';
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -95,6 +96,7 @@ class VoucherCodesForm extends AbstractRuleForm
 
         $builder->addModelTransformer($this->decisionRulesFormTransformer);
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -107,8 +109,10 @@ class VoucherCodesForm extends AbstractRuleForm
                 new NotBlank(),
             ],
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -123,8 +127,10 @@ class VoucherCodesForm extends AbstractRuleForm
                 new NotBlank(),
             ],
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -135,8 +141,10 @@ class VoucherCodesForm extends AbstractRuleForm
         $builder->add(self::FIELD_IS_ACTIVE, 'checkbox', [
             'label' => 'Active',
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -147,8 +155,10 @@ class VoucherCodesForm extends AbstractRuleForm
         $builder->add(self::FIELD_IS_PRIVILEGED, 'checkbox', [
             'label' => 'Is Combinable with other discounts',
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -157,8 +167,10 @@ class VoucherCodesForm extends AbstractRuleForm
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_DESCRIPTION, 'textarea');
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -175,8 +187,10 @@ class VoucherCodesForm extends AbstractRuleForm
                 ]),
             ],
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -187,8 +201,10 @@ class VoucherCodesForm extends AbstractRuleForm
         $builder->add(self::FIELD_VALID_FROM, 'date', [
             'label' => 'Valid From',
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -199,8 +215,10 @@ class VoucherCodesForm extends AbstractRuleForm
         $builder->add(self::FIELD_VALID_TO, 'date', [
             'label' => 'Valid Until',
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -218,8 +236,10 @@ class VoucherCodesForm extends AbstractRuleForm
                 new NotBlank(),
             ],
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -238,8 +258,10 @@ class VoucherCodesForm extends AbstractRuleForm
             'allow_delete' => true,
             'allow_extra_fields' => true,
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -258,8 +280,10 @@ class VoucherCodesForm extends AbstractRuleForm
             'allow_delete' => true,
             'allow_extra_fields' => true,
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -272,6 +296,7 @@ class VoucherCodesForm extends AbstractRuleForm
             'choices' => $this->getCollectorLogicalOperators(),
             'required' => true,
         ]);
+
         return $this;
     }
 

@@ -8,8 +8,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrderAmountAggregatorInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     public function aggregate(OrderTransfer $orderTransfer);
+
 }

@@ -9,10 +9,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
@@ -25,7 +22,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProduct;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 class ProductManager implements ProductManagerInterface
 {
@@ -647,7 +643,6 @@ class ProductManager implements ProductManagerInterface
         }
 
         return $taxRate;
-
     }
 
 }

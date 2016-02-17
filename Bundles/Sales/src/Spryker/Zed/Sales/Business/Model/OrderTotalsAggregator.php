@@ -14,6 +14,7 @@ use Spryker\Zed\Sales\Business\Exception\OrderTotalHydrationException;
 
 class OrderTotalsAggregator
 {
+
     /**
      * @var \Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
      */
@@ -35,8 +36,8 @@ class OrderTotalsAggregator
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
     public function __construct(
-        array $orderAmountAggregators = [],
-        array $itemAmountAggregators = [],
+        array $orderAmountAggregators,
+        array $itemAmountAggregators,
         SalesQueryContainerInterface $salesQueryContainer
     ) {
         $this->orderAmountAggregators = $orderAmountAggregators;
@@ -55,7 +56,6 @@ class OrderTotalsAggregator
         $orderTransfer = $this->applyItemAmountAggregatorPlugins($orderTransfer);
 
         return $this->applyAmountAggregatorsToOrderTransfer($orderTransfer);
-
     }
 
     /**
@@ -95,14 +95,16 @@ class OrderTotalsAggregator
     public function aggregateByOrderTransfer(OrderTransfer $orderTransfer)
     {
         $orderTransfer = $this->applyItemAmountAggregatorPlugins($orderTransfer);
+
         return $this->applyAmountAggregatorsToOrderTransfer($orderTransfer);
     }
 
     /**
      * @param int $idSalesOrder
-     * @return \Generated\Shared\Transfer\OrderTransfer
      *
      * @throws \Spryker\Zed\Sales\Business\Exception\OrderTotalHydrationException
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function hydrateOrderTransfer($idSalesOrder)
     {
@@ -166,7 +168,6 @@ class OrderTotalsAggregator
         $itemTransfer->setUnitGrossPrice($salesOrderItemEntity->getGrossPrice());
 
         return $itemTransfer;
-
     }
 
 }

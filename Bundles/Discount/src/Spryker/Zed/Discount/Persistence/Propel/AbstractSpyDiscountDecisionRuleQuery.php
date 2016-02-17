@@ -19,3 +19,4 @@ use Orm\Zed\Discount\Persistence\Base\SpyDiscountDecisionRuleQuery as BaseSpyDis
 abstract class AbstractSpyDiscountDecisionRuleQuery extends BaseSpyDiscountDecisionRuleQuery
 {
 } // SpyDiscountDecisionRuleQuery
+

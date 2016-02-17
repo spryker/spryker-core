@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ItemTax;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 
-class ItemTaxTest extends \PHPUnit_Framework_TestCase
+class itemTaxTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -37,7 +37,7 @@ class ItemTaxTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(round(20 / 19), $orderTransfer->getItems()[0]->getSumTaxAmount());
     }
-    
+
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -83,4 +83,5 @@ class ItemTaxTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMockBuilder(SalesToTaxInterface::class)->disableOriginalConstructor()->getMock();
     }
+
 }

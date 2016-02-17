@@ -10,6 +10,7 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridgeInterface;
 
 class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridgeInterface
      */
@@ -60,4 +61,5 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
             );
         }
     }
+
 }

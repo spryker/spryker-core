@@ -7,5 +7,4 @@ namespace Spryker\Zed\Sales\Business\Exception;
 
 class OrderTotalHydrationException extends \Exception
 {
-
 }

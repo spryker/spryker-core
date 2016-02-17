@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**

@@ -23,8 +23,7 @@ class GrandTotalWithDiscountsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(400, $orderTransfer->getTotals()->getGrandTotal());
     }
-    
-    
+
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -40,7 +39,7 @@ class GrandTotalWithDiscountsTest extends \PHPUnit_Framework_TestCase
 
         return $orderTransfer;
     }
-    
+
     /**
      * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts
      */
@@ -48,4 +47,5 @@ class GrandTotalWithDiscountsTest extends \PHPUnit_Framework_TestCase
     {
         return new GrandTotalWithDiscounts();
     }
+
 }

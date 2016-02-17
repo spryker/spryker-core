@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Payolution\Dependency\Facade;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Business\SalesFacade;
 
 class PayolutionToSalesBridge implements PayolutionToSalesInterface

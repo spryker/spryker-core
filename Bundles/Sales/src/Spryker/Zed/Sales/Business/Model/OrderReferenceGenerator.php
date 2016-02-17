@@ -36,7 +36,6 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string

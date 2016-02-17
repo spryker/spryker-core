@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutWorkflowInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

@@ -41,4 +41,5 @@ class ExpenseTotalsCalculator implements CalculatorInterface
 
         return $totalExpenseAmount;
     }
+
 }

@@ -7,12 +7,12 @@ namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Checkout\CheckoutConstants;
 
 class ProductsAvailableCheckoutPreCondition
 {
+
     /**
      * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
@@ -89,4 +89,5 @@ class ProductsAvailableCheckoutPreCondition
     {
         return new CheckoutErrorTransfer();
     }
+
 }

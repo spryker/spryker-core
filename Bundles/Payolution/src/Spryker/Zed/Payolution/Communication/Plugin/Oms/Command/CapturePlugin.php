@@ -6,15 +6,10 @@
 
 namespace Spryker\Zed\Payolution\Communication\Plugin\Oms\Command;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use Spryker\Zed\Payolution\Business\PayolutionFacade;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()

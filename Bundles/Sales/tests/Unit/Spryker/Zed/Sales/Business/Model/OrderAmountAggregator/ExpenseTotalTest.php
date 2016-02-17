@@ -14,6 +14,7 @@ use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 
 class ExpenseTotalTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -37,7 +38,7 @@ class ExpenseTotalTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(100, $orderTransfer->getTotals()->getExpenseTotal());
     }
-    
+
     /**
      * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ExpenseTotal
      */
@@ -95,4 +96,5 @@ class ExpenseTotalTest extends \PHPUnit_Framework_TestCase
 
         return $orderTransfer;
     }
+
 }

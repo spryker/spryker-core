@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductOptionDiscountConnector\Communication\Plugin\OrderA
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\ProductOptionDiscountConnectorFacade;
 
 /**
  * @method \Spryker\Zed\ProductOptionDiscountConnector\Business\ProductOptionDiscountConnectorFacade getFacade()
@@ -25,4 +24,5 @@ class ProductOptionDiscountsAggregatorPlugin extends AbstractDiscountPlugin impl
     {
         $this->getFacade()->aggregateItemWithProductOptionsDiscounts($orderTransfer);
     }
+
 }

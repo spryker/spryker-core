@@ -9,7 +9,6 @@ namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class DiscountTotalsCalculator implements CalculatorInterface
 {
@@ -51,6 +50,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $discountAmount += $this->getItemTotalDiscountAmount($itemTransfer);
         }
+
         return $discountAmount;
     }
 
@@ -80,6 +80,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
             $totalDiscountSumGrossAmount += $calculatedDiscountTransfer->getSumGrossAmount();
         }
+
         return $totalDiscountSumGrossAmount;
     }
 
@@ -126,6 +127,8 @@ class DiscountTotalsCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
      */
     protected function assertDiscountTotalRequirements(QuoteTransfer $quoteTransfer)
     {

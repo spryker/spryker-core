@@ -72,6 +72,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
             $totalDiscountSumGrossAmount += $calculatedDiscountTransfer->getSumGrossAmount();
         }
+
         return $totalDiscountSumGrossAmount;
     }
 
@@ -86,6 +87,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
             $totalDiscountUnitGrossAmount += $calculatedDiscountTransfer->getUnitGrossAmount();
         }
+
         return $totalDiscountUnitGrossAmount;
     }
 
@@ -203,11 +205,12 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
      */
     protected function assertDiscountTotalRequirements(QuoteTransfer $quoteTransfer)
     {
         $quoteTransfer->requireTotals();
     }
-
 
 }

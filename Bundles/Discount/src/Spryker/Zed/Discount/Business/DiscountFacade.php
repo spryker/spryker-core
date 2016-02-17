@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
@@ -18,15 +17,8 @@ use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory;
-use Spryker\Zed\Kernel\Business\ModelResult;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
@@ -460,9 +452,12 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function aggregateOrderExpensesWithDiscounts(OrderTransfer $orderTransfer)
     {
         $this->getFactory()->createOrderExpenseWithDiscountsAggregator()->aggregate($orderTransfer);
     }
+
 }

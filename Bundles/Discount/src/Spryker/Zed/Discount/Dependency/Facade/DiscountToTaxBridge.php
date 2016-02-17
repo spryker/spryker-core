@@ -9,6 +9,7 @@ use Spryker\Zed\Tax\Business\TaxFacade;
 
 class DiscountToTaxBridge implements DiscountToTaxBridgeInterface
 {
+
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacade
      */
@@ -16,6 +17,7 @@ class DiscountToTaxBridge implements DiscountToTaxBridgeInterface
 
     /**
      * DiscountToTax constructor.
+     *
      * @param $taxFacade
      */
     public function __construct($taxFacade)

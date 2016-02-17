@@ -90,7 +90,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_PRESENTATION_ELEMENT,
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_CURRENCY_ELEMENT,
-                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->getCurrencyManager()->getDefaultCurrency()->getIsoCode()
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->getCurrencyManager()->getDefaultCurrency()->getIsoCode(),
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_USAGE_ELEMENT,

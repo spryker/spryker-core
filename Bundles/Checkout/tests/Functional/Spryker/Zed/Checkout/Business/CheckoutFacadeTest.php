@@ -280,7 +280,6 @@ class CheckoutFacadeTest extends Test
             ->setUnitGrossPrice(4000)
             ->setName('Product2');
 
-
         $quoteTransfer->addItem($item1);
         $quoteTransfer->addItem($item2);
 
@@ -350,7 +349,6 @@ class CheckoutFacadeTest extends Test
             ];
         };
 
-
         $container[CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
             return [
                 new SalesOrderSaverPlugin(),
@@ -365,6 +363,7 @@ class CheckoutFacadeTest extends Test
         $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
             return new CheckoutToOmsBridge($container->getLocator()->oms()->facade());
         };
+
         return $container;
     }
 

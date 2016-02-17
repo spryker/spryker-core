@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**

@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class DiscountTotalAmount implements OrderAmountAggregatorInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -53,6 +54,8 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     protected function assertDisountTotalRequirements(OrderTransfer $orderTransfer)
     {

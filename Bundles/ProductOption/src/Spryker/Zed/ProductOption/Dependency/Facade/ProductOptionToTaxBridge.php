@@ -9,6 +9,7 @@ use Spryker\Zed\Tax\Business\TaxFacade;
 
 class ProductOptionToTaxBridge implements ProductOptionToTaxBridgeInterface
 {
+
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacade
      */

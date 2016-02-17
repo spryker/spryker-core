@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Payolution\Zed;
 
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PayolutionStubInterface

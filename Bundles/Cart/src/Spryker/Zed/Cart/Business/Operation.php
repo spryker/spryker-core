@@ -8,7 +8,6 @@ namespace Spryker\Zed\Cart\Business;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
-use Spryker\Zed\Calculation\Business\CalculationFacadeInterface;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;

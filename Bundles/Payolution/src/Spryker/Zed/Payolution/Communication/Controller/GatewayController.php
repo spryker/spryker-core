@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Payolution\Communication\Controller;
 
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 

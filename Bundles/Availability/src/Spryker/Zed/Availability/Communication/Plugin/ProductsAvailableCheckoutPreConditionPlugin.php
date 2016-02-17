@@ -8,7 +8,6 @@ namespace Spryker\Zed\Availability\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Availability\Business\AvailabilityFacade;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
@@ -28,4 +27,5 @@ class ProductsAvailableCheckoutPreConditionPlugin extends AbstractPlugin impleme
     {
         $this->getFacade()->checkoutAvailabilityPrecondition($quoteTransfer, $checkoutResponseTransfer);
     }
+
 }

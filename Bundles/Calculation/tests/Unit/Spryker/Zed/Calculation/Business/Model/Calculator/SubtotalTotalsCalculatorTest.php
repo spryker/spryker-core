@@ -9,8 +9,6 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Kernel\Locator;
 

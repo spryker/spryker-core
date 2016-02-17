@@ -5,13 +5,13 @@
 
 namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
 
 class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
+
     const GRAND_TOTAL_BEFORE_DISCOUNTS = 500;
     const DISCOUNT_AMOUNT = 100;
     const DISCOUNT_OVER_AMOUNT = 600;
@@ -33,7 +33,6 @@ class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
             self::GRAND_TOTAL_BEFORE_DISCOUNTS - self::DISCOUNT_AMOUNT,
             $quoteTransfer->getTotals()->getGrandTotal()
         );
-
     }
 
     /**
@@ -50,9 +49,7 @@ class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
         $grandTotalWithDiscountsCalculator->recalculate($quoteTransfer);
 
         $this->assertEquals(0, $quoteTransfer->getTotals()->getGrandTotal());
-
     }
-
 
     /**
      * @return void
@@ -65,7 +62,6 @@ class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $grandTotalWithDiscountsCalculator = $this->createGrandTotalWithDiscountsCalculator();
         $grandTotalWithDiscountsCalculator->recalculate($quoteTransfer);
-
     }
 
     /**
@@ -73,12 +69,13 @@ class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createGrandTotalWithDiscountsCalculator()
     {
-         return new GrandTotalWithDiscountsCalculator();
+        return new GrandTotalWithDiscountsCalculator();
     }
 
     /**
      * @param int $grandTotalBeforeDiscounts
      * @param int $discountAmount
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithFixtureData($grandTotalBeforeDiscounts, $discountAmount)
@@ -110,4 +107,5 @@ class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
     {
         return new TotalsTransfer();
     }
+
 }

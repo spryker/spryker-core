@@ -14,12 +14,7 @@ use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;
 use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
-use Spryker\Zed\ProductOption\ProductOptionConfig;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -109,6 +104,5 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT);
     }
-
 
 }

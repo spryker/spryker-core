@@ -7,13 +7,10 @@
 namespace Spryker\Zed\Shipment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Spryker\Zed\Shipment\ShipmentConfig;
 
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()

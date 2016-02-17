@@ -24,7 +24,6 @@ class OrderDiscountsTest extends \PHPUnit_Framework_TestCase
         $orderDiscountsAggregator->aggregate($orderTransfer);
 
         $this->assertEquals(60, $orderTransfer->getCalculatedDiscounts()['test']->getSumGrossAmount());
-
     }
 
     /**
@@ -37,7 +36,6 @@ class OrderDiscountsTest extends \PHPUnit_Framework_TestCase
         $orderDiscountsAggregator->aggregate($orderTransfer);
 
         $this->assertEquals(30, $orderTransfer->getCalculatedDiscounts()['test']->getUnitGrossAmount());
-
     }
 
     /**
@@ -74,4 +72,5 @@ class OrderDiscountsTest extends \PHPUnit_Framework_TestCase
     {
         return new OrderDiscounts();
     }
+
 }

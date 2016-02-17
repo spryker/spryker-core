@@ -9,7 +9,6 @@ namespace Spryker\Client\Payolution;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Payolution\Session\PayolutionSession;
 
 /**
  * @method \Spryker\Client\Payolution\PayolutionFactory getFactory()

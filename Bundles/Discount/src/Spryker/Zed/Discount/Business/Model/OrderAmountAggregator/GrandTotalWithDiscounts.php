@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class GrandTotalWithDiscounts implements OrderAmountAggregatorInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -34,4 +35,5 @@ class GrandTotalWithDiscounts implements OrderAmountAggregatorInterface
         $orderTransfer->requireTotals();
         $orderTransfer->getTotals()->requireGrandTotal();
     }
+
 }

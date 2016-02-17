@@ -11,10 +11,8 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\Model\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Model\VoucherCode;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 

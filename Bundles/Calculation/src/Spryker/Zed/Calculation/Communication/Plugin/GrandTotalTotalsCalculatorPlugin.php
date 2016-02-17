@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Calculation\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 

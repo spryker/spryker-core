@@ -107,4 +107,5 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
     {
         return new ProductOptionTransfer();
     }
+
 }

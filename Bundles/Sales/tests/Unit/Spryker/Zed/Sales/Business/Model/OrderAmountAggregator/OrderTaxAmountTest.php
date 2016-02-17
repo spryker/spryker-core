@@ -20,7 +20,7 @@ class OrderTaxAmountTest  extends \PHPUnit_Framework_TestCase
      */
     public function testTaxShouldBeCalculatedFromGrandTotalUsingEffectiveTaxRate()
     {
-        $orderTaxAmountAggregator =  $this->createOrderTaxAmountAggregator();
+        $orderTaxAmountAggregator = $this->createOrderTaxAmountAggregator();
         $orderTransfer = $this->createOrderTransfer();
         $orderTaxAmountAggregator->aggregate($orderTransfer);
 
@@ -32,7 +32,7 @@ class OrderTaxAmountTest  extends \PHPUnit_Framework_TestCase
      */
     public function testTaxEffectiveTaxRateShouldBeSet()
     {
-        $orderTaxAmountAggregator =  $this->createOrderTaxAmountAggregator();
+        $orderTaxAmountAggregator = $this->createOrderTaxAmountAggregator();
         $orderTransfer = $this->createOrderTransfer();
         $orderTaxAmountAggregator->aggregate($orderTransfer);
 
@@ -84,4 +84,5 @@ class OrderTaxAmountTest  extends \PHPUnit_Framework_TestCase
 
         return $orderTransfer;
     }
+
 }

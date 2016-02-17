@@ -19,3 +19,4 @@ use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueTranslationQuery
 abstract class AbstractSpyProductOptionValueTranslationQuery extends BaseSpyProductOptionValueTranslationQuery
 {
 } // SpyProductOptionValueTranslationQuery
+

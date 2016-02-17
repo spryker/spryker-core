@@ -14,7 +14,6 @@ use Propel\Runtime\Propel;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 {
@@ -71,7 +70,6 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
-     *
      */
     protected function assertShipmentRequirements(QuoteTransfer $quoteTransfer)
     {

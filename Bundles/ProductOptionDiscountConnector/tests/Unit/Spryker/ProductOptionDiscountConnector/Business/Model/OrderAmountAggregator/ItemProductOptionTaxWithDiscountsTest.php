@@ -92,7 +92,6 @@ class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
         return $orderTransfer;
     }
 
-
     /**
      * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts
      */
@@ -115,4 +114,5 @@ class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMockBuilder(ProductOptionToTaxBridgeInterface::class)->disableArgumentCloning()->getMock();
     }
+
 }

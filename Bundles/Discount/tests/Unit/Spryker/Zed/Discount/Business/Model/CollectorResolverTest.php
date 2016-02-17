@@ -10,8 +10,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\DiscountConfigInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
 
 class CollectorResolverTest extends Test

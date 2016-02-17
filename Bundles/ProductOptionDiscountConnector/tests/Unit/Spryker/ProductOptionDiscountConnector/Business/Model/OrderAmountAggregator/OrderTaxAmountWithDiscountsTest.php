@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggrega
 
 class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -42,7 +43,6 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
             $this->getEffectiveTaxRateForTestData(),
             $orderTransfer->getTotals()->getTaxTotal()->getTaxRate()
         );
-
     }
 
     /**
@@ -82,7 +82,6 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
         return ((19 + 7 + 7) / 3);
     }
 
-
     /**
      * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts
      */
@@ -105,4 +104,5 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMockBuilder(ProductOptionToTaxBridgeInterface::class)->disableArgumentCloning()->getMock();
     }
+
 }

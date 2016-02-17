@@ -79,7 +79,7 @@ class RemoveAllCalculatedDiscountsCalculatorTest extends \PHPUnit_Framework_Test
 
         return $quoteTransfer;
     }
-    
+
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -127,4 +127,5 @@ class RemoveAllCalculatedDiscountsCalculatorTest extends \PHPUnit_Framework_Test
     {
         return new ExpenseTransfer();
     }
+
 }

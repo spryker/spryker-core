@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class Aggregate implements CollectorInterface

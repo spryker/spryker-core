@@ -3,7 +3,6 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-
 namespace Unit\Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
@@ -15,6 +14,7 @@ use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggrega
 
 class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -95,4 +95,5 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
     {
         return new DiscountTotalAmount();
     }
+
 }

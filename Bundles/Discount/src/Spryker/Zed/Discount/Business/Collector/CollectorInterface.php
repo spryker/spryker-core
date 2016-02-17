@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CollectorInterface

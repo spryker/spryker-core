@@ -62,6 +62,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $totalSumGrossDiscountAmount += $this->getCalculatedDiscountSumGrossAmount($itemTransfer->getCalculatedDiscounts());
         }
+
         return $totalSumGrossDiscountAmount;
     }
 
@@ -72,10 +73,11 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
      */
     protected function getExpenseDiscountTotalAmount(OrderTransfer $orderTransfer)
     {
-        $totalSumGrossDiscountAmount = 0 ;
+        $totalSumGrossDiscountAmount = 0;
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             $totalSumGrossDiscountAmount += $this->getCalculatedDiscountSumGrossAmount($expenseTransfer->getCalculatedDiscounts());
         }
+
         return $totalSumGrossDiscountAmount;
     }
 
@@ -88,4 +90,5 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
     {
         $orderTransfer->requireTotals();
     }
+
 }

@@ -8,8 +8,6 @@ namespace Spryker\Zed\Payolution\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -27,7 +25,7 @@ class PayolutionFacade extends AbstractFacade
      */
     public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-         $this
+        $this
              ->getFactory()
              ->createOrderSaver()
              ->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);

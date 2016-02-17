@@ -6,10 +6,8 @@
 
 namespace Spryker\Zed\Customer\Business;
 
-use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;

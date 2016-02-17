@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class Item implements OrderAmountAggregatorInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

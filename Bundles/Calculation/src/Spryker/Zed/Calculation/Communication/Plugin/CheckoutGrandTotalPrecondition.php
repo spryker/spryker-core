@@ -8,7 +8,6 @@ namespace Spryker\Zed\Calculation\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
 /**

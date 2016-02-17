@@ -11,7 +11,6 @@ use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -79,7 +78,6 @@ class CommentController extends AbstractController
             $this->getFacade()->saveComment($comment);
 
             $this->addSuccessMessage('Comment successfully added');
-
         } else {
             foreach ($form->getErrors() as $error) {
                 $this->addErrorMessage($error->getMessage());

@@ -40,11 +40,11 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
 
         if (count($salesOrderDiscounts) === 0) {
             $this->setExpenseGrossPriceWithDiscountsToDefaults($orderTransfer);
+
             return;
         }
 
         $this->addDiscountsFromSalesOrderDiscountEntity($orderTransfer, $salesOrderDiscounts);
-
     }
 
     /**
@@ -85,7 +85,6 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
         OrderTransfer $orderTransfer,
         SpySalesDiscount $salesOrderDiscountEntity
     ) {
-
         if ($salesOrderDiscountEntity->getFkSalesExpense() === null) {
             return;
         }
@@ -184,4 +183,5 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
 
         return $calculatedDiscountTransfer;
     }
+
 }

@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrderTotalsAggregatePluginInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

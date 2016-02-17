@@ -6,7 +6,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;

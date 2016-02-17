@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 
-
 /**
  * @group Spryker
  * @group Zed
@@ -24,11 +23,11 @@ use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountT
  */
 class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
+
     const ITEM_GROSS_PRICE_WITH_OPTIONS = 500;
     const ITEM_GROSS_UNIT_PRICE_WITH_OPTIONS = 250;
     const ITEM_QUANTITY = 2;
     const UNIT_GROSS_AMOUNT = 10;
-
 
     /**
      * @return void
@@ -49,7 +48,6 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
         $discountTotalsCalculator->recalculate($quoteTransfer);
 
         $this->assertEquals(120, $quoteTransfer->getTotals()->getDiscountTotal());
-
     }
 
     /**
@@ -108,12 +106,12 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 'quantity' => 2,
-                'unitGrossAmount' => 10
+                'unitGrossAmount' => 10,
             ],
             [
                 'quantity' => 2,
-                'unitGrossAmount' => 10
-            ]
+                'unitGrossAmount' => 10,
+            ],
         ];
     }
 
@@ -172,4 +170,5 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     {
         return new ExpenseTransfer();
     }
+
 }

@@ -39,9 +39,12 @@ class ItemGrossAmountsCalculator implements CalculatorInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @Return void
+     *
+     * @return void
      */
     protected function assertItemRequirements(ItemTransfer $itemTransfer)
     {
         $itemTransfer->requireUnitGrossPrice()->requireQuantity();
     }
+
 }

@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;

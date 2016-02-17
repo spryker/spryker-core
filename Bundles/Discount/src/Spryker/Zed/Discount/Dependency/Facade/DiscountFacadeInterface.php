@@ -8,18 +8,11 @@ namespace Spryker\Zed\Discount\Dependency\Facade;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory;
-use Spryker\Zed\Kernel\Business\ModelResult;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 
 interface DiscountFacadeInterface

@@ -10,7 +10,6 @@ use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 class CartDependencyProvider extends AbstractBundleDependencyProvider
 {

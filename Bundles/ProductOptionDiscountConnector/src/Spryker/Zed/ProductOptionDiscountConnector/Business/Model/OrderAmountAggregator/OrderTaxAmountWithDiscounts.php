@@ -11,6 +11,7 @@ use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionTo
 
 class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
 {
+
     /**
      * @var \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface
      */
@@ -73,6 +74,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
                 $taxRates[] = $item->getTaxRate();
             }
         }
+
         return $taxRates;
     }
 
@@ -124,4 +126,5 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
 
         $orderTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
     }
+
 }

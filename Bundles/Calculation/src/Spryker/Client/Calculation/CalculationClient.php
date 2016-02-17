@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CalculationClient extends AbstractClient implements CalculationClientInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

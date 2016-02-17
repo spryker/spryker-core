@@ -43,6 +43,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createVoucherForm(array $formData = [], array $formOptions = [])
     {
         $voucherForm = new VoucherForm($this->getConfig());
+
         return $this->getFormFactory()->create($voucherForm, $formData, $formOptions);
     }
 
@@ -60,6 +61,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createPoolCategoriesTable()
     {
         $poolCategoriesQuery = $this->getQueryContainer()->queryDiscountVoucherPoolCategory();
+
         return new VoucherPoolCategoryTable($poolCategoriesQuery);
     }
 
@@ -69,9 +71,9 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createDiscountsTable()
     {
         $discountQuery = $this->getQueryContainer()->queryDiscount();
+
         return new DiscountsTable($discountQuery);
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\DataTablesTransfer $dataTablesTransfer
@@ -96,6 +98,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createVoucherPoolTable()
     {
         $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
+
         return new VoucherPoolTable($poolQuery, $this->getCalculatorPlugins());
     }
 
@@ -115,6 +118,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getFormFactory()->create($cartRuleForm, $formData, $formOptions);
     }
+
     /**
      * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\CartRuleFormDataProvider
      */
@@ -152,7 +156,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $this->getDecisionRulePlugins()
         );
 
-       return $this->getFormFactory()->create($voucherCodesForm, $formData, $formOptions);
+        return $this->getFormFactory()->create($voucherCodesForm, $formData, $formOptions);
     }
 
     /**
@@ -194,6 +198,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $this->getCollectorPlugins(),
             $this->getDecisionRulePlugins()
         );
+
         return $this->getFormFactory()->create($decisionRulesForm);
     }
 

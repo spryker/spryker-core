@@ -9,9 +9,6 @@ namespace Spryker\Zed\Shipment\Business\Model;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -165,7 +162,6 @@ class Method
         return $isAvailable;
     }
 
-
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param $availabilityPlugins
@@ -252,6 +248,7 @@ class Method
         foreach ($shipmentMethodEntity->getTaxSet()->getSpyTaxRates() as $taxRate) {
             $effectiveTaxRate = $taxRate->getRate();
         }
+
         return $effectiveTaxRate;
     }
 

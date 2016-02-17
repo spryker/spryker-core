@@ -12,14 +12,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use Generated\Shared\Transfer\MessageTransfer;
 
 class Discount
@@ -128,6 +122,8 @@ class Discount
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
+     *
+     * @return void
      */
     protected function addDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
     {

@@ -9,5 +9,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOptionDiscountConnectorConfig extends AbstractBundleConfig
 {
-
 }

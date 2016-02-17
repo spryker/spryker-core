@@ -24,4 +24,5 @@ class ItemDiscountsOrderAggregatorPlugin extends AbstractPlugin implements Order
     {
         $this->getFacade()->aggregateItemDiscounts($orderTransfer);
     }
+
 }

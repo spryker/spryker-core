@@ -6,9 +6,7 @@
 
 namespace Spryker\Zed\Checkout\Communication\Controller;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**

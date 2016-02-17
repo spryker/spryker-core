@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\TaxTotalTransfer;
 
 class TaxCalculation implements CalculatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
@@ -38,6 +39,7 @@ class TaxCalculation implements CalculatorInterface
 
         if ($effectiveTaxRate <= 0) {
             $this->setEmptyTaxRateTransfer($quoteTransfer);
+
             return;
         }
 
@@ -79,6 +81,7 @@ class TaxCalculation implements CalculatorInterface
             }
             $taxRates[] = $expenseTransfer->getTaxRate();
         }
+
         return $taxRates;
     }
 
@@ -96,11 +99,13 @@ class TaxCalculation implements CalculatorInterface
             }
             $taxRates[] = $productOptionTransfer->getTaxRate();
         }
+
         return $taxRates;
     }
 
     /**
      * @param array|int[] $taxRates
+     *
      * @return float
      */
     protected function getCalculatedEffectiveTaxRate(array $taxRates)
@@ -174,6 +179,8 @@ class TaxCalculation implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
      */
     protected function assertTaxCalculationRequirements(QuoteTransfer $quoteTransfer)
     {

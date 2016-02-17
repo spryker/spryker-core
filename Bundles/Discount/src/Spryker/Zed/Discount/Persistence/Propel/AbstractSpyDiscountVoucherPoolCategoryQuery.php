@@ -19,3 +19,4 @@ use Orm\Zed\Discount\Persistence\Base\SpyDiscountVoucherPoolCategoryQuery as Bas
 abstract class AbstractSpyDiscountVoucherPoolCategoryQuery extends BaseSpyDiscountVoucherPoolCategoryQuery
 {
 } // SpyDiscountVoucherPoolCategoryQuery
+

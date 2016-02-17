@@ -7,7 +7,6 @@ namespace Spryker\Zed\ProductOption\Communication\Plugin\OrderTotalAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
 /**
@@ -25,4 +24,5 @@ class ProductOptionsGrossPriceAggregatorPlugin extends AbstractPlugin implements
     {
         $this->getFacade()->aggregateOrderItemProductOptionGrossPrice($orderTransfer);
     }
+
 }

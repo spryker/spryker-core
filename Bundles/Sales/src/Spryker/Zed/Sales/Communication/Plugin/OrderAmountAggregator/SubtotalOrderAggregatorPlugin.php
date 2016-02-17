@@ -16,6 +16,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
 class SubtotalOrderAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -25,4 +26,5 @@ class SubtotalOrderAggregatorPlugin extends AbstractPlugin implements OrderTotal
     {
         $this->getFacade()->aggregateOrderSubtotal($orderTransfer);
     }
+
 }

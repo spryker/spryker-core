@@ -245,6 +245,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function aggregateOrderItemProductOptionGrossPrice(OrderTransfer $orderTransfer)
     {
@@ -253,6 +255,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function aggregateOrderSubtotalWithProductOptions(OrderTransfer $orderTransfer)
     {
@@ -271,6 +275,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer)
     {

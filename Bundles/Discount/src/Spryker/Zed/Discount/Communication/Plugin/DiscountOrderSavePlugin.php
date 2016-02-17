@@ -8,10 +8,8 @@ namespace Spryker\Zed\Discount\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
-
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()

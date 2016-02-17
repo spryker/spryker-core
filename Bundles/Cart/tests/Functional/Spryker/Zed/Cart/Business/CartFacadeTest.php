@@ -3,7 +3,6 @@
 namespace Functional\Spryker\Zed\Cart\Business;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Container;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -15,7 +14,6 @@ use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Spryker\Zed\Cart\Business\CartBusinessFactory;
 
 /**
  * @group Spryker

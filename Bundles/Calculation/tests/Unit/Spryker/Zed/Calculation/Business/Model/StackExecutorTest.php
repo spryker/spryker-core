@@ -7,7 +7,6 @@ namespace Unit\SprykerFeature\Zed\Calculation\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\StackExecutor;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class StackExecutorTest extends \PHPUnit_Framework_TestCase
 {

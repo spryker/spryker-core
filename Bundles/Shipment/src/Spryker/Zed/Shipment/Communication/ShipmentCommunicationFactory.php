@@ -10,9 +10,7 @@ use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Spryker\Zed\Shipment\ShipmentConfig;
 
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer getQueryContainer()

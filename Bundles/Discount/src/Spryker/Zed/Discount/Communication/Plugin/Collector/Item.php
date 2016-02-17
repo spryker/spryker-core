@@ -8,8 +8,6 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Collector;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 

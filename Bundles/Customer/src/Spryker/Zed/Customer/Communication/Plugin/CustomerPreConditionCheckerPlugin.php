@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
-use Spryker\Zed\Customer\Business\CustomerFacade;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()

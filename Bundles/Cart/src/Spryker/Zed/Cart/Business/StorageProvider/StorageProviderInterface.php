@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Cart\Business\StorageProvider;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface StorageProviderInterface

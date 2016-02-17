@@ -6,6 +6,7 @@ namespace Spryker\Zed\Sales\Dependency\Facade;
 
 interface SalesToTaxInterface
 {
+
     /**
      * @param string $grossPrice
      * @param int $taxRate
@@ -13,4 +14,5 @@ interface SalesToTaxInterface
      * @return int
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
 }

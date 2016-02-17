@@ -14,6 +14,7 @@ class OrderItemSplitDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer
+     *
      * @return array
      */
     public function getData(ItemTransfer $orderItemTransfer)

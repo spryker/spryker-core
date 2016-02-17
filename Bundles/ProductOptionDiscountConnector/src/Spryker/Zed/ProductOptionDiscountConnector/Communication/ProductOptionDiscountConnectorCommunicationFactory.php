@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Communication;
 
-use Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorConfig;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -13,5 +12,4 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ProductOptionDiscountConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
 }

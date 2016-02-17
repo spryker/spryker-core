@@ -14,7 +14,6 @@ use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\ItemGrossPriceA
 use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\SubtotalOrderAggregatorPlugin;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
-use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundBridge;
@@ -34,8 +33,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_USER = 'FACADE_USER';
 
     const PLUGINS_PAYMENT_LOGS = 'PLUGINS_PAYMENT_LOGS';
-    const PLUGINS_ORDER_AMOUNT_AGGREGATION =  'PLUGINS_ORDER_AMOUNT_AGGREGATION';
-    const PLUGINS_ITEM_AMOUNT_AGGREGATION =  'PLUGINS_ITEM_AMOUNT_AGGREGATION';
+    const PLUGINS_ORDER_AMOUNT_AGGREGATION = 'PLUGINS_ORDER_AMOUNT_AGGREGATION';
+    const PLUGINS_ITEM_AMOUNT_AGGREGATION = 'PLUGINS_ITEM_AMOUNT_AGGREGATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -121,7 +120,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             //Add tax amount for each item
             new ItemTaxAmountAggregatorPlugin(),
         ];
-
     }
 
     /**
@@ -145,4 +143,5 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             new OrderTaxAmountAggregatorPlugin(),
         ];
     }
+
 }

@@ -8,10 +8,6 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\CaptureAdapterMock;
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 /**

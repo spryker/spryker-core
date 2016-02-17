@@ -9,6 +9,7 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 
 class TaxCalculatorHelperTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -52,4 +53,5 @@ class TaxCalculatorHelperTest extends \PHPUnit_Framework_TestCase
     {
         return new PriceCalculationHelper();
     }
+
 }

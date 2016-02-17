@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Discount\Communication\Plugin\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
@@ -25,4 +24,5 @@ class OrderDiscountsAggregatorPlugin extends AbstractPlugin implements OrderTota
     {
         $this->getFacade()->aggregateOrderCalculatedDiscounts($orderTransfer);
     }
+
 }

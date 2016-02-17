@@ -29,9 +29,8 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
 
         $itemCalculatedDiscounts = $orderTransfer->getItems()[0]->getCalculatedDiscounts();
         $this->assertEquals(100, $itemCalculatedDiscounts[0]->getSumGrossAmount());
-
     }
-    
+
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -60,7 +59,7 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     protected function createItemDiscountsAggregator()
     {
         $discountQueryContainer = $this->createDiscountQueryContainer();
-        $discountQueryMock  = $this->createDiscountQueryMock();
+        $discountQueryMock = $this->createDiscountQueryMock();
 
         $objectCollection = new ObjectCollection();
 
@@ -99,7 +98,7 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     protected function createDiscountQueryMock()
     {
         return $this->getMockBuilder(SpySalesDiscountQuery::class)
-            ->setMethods(['filterByFkSalesOrderItem','find'])
+            ->setMethods(['filterByFkSalesOrderItem', 'find'])
             ->disableArgumentCloning()
             ->getMock();
     }
@@ -113,4 +112,5 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
             ->disableArgumentCloning()
             ->getMock();
     }
+
 }

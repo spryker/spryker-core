@@ -94,4 +94,5 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     {
         return new TotalsTransfer();
     }
+
 }

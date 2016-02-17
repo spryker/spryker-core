@@ -24,4 +24,5 @@ class OrderExpenseTaxWithDiscountsAggregatorPlugin extends AbstractPlugin implem
     {
         $this->getFacade()->aggregateOrderExpenseTaxWithDiscounts($orderTransfer);
     }
+
 }

@@ -8,7 +8,6 @@ namespace Spryker\Zed\DiscountCalculationConnector\Communication\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade;
 
 /**
  * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade getFacade()
@@ -25,4 +24,5 @@ class GrandTotalWithDiscountsCalculatorPlugin extends AbstractPlugin implements 
     {
         $this->getFacade()->calculateGrandTotalWithDiscounts($quoteTransfer);
     }
+
 }

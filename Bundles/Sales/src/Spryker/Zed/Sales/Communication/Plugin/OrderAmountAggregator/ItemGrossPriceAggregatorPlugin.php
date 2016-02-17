@@ -5,7 +5,6 @@
 namespace Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
@@ -14,6 +13,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
  */
 class ItemGrossPriceAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

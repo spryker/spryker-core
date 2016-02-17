@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Calculation\Communication\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**

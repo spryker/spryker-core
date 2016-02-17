@@ -16,9 +16,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalcu
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Calculation\CalculationConfig;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 /**
  * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()

@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductOptionDiscountConnectorFacade extends AbstractFacade
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -62,4 +63,5 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade
     {
         $this->getFactory()->createOrderTaxAmountWithDiscounts()->aggregate($orderTransfer);
     }
+
 }

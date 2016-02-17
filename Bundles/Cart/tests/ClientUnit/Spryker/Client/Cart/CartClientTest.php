@@ -275,7 +275,6 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
                 ->will($this->returnValue($cartStub));
         }
 
-
         return $factoryMock;
     }
 

@@ -11,6 +11,7 @@ use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\GrandTotal;
 
 class GrandTotalTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -38,7 +39,7 @@ class GrandTotalTest extends \PHPUnit_Framework_TestCase
 
         return $orderTransfer;
     }
-    
+
     /**
      * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\GrandTotal
      */
@@ -46,4 +47,5 @@ class GrandTotalTest extends \PHPUnit_Framework_TestCase
     {
         return new GrandTotal();
     }
+
 }

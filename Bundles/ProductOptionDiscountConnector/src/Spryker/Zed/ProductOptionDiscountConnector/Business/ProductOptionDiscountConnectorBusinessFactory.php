@@ -3,7 +3,6 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -12,7 +11,6 @@ use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggrega
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderDiscounts;
-use Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorConfig;
 use Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorDependencyProvider;
 
 /**
@@ -20,6 +18,7 @@ use Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorDep
  */
 class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFactory
 {
+
     /**
      * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\DiscountTotalAmount
      */
@@ -65,4 +64,5 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
             $this->getProvidedDependency(ProductOptionDiscountConnectorDependencyProvider::FACADE_TAX)
         );
     }
+
 }

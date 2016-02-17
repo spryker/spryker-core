@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\DiscountTotalsTransfer;
-use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -45,4 +43,5 @@ class RemoveTotalsCalculator implements CalculatorInterface
     {
         return new TaxTotalTransfer();
     }
+
 }

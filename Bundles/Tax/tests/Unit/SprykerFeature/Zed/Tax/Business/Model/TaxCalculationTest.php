@@ -15,6 +15,7 @@ use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 
 class TaxCalculationTest extends \PHPUnit_Framework_TestCase
 {
+
     const TAX_RATE = 19;
     const GRAND_TOTAL = 100;
 
@@ -134,7 +135,6 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
         $quoteTransfer->setTotals($totalsTransfer);
 
         return $quoteTransfer;
-
     }
 
     /**
@@ -198,4 +198,5 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     {
         return new TotalsTransfer();
     }
+
 }

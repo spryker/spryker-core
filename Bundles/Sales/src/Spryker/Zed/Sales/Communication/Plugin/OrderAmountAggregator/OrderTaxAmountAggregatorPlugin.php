@@ -14,6 +14,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
  */
 class OrderTaxAmountAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -23,4 +24,5 @@ class OrderTaxAmountAggregatorPlugin extends AbstractPlugin implements OrderTota
     {
         $this->getFacade()->aggregateOrderTaxAmountAggregator($orderTransfer);
     }
+
 }

@@ -8,8 +8,6 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\ReAuthorizationAdapterMock;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 class PayolutionFacadeReAuthorizeTest extends AbstractFacadeTest

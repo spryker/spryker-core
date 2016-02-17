@@ -14,6 +14,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class ItemDiscounts implements OrderAmountAggregatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
@@ -38,6 +39,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
 
         if (count($salesOrderDiscounts) === 0) {
             $this->setItemGrossPriceWithDiscountsToDefaults($orderTransfer);
+
             return;
         }
 
@@ -194,4 +196,5 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
 
         return $saleOrderItemIds;
     }
+
 }

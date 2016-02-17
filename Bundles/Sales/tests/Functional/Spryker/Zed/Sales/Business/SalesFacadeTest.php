@@ -21,7 +21,6 @@ use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Kernel\Container;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
@@ -181,7 +180,6 @@ class SalesFacadeTest extends Test
         $paymentTransfer->setPaymentSelection('payolution_invoice');
 
         $quoteTransfer->setPayment($paymentTransfer);
-
 
         return $quoteTransfer;
     }

@@ -10,6 +10,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 
 class ItemTax implements OrderAmountAggregatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface
      */
@@ -32,7 +33,6 @@ class ItemTax implements OrderAmountAggregatorInterface
     {
         $this->assertItemTaxRequirements($orderTransfer);
         $this->addTaxAmountToTaxableItems($orderTransfer->getItems());
-
     }
 
     /**
@@ -73,4 +73,5 @@ class ItemTax implements OrderAmountAggregatorInterface
     {
         $orderTransfer->requireItems();
     }
+
 }

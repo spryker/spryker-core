@@ -13,6 +13,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class ExpenseTotal implements OrderAmountAggregatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -86,6 +87,7 @@ class ExpenseTotal implements OrderAmountAggregatorInterface
         foreach ($salesOrderExpenses as $salesOrderExpenseEntity) {
             $totalExpenseAmount += $salesOrderExpenseEntity->getGrossPrice();
         }
+
         return $totalExpenseAmount;
     }
 
@@ -101,4 +103,5 @@ class ExpenseTotal implements OrderAmountAggregatorInterface
 
         return $salesOrderExpenses;
     }
+
 }

@@ -85,7 +85,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
             ->disableArgumentCloning()
             ->getMock();
     }
-    
+
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */

@@ -11,6 +11,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 
 class ProductOptionOrderSaver
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -43,4 +44,5 @@ class ProductOptionOrderSaver
     {
         return new SpySalesOrderItemOption();
     }
+
 }

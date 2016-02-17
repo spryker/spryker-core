@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Dependency\Plugin;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 interface DiscountCollectorPluginInterface
 {

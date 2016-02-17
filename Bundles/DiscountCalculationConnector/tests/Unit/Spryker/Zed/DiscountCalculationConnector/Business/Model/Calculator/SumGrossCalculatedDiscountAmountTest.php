@@ -11,11 +11,11 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator;
 
 class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
 {
+
     const ITEM_GROSS_PRICE_WITH_OPTIONS = 500;
     const ITEM_GROSS_UNIT_PRICE_WITH_OPTIONS = 250;
     const ITEM_QUANTITY = 2;
@@ -148,12 +148,12 @@ class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 'quantity' => 2,
-                'unitGrossAmount' => 10
+                'unitGrossAmount' => 10,
             ],
             [
                 'quantity' => 2,
-                'unitGrossAmount' => 10
-            ]
+                'unitGrossAmount' => 10,
+            ],
         ];
     }
 
@@ -212,4 +212,5 @@ class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
     {
         return new ExpenseTransfer();
     }
+
 }

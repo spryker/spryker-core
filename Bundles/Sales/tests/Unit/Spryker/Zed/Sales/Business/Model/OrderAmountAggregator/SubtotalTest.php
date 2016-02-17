@@ -11,6 +11,7 @@ use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\Subtotal;
 
 class SubtotalTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -50,4 +51,5 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
 
         return $orderTransfer;
     }
+
 }

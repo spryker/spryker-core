@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 
-
 class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
 

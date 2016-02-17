@@ -6,12 +6,10 @@
 
 namespace Spryker\Zed\Sales\Communication;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\Form\CommentForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
@@ -20,7 +18,6 @@ use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\OrderItemSplitDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
-
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
@@ -35,6 +32,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function createOrderItemSplitForm()
     {
         $formType = new OrderItemSplitForm();
+
         return $this->getFormFactory()->create($formType);
     }
 
@@ -47,6 +45,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function createCustomerForm(array $formData = [], array $formOptions = [])
     {
         $customerFormType = new CustomerForm();
+
         return $this->getFormFactory()->create($customerFormType, $formData, $formOptions);
     }
 
@@ -75,6 +74,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function createAddressForm(array $formData = [], array $formOptions = [])
     {
         $addressFormType = new AddressForm();
+
         return $this->getFormFactory()->create($addressFormType, $formData, $formOptions);
     }
 
@@ -113,6 +113,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
                 ->create($formType, $orderItemSplitDataProvider->getData($itemTransfer), $orderItemSplitDataProvider->getOptions())
                 ->createView();
         }
+
         return $formCollectionArray;
     }
 
@@ -123,7 +124,6 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         return new OrderItemSplitDataProvider();
     }
-
 
     /**
      * @param \Spryker\Zed\Sales\Business\SalesFacade $salesFacade

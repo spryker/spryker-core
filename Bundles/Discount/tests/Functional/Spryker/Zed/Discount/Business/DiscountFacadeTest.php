@@ -20,8 +20,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Spryker\Zed\Kernel\Locator;

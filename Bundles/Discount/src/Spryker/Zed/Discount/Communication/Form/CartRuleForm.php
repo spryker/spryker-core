@@ -2,7 +2,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -82,6 +81,7 @@ class CartRuleForm extends AbstractRuleForm
             ->addIsActiveField($builder)
             ->addDecisionRulesField($builder);
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -94,8 +94,10 @@ class CartRuleForm extends AbstractRuleForm
                 new NotBlank(),
             ],
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -104,8 +106,10 @@ class CartRuleForm extends AbstractRuleForm
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_DESCRIPTION, 'textarea');
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -119,8 +123,10 @@ class CartRuleForm extends AbstractRuleForm
                 new NotBlank(),
             ],
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -129,8 +135,10 @@ class CartRuleForm extends AbstractRuleForm
     protected function addValidFromField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_VALID_FROM, 'date');
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -139,8 +147,10 @@ class CartRuleForm extends AbstractRuleForm
     protected function addValidToField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_VALID_TO, 'date');
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -151,8 +161,10 @@ class CartRuleForm extends AbstractRuleForm
         $builder->add(self::FIELD_IS_PRIVILEGED, 'checkbox', [
             'label' => 'Is Combinable with other discounts',
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -163,8 +175,10 @@ class CartRuleForm extends AbstractRuleForm
         $builder->add(self::FIELD_IS_ACTIVE, 'checkbox', [
             'label' => 'Is Active',
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -179,8 +193,10 @@ class CartRuleForm extends AbstractRuleForm
             'required' => false,
             'placeholder' => false,
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -199,8 +215,10 @@ class CartRuleForm extends AbstractRuleForm
             'allow_delete' => true,
             'allow_extra_fields' => true,
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -219,8 +237,10 @@ class CartRuleForm extends AbstractRuleForm
             'allow_delete' => true,
             'allow_extra_fields' => true,
         ]);
+
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -233,6 +253,8 @@ class CartRuleForm extends AbstractRuleForm
             'choices' => $this->getCollectorLogicalOperators(),
             'required' => true,
         ]);
+
         return $this;
     }
+
 }

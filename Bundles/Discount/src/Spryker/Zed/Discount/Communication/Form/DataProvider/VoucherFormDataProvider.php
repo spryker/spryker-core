@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 
 class VoucherFormDataProvider

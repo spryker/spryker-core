@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Sales\Business\Model;
 
-use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -22,7 +21,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface;
 
 class OrderDetailsManager
 {

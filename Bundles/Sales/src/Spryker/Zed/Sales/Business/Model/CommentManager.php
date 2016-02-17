@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\Sales\Business\Model;
 
+use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderDetailsCommentsTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderComment;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class CommentManager
 {
@@ -29,7 +29,7 @@ class CommentManager
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      */
-    public function __construct(\Spryker\Zed\Sales\Persistence\SalesQueryContainer $queryContainer, UserTransfer $userTransfer)
+    public function __construct(SalesQueryContainer $queryContainer, UserTransfer $userTransfer)
     {
         $this->queryContainer = $queryContainer;
         $this->userTransfer = $userTransfer;

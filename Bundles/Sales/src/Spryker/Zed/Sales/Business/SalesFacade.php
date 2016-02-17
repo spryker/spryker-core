@@ -314,4 +314,5 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getFactory()->createOrderTotalsAggregator()->aggregateByOrderTransfer($orderTransfer);
     }
+
 }

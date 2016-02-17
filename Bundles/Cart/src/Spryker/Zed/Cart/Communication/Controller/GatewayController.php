@@ -6,9 +6,7 @@
 
 namespace Spryker\Zed\Cart\Communication\Controller;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**

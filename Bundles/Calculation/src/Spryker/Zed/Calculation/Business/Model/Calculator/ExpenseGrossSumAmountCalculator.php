@@ -23,4 +23,5 @@ class ExpenseGrossSumAmountCalculator implements CalculatorInterface
             $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
         }
     }
+
 }

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Shipment\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;

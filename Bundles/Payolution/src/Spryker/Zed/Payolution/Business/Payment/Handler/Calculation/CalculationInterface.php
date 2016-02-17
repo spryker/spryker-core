@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Handler\Calculation;
 
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CalculationInterface

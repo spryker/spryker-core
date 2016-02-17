@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Business\Model;
 
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 

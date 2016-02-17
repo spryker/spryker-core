@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class OrderDiscounts implements OrderAmountAggregatorInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -47,7 +48,6 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
         return $orderCalculatedDiscounts;
     }
 
-
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $orderCalculatedDiscounts
      * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculatedDiscounts
@@ -72,6 +72,6 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
         }
 
         return $orderCalculatedDiscounts;
-
     }
+
 }

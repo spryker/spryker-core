@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class SubtotalWithProductOptions implements OrderAmountAggregatorInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -53,4 +54,5 @@ class SubtotalWithProductOptions implements OrderAmountAggregatorInterface
 
         return $productOptionTotalGrossSumAmount;
     }
+
 }

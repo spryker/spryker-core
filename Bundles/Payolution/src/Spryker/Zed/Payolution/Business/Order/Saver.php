@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Payolution\Business\Order;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;

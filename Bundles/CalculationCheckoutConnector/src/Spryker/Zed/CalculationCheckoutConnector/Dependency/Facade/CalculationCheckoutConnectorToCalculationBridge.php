@@ -7,7 +7,6 @@
 namespace Spryker\Zed\CalculationCheckoutConnector\Dependency\Facade;
 
 use Spryker\Zed\Calculation\Business\CalculationFacade;
-use Spryker\Zed\Calculation\Business\CalculationFacadeInterface;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class CalculationCheckoutConnectorToCalculationBridge implements CalculationCheckoutConnectorToCalculationInterface

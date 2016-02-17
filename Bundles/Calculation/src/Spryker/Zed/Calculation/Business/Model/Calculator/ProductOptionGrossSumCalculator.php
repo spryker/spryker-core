@@ -53,7 +53,6 @@ class ProductOptionGrossSumCalculator implements CalculatorInterface
         $itemTransfer->requireSumGrossPrice()->requireQuantity();
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *

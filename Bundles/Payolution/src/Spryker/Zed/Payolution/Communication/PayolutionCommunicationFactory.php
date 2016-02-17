@@ -9,11 +9,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Payolution\Communication\Table\Payments;
 use Spryker\Zed\Payolution\Communication\Table\RequestLog;
 use Spryker\Zed\Payolution\Communication\Table\StatusLog;
-use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToGlossaryInterface;
-use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMailInterface;
-use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToSalesInterface;
-use Spryker\Zed\Payolution\PayolutionConfig;
-use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use Spryker\Zed\Payolution\PayolutionDependencyProvider;
 
 /**

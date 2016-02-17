@@ -8,7 +8,6 @@ namespace Spryker\Zed\Calculation;
 
 use Spryker\Zed\Calculation\Communication\Plugin\ExpensesGrossSumAmountCalculatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;

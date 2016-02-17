@@ -11,6 +11,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 
 class OrderTaxAmount implements OrderAmountAggregatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface
      */
@@ -79,6 +80,7 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
                 $taxRates[] = $item->getTaxRate();
             }
         }
+
         return $taxRates;
     }
 
@@ -106,4 +108,5 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
         $orderTransfer->requireTotals();
         $orderTransfer->getTotals()->requireGrandTotal();
     }
+
 }

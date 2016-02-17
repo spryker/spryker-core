@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Calculation\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class StackExecutor
 {

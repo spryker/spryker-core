@@ -204,9 +204,9 @@ class OrdersTable extends AbstractTable
      */
     protected function getGrandTotalByIdSalesOrder($idSalesOrder)
     {
-         $orderTransfer = $this->salesFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
+        $orderTransfer = $this->salesFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
 
-         return $orderTransfer->getTotals()->getGrandTotal();
+        return $orderTransfer->getTotals()->getGrandTotal();
     }
 
 }

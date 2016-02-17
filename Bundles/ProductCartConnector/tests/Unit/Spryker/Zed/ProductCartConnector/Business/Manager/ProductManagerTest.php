@@ -8,7 +8,6 @@ namespace Unit\Spryker\Zed\ProductCartConnector\Business\Manager;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 

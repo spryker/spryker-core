@@ -9,8 +9,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\Item;
 
-class ItemTest extends \PHPUnit_Framework_TestCase
+class itemTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -66,6 +67,8 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         $itemTransfer->setQuantity(2)
             ->setUnitGrossPrice(100);
         $orderTransfer->addItem($itemTransfer);
+
         return $orderTransfer;
     }
+
 }

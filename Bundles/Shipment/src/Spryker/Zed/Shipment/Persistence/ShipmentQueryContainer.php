@@ -6,9 +6,7 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
-use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentPersistenceFactory getFactory()

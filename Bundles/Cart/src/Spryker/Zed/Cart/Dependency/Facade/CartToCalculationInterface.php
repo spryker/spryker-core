@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Cart\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 interface CartToCalculationInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

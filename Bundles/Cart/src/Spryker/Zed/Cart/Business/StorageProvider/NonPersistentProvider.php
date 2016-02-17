@@ -8,7 +8,6 @@ namespace Spryker\Zed\Cart\Business\StorageProvider;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 class NonPersistentProvider implements StorageProviderInterface

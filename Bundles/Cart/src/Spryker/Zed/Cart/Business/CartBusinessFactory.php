@@ -48,7 +48,6 @@ class CartBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @return \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
-     *
      */
     protected function getCalculatorFacade()
     {

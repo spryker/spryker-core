@@ -8,7 +8,6 @@ namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use Spryker\Zed\Kernel\Business\ModelResult;
 
 class DecisionRuleEngine implements DecisionRuleInterface

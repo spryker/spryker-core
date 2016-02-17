@@ -47,5 +47,4 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
         return new SumGrossCalculatedDiscountAmountCalculator();
     }
 
-
 }

@@ -8,9 +8,7 @@ namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-use Spryker\Zed\Kernel\Business\ModelResult;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()

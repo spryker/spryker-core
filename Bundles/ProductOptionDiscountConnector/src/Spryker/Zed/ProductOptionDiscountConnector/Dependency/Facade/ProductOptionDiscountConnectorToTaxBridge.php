@@ -9,6 +9,7 @@ use Spryker\Zed\Tax\Business\TaxFacade;
 
 class ProductOptionDiscountConnectorToTaxBridge implements ProductOptionToTaxBridgeInterface
 {
+
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacade
      */
@@ -32,4 +33,5 @@ class ProductOptionDiscountConnectorToTaxBridge implements ProductOptionToTaxBri
     {
         return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate);
     }
+
 }

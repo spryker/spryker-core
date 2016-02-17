@@ -7,13 +7,13 @@ namespace Spryker\Zed\Calculation\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-
 /**
  * @method \Spryker\Zed\Calculation\Business\CalculationBusinessFactory getFactory()
  * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 interface CalculationFacadeInterface
 {
+
     /**
      * Executes all calculators in plugin stack.
      *
@@ -81,4 +81,5 @@ interface CalculationFacadeInterface
      * @return void
      */
     public function validateCheckoutGrandTotal(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
 }

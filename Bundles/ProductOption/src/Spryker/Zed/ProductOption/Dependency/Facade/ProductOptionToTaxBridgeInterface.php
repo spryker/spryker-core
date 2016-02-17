@@ -6,6 +6,7 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 interface ProductOptionToTaxBridgeInterface
 {
+
     /**
      * @param int $grossPrice
      * @param float $taxRate
@@ -13,4 +14,5 @@ interface ProductOptionToTaxBridgeInterface
      * @return int
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
 }

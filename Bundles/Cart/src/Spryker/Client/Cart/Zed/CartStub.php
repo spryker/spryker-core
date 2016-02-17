@@ -6,9 +6,7 @@
 
 namespace Spryker\Client\Cart\Zed;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Client\ZedRequest\Stub\BaseStub;
 
 class CartStub extends BaseStub implements CartStubInterface
