@@ -5,35 +5,40 @@
 
 namespace Spryker\Client\Glossary\Storage;
 
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+
 class GlossaryStorage implements GlossaryStorageInterface
 {
 
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $storage;
+    protected $storage;
 
     /**
      * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
-    private $keyBuilder;
+    protected $keyBuilder;
 
     /**
      * @var string
      */
-    private $locale;
+    protected $locale;
 
     /**
      * @var array
      */
-    private $translations = [];
+    protected $translations = [];
+
+    protected $translationKeyMap = [];
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
      * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
-    public function __construct($storage, $keyBuilder, $localeName)
+    public function __construct(StorageClientInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
     {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
@@ -52,12 +57,12 @@ class GlossaryStorage implements GlossaryStorageInterface
             return $keyName;
         }
 
-        if (!isset($this->translations[$keyName])) {
+        if (!isset($this->translationKeyMap[$keyName])) {
             $this->loadTranslation($keyName);
         }
 
-        if (!isset($this->translations[$keyName])) {
-            return $keyName;
+        if (empty($parameters)) {
+            return $this->translations[$keyName];
         }
 
         return str_replace(array_keys($parameters), array_values($parameters), $this->translations[$keyName]);
@@ -68,10 +73,11 @@ class GlossaryStorage implements GlossaryStorageInterface
      *
      * @return void
      */
-    private function loadTranslation($keyName)
+    protected function loadTranslation($keyName)
     {
         $key = $this->keyBuilder->generateKey($keyName, $this->locale);
         $this->translations[$keyName] = $this->storage->get($key);
+        $this->translationKeyMap[$keyName] = true;
     }
 
 }
