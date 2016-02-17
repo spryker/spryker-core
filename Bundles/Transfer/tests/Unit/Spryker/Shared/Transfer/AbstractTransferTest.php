@@ -387,4 +387,29 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $transfer2->getTransfer()->getString());
     }
 
+    /**
+     * @return void
+     */
+    public function testSetTransferCollectionFailsWithTransferObject()
+    {
+        $this->setExpectedException(\InvalidArgumentException::class);
+        $transfer = new AbstractTransfer();
+        $transfer->setTransferCollection(new AbstractTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetTransferCollectionWithArrayObject()
+    {
+        $transfer = new AbstractTransfer();
+        $collection = new \ArrayObject([
+            new AbstractTransfer(),
+            new AbstractTransfer(),
+        ]);
+        $transfer->setTransferCollection($collection);
+
+        $this->assertCount(2, $transfer->getTransferCollection());
+    }
+
 }

@@ -111,11 +111,11 @@ class CalculatorTest extends Test
 
         $expensesCollection = $this->getExpenseCollection();
         $expensesCollection->addCalculationExpense($expense);
-        $order->getCalculableObject()->setExpenses($expensesCollection);
+        $order->getCalculableObject()->setExpenses($expensesCollection->getCalculationExpenses());
 
-        $item->setDiscounts($discountCollection);
+        $item->setDiscounts($discountCollection->getDiscounts());
         $items->addOrderItem($item);
-        $order->getCalculableObject()->setItems($items);
+        $order->getCalculableObject()->setItems($items->getOrderItems());
 
         $calculator = $this->getCalculator();
 

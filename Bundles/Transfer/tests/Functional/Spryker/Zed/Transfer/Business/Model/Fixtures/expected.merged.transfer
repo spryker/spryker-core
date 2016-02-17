@@ -153,6 +153,8 @@ class FooBarTransfer extends AbstractTransfer
      */
     public function setSelfReference(\ArrayObject $selfReference)
     {
+        $this->assertNotTransferObject($selfReference);
+
         $this->selfReference = $selfReference;
         $this->addModifiedProperty(self::SELF_REFERENCE);
 

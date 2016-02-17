@@ -228,6 +228,21 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     }
 
     /**
+     * @param mixed $argument
+     *
+     * @return void
+     */
+    protected function assertNotTransferObject($argument)
+    {
+        if ($argument instanceof AbstractTransfer) {
+            throw new \InvalidArgumentException(sprintf(
+                'Parameter type of %s is invalid, must be simple type of \ArrayObject instead.',
+                get_class($argument)
+            ));
+        }
+    }
+
+    /**
      * @param string $property
      *
      * @return string

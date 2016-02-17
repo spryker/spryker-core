@@ -287,6 +287,8 @@ class AbstractTransfer extends ParentAbstractTransfer
      */
     public function setTransferCollection(\ArrayObject $transferCollection)
     {
+        $this->assertNotTransferObject($transferCollection);
+
         $this->transferCollection = $transferCollection;
         $this->addModifiedProperty(self::TRANSFER_COLLECTION);
 
