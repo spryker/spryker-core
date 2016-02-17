@@ -13,7 +13,7 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 /**
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
  */
-class ProductOptionOrderSaverPlugin extends AbstractPlugin  implements CheckoutSaveOrderInterface
+class ProductOptionOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
 
     /**

@@ -28,12 +28,12 @@ class Operation
     protected $cartStorageProvider;
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\CalculationFacadeInterface
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      */
     protected $calculationFacade;
 
     /**
-     * @var \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface
      */
     protected $itemGrouperFacade;
 

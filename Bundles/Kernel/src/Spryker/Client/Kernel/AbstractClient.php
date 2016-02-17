@@ -79,7 +79,7 @@ abstract class AbstractClient
     }
 
     /***
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedErrorMessages()
     {
