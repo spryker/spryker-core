@@ -1,5 +1,5 @@
 <?php
-namespace Shipment;
+namespace ShipmentCheckoutConnector;
 
 /**
  * Inherited Methods

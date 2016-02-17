@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Shipment\Module;
+namespace ShipmentCheckoutConnector\Module;
 
 use Codeception\Module;
 
