@@ -1,69 +1,8 @@
 actor: Tester
 
 include:
- - Bundles/Acl
- - Bundles/Application
- - Bundles/Auth
- - Bundles/Availability
- - Bundles/Calculation
- - Bundles/Cart
- - Bundles/Category
- - Bundles/Checkout
- - Bundles/Cms
- - Bundles/Config
- - Bundles/Console
- - Bundles/Country
- - Bundles/Customer
- - Bundles/CustomerCheckoutConnector
- - Bundles/CustomerMailConnector
- - Bundles/Discount
- - Bundles/DiscountCalculationConnector
- - Bundles/DiscountCheckoutConnector
- - Bundles/Git
- - Bundles/Glossary
- - Bundles/Heartbeat
- - Bundles/Invoice
- - Bundles/ItemGrouper
- - Bundles/Kernel
- - Bundles/Library
- - Bundles/Locale
- - Bundles/Log
- - Bundles/Lumberjack
- - Bundles/Mail
- - Bundles/Maintenance
- - Bundles/Newsletter
- - Bundles/Oms
- - Bundles/OmsCheckoutConnector
- - Bundles/Payone
- - Bundles/Price
- - Bundles/PriceCartConnector
- - Bundles/Product
- - Bundles/ProductCartConnector
- - Bundles/ProductCategory
- - Bundles/ProductOption
- - Bundles/ProductOptionCartConnector
- - Bundles/ProductOptionCheckoutConnector
- - Bundles/ProductOptionExporter
- - Bundles/ProductSearch
- - Bundles/Propel
- - Bundles/Sales
- - Bundles/SequenceNumber
- - Bundles/Session
- - Bundles/Setup
- - Bundles/Stock
- - Bundles/StockSalesConnector
- - Bundles/Storage
- - Bundles/Tax
- - Bundles/TaxProductConnector
- - Bundles/Touch
- - Bundles/Transfer
- - Bundles/Twig
- - Bundles/Url
- - Bundles/User
- - Bundles/Wishlist
- - Bundles/Yves
- - Bundles/ZedRequest
-
+ - Bundles/*/
+ 
 paths:
     tests: ../../../tests
     log: ../../../tests/_output
