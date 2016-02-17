@@ -69,6 +69,7 @@ class GroupForm extends AbstractType
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_GROUP_CHECK];
                 }
+
                 return [Constraint::DEFAULT_GROUP];
             },
         ]);
