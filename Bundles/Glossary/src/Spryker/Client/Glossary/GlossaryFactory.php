@@ -15,7 +15,7 @@ class GlossaryFactory extends AbstractFactory
     /**
      * @var \Spryker\Client\Glossary\Storage\GlossaryStorageInterface[]
      */
-    protected $translator = [];
+    protected static $translator = [];
 
     /**
      * @param string $localeName
@@ -24,11 +24,21 @@ class GlossaryFactory extends AbstractFactory
      */
     public function createTranslator($localeName)
     {
-        return new GlossaryStorage(
-            $this->getStorage(),
-            $this->createKeyBuilder(),
-            $localeName
-        );
+        return $this->getTranslatorInstance($localeName);
+    }
+
+    /**
+     * @param $localeName
+     *
+     * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
+     */
+    protected function getTranslatorInstance($localeName)
+    {
+        if (!isset(static::$translator[$localeName])) {
+            static::$translator[$localeName] = $this->createGlossaryStorage($localeName);
+        }
+
+        return static::$translator[$localeName];
     }
 
     /**
@@ -36,13 +46,13 @@ class GlossaryFactory extends AbstractFactory
      *
      * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */
-    public function createCachedTranslator($localeName)
+    protected function createGlossaryStorage($localeName)
     {
-        if (array_key_exists($localeName, $this->translator) === false) {
-            $this->translator[$localeName] = $this->createTranslator($localeName);
-        }
-
-        return $this->translator[$localeName];
+        return new GlossaryStorage(
+            $this->getStorage(),
+            $this->createKeyBuilder(),
+            $localeName
+        );
     }
 
     /**
