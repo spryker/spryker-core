@@ -13,4 +13,3 @@ composer require spryker/application
 
 
 
-ca
