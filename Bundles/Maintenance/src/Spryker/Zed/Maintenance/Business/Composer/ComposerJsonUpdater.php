@@ -15,18 +15,18 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
 
     /**
-     * @var ComposerJsonFinderInterface
+     * @var \Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinderInterface
      */
     private $finder;
 
     /**
-     * @var UpdaterInterface
+     * @var \Spryker\Zed\Maintenance\Business\Composer\Updater\UpdaterInterface
      */
     private $updater;
 
     /**
-     * @param ComposerJsonFinderInterface $finder
-     * @param UpdaterInterface $updater
+     * @param \Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinderInterface $finder
+     * @param \Spryker\Zed\Maintenance\Business\Composer\Updater\UpdaterInterface $updater
      */
     public function __construct(ComposerJsonFinderInterface $finder, UpdaterInterface $updater)
     {
@@ -46,7 +46,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     }
 
     /**
-     * @param SplFileInfo $composerJsonFile
+     * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
      * @return void
      */

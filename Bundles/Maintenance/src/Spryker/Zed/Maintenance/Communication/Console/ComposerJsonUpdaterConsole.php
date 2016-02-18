@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method MaintenanceFacade getFacade()
+ * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
  */
 class ComposerJsonUpdaterConsole extends Console
 {
@@ -33,8 +33,8 @@ class ComposerJsonUpdaterConsole extends Console
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @throws \Exception
      *
