@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\Auth\Business\Model;
 
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
@@ -14,6 +15,8 @@ use Spryker\Zed\Auth\AuthConfig;
 
 class PasswordReset
 {
+
+    const LENGTH = 22;
 
     /**
      * @var \Spryker\Zed\Auth\Persistence\AuthQueryContainer
@@ -65,15 +68,29 @@ class PasswordReset
 
         $passwordResetToken = $this->generateToken();
 
+        $result = $this->persistResetPassword($passwordResetToken, $userTransfer);
+
+        $this->sendResetRequest($email, $passwordResetToken);
+
+        return $result;
+    }
+
+    /**
+     * @param string $passwordResetToken
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return bool
+     */
+    protected function persistResetPassword($passwordResetToken, UserTransfer $userTransfer)
+    {
         $resetPasswordEntity = new SpyResetPassword();
         $resetPasswordEntity->setCode($passwordResetToken);
         $resetPasswordEntity->setFkUser($userTransfer->getIdUser());
         $resetPasswordEntity->setStatus(SpyResetPasswordTableMap::COL_STATUS_ACTIVE);
 
         $affectedRows = $resetPasswordEntity->save();
-
-        $this->sendResetRequest($email, $passwordResetToken);
-
         return $affectedRows > 0;
     }
 
@@ -135,7 +152,12 @@ class PasswordReset
      */
     protected function generateToken()
     {
-        return uniqid();
+        $length = self::LENGTH / 2;
+        $function = 'openssl_random_pseudo_bytes';
+        if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+            $function = 'random_bytes';
+        }
+        return bin2hex(call_user_func($function, $length));
     }
 
     /**
