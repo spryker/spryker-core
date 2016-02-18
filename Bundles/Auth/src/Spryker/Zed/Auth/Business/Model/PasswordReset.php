@@ -91,6 +91,7 @@ class PasswordReset
         $resetPasswordEntity->setStatus(SpyResetPasswordTableMap::COL_STATUS_ACTIVE);
 
         $affectedRows = $resetPasswordEntity->save();
+
         return $affectedRows > 0;
     }
 

@@ -57,6 +57,7 @@ class PasswordResetTest extends \PHPUnit_Framework_TestCase
             ['getUserByUsername'],
             [new UserFacade()]
         );
+
         return $facadeUser;
     }
 
@@ -74,6 +75,7 @@ class PasswordResetTest extends \PHPUnit_Framework_TestCase
             ['persistResetPassword'],
             [$authQueryContainer, $facadeUser, $authConfig]
         );
+
         return $passwordReset;
     }
 
