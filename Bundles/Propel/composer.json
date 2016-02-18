@@ -16,7 +16,8 @@
     "spryker/library": "^1.0.0",
     "spryker/monolog": "^1.0.0",
     "spryker/silex": "^1.0.0",
-    "spryker/symfony": "^1.0.0"
+    "spryker/symfony": "^1.0.0",
+    "spryker/config": "^1.0.0"
   },
   "description": "propel bundle",
   "license": "proprietary",

@@ -38,7 +38,7 @@ class UseStatement extends AbstractDependencyFinder
             }
         }
 
-        if (preg_match('/use Spryker\\Shared\\Config;/', $content)) {
+        if (preg_match('/use Spryker\\\Shared\\\Config/', $content)) {
             $toBundle = 'Config';
             $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = '';
             $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = 'Spryker\\Shared\\Config';
