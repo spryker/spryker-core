@@ -154,8 +154,6 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setItems(\ArrayObject $items)
     {
-        $this->assertNotTransferObject($items);
-
         $this->items = $items;
         $this->addModifiedProperty(self::ITEMS);
 

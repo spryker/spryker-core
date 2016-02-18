@@ -1005,11 +1005,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
 
         $this->mandrillMock->messages
             ->expects($this->once())
-            ->method('sendTemplate')
-            ->will($this->returnValue($mockResult));
+            ->method('sendTemplate');
 
-        $result = $this->mailSender->sendMail(new MailTransfer());
-        $this->assertEquals($mockResult, $result);
+        $this->mailSender->sendMail(new MailTransfer());
     }
 
     /**

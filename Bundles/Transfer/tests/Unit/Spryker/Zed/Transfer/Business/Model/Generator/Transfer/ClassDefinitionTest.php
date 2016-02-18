@@ -294,7 +294,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperty1'];
-        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTY1', $bundles, false, true);
+        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTY1', $bundles, false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
@@ -323,7 +323,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperties'];
-        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTIES', [], false, true);
+        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTIES', [], false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
@@ -344,11 +344,10 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
      * @param string|null $constant
      * @param array $bundles
      * @param bool|null $hasDefaultNull
-     * @param bool|null $assertNotTransferObject
      *
      * @return array
      */
-    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [], $hasDefaultNull = null, $assertNotTransferObject = null)
+    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [], $hasDefaultNull = null)
     {
         $method = [
             'name' => $method,
@@ -374,10 +373,6 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         if ($hasDefaultNull !== null) {
             $method['hasDefaultNull'] = $hasDefaultNull;
-        }
-
-        if ($assertNotTransferObject !== null) {
-            $method['assertNotTransferObject'] = $assertNotTransferObject;
         }
 
         return $method;

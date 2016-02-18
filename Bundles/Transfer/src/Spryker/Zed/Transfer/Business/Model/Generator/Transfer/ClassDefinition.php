@@ -521,7 +521,6 @@ class ClassDefinition implements ClassDefinitionInterface
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'hasDefaultNull' => null,
-            'assertNotTransferObject' => $this->isCollection($property),
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method['typeHint'], $property, $method);

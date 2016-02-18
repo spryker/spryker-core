@@ -53,10 +53,6 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
-        {% if method.assertNotTransferObject -%}
-            $this->assertNotTransferObject(${{ method.property }});
-
-        {% endif -%}
         $this->{{ method.property }} = ${{ method.property }};
         $this->addModifiedProperty(self::{{ method.propertyConst }});
 

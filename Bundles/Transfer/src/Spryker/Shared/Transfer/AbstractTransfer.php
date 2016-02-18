@@ -9,7 +9,7 @@ namespace Spryker\Shared\Transfer;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-abstract class AbstractTransfer extends \ArrayObject implements TransferInterface
+abstract class AbstractTransfer implements TransferInterface
 {
 
     /**
@@ -223,21 +223,6 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
                 'Empty required collection property "%s" for transfer %s.',
                 $property,
                 get_class($this)
-            ));
-        }
-    }
-
-    /**
-     * @param mixed $argument
-     *
-     * @return void
-     */
-    protected function assertNotTransferObject($argument)
-    {
-        if ($argument instanceof AbstractTransfer) {
-            throw new \InvalidArgumentException(sprintf(
-                'Parameter type of %s is invalid, must be simple type of \ArrayObject instead.',
-                get_class($argument)
             ));
         }
     }
