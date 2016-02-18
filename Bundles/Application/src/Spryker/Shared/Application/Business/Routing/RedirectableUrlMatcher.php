@@ -58,7 +58,7 @@ class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatche
     }
 
     /**
-     * @see RedirectableUrlMatcherInterface::match()
+     * @see \Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface::match()
      */
     public function redirect($path, $route, $scheme = null)
     {

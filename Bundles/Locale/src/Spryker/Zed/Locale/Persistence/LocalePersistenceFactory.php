@@ -22,4 +22,5 @@ class LocalePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyLocaleQuery::create();
     }
+
 }

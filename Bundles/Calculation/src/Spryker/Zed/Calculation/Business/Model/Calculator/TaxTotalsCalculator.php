@@ -39,7 +39,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -70,7 +70,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer $taxableItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $taxableItem
      *
      * @return void
      */

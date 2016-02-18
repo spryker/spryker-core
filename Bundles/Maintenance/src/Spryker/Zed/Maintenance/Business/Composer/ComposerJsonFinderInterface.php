@@ -13,7 +13,7 @@ interface ComposerJsonFinderInterface
 {
 
     /**
-     * @return Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function find();
 

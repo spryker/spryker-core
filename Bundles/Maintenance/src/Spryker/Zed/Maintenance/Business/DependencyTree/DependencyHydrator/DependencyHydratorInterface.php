@@ -13,4 +13,5 @@ interface DependencyHydratorInterface
      * @return void
      */
     public function hydrate(array &$dependency);
+
 }

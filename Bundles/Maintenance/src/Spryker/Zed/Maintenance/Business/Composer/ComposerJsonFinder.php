@@ -13,7 +13,7 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
 {
 
     /**
-     * @var Finder
+     * @var \Symfony\Component\Finder\Finder
      */
     private $finder;
 
@@ -23,7 +23,7 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
     private $pathToBundles;
 
     /**
-     * @param Finder $finder
+     * @param \Symfony\Component\Finder\Finder $finder
      * @param string $pathToBundles
      */
     public function __construct(Finder $finder, $pathToBundles)
@@ -33,7 +33,7 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
     }
 
     /**
-     * @return Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function find()
     {
