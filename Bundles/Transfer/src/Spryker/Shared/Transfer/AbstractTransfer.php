@@ -7,9 +7,10 @@
 namespace Spryker\Shared\Transfer;
 
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\Transfer\Exception\TransferUnserializationException;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-abstract class AbstractTransfer implements TransferInterface
+abstract class AbstractTransfer implements TransferInterface, \Serializable
 {
 
     /**
@@ -26,6 +27,11 @@ abstract class AbstractTransfer implements TransferInterface
      * @var \Zend\Filter\Word\UnderscoreToCamelCase
      */
     private static $filterUnderscoreToCamelCase;
+
+    public function __construct()
+    {
+        $this->initCollectionProperties();
+    }
 
     /**
      * @param bool $isRecursive
@@ -45,6 +51,18 @@ abstract class AbstractTransfer implements TransferInterface
     public function modifiedToArray($isRecursive = true)
     {
         return $this->propertiesToArray($this->modifiedProperties, $isRecursive, 'modifiedToArray');
+    }
+
+    /**
+     * @return void
+     */
+    protected function initCollectionProperties()
+    {
+        foreach ($this->transferMetadata as $property => $metaData) {
+            if ($metaData['is_collection'] && $this->$property === null) {
+                $this->$property = new \ArrayObject();
+            }
+        }
     }
 
     /**
@@ -402,6 +420,42 @@ abstract class AbstractTransfer implements TransferInterface
         }
 
         return $values;
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize($this->modifiedToArray());
+    }
+
+    /**
+     * @param string $serialized
+     *
+     * @throws \Spryker\Shared\Transfer\Exception\TransferUnserializationException
+     *
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        try {
+            $this->fromArray(unserialize($serialized), true);
+            $this->initCollectionProperties();
+        } catch (\Exception $e) {
+            throw new TransferUnserializationException(sprintf(
+                'Failed to unserialize %s. Updating or clearing your data source may solve this problem.',
+                get_class($this)
+            ));
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function __wakeup()
+    {
+        $this->initCollectionProperties();
     }
 
 }

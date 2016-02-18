@@ -320,6 +320,43 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testSerializeTransferAffectsModifiedDataOnly()
+    {
+        $transfer = new AbstractTransfer();
+        $transfer->setString('foo');
+
+        $serialized = $transfer->serialize();
+
+        $unserializedData = unserialize($serialized);
+
+        $this->assertEquals($transfer->modifiedToArray(), $unserializedData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTransferUnserializationIsIdempotent()
+    {
+        $transfer = new AbstractTransfer();
+        $transfer
+            ->setString('foo')
+            ->setTransfer((new AbstractTransfer())->setInt(123))
+            ->setTransferCollection(new \ArrayObject([
+                (new AbstractTransfer())->setBool(false),
+                (new AbstractTransfer())->setBool(true),
+            ]));
+
+        $serialized = $transfer->serialize();
+        $unserializedTransfer = new AbstractTransfer();
+        $unserializedTransfer->unserialize($serialized);
+
+        $this->assertEquals($transfer, $unserializedTransfer);
+        $this->assertFalse($unserializedTransfer->getTransferCollection()[0]->getBool());
+    }
+
+    /**
+     * @return void
+     */
     public function testCloneShouldReturnFullClonedObject()
     {
         $transfer = new AbstractTransfer();
