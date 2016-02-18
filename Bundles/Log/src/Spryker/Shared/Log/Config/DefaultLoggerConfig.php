@@ -7,13 +7,12 @@
 namespace Spryker\Shared\Log\Config;
 
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Spryker\Shared\Config;
+use Spryker\Shared\Log\LogConstants;
 
 class DefaultLoggerConfig implements LoggerConfigInterface
 {
-
-    const DEFAULT_LOG_FILE_PATH = 'DEFAULT_LOG_FILE_PATH';
-    const DEFAULT_LOG_LEVEL = 'DEFAULT_LOG_LEVEL';
 
     /**
      * @return string
@@ -29,7 +28,10 @@ class DefaultLoggerConfig implements LoggerConfigInterface
     public function getHandlers()
     {
         return [
-            new StreamHandler(Config::get(self::DEFAULT_LOG_FILE_PATH), Config::get(self::DEFAULT_LOG_LEVEL)),
+            new StreamHandler(
+                Config::get(LogConstants::LOG_FILE_PATH),
+                Config::get(LogConstants::LOG_LEVEL, Logger::INFO)
+            ),
         ];
     }
 
