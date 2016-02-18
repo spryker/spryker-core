@@ -53,4 +53,5 @@ class PackageNameHydrator implements DependencyHydratorInterface
         } catch (\Exception $e) {
         }
     }
+
 }

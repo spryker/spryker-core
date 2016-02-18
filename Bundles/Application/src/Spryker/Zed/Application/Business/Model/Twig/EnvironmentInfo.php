@@ -33,7 +33,7 @@ class EnvironmentInfo extends TwigFunction
                 . '<dt>Locale:'
                 . '<dd>' . Store::getInstance()->getCurrentLocale()
                 . '<dt>Store:'
-                . '<dd>' . \Spryker\Shared\Kernel\Store::getInstance()->getStoreName()
+                . '<dd>' . Store::getInstance()->getStoreName()
                 . '<dt>Server:'
                 . '<dd>' . System::getHostName()
                 . '<dt>Controller:'
