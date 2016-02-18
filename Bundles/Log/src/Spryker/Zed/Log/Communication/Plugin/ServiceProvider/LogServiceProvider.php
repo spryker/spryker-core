@@ -35,5 +35,4 @@ class LogServiceProvider implements ServiceProviderInterface
     {
     }
 
-
 }
