@@ -351,7 +351,6 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $unserializedTransfer->unserialize($serialized);
 
         $this->assertEquals($transfer, $unserializedTransfer);
-        $this->assertFalse($unserializedTransfer->getTransferCollection()[0]->getBool());
     }
 
     /**
