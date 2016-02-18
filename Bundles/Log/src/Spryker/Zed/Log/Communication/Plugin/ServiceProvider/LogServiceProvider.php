@@ -22,7 +22,7 @@ class LogServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['monolog.level'] = function () {
-            return Config::get(LogConstants::LOG_LEVEL, Logger::INFO);
+            return Config::get(LogConstants::LOG_LEVEL, Logger::ERROR);
         };
     }
 
