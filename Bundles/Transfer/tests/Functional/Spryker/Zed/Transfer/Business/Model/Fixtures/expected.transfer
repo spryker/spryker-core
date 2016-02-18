@@ -62,11 +62,6 @@ class CatFaceTransfer extends AbstractTransfer
         ],
     ];
 
-    public function __construct()
-    {
-        $this->items = new \ArrayObject();
-    }
-
     /**
      * @bundle Test
      *

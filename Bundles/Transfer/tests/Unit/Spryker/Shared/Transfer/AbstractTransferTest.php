@@ -320,6 +320,42 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testSerializeTransferAffectsModifiedDataOnly()
+    {
+        $transfer = new AbstractTransfer();
+        $transfer->setString('foo');
+
+        $serialized = $transfer->serialize();
+
+        $unserializedData = unserialize($serialized);
+
+        $this->assertEquals($transfer->modifiedToArray(), $unserializedData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTransferUnserializationIsIdempotent()
+    {
+        $transfer = new AbstractTransfer();
+        $transfer
+            ->setString('foo')
+            ->setTransfer((new AbstractTransfer())->setInt(123))
+            ->setTransferCollection(new \ArrayObject([
+                (new AbstractTransfer())->setBool(false),
+                (new AbstractTransfer())->setBool(true),
+            ]));
+
+        $serialized = $transfer->serialize();
+        $unserializedTransfer = new AbstractTransfer();
+        $unserializedTransfer->unserialize($serialized);
+
+        $this->assertEquals($transfer, $unserializedTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testCloneShouldReturnFullClonedObject()
     {
         $transfer = new AbstractTransfer();
@@ -385,6 +421,21 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('foo', $transfer2->getString());
         $this->assertEquals('bar', $transfer2->getTransfer()->getString());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetTransferCollectionWithArrayObject()
+    {
+        $transfer = new AbstractTransfer();
+        $collection = new \ArrayObject([
+            new AbstractTransfer(),
+            new AbstractTransfer(),
+        ]);
+        $transfer->setTransferCollection($collection);
+
+        $this->assertCount(2, $transfer->getTransferCollection());
     }
 
 }

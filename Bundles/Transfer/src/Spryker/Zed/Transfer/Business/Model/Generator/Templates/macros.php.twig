@@ -18,7 +18,7 @@
         ],
     {% endfor -%}
 ];
-{% endmacro %}
+{%- endmacro %}
 
 {# property #}
 {% macro addProperty(property) %}
@@ -31,9 +31,12 @@
 {# constructor #}
 {% macro addConstructor(properties) %}
 {% if properties %}
+
     public function __construct()
     {
 {% for property, collectionType in properties %}
+        parent::__construct();
+
         $this->{{ property }} = new {{ collectionType }}();
 {% endfor %}
     }

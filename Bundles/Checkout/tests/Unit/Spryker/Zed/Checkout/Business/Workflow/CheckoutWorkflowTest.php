@@ -39,13 +39,13 @@ class CheckoutWorkflowTest extends Test
         $checkoutResponse = new CheckoutResponseTransfer();
 
         $mock1->expects($this->once())->method('checkCondition')->with(
-            $this->equalTo($checkoutRequest),
-            $this->equalTo($checkoutResponse)
+            $this->isInstanceOf($checkoutRequest),
+            $this->isInstanceOf($checkoutResponse)
         );
 
         $mock2->expects($this->once())->method('checkCondition')->with(
-            $this->equalTo($checkoutRequest),
-            $this->equalTo($checkoutResponse)
+            $this->isInstanceOf($checkoutRequest),
+            $this->isInstanceOf($checkoutResponse)
         );
 
         $checkoutWorkflow = new CheckoutWorkflow([$mock1, $mock2], [], [], [], [], $omsMock);
@@ -94,13 +94,13 @@ class CheckoutWorkflowTest extends Test
         $checkoutResponse = new CheckoutResponseTransfer();
 
         $mock1->expects($this->once())->method('saveOrder')->with(
-            $this->equalTo($order),
-            $this->equalTo($checkoutResponse)
+            $this->isInstanceOf($order),
+            $this->isInstanceOf($checkoutResponse)
         );
 
         $mock2->expects($this->once())->method('saveOrder')->with(
-            $this->equalTo($order),
-            $this->equalTo($checkoutResponse)
+            $this->isInstanceOf($order),
+            $this->isInstanceOf($checkoutResponse)
         );
 
         $checkoutWorkflow = new CheckoutWorkflow([], [], [], [$mock1, $mock2], [], $omsMock);
@@ -122,13 +122,13 @@ class CheckoutWorkflowTest extends Test
         $checkoutResponse = new CheckoutResponseTransfer();
 
         $mock1->expects($this->once())->method('executeHook')->with(
-            $this->equalTo($order),
-            $this->equalTo($checkoutResponse)
+            $this->isInstanceOf($order),
+            $this->isInstanceOf($checkoutResponse)
         );
 
         $mock2->expects($this->once())->method('executeHook')->with(
-            $this->equalTo($order),
-            $this->equalTo($checkoutResponse)
+            $this->isInstanceOf($order),
+            $this->isInstanceOf($checkoutResponse)
         );
 
         $checkoutWorkflow = new CheckoutWorkflow([], [], [], [], [$mock1, $mock2], $omsMock);
@@ -156,8 +156,8 @@ class CheckoutWorkflowTest extends Test
         $checkoutWorkflow = new CheckoutWorkflow([$mock1], [], [], [$mock2], [], $omsMock);
 
         $mock2->expects($this->once())->method('saveOrder')->with(
-            $this->equalTo($order),
-            $this->equalTo($checkoutResponse)
+            $this->isInstanceOf($order),
+            $this->isInstanceOf($checkoutResponse)
         );
 
         $checkoutWorkflow->requestCheckout($checkoutRequest);
@@ -185,7 +185,7 @@ class CheckoutWorkflowTest extends Test
         $mock2->expects($this->never())->method('saveOrder');
 
         $result = $checkoutWorkflow->requestCheckout($checkoutRequest);
-        $this->assertEquals($checkoutResponse, $result);
+        $this->assertFalse($result->getIsSuccess());
     }
 
     /**
@@ -208,7 +208,7 @@ class CheckoutWorkflowTest extends Test
         $checkoutRequest = new CheckoutRequestTransfer();
 
         $mock2->expects($this->once())->method('saveOrder')->with(
-            $this->equalTo($orderTransfer),
+            $this->isInstanceOf($orderTransfer),
             $this->anything()
         );
 
@@ -237,7 +237,7 @@ class CheckoutWorkflowTest extends Test
         $mock2->expects($this->never())->method('executeHook');
 
         $result = $checkoutWorkflow->requestCheckout($checkoutRequest);
-        $this->assertEquals($checkoutResponse, $result);
+        $this->assertFalse($result->getIsSuccess());
     }
 
     /**
@@ -246,10 +246,8 @@ class CheckoutWorkflowTest extends Test
     public function testPostHookResultIsReturned()
     {
         $checkoutResponse = new CheckoutResponseTransfer();
-        $error = new CheckoutErrorTransfer();
 
         $checkoutResponse
-            ->addError($error)
             ->setIsSuccess(true);
 
         $mock = new MockPostHook($checkoutResponse);
@@ -260,7 +258,7 @@ class CheckoutWorkflowTest extends Test
 
         $result = $checkoutWorkflow->requestCheckout($checkoutRequest);
 
-        $this->assertEquals($checkoutResponse, $result);
+        $this->assertTrue($result->getIsSuccess());
     }
 
 }

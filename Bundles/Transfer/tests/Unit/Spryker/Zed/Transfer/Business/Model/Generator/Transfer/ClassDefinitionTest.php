@@ -147,24 +147,6 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testIfPropertyTypeIsCollectionConstructorDefinitionMustContainArrayWithThisEntry()
-    {
-        $transferDefinition = [
-            'name' => 'name',
-            'property' => [$this->getProperty('property1', 'Collection[]')],
-        ];
-
-        $classDefinition = new ClassDefinition();
-        $classDefinition->setDefinition($transferDefinition);
-
-        $constructorDefinition = $classDefinition->getConstructorDefinition();
-        $this->assertArrayHasKey('property1', $constructorDefinition);
-        $this->assertSame('\\ArrayObject', $constructorDefinition['property1']);
-    }
-
-    /**
-     * @return void
-     */
     public function testIfMoreThanOnePropertyTypeHasSameCollectionTypeUseShouldContainOnlyOneOfThisEntries()
     {
         $transferDefinition = [
