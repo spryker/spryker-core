@@ -26,15 +26,22 @@ class UseStatement extends AbstractDependencyFinder
     {
         $content = $fileInfo->getContents();
 
-        if (!preg_match_all('/use Spryker\\\(?<application>.*?)\\\(?<bundle>.*?)\\\(?<layerOrFileName>.*?);/', $content, $matches, PREG_SET_ORDER)) {
-            return;
+        if (preg_match_all('/use Spryker\\\(?<application>.*?)\\\(?<bundle>.*?)\\\(?<layerOrFileName>.*?);/', $content, $matches, PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $className = str_replace(['use ', ';'], '', $match[0]);
+                $toBundle = $match[self::BUNDLE];
+                $layer = $this->getLayerFromUseStatement($match);
+                $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = $layer;
+                $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = $className;
+
+                $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
+            }
         }
-        foreach ($matches as $match) {
-            $className = str_replace(['use ', ';'], '', $match[0]);
-            $toBundle = $match[self::BUNDLE];
-            $layer = $this->getLayerFromUseStatement($match);
-            $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = $layer;
-            $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = $className;
+
+        if (preg_match('/use Spryker\\Shared\\Config;/', $content)) {
+            $toBundle = 'Config';
+            $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = '';
+            $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = 'Spryker\\Shared\\Config';
 
             $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
         }
