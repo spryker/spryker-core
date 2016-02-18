@@ -136,4 +136,5 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
 
         return $pluginMock->init(self::GRAPH_NAME);
     }
+
 }

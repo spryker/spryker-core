@@ -18,6 +18,7 @@ use Spryker\Yves\Kernel\Locator;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Spryker\Shared\Library\Application\Environment;
 use Spryker\Shared\Library\Application\TestEnvironment;
+use Spryker\Zed\Kernel\Locator as KernelLocator;
 
 class SystemUnderTestBootstrap
 {
@@ -108,7 +109,7 @@ class SystemUnderTestBootstrap
     protected function bootstrapZed()
     {
         $application = new ZedBootstrap();
-        $locator = \Spryker\Zed\Kernel\Locator::getInstance();
+        $locator = KernelLocator::getInstance();
         $this->resetLocator($locator);
         $application->boot();
 
