@@ -33,9 +33,9 @@ class ContainerKeyNotFoundException extends \Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-                'Container does not contain the called "%s"',
-                $key
-            ) . PHP_EOL;
+            'Container does not contain the called "%s"',
+            $key
+        ) . PHP_EOL;
 
         $message .= sprintf(
             'You can fix this by adding the key "%s" to your "%sDependencyProvider"',

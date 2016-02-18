@@ -16,6 +16,8 @@ class ProductController extends AbstractController
 {
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return void
      */
     public function indexAction(Request $request)

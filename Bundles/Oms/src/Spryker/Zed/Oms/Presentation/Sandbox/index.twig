@@ -1,30 +1,33 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
+
 {% block content %}
-    <section class="spy-layout plain">
-        <h3>Sandbox (only for test purpose)</h3>
-    </section>
 
-    <form action="/oms/sandbox/add" style="margin-bottom: 20px;">
-        <button class="button default">Add new order</button> &nbsp;
-        <a href="/oms/index/draw?process={{ processName }}&amp;format=gif&amp;font=14" style="color: #369; text-decoration: none;"><em>{{ processName }}</em> process display</a>
-    </form>
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Sandbox (only for test purpose)' } %}
 
-    <div class="spy-grid">
+        {% block widget_content %}
 
-    <table>
-        <tr>
-            <th class="ng-isolate-scope" spy-grid-head=""><b class="title">Order ID</b></th>
-            <th class="ng-isolate-scope" spy-grid-head=""><b class="title">Customer</b></th>
-            <th class="ng-isolate-scope" spy-grid-head=""><b class="title">Total Price</b></th>
-        </tr>
-        {% for row in orders %}
-        <tr>
-            <td>{{ row.getIdSalesOrder }}</td>
-            <td><a href="/sales/details?id-sales-order={{ row.getIdSalesOrder }}">{{ row.getFirstName }} {{ row.getLastName }} {% if row.getIsTest %}[<em>Test order</em>]{% endif %}</a></td>
-            <td>{{ row.getGrandTotal }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    </div>
+            <form action="/oms/sandbox/add" style="margin-bottom: 20px;">
+                <button class="btn btn-xs btn-primary">{{ 'Add new order' | trans }}</button> &nbsp;
+                <a href="/oms/index/draw?process={{ processName }}&amp;format=gif&amp;font=14" style="color: #369; text-decoration: none;"><em>{{ processName }}</em> <span class="label label-warning">{{ 'process display' | trans }}</span></a>
+            </form>
+
+            <table class="table table-bordered table-condensed">
+                <tr>
+                    <th>{{ 'Order ID' | trans }}</th>
+                    <th>{{ 'Customer' | trans }}</th>
+                    <th>{{ 'Total Price' | trans }}</th>
+                </tr>
+                {% for row in orders %}
+                <tr>
+                    <td>{{ row.getIdSalesOrder }}</td>
+                    <td><a href="/sales/details?id-sales-order={{ row.getIdSalesOrder }}">{{ row.getFirstName }} {{ row.getLastName }} {% if row.getIsTest %} <span class="label label-warning">Test order</span>{% endif %}</a></td>
+                    <td>{{ row.getGrandTotal }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        {% endblock %}
+
+    {% endembed %}
 
 {% endblock %}

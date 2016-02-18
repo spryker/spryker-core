@@ -6,11 +6,15 @@
       "Unit": "tests/"
     }
   },
-  "require": {},
-  "require-dev": {},
+  "require": {
+    "psr/log": "~1.0.0",
+    "spryker/monolog": "^1.0.0",
+    "spryker/config": "^1.0.0"
+  },
   "description": "log bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

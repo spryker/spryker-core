@@ -71,21 +71,4 @@ interface PriceQueryContainerInterface
      */
     public function queryPriceProductEntity($idPriceProduct);
 
-    /**
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
-     */
-    public function queryPriceGrid();
-
-    /**
-     * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
-     */
-    public function queryPriceTypeGrid();
-
-    /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryPriceTypeForm();
-
 }

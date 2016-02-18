@@ -20,4 +20,3 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItemOptionQuery as BaseSpySalesO
 abstract class AbstractSpySalesOrderItemOptionQuery extends BaseSpySalesOrderItemOptionQuery
 {
 } // SpySalesOrderItemOptionQuery
-

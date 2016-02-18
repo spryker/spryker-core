@@ -164,8 +164,8 @@ class GroupController extends AbstractController
      */
     public function removeUserFromGroupAction(Request $request)
     {
-        $idGroup = (int) $request->request->get(self::PARAMETER_ID_GROUP);
-        $idUser = (int) $request->request->get(self::PARAMETER_ID_USER);
+        $idGroup = (int)$request->request->get(self::PARAMETER_ID_GROUP);
+        $idUser = (int)$request->request->get(self::PARAMETER_ID_USER);
 
         try {
             $this->getFacade()->removeUserFromGroup($idUser, $idGroup);
@@ -196,34 +196,6 @@ class GroupController extends AbstractController
         $roles = $this->getFactory()->getGroupRoleListByGroupId($idGroup);
 
         return $this->jsonResponse($roles);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function listAction(Request $request)
-    {
-        $grid = $this->getFactory()->createGroupsGrid($request);
-        $data = $grid->renderData();
-
-        return $this->jsonResponse($data);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function rulesAction(Request $request)
-    {
-        $idGroup = $request->get('id');
-        $grid = $this->getFactory()->createRulesetGrid($request, $idGroup);
-
-        $data = $grid->renderData();
-
-        return $this->jsonResponse($data);
     }
 
 }

@@ -381,7 +381,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    protected function createGlossaryPageKeyMapping(PageTransfer $page, $placeholder,  $keyName, $value, LocaleTransfer $localeTransfer = null)
+    protected function createGlossaryPageKeyMapping(PageTransfer $page, $placeholder, $keyName, $value, LocaleTransfer $localeTransfer = null)
     {
         $idKey = $this->glossaryFacade->getOrCreateKey($keyName);
         $this->createGlossaryTranslation($keyName, $value, $localeTransfer);

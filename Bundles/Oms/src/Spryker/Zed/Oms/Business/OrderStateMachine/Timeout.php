@@ -204,7 +204,7 @@ class Timeout implements TimeoutInterface
         $vars = get_object_vars($interval);
         $vSum = 0;
         foreach ($vars as $v) {
-            $vSum += (int) $v;
+            $vSum += (int)$v;
         }
         if ($vSum === 0) {
             throw new ErrorException('Invalid format for timeout "' . $timeout . '"');

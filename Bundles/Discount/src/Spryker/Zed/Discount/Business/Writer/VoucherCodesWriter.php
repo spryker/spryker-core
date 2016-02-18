@@ -120,7 +120,8 @@ class VoucherCodesWriter extends AbstractWriter
 
         $formCollectorPlugins = array_column(
             $voucherCodesTransferArray[self::COLLECTOR_PLUGINS],
-            self::ID_DISCOUNT_COLLECTOR);
+            self::ID_DISCOUNT_COLLECTOR
+        );
 
         $collectorPluginsCollection = $this->getQueryContainer()
             ->queryDiscountCollectorByDiscountId($voucherCodesTransfer->getIdDiscount())

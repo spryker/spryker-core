@@ -46,4 +46,3 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
     }
 
 } // Spryker\Zed\Stock\Persistence\Propel\AbstractSpyStockProduct
-

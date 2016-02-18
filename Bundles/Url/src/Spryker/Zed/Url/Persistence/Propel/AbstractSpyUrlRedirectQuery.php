@@ -20,4 +20,3 @@ use Orm\Zed\Url\Persistence\Base\SpyUrlRedirectQuery as BaseSpyUrlRedirectQuery;
 abstract class AbstractSpyUrlRedirectQuery extends BaseSpyUrlRedirectQuery
 {
 } // SpyUrlRedirectQuery
-

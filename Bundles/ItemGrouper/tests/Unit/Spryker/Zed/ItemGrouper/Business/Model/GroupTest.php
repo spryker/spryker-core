@@ -21,7 +21,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $groupAbleContainer = $this->getGroupableContainer();
 
         $group = new Group(0, true);
-        $groupedItems = (array) $group->groupByKey($groupAbleContainer)->getItems();
+        $groupedItems = (array)$group->groupByKey($groupAbleContainer)->getItems();
 
         $this->assertCount(2, $groupedItems);
 
@@ -42,7 +42,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $groupAbleContainer = $this->getGroupableContainer();
 
         $group = new Group(1, true);
-        $groupedItems = (array) $group->groupByKey($groupAbleContainer)->getItems();
+        $groupedItems = (array)$group->groupByKey($groupAbleContainer)->getItems();
 
         $this->assertCount(2, $groupedItems);
 

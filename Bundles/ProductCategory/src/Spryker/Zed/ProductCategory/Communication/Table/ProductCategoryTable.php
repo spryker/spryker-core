@@ -122,7 +122,7 @@ class ProductCategoryTable extends AbstractTable
         $items = '<option value="0">Default</option>';
         foreach ($preconfigItems as $preconfigItem) {
             $selected = '';
-            if ((int) $productCategory['preconfig_product'] === (int) $preconfigItem->getIdProduct()) {
+            if ((int)$productCategory['preconfig_product'] === (int)$preconfigItem->getIdProduct()) {
                 $selected = 'selected="selected"';
             }
 

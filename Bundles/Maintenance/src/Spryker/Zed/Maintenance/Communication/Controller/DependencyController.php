@@ -128,4 +128,19 @@ class DependencyController extends AbstractController
         return $this->viewResponse(['matrixData' => $matrixData, 'engineBundles' => $engineBundleList]);
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function externalDependencyTreeAction(Request $request)
+    {
+        $callback = function () use ($request) {
+            $bundleToView = $request->query->get('bundle', false);
+            echo $this->getFacade()->drawExternalDependencyTreeGraph($bundleToView);
+        };
+
+        return $this->streamedResponse($callback);
+    }
+
 }

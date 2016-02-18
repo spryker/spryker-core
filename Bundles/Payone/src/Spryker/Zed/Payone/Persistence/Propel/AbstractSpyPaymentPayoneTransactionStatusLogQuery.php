@@ -23,4 +23,3 @@ abstract class AbstractSpyPaymentPayoneTransactionStatusLogQuery extends BaseSpy
     const SEQUENCE_NUMBER = 'sequence_number';
 
 } // SpyPaymentPayoneTransactionStatusLogQuery
-

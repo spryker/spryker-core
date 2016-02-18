@@ -59,8 +59,6 @@ class LocaleFacadeTest extends Test
     }
 
     /**
-     * @group TranslationGrid
-     *
      * @return void
      */
     public function testAvailableLocalesAreTheSameAsConfiguredOnes()
@@ -72,8 +70,6 @@ class LocaleFacadeTest extends Test
     }
 
     /**
-     * @group TranslationGrid
-     *
      * @return void
      */
     public function testAvailableLocalesHasDifferentIdsThanConfiguredOnes()

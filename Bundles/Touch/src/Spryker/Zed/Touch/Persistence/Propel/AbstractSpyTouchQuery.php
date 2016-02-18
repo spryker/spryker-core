@@ -57,4 +57,3 @@ abstract class AbstractSpyTouchQuery extends BaseSpyTouchQuery
     }
 
 } // SpyTouchQuery
-

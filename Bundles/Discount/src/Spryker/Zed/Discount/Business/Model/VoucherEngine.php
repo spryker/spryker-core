@@ -219,7 +219,7 @@ class VoucherEngine
     protected function getRandomVoucherCode($length, $asMd5 = false)
     {
         $allowedCharacters = $this->settings->getVoucherCodeCharacters();
-        srand((double) microtime() * 1000000);
+        srand((double)microtime() * 1000000);
 
         $consonants = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_CONSONANTS];
         $vowels = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_VOWELS];

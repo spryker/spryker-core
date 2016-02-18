@@ -146,7 +146,10 @@ class VoucherEngineTest extends Test
 
         $order = $this->getOrderWithTwoItems();
         $result = $calculator->calculate(
-            [$discount1, $discount2, $discount3], $order, $settings, new Distributor()
+            [$discount1, $discount2, $discount3],
+            $order,
+            $settings,
+            new Distributor()
         );
         $this->assertEquals(2, count($result));
     }

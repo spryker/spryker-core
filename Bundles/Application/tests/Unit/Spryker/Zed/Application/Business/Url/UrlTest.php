@@ -35,7 +35,7 @@ class UrlTest extends Test
     {
         $url = new Url(['path' => '/foo/bar']);
 
-        $this->assertSame('/foo/bar', (string) $url);
+        $this->assertSame('/foo/bar', (string)$url);
     }
 
     /**
@@ -96,7 +96,7 @@ class UrlTest extends Test
     {
         $url = Url::parse('/foo/bar?q=a#z');
 
-        $this->assertSame('/foo/bar?q=a#z', (string) $url);
+        $this->assertSame('/foo/bar?q=a#z', (string)$url);
     }
 
     /**

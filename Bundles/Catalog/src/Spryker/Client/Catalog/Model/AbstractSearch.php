@@ -117,8 +117,8 @@ abstract class AbstractSearch
         $this->rangeExtractor = $rangeExtractor;
         $this->catalogModel = $catalogModel;
 
-        $this->currentPage = (int) $this->request->query->get(self::PAGE, 1);
-        $this->itemsPerPage = (int) $this->request->query->get(self::IPP, self::DEFAULT_ITEMS_PER_PAGE);
+        $this->currentPage = (int)$this->request->query->get(self::PAGE, 1);
+        $this->itemsPerPage = (int)$this->request->query->get(self::IPP, self::DEFAULT_ITEMS_PER_PAGE);
     }
 
     /**

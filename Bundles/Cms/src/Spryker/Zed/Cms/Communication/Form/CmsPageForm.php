@@ -64,10 +64,9 @@ class CmsPageForm extends AbstractType
         $resolver->setRequired(self::OPTION_TEMPLATE_CHOICES);
 
         $resolver->setDefaults([
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
-                if (
-                    array_key_exists(self::FIELD_URL, $defaultData) === false ||
+                if (array_key_exists(self::FIELD_URL, $defaultData) === false ||
                     $defaultData[self::FIELD_URL] !== $form->getData()[self::FIELD_URL]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_URL_CHECK];

@@ -83,8 +83,7 @@ class Writer implements WriterInterface
     public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
-        if (
-            !$this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
+        if (!$this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
             && !$this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
         ) {
             $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
@@ -113,8 +112,7 @@ class Writer implements WriterInterface
     {
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
 
-        if (
-            $this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
+        if ($this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
             || $this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
         ) {
             $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
@@ -152,8 +150,7 @@ class Writer implements WriterInterface
      */
     protected function loadProductConcreteIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
     {
-        if (
-            $transferPriceProduct->getIdProduct() === null &&
+        if ($transferPriceProduct->getIdProduct() === null &&
             $this->reader->hasProductConcrete($transferPriceProduct->getSkuProduct())
         ) {
             $transferPriceProduct->setIdProduct(

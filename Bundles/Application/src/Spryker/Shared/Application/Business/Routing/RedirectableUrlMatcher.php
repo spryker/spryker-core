@@ -58,7 +58,7 @@ class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatche
     }
 
     /**
-     * @see RedirectableUrlMatcherInterface::match()
+     * @see \Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface::match()
      */
     public function redirect($path, $route, $scheme = null)
     {
@@ -83,7 +83,9 @@ class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatche
         }
 
         return [
-            '_controller' => function ($url) { return new RedirectResponse($url, 301); },
+            '_controller' => function ($url) {
+                return new RedirectResponse($url, 301);
+            },
             '_route' => null,
             'url' => $url,
         ];

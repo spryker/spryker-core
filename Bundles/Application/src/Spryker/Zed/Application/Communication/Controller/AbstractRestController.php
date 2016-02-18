@@ -40,16 +40,16 @@ abstract class AbstractRestController
     {
         $result = null;
         switch ($this->request->getMethod()) {
-            case self::GET :
+            case self::GET:
                 $result = $this->get();
                 break;
-            case self::POST :
+            case self::POST:
                 $result = $this->post();
                 break;
-            case self::PUT :
+            case self::PUT:
                 $result = $this->put();
                 break;
-            case self::DELETE :
+            case self::DELETE:
                 $result = $this->delete();
         }
 

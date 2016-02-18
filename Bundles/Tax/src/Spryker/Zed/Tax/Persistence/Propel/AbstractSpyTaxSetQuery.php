@@ -19,4 +19,3 @@ use Orm\Zed\Tax\Persistence\Base\SpyTaxSetQuery as BaseSpyTaxSetQuery;
 abstract class AbstractSpyTaxSetQuery extends BaseSpyTaxSetQuery
 {
 } // SpyTaxSetQuery
-

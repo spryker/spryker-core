@@ -32,9 +32,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createMethod()
     {
         return new Method(
-                $this->getQueryContainer(),
-                $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
-            );
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
+        );
     }
 
 }

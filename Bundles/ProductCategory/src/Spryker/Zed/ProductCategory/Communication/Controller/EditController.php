@@ -75,7 +75,7 @@ class EditController extends AddController
 
                 $this->updateCategoryNodeChild($currentCategoryTransfer, $locale, $data);
             }
-            $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order'], true));
+            $this->updateProductOrder($currentCategoryTransfer, (array)json_decode($data['product_order'], true));
 
             $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
             $parentIdList = array_flip($parentIdList);
@@ -320,7 +320,7 @@ class EditController extends AddController
             ->generatePath($pathTokens);
 
         $path['view_node_name'] = 'child';
-        if ((int) $category->getIdCategory() === (int) $node->getFkCategory()) {
+        if ((int)$category->getIdCategory() === (int)$node->getFkCategory()) {
             $path['view_node_name'] = 'parent';
         }
 
@@ -371,7 +371,7 @@ class EditController extends AddController
             $productCategoryData = $productCategory->toArray();
             $productCategoryData['view_node_name'] = 'child';
 
-            if ((int) $category->getIdCategory() === (int) $productCategory->getFkCategory()) {
+            if ((int)$category->getIdCategory() === (int)$productCategory->getFkCategory()) {
                 $productCategoryData['view_node_name'] = 'parent';
             }
 
@@ -418,7 +418,7 @@ class EditController extends AddController
         foreach ($blocks as $blockTransfer) {
             $blockData = $blockTransfer->toArray();
             $blockData['view_node_name'] = 'child';
-            if ((int) $category->getIdCategory() === (int) $node->getFkCategory()) {
+            if ((int)$category->getIdCategory() === (int)$node->getFkCategory()) {
                 $blockData['view_node_name'] = 'parent';
             }
 

@@ -57,7 +57,7 @@ class MaximumCalculatedRangeValidator
         $numitor = $this->factorial($numberOfCombinations) * $this->factorial($difference);
         $possibleCodeCombinations = $this->factorial($this->charactersCount) / $numitor;
 
-        return (int) $possibleCodeCombinations;
+        return (int)$possibleCodeCombinations;
     }
 
 }

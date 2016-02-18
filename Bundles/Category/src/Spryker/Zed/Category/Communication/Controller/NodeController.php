@@ -63,7 +63,7 @@ class NodeController extends AbstractController
         $locale = $this->getFactory()
             ->getCurrentLocale();
 
-        $categoryNodesToReorder = (array) json_decode($request->request->get('nodes'), true);
+        $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true);
 
         $order = count($categoryNodesToReorder) - 1;
         foreach ($categoryNodesToReorder as $index => $nodeData) {
@@ -87,8 +87,7 @@ class NodeController extends AbstractController
         return $this->jsonResponse([
                 'code' => Response::HTTP_OK,
                 'message' => 'Category nodes successfully reordered',
-            ]
-        );
+            ]);
     }
 
 }

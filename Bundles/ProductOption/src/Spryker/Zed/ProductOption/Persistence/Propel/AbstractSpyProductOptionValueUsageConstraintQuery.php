@@ -19,4 +19,3 @@ use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueUsageConstraintQ
 abstract class AbstractSpyProductOptionValueUsageConstraintQuery extends BaseSpyProductOptionValueUsageConstraintQuery
 {
 } // SpyProductOptionValueUsageConstraintQuery
-

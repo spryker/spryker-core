@@ -64,7 +64,7 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
      */
     protected function isSubcategoriesChecked($checkboxName)
     {
-        return (bool) $this->context->getRoot()
+        return (bool)$this->context->getRoot()
             ->get($checkboxName)
             ->getData();
     }

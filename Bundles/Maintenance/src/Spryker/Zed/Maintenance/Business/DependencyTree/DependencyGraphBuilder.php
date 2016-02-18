@@ -6,9 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree;
 
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\GraphBuilderInterface;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
 
 class DependencyGraphBuilder
 {
@@ -19,28 +17,20 @@ class DependencyGraphBuilder
     private $graphBuilder;
 
     /**
-     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
+     * @var array
      */
-    private $dependencyTreeReader;
-
-    /**
-     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter
-     */
-    private $filter;
+    private $dependencyTree;
 
     /**
      * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\GraphBuilderInterface $graphBuilder
-     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface $dependencyTreeReader
-     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter $filter
+     * @param array $dependencyTree
      */
     public function __construct(
         GraphBuilderInterface $graphBuilder,
-        DependencyTreeReaderInterface $dependencyTreeReader,
-        TreeFilter $filter
+        array $dependencyTree
     ) {
         $this->graphBuilder = $graphBuilder;
-        $this->dependencyTreeReader = $dependencyTreeReader;
-        $this->filter = $filter;
+        $this->dependencyTree = $dependencyTree;
     }
 
     /**
@@ -48,9 +38,7 @@ class DependencyGraphBuilder
      */
     public function build()
     {
-        $filteredDependencyTree = $this->filter->filter($this->dependencyTreeReader->read());
-
-        return $this->graphBuilder->build($filteredDependencyTree);
+        return $this->graphBuilder->build($this->dependencyTree);
     }
 
 }

@@ -67,7 +67,7 @@ class PdoStatementIterator implements \Iterator, \Countable
     {
         $this->currentRow = $this->statement->fetch(\PDO::FETCH_ASSOC);
         $this->currentKey++;
-        $this->isValid = (bool) $this->currentRow;
+        $this->isValid = (bool)$this->currentRow;
 
         if (!$this->isValid) {
             $this->statement->closeCursor();

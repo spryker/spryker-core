@@ -41,8 +41,9 @@ class TransactionStatusUpdateManager
     public function __construct(
         PayoneQueryContainerInterface $queryContainer,
         PayoneStandardParameterTransfer $standardParameter,
-        HashGenerator $hashGenerator)
-    {
+        HashGenerator $hashGenerator
+    ) {
+
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
         $this->hashGenerator = $hashGenerator;
@@ -134,11 +135,11 @@ class TransactionStatusUpdateManager
             return $this->createErrorResponse('Payone transaction status update: Given and internal key do not match!');
         }
 
-        if ((int) $request->getAid() !== (int) $this->standardParameter->getAid()) {
+        if ((int)$request->getAid() !== (int)$this->standardParameter->getAid()) {
             return $this->createErrorResponse('Payone transaction status update: Invalid Aid! System: ' . $this->standardParameter->getAid() . ' Request: ' . $request->getAid());
         }
 
-        if ((int) $request->getPortalid() !== (int) $this->standardParameter->getPortalId()) {
+        if ((int)$request->getPortalid() !== (int)$this->standardParameter->getPortalId()) {
             return $this->createErrorResponse('Payone transaction status update: Invalid Portalid! System: ' . $this->standardParameter->getPortalId() . ' Request: ' . $request->getPortalid());
         }
 

@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
+use Spryker\Zed\Log\Communication\Plugin\ServiceProvider\LogServiceProvider;
 use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider as ServiceProviderSessionServiceProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\NewRelicServiceProvider;
@@ -44,6 +45,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
     public function getServiceProvider(Application $app)
     {
         $providers = [
+            new LogServiceProvider(),
             new SessionServiceProvider(),
             $this->getSessionServiceProvider(),
             new PropelServiceProvider(),

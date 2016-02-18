@@ -19,4 +19,3 @@ use Orm\Zed\Acl\Persistence\Base\SpyAclRoleQuery as BaseSpyAclRoleQuery;
 abstract class AbstractSpyAclRoleQuery extends BaseSpyAclRoleQuery
 {
 } // SpyAclRoleQuery
-

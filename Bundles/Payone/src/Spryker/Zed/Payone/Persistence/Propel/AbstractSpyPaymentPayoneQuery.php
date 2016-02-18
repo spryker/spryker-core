@@ -20,4 +20,3 @@ use Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery as BaseSpyPaymentPayon
 abstract class AbstractSpyPaymentPayoneQuery extends BaseSpyPaymentPayoneQuery
 {
 } // SpyPaymentPayoneQuery
-

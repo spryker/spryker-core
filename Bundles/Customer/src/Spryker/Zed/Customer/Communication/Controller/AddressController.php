@@ -119,8 +119,10 @@ class AddressController extends AbstractController
             $this->getFacade()->updateAddress($customerAddress);
 
             return $this->redirectResponse(sprintf(
-                '/customer/address/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
-            );
+                '/customer/address/?%s=%d',
+                CustomerConstants::PARAM_ID_CUSTOMER,
+                $idCustomer
+            ));
         }
 
         return $this->viewResponse([
