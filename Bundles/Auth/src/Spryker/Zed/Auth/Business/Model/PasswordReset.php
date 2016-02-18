@@ -152,12 +152,19 @@ class PasswordReset
      */
     protected function generateToken()
     {
-        $length = self::LENGTH / 2;
         $function = 'openssl_random_pseudo_bytes';
         if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
             $function = 'random_bytes';
         }
-        return bin2hex(call_user_func($function, $length));
+
+        $length = self::LENGTH / 2;
+        $token = bin2hex(call_user_func($function, (int)$length));
+
+        if (strlen($token) !== self::LENGTH) {
+            $token = str_pad($token, self::LENGTH, '0');
+        }
+
+        return $token;
     }
 
     /**
