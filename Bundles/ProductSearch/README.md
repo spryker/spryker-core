@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/ProductSearch
+composer require spryker/product-search
 ```
 
 ## Documentation

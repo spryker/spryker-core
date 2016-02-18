@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Graph
+composer require spryker/graph
 ```
 
 ## Documentation

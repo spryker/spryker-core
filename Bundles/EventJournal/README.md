@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/EventJournal
+composer require spryker/event-journal
 ```
 
 ## Documentation

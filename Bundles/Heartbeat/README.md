@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Heartbeat
+composer require spryker/heartbeat
 ```
 
 ## Documentation

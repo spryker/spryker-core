@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/AvailabilityCheckoutConnector
+composer require spryker/availability-checkout-connector
 ```
 
 ## Documentation

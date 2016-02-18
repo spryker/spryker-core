@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/ItemGrouperCheckoutConnector
+composer require spryker/item-grouper-checkout-connector
 ```
 
 ## Documentation

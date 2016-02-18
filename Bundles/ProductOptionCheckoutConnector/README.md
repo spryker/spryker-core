@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/ProductOptionCheckoutConnector
+composer require spryker/product-option-checkout-connector
 ```
 
 ## Documentation

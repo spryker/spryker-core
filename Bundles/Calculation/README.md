@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Calculation
+composer require spryker/calculation
 ```
 
 ## Documentation

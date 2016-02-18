@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Cache
+composer require spryker/cache
 ```
 
 ## Documentation

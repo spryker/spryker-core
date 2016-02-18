@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Gui
+composer require spryker/gui
 ```
 
 ## Documentation

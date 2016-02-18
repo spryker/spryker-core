@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/SalesCheckoutConnector
+composer require spryker/sales-checkout-connector
 ```
 
 ## Documentation

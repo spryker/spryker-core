@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Twig
+composer require spryker/twig
 ```
 
 ## Documentation

@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Search
+composer require spryker/search
 ```
 
 ## Documentation

@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/TaxProductConnector
+composer require spryker/tax-product-connector
 ```
 
 ## Documentation

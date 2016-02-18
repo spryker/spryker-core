@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Refund
+composer require spryker/refund
 ```
 
 ## Documentation

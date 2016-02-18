@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/ProductOptionCartConnector
+composer require spryker/product-option-cart-connector
 ```
 
 ## Documentation

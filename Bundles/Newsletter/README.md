@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Newsletter
+composer require spryker/newsletter
 ```
 
 ## Documentation

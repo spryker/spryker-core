@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/DiscountCheckoutConnector
+composer require spryker/discount-checkout-connector
 ```
 
 ## Documentation

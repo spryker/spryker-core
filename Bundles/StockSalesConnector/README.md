@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/StockSalesConnector
+composer require spryker/stock-sales-connector
 ```
 
 ## Documentation

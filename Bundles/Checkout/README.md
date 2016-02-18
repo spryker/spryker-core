@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Checkout
+composer require spryker/checkout
 ```
 
 ## Documentation

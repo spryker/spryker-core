@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Propel
+composer require spryker/propel
 ```
 
 ## Documentation

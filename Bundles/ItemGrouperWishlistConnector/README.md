@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/ItemGrouperWishlistConnector
+composer require spryker/item-grouper-wishlist-connector
 ```
 
 ## Documentation

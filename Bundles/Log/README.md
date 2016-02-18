@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Log
+composer require spryker/log
 ```
 
 ## Documentation

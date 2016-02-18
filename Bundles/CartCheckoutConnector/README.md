@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/CartCheckoutConnector
+composer require spryker/cart-checkout-connector
 ```
 
 ## Documentation

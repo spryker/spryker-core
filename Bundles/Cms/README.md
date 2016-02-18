@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Cms
+composer require spryker/cms
 ```
 
 ## Documentation

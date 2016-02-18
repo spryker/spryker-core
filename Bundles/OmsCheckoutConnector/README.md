@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/OmsCheckoutConnector
+composer require spryker/oms-checkout-connector
 ```
 
 ## Documentation

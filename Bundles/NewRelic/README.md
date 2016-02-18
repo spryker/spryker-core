@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/NewRelic
+composer require spryker/new-relic
 ```
 
 ## Documentation

@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Wishlist
+composer require spryker/wishlist
 ```
 
 ## Documentation

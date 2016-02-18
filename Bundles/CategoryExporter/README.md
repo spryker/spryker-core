@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/CategoryExporter
+composer require spryker/category-exporter
 ```
 
 ## Documentation

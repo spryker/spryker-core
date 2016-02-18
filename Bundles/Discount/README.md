@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Discount
+composer require spryker/discount
 ```
 
 ## Documentation

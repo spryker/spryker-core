@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Price
+composer require spryker/price
 ```
 
 ## Documentation

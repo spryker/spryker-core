@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Touch
+composer require spryker/touch
 ```
 
 ## Documentation

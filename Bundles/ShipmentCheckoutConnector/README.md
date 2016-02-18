@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/ShipmentCheckoutConnector
+composer require spryker/shipment-checkout-connector
 ```
 
 ## Documentation

@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/ItemGrouper
+composer require spryker/item-grouper
 ```
 
 ## Documentation

@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Stock
+composer require spryker/stock
 ```
 
 ## Documentation

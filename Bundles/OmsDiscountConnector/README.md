@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/OmsDiscountConnector
+composer require spryker/oms-discount-connector
 ```
 
 ## Documentation

@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Auth
+composer require spryker/auth
 ```
 
 ## Documentation

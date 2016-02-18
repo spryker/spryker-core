@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/SequenceNumber
+composer require spryker/sequence-number
 ```
 
 ## Documentation

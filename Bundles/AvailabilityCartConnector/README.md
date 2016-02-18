@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/AvailabilityCartConnector
+composer require spryker/availability-cart-connector
 ```
 
 ## Documentation

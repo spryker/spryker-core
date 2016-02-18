@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/ProductCategory
+composer require spryker/product-category
 ```
 
 ## Documentation

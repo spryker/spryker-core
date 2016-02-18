@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/DiscountCalculationConnector
+composer require spryker/discount-calculation-connector
 ```
 
 ## Documentation

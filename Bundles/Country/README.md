@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Country
+composer require spryker/country
 ```
 
 ## Documentation

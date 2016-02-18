@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Session
+composer require spryker/session
 ```
 
 ## Documentation

@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/PriceCartConnector
+composer require spryker/price-cart-connector
 ```
 
 ## Documentation

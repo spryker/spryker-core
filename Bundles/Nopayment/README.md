@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Nopayment
+composer require spryker/nopayment
 ```
 
 ## Documentation

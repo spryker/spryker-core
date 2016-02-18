@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Glossary
+composer require spryker/glossary
 ```
 
 ## Documentation

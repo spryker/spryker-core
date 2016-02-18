@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Git
+composer require spryker/git
 ```
 
 ## Documentation

@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/CustomerMailConnector
+composer require spryker/customer-mail-connector
 ```
 
 ## Documentation

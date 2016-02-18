@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Acl
+composer require spryker/acl
 ```
 
 ## Documentation

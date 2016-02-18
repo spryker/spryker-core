@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/ProductOptionWishlistConnector
+composer require spryker/product-option-wishlist-connector
 ```
 
 ## Documentation

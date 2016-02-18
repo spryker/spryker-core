@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Oms
+composer require spryker/oms
 ```
 
 ## Documentation

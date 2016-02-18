@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Sales
+composer require spryker/sales
 ```
 
 ## Documentation

@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Storage
+composer require spryker/storage
 ```
 
 ## Documentation

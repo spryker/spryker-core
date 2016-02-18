@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Payone
+composer require spryker/payone
 ```
 
 ## Documentation

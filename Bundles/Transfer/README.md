@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Transfer
+composer require spryker/transfer
 ```
 
 ## Documentation

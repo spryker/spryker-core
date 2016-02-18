@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/AuthMailConnector
+composer require spryker/auth-mail-connector
 ```
 
 ## Documentation

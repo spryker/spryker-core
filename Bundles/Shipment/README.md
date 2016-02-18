@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Shipment
+composer require spryker/shipment
 ```
 
 ## Documentation

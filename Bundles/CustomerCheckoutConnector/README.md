@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/CustomerCheckoutConnector
+composer require spryker/customer-checkout-connector
 ```
 
 ## Documentation

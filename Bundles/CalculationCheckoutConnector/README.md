@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/CalculationCheckoutConnector
+composer require spryker/calculation-checkout-connector
 ```
 
 ## Documentation

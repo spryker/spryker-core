@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Locale
+composer require spryker/locale
 ```
 
 ## Documentation

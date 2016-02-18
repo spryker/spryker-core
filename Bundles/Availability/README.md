@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Availability
+composer require spryker/availability
 ```
 
 ## Documentation

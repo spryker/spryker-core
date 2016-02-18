@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Tax
+composer require spryker/tax
 ```
 
 ## Documentation

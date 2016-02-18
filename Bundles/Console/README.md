@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Console
+composer require spryker/console
 ```
 
 ## Documentation

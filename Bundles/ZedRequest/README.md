@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/ZedRequest
+composer require spryker/zed-request
 ```
 
 ## Documentation

@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/Mail
+composer require spryker/mail
 ```
 
 ## Documentation
