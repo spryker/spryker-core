@@ -136,7 +136,9 @@ interface ApplicationConstants
     const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
     const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
+    /* @deprecated Use LogConstants::LOG_LEVEL instead */
     const LOG_LEVEL = 'LOG_LEVEL';
+
     const ERROR_LEVEL = 'ERROR_LEVEL';
 
     const PROPEL = 'PROPEL';

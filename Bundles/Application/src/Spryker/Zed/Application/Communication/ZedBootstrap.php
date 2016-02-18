@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Application\Communication;
 
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\AfterBootExtension;
 use Spryker\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension;
 use Spryker\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension;
 use Spryker\Shared\Application\Communication\Application;
@@ -25,10 +24,6 @@ class ZedBootstrap extends Bootstrap
 
         $this->addBeforeBootExtension(
             $this->getBeforeBootExtension()
-        );
-
-        $this->addAfterBootExtension(
-            $this->getAfterBootExtension()
         );
 
         $this->addServiceProviderExtension(
@@ -78,14 +73,6 @@ class ZedBootstrap extends Bootstrap
     protected function getBeforeBootExtension()
     {
         return new BeforeBootExtension();
-    }
-
-    /**
-     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\AfterBootExtension
-     */
-    protected function getAfterBootExtension()
-    {
-        return new AfterBootExtension();
     }
 
     /**
