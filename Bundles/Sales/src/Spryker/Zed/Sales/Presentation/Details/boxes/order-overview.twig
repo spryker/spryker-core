@@ -10,7 +10,7 @@
                 <p><b>{{ 'Item Quantity' | trans }}:</b> {{ order.items|length }}</p>
             </div>
             <div class="col-sm-4">
-                <p><b>{{ 'Customer name' | trans }}:</b> {{ order.firstName }} {{ order.lastName }}</p>
+                <p><b>{{ 'Customer name' | trans }}:</b> <a href="/customer/view/?id-customer={{ order.fkCustomer }}" target="_blank">{{ order.firstName }} {{ order.lastName }}</a></p>
                 <p><b>{{ 'Email' | trans }}:</b> {{ order.email }}</p>
                 <p><b>{{ 'Status' | trans }}:</b>
                     {% for state in uniqueOrderStates %}
@@ -21,8 +21,10 @@
             </div>
             <div class="col-sm-4">
                 {{ render(controller('/sales/comment/list', {'request': app.request})) }}
+                {{ render(controller('/sales/comment/add', {'request': app.request})) }}
             </div>
         </div>
+
     {% endblock %}
 
 {% endembed %}
