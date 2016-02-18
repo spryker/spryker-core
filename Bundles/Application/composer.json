@@ -29,7 +29,8 @@
     "spryker/silex": "^1.0.0",
     "spryker/symfony": "^1.0.0",
     "spryker/twig": "^1.0.0",
-    "spryker/zend": "^1.0.0"
+    "spryker/zend": "^1.0.0",
+    "spryker/config": "^1.0.0"
   },
   "description": "application bundle",
   "license": "proprietary",

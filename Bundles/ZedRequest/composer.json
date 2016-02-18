@@ -17,7 +17,8 @@
     "spryker/kernel": "^1.0.0",
     "spryker/library": "^1.0.0",
     "spryker/transfer": "^1.0.0",
-    "spryker/guzzle": "^1.0.0"
+    "spryker/guzzle": "^1.0.0",
+    "spryker/config": "^1.0.0"
   },
   "description": "zed request bundle",
   "license": "proprietary",
