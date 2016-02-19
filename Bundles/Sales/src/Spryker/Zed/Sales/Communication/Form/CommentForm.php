@@ -41,7 +41,9 @@ class CommentForm extends AbstractType
     {
         $builder->add(CommentTransfer::MESSAGE, 'textarea', [
             'constraints' => [
-                new NotBlank(),
+                new NotBlank([
+                    'message' => 'Please add your message to post a comment',
+                ]),
             ],
         ]);
 

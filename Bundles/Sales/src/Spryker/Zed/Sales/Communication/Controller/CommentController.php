@@ -79,7 +79,7 @@ class CommentController extends AbstractController
 
             $this->addSuccessMessage('Comment successfully added');
         } else {
-            foreach ($form->getErrors() as $error) {
+            foreach ($form->getErrors(true) as $error) {
                 $this->addErrorMessage($error->getMessage());
             }
         }
