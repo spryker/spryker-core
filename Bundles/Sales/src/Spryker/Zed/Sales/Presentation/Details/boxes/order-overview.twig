@@ -2,14 +2,14 @@
 
     {% block widget_content %}
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-xs-12 col-md-4">
                 <p><b>{{ 'Order ID' | trans }}:</b> {{ order.idSalesOrder }}</p>
                 <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | date('Y-m-d G:i:s') }}</p>
                 <p><b>{{ 'Grand total' | trans }}:</b> {{ order.totals.grandTotal | currency }}</p>
                 <p><b>{{ 'Discount' | trans }}:</b> {{ order.totals.discountTotal | currency }}</p>
                 <p><b>{{ 'Item Quantity' | trans }}:</b> {{ order.items|length }}</p>
             </div>
-            <div class="col-sm-4">
+            <div class="col-xs-12 col-md-4">
                 <p><b>{{ 'Customer name' | trans }}:</b> <a href="/customer/view/?id-customer={{ order.fkCustomer }}" target="_blank">{{ order.firstName }} {{ order.lastName }}</a></p>
                 <p><b>{{ 'Email' | trans }}:</b> {{ order.email }}</p>
                 <p><b>{{ 'Status' | trans }}:</b>
@@ -19,7 +19,7 @@
                 </p>
                 <p><b>{{ 'Other order' | trans }}:</b> ({{ order.totalOrderCount }})</p>
             </div>
-            <div class="col-sm-4">
+            <div class="col-xs-12 col-md-4">
                 {{ render(controller('/sales/comment/list', {'request': app.request})) }}
                 {{ render(controller('/sales/comment/add', {'request': app.request})) }}
             </div>
