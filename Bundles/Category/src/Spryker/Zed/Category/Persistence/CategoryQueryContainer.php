@@ -491,6 +491,30 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * @param int $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    public function queryCategoryByKey($categoryKey)
+    {
+        return $this->getFactory()->createCategoryQuery()->filterByCategoryKey($categoryKey);
+    }
+
+    /**
+     * @param string $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryMainCategoryNodeByCategoryKey($categoryKey)
+    {
+        return $this->getFactory()->createCategoryNodeQuery()
+            ->filterByIsMain(true)
+            ->useCategoryQuery()
+                ->filterByCategoryKey($categoryKey)
+            ->endUse();
+    }
+
+    /**
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery

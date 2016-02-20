@@ -147,6 +147,20 @@ interface CategoryQueryContainerInterface
     public function queryCategoryById($idCategory);
 
     /**
+     * @param int $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    public function queryCategoryByKey($categoryKey);
+
+    /**
+     * @param string $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryMainCategoryNodeByCategoryKey($categoryKey);
+
+    /**
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
