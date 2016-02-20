@@ -56,7 +56,7 @@ class AbstractCategoryFormDataProvider
     protected function getCategoriesWithPaths($idLocale)
     {
         $categoryEntityList = $this->categoryQueryContainer
-            ->queryCategory($this->locale->getIdLocale())
+            ->queryCategory($idLocale)
             ->find();
 
         $categories = [];
