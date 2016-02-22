@@ -54,7 +54,7 @@ class CodeStyleSniffer
      *
      * @throws \ErrorException
      *
-     * @return void
+     * @return int
      */
     public function checkCodeStyle($bundle, array $options = [])
     {
@@ -74,7 +74,7 @@ class CodeStyleSniffer
         ];
         $options += $defaults;
 
-        $this->runSnifferCommand($path, $options);
+        return $this->runSnifferCommand($path, $options);
     }
 
     /**
@@ -123,7 +123,7 @@ class CodeStyleSniffer
      * @param string $path
      * @param array $options
      *
-     * @return void
+     * @return int
      */
     protected function runSnifferCommand($path, array $options)
     {
@@ -148,13 +148,15 @@ class CodeStyleSniffer
         if (!empty($options[self::OPTION_DRY_RUN])) {
             echo $command;
 
-            return;
+            return 0;
         }
 
         $process = new Process($command, $this->applicationRoot, null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
+        $exitCode = $process->getExitCode();
+        return $exitCode;
     }
 
 }

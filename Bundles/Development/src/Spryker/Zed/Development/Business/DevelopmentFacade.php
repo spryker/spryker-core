@@ -19,22 +19,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @param string|null $bundle
      * @param array $options
      *
-     * @return void
-     */
-    public function fixCodeStyle($bundle = null, array $options = [])
-    {
-        $this->getFactory()->createCodeStyleFixer()->fixCodeStyle($bundle, $options);
-    }
-
-    /**
-     * @param string|null $bundle
-     * @param array $options
-     *
-     * @return void
+     * @return int
      */
     public function checkCodeStyle($bundle = null, array $options = [])
     {
-        $this->getFactory()->createCodeStyleSniffer()->checkCodeStyle($bundle, $options);
+        return $this->getFactory()->createCodeStyleSniffer()->checkCodeStyle($bundle, $options);
     }
 
     /**
