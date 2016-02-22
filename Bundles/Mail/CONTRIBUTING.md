@@ -44,15 +44,3 @@ on Contracts for the International Sale of Goods (CISG). The parties consent to 
 
 This Agreement constitutes the entire agreement between you and us concerning Spryker’s use of the Source Code. This Agreement
 supersedes any prior verbal understanding between the parties. This Agreement may be amended only in a writing signed by an authorized officer of Spryker.
-
-
-
-
-
-
-
-
-
-
-
-
