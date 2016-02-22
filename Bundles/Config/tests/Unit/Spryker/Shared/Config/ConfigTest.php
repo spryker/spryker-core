@@ -17,6 +17,9 @@ use Spryker\Shared\Config\Config;
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetInstance()
     {
         $this->assertInstanceOf(Config::class, Config::getInstance());
