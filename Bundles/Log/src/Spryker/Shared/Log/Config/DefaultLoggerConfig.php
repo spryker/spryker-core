@@ -9,7 +9,7 @@ namespace Spryker\Shared\Log\Config;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\LogConstants;
 
 class DefaultLoggerConfig implements LoggerConfigInterface

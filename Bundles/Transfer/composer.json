@@ -3,10 +3,9 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Function": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/"
+      "Functional": "tests/",
+      "Unit": "tests/",
+      "Transfer\\Module\\": "tests/_support/Module"
     }
   },
   "require": {

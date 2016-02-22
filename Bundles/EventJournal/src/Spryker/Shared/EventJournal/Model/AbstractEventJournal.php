@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\EventJournal\Model;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\EventJournal\EventJournalConstants;
 use Spryker\Shared\EventJournal\Model\Collector\DataCollectorInterface;
 use Spryker\Shared\EventJournal\Model\Filter\FilterInterface;

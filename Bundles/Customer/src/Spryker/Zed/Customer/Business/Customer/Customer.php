@@ -125,7 +125,7 @@ class Customer
     public function get(CustomerTransfer $customerTransfer)
     {
         $customerEntity = $this->getCustomer($customerTransfer);
-        $customerTransfer->fromArray($customerEntity->toArray());
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
         $addresses = $customerEntity->getAddresses();
         if ($addresses) {
             $customerTransfer->setAddresses($this->entityCollectionToTransferCollection($addresses, $customerEntity));
@@ -248,7 +248,7 @@ class Customer
         $customerEntity->setRegistrationKey(null);
 
         $customerEntity->save();
-        $customerTransfer->fromArray($customerEntity->toArray());
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         return $customerTransfer;
     }

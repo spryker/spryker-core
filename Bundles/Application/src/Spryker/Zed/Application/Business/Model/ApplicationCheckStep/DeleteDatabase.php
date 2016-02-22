@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Application\Business\Model\ApplicationCheckStep;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 use Symfony\Component\Process\Process;
 

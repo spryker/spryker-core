@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Application\Communication\Console;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;

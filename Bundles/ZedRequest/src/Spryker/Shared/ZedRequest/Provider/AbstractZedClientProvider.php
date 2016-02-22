@@ -9,7 +9,7 @@ namespace Spryker\Shared\ZedRequest\Provider;
 
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 

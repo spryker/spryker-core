@@ -11,7 +11,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Application\Business\Model\Twig\RouteResolver;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Library\Twig\Loader\Filesystem;

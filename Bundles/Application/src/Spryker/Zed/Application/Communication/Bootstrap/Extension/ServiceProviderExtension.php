@@ -31,7 +31,7 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
 use Spryker\Shared\Application\Communication\Application;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
 

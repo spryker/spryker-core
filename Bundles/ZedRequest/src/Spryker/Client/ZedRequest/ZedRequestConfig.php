@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ZedRequest;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 class ZedRequestConfig

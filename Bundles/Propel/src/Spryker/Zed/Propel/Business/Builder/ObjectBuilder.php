@@ -13,7 +13,7 @@ use Propel\Generator\Model\IdMethod;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Application\Environment;
 
 class ObjectBuilder extends PropelObjectBuilder

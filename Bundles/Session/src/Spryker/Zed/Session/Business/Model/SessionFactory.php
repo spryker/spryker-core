@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Session\Business\Model;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Session\Business\Model\SessionFactory as SharedSessionFactory;
 use Spryker\Shared\Application\ApplicationConstants;
 

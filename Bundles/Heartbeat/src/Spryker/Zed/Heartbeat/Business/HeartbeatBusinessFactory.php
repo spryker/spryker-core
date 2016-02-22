@@ -9,7 +9,7 @@ namespace Spryker\Zed\Heartbeat\Business;
 
 use Elastica\Client as ElasticaClient;
 use Predis\Client as PredisClient;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 use Spryker\Zed\Heartbeat\Business\Assistant\PropelHealthIndicator;

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\DataDirectory;
 use Spryker\Shared\Library\Environment;
 use Spryker\Shared\Library\Log;

@@ -16,7 +16,7 @@ use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
 use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Client\ZedRequest\Client\Request;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
 use Spryker\Shared\EventJournal\Model\SharedEventJournal;

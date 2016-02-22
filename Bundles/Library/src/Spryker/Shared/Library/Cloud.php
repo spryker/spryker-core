@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Library;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 
 class Cloud
 {

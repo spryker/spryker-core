@@ -11,7 +11,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Client\Session\SessionClientInterface;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Session\Business\Model\SessionFactory;

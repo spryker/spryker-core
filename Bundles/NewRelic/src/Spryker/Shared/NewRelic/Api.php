@@ -8,7 +8,7 @@
 namespace Spryker\Shared\NewRelic;
 
 use Guzzle\Http\Client;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\NewRelic\Exception\RecordDeploymentException;
 
 /**
