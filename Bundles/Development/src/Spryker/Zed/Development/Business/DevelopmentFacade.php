@@ -40,11 +40,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @param string|null $bundle
      *
-     * @return void
+     * @return int Exit code
      */
     public function runPhpMd($bundle)
     {
-        $this->getFactory()->createPhpMdRunner()->run($bundle);
+        return $this->getFactory()->createPhpMdRunner()->run($bundle);
     }
 
     /**
