@@ -21,17 +21,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer
-     */
-    public function createCodeStyleFixer()
-    {
-        return new CodeStyleFixer(
-            $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
     public function createCodeStyleSniffer()

@@ -16,14 +16,6 @@ interface DevelopmentFacadeInterface
      *
      * @return void
      */
-    public function fixCodeStyle($bundle = null, array $options = []);
-
-    /**
-     * @param string|null $bundle
-     * @param array $options
-     *
-     * @return void
-     */
     public function checkCodeStyle($bundle = null, array $options = []);
 
     /**
