@@ -18,8 +18,6 @@ class CreditCardCheck extends AbstractCall
     private $storeCardData = PayoneApiConstants::STORE_CARD_DATA_YES;
 
     /**
-     * @void
-     *
      * @return void
      */
     public function setDoStoreCardData()
@@ -28,8 +26,6 @@ class CreditCardCheck extends AbstractCall
     }
 
     /**
-     * @void
-     *
      * @return void
      */
     public function setDoNotStoreCardData()

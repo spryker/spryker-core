@@ -179,7 +179,7 @@ class VoucherForm extends AbstractType
                                 return;
                             }
 
-                            if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[VoucherForm::FIELD_QUANTITY]) {
+                            if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[self::FIELD_QUANTITY]) {
                                 $context->addViolation('The quantity of required codes is to high regarding the code length');
 
                                 return;
