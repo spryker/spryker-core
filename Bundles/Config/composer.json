@@ -5,7 +5,8 @@
       "Spryker": "src/",
       "Unit": "tests/",
       "Config\\Module\\": "tests/_support/Module"
-    }
+    },
+    "files": ["src/Spryker/Shared/Config.php"]
   },
   "require": {},
   "description": "config bundle",

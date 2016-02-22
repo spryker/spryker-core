@@ -458,7 +458,8 @@
       "Propel\\Module\\": "Bundles/Propel/tests/_support/Module",
       "Config\\Module\\": "Bundles/Config/tests/_support/Module",
       "Transfer\\Module\\": "Bundles/Transfer/tests/_support/Module"
-    }
+    },
+    "files": ["Bundles/Config/src/Spryker/Shared/Config.php"]
   },
   "bin": [
     "Bundles/Console/bin/console"
