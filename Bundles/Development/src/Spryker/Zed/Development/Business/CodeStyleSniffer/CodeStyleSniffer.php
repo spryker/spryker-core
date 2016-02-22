@@ -56,7 +56,7 @@ class CodeStyleSniffer
      *
      * @throws \ErrorException
      *
-     * @return int
+     * @return int Exit code
      */
     public function checkCodeStyle($bundle, array $options = [])
     {
@@ -125,7 +125,7 @@ class CodeStyleSniffer
      * @param string $path
      * @param array $options
      *
-     * @return int
+     * @return int Exit code
      */
     protected function runSnifferCommand($path, array $options)
     {
@@ -157,8 +157,8 @@ class CodeStyleSniffer
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
-        $exitCode = $process->getExitCode();
-        return $exitCode;
+
+        return $process->getExitCode();
     }
 
 }

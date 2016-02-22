@@ -19,7 +19,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @param string|null $bundle
      * @param array $options
      *
-     * @return int
+     * @return int Exit code
      */
     public function checkCodeStyle($bundle = null, array $options = [])
     {

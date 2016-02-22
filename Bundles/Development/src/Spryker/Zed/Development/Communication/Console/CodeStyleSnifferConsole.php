@@ -49,7 +49,7 @@ class CodeStyleSnifferConsole extends Console
      *
      * @throws \Exception
      *
-     * @return int
+     * @return int Exit code
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
