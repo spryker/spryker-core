@@ -3,11 +3,8 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
       "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Unit": "tests/"
     }
   },
   "require": {
@@ -24,6 +21,9 @@
     "spryker/zed-request": "^1.0.0",
     "spryker/propel": "^1.0.0",
     "spryker/symfony": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/testify": "^1.0.0"
   },
   "description": "customer bundle",
   "license": "proprietary",
