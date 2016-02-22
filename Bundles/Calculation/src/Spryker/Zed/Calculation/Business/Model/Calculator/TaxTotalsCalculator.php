@@ -65,7 +65,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
             $this->calculateTax($item);
         }
 
-        /** @var \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\OrderTransfer $order**/
+        /** @var \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\OrderTransfer $order */
         $order = $calculableContainer->getCalculableObject();
         $this->calculateTaxForOrderExpenses($order->getExpenses());
     }
