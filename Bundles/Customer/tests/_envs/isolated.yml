@@ -2,3 +2,9 @@ modules:
     config:
         \Testify\Module\Environment:
             mode: 'isolated'
+
+        \Transfer\Module\TransferGenerate:
+            enabled: true
+
+        \Propel\Module\PropelInstall:
+            enabled: true

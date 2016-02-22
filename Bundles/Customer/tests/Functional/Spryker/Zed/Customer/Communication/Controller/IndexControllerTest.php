@@ -22,6 +22,9 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexControllerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testIndexAction()
     {
         $request = Request::create('/customer');
@@ -32,6 +35,9 @@ class IndexControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $controller->indexAction());
     }
 
+    /**
+     * @return void
+     */
     public function testTableAction()
     {
         $request = Request::create('/customer/table');

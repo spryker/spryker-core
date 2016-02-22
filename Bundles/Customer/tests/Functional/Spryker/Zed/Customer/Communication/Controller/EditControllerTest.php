@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditControllerTest extends Test
 {
+
     const NEW_FIRST_NAME = 'superMan';
 
     /**
@@ -37,6 +38,9 @@ class EditControllerTest extends Test
      */
     private $controller;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $customer = new SpyCustomer();
@@ -50,6 +54,9 @@ class EditControllerTest extends Test
         $this->controller = new EditController();
     }
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $this->customer->delete();
