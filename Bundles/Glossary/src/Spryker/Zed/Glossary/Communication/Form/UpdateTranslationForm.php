@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateTranslationForm extends TranslationForm
 {
+
     const TYPE_DATA_EMPTY = 'empty_data';
 
     /**

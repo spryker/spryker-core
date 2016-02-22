@@ -9,6 +9,7 @@ namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyHydrator;
 
 interface DependencyHydratorInterface
 {
+
     /**
      * @param array $dependency
      *
