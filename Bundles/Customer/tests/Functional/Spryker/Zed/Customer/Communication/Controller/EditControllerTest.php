@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditControllerTest extends Test
 {
+
     const NEW_FIRST_NAME = 'superMan';
 
     /**
