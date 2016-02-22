@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Catalog\Code;
 
+/**
+ * Add attribute sets in project code as constants.
+ */
 interface ProductAttributeSetConstantInterface
 {
-
-    //add attribute sets in project code
-
 }

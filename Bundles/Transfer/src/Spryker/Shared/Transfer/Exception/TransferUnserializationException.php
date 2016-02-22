@@ -8,5 +8,4 @@ namespace Spryker\Shared\Transfer\Exception;
 
 class TransferUnserializationException extends \Exception
 {
-
 }
