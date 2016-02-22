@@ -28,7 +28,9 @@ class TransferGenerate extends Module
     {
         parent::__construct($moduleContainer, $config);
 
-        $this->generateTransferObjects();
+        if (isset($config['enabled']) && $config['enabled']) {
+            $this->generateTransferObjects();
+        }
     }
 
     /**
