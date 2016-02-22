@@ -27,12 +27,12 @@ class EditControllerTest extends Test
     const NEW_FIRST_NAME = 'superMan';
 
     /**
-     * @var SpyCustomer
+     * @var \Orm\Zed\Customer\Persistence\SpyCustomer
      */
     private $customer;
 
     /**
-     * @var EditController
+     * @var \Spryker\Zed\Customer\Communication\Controller\EditController
      */
     private $controller;
 
@@ -106,7 +106,7 @@ class EditControllerTest extends Test
     }
 
     /**
-     * @param FormView $formView
+     * @param \Symfony\Component\Form\FormView $formView
      *
      * @return array
      */

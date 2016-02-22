@@ -25,4 +25,3 @@ $config[ApplicationConstants::YVES_SSL_ENABLED] = false;
 $config[ApplicationConstants::NAVIGATION_CACHE_ENABLED] = true;
 
 $config[ApplicationConstants::HOST_YVES] = 'www.spryker.dev';
-
