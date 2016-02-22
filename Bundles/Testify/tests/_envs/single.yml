@@ -1,4 +1,0 @@
-modules:
-    config:
-        \Testify\Module\Environment:
-            root: '../'

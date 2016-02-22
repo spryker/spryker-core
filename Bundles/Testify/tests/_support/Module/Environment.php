@@ -49,9 +49,7 @@ class Environment extends Module
         defined('APPLICATION') || define('APPLICATION', 'ZED');
 
         defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $applicationRoot);
-
         defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . '/src');
-
         defined('APPLICATION_SPRYKER_ROOT') || define('APPLICATION_SPRYKER_ROOT', APPLICATION_ROOT_DIR . $sprykerRoot);
     }
 }

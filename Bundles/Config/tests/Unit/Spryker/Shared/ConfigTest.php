@@ -17,6 +17,9 @@ use Spryker\Shared\Config\Config;
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetInstanceMustTriggerErrorAndReturnConfigInstance()
     {
         $this->setExpectedException(\ErrorException::class);
@@ -26,7 +29,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Config::class, $config);
     }
 
-
+    /**
+     * @return void
+     */
     public function testInitMustTriggerError()
     {
         $this->setExpectedException(\ErrorException::class);

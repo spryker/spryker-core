@@ -26,11 +26,10 @@ class Database extends Db
         $config += [
             'dsn' => $defaultConfig['dsn'],
             'user' => Config::get(PropelConstants::ZED_DB_USERNAME),
-            'password' => Config::get(PropelConstants::ZED_DB_PASSWORD)
+            'password' => Config::get(PropelConstants::ZED_DB_PASSWORD),
         ];
 
         parent::__construct($moduleContainer, $config);
     }
-
 
 }

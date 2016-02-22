@@ -25,7 +25,6 @@ use Spryker\Zed\Customer\Business\CustomerFacade;
 class CustomerFacadeTest extends Test
 {
 
-
     /**
      * @param \Spryker\Shared\Transfer\TransferInterface|null $transfer
      * @param bool $hasEmail

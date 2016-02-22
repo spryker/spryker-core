@@ -17,6 +17,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class TransferGenerate extends Module
 {
+
     const TARGET_DIRECTORY = 'target_directory';
 
     /**
