@@ -13,6 +13,8 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class CodeStyleSniffer
 {
 
+    const CODE_SUCCESS = 0;
+
     const BUNDLE_ALL = 'all';
 
     const OPTION_FIX = 'fix';
@@ -148,7 +150,7 @@ class CodeStyleSniffer
         if (!empty($options[self::OPTION_DRY_RUN])) {
             echo $command;
 
-            return 0;
+            return self::CODE_SUCCESS;
         }
 
         $process = new Process($command, $this->applicationRoot, null, null, 4800);
