@@ -177,7 +177,7 @@ class InvoiceTest extends Test
             []
         );
 
-        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock*/
         $paymentEntityMock = $this->getMock(
             'Orm\Zed\Payolution\Persistence\SpyPaymentPayolution',
             [

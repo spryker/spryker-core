@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class LocalePersistenceFactory extends AbstractPersistenceFactory
 {
+
     /**
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
