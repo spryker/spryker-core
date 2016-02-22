@@ -1,11 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Transfer\Business;
 
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
@@ -24,11 +26,11 @@ class TransferBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Transfer\Business\Model\TransferGenerator
      */
-    public function createTransferGenerator(MessengerInterface $messenger)
+    public function createTransferGenerator(LoggerInterface $messenger)
     {
         return new TransferGenerator(
             $messenger,

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
@@ -73,9 +74,7 @@ class GrandTotalTest extends Test
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $itemCollection = new OrderItemsTransfer();
-        $itemCollection->addOrderItem($item);
-        $order->getCalculableObject()->setItems($itemCollection);
+        $order->getCalculableObject()->addItem($item);
 
         $totalsTransfer = $this->getPriceTotals();
         $calculator = $this->getGrandTotalCalculator();
@@ -97,9 +96,7 @@ class GrandTotalTest extends Test
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $item->addDiscount($discount);
 
-        $itemCollection = new OrderItemsTransfer();
-        $itemCollection->addOrderItem($item);
-        $order->getCalculableObject()->setItems($itemCollection);
+        $order->getCalculableObject()->addItem($item);
 
         $totalsTransfer = $this->getPriceTotals();
         $calculator = $this->getGrandTotalCalculator();
@@ -160,13 +157,10 @@ class GrandTotalTest extends Test
     protected function getOrderWithFixtureData()
     {
         $order = new OrderTransfer();
-        $order->setItems(new OrderItemsTransfer());
 
         $totalsTransfer = new TotalsTransfer();
         $totalsTransfer->setExpenses(new ExpenseTotalsTransfer());
         $order->setTotals($totalsTransfer);
-
-        $order->setExpenses(new ExpenseTransfer());
 
         return new CalculableContainer($order);
     }

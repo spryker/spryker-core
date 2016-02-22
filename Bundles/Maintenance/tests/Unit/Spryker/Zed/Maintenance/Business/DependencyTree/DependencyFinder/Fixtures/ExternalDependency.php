@@ -8,7 +8,7 @@ namespace Unit\Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\
 
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\DependencyFinder;
 use Company\Class as Something;
-use \Exception;
+use Exception;
 
 class ExternalDependency
 {

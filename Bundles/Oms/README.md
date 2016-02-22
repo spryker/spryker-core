@@ -1,6 +1,11 @@
-# Zed Package
+# Oms Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/oms
+```
+
+## Documentation
+
+[Oms Documentation](https://spryker.github.io/oms/index.html)

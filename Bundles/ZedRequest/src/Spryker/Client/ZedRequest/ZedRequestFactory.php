@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\ZedRequest;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
 

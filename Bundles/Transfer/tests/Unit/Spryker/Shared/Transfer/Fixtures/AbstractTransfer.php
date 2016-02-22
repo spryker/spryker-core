@@ -97,11 +97,6 @@ class AbstractTransfer extends ParentAbstractTransfer
         ],
     ];
 
-    public function __construct()
-    {
-        $this->transferCollection = new \ArrayObject();
-    }
-
     /**
      * @param string $string
      *

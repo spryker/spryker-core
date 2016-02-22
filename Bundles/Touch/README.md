@@ -1,6 +1,11 @@
-# Zed Package
+# Touch Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/touch
+```
+
+## Documentation
+
+[Touch Documentation](https://spryker.github.io/touch/index.html)

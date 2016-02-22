@@ -65,12 +65,4 @@ return Symfony\CS\Config\Config::create()
             'unused_use',
             'whitespacy_lines',
         ]
-    )
-    ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\EmptyEnclosingLinesFixer())
-    ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\MethodArgumentDefaultValueFixer())
-    ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\NoInlineAssignmentFixer())
-    ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\ConditionalExpressionOrderFixer())
-    ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\NoIsNullFixer())
-    ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\PhpdocParamsFixer())
-    ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\PhpdocReturnVoidFixer())
-    ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\WhitespaceAfterReturnFixer());
+    );

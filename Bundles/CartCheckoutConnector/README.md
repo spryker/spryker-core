@@ -1,6 +1,11 @@
-# Zed Package
+# CartCheckoutConnector Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/cart-checkout-connector
+```
+
+## Documentation
+
+[CartCheckoutConnector Documentation](https://spryker.github.io/cart-checkout-connector/index.html)

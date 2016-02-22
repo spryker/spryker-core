@@ -1,6 +1,11 @@
-# Zed Package
+# CustomerCheckoutConnector Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/customer-checkout-connector
+```
+
+## Documentation
+
+[CustomerCheckoutConnector Documentation](https://spryker.github.io/customer-checkout-connector/index.html)

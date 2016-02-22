@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model;
@@ -111,11 +112,11 @@ class CalculatorTest extends Test
 
         $expensesCollection = $this->getExpenseCollection();
         $expensesCollection->addCalculationExpense($expense);
-        $order->getCalculableObject()->setExpenses($expensesCollection);
+        $order->getCalculableObject()->setExpenses($expensesCollection->getCalculationExpenses());
 
-        $item->setDiscounts($discountCollection);
+        $item->setDiscounts($discountCollection->getDiscounts());
         $items->addOrderItem($item);
-        $order->getCalculableObject()->setItems($items);
+        $order->getCalculableObject()->setItems($items->getOrderItems());
 
         $calculator = $this->getCalculator();
 

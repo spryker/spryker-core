@@ -1,6 +1,11 @@
-# Zed Package
+# DiscountCheckoutConnector Bundle
 
-## 1.0.0
-*2015-09-10 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/discount-checkout-connector
+```
+
+## Documentation
+
+[DiscountCheckoutConnector Documentation](https://spryker.github.io/discount-checkout-connector/index.html)

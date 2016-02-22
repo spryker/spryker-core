@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Application;
@@ -149,4 +150,5 @@ interface ApplicationConstants
     const ZED_ERROR_PAGE = 'ZED_ERROR_PAGE';
     const ZED_SHOW_EXCEPTION_STACK_TRACE = 'ZED_SHOW_EXCEPTION_STACK_TRACE';
 
+    const APPLICATION_SPRYKER_ROOT = 'APPLICATION_SPRYKER_ROOT';
 }

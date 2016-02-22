@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
@@ -30,7 +31,7 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
 use Spryker\Shared\Application\Communication\Application;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
 

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\ZedRequest\Client;
@@ -15,7 +16,7 @@ use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
 use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Client\ZedRequest\Client\Request;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
 use Spryker\Shared\EventJournal\Model\SharedEventJournal;
