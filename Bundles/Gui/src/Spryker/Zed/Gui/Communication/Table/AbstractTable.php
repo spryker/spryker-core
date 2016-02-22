@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\DataTablesTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Library\Sanitize\Html;

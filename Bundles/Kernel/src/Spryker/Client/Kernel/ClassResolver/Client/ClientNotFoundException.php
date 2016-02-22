@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Kernel\ClassResolver\Client;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;

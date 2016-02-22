@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Library\Error;
 
 use Propel\Runtime\Propel;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\LibraryConstants;
 
 class ErrorHandler

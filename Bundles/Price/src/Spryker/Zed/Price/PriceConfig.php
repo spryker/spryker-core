@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Price;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Price\PriceConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 

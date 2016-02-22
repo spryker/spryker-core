@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Collector;
 
 use Spryker\Shared\Collector\CollectorConstants;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CollectorConfig extends AbstractBundleConfig

@@ -7,9 +7,8 @@
 
 namespace Spryker\Shared\Library\Application;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Autoloader;
 use Spryker\Shared\Library\Error\ErrorHandler;
 use Spryker\Shared\Library\LibraryConstants;
 use Spryker\Shared\Library\TestAutoloader;
@@ -49,30 +48,17 @@ class Environment
         $errorCode = error_reporting();
         self::initializeErrorHandler();
 
-        require_once APPLICATION_SPRYKER_ROOT . '/Library/src/Spryker/Shared/Library/Autoloader.php';
-
-        Autoloader::unregister();
-        Autoloader::register(APPLICATION_SPRYKER_ROOT, APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
-        TestAutoloader::register(APPLICATION_SPRYKER_ROOT, APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
-
-        $coreNamespaces = Config::get(LibraryConstants::CORE_NAMESPACES);
         $configErrorCode = Config::get(LibraryConstants::ERROR_LEVEL);
         if ($configErrorCode !== $errorCode) {
             error_reporting($configErrorCode);
             self::initializeErrorHandler();
         }
-
-        foreach ($coreNamespaces as $namespace) {
-            Autoloader::allowNamespace($namespace);
-        }
-
         ini_set('display_errors', Config::get(LibraryConstants::DISPLAY_ERRORS, false));
 
         $store = Store::getInstance();
         $locale = current($store->getLocales());
 
         self::initializeLocale($locale);
-
         mb_internal_encoding('UTF-8');
         mb_regex_encoding('UTF-8');
 

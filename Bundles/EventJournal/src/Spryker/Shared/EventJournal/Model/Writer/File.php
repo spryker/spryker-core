@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\EventJournal\Model\Writer;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\EventJournal\EventJournalConstants;
 use Spryker\Shared\EventJournal\Model\EventInterface;
 use Spryker\Shared\Library\DataDirectory;

@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
 
 class ClassInfo

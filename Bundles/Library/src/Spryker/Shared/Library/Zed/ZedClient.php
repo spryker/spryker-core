@@ -18,7 +18,7 @@ use Guzzle\Plugin\Cookie\CookiePlugin;
 use Spryker\Client\EventJournal\EventJournal;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\Library\Communication\ObjectInterface;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\LibraryConstants;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Communication\Request;

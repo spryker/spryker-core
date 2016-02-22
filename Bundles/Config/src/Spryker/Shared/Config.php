@@ -7,133 +7,36 @@
 
 namespace Spryker\Shared;
 
-use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Environment;
+use Spryker\Shared\Config\Config as SprykerConfig;
 
-class Config
+/**
+ * @deprecated use Spryker\Shared\Config\Config instead
+ */
+class Config extends SprykerConfig
 {
 
-    const CONFIG_FILE_PREFIX = '/config/Shared/config_';
-    const CONFIG_FILE_SUFFIX = '.php';
-
     /**
-     * @var \ArrayObject|null
+     * @param \ArrayObject|null $config
+     *
+     * @return void
      */
-    protected static $config = null;
-
-    /**
-     * @var self
-     */
-    private static $instance;
-
-    /**
-     * @return $this
-     */
-    public static function getInstance()
+    public static function getInstance(\ArrayObject $config = null)
     {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
+        trigger_error('Deprecated, use Spryker\Shared\Config\Config instead', E_USER_DEPRECATED);
 
-        return self::$instance;
+        parent::getInstance($config);
     }
 
     /**
-     * @param string $key
-     * @param null $default
-     *
-     * @throws \Exception
-     *
-     * @return mixed
-     */
-    public static function get($key, $default = null)
-    {
-        if (empty(self::$config)) {
-            self::init();
-        }
-
-        if (!self::hasValue($key) && $default !== null) {
-            self::$config[$key] = $default;
-        }
-
-        if (!self::hasValue($key)) {
-            throw new \Exception(sprintf('Could not find config key "%s" in "%s"', $key, __CLASS__));
-        }
-
-        return self::$config[$key];
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public static function hasValue($key)
-    {
-        return isset(self::$config[$key]);
-    }
-
-    /**
-     * @param null $environment
+     * @param null|string $environment
      *
      * @return void
      */
     public static function init($environment = null)
     {
-        if ($environment === null) {
-            $environment = Environment::getInstance()->getEnvironment();
-        }
+        trigger_error('Deprecated, use Spryker\Shared\Config\Config instead', E_USER_DEPRECATED);
 
-        $storeName = Store::getInstance()->getStoreName();
-
-        $config = new \ArrayObject();
-
-        /*
-         * e.g. config_default.php
-         */
-        self::buildConfig('default', $config);
-
-        /*
-         * e.g. config_default-production.php
-         */
-        self::buildConfig('default-' . $environment, $config);
-
-        /*
-         * e.g. config_default_DE.php
-         */
-        self::buildConfig('default_' . $storeName, $config);
-
-        /*
-         * e.g. config_default-production_DE.php
-         */
-        self::buildConfig('default-' . $environment . '_' . $storeName, $config);
-        /*
-         * e.g. config_local.php
-         */
-        self::buildConfig('local', $config);
-
-        /*
-         * e.g. config_local_DE.php
-         */
-        self::buildConfig('local_' . $storeName, $config);
-
-        self::$config = $config;
-    }
-
-    /**
-     * @param string $type
-     * @param \ArrayObject $config
-     *
-     * @return \ArrayObject
-     */
-    protected static function buildConfig($type, \ArrayObject $config)
-    {
-        $fileName = APPLICATION_ROOT_DIR . self::CONFIG_FILE_PREFIX . $type . self::CONFIG_FILE_SUFFIX;
-        if (file_exists($fileName)) {
-            include $fileName;
-        }
-
-        return $config;
+        parent::init($environment);
     }
 
 }

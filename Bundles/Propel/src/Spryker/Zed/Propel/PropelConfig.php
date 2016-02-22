@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Propel;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 
 abstract class AbstractBundleConfig
 {

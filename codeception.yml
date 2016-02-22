@@ -2,7 +2,7 @@ actor: Tester
 
 include:
  - Bundles/*/
- 
+
 paths:
     tests: ../../../tests
     log: ../../../tests/_output
@@ -17,14 +17,10 @@ settings:
     memory_limit: 1024M
     log: true
 
-modules:
-    config:
-        Db:
-            dsn: ''
-            user: ''
-            password: ''
-            dump: tests/_data/dump.sql
-
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+
+coverage:
+    enabled: true
+    blacklist: { exclude: ['../../../*'] }

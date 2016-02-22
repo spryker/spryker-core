@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Library\Storage;
 
 use Elastica\Client;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\LibraryConstants;
 
 /**

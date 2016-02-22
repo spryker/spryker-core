@@ -14,7 +14,7 @@ use Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtension
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
 use Symfony\Component\HttpFoundation\RedirectResponse;

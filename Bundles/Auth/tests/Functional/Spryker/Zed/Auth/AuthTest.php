@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\Auth;
 
 use Codeception\TestCase\Test;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Auth\Business\AuthFacade;
