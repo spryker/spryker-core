@@ -1,3 +1,15 @@
-# Whishlist
+# Wishlist Bundle
 
-provide an api to build a Wishlist
+## Installation
+
+```
+composer require spryker/wishlist
+```
+
+## Documentation
+
+[Wishlist Documentation](https://spryker.github.io/wishlist/index.html)
+
+
+
+

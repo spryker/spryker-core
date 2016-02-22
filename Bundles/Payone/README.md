@@ -1,6 +1,15 @@
-# Payone Package
+# Payone Bundle
 
-## 1.0.0
-*2015-04-28 | Jörg Stick*
+## Installation
 
-- init
+```
+composer require spryker/payone
+```
+
+## Documentation
+
+[Payone Documentation](https://spryker.github.io/payone/index.html)
+
+
+
+

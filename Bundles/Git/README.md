@@ -1,6 +1,15 @@
-# Zed Package
+# Git Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/git
+```
+
+## Documentation
+
+[Git Documentation](https://spryker.github.io/git/index.html)
+
+
+
+

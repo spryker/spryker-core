@@ -1,6 +1,15 @@
-# Zed Package
+# PriceCartConnector Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/price-cart-connector
+```
+
+## Documentation
+
+[PriceCartConnector Documentation](https://spryker.github.io/price-cart-connector/index.html)
+
+
+
+
