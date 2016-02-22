@@ -4,7 +4,9 @@
     "psr-0": {
       "Spryker": "src/",
       "Functional": "tests/",
-      "Unit": "tests/",
+      "Unit": "tests/"
+    },
+    "psr-4": {
       "Transfer\\Module\\": "tests/_support/Module"
     }
   },

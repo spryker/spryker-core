@@ -3,7 +3,9 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Unit": "tests/",
+      "Unit": "tests/"
+    },
+    "psr-4": {
       "Config\\Module\\": "tests/_support/Module"
     },
     "files": ["src/Spryker/Shared/Config.php"]
