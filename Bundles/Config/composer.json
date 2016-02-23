@@ -8,9 +8,7 @@
     "psr-4": {
       "Config\\Module\\": "tests/_support/Module"
     },
-    "files": {
-      "0": "src/Spryker/Shared/Config.php"
-    }
+    "files": ["src/Spryker/Shared/Config.php"]
   },
   "require": {
     "spryker/kernel": "^1.0.0",
