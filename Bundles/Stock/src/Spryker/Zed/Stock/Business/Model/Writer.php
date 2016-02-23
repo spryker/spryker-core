@@ -109,10 +109,9 @@ class Writer implements WriterInterface
     {
         Propel::getConnection()->beginTransaction();
 
-        $idStockType = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
         $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
-        $this->reader->checkStockDoesNotExist($idStockType, $idProduct);
-        $idStockProduct = $this->saveStockProduct($transferStockProduct, $idStockType, $idProduct);
+        $this->reader->checkStockDoesNotExist($transferStockProduct->getStockType(), $idProduct);
+        $idStockProduct = $this->saveStockProduct($transferStockProduct, $transferStockProduct->getStockType(), $idProduct);
 
         Propel::getConnection()->commit();
 
@@ -239,5 +238,4 @@ class Writer implements WriterInterface
 
         return $stockProduct->getPrimaryKey();
     }
-
 }
