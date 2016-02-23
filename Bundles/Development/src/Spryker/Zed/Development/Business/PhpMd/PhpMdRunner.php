@@ -40,7 +40,7 @@ class PhpMdRunner
      *
      * @throws \ErrorException
      *
-     * @return void
+     * @return int Exit code
      */
     public function run($bundle)
     {
@@ -55,7 +55,7 @@ class PhpMdRunner
             throw new \ErrorException($message);
         }
 
-        $this->runPhpMdCommand($path);
+        return $this->runPhpMdCommand($path);
     }
 
     /**
@@ -103,7 +103,7 @@ class PhpMdRunner
     /**
      * @param string $path
      *
-     * @return void
+     * @return int Exit code
      */
     protected function runPhpMdCommand($path)
     {
@@ -116,6 +116,8 @@ class PhpMdRunner
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
+
+        return $process->getExitCode();
     }
 
 }
