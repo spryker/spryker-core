@@ -9,7 +9,8 @@
   "require": {
     "psr/log": "~1.0.0",
     "spryker/monolog": "^1.0.0",
-    "spryker/config": "^1.0.0"
+    "spryker/config": "^1.0.0",
+    "spryker/silex": "^1.0.0"
   },
   "description": "log bundle",
   "license": "proprietary",
