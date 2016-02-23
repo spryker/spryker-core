@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Catalog\Model;
 
-use Elastica\Query;
 use Elastica\Index;
+use Elastica\Query;
 use Elastica\ResultSet;
 use Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface;
 use Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface;

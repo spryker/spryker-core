@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use DateTime;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface OmsQueryContainerInterface
 {

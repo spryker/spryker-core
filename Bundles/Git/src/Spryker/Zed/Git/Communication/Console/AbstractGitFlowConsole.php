@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Git\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 abstract class AbstractGitFlowConsole extends Console
 {

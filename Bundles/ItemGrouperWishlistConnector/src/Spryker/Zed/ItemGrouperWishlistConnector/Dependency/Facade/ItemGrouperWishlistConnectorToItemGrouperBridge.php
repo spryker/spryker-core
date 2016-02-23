@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ItemGrouperWishlistConnector\Dependency\Facade;
 
-use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
+use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 class ItemGrouperWishlistConnectorToItemGrouperBridge implements ItemGrouperWishlistConnectorToItemGrouperInterface
 {

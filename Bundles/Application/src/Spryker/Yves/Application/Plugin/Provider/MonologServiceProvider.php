@@ -7,12 +7,12 @@
 
 namespace Spryker\Yves\Application\Plugin\Provider;
 
-use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use Spryker\Shared\Library\Log;
-use Spryker\Shared\Library\Monolog\EventJournalHandler;
+use Monolog\Logger;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Library\Log;
+use Spryker\Shared\Library\Monolog\EventJournalHandler;
 
 /**
  * @deprecated Use Spryker\Shared\Log\LoggerTrait where ever you need to log something with monolog

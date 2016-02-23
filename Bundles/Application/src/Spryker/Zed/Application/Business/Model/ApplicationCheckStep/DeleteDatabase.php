@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Application\Business\Model\ApplicationCheckStep;
 
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 use Symfony\Component\Process\Process;
 
 class DeleteDatabase extends AbstractApplicationCheckStep

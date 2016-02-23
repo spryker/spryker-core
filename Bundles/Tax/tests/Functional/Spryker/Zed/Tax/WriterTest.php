@@ -10,10 +10,10 @@ namespace Functional\Spryker\Zed\Tax;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
-use Spryker\Zed\Tax\Business\TaxFacade;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
+use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
  * @group Business

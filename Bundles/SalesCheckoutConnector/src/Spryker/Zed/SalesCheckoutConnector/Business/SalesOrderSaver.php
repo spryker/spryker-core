@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SalesCheckoutConnector\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesCheckoutConnector\Dependency\Facade\SalesCheckoutConnectorToSalesInterface;
 
 class SalesOrderSaver implements SalesOrderSaverInterface

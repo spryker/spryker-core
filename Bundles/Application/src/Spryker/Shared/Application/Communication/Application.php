@@ -17,9 +17,9 @@ use Symfony\Component\Routing\RouterInterface;
 class Application extends \Silex\Application
 {
 
-    use UrlGeneratorTrait;
-    use TwigTrait;
     use TranslationTrait;
+    use TwigTrait;
+    use UrlGeneratorTrait;
 
     const COOKIES = 'cookies';
     const REQUEST = 'request';

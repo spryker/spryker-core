@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Category;
 
-use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 {

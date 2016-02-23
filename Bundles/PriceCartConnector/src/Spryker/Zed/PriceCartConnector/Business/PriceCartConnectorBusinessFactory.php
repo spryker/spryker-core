@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PriceCartConnector\Business;
 
-use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
 
 /**

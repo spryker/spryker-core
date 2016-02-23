@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Newsletter\Business;
 
-use Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGenerator;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandler;
 use Spryker\Zed\Newsletter\Business\Subscription\SingleOptInHandler;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGenerator;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriberManager;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManager;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler;
 use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()

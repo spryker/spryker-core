@@ -7,9 +7,9 @@
 
 namespace Spryker\Yves\Application\Routing;
 
+use Silex\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Filter\CamelCaseToSeparatorFilter;
-use Silex\Application;
 
 class Helper
 {

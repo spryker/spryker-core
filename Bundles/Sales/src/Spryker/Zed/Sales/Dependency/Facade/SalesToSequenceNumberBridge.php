@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 class SalesToSequenceNumberBridge implements SalesToSequenceNumberInterface
 {

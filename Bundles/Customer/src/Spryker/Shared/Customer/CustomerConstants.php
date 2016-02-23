@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\Customer;
 
-use Spryker\Shared\Mail\MailConstants;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Mail\MailConstants;
 
 interface CustomerConstants
 {

@@ -9,14 +9,14 @@ namespace Spryker\Zed\Kernel\Communication\Plugin;
 
 use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\ZedRequest\Client\Message;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
+use Spryker\Zed\Messenger\MessengerConfig;
 use Spryker\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Spryker\Zed\Messenger\MessengerConfig;
 
 /**
  * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()

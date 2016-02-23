@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business;
 
-use Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
 use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**

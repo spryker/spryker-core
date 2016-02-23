@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Category\Communication\Table;
 
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 

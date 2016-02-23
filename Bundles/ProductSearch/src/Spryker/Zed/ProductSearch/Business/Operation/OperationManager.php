@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Operation;
 
-use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation;
+use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class OperationManager implements OperationManagerInterface
 {

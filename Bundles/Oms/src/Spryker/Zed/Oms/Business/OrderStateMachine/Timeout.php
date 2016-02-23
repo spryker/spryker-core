@@ -8,16 +8,16 @@
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use DateInterval;
-use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use Spryker\Zed\Oms\Business\Process\ProcessInterface;
-use Spryker\Zed\Oms\Business\Process\EventInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
-use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use DateTime;
 use ErrorException;
+use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
+use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Library\Log;
+use Spryker\Zed\Oms\Business\Process\EventInterface;
+use Spryker\Zed\Oms\Business\Process\ProcessInterface;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Timeout implements TimeoutInterface
 {

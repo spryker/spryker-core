@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\User\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Orm\Zed\User\Persistence\SpyUserQuery;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\User\UserConfig getConfig()

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Cart\Business\Operator;
 
+use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Shared\Cart\Messages\Messages;
-use Generated\Shared\Transfer\CartTransfer;
 
 class RemoveOperator extends AbstractOperator
 {

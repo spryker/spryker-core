@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Application\Communication;
 
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension;
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension;
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Shared\Application\Communication\Bootstrap;
+use Spryker\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension;
+use Spryker\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension;
 use Spryker\Zed\Application\Communication\Bootstrap\Extension\RouterExtension;
 use Spryker\Zed\Application\Communication\Bootstrap\Extension\ServiceProviderExtension;
 use Spryker\Zed\Application\Communication\Bootstrap\Extension\TwigExtension;

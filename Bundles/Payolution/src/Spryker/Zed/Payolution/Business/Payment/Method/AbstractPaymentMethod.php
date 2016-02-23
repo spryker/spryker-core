@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Payolution\Business\Payment\Method;
 
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Payolution\Business\Exception\GenderNotDefinedException;
 use Spryker\Zed\Payolution\PayolutionConfig;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 abstract class AbstractPaymentMethod
 {

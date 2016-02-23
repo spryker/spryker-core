@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
-use Spryker\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Library\DataDirectory;
 
 class BeforeBootExtension implements BeforeBootExtensionInterface

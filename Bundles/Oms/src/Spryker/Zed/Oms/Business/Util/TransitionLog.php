@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Spryker\Shared\Library\System;
-use Spryker\Zed\Oms\Business\Process\EventInterface;
+use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
+use Spryker\Shared\Library\System;
+use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;

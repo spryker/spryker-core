@@ -10,9 +10,9 @@ namespace Spryker\Zed\AvailabilityCheckoutConnector\Communication\Plugin;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Checkout\CheckoutConstants;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\AvailabilityCheckoutConnector\Communication\AvailabilityCheckoutConnectorCommunicationFactory getFactory()

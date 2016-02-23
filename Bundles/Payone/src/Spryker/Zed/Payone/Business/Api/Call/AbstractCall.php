@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Payone\Business\Api\Call;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use Spryker\Zed\Payone\Business\Key\HashGeneratorInterface;
-use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+use Spryker\Zed\Payone\Business\Key\HashGeneratorInterface;
 
 abstract class AbstractCall
 {

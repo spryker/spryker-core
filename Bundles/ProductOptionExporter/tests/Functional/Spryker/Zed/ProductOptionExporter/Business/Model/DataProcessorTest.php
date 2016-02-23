@@ -9,8 +9,8 @@ namespace Functional\Spryker\Zed\ProductOptionExporter\Business\Model;
 
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
-use Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 
 /**
  * @group Business

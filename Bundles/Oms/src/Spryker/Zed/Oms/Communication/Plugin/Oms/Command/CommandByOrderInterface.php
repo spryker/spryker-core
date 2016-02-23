@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 interface CommandByOrderInterface extends CommandInterface
 {

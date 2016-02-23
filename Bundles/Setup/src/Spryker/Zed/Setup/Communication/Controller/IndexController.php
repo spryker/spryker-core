@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Environment;
 use Spryker\Shared\Setup\SetupConstants;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 class IndexController extends AbstractController

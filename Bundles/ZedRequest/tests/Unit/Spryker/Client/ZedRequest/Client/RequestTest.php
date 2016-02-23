@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Client\ZedRequest\Client;
 
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Client\ZedRequest\Client\Request;
+use Spryker\Shared\Transfer\TransferInterface;
 use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
 
 /**

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Url\Persistence\Propel;
 
+use Orm\Zed\Url\Persistence\Base\SpyUrl as BaseSpyUrl;
 use Spryker\Zed\Url\Persistence\Exception\MissingResourceException;
 use Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException;
-use Orm\Zed\Url\Persistence\Base\SpyUrl as BaseSpyUrl;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_url' table.

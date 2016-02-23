@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Shipment\Communication\Table;
 
+use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 
 class MethodTable extends AbstractTable
 {

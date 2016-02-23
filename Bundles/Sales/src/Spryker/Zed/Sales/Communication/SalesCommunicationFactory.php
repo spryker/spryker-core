@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Sales\Communication;
 
+use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Sales\Communication\Form\AddressForm;
+use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\OrderItemSplitDataProvider;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
-use Spryker\Zed\Sales\Communication\Form\CustomerForm;
-use Spryker\Zed\Sales\Communication\Form\AddressForm;
+use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()

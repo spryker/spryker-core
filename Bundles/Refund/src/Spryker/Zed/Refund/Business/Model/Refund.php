@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
+use Orm\Zed\Refund\Persistence\SpyRefund;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
-use Orm\Zed\Refund\Persistence\SpyRefund;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 class Refund

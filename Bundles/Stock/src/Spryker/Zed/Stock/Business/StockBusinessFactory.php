@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Stock\Business;
 
-use Spryker\Zed\Stock\Business\Model\Writer;
-use Spryker\Zed\Stock\Business\Model\Reader;
-use Spryker\Zed\Stock\Business\Model\Calculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Stock\Business\Model\Calculator;
+use Spryker\Zed\Stock\Business\Model\Reader;
+use Spryker\Zed\Stock\Business\Model\Writer;
 use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**

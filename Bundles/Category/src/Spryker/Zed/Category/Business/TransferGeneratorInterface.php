@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Category\Business;
 
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface TransferGeneratorInterface
 {

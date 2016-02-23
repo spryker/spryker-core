@@ -9,11 +9,11 @@ namespace Spryker\Zed\Product\Business\Importer\Writer\Db;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Propel\Runtime\Propel;
-use Spryker\Zed\Product\Business\Importer\Writer\ProductConcreteWriterInterface;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\Propel;
+use Spryker\Zed\Product\Business\Importer\Writer\ProductConcreteWriterInterface;
 
 class ProductConcreteWriter implements ProductConcreteWriterInterface
 {

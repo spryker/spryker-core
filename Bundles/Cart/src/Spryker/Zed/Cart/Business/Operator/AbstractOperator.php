@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Cart\Business\Operator;
 
 use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Cart\Business\Model\CalculableContainer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;

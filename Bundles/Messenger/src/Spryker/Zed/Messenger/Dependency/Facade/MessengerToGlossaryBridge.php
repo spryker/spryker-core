@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Messenger\Dependency\Facade;
 
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
 
 class MessengerToGlossaryBridge implements MessengerToGlossaryInterface
 {

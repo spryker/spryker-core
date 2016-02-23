@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Payolution;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Payolution\PayolutionConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PayolutionConfig extends AbstractBundleConfig
 {

@@ -8,8 +8,8 @@
 namespace Functional\Spryker\Zed\Tax;
 
 use Codeception\TestCase\Test;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**

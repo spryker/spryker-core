@@ -16,15 +16,15 @@ use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
 use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Client\ZedRequest\Client\Request;
+use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\EventJournal\Model\Event;
+use Spryker\Shared\EventJournal\Model\SharedEventJournal;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use Spryker\Shared\EventJournal\Model\SharedEventJournal;
-use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
-use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 abstract class AbstractHttpClient implements HttpClientInterface

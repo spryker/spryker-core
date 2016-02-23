@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Checkout\Business;
 
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Checkout\CheckoutConfig getConfig()

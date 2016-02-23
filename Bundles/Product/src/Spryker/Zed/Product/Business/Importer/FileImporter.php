@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Product\Business\Importer;
 
 use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
-use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Product\Business\Importer\Reader\File;
 use Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface;
+use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Product\Business\Model\ProductBatchResultInterface;
 use Spryker\Zed\Product\Business\Validator\DataValidatorInterface;
 

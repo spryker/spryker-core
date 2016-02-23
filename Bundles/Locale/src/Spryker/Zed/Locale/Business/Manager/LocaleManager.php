@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Locale\Business\Manager;
 
+use Orm\Zed\Locale\Persistence\SpyLocale;
 use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 use Spryker\Zed\Locale\Business\TransferGeneratorInterface;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
-use Orm\Zed\Locale\Persistence\SpyLocale;
 
 class LocaleManager
 {

@@ -7,13 +7,13 @@
 
 namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\PriceCalculationHelper;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;

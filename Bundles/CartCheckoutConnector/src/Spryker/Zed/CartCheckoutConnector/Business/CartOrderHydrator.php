@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CartCheckoutConnector\Business;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 class CartOrderHydrator implements CartOrderHydratorInterface
 {

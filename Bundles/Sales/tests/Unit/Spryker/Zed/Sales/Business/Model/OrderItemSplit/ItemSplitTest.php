@@ -7,9 +7,9 @@
 
 namespace Unit\Spryker\Zed\Sales\Business\Model\OrderItemSplit\Validation;
 
-use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
+use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
 
 class ItemSplitTest extends \PHPUnit_Framework_TestCase
 {

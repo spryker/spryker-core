@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
-use Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
 use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
 use Spryker\Shared\Library\Context;
 use Spryker\Shared\Library\DateFormatter;
 use Spryker\Shared\Library\Twig\DateFormatterTwigExtension;

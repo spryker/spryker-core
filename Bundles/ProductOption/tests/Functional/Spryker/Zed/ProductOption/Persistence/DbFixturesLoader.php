@@ -7,10 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductOption\Persistence;
 
-use Propel\Runtime\Propel;
 use Orm\Zed\Locale\Persistence\SpyLocale;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPreset;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValue;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
@@ -22,9 +19,12 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslation;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsage;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraint;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
+use Propel\Runtime\Propel;
 
 class DbFixturesLoader
 {

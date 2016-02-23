@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Console\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Console\ConsoleDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Console\ConsoleConfig getConfig()

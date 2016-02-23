@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\Acl\Communication;
 
+use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Communication\Form\DataProvider\AclGroupFormDataProvider;
 use Spryker\Zed\Acl\Communication\Form\DataProvider\AclRoleFormDataProvider;
 use Spryker\Zed\Acl\Communication\Form\DataProvider\AclRuleFormDataProvider;
-use Spryker\Zed\Acl\Communication\Table\GroupTable;
-use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Acl\Communication\Form\RoleForm;
 use Spryker\Zed\Acl\Communication\Form\RuleForm;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Acl\Communication\Table\GroupTable;
 use Spryker\Zed\Acl\Communication\Table\GroupUsersTable;
 use Spryker\Zed\Acl\Communication\Table\RoleTable;
 use Spryker\Zed\Acl\Communication\Table\RulesetTable;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Sales\Business;
 
-use Spryker\Zed\Sales\Business\Model\OrderReferenceGenerator;
-use Spryker\Zed\Sales\Business\Model\Split\Validation\Validator;
-use Spryker\Zed\Sales\Business\Model\Split\Calculator;
-use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
-use Spryker\Zed\Sales\Business\Model\OrderManager;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Model\CommentManager;
 use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
+use Spryker\Zed\Sales\Business\Model\OrderManager;
+use Spryker\Zed\Sales\Business\Model\OrderReferenceGenerator;
+use Spryker\Zed\Sales\Business\Model\Split\Calculator;
+use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
+use Spryker\Zed\Sales\Business\Model\Split\Validation\Validator;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**

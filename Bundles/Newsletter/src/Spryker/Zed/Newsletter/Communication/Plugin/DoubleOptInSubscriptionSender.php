@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Newsletter\Communication\Plugin;
 
-use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface;
 use Spryker\Zed\Newsletter\NewsletterConfig;

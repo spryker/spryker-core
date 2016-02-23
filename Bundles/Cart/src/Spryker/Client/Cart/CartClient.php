@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\Cart;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**

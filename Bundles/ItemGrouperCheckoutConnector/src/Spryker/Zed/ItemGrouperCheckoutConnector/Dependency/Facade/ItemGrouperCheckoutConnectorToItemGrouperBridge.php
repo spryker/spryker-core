@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ItemGrouperCheckoutConnector\Dependency\Facade;
 
-use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
+use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 class ItemGrouperCheckoutConnectorToItemGrouperBridge implements ItemGrouperCheckoutConnectorToItemGrouperInterface
 {

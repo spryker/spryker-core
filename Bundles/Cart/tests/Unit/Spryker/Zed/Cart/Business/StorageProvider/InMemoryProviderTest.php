@@ -7,9 +7,9 @@
 
 namespace Unit\Spryker\Zed\Cart\Business\StorageProvider;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\InMemoryProvider;
 
 /**

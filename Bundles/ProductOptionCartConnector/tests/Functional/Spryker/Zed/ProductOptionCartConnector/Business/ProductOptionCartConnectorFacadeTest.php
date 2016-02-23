@@ -8,11 +8,11 @@
 namespace Functional\Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
+use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
+use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
 
 /**
  * @group Business

@@ -7,9 +7,9 @@
 
 namespace Spryker\Yves\Application\Routing;
 
+use Silex\Application;
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
-use Silex\Application;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Yves\Kernel\Controller\RouteNameResolver;

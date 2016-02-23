@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector;
 
+use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationBridge;
 use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToDiscountBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationBridge;
 
 class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {

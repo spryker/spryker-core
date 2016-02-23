@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ItemGrouperCheckoutConnector\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ItemGrouperCheckoutConnector\ItemGrouperCheckoutConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\ItemGrouperCheckoutConnector\ItemGrouperCheckoutConnectorConfig getConfig()

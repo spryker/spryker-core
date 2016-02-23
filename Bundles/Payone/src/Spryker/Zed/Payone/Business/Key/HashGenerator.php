@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Payone\Business\Key;
 
-use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use Spryker\Shared\Payone\Dependency\HashInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 
 class HashGenerator implements HashGeneratorInterface
 {

@@ -8,14 +8,14 @@
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
 use Codeception\TestCase\Test;
+use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
-use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
-use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
-use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 

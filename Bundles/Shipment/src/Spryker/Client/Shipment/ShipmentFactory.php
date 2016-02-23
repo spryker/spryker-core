@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Shipment;
 
-use Spryker\Client\Shipment\Zed\ShipmentStub;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Shipment\Zed\ShipmentStub;
 
 class ShipmentFactory extends AbstractFactory
 {

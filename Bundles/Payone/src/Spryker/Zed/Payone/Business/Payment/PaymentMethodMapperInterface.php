@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
+use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 
 interface PaymentMethodMapperInterface
 {

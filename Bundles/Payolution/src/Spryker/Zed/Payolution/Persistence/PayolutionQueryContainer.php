@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Payolution\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Shared\Payolution\PayolutionConstants;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Payolution\Persistence\PayolutionPersistenceFactory getFactory()

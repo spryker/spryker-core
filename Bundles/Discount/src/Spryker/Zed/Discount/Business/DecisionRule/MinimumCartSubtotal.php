@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Discount\Business\DecisionRule;
 
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Kernel\Business\ModelResult;
 
 class MinimumCartSubtotal

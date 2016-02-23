@@ -7,15 +7,15 @@
 
 namespace Unit\Spryker\Zed\Wishlist\Business\Storage;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Zed\Wishlist\Business\Storage\Propel;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\Wishlist\Business\Storage\Propel;
 
 class PropelTest extends \PHPUnit_Framework_TestCase
 {

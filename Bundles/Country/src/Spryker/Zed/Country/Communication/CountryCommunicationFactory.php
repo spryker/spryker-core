@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Country\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Country\CountryDependencyProvider;
 use Spryker\Zed\Country\Communication\Table\CountryTable;
+use Spryker\Zed\Country\CountryDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()

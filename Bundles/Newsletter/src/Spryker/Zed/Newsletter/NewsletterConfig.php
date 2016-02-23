@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Newsletter;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Newsletter\NewsletterConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class NewsletterConfig extends AbstractBundleConfig
 {

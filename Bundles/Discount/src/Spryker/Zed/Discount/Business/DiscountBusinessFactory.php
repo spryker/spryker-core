@@ -7,34 +7,34 @@
 
 namespace Spryker\Zed\Discount\Business;
 
-use Spryker\Zed\Discount\Business\Model\VoucherCode;
-use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
-use Spryker\Zed\Discount\Business\Model\CartRule;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Business\Calculator\Fixed;
 use Spryker\Zed\Discount\Business\Calculator\Percentage;
 use Spryker\Zed\Discount\Business\Collector\Aggregate;
+use Spryker\Zed\Discount\Business\Collector\Expense;
 use Spryker\Zed\Discount\Business\Collector\Item;
 use Spryker\Zed\Discount\Business\Collector\ItemExpense;
-use Spryker\Zed\Discount\Business\Collector\Expense;
 use Spryker\Zed\Discount\Business\Collector\ItemProductOption;
+use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
+use Spryker\Zed\Discount\Business\DecisionRule\Voucher;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
+use Spryker\Zed\Discount\Business\Model\CartRule;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
+use Spryker\Zed\Discount\Business\Model\DecisionRuleEngine;
+use Spryker\Zed\Discount\Business\Model\Discount;
+use Spryker\Zed\Discount\Business\Model\VoucherCode;
+use Spryker\Zed\Discount\Business\Model\VoucherEngine;
+use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
 use Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
-use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
-use Spryker\Zed\Discount\Business\Writer\DiscountVoucherWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Discount\Business\DecisionRule\Voucher;
+use Spryker\Zed\Discount\Business\Writer\DiscountVoucherWriter;
+use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
 use Spryker\Zed\Discount\Business\Writer\VoucherCodesWriter;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
-use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
-use Spryker\Zed\Discount\Business\Model\Discount;
-use Spryker\Zed\Discount\Business\Model\VoucherEngine;
-use Spryker\Zed\Discount\Business\Model\DecisionRuleEngine;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()

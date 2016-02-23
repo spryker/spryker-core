@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Category\Business\Renderer;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Graph\GraphInterface;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Shared\Graph\GraphInterface;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 class CategoryTreeRenderer
 {

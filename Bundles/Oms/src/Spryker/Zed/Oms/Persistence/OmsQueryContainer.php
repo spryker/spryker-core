@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Oms\OmsDependencyProvider;
-use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory getFactory()

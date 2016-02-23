@@ -8,13 +8,13 @@
 namespace Spryker\Zed\Payone\Business\TransactionStatus;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
 use Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
 use Spryker\Shared\Payone\PayoneTransactionStatusConstants;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
 
 class TransactionStatusUpdateManager
 {

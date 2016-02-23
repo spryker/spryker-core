@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
-use Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException;
 use Spryker\Zed\Application\Business\Exception\NavigationCacheEmptyException;
+use Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException;
 
 class NavigationCache implements NavigationCacheInterface
 {

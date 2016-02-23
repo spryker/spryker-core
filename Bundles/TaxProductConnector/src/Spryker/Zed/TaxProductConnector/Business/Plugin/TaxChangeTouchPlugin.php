@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\Plugin;
 
-use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
+use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 
 class TaxChangeTouchPlugin implements TaxChangePluginInterface
 {

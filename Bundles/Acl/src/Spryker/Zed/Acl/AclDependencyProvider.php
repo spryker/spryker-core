@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Acl;
 
+use Spryker\Zed\Acl\Dependency\Facade\AclToUserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Acl\Dependency\Facade\AclToUserBridge;
 
 class AclDependencyProvider extends AbstractBundleDependencyProvider
 {

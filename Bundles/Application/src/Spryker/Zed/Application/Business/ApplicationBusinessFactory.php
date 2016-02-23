@@ -7,17 +7,7 @@
 
 namespace Spryker\Zed\Application\Business;
 
-use Spryker\Zed\Application\Business\Model\Navigation\Collector\Decorator\NavigationCollectorCacheDecorator;
-use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
-use Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidator;
-use Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidator;
-use Spryker\Zed\Application\Business\Model\Url\UrlBuilder;
-use Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractor;
-use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollector;
-use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
-use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
 use Psr\Log\LoggerInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory;
@@ -25,8 +15,18 @@ use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportKeyValue;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallDemoData;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall;
+use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
+use Spryker\Zed\Application\Business\Model\Navigation\Collector\Decorator\NavigationCollectorCacheDecorator;
+use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollector;
+use Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractor;
+use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
 use Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder;
+use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
+use Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidator;
+use Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidator;
+use Spryker\Zed\Application\Business\Model\Url\UrlBuilder;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()

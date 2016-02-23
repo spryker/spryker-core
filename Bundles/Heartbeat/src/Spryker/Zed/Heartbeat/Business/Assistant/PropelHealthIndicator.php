@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Heartbeat\Business\Assistant;
 
+use Orm\Zed\Heartbeat\Persistence\SpyPropelHeartbeat;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Heartbeat\Code\AbstractHealthIndicator;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
-use Orm\Zed\Heartbeat\Persistence\SpyPropelHeartbeat;
 
 class PropelHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {

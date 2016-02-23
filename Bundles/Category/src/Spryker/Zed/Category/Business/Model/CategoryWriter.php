@@ -9,9 +9,9 @@ namespace Spryker\Zed\Category\Business\Model;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 class CategoryWriter implements CategoryWriterInterface
 {

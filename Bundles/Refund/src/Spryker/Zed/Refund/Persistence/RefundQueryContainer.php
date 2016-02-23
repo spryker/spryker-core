@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Refund\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Refund\Persistence\RefundPersistenceFactory getFactory()

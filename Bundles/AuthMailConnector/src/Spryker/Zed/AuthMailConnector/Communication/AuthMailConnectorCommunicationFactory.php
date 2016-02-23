@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\AuthMailConnector\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\AuthMailConnector\AuthMailConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig getConfig()

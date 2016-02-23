@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
+use Generated\Shared\Transfer\InstalledPackagesTransfer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater;
@@ -14,8 +16,8 @@ use Spryker\Zed\Maintenance\Business\Composer\Updater\ComposerUpdaterComposite;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\DescriptionUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\LicenseUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\RequireExternalUpdater;
-use Spryker\Zed\Maintenance\Business\Composer\Updater\StabilityUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\RequireUpdater;
+use Spryker\Zed\Maintenance\Business\Composer\Updater\StabilityUpdater;
 use Spryker\Zed\Maintenance\Business\DependencyTree\AdjacencyMatrixBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ClassNameFilter;
@@ -33,10 +35,10 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClie
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\UseStatement;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraphBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\ExternalGraphBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\SimpleGraphBuilder;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraphBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyHydrator\DependencyHydrator;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyHydrator\PackageNameHydrator;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyHydrator\PackageVersionHydrator;
@@ -51,20 +53,18 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\BundleUsesCo
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignConstants;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignException;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinder;
-use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
-use Generated\Shared\Transfer\InstalledPackagesTransfer;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Maintenance\Business\Dependency\BundleParser;
 use Spryker\Zed\Maintenance\Business\Dependency\Graph as DependencyGraph;
 use Spryker\Zed\Maintenance\Business\Dependency\Manager;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
+use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
 use Spryker\Zed\Maintenance\MaintenanceDependencyProvider;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Finder\Finder as SfFinder;
+use Symfony\Component\Process\Process;
 
 /**
  * @method \Spryker\Zed\Maintenance\MaintenanceConfig getConfig()

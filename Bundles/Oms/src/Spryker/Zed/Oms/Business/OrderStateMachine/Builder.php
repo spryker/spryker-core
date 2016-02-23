@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use LogicException;
+use SimpleXMLElement;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
-use SimpleXMLElement;
-use LogicException;
 
 class Builder implements BuilderInterface
 {

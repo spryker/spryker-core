@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Discount\Business\DiscountFacade;
 
 class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscountInterface
 {

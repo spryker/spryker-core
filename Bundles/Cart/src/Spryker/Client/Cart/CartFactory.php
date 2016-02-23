@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Cart;
 
-use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Cart\Session\CartSession;
+use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CartFactory extends AbstractFactory

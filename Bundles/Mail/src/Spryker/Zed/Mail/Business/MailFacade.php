@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Mail\Business;
 
-use Generated\Shared\Transfer\SendMailResponsesTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\SendMailResponsesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
