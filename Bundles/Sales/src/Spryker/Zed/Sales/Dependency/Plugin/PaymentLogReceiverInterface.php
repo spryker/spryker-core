@@ -12,6 +12,8 @@ interface PaymentLogReceiverInterface
 {
 
     /**
+     * TODO FW Do we need this here?
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return array

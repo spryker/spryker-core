@@ -18,9 +18,9 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
 {
 
     /**
-     * Executes all calculators in plugin stack.
-     *
-     * @see CalculationConfig::getCalculatorStack
+     * Specification:
+     * - Run all calculator plugins
+     * - Return the updated quote
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -32,6 +32,8 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
+     * Specific calculator
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -42,6 +44,8 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
+     * Specific calculator
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -52,6 +56,8 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
+     * Specific calculator
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -62,6 +68,8 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
+     * Specific calculator
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -72,6 +80,8 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
+     * Specific calculator
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -82,6 +92,8 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
+     * Specific calculator
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -92,6 +104,8 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
+     * Specific calculator
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -102,6 +116,9 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
+     * Checks if the calculated totals in the quote are still valid/consistent.
+     * If not: Adds an error code and message to the response
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

@@ -19,6 +19,8 @@ class SalesConfig extends AbstractBundleConfig
     const PARAM_IS_SALES_ORDER = 'id-sales-order';
 
     /**
+     * TODO Not needed, remove
+     *
      * @var array|string[]
      */
     protected static $stateMachineMapper = [
@@ -26,6 +28,8 @@ class SalesConfig extends AbstractBundleConfig
         'no_payment' => 'Nopayment01',
     ];
     /**
+     * TODO FW Not used. Please remove.
+     *
      * @return string
      */
     public function getInvoiceIncrementPrefix()
@@ -34,6 +38,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * TODO FW Not used. Please remove.
+     *
      * @return string
      */
     public function getInvoiceIncrementDivider()
@@ -42,6 +48,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * TODO FW Not used. Please remove.
+     *
      * total count of digits in invoiceNumber including prefix (max 20)
      *
      * @return int
@@ -52,6 +60,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * TODO FW Not used. Please remove.
+     *
      * minimum incrementation of invoice number
      *
      * @return int
@@ -62,6 +72,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * TODO FW Not used. Please remove.
+     *
      * maximum incrementation of invoice number
      *
      * @return int
@@ -72,6 +84,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * TODO FW Not used. Please remove.
+     *
      * @throws \Exception
      *
      * @return int
@@ -82,6 +96,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * Separator for the sequence number
      * @return string
      */
     public function getUniqueIdentifierSeparator()
@@ -90,6 +105,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * TODO FW Move the whole algortithm to the bundle config
+     *
      * OR-condition
      *
      * @return array
@@ -102,6 +119,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * Defines the prefix for the sequence number which is the public id of an order.
+     *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     public function getOrderReferenceDefaults()

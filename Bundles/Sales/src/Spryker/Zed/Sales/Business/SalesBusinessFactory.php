@@ -54,7 +54,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
 
         return new CommentManager(
             $this->getQueryContainer(),
-            $userFacade->getCurrentUser()
+            $userFacade->getCurrentUser() // TODO FW The "current user" should come from the calling class. Not from the factory.
         );
     }
 
@@ -65,8 +65,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderDetailsManager(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS),
-            $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_PAYMENT_LOGS)
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS), // TODO FW Replace with getFacadeOms()
+            $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_PAYMENT_LOGS) // TODO FW Use a method getPaymentLogPlugins()
         );
     }
 

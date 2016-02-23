@@ -13,6 +13,8 @@ interface CheckoutSaveOrderInterface
 {
 
     /**
+     * This plugin retrieves (its) data from the quote object and saves it to the database.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      */

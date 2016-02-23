@@ -14,7 +14,8 @@ use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface;
 
-class Operation
+// TODO FW This file must be moved to a directory
+class Operation // TODO FW Interface missing
 {
 
     const ADD_ITEMS_SUCCESS = 'cart.add.items.success';

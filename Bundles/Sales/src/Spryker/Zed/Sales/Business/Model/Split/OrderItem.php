@@ -15,7 +15,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-class OrderItem implements ItemInterface
+class OrderItem implements ItemInterface // TODO FW This class should be called "class OrderItemSplit implements OrderItemSplitInterface"
 {
 
     const SPLIT_MARKER = 'split#';
@@ -65,11 +65,11 @@ class OrderItem implements ItemInterface
      */
     public function split($idSalesOrderItem, $quantityToSplit)
     {
-        $salesOrderItem = $this->salesQueryContainer
+        $salesOrderItem = $this->salesQueryContainer // TODO FW Rename to $salesOrderItemEntity
             ->querySalesOrderItem()
             ->findOneByIdSalesOrderItem($idSalesOrderItem);
 
-        $splitResponse = new ItemSplitResponseTransfer();
+        $splitResponse = new ItemSplitResponseTransfer(); // TODO FW Rename to $splitResponseTransfer
         if ($this->validator->isValid($salesOrderItem, $quantityToSplit) === false) {
             return $splitResponse
                 ->setSuccess(false)

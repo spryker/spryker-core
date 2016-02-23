@@ -86,7 +86,7 @@ class OrderDetailsManager
             ->querySalesOrderAddressById($idAddress)
             ->findOne();
 
-        Copy::transferToEntity($addressTransfer, $addressEntity);
+        Copy::transferToEntity($addressTransfer, $addressEntity); // TODO FW Remove this outdated static function from here. It should set only these fields, which are modified in the transfer.
 
         $addressEntity->save();
 
@@ -128,7 +128,7 @@ class OrderDetailsManager
     }
 
     /**
-     * @param int $idOrder
+     * @param int $idOrder // TODO FW Rename to $idSalesOrder
      *
      * @return array
      */
@@ -138,7 +138,7 @@ class OrderDetailsManager
             ->querySalesOrderItemsByIdSalesOrder($idOrder)
             ->find();
 
-        $status = [];
+        $status = []; // TODO FW Rename to $states
         foreach ($orderItems as $orderItem) {
             $status[$orderItem->getState()->getName()] = $orderItem->getState()->getName();
         }
@@ -165,6 +165,8 @@ class OrderDetailsManager
     }
 
     /**
+     * TODO FW This method returns strange things, which are need for a specific GUI probably.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
@@ -182,6 +184,8 @@ class OrderDetailsManager
         }
 
         foreach ($orderEntity->getItems() as $orderItem) {
+
+            // TODO FW Move this to query container
             $criteria = new Criteria();
             $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
             $orderItem->getStateHistoriesJoinState($criteria);
@@ -345,7 +349,7 @@ class OrderDetailsManager
     {
         $totalOrderCount = $this->queryContainer
             ->querySalesOrder()
-            ->filterByFkCustomer($orderTransfer->getFkCustomer())->count();
+            ->filterByFkCustomer($orderTransfer->getFkCustomer())->count(); // TODO FW filer not allowed here
 
         $orderTransfer->setTotalOrderCount($totalOrderCount);
 

@@ -25,6 +25,11 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
+/**
+ * TODO FW Interface missing
+ * TODO FW This class has too many responsiblities. (Save order, hydration, getSomething, ...)
+ * TODO FW Avoid dependency to OmsFacade.
+ */
 class OrderManager
 {
 
@@ -346,6 +351,8 @@ class OrderManager
     }
 
     /**
+     * TODO FW Move this method to bundle config
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool

@@ -11,6 +11,8 @@ interface OrderTotalsAggregatePluginInterface
 {
 
     /**
+     * Aggregates data and adds it to the transfer.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void

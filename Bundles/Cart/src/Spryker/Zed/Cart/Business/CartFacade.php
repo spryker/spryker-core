@@ -16,6 +16,16 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
 {
 
     /**
+     * Adds item(s) to the quote. Each item gets additonal informations (e.g. price).
+     *
+     * Specification:
+     * - For each new item run the item expander plugins (requires a SKU for each new item)
+     * - Add new item(s) to quote (Requires a quantity > 0 for each new item)
+     * - Group items in quote (-> ItemGrouper)
+     * - Recalculate quote (-> Calculation)
+     * - Add success message to messenger (-> Messenger)
+     * - Return updated quote
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -26,6 +36,9 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
+     *
+     * TODO FW Is this a duplicate of addToCart() ? If so please remove
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -36,6 +49,15 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
+     * Remove item(s) from the quote.
+     *
+     * Specification:
+     * - For each new item run the item expander plugins (requires a SKU for each new item)
+     * - Decreases the given quantity for the given item(s) from the quote
+     * - Recalculate quote (-> Calculation)
+     * - Add success message to messenger (-> Messenger)
+     * - Return updated quote
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -46,6 +68,8 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
+     * TODO FW Is this a duplicate of removeFromCart() ? If so please remove
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Checkout\CheckoutConstants;
 
-class CheckoutGrandTotalPrecondition
+class CheckoutGrandTotalPrecondition // TODO FW Interface missing
 {
 
     /**

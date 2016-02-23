@@ -12,6 +12,8 @@ interface CalculatorPluginInterface
 {
 
     /**
+     * This plugin makes calculations based on the given quote. The result is added to the quote.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer);

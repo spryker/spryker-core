@@ -19,6 +19,8 @@ class CartClient extends AbstractClient implements CartClientInterface
 {
 
     /**
+     * Returns the stored quote
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote()
@@ -27,6 +29,9 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * Resets all data which is stored in the quote
+     *
+     * TODO FW Wrong name
      * @return void
      */
     public function clearCart()
@@ -35,6 +40,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * Returns number of items in quote
+     *
      * @return int
      */
     public function getItemCount()
@@ -43,6 +50,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * Stores quote
+     *
+     * TODO FW Please remove the "toSession" from the methodname as this is an implementation detail
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -53,6 +64,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * Adds an item (identfied by SKU and quantity) to the quote and stores it
+     *
+     * TODO FW This method does two things. Please remove the storeQuoteToSession() from here and adjust the description.
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -68,13 +83,17 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * Removes the item with the given SKU
+     *
+     * TODO FW The method only needs the SKU. All other information from the itemTransfer (incl the quantity) are dismissed. Why not just have the SKU as a parameter?
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItem(ItemTransfer $itemTransfer)
     {
-        $itemTransfer = $this->mergeCartItems($itemTransfer, $this->findItem($itemTransfer));
+        $itemTransfer = $this->mergeCartItems($itemTransfer, $this->findItem($itemTransfer)); // TODO FW Two things on one line
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
         $quoteTransfer = $this->getZedStub()->removeItem($cartChangeTransfer);
 
@@ -106,6 +125,9 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * Changes the quantity of the given item in the quote. If the quantity is equal to 0, the item
+     * is removed from the quote.
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -132,6 +154,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * Decreases the quantity of the given item in the quote.
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -148,6 +172,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * Increases the quantity of the given item in the quote.
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *

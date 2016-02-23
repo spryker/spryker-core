@@ -8,7 +8,7 @@ namespace Spryker\Zed\Calculation\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class StackExecutor
+class StackExecutor // TODO FW Interface missing
 {
 
     /**

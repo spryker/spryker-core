@@ -16,6 +16,8 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {
 
     /**
+     * Places the order
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer

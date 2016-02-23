@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\OrderDetailsCommentsTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderComment;
 
+/**
+ * TODO FW Interface missing
+ */
 class CommentManager
 {
 
@@ -26,6 +29,8 @@ class CommentManager
     protected $userTransfer;
 
     /**
+     * TODO FW This class is stateful because of $userTransfer
+     *
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      */
@@ -64,6 +69,8 @@ class CommentManager
      */
     public function getCommentsByIdSalesOrder($idSalesOrder)
     {
+
+        // TODO FW filter method is not allowed outside of query container
         $commentsCollection = $this->queryContainer->queryComments()->filterByFkSalesOrder($idSalesOrder)->find();
 
         $comments = new OrderDetailsCommentsTransfer();
