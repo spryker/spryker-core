@@ -8,9 +8,14 @@
     "psr-4": {
       "Config\\Module\\": "tests/_support/Module"
     },
-    "files": ["src/Spryker/Shared/Config.php"]
+    "files": {
+      "0": "src/Spryker/Shared/Config.php"
+    }
   },
-  "require": {},
+  "require": {
+    "spryker/kernel": "^1.0.0",
+    "spryker/library": "^1.0.0"
+  },
   "description": "config bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

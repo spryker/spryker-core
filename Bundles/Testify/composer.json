@@ -12,8 +12,7 @@
   "require": {
     "codeception/codeception": "~2.1.5"
   },
-  "require-dev": {
-  },
+  "require-dev": {},
   "description": "testify bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -21,6 +20,6 @@
     "branch-alias": {
       "dev-master": "1.0.x-dev"
     }
-  }
+  },
+  "prefer-stable": true
 }
-
