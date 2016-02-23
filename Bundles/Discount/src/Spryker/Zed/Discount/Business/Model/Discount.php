@@ -11,11 +11,10 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
-use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
+use Spryker\Zed\Discount\Business\Exception\QueryStringException;
+use Spryker\Zed\Discount\Business\QueryString\Parser;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 class Discount
 {
@@ -29,95 +28,43 @@ class Discount
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Model\DecisionRuleEngine
-     */
-    protected $decisionRule;
-
-    /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected $quoteTransfer;
-
-    /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
-     */
-    protected $collectorPlugins;
-
-    /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
-     */
-    protected $calculatorPlugins;
-
-    /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
-     */
-    protected $discountSettings;
-
-    /**
      * @var \Spryker\Zed\Discount\Business\Model\CalculatorInterface
      */
     protected $calculator;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Distributor\DistributorInterface
+     * @var \Spryker\Zed\Discount\Business\QueryString\Parser
      */
-    protected $distributor;
+    protected $decisionRuleQueryStringParser;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
-     */
-    protected $messengerFacade;
-
-    /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
-     */
-    protected $decisionRulePlugins;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
-     * @param \Spryker\Zed\Discount\Business\Model\DecisionRuleInterface $decisionRule
      * @param \Spryker\Zed\Discount\Business\Model\CalculatorInterface $calculator
-     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     * @param \Spryker\Zed\Discount\Business\QueryString\Parser $decisionRuleQueryStringParser
      */
     public function __construct(
-        QuoteTransfer $quoteTransfer,
         DiscountQueryContainer $queryContainer,
-        DecisionRuleInterface $decisionRule,
         CalculatorInterface $calculator,
-        DistributorInterface $distributor,
-        DiscountToMessengerInterface $messengerFacade,
-        array $decisionRulePlugins
+        Parser $decisionRuleQueryStringParser
     ) {
         $this->queryContainer = $queryContainer;
-        $this->decisionRule = $decisionRule;
-        $this->quoteTransfer = $quoteTransfer;
         $this->calculator = $calculator;
-        $this->distributor = $distributor;
-        $this->decisionRulePlugins = $decisionRulePlugins;
-        $this->messengerFacade = $messengerFacade;
+        $this->decisionRuleQueryStringParser = $decisionRuleQueryStringParser;
     }
 
     /**
-     * @return array
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @return array|\Generated\Shared\Transfer\QuoteTransfer[]
      */
-    public function calculate()
+    public function calculate(QuoteTransfer $quoteTransfer)
     {
-        $result = $this->retrieveDiscountsToBeCalculated();
-        $discountsToBeCalculated = $result[self::KEY_DISCOUNTS];
-        $this->setValidationMessages($result[self::KEY_ERRORS]);
+        $discountsToBeCalculated = $this->retrieveDiscountsToBeCalculated($quoteTransfer);
 
-        $calculatedDiscounts = $this->calculator->calculate(
-            $discountsToBeCalculated,
-            $this->quoteTransfer,
-            $this->distributor
-        );
+        $calculatedDiscounts = $this->calculator->calculate($discountsToBeCalculated, $quoteTransfer);
 
-        $this->addDiscountsToQuote($this->quoteTransfer, $calculatedDiscounts);
+        $this->addCalculatedDiscountsToQuote($quoteTransfer, $calculatedDiscounts);
 
-        return $result;
+        return $quoteTransfer;
     }
 
     /**
@@ -126,17 +73,17 @@ class Discount
      *
      * @return void
      */
-    protected function addDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
+    protected function addCalculatedDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
     {
         $quoteTransfer->setVoucherDiscounts(new \ArrayObject());
         $quoteTransfer->setCartRuleDiscounts(new \ArrayObject());
 
         foreach ($discounts as $discount) {
-            $discountTransferCopy = $discount[Calculator::KEY_DISCOUNT_TRANSFER];
-            if (!empty($discountTransferCopy->getVoucherCode())) {
-                $quoteTransfer->addVoucherDiscount($discountTransferCopy);
+            $discountTransfer = $discount[Calculator::KEY_DISCOUNT_TRANSFER];
+            if (!empty($discountTransfer->getVoucherCode())) {
+                $quoteTransfer->addVoucherDiscount($discountTransfer);
             } else {
-                $quoteTransfer->addCartRuleDiscount($discountTransferCopy);
+                $quoteTransfer->addCartRuleDiscount($discountTransfer);
             }
         }
     }
@@ -152,76 +99,41 @@ class Discount
     }
 
     /**
-     * @return array
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @return array|\Generated\Shared\Transfer\DiscountTransfer[]
      */
-    protected function retrieveDiscountsToBeCalculated()
+    protected function retrieveDiscountsToBeCalculated(QuoteTransfer $quoteTransfer)
     {
-        $discounts = $this->retrieveActiveCartAndVoucherDiscounts($this->getVoucherCodes());
+        $discounts = $this->retrieveActiveCartAndVoucherDiscounts($this->getVoucherCodes($quoteTransfer));
 
         $discountsToBeCalculated = [];
-        $decisionRuleValidationErrors = [];
-
         foreach ($discounts as $discountEntity) {
-            $discountTransfer = $this->hydrateDiscountTransfer($discountEntity);
-            $decisionRulePlugins = $this->getDecisionRulePlugins($discountEntity->getPrimaryKey());
+            try {
+                $isSatisfied = $this->decisionRuleQueryStringParser->parse(
+                    $quoteTransfer,
+                    $discountEntity->getDecisionRuleQueryString()
+                );
 
-            $result = $this->decisionRule->evaluate($discountTransfer, $this->quoteTransfer, $decisionRulePlugins);
-
-            if ($result->isSuccess()) {
-                $discountsToBeCalculated[] = $discountTransfer;
-            } else {
-                $decisionRuleValidationErrors = array_merge($decisionRuleValidationErrors, $result->getErrors());
+                if ($isSatisfied === true) {
+                    $discountsToBeCalculated[] = $this->hydrateDiscountTransfer($discountEntity);
+                }
+            } catch (QueryStringException $e) {
+               //@todo log exception
             }
         }
 
-        return [
-            self::KEY_DISCOUNTS => $discountsToBeCalculated,
-            self::KEY_ERRORS => $decisionRuleValidationErrors,
-        ];
+        return $discountsToBeCalculated;
+
     }
 
     /**
-     * @param int $idDiscount
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
-     */
-    protected function getDecisionRulePlugins($idDiscount)
-    {
-        $plugins = [];
-        $decisionRules = $this->retrieveDecisionRules($idDiscount);
-        foreach ($decisionRules as $decisionRuleEntity) {
-            $decisionRulePlugin = $this->decisionRulePlugins[$decisionRuleEntity->getDecisionRulePlugin()];
-
-            $decisionRulePlugin->setContext(
-                [
-                    AbstractDecisionRule::KEY_ENTITY => $decisionRuleEntity,
-                ]
-            );
-
-            $plugins[] = $decisionRulePlugin;
-        }
-
-        return $plugins;
-    }
-
-    /**
-     * @param int $idDiscount
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule[]
-     */
-    protected function retrieveDecisionRules($idDiscount)
-    {
-        $decisionRules = $this->queryContainer->queryDecisionRules($idDiscount)->find();
-
-        return $decisionRules;
-    }
-
-    /**
      * @return array|string[]
      */
-    protected function getVoucherCodes()
+    protected function getVoucherCodes(QuoteTransfer $quoteTransfer)
     {
-        $voucherDiscounts = $this->quoteTransfer->getVoucherDiscounts();
+        $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
 
         if (count($voucherDiscounts) === 0) {
             return [];
@@ -257,20 +169,4 @@ class Discount
 
         return $discountTransfer;
     }
-
-    /**
-     * @param array|string[] $errors
-     *
-     * @return void
-     */
-    protected function setValidationMessages(array $errors = [])
-    {
-        foreach ($errors as $errorMessage) {
-            $messageTransfer = new MessageTransfer();
-            $messageTransfer->setValue($errorMessage);
-
-            $this->messengerFacade->addErrorMessage($messageTransfer);
-        }
-    }
-
 }

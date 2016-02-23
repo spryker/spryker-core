@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Business;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Fixed;
 use Spryker\Zed\Discount\Business\Calculator\Percentage;
 use Spryker\Zed\Discount\Business\Collector\Aggregate;
@@ -32,6 +31,8 @@ use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWit
 use Spryker\Zed\Discount\Business\Model\VoucherCode;
 use Spryker\Zed\Discount\Business\Model\VoucherEngine;
 use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
+use Spryker\Zed\Discount\Business\QueryString\Parser;
+use Spryker\Zed\Discount\Business\QueryString\RuleRegistry;
 use Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
@@ -66,20 +67,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Spryker\Zed\Discount\Business\Model\Discount
      */
-    public function createDiscount(QuoteTransfer $quoteTransfer)
+    public function createDiscount()
     {
         return new Discount(
-            $quoteTransfer,
             $this->getQueryContainer(),
-            $this->createDecisionRuleEngine(),
             $this->createCalculator(),
-            $this->createDistributor(),
-            $this->getMessengerFacade(),
-            $this->getDecisionRulePlugins()
+            $this->createDecisionRuleQueryStringParser()
         );
     }
 
@@ -212,6 +207,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
         return new Calculator(
             $this->createCollectorResolver(),
             $this->getMessengerFacade(),
+            $this->createDistributor(),
             $this->getCalculatorPlugins()
         );
     }
@@ -325,7 +321,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge
      */
     protected function getMessengerFacade()
     {
@@ -394,6 +390,38 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createOrderExpenseWithDiscountsAggregator()
     {
         return new OrderExpensesWithDiscounts($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\Subtotal
+     */
+    public function createSubTotalDecisionRuleRule()
+    {
+        return new Subtotal();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\Subtotal
+     */
+    public function createGrandtotalDecisionRuleRule()
+    {
+        return new DecisionRuleGrandTotal();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\Parser
+     */
+    protected function createDecisionRuleQueryStringParser()
+    {
+        return new Parser($this->createDecisionRuleRegistry());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\RuleRegistry
+     */
+    protected function createDecisionRuleRegistry()
+    {
+        return new RuleRegistry($this->getDecisionRulePlugins());
     }
 
 }

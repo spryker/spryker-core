@@ -31,7 +31,7 @@ class Percentage implements CalculatorInterface
         }
 
         foreach ($discountableObjects as $discountableObject) {
-            $itemTotalAmount = $discountableObject->getUnitGrossPrice() * $discountableObject->getQuantity();
+            $itemTotalAmount = $discountableObject->getUnitGrossPrice() * $this->getDiscountableObjectQuantity($discountableObject);
             $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $percentage);
         }
 
@@ -39,7 +39,7 @@ class Percentage implements CalculatorInterface
             return 0;
         }
 
-        return round($discountAmount);
+        return round($discountAmount, 2);
     }
 
     /**
@@ -66,5 +66,22 @@ class Percentage implements CalculatorInterface
             throw new \InvalidArgumentException('Wrong number, only float or integer is allowed!');
         }
     }
+
+    /**
+     * @param mixed $discountableObject
+     *
+     * @return mixed
+     */
+    protected function getDiscountableObjectQuantity($discountableObject)
+    {
+        $quantity = $discountableObject->getQuantity();
+
+        if (empty($quantity)) {
+            return 1;
+        }
+
+        return $quantity;
+    }
+
 
 }

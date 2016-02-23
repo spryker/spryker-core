@@ -14,6 +14,10 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CartRuleTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
+use Generated\Shared\Transfer\RuleConditionTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
@@ -37,7 +41,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function calculateDiscounts(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createDiscount($quoteTransfer)->calculate();
+        return $this->getFactory()->createDiscount()->calculate($quoteTransfer);
     }
 
     /**
@@ -65,6 +69,26 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         return $this->getFactory()
             ->getDecisionRuleMinimumCartSubtotal()
             ->isMinimumCartSubtotalReached($quoteTransfer, $decisionRule);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RuleConditionTransfer $ruleConditionTransfer
+     *
+     * @return bool
+     */
+    public function isSubTotalDecisionRuleSatisfiedBy(RuleConditionTransfer $ruleConditionTransfer)
+    {
+        return $this->getFactory()->createSubTotalDecisionRuleRule()->isSatisfiedBy($ruleConditionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RuleConditionTransfer $ruleConditionTransfer
+     *
+     * @return bool
+     */
+    public function isGrandTotalDecisionRuleSatisfiedBy(RuleConditionTransfer $ruleConditionTransfer)
+    {
+        return $this->getFactory()->createGrandtotalDecisionRuleRule()->isSatisfiedBy($ruleConditionTransfer);
     }
 
     /**

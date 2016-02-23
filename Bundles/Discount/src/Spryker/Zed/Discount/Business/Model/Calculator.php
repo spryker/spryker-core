@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Generated\Shared\Transfer\MessageTransfer;
 
 class Calculator implements CalculatorInterface
 {
@@ -62,18 +63,14 @@ class Calculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
      *
      * @return array
      */
-    public function calculate(
-        array $discountCollection,
-        QuoteTransfer $quoteTransfer,
-        DistributorInterface $discountDistributor
-    ) {
+    public function calculate(array $discountCollection, QuoteTransfer $quoteTransfer)
+    {
         $calculatedDiscounts = $this->calculateDiscountAmount($discountCollection, $quoteTransfer);
         $calculatedDiscounts = $this->filterOutNonPrivilegedDiscounts($calculatedDiscounts);
-        $this->distributeDiscountAmount($discountDistributor, $calculatedDiscounts);
+        $this->distributeDiscountAmount($calculatedDiscounts);
 
         return $calculatedDiscounts;
     }
@@ -123,17 +120,16 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
      * @param array $calculatedDiscounts
      *
      * @return void
      */
-    protected function distributeDiscountAmount(DistributorInterface $discountDistributor, array $calculatedDiscounts)
+    protected function distributeDiscountAmount(array $calculatedDiscounts)
     {
         foreach ($calculatedDiscounts as $calculatedDiscount) {
             /* @var $discountTransfer DiscountTransfer */
             $discountTransfer = $calculatedDiscount[self::KEY_DISCOUNT_TRANSFER];
-            $discountDistributor->distribute(
+            $this->distributor->distribute(
                 $calculatedDiscount[self::KEY_DISCOUNTABLE_OBJECTS],
                 $discountTransfer
             );

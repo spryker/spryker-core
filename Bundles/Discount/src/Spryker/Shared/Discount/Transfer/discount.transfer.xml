@@ -160,5 +160,11 @@
         <property name="sumTotalDiscountAmount" type="int" />
     </transfer>
 
+    <transfer name="RuleCondition">
+        <property name="quote" type="Quote" />
+        <property name="inputValue" type="string" />
+        <property name="comparator" type="string" />
+    </transfer>
+
 </transfers>
 

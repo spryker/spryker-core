@@ -14,7 +14,9 @@ use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\GrandtotalDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubtotalDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridge;
@@ -33,6 +35,9 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGIN_DECISION_RULE_VOUCHER = 'PLUGIN_DECISION_RULE_VOUCHER';
     const PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL = 'PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL';
+
+    const PLUGIN_DECISION_RULE_SUBTOTAL = 'subtotal';
+    const PLUGIN_DECISION_RULE_GRANDTOTAL = 'grandtotal';
 
     const PLUGIN_COLLECTOR_ITEM = 'PLUGIN_COLLECTOR_ITEM';
     const PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION = 'PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION';
@@ -114,13 +119,13 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
-    public function getAvailableDecisionRulePlugins(Container $container)
+    /*public function getAvailableDecisionRulePlugins(Container $container)
     {
         return [
             self::PLUGIN_DECISION_RULE_VOUCHER => new Voucher(),
             self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new MinimumCartSubtotal(),
         ];
-    }
+    }*/
 
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
@@ -146,4 +151,15 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         ];
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     * @return array|Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     */
+    public function getAvailableDecisionRulePlugins(Container $container)
+    {
+        return [
+            self::PLUGIN_DECISION_RULE_SUBTOTAL => new SubtotalDecisionRulePlugin(),
+            self::PLUGIN_DECISION_RULE_GRANDTOTAL => new GrandtotalDecisionRulePlugin(),
+        ];
+    }
 }
