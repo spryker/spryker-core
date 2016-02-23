@@ -26,10 +26,3 @@ GTAGS
 npm-debug.log
 Bundles/*/tests/_output
 Bundles/*/tests/_support/_generated
-
-# PHP CS Fixer
-Bundles/.php_cs.cache
-Bundles/.php_cs
-Bundles/*/.php_cs.cache
-Bundles/*/.php_cs
-
