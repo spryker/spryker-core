@@ -121,7 +121,7 @@ class CategoryTreeRenderer
      */
     protected function getNodeHash(SpyCategoryNode $node)
     {
-        return md5($this->getNodeName($node));
+        return sha1($this->getNodeName($node));
     }
 
     /**
