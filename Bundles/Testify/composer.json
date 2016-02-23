@@ -2,8 +2,8 @@
   "name": "spryker/testify",
   "autoload": {
     "psr-0": {
-      "Generated": "src/Generated",
-      "Orm": "src/Orm"
+      "Generated": "src/",
+      "Orm": "src/"
     },
     "psr-4": {
       "Testify\\Module\\": "tests/_support/Module"
