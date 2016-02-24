@@ -38,4 +38,15 @@ class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
         return $this->touchFacade->touchActive($itemType, $itemId);
     }
 
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchInActive($itemType, $itemId)
+    {
+        return $this->touchFacade->touchInActive($itemType, $itemId);
+    }
+
 }
