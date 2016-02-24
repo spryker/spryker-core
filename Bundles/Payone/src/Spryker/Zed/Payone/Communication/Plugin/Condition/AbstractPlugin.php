@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
+use Generated\Shared\Transfer\OrderTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Generated\Shared\Transfer\OrderTransfer;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneCommunicationFactory getFactory()

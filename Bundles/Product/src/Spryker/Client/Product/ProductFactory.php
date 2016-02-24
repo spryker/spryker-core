@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\Product;
 
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Product\KeyBuilder\ProductResourceKeyBuilder;
 use Spryker\Client\Product\Storage\ProductStorage;
-use Spryker\Client\Kernel\AbstractFactory;
 
 class ProductFactory extends AbstractFactory
 {

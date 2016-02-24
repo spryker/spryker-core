@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneCommunicationFactory getFactory()

@@ -8,10 +8,10 @@
 namespace Functional\Spryker\Zed\Auth\Business;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\Auth\Business\AuthFacade;
+use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 use Orm\Zed\Auth\Persistence\SpyResetPasswordQuery;
 use Orm\Zed\User\Persistence\SpyUser;
-use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
+use Spryker\Zed\Auth\Business\AuthFacade;
 
 class AuthFacadeTest extends Test
 {

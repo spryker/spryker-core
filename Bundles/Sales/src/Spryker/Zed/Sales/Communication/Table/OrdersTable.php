@@ -8,14 +8,14 @@
 namespace Spryker\Zed\Sales\Communication\Table;
 
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 
 class OrdersTable extends AbstractTable
 {

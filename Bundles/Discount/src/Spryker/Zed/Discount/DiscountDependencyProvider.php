@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Discount;
 
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {

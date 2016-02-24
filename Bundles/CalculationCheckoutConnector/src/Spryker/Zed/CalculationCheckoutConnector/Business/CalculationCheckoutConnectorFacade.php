@@ -10,9 +10,9 @@ namespace Spryker\Zed\CalculationCheckoutConnector\Business;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Shared\Checkout\CheckoutConstants;
 use Spryker\Zed\Checkout\Business\Calculation\CalculableContainer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CalculationCheckoutConnector\Business\CalculationCheckoutConnectorBusinessFactory getFactory()

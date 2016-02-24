@@ -7,9 +7,9 @@
 
 namespace Unit\Spryker\Zed\Maintenance\Business\InstalledPackages;
 
-use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Shared\Transfer\InstalledPackageTransfer;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**

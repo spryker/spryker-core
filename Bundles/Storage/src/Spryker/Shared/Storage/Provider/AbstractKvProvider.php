@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Storage\Provider;
 
-use Spryker\Shared\Kernel\AbstractClientProvider;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\AbstractClientProvider;
 
 abstract class AbstractKvProvider extends AbstractClientProvider
 {

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Category\Business\Manager;
 
-use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 
 interface NodeUrlManagerInterface
 {

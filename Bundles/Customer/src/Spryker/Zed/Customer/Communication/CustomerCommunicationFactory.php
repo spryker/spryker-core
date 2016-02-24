@@ -13,10 +13,10 @@ use Spryker\Zed\Customer\Communication\Form\CustomerUpdateForm;
 use Spryker\Zed\Customer\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerUpdateFormDataProvider;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
 use Spryker\Zed\Customer\Communication\Table\CustomerTable;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainer getQueryContainer()

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter;
 
-use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
 
 class BatchIterator implements CountableIteratorInterface
 {

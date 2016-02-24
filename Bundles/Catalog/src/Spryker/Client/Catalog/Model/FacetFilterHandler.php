@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Catalog\Model;
 
-use Elastica\Filter\BoolAnd;
 use Elastica\Filter;
+use Elastica\Filter\BoolAnd;
 use Elastica\Query;
 use Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;

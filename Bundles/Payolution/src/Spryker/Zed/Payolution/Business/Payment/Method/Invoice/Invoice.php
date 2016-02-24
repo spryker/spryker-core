@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Invoice;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 class Invoice extends AbstractPaymentMethod implements InvoiceInterface
 {

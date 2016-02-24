@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Cache\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Cache\Business\Model\CacheDelete;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Cache\CacheConfig getConfig()

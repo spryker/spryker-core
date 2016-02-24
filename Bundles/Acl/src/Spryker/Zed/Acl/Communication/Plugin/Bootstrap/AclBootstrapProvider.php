@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Acl\Communication\Plugin\Bootstrap;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

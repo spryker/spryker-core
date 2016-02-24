@@ -10,10 +10,10 @@ namespace Unit\Spryker\Zed\Discount\Business\Model;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Discount\Business\Model\CollectorResolver;
-use Spryker\Zed\Cart\Business\Model\CalculableContainer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Zed\Cart\Business\Model\CalculableContainer;
+use Spryker\Zed\Discount\Business\Model\CollectorResolver;
 
 class CollectorResolverTest extends Test
 {

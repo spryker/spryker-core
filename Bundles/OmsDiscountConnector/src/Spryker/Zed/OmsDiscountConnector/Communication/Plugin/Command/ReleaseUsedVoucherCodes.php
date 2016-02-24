@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\OmsDiscountConnector\Communication\Plugin\Command;
 
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\AbstractCommand;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 
 /**
  * @method \Spryker\Zed\OmsDiscountConnector\Communication\OmsDiscountConnectorCommunicationFactory getFactory()

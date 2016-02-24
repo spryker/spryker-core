@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Setup\Business;
 
-use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Setup\Business\Model\Cronjobs;
+use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Spryker\Zed\Setup\Communication\Console\DeployPreparePropelConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;

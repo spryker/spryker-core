@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Payolution\Communication\Table;
 
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
-use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTransactionStatusLogTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class StatusLog extends AbstractTable
 {

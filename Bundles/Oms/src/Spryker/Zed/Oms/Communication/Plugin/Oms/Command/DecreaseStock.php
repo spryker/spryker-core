@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Shared\Library\Log;
+use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 class DecreaseStock implements CommandByItemInterface
 {

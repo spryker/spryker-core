@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Propel\Business\Builder;
 
-use Propel\Generator\Model\Column;
 use Propel\Generator\Builder\Om\ObjectBuilder as PropelObjectBuilder;
+use Propel\Generator\Model\Column;
 use Propel\Generator\Model\IdMethod;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;

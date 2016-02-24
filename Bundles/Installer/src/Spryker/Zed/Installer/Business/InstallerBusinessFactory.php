@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Installer\Business;
 
 use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Installer\InstallerDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Installer\InstallerConfig getConfig()

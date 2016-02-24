@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Application\Business\Model\Router;
 
+use Silex\Application;
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
 use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
 use Spryker\Zed\Kernel\Communication\Controller\RouteNameResolver;
-use Silex\Application;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\RequestContext;

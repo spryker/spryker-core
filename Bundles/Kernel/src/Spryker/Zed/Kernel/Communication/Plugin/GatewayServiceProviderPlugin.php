@@ -9,8 +9,8 @@ namespace Spryker\Zed\Kernel\Communication\Plugin;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;

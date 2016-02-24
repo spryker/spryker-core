@@ -8,10 +8,10 @@
 namespace Functional\Spryker\Zed\Country;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
-use Orm\Zed\Country\Persistence\SpyCountry;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @group Country

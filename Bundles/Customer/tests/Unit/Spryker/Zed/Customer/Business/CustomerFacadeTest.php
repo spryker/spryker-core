@@ -11,10 +11,10 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Customer\Business\Customer\Address;
-use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Business\Customer\Address;
+use Spryker\Zed\Customer\Business\Customer\Customer;
 
 /**
  * @group Spryker

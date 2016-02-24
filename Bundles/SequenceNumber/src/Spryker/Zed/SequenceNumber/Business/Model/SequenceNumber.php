@@ -8,12 +8,12 @@
 namespace Spryker\Zed\SequenceNumber\Business\Model;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumber;
+use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException;
 use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
-use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumber;
-use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 
 class SequenceNumber implements SequenceNumberInterface
 {

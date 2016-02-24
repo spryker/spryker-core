@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
+use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

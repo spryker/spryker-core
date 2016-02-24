@@ -8,8 +8,8 @@
 namespace Spryker\Client\CategoryExporter\Builder;
 
 use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Spryker\Shared\CategoryExporter\Business\CategoryNodeKeyInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class CategoryTreeBuilder
 {

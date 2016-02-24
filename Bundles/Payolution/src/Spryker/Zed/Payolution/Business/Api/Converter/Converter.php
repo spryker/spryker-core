@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Payolution\Business\Api\Converter;
 
+use DOMDocument;
+use DOMElement;
 use Generated\Shared\Transfer\PayolutionCalculationInstallmentTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use DOMDocument;
-use DOMElement;
 
 class Converter implements ConverterInterface
 {

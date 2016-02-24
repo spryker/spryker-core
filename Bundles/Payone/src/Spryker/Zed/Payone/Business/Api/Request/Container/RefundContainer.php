@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Payone\Business\Api\Request\Container;
 
 use Spryker\Shared\Payone\PayoneApiConstants;
-use Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer;
 
 class RefundContainer extends AbstractRequestContainer
 {

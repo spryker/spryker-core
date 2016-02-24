@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Checkout;
 
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
 
 class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {

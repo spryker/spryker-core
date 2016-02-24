@@ -7,8 +7,8 @@
 
 namespace ClientUnit\Spryker\Client\Cart;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\Cart\CartClient;
 use Spryker\Client\Cart\Session\CartSessionInterface;
 use Spryker\Client\Cart\Zed\CartStubInterface;

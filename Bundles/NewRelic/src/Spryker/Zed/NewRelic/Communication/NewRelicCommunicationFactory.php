@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\NewRelic\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Shared\NewRelic\Api;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\NewRelic\NewRelicConfig getConfig()

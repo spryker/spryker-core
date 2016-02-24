@@ -8,14 +8,14 @@
 namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\DiscountItemsTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\DiscountTotalItemTransfer;
+use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\DiscountTotalsTransfer;
-use Generated\Shared\Transfer\DiscountTotalItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface

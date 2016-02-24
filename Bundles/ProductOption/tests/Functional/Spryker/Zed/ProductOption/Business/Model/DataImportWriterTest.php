@@ -8,20 +8,20 @@
 namespace Functional\Spryker\Zed\ProductOption\Business\Model;
 
 use Codeception\TestCase\Test;
-use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionConfigurationPresetQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsage;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusionQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsage;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsage;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraintQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 
 /**
  * @group Business

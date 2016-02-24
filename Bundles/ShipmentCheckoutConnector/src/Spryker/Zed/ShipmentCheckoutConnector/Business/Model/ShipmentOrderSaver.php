@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Model;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Propel\Runtime\Propel;
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
+use Propel\Runtime\Propel;
 use Spryker\Shared\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConstants;
 use Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainerInterface;
 

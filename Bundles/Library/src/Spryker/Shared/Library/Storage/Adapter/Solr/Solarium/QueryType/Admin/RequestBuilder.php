@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin;
 
-use Solarium\Core\Query\RequestBuilder as BaseRequestBuilder;
 use Solarium\Core\Query\QueryInterface;
+use Solarium\Core\Query\RequestBuilder as BaseRequestBuilder;
 
 /**
  * Class RequestBuilder

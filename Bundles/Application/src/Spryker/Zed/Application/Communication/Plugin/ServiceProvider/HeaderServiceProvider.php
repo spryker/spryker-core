@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

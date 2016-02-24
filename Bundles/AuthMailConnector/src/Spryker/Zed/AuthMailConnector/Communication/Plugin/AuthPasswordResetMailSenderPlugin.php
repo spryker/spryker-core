@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\AuthMailConnector\Communication\Plugin;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\AuthMailConnector\Communication\AuthMailConnectorCommunicationFactory getFactory()

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CustomerCheckoutConnector\Business;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Shared\CustomerCheckoutConnector\CustomerCheckoutConnectorConstants;
 use Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface;

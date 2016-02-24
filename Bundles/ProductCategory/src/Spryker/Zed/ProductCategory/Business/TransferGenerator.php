@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\ProductCategoryTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class TransferGenerator implements TransferGeneratorInterface
 {

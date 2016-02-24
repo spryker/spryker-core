@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\Library\Zed;
 
-use Spryker\Client\EventJournal\EventJournalClient;
-use Spryker\Shared\Library\Communication\Response as CommunicationResponse;
 use Guzzle\Http\Client;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\Message\Response;
@@ -16,14 +14,16 @@ use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
 use Spryker\Client\EventJournal\EventJournal;
+use Spryker\Client\EventJournal\EventJournalClient;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\Library\Communication\ObjectInterface;
-use Spryker\Shared\Config\Config;
+use Spryker\Shared\Library\Communication\Request;
+use Spryker\Shared\Library\Communication\Response as CommunicationResponse;
 use Spryker\Shared\Library\LibraryConstants;
 use Spryker\Shared\Library\System;
-use Spryker\Shared\Library\Communication\Request;
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
+use Spryker\Shared\Transfer\TransferInterface;
 
 class ZedClient
 {

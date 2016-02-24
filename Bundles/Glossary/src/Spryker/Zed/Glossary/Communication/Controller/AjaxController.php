@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Glossary\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

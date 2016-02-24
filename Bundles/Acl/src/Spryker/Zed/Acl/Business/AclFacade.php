@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Acl\Business;
 
-use Generated\Shared\Transfer\RolesTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\GroupTransfer;
+use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Acl\Business\AclBusinessFactory getFactory()

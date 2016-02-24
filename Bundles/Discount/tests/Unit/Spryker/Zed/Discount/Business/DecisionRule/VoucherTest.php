@@ -7,11 +7,11 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\DecisionRule;
 
+use Orm\Zed\Discount\Persistence\Base\SpyDiscountVoucherQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Zed\Discount\Business\DecisionRule\Voucher;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Orm\Zed\Discount\Persistence\Base\SpyDiscountVoucherQuery;
 
 class VoucherTest extends \PHPUnit_Framework_TestCase
 {

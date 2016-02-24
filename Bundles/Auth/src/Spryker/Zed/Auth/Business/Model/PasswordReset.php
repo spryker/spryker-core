@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Auth\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
+use Orm\Zed\Auth\Persistence\SpyResetPassword;
+use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
-use Orm\Zed\Auth\Persistence\SpyResetPassword;
-use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
-use Spryker\Zed\Auth\AuthConfig;
 
 class PasswordReset
 {

@@ -7,8 +7,8 @@
 
 namespace Functional\Spryker\Zed\ProductOption\Mock;
 
-use Spryker\Zed\Product\Business\ProductFacade as SprykerProductFacade;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
+use Spryker\Zed\Product\Business\ProductFacade as SprykerProductFacade;
 
 class ProductFacade extends SprykerProductFacade implements ProductOptionToProductInterface
 {

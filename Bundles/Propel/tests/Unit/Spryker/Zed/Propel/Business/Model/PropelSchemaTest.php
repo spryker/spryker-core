@@ -7,10 +7,10 @@
 
 namespace Unit\Spryker\Zed\Propel\Business\Model;
 
-use Spryker\Zed\Propel\Business\Model\PropelSchema;
-use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
+use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
 use Symfony\Component\Filesystem\Filesystem;
 

@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\Collector\Code\Reader\KeyValue;
 
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
 use Spryker\Shared\Collector\Code\Reader\ReaderInterface;
+use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
 
 class RedisReader implements ReaderInterface
 {

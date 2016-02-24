@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductSearch\Persistence;
 
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 

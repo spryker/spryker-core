@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Newsletter;
 
-use Spryker\Client\Newsletter\Zed\NewsletterStub;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Newsletter\Zed\NewsletterStub;
 
 class NewsletterFactory extends AbstractFactory
 {

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()

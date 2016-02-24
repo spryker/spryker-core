@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Sales\Business\Model;
 
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class CalculableContainer implements CalculableInterface
 {

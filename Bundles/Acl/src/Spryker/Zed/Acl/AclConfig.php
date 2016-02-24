@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Acl;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AclConfig extends AbstractBundleConfig
 {

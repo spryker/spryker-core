@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Kernel;
 
 use Spryker\Client\Kernel\ClientLocator;
-use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\Kernel\Business\FacadeLocator;
 use Spryker\Zed\Kernel\Persistence\QueryContainerLocator;
 

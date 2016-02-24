@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Application;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApplicationConfig extends AbstractBundleConfig
 {

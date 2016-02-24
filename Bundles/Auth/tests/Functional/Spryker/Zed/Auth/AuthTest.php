@@ -8,12 +8,12 @@
 namespace Functional\Spryker\Zed\Auth;
 
 use Codeception\TestCase\Test;
+use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Zed\Auth\AuthConfig;
-use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Auth\Business\AuthFacade;
-use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
+use Spryker\Zed\User\Business\UserFacade;
 
 /**
  * @group Spryker

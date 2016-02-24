@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\Kernel;
 
-use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 
 class Store
 {

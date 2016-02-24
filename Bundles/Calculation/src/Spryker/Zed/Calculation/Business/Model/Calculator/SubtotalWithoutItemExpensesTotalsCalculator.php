@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 

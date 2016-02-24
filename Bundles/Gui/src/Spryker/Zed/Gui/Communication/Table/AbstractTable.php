@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Gui\Communication\Table;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Library\Sanitize\Html;
 use Symfony\Component\HttpFoundation\Request;
 

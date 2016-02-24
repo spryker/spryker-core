@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Category\Business\Manager;
 
-use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTable;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
-use Orm\Zed\Category\Persistence\SpyCategoryClosureTable;
 
 class NodeUrlManager implements NodeUrlManagerInterface
 {

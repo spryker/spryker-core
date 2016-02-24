@@ -7,24 +7,24 @@
 
 namespace Spryker\Zed\Discount\Communication;
 
+use Generated\Shared\Transfer\DataTablesTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Spryker\Zed\Discount\Communication\Form\CartRuleForm;
+use Spryker\Zed\Discount\Communication\Form\CollectorPluginForm;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CartRuleFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherCodesFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
-use Spryker\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
-use Spryker\Zed\Discount\Communication\Form\VoucherForm;
-use Generated\Shared\Transfer\DataTablesTransfer;
-use Spryker\Zed\Discount\Communication\Form\CollectorPluginForm;
 use Spryker\Zed\Discount\Communication\Form\DecisionRuleForm;
+use Spryker\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
+use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
-use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
-use Spryker\Zed\Discount\DiscountDependencyProvider;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use Spryker\Zed\Discount\Communication\Table\VoucherPoolTable;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**

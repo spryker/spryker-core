@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Category\Business;
 
-use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Library;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 class Copy
 {

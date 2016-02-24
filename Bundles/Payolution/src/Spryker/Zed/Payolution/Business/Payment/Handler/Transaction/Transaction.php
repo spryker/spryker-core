@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Handler\Transaction;
 
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface;
 use Spryker\Zed\Payolution\Business\Payment\Handler\AbstractPaymentHandler;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Spryker\Zed\Payolution\PayolutionConfig;
-use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 
 class Transaction extends AbstractPaymentHandler implements TransactionInterface
 {

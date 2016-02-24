@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Collector;
 
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Collector\Matcher\UrlMatcherInterface;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @todo Rename all YvesExport Bundles to PageExport or just Export.

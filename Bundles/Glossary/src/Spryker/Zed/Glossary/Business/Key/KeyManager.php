@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Glossary\Business\Key;
 
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
 use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 
 class KeyManager implements KeyManagerInterface
 {

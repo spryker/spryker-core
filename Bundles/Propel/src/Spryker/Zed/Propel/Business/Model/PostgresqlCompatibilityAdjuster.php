@@ -9,8 +9,8 @@ namespace Spryker\Zed\Propel\Business\Model;
 
 use DOMDocument;
 use DOMXPath;
-use Symfony\Component\Finder\SplFileInfo;
 use Propel\Runtime\Propel;
+use Symfony\Component\Finder\SplFileInfo;
 
 class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjusterInterface
 {

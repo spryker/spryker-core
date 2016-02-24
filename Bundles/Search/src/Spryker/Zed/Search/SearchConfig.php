@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Search;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SearchConfig extends AbstractBundleConfig
 {

@@ -7,26 +7,26 @@
 
 namespace Spryker\Zed\Payone\Business;
 
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\Prepayment;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\OnlineBankTransfer;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
-use Spryker\Zed\Payone\Business\Mode\ModeDetector;
-use Spryker\Zed\Payone\Business\Key\HashProvider;
-use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
-use Spryker\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
-use Spryker\Zed\Payone\Business\Order\OrderManager;
-use Spryker\Zed\Payone\Business\Payment\PaymentManager;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder;
+use Spryker\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
+use Spryker\Zed\Payone\Business\Key\HashProvider;
+use Spryker\Zed\Payone\Business\Mode\ModeDetector;
+use Spryker\Zed\Payone\Business\Order\OrderManager;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\OnlineBankTransfer;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\Prepayment;
+use Spryker\Zed\Payone\Business\Payment\PaymentManager;
+use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
 use Spryker\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
 use Spryker\Zed\Payone\PayoneConfig;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
-use Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder;
 
 /**
  * @method \Spryker\Zed\Payone\PayoneConfig getConfig()

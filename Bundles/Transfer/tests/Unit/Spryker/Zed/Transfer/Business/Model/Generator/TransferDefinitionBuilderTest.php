@@ -8,10 +8,10 @@
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
+use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
 
 /**
  * @group Spryker

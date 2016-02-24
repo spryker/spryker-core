@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Application\Business\Model\Twig\RouteResolver;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Library\Twig\Loader\Filesystem;
-use Silex\Application;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;

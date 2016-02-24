@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\User\Communication\Table;
 
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 class UsersTable extends AbstractTable

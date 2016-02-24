@@ -11,8 +11,8 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
-use Spryker\Zed\Newsletter\Business\NewsletterFacade;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
+use Spryker\Zed\Newsletter\Business\NewsletterFacade;
 
 /**
  * @group Zed

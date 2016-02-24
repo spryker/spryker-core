@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Discount\Business;
 
-use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\CartRuleTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
-use Generated\Shared\Transfer\VoucherTransfer;
-use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\VoucherPoolTransfer;
+use Generated\Shared\Transfer\VoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

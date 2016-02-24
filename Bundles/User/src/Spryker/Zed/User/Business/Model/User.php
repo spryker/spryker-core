@@ -8,15 +8,15 @@
 namespace Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\CollectionTransfer;
-use Spryker\Zed\Library\Copy;
-use Propel\Runtime\Collection\ObjectCollection;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Zed\User\UserConfig;
 use Orm\Zed\User\Persistence\SpyUser;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
-use Spryker\Zed\User\Business\Exception\UserNotFoundException;
+use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Library\Copy;
 use Spryker\Zed\User\Business\Exception\UsernameExistsException;
+use Spryker\Zed\User\Business\Exception\UserNotFoundException;
+use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\UserConfig;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class User implements UserInterface

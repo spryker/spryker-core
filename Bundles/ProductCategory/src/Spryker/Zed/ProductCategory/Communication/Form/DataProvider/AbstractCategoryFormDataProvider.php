@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductCategory\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 
 class AbstractCategoryFormDataProvider

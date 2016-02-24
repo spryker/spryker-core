@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Url;
 
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Url\Dependency\UrlToLocaleBridge;
 use Spryker\Zed\Url\Dependency\UrlToTouchBridge;
 

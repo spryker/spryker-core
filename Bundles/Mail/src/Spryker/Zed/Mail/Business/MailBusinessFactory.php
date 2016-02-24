@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Mail\Business;
 
 use Spryker\Shared\Config\Config;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Shared\Mail\MailConstants;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Mail\MailConfig getConfig()

@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Wishlist\Persistence;
 
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistPersistenceFactory getFactory()

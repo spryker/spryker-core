@@ -9,10 +9,10 @@ namespace Spryker\Zed\Country\Business;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Spryker\Zed\Country\Business\Exception\CountryExistsException;
 use Spryker\Zed\Country\Business\Exception\MissingCountryException;
 use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
-use Orm\Zed\Country\Persistence\SpyCountry;
 
 class CountryManager implements CountryManagerInterface
 {

@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Auth\Communication\Plugin\Bootstrap;
 
-use Spryker\Shared\Auth\AuthConstants;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Auth\AuthConstants;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductOptionExporter\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterBusinessFactory getFactory()

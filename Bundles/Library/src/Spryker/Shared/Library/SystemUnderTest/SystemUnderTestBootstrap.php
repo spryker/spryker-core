@@ -15,11 +15,11 @@ use Pyz\Zed\Application\Communication\ZedBootstrap;
 use ReflectionObject;
 use Silex\Application;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Yves\Kernel\Locator;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Spryker\Shared\Library\Application\Environment;
 use Spryker\Shared\Library\Application\TestEnvironment;
+use Spryker\Yves\Kernel\Locator;
 use Spryker\Zed\Kernel\Locator as KernelLocator;
+use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class SystemUnderTestBootstrap
 {

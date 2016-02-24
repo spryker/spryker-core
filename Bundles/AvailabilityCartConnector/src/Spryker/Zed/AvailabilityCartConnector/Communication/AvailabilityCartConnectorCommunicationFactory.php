@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\AvailabilityCartConnector\AvailabilityCartConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class AvailabilityCartConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

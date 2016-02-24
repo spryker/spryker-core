@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Business;
 
-use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSaver;
-use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderHydrator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderHydrator;
+use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSaver;
 
 /**
  * @method \Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig getConfig()

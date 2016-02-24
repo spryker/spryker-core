@@ -7,14 +7,8 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Shared\Cms\CmsConstants;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
-use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
@@ -25,6 +19,12 @@ use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Cms\CmsConstants;
+use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
+use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Cms\Persistence\CmsPersistenceFactory getFactory()

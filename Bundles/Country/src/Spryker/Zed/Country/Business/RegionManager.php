@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Country\Business;
 
+use Orm\Zed\Country\Persistence\SpyRegion;
 use Spryker\Zed\Country\Business\Exception\RegionExistsException;
 use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
-use Orm\Zed\Country\Persistence\SpyRegion;
 
 class RegionManager implements RegionManagerInterface
 {

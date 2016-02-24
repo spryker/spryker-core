@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Cms\Communication\Table;
 
+use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Cms\Communication\Controller\RedirectController;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
-use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 
 class CmsRedirectTable extends AbstractTable
 {

@@ -7,31 +7,31 @@
 
 namespace Spryker\Zed\Calculation\Business;
 
-use Spryker\Zed\Calculation\Business\Model\PriceCalculationHelper;
-use Spryker\Zed\Calculation\Business\Model\Calculator\ItemTotalPriceCalculator;
-use Spryker\Zed\Calculation\Business\Model\StackExecutor;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpensePriceToPayCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ItemTotalPriceCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin;
+use Spryker\Zed\Calculation\Business\Model\PriceCalculationHelper;
+use Spryker\Zed\Calculation\Business\Model\StackExecutor;
 use Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\SubtotalWithoutItemExpensesTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\SubtotalWithoutItemExpensesTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()

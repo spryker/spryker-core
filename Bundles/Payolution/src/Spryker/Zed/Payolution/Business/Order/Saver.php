@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Payolution\Business\Order;
 
-use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionOrderItem;
 

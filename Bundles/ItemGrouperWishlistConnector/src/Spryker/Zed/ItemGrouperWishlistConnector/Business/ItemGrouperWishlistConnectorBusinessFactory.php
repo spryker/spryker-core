@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ItemGrouperWishlistConnector\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorConfig getConfig()

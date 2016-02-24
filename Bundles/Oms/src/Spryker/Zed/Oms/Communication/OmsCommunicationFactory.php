@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Oms\Communication;
 
-use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()

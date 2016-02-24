@@ -14,11 +14,11 @@ use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
-use Spryker\Zed\Product\Business\ProductBusinessFactory;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionPersistenceFactory;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionPersistenceFactory;
+use Spryker\Zed\Product\Business\ProductBusinessFactory;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 /**
  * @group Business
