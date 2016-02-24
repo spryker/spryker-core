@@ -274,6 +274,11 @@ class DataImportWriterTest extends Test
         $this->performAssertionOnTouchTable($product->getFkProductAbstract());
     }
 
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
     private function createProductConcrete()
     {
         $productAbstract = (new SpyProductAbstract())

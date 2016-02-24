@@ -114,6 +114,11 @@ class JenkinsController extends AbstractController
         return $xml;
     }
 
+    /**
+     * @param array $job
+     *
+     * @return string
+     */
     protected function getSchedule(array $job)
     {
         $schedule = ($job['schedule'] === '') ? '' : ' <hudson.triggers.TimerTrigger><spec>' . $job['schedule'] . '</spec></hudson.triggers.TimerTrigger>';

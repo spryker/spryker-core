@@ -17,6 +17,11 @@ use Symfony\Component\HttpFoundation\Request;
 class TriggerController extends AbstractController
 {
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function triggerEventForOrderItemsAction(Request $request)
     {
         $idOrderItem = $request->query->get('id-sales-order-item');
@@ -28,6 +33,11 @@ class TriggerController extends AbstractController
         return $this->redirectResponse($redirect);
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function triggerEventForOrderAction(Request $request)
     {
         $idOrder = $request->query->get('id-sales-order');

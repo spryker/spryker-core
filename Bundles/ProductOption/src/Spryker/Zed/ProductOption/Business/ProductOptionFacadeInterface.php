@@ -78,6 +78,8 @@ interface ProductOptionFacadeInterface
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
+     *
+     * @return void
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
 
@@ -90,6 +92,8 @@ interface ProductOptionFacadeInterface
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
+     *
+     * @return void
      */
     public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
 

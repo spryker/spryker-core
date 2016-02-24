@@ -347,8 +347,13 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         return $this;
     }
 
-    // @todo refactor queries from below
-
+    /**
+     * @todo refactor queries from below
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
     public function queryProductConcreteByProductAbstract(SpyProductAbstract $productAbstract)
     {
         return $this->getFactory()->createProductQuery()

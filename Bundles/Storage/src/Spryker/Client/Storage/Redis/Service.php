@@ -303,7 +303,7 @@ class Service implements ServiceInterface
      *
      * @throws \Exception
      *
-     * @return bool
+     * @return void
      */
     public function setMulti(array $items)
     {
@@ -320,7 +320,7 @@ class Service implements ServiceInterface
         }
 
         if (count($data) === 0) {
-            return false;
+            return;
         }
 
         $result = $this->client->mset($data);
@@ -332,8 +332,6 @@ class Service implements ServiceInterface
                 . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );
         }
-
-        return $result;
     }
 
     /**

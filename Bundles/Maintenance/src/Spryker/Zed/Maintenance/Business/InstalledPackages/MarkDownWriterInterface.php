@@ -10,6 +10,9 @@ namespace Spryker\Zed\Maintenance\Business\InstalledPackages;
 interface MarkDownWriterInterface
 {
 
+    /**
+     * @return void
+     */
     public function write();
 
 }

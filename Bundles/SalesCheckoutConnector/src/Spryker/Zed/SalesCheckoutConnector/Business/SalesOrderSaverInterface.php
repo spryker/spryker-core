@@ -16,6 +16,8 @@ interface SalesOrderSaverInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $order
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function saveOrder(OrderTransfer $order, CheckoutResponseTransfer $checkoutResponse);
 

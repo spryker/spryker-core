@@ -75,6 +75,8 @@ interface ReaderInterface
      * @param int $idProduct
      *
      * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
+     *
+     * @return void
      */
     public function checkStockDoesNotExist($idStockType, $idProduct);
 

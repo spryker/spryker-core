@@ -11,7 +11,7 @@ use Spryker\Zed\Installer\Business\Model\InstallerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Customer\Communication\CustomerPluginFactory getFactory()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class Installer extends AbstractPlugin implements InstallerInterface
 {

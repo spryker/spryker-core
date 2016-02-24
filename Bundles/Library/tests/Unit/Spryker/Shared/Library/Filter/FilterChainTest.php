@@ -16,6 +16,9 @@ use Spryker\Shared\Library\Filter\FilterChain;
 class FilterChainTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return array
+     */
     public function dataProvider()
     {
         return [

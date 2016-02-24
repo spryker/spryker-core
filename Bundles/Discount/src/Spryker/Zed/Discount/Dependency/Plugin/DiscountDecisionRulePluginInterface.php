@@ -26,6 +26,8 @@ interface DiscountDecisionRulePluginInterface
 
     /**
      * @param array $context
+     *
+     * @return void
      */
     public function setContext(array $context);
 

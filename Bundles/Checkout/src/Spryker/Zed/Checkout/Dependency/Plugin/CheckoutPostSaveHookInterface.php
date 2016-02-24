@@ -16,6 +16,8 @@ interface CheckoutPostSaveHookInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function executeHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
 

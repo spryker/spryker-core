@@ -208,6 +208,9 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         return $wishlistQueryContainerMock;
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getSpyWishlistQueryMock()
     {
         $spyWishlistMock = $this
@@ -219,6 +222,9 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         return $spyWishlistMock;
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getSpyWishlistItemQueryMock()
     {
         $spyWishlistMock = $this

@@ -22,11 +22,23 @@ class PriceFacadeStub extends PriceFacade
      */
     private $validities = [];
 
+    /**
+     * @param string $sku
+     * @param string|null $priceType
+     *
+     * @return mixed
+     */
     public function getPriceBySku($sku, $priceType = null)
     {
         return $this->prices[$sku];
     }
 
+    /**
+     * @param string $sku
+     * @param string|null $priceType
+     *
+     * @return bool
+     */
     public function hasValidPrice($sku, $priceType = null)
     {
         if (!isset($this->validities[$sku])) {

@@ -17,6 +17,8 @@ interface NavigationCacheInterface
 
     /**
      * @param array $navigation
+     *
+     * @return void
      */
     public function setNavigation(array $navigation);
 

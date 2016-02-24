@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class IndexController extends AbstractController
 {
 
+    /**
+     * @return array
+     */
     public function indexAction()
     {
         $table = $this->getFactory()

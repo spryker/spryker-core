@@ -16,6 +16,9 @@ use Spryker\Shared\Library\Currency\CurrencyManager;
 class CurrencyManagerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return array
+     */
     public function dataProvider()
     {
         return [

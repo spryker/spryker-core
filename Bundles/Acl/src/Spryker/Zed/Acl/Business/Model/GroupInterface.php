@@ -48,6 +48,8 @@ interface GroupInterface
     /**
      * @param int $idGroup
      * @param int $idUser
+     *
+     * @return void
      */
     public function removeUser($idGroup, $idUser);
 
@@ -60,6 +62,8 @@ interface GroupInterface
      * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNameExistsException
+     *
+     * @return void
      */
     public function assertGroupHasName(GroupTransfer $group);
 
@@ -67,6 +71,8 @@ interface GroupInterface
      * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
+     *
+     * @return void
      */
     public function assertGroupExists(GroupTransfer $group);
 

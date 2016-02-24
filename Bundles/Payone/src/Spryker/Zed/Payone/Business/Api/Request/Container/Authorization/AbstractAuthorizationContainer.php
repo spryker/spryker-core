@@ -134,7 +134,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @param string $clearingtype
+     * @param string $clearingType
      *
      * @return void
      */

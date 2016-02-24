@@ -16,6 +16,8 @@ interface CheckoutStepExecutionInterface
     /**
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function execute(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse);
 

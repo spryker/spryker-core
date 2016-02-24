@@ -33,6 +33,11 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         return $query;
     }
 
+    /**
+     * @param int $id
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
     public function queryTranslationById($id)
     {
         $query = $this->getFactory()->createUrlQuery();

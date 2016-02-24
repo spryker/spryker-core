@@ -32,6 +32,9 @@ class CountryConfig extends AbstractBundleConfig
         return [];
     }
 
+    /**
+     * @return string
+     */
     public function getCldrDir()
     {
         return __DIR__ . '/Business/File/cldr';

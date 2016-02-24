@@ -16,6 +16,10 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 class IndexController extends AbstractController
 {
 
+    /**
+     * @throws \Exception
+     * @return array
+     */
     public function indexAction()
     {
         $developmentLinks = [];
@@ -114,7 +118,7 @@ class IndexController extends AbstractController
             ];
         } else {
             $developmentLinks[] = [
-                'href' => Config::get(SetupConstants::JENKINS_BASE_URL),
+                'href' => Config::get(ApplicationConstants::JENKINS_BASE_URL),
                 'target' => '_blank',
                 'label' => __('Jenkins'),
             ];
@@ -131,6 +135,9 @@ class IndexController extends AbstractController
         ]);
     }
 
+    /**
+     * @return array
+     */
     public function showCronjobsAction()
     {
         return $this->viewResponse([
@@ -138,6 +145,9 @@ class IndexController extends AbstractController
         ]);
     }
 
+    /**
+     * @return mixed
+     */
     protected function getClient()
     {
         $redis = Redis::getInstance();

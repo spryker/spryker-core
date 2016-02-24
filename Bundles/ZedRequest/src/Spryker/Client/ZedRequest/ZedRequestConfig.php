@@ -14,12 +14,12 @@ class ZedRequestConfig
 {
 
     /**
-     * @var \Spryker\Shared\Config
+     * @var \Spryker\Shared\Config\Config
      */
     protected $config;
 
     /**
-     * @param \Spryker\Shared\Config $config
+     * @param \Spryker\Shared\Config\Config $config
      */
     public function __construct(Config $config)
     {

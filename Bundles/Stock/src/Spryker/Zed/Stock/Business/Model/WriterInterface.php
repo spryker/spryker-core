@@ -38,6 +38,8 @@ interface WriterInterface
      * @param string $sku
      * @param int $decrementBy
      * @param string $stockType
+     *
+     * @return void
      */
     public function decrementStock($sku, $stockType, $decrementBy = 1);
 
@@ -45,6 +47,8 @@ interface WriterInterface
      * @param string $sku
      * @param int $incrementBy
      * @param string $stockType
+     *
+     * @return void
      */
     public function incrementStock($sku, $stockType, $incrementBy = 1);
 

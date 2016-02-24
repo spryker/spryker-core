@@ -54,6 +54,11 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
         return $this->getFactory()->createDependencyManager()->parseIncomingDependencies($bundleName);
     }
 
+    /**
+     * @param string $bundleName
+     *
+     * @return mixed
+     */
     public function drawDependencyGraph($bundleName)
     {
         return $this->getFactory()->createDependencyGraph()->draw($bundleName);

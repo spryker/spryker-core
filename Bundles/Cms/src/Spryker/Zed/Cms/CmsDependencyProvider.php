@@ -77,11 +77,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
-
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_URL] = function (Container $container) {

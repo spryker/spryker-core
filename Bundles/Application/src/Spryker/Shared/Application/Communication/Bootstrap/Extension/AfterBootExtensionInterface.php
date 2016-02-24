@@ -14,6 +14,8 @@ interface AfterBootExtensionInterface
 
     /**
      * @param \Spryker\Shared\Application\Communication\Application $application
+     *
+     * @return void
      */
     public function afterBoot(Application $application);
 

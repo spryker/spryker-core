@@ -10,16 +10,34 @@ namespace Spryker\Shared\Library\Currency;
 interface CurrencyInterface
 {
 
+    /**
+     * @return string
+     */
     public function getIsoCode();
 
+    /**
+     * @return string
+     */
     public function getSymbol();
 
+    /**
+     * @return string
+     */
     public function getThousandsSeparator();
 
+    /**
+     * @return string
+     */
     public function getDecimalSeparator();
 
+    /**
+     * @return int
+     */
     public function getDecimalDigits();
 
+    /**
+     * @return string
+     */
     public function getFormatPattern();
 
 }

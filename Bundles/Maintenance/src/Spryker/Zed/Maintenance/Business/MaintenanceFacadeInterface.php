@@ -38,6 +38,11 @@ interface MaintenanceFacadeInterface
      */
     public function showIncomingDependenciesForBundle($bundleName);
 
+    /**
+     * @param string $bundleName
+     *
+     * @return mixed
+     */
     public function drawDependencyGraph($bundleName);
 
     /**

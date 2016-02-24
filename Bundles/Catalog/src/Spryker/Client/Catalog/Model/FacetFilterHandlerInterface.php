@@ -19,6 +19,8 @@ interface FacetFilterHandlerInterface
     /**
      * @param \Elastica\Query $query
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return void
      */
     public function addFacetFiltersToQuery(Query $query, Request $request);
 

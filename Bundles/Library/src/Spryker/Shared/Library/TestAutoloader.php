@@ -131,6 +131,12 @@ class TestAutoloader
         }
     }
 
+    /**
+     * @param int $resourceName
+     *
+     * @throws \Exception
+     * @return bool|string
+     */
     protected function findFile($resourceName)
     {
         // We always work with FQCN in our context

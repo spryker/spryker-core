@@ -62,6 +62,8 @@ interface DataImportWriterInterface
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
+     *
+     * @return void
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
 
@@ -74,6 +76,8 @@ interface DataImportWriterInterface
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
+     *
+     * @return void
      */
     public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
 
@@ -91,6 +95,9 @@ interface DataImportWriterInterface
      */
     public function importPresetConfiguration($sku, array $importKeysProductOptionValues, $isDefault = false, $sequence = null);
 
+    /**
+     * @return void
+     */
     public function flushBuffer();
 
 }

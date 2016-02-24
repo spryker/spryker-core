@@ -10,8 +10,14 @@ namespace Spryker\Zed\Propel\Business\Model;
 interface PostgresqlCompatibilityAdjusterInterface
 {
 
+    /**
+     * @return void
+     */
     public function adjustSchemaFiles();
 
+    /**
+     * @return void
+     */
     public function addMissingFunctions();
 
 }
