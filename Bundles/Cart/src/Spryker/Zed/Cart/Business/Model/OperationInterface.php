@@ -1,28 +1,24 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
-namespace Spryker\Zed\Cart\Business\StorageProvider;
+namespace Spryker\Zed\Cart\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface StorageProviderInterface
+interface OperationInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function add(CartChangeTransfer $cartChangeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(CartChangeTransfer $cartChangeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function removeItems(CartChangeTransfer $cartChangeTransfer);
-
+    public function remove(CartChangeTransfer $cartChangeTransfer);
 }

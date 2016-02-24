@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Checkout\CheckoutConstants;
 
-class CheckoutGrandTotalPrecondition // TODO FW Interface missing
+class CheckoutGrandTotalPrecondition implements CheckoutGrandTotalPreconditionInterface
 {
 
     /**
@@ -19,9 +19,9 @@ class CheckoutGrandTotalPrecondition // TODO FW Interface missing
     protected $stackExecutor;
 
     /**
-     * CheckoutGrandTotalPrecondition constructor.
+     * @param \Spryker\Zed\Calculation\Business\Model\StackExecutorInterface $stackExecutor
      */
-    public function __construct(StackExecutor $stackExecutor)
+    public function __construct(StackExecutorInterface $stackExecutor)
     {
         $this->stackExecutor = $stackExecutor;
     }

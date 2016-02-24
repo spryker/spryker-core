@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Cart\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 
 class CartToCalculationBridge implements CartToCalculationInterface
 {

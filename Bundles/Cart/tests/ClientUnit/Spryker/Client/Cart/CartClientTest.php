@@ -52,7 +52,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $factoryMock = $this->getFactoryMock($sessionMock);
         $cartClientMock = $this->getCartClientMock($factoryMock);
 
-        $cartClientMock->clearCart();
+        $cartClientMock->clearQuote();
     }
 
     /**
@@ -68,7 +68,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $factoryMock = $this->getFactoryMock($sessionMock);
         $cartClientMock = $this->getCartClientMock($factoryMock);
 
-        $cartClientMock->clearCart();
+        $cartClientMock->clearQuote();
     }
 
     /**
@@ -112,18 +112,21 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
     }
 
+
     /**
      * @return void
      */
-    public function testRemoveItemMustOnlyExceptItemTransferAsArgument()
+    public function testChangeItemQuantityMustCallRemoveItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setId('identifier');
+        $itemTransfer->setQuantity(2);
+        $itemTransfer->setSku('sku');
+
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
 
         $sessionMock = $this->getSessionMock();
-        $sessionMock->expects($this->exactly(2))
+        $sessionMock->expects($this->exactly(3))
             ->method('getQuote')
             ->will($this->returnValue($quoteTransfer));
 
@@ -131,48 +134,17 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $stubMock->expects($this->once())
             ->method('removeItem')
             ->will($this->returnValue($quoteTransfer));
-
-        $factoryMock = $this->getFactoryMock($sessionMock, $stubMock);
-        $cartClientMock = $this->getCartClientMock($factoryMock);
-
-        $quoteTransfer = $cartClientMock->removeItem($itemTransfer);
-
-        $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testChangeItemQuantityMustOnlyExceptItemTransferAsArgument()
-    {
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(2);
-        $itemTransfer->setId('identifier');
-
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->addItem($itemTransfer);
-
-        $sessionMock = $this->getSessionMock();
-        $sessionMock->expects($this->exactly(3))
-            ->method('getQuote')
-            ->will($this->returnValue($quoteTransfer));
-
-        $stubMock = $this->getStubMock();
-        $stubMock->expects($this->once())
-            ->method('decreaseItemQuantity')
-            ->will($this->returnValue($quoteTransfer));
         $stubMock->expects($this->never())
-            ->method('increaseItemQuantity')
+            ->method('addItem')
             ->will($this->returnValue($quoteTransfer));
 
         $factoryMock = $this->getFactoryMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($factoryMock);
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(1);
-        $itemTransfer->setId('identifier');
+        $itemTransfer->setSku('sku');
 
-        $quoteTransfer = $cartClientMock->changeItemQuantity($itemTransfer);
+        $quoteTransfer = $cartClientMock->changeItemQuantity('sku', null, 1);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
     }
@@ -180,47 +152,11 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testChangeItemQuantityMustCallDecreaseItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
-    {
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(2);
-        $itemTransfer->setId('identifier');
-
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->addItem($itemTransfer);
-
-        $sessionMock = $this->getSessionMock();
-        $sessionMock->expects($this->exactly(3))
-            ->method('getQuote')
-            ->will($this->returnValue($quoteTransfer));
-
-        $stubMock = $this->getStubMock();
-        $stubMock->expects($this->once())
-            ->method('decreaseItemQuantity')
-            ->will($this->returnValue($quoteTransfer));
-        $stubMock->expects($this->never())
-            ->method('increaseItemQuantity')
-            ->will($this->returnValue($quoteTransfer));
-
-        $factoryMock = $this->getFactoryMock($sessionMock, $stubMock);
-        $cartClientMock = $this->getCartClientMock($factoryMock);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setId('identifier');
-
-        $quoteTransfer = $cartClientMock->changeItemQuantity($itemTransfer, 1);
-
-        $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testChangeItemQuantityMustCallIncreaseItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
+    public function testChangeItemQuantityMustCallAddItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(1);
-        $itemTransfer->setId('identifier');
+        $itemTransfer->setSku('sku');
 
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
@@ -232,19 +168,20 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
 
         $stubMock = $this->getStubMock();
         $stubMock->expects($this->never())
-            ->method('decreaseItemQuantity')
+            ->method('removeItem')
             ->will($this->returnValue($quoteTransfer));
+
         $stubMock->expects($this->once())
-            ->method('increaseItemQuantity')
+            ->method('addItem')
             ->will($this->returnValue($quoteTransfer));
 
         $factoryMock = $this->getFactoryMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($factoryMock);
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setId('identifier');
+        $itemTransfer->setSku('sku');
 
-        $quoteTransfer = $cartClientMock->changeItemQuantity($itemTransfer, 2);
+        $quoteTransfer = $cartClientMock->changeItemQuantity('sku', null, 2);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
     }
@@ -320,9 +257,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         return $this->getMock('Spryker\Client\Cart\Zed\CartStubInterface', [
             'addItem',
             'removeItem',
-            'increaseItemQuantity',
-            'decreaseItemQuantity',
-            'storeQuoteToSession',
+            'storeQuote',
         ]);
     }
 

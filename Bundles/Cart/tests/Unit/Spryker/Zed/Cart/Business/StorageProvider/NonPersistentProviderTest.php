@@ -50,14 +50,14 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
 
         $changedCart = $this->provider->addItems($change);
         $changedItems = $changedCart->getItems();
-        $this->assertCount(2, $changedItems);
+        $this->assertCount(1, $changedItems);
 
         /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
         $changedItem = $changedItems[0];
 
         $this->assertEquals($itemId, $changedItem->getId());
         $this->assertEquals(
-            1,
+            $existingQuantity + $newQuantity,
             $changedItem->getQuantity()
         );
     }

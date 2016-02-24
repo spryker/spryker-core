@@ -3,25 +3,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Cart\Business;
+namespace Spryker\Zed\Cart\Business\Model;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface;
+use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridgeInterface;
 
-// TODO FW This file must be moved to a directory
-class Operation // TODO FW Interface missing
+class Operation implements OperationInterface
 {
-
     const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
-    const INCREASE_ITEMS_SUCCESS = 'cart.increase.items.success';
     const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
-    const DECREASE_ITEMS_SUCCESS = 'cart.decrease.items.success';
 
     /**
      * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
@@ -52,14 +48,14 @@ class Operation // TODO FW Interface missing
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface $itemGrouperFacade
-     * @param \Spryker\Zed\Messenger\Business\MessengerFacade $messengerFacade
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridgeInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
         CartToCalculationInterface $calculationFacade,
         CartToItemGrouperInterface $itemGrouperFacade,
-        MessengerFacade $messengerFacade,
+        CartToMessengerBridgeInterface $messengerFacade,
         array $itemExpanderPlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
@@ -80,35 +76,6 @@ class Operation // TODO FW Interface missing
         $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
         $quoteTransfer = $this->getGroupedCartItems($quoteTransfer);
         $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::ADD_ITEMS_SUCCESS));
-
-        return $this->recalculate($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function increase(CartChangeTransfer $cartChangeTransfer)
-    {
-        $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
-        $quoteTransfer = $this->cartStorageProvider->increaseItems($expandedCartChangeTransfer);
-        $quoteTransfer = $this->getGroupedCartItems($quoteTransfer);
-        $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::INCREASE_ITEMS_SUCCESS));
-
-        return $this->recalculate($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function decrease(CartChangeTransfer $cartChangeTransfer)
-    {
-        $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
-        $quoteTransfer = $this->cartStorageProvider->decreaseItems($expandedCartChangeTransfer);
-        $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::DECREASE_ITEMS_SUCCESS));
 
         return $this->recalculate($quoteTransfer);
     }

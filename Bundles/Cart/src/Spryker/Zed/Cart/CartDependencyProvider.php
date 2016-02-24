@@ -8,6 +8,7 @@ namespace Spryker\Zed\Cart;
 
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperBridge;
+use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -35,7 +36,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_MESSENGER] = function (Container $container) {
-            return $container->getLocator()->messenger()->facade();
+            return new CartToMessengerBridge($container->getLocator()->messenger()->facade());
         };
 
         $container[self::CART_EXPANDER_PLUGINS] = function (Container $container) {

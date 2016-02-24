@@ -32,24 +32,4 @@ class CartStub extends BaseStub implements CartStubInterface
         return $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function increaseItemQuantity(CartChangeTransfer $changeTransfer)
-    {
-        return $this->zedStub->call('/cart/gateway/increase-item-quantity', $changeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function decreaseItemQuantity(CartChangeTransfer $changeTransfer)
-    {
-        return $this->zedStub->call('/cart/gateway/decrease-item-quantity', $changeTransfer);
-    }
-
 }

@@ -25,7 +25,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\StackExecutor // TODO FW Interface missing
+     * @return \Spryker\Zed\Calculation\Business\Model\StackExecutorInterface
      */
     public function createStackExecutor()
     {
@@ -97,7 +97,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPrecondition // TODO FW Interface missing
+     * @return \Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPreconditionInterface
      */
     public function createCheckoutGrandTotalPrecondition()
     {

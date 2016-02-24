@@ -30,22 +30,9 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addToCart(CartChangeTransfer $cartChangeTransfer)
+    public function add(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFactory()->createCartOperation()->add($cartChangeTransfer);
-    }
-
-    /**
-     *
-     * TODO FW Is this a duplicate of addToCart() ? If so please remove
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function increaseQuantity(CartChangeTransfer $cartChangeTransfer)
-    {
-        return $this->getFactory()->createCartOperation()->increase($cartChangeTransfer);
     }
 
     /**
@@ -62,21 +49,9 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeFromCart(CartChangeTransfer $cartChangeTransfer)
+    public function remove(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFactory()->createCartOperation()->remove($cartChangeTransfer);
-    }
-
-    /**
-     * TODO FW Is this a duplicate of removeFromCart() ? If so please remove
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function decreaseQuantity(CartChangeTransfer $cartChangeTransfer)
-    {
-        return $this->getFactory()->createCartOperation()->decrease($cartChangeTransfer);
     }
 
 }

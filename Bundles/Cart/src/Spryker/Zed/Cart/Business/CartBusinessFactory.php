@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Cart\Business;
 
+use Spryker\Zed\Cart\Business\Model\Operation;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Cart\CartDependencyProvider;
@@ -17,8 +18,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * TODO FW return value without interface
-     * @return \Spryker\Zed\Cart\Business\Operation
+     * @return \Spryker\Zed\Cart\Business\Model\OperationInterface
      */
     public function createCartOperation()
     {
@@ -56,7 +56,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridgeInterface
      */
     protected function getMessengerFacade()
     {

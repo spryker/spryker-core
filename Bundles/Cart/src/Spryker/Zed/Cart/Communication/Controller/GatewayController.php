@@ -22,27 +22,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function addItemAction(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->addToCart($cartChangeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function increaseItemQuantityAction(CartChangeTransfer $cartChangeTransfer)
-    {
-        return $this->getFacade()->increaseQuantity($cartChangeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function decreaseItemQuantityAction(CartChangeTransfer $cartChangeTransfer)
-    {
-        return $this->getFacade()->decreaseQuantity($cartChangeTransfer);
+        return $this->getFacade()->add($cartChangeTransfer);
     }
 
     /**
@@ -52,7 +32,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function removeItemAction(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->removeFromCart($cartChangeTransfer);
+        return $this->getFacade()->remove($cartChangeTransfer);
     }
 
 }

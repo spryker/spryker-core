@@ -17,27 +17,13 @@ interface CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addToCart(CartChangeTransfer $cartChangeTransfer);
+    public function add(CartChangeTransfer $cartChangeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseQuantity(CartChangeTransfer $cartChangeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function removeFromCart(CartChangeTransfer $cartChangeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function decreaseQuantity(CartChangeTransfer $cartChangeTransfer);
+    public function remove(CartChangeTransfer $cartChangeTransfer);
 
 }

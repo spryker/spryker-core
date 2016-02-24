@@ -25,18 +25,4 @@ interface CartStubInterface
      */
     public function removeItem(CartChangeTransfer $cartChangeTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function increaseItemQuantity(CartChangeTransfer $cartChangeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function decreaseItemQuantity(CartChangeTransfer $cartChangeTransfer);
-
 }

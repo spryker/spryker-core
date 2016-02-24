@@ -114,22 +114,16 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     {
         Propel::getConnection()->beginTransaction();
 
-        try {
-            foreach ($this->saveOrderStack as $orderSaver) {
-                $orderSaver->saveOrder($quoteTransfer, $checkoutResponse);
-            }
-
-            if (!$this->hasErrors($checkoutResponse)) {
-                Propel::getConnection()->commit();
-            } else {
-                Propel::getConnection()->rollBack();
-
-                return $quoteTransfer;
-            }
-        } catch (\Exception $e) {
-            Propel::getConnection()->rollBack();
-            throw $e;
+        foreach ($this->saveOrderStack as $orderSaver) {
+            $orderSaver->saveOrder($quoteTransfer, $checkoutResponse);
         }
+
+        if ($this->hasErrors($checkoutResponse)) {
+            Propel::getConnection()->rollBack();
+            return $quoteTransfer;
+        }
+
+        Propel::getConnection()->commit();
 
         return $quoteTransfer;
     }

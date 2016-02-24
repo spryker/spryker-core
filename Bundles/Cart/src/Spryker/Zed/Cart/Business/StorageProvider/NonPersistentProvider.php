@@ -18,35 +18,23 @@ class NonPersistentProvider implements StorageProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItems(CartChangeTransfer $cartChangeTransfer)
-    {
-        return $this->addItems($cartChangeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function addItems(CartChangeTransfer $cartChangeTransfer)
     {
         $existingItems = $cartChangeTransfer->getQuote()->getItems();
-        foreach ($cartChangeTransfer->getItems() as $item) {
-            $this->isValidQuantity($item);
-            $existingItems->append($item);
+        $cartIndex = $this->createCartIndex($existingItems);
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $this->isValidQuantity($itemTransfer);
+
+            $itemIdentifier = $this->getItemIdentifier($itemTransfer);
+            if (isset($cartIndex[$itemIdentifier])) {
+                $this->increaseExistingItem($existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
+            } else {
+                $existingItems->append($itemTransfer);
+            }
         }
 
         return $cartChangeTransfer->getQuote();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function decreaseItems(CartChangeTransfer $cartChangeTransfer)
-    {
-        return $this->removeItems($cartChangeTransfer);
     }
 
     /**
@@ -59,13 +47,12 @@ class NonPersistentProvider implements StorageProviderInterface
         $existingItems = $cartChangeTransfer->getQuote()->getItems();
         $cartIndex = $this->createCartIndex($existingItems);
 
-        foreach ($cartChangeTransfer->getItems() as $item) {
-            $this->isValidQuantity($item);
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $this->isValidQuantity($itemTransfer);
 
-            if (isset($cartIndex[$item->getGroupKey()])) {
-                $this->decreaseExistingItem($existingItems, $cartIndex[$item->getGroupKey()], $item);
-            } else {
-                $this->decreaseBySku($existingItems, $item);
+            $itemIdentifier = $this->getItemIdentifier($itemTransfer);
+            if (isset($cartIndex[$itemIdentifier])) {
+                $this->decreaseExistingItem($existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
             }
         }
 
@@ -80,64 +67,71 @@ class NonPersistentProvider implements StorageProviderInterface
     protected function createCartIndex(\ArrayObject $cartItems)
     {
         $cartIndex = [];
-        foreach ($cartItems as $key => $cartItem) {
-            if (!empty($cartItem->getGroupKey())) {
-                $cartIndex[$cartItem->getGroupKey()] = $key;
-            }
+        foreach ($cartItems as $key => $itemTransfer) {
+            $itemIdentifier = $this->getItemIdentifier($itemTransfer);
+            $cartIndex[$itemIdentifier] = $key;
         }
 
         return $cartIndex;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function getItemIdentifier(ItemTransfer $itemTransfer)
+    {
+        return $itemTransfer->getGroupKey() ? $itemTransfer->getGroupKey() : $itemTransfer->getSku();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
      * @param int $index
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
-    protected function decreaseExistingItem($existingItems, $index, $item)
+    protected function decreaseExistingItem($existingItems, $index, $itemTransfer)
     {
-        $existingItem = $existingItems[$index];
-        $newQuantity = $existingItem->getQuantity() - $item->getQuantity();
+        $existingItemTransfer = $existingItems[$index];
+        $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
 
-        if ($newQuantity > 0) {
-            $existingItem->setQuantity($newQuantity);
+        if ($changedQuantity > 0) {
+            $existingItemTransfer->setQuantity($changedQuantity);
         } else {
             unset($existingItems[$index]);
         }
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $existingItems
-     * @param \Generated\Shared\Transfer\ItemTransfer $changedItem
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
+     * @param int $index
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
-    protected function decreaseBySku(\ArrayObject $existingItems, ItemTransfer $changedItem)
+    protected function increaseExistingItem($existingItems, $index, $itemTransfer)
     {
-        foreach ($existingItems as $key => $cartIndexItem) {
-            if ($cartIndexItem->getSku() === $changedItem->getSku()) {
-                $this->decreaseExistingItem($existingItems, $key, $changedItem);
+        $existingItemTransfer = $existingItems[$index];
+        $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
 
-                return;
-            }
-        }
+        $existingItemTransfer->setQuantity($changedQuantity);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */
-    protected function isValidQuantity(ItemTransfer $item)
+    protected function isValidQuantity(ItemTransfer $itemTransfer)
     {
-        if ($item->getQuantity() < 1) {
+        if ($itemTransfer->getQuantity() < 1) {
             throw new InvalidQuantityExeption(
                 sprintf(
                     'Could not change cart item "%d" with "%d" as value.',
-                    $item->getSku(),
-                    $item->getQuantity()
+                    $itemTransfer->getSku(),
+                    $itemTransfer->getQuantity()
                 )
             );
         }

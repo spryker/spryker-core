@@ -20,7 +20,7 @@ interface CartClientInterface
     /**
      * @return void
      */
-    public function clearCart();
+    public function clearQuote();
 
     /**
      * @return int
@@ -35,41 +35,44 @@ interface CartClientInterface
     public function addItem(ItemTransfer $itemTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
+     * @param string $sku
+     * @param string $groupKey
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItem(ItemTransfer $itemTransfer);
+    public function removeItem($sku, $groupKey = null);
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $sku
+     * @param string $groupKey
+     * @param int $quantity
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1);
+
+    /**
+     * @param string $sku
+     * @param string $groupKey
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
+    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $sku
+     * @param string $groupKey
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function increaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
+    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function storeQuoteToSession(QuoteTransfer $quoteTransfer);
+    public function storeQuote(QuoteTransfer $quoteTransfer);
 
 }
