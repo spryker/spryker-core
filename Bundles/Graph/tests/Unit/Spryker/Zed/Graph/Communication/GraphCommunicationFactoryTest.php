@@ -22,6 +22,7 @@ use Spryker\Zed\Graph\GraphConfig;
  */
 class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
 {
+
     const GRAPH_NAME = 'graph name';
 
     /**

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Gui\Communication\Form\Type\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 
 class NoValidateTypeExtension extends AbstractTypeExtension
 {

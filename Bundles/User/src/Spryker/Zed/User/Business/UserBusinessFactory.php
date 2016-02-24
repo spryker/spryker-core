@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\User\Business;
 
-use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\User\Business\Model\Installer;
+use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\UserDependencyProvider;
 
 /**

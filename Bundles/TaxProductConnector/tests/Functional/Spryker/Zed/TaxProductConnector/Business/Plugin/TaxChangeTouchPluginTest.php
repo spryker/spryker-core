@@ -8,11 +8,11 @@
 namespace Functional\Spryker\Zed\TaxProductConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 
 /**
  * @group Business

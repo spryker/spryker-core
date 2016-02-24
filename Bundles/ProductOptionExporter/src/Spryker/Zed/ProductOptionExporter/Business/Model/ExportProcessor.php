@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductOptionExporter\Business\Model;
 
-use Spryker\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductOptionInterface;
-use Spryker\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductInterface;
+use Spryker\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductOptionInterface;
 
 class ExportProcessor implements ExportProcessorInterface
 {

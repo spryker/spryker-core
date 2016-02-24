@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Oms\Communication\Table;
 
+use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 
 class TransitionLogTable extends AbstractTable
 {

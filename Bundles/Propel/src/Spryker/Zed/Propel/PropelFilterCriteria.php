@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Propel;
 
-use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\FilterTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 class PropelFilterCriteria implements PropelFilterCriteriaInterface
 {

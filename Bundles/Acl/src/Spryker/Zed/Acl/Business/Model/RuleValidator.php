@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RulesTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Shared\Acl\AclConstants;
 
 class RuleValidator implements RuleValidatorInterface

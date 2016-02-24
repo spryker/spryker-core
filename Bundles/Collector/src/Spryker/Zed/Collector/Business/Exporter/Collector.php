@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Collector

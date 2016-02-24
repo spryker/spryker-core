@@ -10,8 +10,8 @@ namespace Spryker\Zed\Kernel;
 abstract class AbstractFactory
 {
 
-    use QueryContainerResolverAwareTrait;
     use BundleConfigResolverAwareTrait;
     use BundleDependencyProviderResolverAwareTrait;
+    use QueryContainerResolverAwareTrait;
 
 }

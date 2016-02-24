@@ -4,7 +4,7 @@ modules:
         - Asserts
         - \Testify\Module\Environment
         - \Config\Module\ConfigInit
-#        - \Propel\Module\PropelInstall
+        - \Propel\Module\PropelInstall
         - \Transfer\Module\TransferGenerate
         - \Propel\Module\Database
 

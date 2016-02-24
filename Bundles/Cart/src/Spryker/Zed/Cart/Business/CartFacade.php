@@ -9,8 +9,8 @@ namespace Spryker\Zed\Cart\Business;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Cart\Business\Model\CalculableContainer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Cart\Business\CartBusinessFactory getFactory()

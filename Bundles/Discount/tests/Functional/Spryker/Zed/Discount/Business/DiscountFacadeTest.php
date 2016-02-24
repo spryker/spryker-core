@@ -7,27 +7,27 @@
 
 namespace Functional\Spryker\Zed\Discount\Business;
 
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Generated\Shared\Transfer\DecisionRuleTransfer;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderItemsTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderItemsTransfer;
-use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
-use Spryker\Zed\Discount\Business\DiscountFacade;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
+use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**

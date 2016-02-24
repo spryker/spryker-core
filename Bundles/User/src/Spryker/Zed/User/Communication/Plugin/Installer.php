@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\User\Communication\Plugin;
 
-use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 use Spryker\Zed\Installer\Business\Model\InstallerInterface;
+use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 /**
  * @method \Spryker\Zed\User\Business\UserFacade getFacade()

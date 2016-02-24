@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\Cart\Business;
 
-use Spryker\Zed\Cart\Business\StorageProvider\InMemoryProvider;
+use Spryker\Zed\Cart\Business\Operator\AddOperator;
+use Spryker\Zed\Cart\Business\Operator\CouponCodeAddOperator;
 use Spryker\Zed\Cart\Business\Operator\CouponCodeClearOperator;
 use Spryker\Zed\Cart\Business\Operator\CouponCodeRemoveOperator;
-use Spryker\Zed\Cart\Business\Operator\CouponCodeAddOperator;
 use Spryker\Zed\Cart\Business\Operator\DecreaseOperator;
-use Spryker\Zed\Cart\Business\Operator\RemoveOperator;
 use Spryker\Zed\Cart\Business\Operator\IncreaseOperator;
-use Spryker\Zed\Cart\Business\Operator\AddOperator;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Cart\Business\Operator\OperatorInterface;
+use Spryker\Zed\Cart\Business\Operator\RemoveOperator;
+use Spryker\Zed\Cart\Business\StorageProvider\InMemoryProvider;
 use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Cart\CartConfig getConfig()

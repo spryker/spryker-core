@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Payone\Dependency\Facade;
 
-use Spryker\Zed\Refund\Business\RefundFacade;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\Refund\Business\RefundFacade;
 
 class PayoneToRefundBridge implements PayoneToRefundInterface
 {

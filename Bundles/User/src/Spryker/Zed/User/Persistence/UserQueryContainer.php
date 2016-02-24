@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\User\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\User\Persistence\UserPersistenceFactory getFactory()

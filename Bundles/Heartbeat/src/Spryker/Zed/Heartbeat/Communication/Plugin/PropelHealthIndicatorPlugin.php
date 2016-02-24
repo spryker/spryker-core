@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Heartbeat\Communication\Plugin;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacade getFacade()

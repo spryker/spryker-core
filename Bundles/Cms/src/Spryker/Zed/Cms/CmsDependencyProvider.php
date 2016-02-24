@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Cms;
 
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleBridge;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryBridge;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlBridge;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {

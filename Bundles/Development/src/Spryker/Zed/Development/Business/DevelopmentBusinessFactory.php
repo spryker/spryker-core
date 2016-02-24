@@ -8,28 +8,17 @@
 namespace Spryker\Zed\Development\Business;
 
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
-use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
+use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
  */
 class DevelopmentBusinessFactory extends AbstractBusinessFactory
 {
-
-    /**
-     * @return \Spryker\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer
-     */
-    public function createCodeStyleFixer()
-    {
-        return new CodeStyleFixer(
-            $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory()
-        );
-    }
 
     /**
      * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer

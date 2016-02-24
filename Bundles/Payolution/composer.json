@@ -21,7 +21,10 @@
     "spryker/zed-request": "^1.0.0",
     "spryker/guzzle": "^1.0.0",
     "spryker/propel": "^1.0.0",
-    "spryker/symfony": "^1.0.0"
+    "spryker/symfony": "^1.0.0",
+    "spryker/country": "^1.0.0",
+    "spryker/customer": "^1.0.0",
+    "spryker/sales": "^1.0.0"
   },
   "description": "payolution bundle",
   "license": "proprietary",

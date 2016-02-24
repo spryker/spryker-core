@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Refund\Communication;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Shared\Library\Context;
 use Spryker\Shared\Library\DateFormatter;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Refund\Business\RefundFacade;
 use Spryker\Zed\Refund\Communication\Form\RefundForm;
 use Spryker\Zed\Refund\Communication\Table\RefundTable;

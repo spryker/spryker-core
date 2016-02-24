@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Cart\Business\StorageProvider;
 
-use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Zed\Cart\Business\Exception\InvalidArgumentException;
 use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Zed\Cart\Business\Exception\InvalidArgumentException;
 
 class InMemoryProvider implements StorageProviderInterface
 {

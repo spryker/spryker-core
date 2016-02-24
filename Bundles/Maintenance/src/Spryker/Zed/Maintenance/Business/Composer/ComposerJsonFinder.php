@@ -37,7 +37,7 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
      */
     public function find()
     {
-        return $this->finder->in($this->pathToBundles)->name('composer.json');
+        return $this->finder->in($this->pathToBundles)->name('composer.json')->depth('< 2');
     }
 
 }

@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

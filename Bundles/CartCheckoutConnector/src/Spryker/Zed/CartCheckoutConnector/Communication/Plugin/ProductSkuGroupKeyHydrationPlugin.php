@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CartCheckoutConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

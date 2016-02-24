@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CustomerMailConnector\Dependency\Facade;
 
-use Spryker\Zed\Mail\Business\MailFacade;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\SendMailResponsesTransfer;
+use Spryker\Zed\Mail\Business\MailFacade;
 
 class CustomerMailConnectorToMailBridge implements CustomerMailConnectorToMailInterface
 {

@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
@@ -65,7 +65,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
             $this->calculateTax($item);
         }
 
-        /** @var \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\OrderTransfer $order **/
+        /** @var \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\OrderTransfer $order */
         $order = $calculableContainer->getCalculableObject();
         $this->calculateTaxForOrderExpenses($order->getExpenses());
     }

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Installer\Communication\Plugin;
 
 use Psr\Log\LogLevel;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Installer\Business\InstallerFacade getFacade()

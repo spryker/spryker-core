@@ -9,13 +9,13 @@ namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Url\Business\Exception\MissingUrlException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Dependency\UrlToLocaleInterface;
 use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
-use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlManager implements UrlManagerInterface

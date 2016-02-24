@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\Discount\Business\Model;
 
-use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
+use Generated\Shared\Transfer\VoucherTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 
 /**
  * Class VoucherEngine

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Country\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Country\Business\CountryBusinessFactory getFactory()

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductOptionCartConnector\Business\Model;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class GroupKeyExpander
 {

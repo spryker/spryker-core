@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Nopayment\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Nopayment\Business\NopaymentBusinessFactory getFactory()

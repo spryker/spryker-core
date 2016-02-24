@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Maintenance\Business\InstalledPackages;
 
-use Generated\Shared\Transfer\InstalledPackageTransfer;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
+use Generated\Shared\Transfer\InstalledPackageTransfer;
 
 class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterface
 {

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ItemGrouper\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ItemGrouper\Business\ItemGrouperBusinessFactory getFactory()

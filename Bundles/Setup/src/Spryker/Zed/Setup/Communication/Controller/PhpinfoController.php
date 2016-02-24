@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class PhpinfoController extends AbstractController
 {

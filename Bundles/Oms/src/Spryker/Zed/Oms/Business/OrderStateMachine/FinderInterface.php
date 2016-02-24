@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface FinderInterface
 {

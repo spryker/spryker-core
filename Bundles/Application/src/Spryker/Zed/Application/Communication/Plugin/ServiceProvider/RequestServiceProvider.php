@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()

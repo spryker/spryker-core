@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Stock\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Stock\Persistence\StockPersistenceFactory getFactory()

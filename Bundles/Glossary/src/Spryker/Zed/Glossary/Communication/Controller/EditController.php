@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Glossary\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

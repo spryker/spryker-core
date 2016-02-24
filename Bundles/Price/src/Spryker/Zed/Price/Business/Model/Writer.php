@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
-use Spryker\Zed\Price\Persistence\PriceQueryContainer;
-use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
-use Spryker\Zed\Price\PriceConfig;
 use Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
+use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
+use Spryker\Zed\Price\Persistence\PriceQueryContainer;
+use Spryker\Zed\Price\PriceConfig;
 
 class Writer implements WriterInterface
 {

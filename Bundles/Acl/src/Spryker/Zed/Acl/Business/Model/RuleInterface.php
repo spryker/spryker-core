@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Acl\AclConstants;
 

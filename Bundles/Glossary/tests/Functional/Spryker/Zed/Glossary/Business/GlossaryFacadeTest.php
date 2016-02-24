@@ -10,8 +10,8 @@ namespace Functional\Spryker\Zed\Glossary\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 
 /**
  * @group Spryker

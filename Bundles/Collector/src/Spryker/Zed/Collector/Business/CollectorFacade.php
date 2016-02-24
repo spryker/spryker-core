@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Collector\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

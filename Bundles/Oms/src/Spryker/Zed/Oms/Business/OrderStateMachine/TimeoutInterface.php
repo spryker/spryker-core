@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Spryker\Zed\Oms\Business\Process\ProcessInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use DateTime;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 
 interface TimeoutInterface
 {

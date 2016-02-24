@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\User\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\User\Business\UserBusinessFactory getFactory()

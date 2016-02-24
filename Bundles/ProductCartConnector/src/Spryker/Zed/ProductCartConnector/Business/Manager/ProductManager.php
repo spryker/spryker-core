@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
+use Spryker\Zed\Product\Business\ProductFacade;
 
 class ProductManager implements ProductManagerInterface
 {

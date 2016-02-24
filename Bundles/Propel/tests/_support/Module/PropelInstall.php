@@ -25,7 +25,9 @@ class PropelInstall extends Module
     {
         parent::__construct($moduleContainer, $config);
 
-        $this->initPropel();
+        if (!empty($config['enabled'])) {
+            $this->initPropel();
+        }
     }
 
     /**

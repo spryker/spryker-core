@@ -8,14 +8,14 @@
 namespace Functional\Spryker\Zed\Price;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\Price\Business\PriceFacade;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\Price\Business\PriceFacade;
 
 /**
  * @group PriceTest

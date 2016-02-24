@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Sales\Business\Model\Split;
 
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Sales\Business\Model\Split\Validation\Messages;
 use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderItem implements ItemInterface

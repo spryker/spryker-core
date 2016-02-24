@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Customer\Persistence;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Customer\CustomerConfig getConfig()

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()

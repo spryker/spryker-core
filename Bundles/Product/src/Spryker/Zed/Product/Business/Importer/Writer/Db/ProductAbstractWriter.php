@@ -9,10 +9,10 @@ namespace Spryker\Zed\Product\Business\Importer\Writer\Db;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Product\Business\Importer\Writer\ProductAbstractWriterInterface;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 
 class ProductAbstractWriter implements ProductAbstractWriterInterface
 {

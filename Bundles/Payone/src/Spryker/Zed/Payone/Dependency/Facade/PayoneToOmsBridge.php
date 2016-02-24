@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Payone\Dependency\Facade;
 
-use Spryker\Zed\Oms\Business\OmsFacade;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Oms\Business\OmsFacade;
 
 class PayoneToOmsBridge implements PayoneToOmsInterface
 {

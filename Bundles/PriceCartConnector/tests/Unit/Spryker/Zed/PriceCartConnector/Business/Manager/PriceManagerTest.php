@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Zed\PriceCartConnector\Business;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 use Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;

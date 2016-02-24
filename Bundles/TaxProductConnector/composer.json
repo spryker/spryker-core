@@ -11,7 +11,9 @@
   "require": {
     "spryker/kernel": "^1.0.0",
     "spryker/product": "^1.0.0",
-    "spryker/propel": "^1.0.0"
+    "spryker/propel": "^1.0.0",
+    "spryker/tax": "^1.0.0",
+    "spryker/touch": "^1.0.0"
   },
   "description": "tax product connector bundle",
   "license": "proprietary",

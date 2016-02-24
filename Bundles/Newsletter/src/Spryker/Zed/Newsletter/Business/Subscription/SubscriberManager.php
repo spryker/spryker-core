@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 
 class SubscriberManager implements SubscriberManagerInterface
 {

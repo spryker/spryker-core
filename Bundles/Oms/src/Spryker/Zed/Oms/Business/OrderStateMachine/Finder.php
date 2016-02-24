@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Finder implements FinderInterface
 {

@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
-use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
-use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Propel\Runtime\Collection\Collection;
+use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
+use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 class TaxWriter implements TaxWriterInterface
 {

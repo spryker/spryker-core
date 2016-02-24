@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Shipment\Communication;
 
-use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
-use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
+use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
+use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 

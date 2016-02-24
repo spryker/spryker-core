@@ -8,12 +8,12 @@
 namespace Functional\Spryker\Zed\Glossary;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\TranslationTransfer;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
-use Generated\Shared\Transfer\TranslationTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
 
 /**
  * @group Spryker

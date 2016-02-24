@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Auth\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Auth\Persistence\AuthPersistenceFactory getFactory()

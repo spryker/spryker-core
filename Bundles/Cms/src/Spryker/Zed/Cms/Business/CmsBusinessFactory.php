@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Cms\Business;
 
-use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\Cms\Business\Block\BlockManager;
-use Spryker\Zed\Cms\Business\Template\TemplateManager;
+use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\Cms\Business\Page\PageManager;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder;
 
 /**

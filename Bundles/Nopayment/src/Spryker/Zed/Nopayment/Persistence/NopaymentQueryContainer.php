@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Nopayment\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Nopayment\Persistence\NopaymentPersistenceFactory getFactory()

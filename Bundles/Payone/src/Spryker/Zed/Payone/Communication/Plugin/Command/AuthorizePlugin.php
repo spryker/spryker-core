@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Payone\Communication\Plugin\Command;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()

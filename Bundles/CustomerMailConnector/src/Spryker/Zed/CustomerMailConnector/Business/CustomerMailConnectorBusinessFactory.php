@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\CustomerMailConnector\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoredConfirmationSender;
 use Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoreTokenSender;
 use Spryker\Zed\CustomerMailConnector\Business\Sender\RegistrationTokenSender;
 use Spryker\Zed\CustomerMailConnector\CustomerMailConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig getConfig()

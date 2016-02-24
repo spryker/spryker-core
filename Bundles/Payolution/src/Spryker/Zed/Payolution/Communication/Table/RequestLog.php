@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Payolution\Communication\Table;
 
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTransactionRequestLogTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
-use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTransactionRequestLogTableMap;
 
 class RequestLog extends AbstractTable
 {

@@ -9,8 +9,8 @@ namespace Spryker\Zed\Payolution\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 
 class OrderHydrationPlugin extends BaseAbstractPlugin implements CheckoutOrderHydrationInterface
 {

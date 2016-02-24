@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Touch\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Touch\Business\TouchBusinessFactory getFactory()

@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Kernel\ClassResolver\Config;
 
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
-use Spryker\Shared\Kernel\Exception\Backtrace;
 
 class BundleConfigNotFoundException extends \Exception
 {

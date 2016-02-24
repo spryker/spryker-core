@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Oms\Business\Process;
 
-use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 use Exception;
+use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 
 class Process implements ProcessInterface
 {

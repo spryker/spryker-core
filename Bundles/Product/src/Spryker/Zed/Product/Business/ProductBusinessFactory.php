@@ -7,21 +7,21 @@
 
 namespace Spryker\Zed\Product\Business;
 
-use Spryker\Zed\Product\Business\Attribute\AttributeManager;
-use Spryker\Zed\Product\Business\Model\ProductBatchResult;
-use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductConcreteWriter;
-use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductAbstractWriter;
-use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
-use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
-use Spryker\Zed\Product\Business\Importer\Reader\File\CsvReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
 use Spryker\Zed\Product\Business\Importer\FileImporter;
+use Spryker\Zed\Product\Business\Importer\Reader\File\CsvReader;
 use Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter;
 use Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator;
+use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductAbstractWriter;
+use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductConcreteWriter;
+use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
 use Spryker\Zed\Product\Business\Internal\Install;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Product\ProductDependencyProvider;
+use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Product\Business\Product\ProductManager;
+use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()

@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
-use Orm\Zed\Category\Persistence\SpyCategoryNode;
 
 class NodeWriter implements NodeWriterInterface
 {

@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Application\ApplicationConstants;
-use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()

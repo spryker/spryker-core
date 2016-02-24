@@ -14,7 +14,9 @@
     "spryker/kernel": "^1.0.0",
     "spryker/locale": "^1.0.0",
     "spryker/product": "^1.0.0",
-    "spryker/propel": "^1.0.0"
+    "spryker/propel": "^1.0.0",
+    "spryker/tax": "^1.0.0",
+    "spryker/touch": "^1.0.0"
   },
   "description": "product option bundle",
   "license": "proprietary",

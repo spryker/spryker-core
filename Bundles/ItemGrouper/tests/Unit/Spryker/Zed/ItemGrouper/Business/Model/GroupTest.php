@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Zed\ItemGrouper\Business\Model;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\ItemGrouper\Business\Model\Group;
 
 class GroupTest extends \PHPUnit_Framework_TestCase

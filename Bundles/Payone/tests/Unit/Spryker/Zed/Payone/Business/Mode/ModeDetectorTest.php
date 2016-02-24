@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Mode;
 
-use Spryker\Zed\Payone\Business\Mode\ModeDetector;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Zed\Payone\Business\Mode\ModeDetector;
 use Spryker\Zed\Payone\PayoneConfig;
 
 /**

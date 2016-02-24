@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 
 use Spryker\Shared\Library\Communication\Response;
-use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class TransferServer
 {

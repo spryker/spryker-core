@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\Wishlist;
 
+use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Wishlist\Session\WishlistSession;
 use Spryker\Client\Wishlist\Storage\WishlistStorage;
 use Spryker\Client\Wishlist\Zed\WishlistStub;
-use Spryker\Client\Wishlist\Session\WishlistSession;
-use Spryker\Client\Kernel\AbstractFactory;
 
 class WishlistFactory extends AbstractFactory
 {

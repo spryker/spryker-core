@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\DiscountCheckoutConnector\Business;
 
-use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydrator;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
 use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorConfig getConfig()

@@ -8,14 +8,14 @@
 namespace Spryker\Zed\ProductSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributesOperationTableMap;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributesOperationTableMap;
-use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchPersistenceFactory getFactory()

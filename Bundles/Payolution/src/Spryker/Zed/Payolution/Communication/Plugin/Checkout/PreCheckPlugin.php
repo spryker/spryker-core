@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()

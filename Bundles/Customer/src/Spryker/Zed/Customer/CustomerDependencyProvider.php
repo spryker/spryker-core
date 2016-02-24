@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Customer;
 
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {

@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Log;
 use Spryker\Shared\ZedRequest\Client\RequestInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**

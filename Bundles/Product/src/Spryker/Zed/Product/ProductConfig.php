@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Product;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Library\DataDirectory;
 use Spryker\Shared\Product\ProductConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductConfig extends AbstractBundleConfig
 {

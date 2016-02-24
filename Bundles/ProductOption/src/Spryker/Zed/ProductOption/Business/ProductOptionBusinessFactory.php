@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;
-use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
+use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**

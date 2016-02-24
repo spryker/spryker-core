@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
-use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
-use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
-use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Discount\Persistence\DiscountPersistenceFactory getFactory()

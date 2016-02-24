@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\DiscountCheckoutConnector\Business\Model;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface DiscountSaverInterface
 {

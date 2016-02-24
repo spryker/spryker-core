@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
@@ -21,8 +22,7 @@ use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer

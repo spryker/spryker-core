@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CustomerCheckoutConnector\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorConfig getConfig()

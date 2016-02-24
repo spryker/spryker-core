@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Auth\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Auth\AuthDependencyProvider;
 use Spryker\Zed\Auth\Communication\Form\LoginForm;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
-use Spryker\Zed\Auth\AuthDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Auth\AuthConfig getConfig()

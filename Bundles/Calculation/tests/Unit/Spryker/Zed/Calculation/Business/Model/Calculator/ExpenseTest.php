@@ -7,10 +7,10 @@
 
 namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SequenceNumber\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\SequenceNumber\Persistence\SequenceNumberPersistenceFactory getFactory()

@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Touch\Business\Model;
 
 use DateTime;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface

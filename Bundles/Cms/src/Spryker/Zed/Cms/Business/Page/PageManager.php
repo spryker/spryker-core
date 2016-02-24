@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cms\Business\Page;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -19,7 +20,6 @@ use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Orm\Zed\Cms\Persistence\SpyCmsPage;
 
 class PageManager implements PageManagerInterface
 {

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CustomerMailConnector\Communication\Plugin;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CustomerMailConnector\Business\CustomerMailConnectorFacade getFacade()

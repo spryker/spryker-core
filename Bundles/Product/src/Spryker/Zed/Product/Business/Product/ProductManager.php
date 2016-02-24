@@ -7,24 +7,24 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Generated\Shared\Transfer\TaxSetTransfer;
-use Generated\Shared\Transfer\TaxRateTransfer;
 
 class ProductManager implements ProductManagerInterface
 {

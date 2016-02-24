@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\Setup;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
-use Spryker\Zed\Transfer\Communication\Console\GeneratorConsole;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Application\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\Cache\Communication\Console\DeleteAllCachesConsole;
 use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
 use Spryker\Zed\Search\Communication\Console\SearchConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
+use Spryker\Zed\Transfer\Communication\Console\GeneratorConsole;
 
 class SetupConfig extends AbstractBundleConfig
 {

@@ -43,7 +43,7 @@ class CodePhpMessDetectorConsole extends Console
      *
      * @throws \Exception
      *
-     * @return void
+     * @return int Exit code
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -58,7 +58,7 @@ class CodePhpMessDetectorConsole extends Console
         }
         $this->info($message);
 
-        $this->getFacade()->runPhpMd($bundle);
+        return $this->getFacade()->runPhpMd($bundle);
     }
 
 }

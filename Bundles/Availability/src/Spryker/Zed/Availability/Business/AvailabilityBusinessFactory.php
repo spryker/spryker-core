@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Availability\Business;
 
+use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()

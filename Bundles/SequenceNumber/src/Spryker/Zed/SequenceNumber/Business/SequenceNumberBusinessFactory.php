@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\SequenceNumber\Business;
 
-use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumber;
-use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
+use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumber;
 
 /**
  * @method \Spryker\Zed\SequenceNumber\SequenceNumberConfig getConfig()

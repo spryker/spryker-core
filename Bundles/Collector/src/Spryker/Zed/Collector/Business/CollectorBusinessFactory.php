@@ -7,28 +7,28 @@
 
 namespace Spryker\Zed\Collector\Business;
 
-use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdater as KeyValueTouchUpdater;
-use Spryker\Zed\Collector\Business\Exporter\Writer\Search\TouchUpdater;
-use Spryker\Zed\Collector\Business\Model\BatchResult;
-use Spryker\Zed\Collector\Business\Model\FailedResult;
-use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\RedisWriter;
-use Spryker\Zed\Collector\Business\Exporter\KeyValueCollector;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Collector;
+use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
+use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
+use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
+use Spryker\Zed\Collector\Business\Exporter\KeyValueCollector;
 use Spryker\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
 use Spryker\Zed\Collector\Business\Exporter\SearchCollector;
-use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
-use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
+use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\RedisWriter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdater as KeyValueTouchUpdater;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Search\TouchUpdater;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Internal\InstallElasticsearch;
+use Spryker\Zed\Collector\Business\Model\BatchResult;
+use Spryker\Zed\Collector\Business\Model\FailedResult;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**

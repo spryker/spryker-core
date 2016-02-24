@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Url\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Url\Persistence\UrlPersistenceFactory getFactory()

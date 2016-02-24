@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Search\Business;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Business\Model\Search;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
 use Spryker\Zed\Search\SearchDependencyProvider;

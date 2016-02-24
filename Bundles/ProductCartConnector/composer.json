@@ -13,7 +13,8 @@
   "require": {
     "spryker/kernel": "^1.0.0",
     "spryker/locale": "^1.0.0",
-    "spryker/product": "^1.0.0"
+    "spryker/product": "^1.0.0",
+    "spryker/tax": "^1.0.0"
   },
   "description": "product cart connector bundle",
   "license": "proprietary",

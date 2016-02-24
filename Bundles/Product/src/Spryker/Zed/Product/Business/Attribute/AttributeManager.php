@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Product\Business\Attribute;
 
+use Orm\Zed\Product\Persistence\SpyProductAttributesMetadata;
+use Orm\Zed\Product\Persistence\SpyProductAttributeType;
 use Spryker\Zed\Product\Business\Exception\AttributeExistsException;
 use Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException;
 use Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Orm\Zed\Product\Persistence\SpyProductAttributesMetadata;
-use Orm\Zed\Product\Persistence\SpyProductAttributeType;
 
 class AttributeManager implements AttributeManagerInterface
 {

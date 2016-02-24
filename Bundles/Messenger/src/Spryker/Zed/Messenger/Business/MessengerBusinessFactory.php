@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Messenger\Business;
 
 use Spryker\Shared\Messenger\MessengerConstants;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray;
 use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
 use Spryker\Zed\Messenger\MessengerDependencyProvider;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Messenger\MessengerConfig getConfig()

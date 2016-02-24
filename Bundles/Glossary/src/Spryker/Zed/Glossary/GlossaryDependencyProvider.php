@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Glossary;
 
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleBridge;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerBridge;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleBridge;
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchBridge;
 
 class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
 {

@@ -49,7 +49,7 @@ class CodeStyleSnifferConsole extends Console
      *
      * @throws \Exception
      *
-     * @return void
+     * @return int Exit code
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -64,7 +64,7 @@ class CodeStyleSnifferConsole extends Console
         }
         $this->info($message);
 
-        $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions());
+        return $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions());
     }
 
 }

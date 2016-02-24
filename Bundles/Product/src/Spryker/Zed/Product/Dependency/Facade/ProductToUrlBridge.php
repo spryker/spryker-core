@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
-use Spryker\Zed\Url\Business\UrlFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Url\Business\UrlFacade;
 
 class ProductToUrlBridge implements ProductToUrlInterface
 {
