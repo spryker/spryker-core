@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
-class DetailsController extends AbstractController
+class DetailsController extends AbstractController // TODO FW No plural in controller names. Rename to DetailController
 {
 
     /**
@@ -26,19 +26,19 @@ class DetailsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $request->get(SalesConfig::PARAM_IS_SALES_ORDER);
+        $idSalesOrder = $request->get(SalesConfig::PARAM_IS_SALES_ORDER); // TODO FW Use $this->castId(SalesConfig::PARAM_IS_SALES_ORDER) See #1409
 
         $orderTransfer = new OrderTransfer();
         $orderTransfer->setIdSalesOrder($idSalesOrder);
-        $orderTransfer = $this->getFacade()->getOrderDetails($orderTransfer);
+        $orderTransfer = $this->getFacade()->getOrderDetails($orderTransfer); // TODO FW See comments in facade. Needs split into smaller parts
         $orderTransfer = $this->getFacade()->getOrderTotalByOrderTransfer($orderTransfer);
 
         $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
         $uniqueOrderStates = $this->getFacade()->getUniqueOrderStates($idSalesOrder);
         $events = $this->getFacade()->getArrayWithManualEvents($idSalesOrder);
         $allEvents = $this->groupEvents($events);
-        $logs = $this->getFacade()->getPaymentLogs($idSalesOrder);
-        $refunds = $this->getFacade()->getRefunds($idSalesOrder);
+        $logs = $this->getFacade()->getPaymentLogs($idSalesOrder); // TODO FW Needs another solution, see mails
+        $refunds = $this->getFacade()->getRefunds($idSalesOrder); // TODO FW Needs another solution, see mails
 
         return [
             'events' => $events,
@@ -52,6 +52,8 @@ class DetailsController extends AbstractController
     }
 
     /**
+     * TODO FE By convention we dissallow protected methods in controller.
+     *
      * @param array $events
      *
      * @return array
