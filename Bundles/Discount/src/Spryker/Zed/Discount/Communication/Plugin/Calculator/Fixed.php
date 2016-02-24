@@ -9,11 +9,12 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
-class Fixed extends AbstractCalculator
+class Fixed extends AbstractDiscountPlugin
 {
 
     /**

@@ -41,14 +41,6 @@ interface DiscountFacadeInterface
     public function isVoucherUsable($code);
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule $decisionRule
-     *
-     * @return \Spryker\Zed\Kernel\Business\ModelResult
-     */
-    public function isMinimumCartSubtotalReached(QuoteTransfer $quoteTransfer, DecisionRule $decisionRule);
-
-    /**
      * @api
      *
      * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects

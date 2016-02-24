@@ -59,9 +59,7 @@ class Discount
     public function calculate(QuoteTransfer $quoteTransfer)
     {
         $discountsToBeCalculated = $this->retrieveDiscountsToBeCalculated($quoteTransfer);
-
         $calculatedDiscounts = $this->calculator->calculate($discountsToBeCalculated, $quoteTransfer);
-
         $this->addCalculatedDiscountsToQuote($quoteTransfer, $calculatedDiscounts);
 
         return $quoteTransfer;

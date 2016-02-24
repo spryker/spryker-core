@@ -38,7 +38,6 @@ class CollectorResolver
     public function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
         $collectedItems = [];
-
         foreach ($discountTransfer->getDiscountCollectors() as $discountCollectorTransfer) {
             $collectorPlugin = $this->collectorPlugins[$discountCollectorTransfer->getCollectorPlugin()];
 

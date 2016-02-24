@@ -20,10 +20,6 @@ use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\RuleConditionTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
-use Generated\Shared\Transfer\VoucherPoolTransfer;
-use Generated\Shared\Transfer\VoucherTransfer;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -33,11 +29,11 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
 
     /**
-     * @api
+     *  Calculate discounts based on provided quote transfer.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function calculateDiscounts(QuoteTransfer $quoteTransfer)
     {
@@ -54,21 +50,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function isVoucherUsable($code)
     {
         return $this->getFactory()->getDecisionRuleVoucher()->isUsable($code);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule $decisionRule
-     *
-     * @return \Spryker\Zed\Kernel\Business\ModelResult
-     */
-    public function isMinimumCartSubtotalReached(QuoteTransfer $quoteTransfer, DecisionRule $decisionRule)
-    {
-        return $this->getFactory()
-            ->getDecisionRuleMinimumCartSubtotal()
-            ->isMinimumCartSubtotalReached($quoteTransfer, $decisionRule);
     }
 
     /**
