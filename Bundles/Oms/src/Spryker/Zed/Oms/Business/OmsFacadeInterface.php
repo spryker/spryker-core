@@ -209,4 +209,11 @@ interface OmsFacadeInterface
      */
     public function getOrderItemMatrix();
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array|string[]
+     */
+    public function getManualEventsByIdSalesOrder($idSalesOrder);
+
 }

@@ -6,16 +6,12 @@
 
 namespace Spryker\Zed\Sales\Business\Model;
 
-use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderDetailsCommentsTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderComment;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-/**
- * TODO FW Interface missing
- */
-class CommentManager
+class CommentManager implements CommentManagerInterface
 {
 
     /**
@@ -24,20 +20,11 @@ class CommentManager
     protected $queryContainer;
 
     /**
-     * @var \Generated\Shared\Transfer\UserTransfer
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      */
-    protected $userTransfer;
-
-    /**
-     * TODO FW This class is stateful because of $userTransfer
-     *
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     */
-    public function __construct(SalesQueryContainer $queryContainer, UserTransfer $userTransfer)
+    public function __construct(SalesQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
-        $this->userTransfer = $userTransfer;
     }
 
     /**
@@ -49,12 +36,6 @@ class CommentManager
     {
         $commentEntity = new SpySalesOrderComment();
         $commentEntity->fromArray($commentTransfer->toArray());
-        $commentEntity->setUsername(sprintf(
-            '%s %s',
-            $this->userTransfer->getFirstName(),
-            $this->userTransfer->getLastName())
-        );
-
         $commentEntity->save();
 
         $commentTransfer->fromArray($commentEntity->toArray(), true);
@@ -69,14 +50,13 @@ class CommentManager
      */
     public function getCommentsByIdSalesOrder($idSalesOrder)
     {
-
-        // TODO FW filter method is not allowed outside of query container
-        $commentsCollection = $this->queryContainer->queryComments()->filterByFkSalesOrder($idSalesOrder)->find();
+        $commentsCollection = $this->queryContainer->queryCommentsByIdSalesOrder($idSalesOrder)->find();
 
         $comments = new OrderDetailsCommentsTransfer();
-        foreach ($commentsCollection as $spySalesOrderComment) {
-            $comment = (new CommentTransfer())->fromArray($spySalesOrderComment->toArray(), true);
-            $comments->addComment($comment);
+        foreach ($commentsCollection as $salesOrderCommentEntity) {
+            $commentTransfer = new CommentTransfer();
+            $commentTransfer = $commentTransfer->fromArray($salesOrderCommentEntity->toArray(), true);
+            $comments->addComment($commentTransfer);
         }
 
         return $comments;

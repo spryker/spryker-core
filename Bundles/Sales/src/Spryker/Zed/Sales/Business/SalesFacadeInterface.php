@@ -30,22 +30,6 @@ interface SalesFacadeInterface
     public function getArrayWithManualEvents($idOrder);
 
     /**
-     * @param int $idOrder
-     *
-     * @return array
-     */
-    public function getAggregateState($idOrder);
-
-    /**
-     * @deprecated
-     *
-     * @param int $idOrderItem
-     *
-     * @return array
-     */
-    public function getOrderItemManualEvents($idOrderItem);
-
-    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

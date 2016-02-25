@@ -1,0 +1,102 @@
+<?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace Spryker\Zed\SalesAggregator;
+
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesAggregator\Communication\Plugin\OrderAmountAggregator\ExpenseTotalAggregatorPlugin;
+use Spryker\Zed\SalesAggregator\Communication\Plugin\OrderAmountAggregator\GrandTotalAggregatorPlugin;
+use Spryker\Zed\SalesAggregator\Communication\Plugin\OrderAmountAggregator\ItemGrossPriceAggregatorPlugin;
+use Spryker\Zed\SalesAggregator\Communication\Plugin\OrderAmountAggregator\SubtotalOrderAggregatorPlugin;
+use Spryker\Zed\SalesAggregator\Communication\Plugin\OrderAmountAggregator\ItemTaxAmountAggregatorPlugin;
+use Spryker\Zed\SalesAggregator\Communication\Plugin\OrderAmountAggregator\OrderTaxAmountAggregatorPlugin;
+use Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxBridge;
+
+class SalesAggregatorDependencyProvider extends AbstractBundleDependencyProvider
+{
+    const FACADE_TAX  = 'FACADE_TAX';
+    const SALES_QUERY_CONTAINER = 'SALES_QUERY_CONTAINER';
+
+    const PLUGINS_ORDER_AMOUNT_AGGREGATION = 'PLUGINS_ORDER_AMOUNT_AGGREGATION';
+    const PLUGINS_ITEM_AMOUNT_AGGREGATION = 'PLUGINS_ITEM_AMOUNT_AGGREGATION';
+
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[self::FACADE_TAX] = function (Container $container) {
+            return new SalesAggregatorToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
+        $container[self::PLUGINS_ORDER_AMOUNT_AGGREGATION] = function (Container $container) {
+            return $this->getOrderAmountAggregationPlugins($container);
+        };
+
+        $container[self::PLUGINS_ITEM_AMOUNT_AGGREGATION] = function (Container $container) {
+            return $this->getItemAmountAggregationPlugins($container);
+        };
+
+        $container[self::SALES_QUERY_CONTAINER] = function (Container $container) {
+            return $container->getLocator()->sales()->queryContainer();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return array
+     */
+    protected function getPaymentLogPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return array|\Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
+     */
+    protected function getItemAmountAggregationPlugins(Container $container)
+    {
+        return [
+            //aggregate sum* fields, so that amount with quantity is available.
+            new ItemGrossPriceAggregatorPlugin(),
+
+            //Add tax amount for each item
+            new ItemTaxAmountAggregatorPlugin(),
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return array|\Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
+     */
+    protected function getOrderAmountAggregationPlugins(Container $container)
+    {
+        return [
+            //order level expense total amount
+            new ExpenseTotalAggregatorPlugin(),
+
+            //SubTotal sum of all items.
+            new SubtotalOrderAggregatorPlugin(),
+
+            //Aggregate Grand total amount, subtotal + expenses
+            new GrandTotalAggregatorPlugin(),
+
+            //add tax amount for order level
+            new OrderTaxAmountAggregatorPlugin(),
+        ];
+    }
+
+}

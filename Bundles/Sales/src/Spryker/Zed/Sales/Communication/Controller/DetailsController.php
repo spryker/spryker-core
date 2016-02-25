@@ -31,11 +31,12 @@ class DetailsController extends AbstractController // TODO FW No plural in contr
         $orderTransfer = new OrderTransfer();
         $orderTransfer->setIdSalesOrder($idSalesOrder);
         $orderTransfer = $this->getFacade()->getOrderDetails($orderTransfer); // TODO FW See comments in facade. Needs split into smaller parts
-        $orderTransfer = $this->getFacade()->getOrderTotalByOrderTransfer($orderTransfer);
+        $orderTransfer = $this->getFactory()->getSalesAggregator()->getOrderTotalByOrderTransfer($orderTransfer);
 
-        $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
-        $uniqueOrderStates = $this->getFacade()->getUniqueOrderStates($idSalesOrder);
-        $events = $this->getFacade()->getArrayWithManualEvents($idSalesOrder);
+        $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
+
+        $events = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
+
         $allEvents = $this->groupEvents($events);
         $logs = $this->getFacade()->getPaymentLogs($idSalesOrder); // TODO FW Needs another solution, see mails
         $refunds = $this->getFacade()->getRefunds($idSalesOrder); // TODO FW Needs another solution, see mails
@@ -43,10 +44,9 @@ class DetailsController extends AbstractController // TODO FW No plural in contr
         return [
             'events' => $events,
             'allEvents' => $allEvents,
-            'uniqueOrderStates' => $uniqueOrderStates,
+            'distinctOrderStates' => $distinctOrderStates,
             'logs' => $logs,
             'refunds' => $refunds,
-            'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'order' => $orderTransfer,
         ];
     }

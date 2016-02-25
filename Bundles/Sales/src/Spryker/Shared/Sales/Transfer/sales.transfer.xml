@@ -162,18 +162,6 @@
         <property name="orderId" type="string" />
     </transfer>
 
-    <transfer name="ItemSplit">
-        <property name="idOrderItem" type="integer" />
-        <property name="quantity" type="integer" />
-    </transfer>
-
-    <transfer name="ItemSplitResponse">
-        <property name="idOrderItem" type="integer" />
-        <property name="success" type="bool" />
-        <property name="validationMessages" type="array" singular="code" />
-        <property name="successMessage" type="string" />
-    </transfer>
-
     <transfer name="Filter">
         <property name="limit" type="int" />
         <property name="offset" type="int" />

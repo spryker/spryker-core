@@ -33,8 +33,11 @@ class Finder implements FinderInterface
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      * @param array $activeProcesses
      */
-    public function __construct(OmsQueryContainerInterface $queryContainer, BuilderInterface $builder, array $activeProcesses)
-    {
+    public function __construct(
+        OmsQueryContainerInterface $queryContainer,
+        BuilderInterface $builder,
+        array $activeProcesses
+    ) {
         $this->queryContainer = $queryContainer;
         $this->builder = $builder;
         $this->activeProcesses = $activeProcesses;
@@ -43,14 +46,41 @@ class Finder implements FinderInterface
     /**
      * @param int $idOrderItem
      *
-     * @return string[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEvents($idOrderItem)
     {
-        $orderItem = $this->queryContainer
+        $orderItemEntity = $this->queryContainer
             ->querySalesOrderItems([$idOrderItem])
             ->findOne();
 
+        return $this->getManualEventsByOrderItemEntity($orderItemEntity);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     */
+    public function getManualEventsByIdSalesOrder($idSalesOrder)
+    {
+        $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idSalesOrder)->find();
+
+        $events = [];
+        foreach ($orderItems as $orderItemEntity) {
+            $events[$orderItemEntity->getIdSalesOrderItem()] = $this->getManualEventsByOrderItemEntity($orderItemEntity);
+        }
+
+        return $events;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
+     *
+     * @return array|\Spryker\Zed\Oms\Business\Process\EventInterface[]
+     */
+    protected function getManualEventsByOrderItemEntity(SpySalesOrderItem $orderItem)
+    {
         $state = $orderItem->getState()->getName();
         $processName = $orderItem->getProcess()->getName();
 
@@ -326,5 +356,7 @@ class Finder implements FinderInterface
 
         return $state->getDisplay();
     }
+
+
 
 }

@@ -7,7 +7,7 @@ namespace Spryker\Zed\Discount\Communication\Plugin\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
+use Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()

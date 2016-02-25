@@ -76,4 +76,11 @@ interface SalesQueryContainerInterface
      */
     public function querySalesOrderDetails($idSalesOrder);
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
+     */
+    public function queryCommentsByIdSalesOrder($idSalesOrder);
+
 }

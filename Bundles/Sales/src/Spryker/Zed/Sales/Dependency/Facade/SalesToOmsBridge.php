@@ -84,4 +84,14 @@ class SalesToOmsBridge implements SalesToOmsInterface
         return $this->omsFacade->getItemsWithFlag($order, $flag);
     }
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array|string[]
+     */
+    public function getManualEventsByIdSalesOrder($idSalesOrder)
+    {
+        return $this->omsFacade->getManualEventsByIdSalesOrder($idSalesOrder);
+    }
+
 }

@@ -13,7 +13,7 @@
                 <p><b>{{ 'Customer name' | trans }}:</b> <a href="/customer/view/?id-customer={{ order.fkCustomer }}" target="_blank">{{ order.firstName }} {{ order.lastName }}</a></p>
                 <p><b>{{ 'Email' | trans }}:</b> {{ order.email }}</p>
                 <p><b>{{ 'Status' | trans }}:</b>
-                    {% for state in uniqueOrderStates %}
+                    {% for state in distinctOrderStates %}
                       <span class="label label-info">{{ state }}</span>
                     {% endfor %}
                 </p>

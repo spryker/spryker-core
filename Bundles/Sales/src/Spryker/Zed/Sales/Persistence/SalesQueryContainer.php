@@ -115,6 +115,16 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @param $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
+     */
+    public function queryCommentsByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()->createSalesOrderCommentQuery()->filterByFkSalesOrder($idSalesOrder);
+    }
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery

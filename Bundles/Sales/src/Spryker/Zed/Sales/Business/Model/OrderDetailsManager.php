@@ -94,56 +94,22 @@ class OrderDetailsManager
     }
 
     /**
-     * @param int $idOrder
+     * @param int $idSalesOrder
      *
-     * @return array
+     * @return array|string[]
      */
-    public function getArrayWithManualEvents($idOrder)
-    {
-        $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idOrder)->find();
-
-        $events = [];
-        foreach ($orderItems as $orderItem) {
-            $events[$orderItem->getIdSalesOrderItem()] = $this->omsFacade->getManualEvents($orderItem->getIdSalesOrderItem());
-        }
-
-        return $events;
-    }
-
-    /**
-     * @param int $idOrder
-     *
-     * @return array
-     */
-    public function getAggregateState($idOrder)
-    {
-        $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idOrder)->find();
-
-        $status = [];
-        foreach ($orderItems as $orderItem) {
-            $status[$orderItem->getIdSalesOrderItem()] = $orderItem->getState()->getName();
-        }
-
-        return $status;
-    }
-
-    /**
-     * @param int $idOrder // TODO FW Rename to $idSalesOrder
-     *
-     * @return array
-     */
-    public function getUniqueOrderStates($idOrder)
+    public function getDistinctOrderStates($idSalesOrder)
     {
         $orderItems = $this->queryContainer
-            ->querySalesOrderItemsByIdSalesOrder($idOrder)
+            ->querySalesOrderItemsByIdSalesOrder($idSalesOrder)
             ->find();
 
-        $status = []; // TODO FW Rename to $states
+        $states = [];
         foreach ($orderItems as $orderItem) {
-            $status[$orderItem->getState()->getName()] = $orderItem->getState()->getName();
+            $states[$orderItem->getState()->getName()] = $orderItem->getState()->getName();
         }
 
-        return $status;
+        return $states;
     }
 
     /**

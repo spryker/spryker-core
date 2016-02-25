@@ -71,11 +71,17 @@ class CommentController extends AbstractController
         $idSalesOrder = $formData[CommentTransfer::FK_SALES_ORDER];
 
         if ($form->isValid()) {
-            $comment = new CommentTransfer();
-            $comment->setMessage($formData[CommentTransfer::MESSAGE]);
-            $comment->setFkSalesOrder($idSalesOrder);
+            $commentTransfer = new CommentTransfer();
+            $commentTransfer->setMessage($formData[CommentTransfer::MESSAGE]);
+            $commentTransfer->setFkSalesOrder($idSalesOrder);
 
-            $this->getFacade()->saveComment($comment);
+            $currentUserTransfer = $this->getFactory()->getUserFacade()->getCurrentUser();
+
+            $commentTransfer->setUsername(
+                $currentUserTransfer->getFirstName() . ' ' . $currentUserTransfer->getLastName()
+            );
+
+            $this->getFacade()->saveComment($commentTransfer);
 
             $this->addSuccessMessage('Comment successfully added');
         } else {

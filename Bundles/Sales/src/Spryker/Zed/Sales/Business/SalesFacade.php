@@ -23,7 +23,7 @@ class SalesFacade extends AbstractFacade
 
     /**
      * Specification:
-     * - Add username to comment // TODO FW This is unexpected
+     * - Add username to comment
      * - Save comment to database
      *
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
@@ -32,60 +32,20 @@ class SalesFacade extends AbstractFacade
      */
     public function saveComment(CommentTransfer $commentTransfer)
     {
-        $commentsManager = $this->getFactory()->createCommentsManager();
-
-        return $commentsManager->saveComment($commentTransfer);
-    }
-
-    /**
-     * Specification:
-     * - Return an associative array:
-     *     Keys are sales-order ids.
-     *     Values are all manual events which are triggerable at the current state.
-     *
-     * TODO This method shouldn't be here, because it exposes that there is something like "manual event". Move it to OMS.
-     * TODO FW The name is too verbose. Why not: getManualEventsBySalesOrderId()
-     *
-     * @param int $idOrder
-     *
-     * @return array
-     */
-    public function getArrayWithManualEvents($idOrder)
-    {
-        $orderManager = $this->getFactory()->createOrderDetailsManager();
-
-        return $orderManager->getArrayWithManualEvents($idOrder);
-    }
-
-    /**
-     * TODO FW Is this method needed? In any case the name is wrong.
-     *
-     * @param int $idOrder // TODO FW Rename to $idSalesOrder
-     *
-     * @return array
-     */
-    public function getAggregateState($idOrder)
-    {
-        $orderManager = $this->getFactory()->createOrderDetailsManager();
-
-        return $orderManager->getAggregateState($idOrder);
+        return $this->getFactory()->createCommentsManager()->saveComment($commentTransfer);
     }
 
     /**
      * Specification:
      * - Return the distinct states of all order items for the given order id
      *
-     * TODO FW The name is not good. Why not: getDistinctStatesBySalesOrderId(). Create a new method and deprecate the existing.
-     *
-     * @param int $idOrder // TODO FW Rename to $idSalesOrder
+     * @param int $idSalesOrder
      *
      * @return array
      */
-    public function getUniqueOrderStates($idOrder)
+    public function getDistinctOrderStates($idSalesOrder)
     {
-        $orderManager = $this->getFactory()->createOrderDetailsManager();
-
-        return $orderManager->getUniqueOrderStates($idOrder);
+        return $this->getFactory()->createOrderDetailsManager()->getDistinctOrderStates($idSalesOrder);
     }
 
     /**
@@ -104,21 +64,7 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @deprecated
-     *
-     * TODO FW Remove in major release
-     *
-     * @param int $idOrderItem
-     *
-     * @return array
-     */
-    public function getOrderItemManualEvents($idOrderItem)
-    {
-        return $this->getFactory()->getFacadeOms()->getManualEvents($idOrderItem);
-    }
-
-    /**
-     * TODO FW This method is just a proxy for the query container without any business logig. Therefore it shouldn't exist. Please deprecated and remove later.
+     * @deprecated - query container should be used directly no need facade call.
      *
      * @param int $idSalesOrder
      *
@@ -149,33 +95,6 @@ class SalesFacade extends AbstractFacade
             ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 
-    /**
-     * TODO FW Move to own bundle
-     *
-     * Splits sales order items which have a quantity > 1 into two parts. One part with the new given quantity and
-     * the other part with the rest.
-     *
-     * Example:
-     *   Item A with quantity = 100
-     * Split(20)
-     *   Item A with quantity = 80
-     *   New Item B with quantity = 20
-     *
-     * Specification:
-     * - Validate if split is possible. (Otherwise return $response->getSuccess() === false and add validation messages)
-     * - Create a copy of the given order item with given quantity
-     * - Decrement the quantity of the original given order item (including all options)
-     * - Return $response->getSuccess() === true
-     *
-     * @param int $idSalesOrderItem
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
-     */
-    public function splitSalesOrderItem($idSalesOrderItem, $quantity)
-    {
-        return $this->getFactory()->createOrderItemSplitter()->split($idSalesOrderItem, $quantity);
-    }
 
     /**
      * TODO FW What is this method doing? Does it belong here?
@@ -279,128 +198,8 @@ class SalesFacade extends AbstractFacade
      */
     public function getRefunds($idSalesOrder)
     {
-        return $this->getFactory()->getFacadeRefund()
+        return $this->getFactory()->getRefundFacade()
             ->getRefundsByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * TODO FW Move to own bundle and add description
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderExpenseAmounts(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createExpenseOrderTotalAggregator()->aggregate($orderTransfer);
-    }
-
-    /**
-     * TODO FW Move to own bundle and add description
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderGrandTotal(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createGrandTotalOrderTotalAggregator()->aggregate($orderTransfer);
-    }
-
-    /**
-     * TODO FW Move to own bundle and add description
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderItemAmounts(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createItemOrderOrderAggregator()->aggregate($orderTransfer);
-    }
-
-    /**
-     * TODO FW Move to own bundle and add description
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderSubtotal(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createSubtotalOrderAggregator()->aggregate($orderTransfer);
-    }
-
-    /**
-     * TODO FW Move to own bundle and add description
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderItemTaxAmount(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createOrderItemTaxAmountAggregator()->aggregate($orderTransfer);
-    }
-
-    /**
-     * TODO FW Move to own bundle and add description
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createOrderTaxAmountAggregator()->aggregate($orderTransfer);
-    }
-
-    /**
-     * TODO FW Move to own bundle and add description
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderExpenseTaxAmountAggregator(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createOrderExpenseTaxAmountAggregator()->aggregate($orderTransfer);
-    }
-
-    /**
-     * TODO FW Move to own bundle and add description
-     *
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderTotalsByIdSalesOrder($idSalesOrder)
-    {
-        return $this->getFactory()->createOrderTotalsAggregator()->aggregateByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * TODO FW Move to own bundle and add description
-     *
-     * @param int $idSalesOrderItem
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    public function getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem)
-    {
-        return $this->getFactory()->createOrderTotalsAggregator()->aggregateByIdSalesOrderItem($idSalesOrderItem);
-    }
-
-    /**
-     * TODO FW Move to own bundle and add description
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderTotalByOrderTransfer(OrderTransfer $orderTransfer)
-    {
-        return $this->getFactory()->createOrderTotalsAggregator()->aggregateByOrderTransfer($orderTransfer);
     }
 
 }

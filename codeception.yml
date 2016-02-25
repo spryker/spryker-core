@@ -45,6 +45,8 @@ include:
  - Bundles/ProductSearch
  - Bundles/Propel
  - Bundles/Sales
+ - Bundles/SalesAggregator
+ - Bundles/SalesSplit
  - Bundles/SequenceNumber
  - Bundles/Session
  - Bundles/Setup

@@ -42,4 +42,11 @@ interface SalesToOmsInterface
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag);
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array|string[]
+     */
+    public function getManualEventsByIdSalesOrder($idSalesOrder);
+
 }

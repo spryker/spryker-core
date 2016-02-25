@@ -30,6 +30,7 @@ class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPre
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
+        return;
         $payolutionTransactionResponseTransfer = $this->getFacade()->preCheckPayment($quoteTransfer);
         $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransfer);
         $quoteTransfer->getPayment()->getPayolution()
