@@ -16,16 +16,3 @@ coverage:
     enabled: true
     whitelist: { include: ['src/*'] }
     blacklist: { exclude: ['tests/*'] }
-
-env:
-    isolated:
-         modules:
-            config:
-                \Config\Module\ConfigInit:
-                    enabled: true
-
-    single:
-         modules:
-            config:
-                \Config\Module\ConfigInit:
-                    enabled: false

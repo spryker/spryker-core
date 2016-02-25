@@ -68,9 +68,9 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getBundlesDirectory()
+    public function isNavigationEnabled()
     {
-        return APPLICATION_SPRYKER_ROOT;
+        return $this->get(ApplicationConstants::NAVIGATION_ENABLED, true);
     }
 
 }

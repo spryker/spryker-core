@@ -23,6 +23,10 @@ class Navigation extends AbstractPlugin
      */
     public function buildNavigation($pathInfo)
     {
+        if (!$this->getConfig()->isNavigationEnabled()) {
+            return;
+        }
+
         return $this->getFacade()
             ->buildNavigation($pathInfo);
     }

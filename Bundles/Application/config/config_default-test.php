@@ -22,6 +22,9 @@ $config[ApplicationConstants::ZED_TWIG_OPTIONS] = [
 
 // Why this?
 $config[ApplicationConstants::YVES_SSL_ENABLED] = false;
-$config[ApplicationConstants::NAVIGATION_CACHE_ENABLED] = true;
+$config[ApplicationConstants::NAVIGATION_CACHE_ENABLED] = false;
 
 $config[ApplicationConstants::HOST_YVES] = 'www.spryker.dev';
+$config[ApplicationConstants::NAVIGATION_ENABLED] = false;
+
+
