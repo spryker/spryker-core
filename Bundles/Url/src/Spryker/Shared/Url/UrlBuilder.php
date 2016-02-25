@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Business\Model\Url;
+namespace Spryker\Shared\Url;
 
 class UrlBuilder implements UrlBuilderInterface
 {
 
     /**
      * @param string $bundle
-     * @param string $controller
-     * @param string $action
+     * @param string|null $controller
+     * @param string|null $action
      * @param array $queryParameter
      *
      * @return string

@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Application\Business\Url;
+namespace Functional\Spryker\Shared\Application\Url;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Url\Url;
 
 /**
  * @group Spryker

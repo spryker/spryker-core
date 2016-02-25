@@ -10,7 +10,7 @@ namespace Spryker\Zed\Cms\Communication\Table;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;

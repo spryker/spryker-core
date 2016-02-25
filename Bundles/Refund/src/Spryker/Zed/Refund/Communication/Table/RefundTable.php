@@ -11,7 +11,7 @@ use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Library\DateFormatter;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Refund\Business\RefundFacade;

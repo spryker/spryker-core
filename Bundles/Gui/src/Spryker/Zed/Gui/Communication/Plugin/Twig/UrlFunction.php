@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Library\Twig\TwigFunction;
 
 class UrlFunction extends TwigFunction
