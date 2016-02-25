@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Application\Business\Model\Navigation\Formatter;
 
+use Spryker\Shared\Url\UrlBuilderInterface;
 use Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface;
 use Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface;
-use Spryker\Shared\Url\UrlBuilderInterface;
 
 class MenuFormatter implements MenuFormatterInterface
 {

@@ -29,4 +29,5 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
 }
