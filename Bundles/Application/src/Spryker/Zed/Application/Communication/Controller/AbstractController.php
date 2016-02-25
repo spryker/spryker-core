@@ -157,6 +157,16 @@ abstract class AbstractController
     }
 
     /**
+     * @param mixed $id
+     *
+     * @return int
+     */
+    protected function castId($id)
+    {
+        return (int) $id;
+    }
+
+    /**
      * @param string $url
      * @param int $status
      * @param array $headers
