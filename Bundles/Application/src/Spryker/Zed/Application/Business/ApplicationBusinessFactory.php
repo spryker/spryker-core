@@ -185,7 +185,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createMenuFormatter()
     {
-        $urlBuilder = $this->createUrlBuilder();
+        $urlBuilder = $this->getUrlBuilder();
         $urlUniqueValidator = $this->createUrlUniqueValidator();
         $menuLevelValidator = $this->createMenuLevelValidator();
 
