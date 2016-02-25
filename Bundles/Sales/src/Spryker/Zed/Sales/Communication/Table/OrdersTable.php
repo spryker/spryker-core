@@ -15,7 +15,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Zed\Sales\Business\SalesFacade;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 
 class OrdersTable extends AbstractTable
 {
@@ -41,21 +41,21 @@ class OrdersTable extends AbstractTable
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
-    protected $salesFacade;
+    protected $salesAggregatorFacade;
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderQuery
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $orderItemQuery
-     * @param \Spryker\Zed\Sales\Business\SalesFacade $salesFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
      */
     public function __construct(
         SpySalesOrderQuery $orderQuery,
         SpySalesOrderItemQuery $orderItemQuery,
-        SalesFacade $salesFacade
+        SalesToSalesAggregatorInterface $salesAggregatorFacade
     ) {
         $this->orderQuery = $orderQuery;
         $this->orderItemQuery = $orderItemQuery;
-        $this->salesFacade = $salesFacade;
+        $this->salesAggregatorFacade = $salesAggregatorFacade;
     }
 
     /**
@@ -204,7 +204,7 @@ class OrdersTable extends AbstractTable
      */
     protected function getGrandTotalByIdSalesOrder($idSalesOrder)
     {
-        $orderTransfer = $this->salesFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
+        $orderTransfer = $this->salesAggregatorFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
 
         return $orderTransfer->getTotals()->getGrandTotal();
     }

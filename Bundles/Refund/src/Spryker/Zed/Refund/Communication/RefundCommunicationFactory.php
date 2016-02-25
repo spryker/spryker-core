@@ -83,4 +83,12 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(RefundDependencyProvider::FACADE_PAYONE);
     }
 
+    /**
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface
+     */
+    public function getSalesAggregatorFacade()
+    {
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_SALES_AGGREGATOR);
+    }
+
 }

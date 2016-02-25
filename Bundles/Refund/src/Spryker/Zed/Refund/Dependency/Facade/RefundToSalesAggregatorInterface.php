@@ -1,19 +1,15 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+namespace Spryker\Zed\Refund\Dependency\Facade;
 
-namespace Spryker\Zed\Payolution\Dependency\Facade;
-
-interface PayolutionToSalesInterface
+interface RefundToSalesAggregatorInterface
 {
-
     /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderTotalsByIdSalesOrder($idSalesOrder);
-
 }

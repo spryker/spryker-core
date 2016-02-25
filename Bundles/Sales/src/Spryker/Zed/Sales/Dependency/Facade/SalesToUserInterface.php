@@ -2,7 +2,7 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-interface SalesToUserBridgeInterface
+interface SalesToUserInterface
 {
 
     /**

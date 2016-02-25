@@ -5,10 +5,9 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-
 use Generated\Shared\Transfer\OrderTransfer;
 
-class SalesToSalesAggregatorBridge implements SalesToSalesAggregatorBridgeInterface
+class SalesToSalesAggregatorBridge implements SalesToSalesAggregatorInterface
 {
 
     /**
@@ -46,8 +45,6 @@ class SalesToSalesAggregatorBridge implements SalesToSalesAggregatorBridgeInterf
     }
 
     /**
-     * TODO FW Move to own bundle and add description
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

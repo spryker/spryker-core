@@ -8,7 +8,6 @@ namespace Spryker\Zed\Sales\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
-use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -32,7 +31,9 @@ class SalesFacade extends AbstractFacade
      */
     public function saveComment(CommentTransfer $commentTransfer)
     {
-        return $this->getFactory()->createCommentsManager()->saveComment($commentTransfer);
+        return $this->getFactory()
+            ->createOrderCommentSaver()
+            ->save($commentTransfer);
     }
 
     /**
@@ -41,11 +42,13 @@ class SalesFacade extends AbstractFacade
      *
      * @param int $idSalesOrder
      *
-     * @return array
+     * @return array|string[]
      */
     public function getDistinctOrderStates($idSalesOrder)
     {
-        return $this->getFactory()->createOrderDetailsManager()->getDistinctOrderStates($idSalesOrder);
+        return $this->getFactory()
+            ->createOrderDetailsManager()
+            ->getDistinctOrderStates($idSalesOrder);
     }
 
     /**
@@ -56,59 +59,29 @@ class SalesFacade extends AbstractFacade
      *
      * @return \Generated\Shared\Transfer\OrderDetailsCommentsTransfer
      */
-    public function getOrderCommentsByOrderId($idSalesOrder)
-    {
-        $commentManager = $this->getFactory()->createCommentsManager();
-
-        return $commentManager->getCommentsByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * @deprecated - query container should be used directly no need facade call.
-     *
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderByIdSalesOrder($idSalesOrder)
+    public function getOrderCommentsByIdSalesOrder($idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderManager()
-            ->getOrderByIdSalesOrder($idSalesOrder);
+            ->createOrderCommentReader()
+            ->getCommentsByIdSalesOrder($idSalesOrder);
     }
 
     /**
      * Specification:
      * - Save order and items to database
      * - Set "is test" flag
-     * - Set order transfer to response
+     * - update checkout response with saved order data
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return void
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        return $this->getFactory()
-            ->createOrderManager()
-            ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
-    }
-
-
-    /**
-     * TODO FW What is this method doing? Does it belong here?
-     *
-     * @param int $idRefund
-     * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
-     *
-     * @return void
-     */
-    public function updateOrderItemsAndExpensesAfterRefund($idRefund, OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer)
-    {
         $this->getFactory()
-            ->createOrderDetailsManager()
-            ->updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsAndExpensesTransfer);
+            ->createOrderSaver()
+            ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -163,15 +136,16 @@ class SalesFacade extends AbstractFacade
      * TODO FW This method uses the same transfer as a parameter and return object
      * TODO FW Hidden required field inside of the transfer. The customer id must be set as a another parameter.
      *
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer Must have getIdCustomer() !== null
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOrders(OrderListTransfer $orderListTransfer)
+    public function getOrders(OrderListTransfer $orderListTransfer, $idCustomer)
     {
         return $this->getFactory()
-            ->createOrderManager()
-            ->getOrders($orderListTransfer);
+            ->createCustomerOrderReader()
+            ->getOrders($orderListTransfer, $idCustomer);
     }
 
     /**
@@ -188,18 +162,4 @@ class SalesFacade extends AbstractFacade
             ->createOrderDetailsManager()
             ->getOrderDetails($orderTransfer);
     }
-
-    /**
-     * TODO FW This belongs to refund bundle. Remove from here.
-     *
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\RefundTransfer[]
-     */
-    public function getRefunds($idSalesOrder)
-    {
-        return $this->getFactory()->getRefundFacade()
-            ->getRefundsByIdSalesOrder($idSalesOrder);
-    }
-
 }

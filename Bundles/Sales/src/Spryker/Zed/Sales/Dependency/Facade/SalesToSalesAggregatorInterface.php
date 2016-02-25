@@ -6,7 +6,7 @@ namespace Spryker\Zed\Sales\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface SalesToSalesAggregatorBridgeInterface
+interface SalesToSalesAggregatorInterface
 {
     /**
      * @param int $idSalesOrder

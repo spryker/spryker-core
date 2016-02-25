@@ -212,9 +212,10 @@ class SalesFacadeTest extends Test
     public function testSaveOrderAssignsSavedOrderId()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
-        $orderTransfer = $this->salesFacade->saveOrder($quoteTransfer, $this->getValidBaseResponseTransfer());
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->assertNotNull($orderTransfer->getIdSalesOrder());
+        $this->assertNotNull($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
     }
 
     /**
@@ -223,10 +224,11 @@ class SalesFacadeTest extends Test
     public function testSaveOrderCreatesOrderAndSavesFields()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
-        $orderTransfer = $this->salesFacade->saveOrder($quoteTransfer, $this->getValidBaseResponseTransfer());
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
 
         $orderQuery = SpySalesOrderQuery::create()
-            ->filterByPrimaryKey($orderTransfer->getIdSalesOrder());
+            ->filterByPrimaryKey($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
 
         $orderEntity = $orderQuery->findOne();
         $this->assertNotNull($orderEntity);
@@ -274,7 +276,7 @@ class SalesFacadeTest extends Test
             ->filterByName('item-test-2');
 
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
-        $orderTransfer = $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
 
         $savedItems = $checkoutResponseTransfer->getSaveOrder()->getOrderItems();
 
@@ -286,7 +288,7 @@ class SalesFacadeTest extends Test
 
         $this->assertSame($savedItems[1]->getIdSalesOrderItem(), $item1Entity->getIdSalesOrderItem());
         $this->assertSame($item1->getName(), $item1Entity->getName());
-        $this->assertSame($orderTransfer->getIdSalesOrder(), $item1Entity->getFkSalesOrder());
+        $this->assertSame($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder(), $item1Entity->getFkSalesOrder());
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item1Entity->getFkOmsOrderItemState());
         $this->assertSame($item1->getSku(), $item1Entity->getSku());
         $this->assertSame($savedItems[1]->getUnitGrossPrice(), $item1Entity->getGrossPrice());
@@ -294,7 +296,7 @@ class SalesFacadeTest extends Test
 
         $this->assertSame($savedItems[2]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
         $this->assertSame($item2->getName(), $item2Entity->getName());
-        $this->assertSame($orderTransfer->getIdSalesOrder(), $item2Entity->getFkSalesOrder());
+        $this->assertSame($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder(), $item2Entity->getFkSalesOrder());
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item2Entity->getFkOmsOrderItemState());
         $this->assertSame($item2->getSku(), $item2Entity->getSku());
         $this->assertSame($savedItems[2]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
@@ -306,9 +308,10 @@ class SalesFacadeTest extends Test
      */
     public function testSaveOrderGeneratesOrderReference()
     {
-        $orderTransfer = $this->getValidBaseQuoteTransfer();
-        $orderTransfer = $this->salesFacade->saveOrder($orderTransfer, $this->getValidBaseResponseTransfer());
-        $this->assertNotNull($orderTransfer->getOrderReference());
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+        $this->assertNotNull($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
     }
 
     /**

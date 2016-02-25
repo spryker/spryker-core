@@ -53,14 +53,6 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToSalesInterface
-     */
-    public function getSalesFacade()
-    {
-        return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_SALES);
-    }
-
-    /**
      * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMailInterface
      */
     public function getMailFacade()
@@ -74,6 +66,14 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     public function getGlossaryFacade()
     {
         return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToSalesAggregatorInterface
+     */
+    public function getSalesAggregator()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_SALES_AGGREGATOR);
     }
 
 }

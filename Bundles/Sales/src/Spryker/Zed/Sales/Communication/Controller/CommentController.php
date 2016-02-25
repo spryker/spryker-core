@@ -53,7 +53,7 @@ class CommentController extends AbstractController
     {
         $idSalesOrder = $request->query->get(SalesConfig::PARAM_IS_SALES_ORDER);
 
-        $comments = $this->getFacade()->getOrderCommentsByOrderId($idSalesOrder);
+        $comments = $this->getFacade()->getOrderCommentsByIdSalesOrder($idSalesOrder);
 
         return [
             'comments' => $comments->getComments(),

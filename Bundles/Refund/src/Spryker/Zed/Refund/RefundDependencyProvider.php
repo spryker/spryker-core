@@ -10,7 +10,8 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToPayoneBridge;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesBridge;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregator;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplit;
 
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -18,10 +19,10 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_REFUND = 'QUERY_CONTAINER_REFUND';
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
-    const FACADE_SALES = 'FACADE_SALES';
     const FACADE_OMS = 'FACADE_OMS';
-    const FACADE_REFUND = 'FACADE_REFUND';
     const FACADE_PAYONE = 'payone facade';
+    const FACADE_SALES_AGGREGATOR  = 'FACADE_SALES_AGGREGATOR';
+    const FACADE_SALES_SPLIT = 'FACADE_SALES_SPLIT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,10 +31,6 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_SALES] = function (Container $container) {
-            return new RefundToSalesBridge($container->getLocator()->sales()->facade());
-        };
-
         $container[static::FACADE_OMS] = function (Container $container) {
             return new RefundToOmsBridge($container->getLocator()->oms()->facade());
         };
@@ -48,6 +45,10 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
+        };
+
+        $container[self::FACADE_SALES_SPLIT] = function (Container $container) {
+            return new RefundToSalesSplit($container->getLocator()->salesSplit()->facade());
         };
 
         return $container;
@@ -66,6 +67,10 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
+        };
+
+        $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
+            return new RefundToSalesAggregator($container->getLocator()->salesAggregator()->facade());
         };
 
         return $container;

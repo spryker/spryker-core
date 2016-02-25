@@ -86,16 +86,17 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\Sales\Business\SalesFacade $salesFacade
-     *
      * @return \Spryker\Zed\Sales\Communication\Table\OrdersTable
      */
-    public function createOrdersTable(SalesFacade $salesFacade)
+    public function createOrdersTable()
     {
         $orderQuery = $this->getQueryContainer()->querySalesOrder();
         $orderItemQuery = $this->getQueryContainer()->querySalesOrderItem();
-
-        return new OrdersTable($orderQuery, $orderItemQuery, $salesFacade);
+        return new OrdersTable(
+            $orderQuery,
+            $orderItemQuery,
+            $this->getSalesAggregator()
+        );
     }
 
     /**
@@ -107,7 +108,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridgeInterface
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToUserInterface
      */
     public function getUserFacade()
     {
@@ -115,7 +116,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorBridgeInterface
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface
      */
     public function getSalesAggregator()
     {

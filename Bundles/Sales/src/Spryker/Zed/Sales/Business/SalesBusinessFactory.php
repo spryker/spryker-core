@@ -6,11 +6,13 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use Spryker\Zed\Sales\Business\Model\OrderCommentReader;
+use Spryker\Zed\Sales\Business\Model\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\OrderReferenceGenerator;
-use Spryker\Zed\Sales\Business\Model\OrderManager;
+use Spryker\Zed\Sales\Business\Model\CustomerOrderReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Sales\Business\Model\CommentManager;
 use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
+use Spryker\Zed\Sales\Business\Model\OrderSaver;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -21,12 +23,19 @@ class SalesBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\OrderManager
+     * @return \Spryker\Zed\Sales\Business\Model\CustomerOrderReaderInterface
      */
-    public function createOrderManager()
+    public function createCustomerOrderReader()
     {
-        return new OrderManager(
-            $this->getQueryContainer(),
+        return new CustomerOrderReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderSaverInterface
+     */
+    public function createOrderSaver()
+    {
+        return new OrderSaver(
             $this->getCountryFacade(),
             $this->getOmsFacade(),
             $this->createReferenceGenerator(),
@@ -35,11 +44,19 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\CommentManagerInterface
+     * @return \Spryker\Zed\Sales\Business\Model\OrderCommentReaderInterface
      */
-    public function createCommentsManager()
+    public function createOrderCommentReader()
     {
-        return new CommentManager($this->getQueryContainer());
+        return new OrderCommentReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderCommentSaverInterface
+     */
+    public function createOrderCommentSaver()
+    {
+        return new OrderCommentSaver($this->getQueryContainer());
     }
 
     /**
@@ -76,16 +93,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToRefundInterface
-     */
-    public function getRefundFacade()
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_REFUND);
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     public function getOmsFacade()
@@ -94,8 +101,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
     protected function getCountryFacade()
@@ -104,8 +109,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return array
      */
     protected function getPaymentLogPlugins()

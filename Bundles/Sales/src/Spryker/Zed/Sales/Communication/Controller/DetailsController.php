@@ -38,15 +38,15 @@ class DetailsController extends AbstractController // TODO FW No plural in contr
         $events = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
 
         $allEvents = $this->groupEvents($events);
-        $logs = $this->getFacade()->getPaymentLogs($idSalesOrder); // TODO FW Needs another solution, see mails
-        $refunds = $this->getFacade()->getRefunds($idSalesOrder); // TODO FW Needs another solution, see mails
+        //$logs = $this->getFacade()->getPaymentLogs($idSalesOrder); // TODO FW Needs another solution, see mails
+        //$refunds = $this->getFacade()->getRefunds($idSalesOrder); // TODO FW Needs another solution, see mails
 
         return [
             'events' => $events,
             'allEvents' => $allEvents,
             'distinctOrderStates' => $distinctOrderStates,
-            'logs' => $logs,
-            'refunds' => $refunds,
+            'logs' => [],
+            'refunds' => [],
             'order' => $orderTransfer,
         ];
     }

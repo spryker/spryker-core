@@ -23,7 +23,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     public function createRefundModel()
     {
         return new Refund(
-            $this->getSalesFacade(),
+            $this->getSalesSplitFacade(),
             $this->getOmsFacade(),
             $this->getSalesQueryContainer()
         );
@@ -36,17 +36,16 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     {
         return new RefundManager(
             $this->getQueryContainer(),
-            $this->getSalesQueryContainer(),
-            $this->getSalesFacade()
+            $this->getSalesQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplitInterface
      */
-    public function getSalesFacade()
+    public function getSalesSplitFacade()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_SALES);
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_SALES_SPLIT);
     }
 
     /**

@@ -8,26 +8,17 @@ namespace Spryker\Zed\Sales;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\ExpenseTotalAggregatorPlugin;
-use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\GrandTotalAggregatorPlugin;
-use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\ItemGrossPriceAggregatorPlugin;
-use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\SubtotalOrderAggregatorPlugin;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToUser;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
-use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\ItemTaxAmountAggregatorPlugin;
-use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\OrderTaxAmountAggregatorPlugin;
 
 class SalesDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_COUNTRY = 'FACADE_COUNTRY';
     const FACADE_OMS = 'FACADE_OMS';
-    const FACADE_REFUND = 'FACADE_REFUND';
     const FACADE_LOCALE = 'LOCALE_FACADE';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
     const FACADE_USER = 'FACADE_USER';
@@ -54,10 +45,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             return new SalesToOmsBridge($container->getLocator()->oms()->facade());
         };
 
-        $container[self::FACADE_REFUND] = function (Container $container) {
-            return new SalesToRefundBridge($container->getLocator()->refund()->facade());
-        };
-
         $container[self::PLUGINS_PAYMENT_LOGS] = function (Container $container) {
             return $this->getPaymentLogPlugins($container);
         };
@@ -77,7 +64,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_USER] = function (Container $container) {
-            return new SalesToUserBridge($container->getLocator()->user()->facade());
+            return new SalesToUser($container->getLocator()->user()->facade());
         };
 
         $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {

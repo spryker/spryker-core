@@ -20,7 +20,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getFactory()->createOrdersTable($this->getFacade());
+        $table = $this->getFactory()->createOrdersTable();
 
         return [
             'orders' => $table->render(),
@@ -32,7 +32,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getFactory()->createOrdersTable($this->getFacade());
+        $table = $this->getFactory()->createOrdersTable();
 
         return $this->jsonResponse(
             $table->fetchData()

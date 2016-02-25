@@ -67,7 +67,7 @@ class OrderDetailsManager
             ->querySalesOrderById($idOrder)
             ->findOne();
 
-        Copy::transferToEntity($orderTransfer, $orderEntity);
+        $orderTransfer->fromArray($orderEntity->toArray(), true);
 
         $orderEntity->save();
 
@@ -275,34 +275,6 @@ class OrderDetailsManager
             $expenseTransfer->fromArray($expenseEntity->toArray(), true);
             $expenseTransfer->setUnitGrossPrice($expenseEntity->getGrossPrice());
             $orderTransfer->addExpense($expenseTransfer);
-        }
-    }
-
-    /**
-     * @param int $idRefund
-     * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
-     *
-     * @return void
-     */
-    public function updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsAndExpensesTransfer)
-    {
-        foreach ($orderItemsAndExpensesTransfer->getOrderItems() as $orderItem) {
-            $orderItemEntity = $this->queryContainer
-                ->querySalesOrderItem()
-                ->filterByIdSalesOrderItem($orderItem->getIdSalesOrderItem())
-                ->findOne();
-
-            $orderItemEntity->setFkRefund($idRefund);
-            $orderItemEntity->save();
-        }
-        foreach ($orderItemsAndExpensesTransfer->getExpenses() as $expense) {
-            $expenseEntity = $this->queryContainer
-                ->querySalesExpense()
-                ->filterByIdSalesExpense($expense->getIdExpense())
-                ->findOne();
-
-            $expenseEntity->setFkRefund($idRefund);
-            $expenseEntity->save();
         }
     }
 

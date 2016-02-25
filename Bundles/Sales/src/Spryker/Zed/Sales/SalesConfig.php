@@ -17,6 +17,7 @@ class SalesConfig extends AbstractBundleConfig
 {
 
     const PARAM_IS_SALES_ORDER = 'id-sales-order';
+    const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
     /**
      * TODO Not needed, remove
@@ -136,6 +137,22 @@ class SalesConfig extends AbstractBundleConfig
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 
         return $sequenceNumberSettingsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isTestOrder(QuoteTransfer $quoteTransfer)
+    {
+        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
+
+        if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

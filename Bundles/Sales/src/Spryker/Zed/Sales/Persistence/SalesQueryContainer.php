@@ -6,8 +6,10 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Propel\PropelFilterCriteria;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesPersistenceFactory getFactory()
@@ -170,4 +172,21 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
         return $query;
     }
 
+    /**
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function queryCustomerOrders($idCustomer, FilterTransfer $filterTransfer = null)
+    {
+        $criteria = new Criteria();
+        if ($filterTransfer !== null) {
+            $criteria = (new PropelFilterCriteria($filterTransfer))
+                ->toCriteria();
+        }
+
+        return $this->querySalesOrdersByCustomerId($idCustomer, $criteria);
+    }
+    
 }

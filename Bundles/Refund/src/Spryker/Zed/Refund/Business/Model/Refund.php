@@ -4,21 +4,20 @@ namespace Spryker\Zed\Refund\Business\Model;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Orm\Zed\Refund\Persistence\SpyRefund;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplitInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 class Refund
 {
 
     /**
-     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
+     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplitInterface
      */
-    protected $salesFacade;
+    protected $salesSplitFacade;
 
     /**
      * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface
@@ -31,16 +30,16 @@ class Refund
     protected $salesQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $salesFacade
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplitInterface $salesSplitFacade
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer $salesQueryContainer
      */
     public function __construct(
-        RefundToSalesInterface $salesFacade,
+        RefundToSalesSplitInterface $salesSplitFacade,
         RefundToOmsInterface $omsFacade,
         SalesQueryContainer $salesQueryContainer
     ) {
-        $this->salesFacade = $salesFacade;
+        $this->salesSplitFacade = $salesSplitFacade;
         $this->omsFacade = $omsFacade;
         $this->salesQueryContainer = $salesQueryContainer;
     }
@@ -70,7 +69,8 @@ class Refund
             return null;
         }
 
-        $this->updateOrderItemsAndExpensesAfterRefund($refundEntity->getIdRefund(), $processedOrderItems, $processedExpenses);
+        $this->updateOrderItemsAfterRefund($processedOrderItems, $refundEntity->getIdRefund());
+        $this->updateOrderExpensesAfterRefund($processedExpenses, $refundEntity->getIdRefund());
 
         $this->salesQueryContainer->getConnection()->commit();
 
@@ -91,7 +91,7 @@ class Refund
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\RefundOrderItemTransfer[] $orderItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \ArrayObject
      */
@@ -103,11 +103,14 @@ class Refund
                 continue;
             }
 
-            $itemSplitResponseTransfer = $this->salesFacade->splitSalesOrderItem($orderItem->getIdOrderItem(), $orderItem->getQuantity());
+            $itemSplitResponseTransfer = $this->salesSplitFacade->splitSalesOrderItem(
+                $orderItem->getIdOrderItem(),
+                $orderItem->getQuantity()
+            );
+
+            $idOrderItem = $orderItem->getIdOrderItem();
             if ($itemSplitResponseTransfer->getSuccess()) {
                 $idOrderItem = $itemSplitResponseTransfer->getIdOrderItem();
-            } else {
-                $idOrderItem = $orderItem->getIdOrderItem();
             }
 
             $itemTransfer = new ItemTransfer();
@@ -119,7 +122,7 @@ class Refund
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\RefundExpenseTransfer[] $expenses
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
      *
      * @return \ArrayObject
      */
@@ -140,20 +143,44 @@ class Refund
     }
 
     /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItems
      * @param int $idRefund
-     * @param \ArrayObject $orderItemsArray
-     * @param \ArrayObject $expensesArray
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
-    protected function updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsArray, $expensesArray)
+    protected function updateOrderItemsAfterRefund(\ArrayObject $orderItems, $idRefund)
     {
-        $orderItemsAndExpensesTransfer = new OrderItemsAndExpensesTransfer();
+        foreach ($orderItems as $orderItem) {
+            $orderItemEntity = $this->salesQueryContainer
+                ->querySalesOrderItem()
+                ->filterByIdSalesOrderItem($orderItem->getIdSalesOrderItem())
+                ->findOne();
 
-        $orderItemsAndExpensesTransfer->setOrderItems($orderItemsArray);
-        $orderItemsAndExpensesTransfer->setExpenses($expensesArray);
+            $orderItemEntity->setFkRefund($idRefund);
+            $orderItemEntity->save();
+        }
+    }
 
-        $this->salesFacade->updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsAndExpensesTransfer);
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     * @param int $idRefund
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    protected function updateOrderExpensesAfterRefund(\ArrayObject $expenses, $idRefund)
+    {
+        foreach ($expenses as $expense) {
+            $expenseEntity = $this->salesQueryContainer
+                ->querySalesExpense()
+                ->filterByIdSalesExpense($expense->getIdExpense())
+                ->findOne();
+
+            $expenseEntity->setFkRefund($idRefund);
+            $expenseEntity->save();
+        }
     }
 
     /**

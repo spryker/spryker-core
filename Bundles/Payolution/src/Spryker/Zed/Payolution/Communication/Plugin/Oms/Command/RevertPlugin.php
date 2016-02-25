@@ -47,7 +47,7 @@ class RevertPlugin extends AbstractPlugin implements CommandByOrderInterface
     {
         return $this
             ->getFactory()
-            ->getSalesFacade()
+            ->getSalesAggregator()
             ->getOrderTotalsByIdSalesOrder($orderEntity->getIdSalesOrder());
     }
 

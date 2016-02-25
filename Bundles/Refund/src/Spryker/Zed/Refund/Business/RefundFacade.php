@@ -50,18 +50,6 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderByIdSalesOrder($idSalesOrder)
-    {
-        return $this->getFactory()
-            ->getSalesFacade()
-            ->getOrderByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return \Generated\Shared\Transfer\RefundTransfer

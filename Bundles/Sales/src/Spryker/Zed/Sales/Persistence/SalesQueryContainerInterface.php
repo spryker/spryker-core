@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 interface SalesQueryContainerInterface
@@ -82,5 +83,13 @@ interface SalesQueryContainerInterface
      * @return @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
      */
     public function queryCommentsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function queryCustomerOrders($idCustomer, FilterTransfer $filterTransfer = null);
 
 }

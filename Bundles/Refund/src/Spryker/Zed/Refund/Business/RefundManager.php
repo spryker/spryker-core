@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 
 class RefundManager
 {
@@ -26,22 +25,15 @@ class RefundManager
     protected $salesQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
-     */
-    protected $salesFacade;
-
-    /**
      * @param \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface $refundQueryContainer
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
     public function __construct(
         RefundQueryContainerInterface $refundQueryContainer,
-        SalesQueryContainerInterface $salesQueryContainer,
-        RefundToSalesInterface $salesFacade
+        SalesQueryContainerInterface $salesQueryContainer
     ) {
         $this->refundQueryContainer = $refundQueryContainer;
         $this->salesQueryContainer = $salesQueryContainer;
-        $this->salesFacade = $salesFacade;
     }
 
     /**
