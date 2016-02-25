@@ -163,7 +163,7 @@ abstract class AbstractController
      */
     protected function castId($id)
     {
-        return (int) $id;
+        return (int)$id;
     }
 
     /**
