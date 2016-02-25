@@ -11,6 +11,8 @@ interface UrlQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $url
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -18,6 +20,8 @@ interface UrlQueryContainerInterface
     public function queryUrl($url);
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -25,16 +29,22 @@ interface UrlQueryContainerInterface
     public function queryUrlById($id);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrls();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
     public function queryRedirects();
 
     /**
+     * @api
+     *
      * @param int $idUrlRedirect
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
@@ -42,6 +52,8 @@ interface UrlQueryContainerInterface
     public function queryRedirectById($idUrlRedirect);
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      * @param int $idLocale
      *

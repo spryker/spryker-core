@@ -13,6 +13,8 @@ interface CountryFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
@@ -20,6 +22,8 @@ interface CountryFacadeInterface
     public function install(LoggerInterface $messenger);
 
     /**
+     * @api
+     *
      * @param string $iso2Code
      *
      * @return bool
@@ -27,6 +31,8 @@ interface CountryFacadeInterface
     public function hasCountry($iso2Code);
 
     /**
+     * @api
+     *
      * @param string $iso2Code
      *
      * @return int
@@ -34,11 +40,15 @@ interface CountryFacadeInterface
     public function getIdCountryByIso2Code($iso2Code);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getAvailableCountries();
 
     /**
+     * @api
+     *
      * @param string $countryName
      *
      * @return \Generated\Shared\Transfer\CountryTransfer

@@ -11,6 +11,8 @@ interface ConsoleFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands();

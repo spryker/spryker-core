@@ -15,11 +15,15 @@ interface ShipmentCheckoutConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return void
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request);
 
     /**
+     * @api
+     *
      * @return void
      */
     public function saveShipmentForOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);

@@ -13,6 +13,8 @@ interface SalesQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -20,11 +22,15 @@ interface SalesQueryContainerInterface
     public function querySalesOrderById($idSalesOrder);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrder();
 
     /**
+     * @api
+     *
      * @var int
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -32,6 +38,8 @@ interface SalesQueryContainerInterface
     public function querySalesOrderItemsByIdSalesOrder($idOrder);
 
     /**
+     * @api
+     *
      * @var int
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -39,16 +47,22 @@ interface SalesQueryContainerInterface
     public function querySalesOrderItemsWithState($idOrder);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItem();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
      */
     public function querySalesExpense();
 
     /**
+     * @api
+     *
      * @param int $orderId
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
@@ -56,6 +70,8 @@ interface SalesQueryContainerInterface
     public function querySalesExpensesByOrderId($orderId);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrderAddress
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
@@ -63,6 +79,8 @@ interface SalesQueryContainerInterface
     public function querySalesOrderAddressById($idSalesOrderAddress);
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
@@ -71,6 +89,8 @@ interface SalesQueryContainerInterface
     public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria = null);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param int $idCustomer
      *

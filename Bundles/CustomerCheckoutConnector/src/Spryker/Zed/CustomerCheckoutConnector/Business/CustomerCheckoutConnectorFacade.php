@@ -19,6 +19,8 @@ class CustomerCheckoutConnectorFacade extends AbstractFacade implements Customer
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $order
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      *
@@ -30,6 +32,8 @@ class CustomerCheckoutConnectorFacade extends AbstractFacade implements Customer
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -41,6 +45,8 @@ class CustomerCheckoutConnectorFacade extends AbstractFacade implements Customer
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

@@ -14,6 +14,8 @@ interface CalculationFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
@@ -21,6 +23,8 @@ interface CalculationFacadeInterface
     public function recalculate(CalculableInterface $calculableContainer);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param null $calculableItems
      *
@@ -29,6 +33,8 @@ interface CalculationFacadeInterface
     public function recalculateTotals(CalculableInterface $calculableContainer, $calculableItems = null);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
@@ -37,6 +43,8 @@ interface CalculationFacadeInterface
     public function recalculateExpensePriceToPay(CalculableInterface $calculableContainer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
@@ -46,6 +54,8 @@ interface CalculationFacadeInterface
     public function recalculateExpenseTotals(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer, $calculableItems);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
@@ -55,6 +65,8 @@ interface CalculationFacadeInterface
     public function recalculateGrandTotalTotals(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer, $calculableItems);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
@@ -62,6 +74,8 @@ interface CalculationFacadeInterface
     public function recalculateItemPriceToPay(CalculableInterface $calculableContainer);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
@@ -69,6 +83,8 @@ interface CalculationFacadeInterface
     public function recalculateOptionPriceToPay(CalculableInterface $calculableContainer);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
@@ -76,6 +92,8 @@ interface CalculationFacadeInterface
     public function recalculateRemoveAllExpenses(CalculableInterface $calculableContainer);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
@@ -83,6 +101,8 @@ interface CalculationFacadeInterface
     public function recalculateRemoveTotals(CalculableInterface $calculableContainer);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
@@ -90,6 +110,8 @@ interface CalculationFacadeInterface
     public function calculateItemTotalPrice(CalculableInterface $calculableContainer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
@@ -99,6 +121,8 @@ interface CalculationFacadeInterface
     public function recalculateSubtotalTotals(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer, $calculableItems);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
@@ -108,6 +132,8 @@ interface CalculationFacadeInterface
     public function recalculateSubtotalWithoutItemExpensesTotals(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer, $calculableItems);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems

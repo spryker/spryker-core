@@ -15,6 +15,8 @@ interface CalculationCheckoutConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $response
      *
@@ -23,6 +25,8 @@ interface CalculationCheckoutConnectorFacadeInterface
     public function checkCartAmountCorrect(CheckoutRequestTransfer $request, CheckoutResponseTransfer $response);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Checkout\Business\Calculation\CalculableContainer $calculableContainer
      *
      * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface

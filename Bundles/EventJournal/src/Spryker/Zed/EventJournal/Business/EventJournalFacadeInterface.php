@@ -13,6 +13,8 @@ interface EventJournalFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return void

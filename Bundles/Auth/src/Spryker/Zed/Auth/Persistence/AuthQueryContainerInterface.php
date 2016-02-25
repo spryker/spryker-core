@@ -11,11 +11,15 @@ interface AuthQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery
      */
     public function queryResetPassword();
 
     /**
+     * @api
+     *
      * @param string $code
      *
      * @return \Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery

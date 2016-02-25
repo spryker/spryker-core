@@ -17,6 +17,8 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
 {
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Catalog\Model\Catalog
      */
     public function createCatalogModel()
@@ -25,6 +27,8 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $category
      *
@@ -36,6 +40,8 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Client\Catalog\Model\FulltextSearch
@@ -46,6 +52,8 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Catalog\Model\FacetConfig
      */
     public function createFacetConfig()

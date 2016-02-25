@@ -26,6 +26,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     const COL_CATEGORY_NAME = 'category_name';
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeDirectParent
@@ -53,6 +55,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryMappingsByCategoryId($idCategory)
@@ -63,6 +67,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param int $idProductAbstract
      *
@@ -79,6 +85,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -103,6 +111,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
@@ -116,6 +126,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -178,6 +190,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @api
+     *
      * @param string $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int|null $idExcludedCategory
@@ -248,6 +262,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param int $idProductAbstract
      *

@@ -11,6 +11,8 @@ interface SearchClientInterface
 {
 
     /**
+     * @api
+     *
      * @return \Elastica\Index
      */
     public function getIndexClient();

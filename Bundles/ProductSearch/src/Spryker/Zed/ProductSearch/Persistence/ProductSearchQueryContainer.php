@@ -24,6 +24,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
      */
     public function queryFieldOperations()
@@ -41,6 +43,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param array $productIds
@@ -74,6 +78,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idAttribute
      * @param string $copyTarget
      *
@@ -90,6 +96,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *

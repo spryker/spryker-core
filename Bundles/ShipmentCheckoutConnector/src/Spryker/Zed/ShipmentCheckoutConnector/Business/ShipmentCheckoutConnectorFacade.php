@@ -19,6 +19,8 @@ class ShipmentCheckoutConnectorFacade extends AbstractFacade implements Shipment
 {
 
     /**
+     * @api
+     *
      * @return void
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
@@ -27,6 +29,8 @@ class ShipmentCheckoutConnectorFacade extends AbstractFacade implements Shipment
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function saveShipmentForOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)

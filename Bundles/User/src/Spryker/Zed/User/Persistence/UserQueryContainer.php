@@ -17,6 +17,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
 {
 
     /**
+     * @api
+     *
      * @param string $username
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
@@ -30,6 +32,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
@@ -43,6 +47,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUsers()
@@ -54,6 +60,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUser()

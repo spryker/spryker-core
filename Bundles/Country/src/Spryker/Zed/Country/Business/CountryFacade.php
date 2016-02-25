@@ -17,6 +17,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
@@ -27,6 +29,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $iso2Code
      *
      * @return bool
@@ -37,6 +41,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $iso2Code
      *
      * @return int
@@ -47,6 +53,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getAvailableCountries()
@@ -59,6 +67,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $countryName
      *
      * @return \Generated\Shared\Transfer\CountryTransfer

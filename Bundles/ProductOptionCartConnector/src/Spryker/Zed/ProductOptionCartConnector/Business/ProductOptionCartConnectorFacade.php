@@ -17,6 +17,8 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\ChangeTransfer
@@ -27,6 +29,8 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\ChangeTransfer

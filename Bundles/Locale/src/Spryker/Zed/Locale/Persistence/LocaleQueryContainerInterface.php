@@ -11,6 +11,8 @@ interface LocaleQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
@@ -18,6 +20,8 @@ interface LocaleQueryContainerInterface
     public function queryLocaleByName($localeName);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocales();

@@ -17,6 +17,8 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      *
      * @return array
@@ -27,6 +29,8 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return array

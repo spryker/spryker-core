@@ -14,6 +14,8 @@ interface ProductCategoryQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeDirectParent
@@ -24,11 +26,15 @@ interface ProductCategoryQueryContainerInterface
     public function expandProductCategoryPathQuery(ModelCriteria $query, LocaleTransfer $locale, $excludeDirectParent = true, $excludeRoot = true);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryMappingsByCategoryId($idCategory);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $idCategoryNode
      *
@@ -37,6 +43,8 @@ interface ProductCategoryQueryContainerInterface
     public function queryProductCategoryMappingByIds($idProductAbstract, $idCategoryNode);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -46,6 +54,8 @@ interface ProductCategoryQueryContainerInterface
     public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
@@ -53,6 +63,8 @@ interface ProductCategoryQueryContainerInterface
     public function queryLocalizedProductCategoryMappingByIdProduct($idProductAbstract);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -61,6 +73,8 @@ interface ProductCategoryQueryContainerInterface
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param string $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param null $idExcludedCategory

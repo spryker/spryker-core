@@ -13,6 +13,8 @@ interface CheckoutClientInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $requestInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer

@@ -18,6 +18,8 @@ class SalesClient extends AbstractClient implements SalesClientInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
@@ -30,6 +32,8 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

@@ -16,6 +16,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
 {
 
     /**
+     * @api
+     *
      * @param string|null $bundle
      * @param array $options
      *
@@ -27,6 +29,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string|null $bundle
      * @param array $options
      *
@@ -38,6 +42,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string|null $bundle
      *
      * @return int Exit code
@@ -48,6 +54,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param string $toBundle
      *

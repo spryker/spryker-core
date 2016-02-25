@@ -14,6 +14,8 @@ interface ProductOptionCheckoutConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $order
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      *

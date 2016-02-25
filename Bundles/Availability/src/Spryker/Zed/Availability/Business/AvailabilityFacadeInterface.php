@@ -11,6 +11,8 @@ interface AvailabilityFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $quantity
      *
@@ -19,6 +21,8 @@ interface AvailabilityFacadeInterface
     public function isProductSellable($sku, $quantity);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return int

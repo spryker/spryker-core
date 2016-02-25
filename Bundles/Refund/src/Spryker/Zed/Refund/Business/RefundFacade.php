@@ -19,6 +19,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
@@ -31,6 +33,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\RefundTransfer[]
@@ -51,6 +55,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -63,6 +69,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return \Generated\Shared\Transfer\RefundTransfer
@@ -75,6 +83,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem[]
@@ -85,6 +95,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]

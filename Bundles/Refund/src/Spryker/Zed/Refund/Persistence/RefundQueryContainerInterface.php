@@ -13,6 +13,8 @@ interface RefundQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
@@ -20,6 +22,8 @@ interface RefundQueryContainerInterface
     public function queryRefundsByIdSalesOrder($idOrder);
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery

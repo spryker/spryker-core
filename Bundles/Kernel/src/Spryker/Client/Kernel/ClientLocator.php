@@ -31,6 +31,8 @@ class ClientLocator extends AbstractLocator
     protected $application = 'Client';
 
     /**
+     * @api
+     *
      * @param string $bundle
      *
      * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException

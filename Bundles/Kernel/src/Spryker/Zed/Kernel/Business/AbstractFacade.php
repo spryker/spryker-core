@@ -18,6 +18,8 @@ abstract class AbstractFacade
     private $factory;
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $factory
      *
      * @return $this

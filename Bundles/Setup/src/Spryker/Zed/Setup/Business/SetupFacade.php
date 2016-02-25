@@ -17,6 +17,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param array $roles
      *
      * @return mixed
@@ -27,6 +29,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function enableJenkins()
@@ -35,6 +39,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function disableJenkins()
@@ -43,6 +49,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function removeGeneratedDirectory()
@@ -51,6 +59,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
@@ -62,6 +72,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()

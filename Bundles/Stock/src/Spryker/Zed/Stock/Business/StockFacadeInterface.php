@@ -14,6 +14,8 @@ interface StockFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return bool
@@ -21,6 +23,8 @@ interface StockFacadeInterface
     public function isNeverOutOfStock($sku);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return int
@@ -28,6 +32,8 @@ interface StockFacadeInterface
     public function calculateStockForProduct($sku);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
@@ -35,6 +41,8 @@ interface StockFacadeInterface
     public function createStockType(TypeTransfer $stockTypeTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
@@ -42,6 +50,8 @@ interface StockFacadeInterface
     public function updateStockType(TypeTransfer $stockTypeTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
@@ -49,6 +59,8 @@ interface StockFacadeInterface
     public function createStockProduct(StockProductTransfer $transferStockProduct);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
      *
      * @return int
@@ -56,6 +68,8 @@ interface StockFacadeInterface
     public function updateStockProduct(StockProductTransfer $stockProductTransfer);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $decrementBy
      * @param string $stockType
@@ -65,6 +79,8 @@ interface StockFacadeInterface
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $incrementBy
      * @param string $stockType
@@ -74,6 +90,8 @@ interface StockFacadeInterface
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $stockType
      *
@@ -82,6 +100,8 @@ interface StockFacadeInterface
     public function hasStockProduct($sku, $stockType);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $stockType
      *

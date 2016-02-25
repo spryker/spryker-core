@@ -13,21 +13,29 @@ interface CartClientInterface
 {
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function getCart();
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCart();
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getItemCount();
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -35,6 +43,8 @@ interface CartClientInterface
     public function addItem(ItemTransfer $itemTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -42,6 +52,8 @@ interface CartClientInterface
     public function removeItem(ItemTransfer $itemTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -50,6 +62,8 @@ interface CartClientInterface
     public function changeItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -58,6 +72,8 @@ interface CartClientInterface
     public function decreaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -66,11 +82,15 @@ interface CartClientInterface
     public function increaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculate();
 
     /**
+     * @api
+     *
      * @param string $coupon
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -78,6 +98,8 @@ interface CartClientInterface
     public function addCoupon($coupon);
 
     /**
+     * @api
+     *
      * @param string $coupon
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -85,6 +107,8 @@ interface CartClientInterface
     public function removeCoupon($coupon);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCoupons();

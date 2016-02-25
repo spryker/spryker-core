@@ -18,6 +18,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      * @param \ArrayObject $discountableContainers
@@ -34,6 +36,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      * @param \ArrayObject $items
@@ -50,6 +54,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
      * @return void

@@ -20,6 +20,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
 {
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -39,6 +41,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -53,6 +57,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
@@ -69,6 +75,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productIdsToAssign
      *
@@ -84,6 +92,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productIdsToUnAssign
      *
@@ -97,6 +107,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productOrderList
      *
@@ -112,6 +124,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productPreConfig
      *
@@ -125,6 +139,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -138,6 +154,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -152,6 +170,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -166,6 +186,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren

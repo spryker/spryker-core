@@ -19,6 +19,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
 {
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -31,6 +33,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -42,6 +46,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idStock
      * @param int $idProduct
      *
@@ -55,6 +61,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $type
      *
@@ -75,6 +83,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
@@ -86,6 +96,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
      */
     public function queryAllStockTypes()
@@ -94,6 +106,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryAllStockProducts()
@@ -102,6 +116,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryAllStockProductsJoinedStockJoinedProduct()
@@ -118,6 +134,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idStockProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery

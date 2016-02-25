@@ -18,6 +18,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -34,6 +36,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -50,6 +54,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
@@ -62,6 +68,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -76,6 +84,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -90,6 +100,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return void

@@ -19,6 +19,8 @@ class CartClient extends AbstractClient implements CartClientInterface
 {
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\CartTransfer
      */
     public function getCart()
@@ -35,6 +37,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCart()
@@ -49,6 +53,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getItemCount()
@@ -57,6 +63,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -78,6 +86,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -117,6 +127,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -143,6 +155,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -158,6 +172,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -173,6 +189,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculate()
@@ -209,6 +227,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $coupon
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -224,6 +244,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $coupon
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -239,6 +261,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCoupons()

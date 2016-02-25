@@ -18,6 +18,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\TaxRateCollectionTransfer
@@ -28,6 +30,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -41,6 +45,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -53,6 +59,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
@@ -63,6 +71,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -76,6 +86,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -88,6 +100,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRate
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -100,6 +114,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -113,6 +129,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSet
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -127,6 +145,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -141,6 +161,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $taxSetId
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
@@ -155,6 +177,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $taxSetId
      * @param int $taxRateId
      *
@@ -170,6 +194,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -182,6 +208,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException

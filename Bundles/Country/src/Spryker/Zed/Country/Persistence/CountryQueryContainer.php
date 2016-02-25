@@ -18,6 +18,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
     public function queryCountries()
@@ -26,6 +28,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     }
 
     /**
+     * @api
+     *
      * @param string $iso2Code
      *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
@@ -40,6 +44,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
      */
     public function queryRegions()
@@ -48,6 +54,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     }
 
     /**
+     * @api
+     *
      * @param string $isoCode
      *
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery

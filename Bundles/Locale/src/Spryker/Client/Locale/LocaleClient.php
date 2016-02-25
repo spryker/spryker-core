@@ -17,6 +17,8 @@ class LocaleClient extends AbstractClient implements LocaleClientInterface
 {
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentLocale()

@@ -13,6 +13,8 @@ interface LocaleFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return bool
@@ -20,6 +22,8 @@ interface LocaleFacadeInterface
     public function hasLocale($localeName);
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
@@ -29,21 +33,29 @@ interface LocaleFacadeInterface
     public function getLocale($localeName);
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentLocaleName();
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAvailableLocales();
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
@@ -53,6 +65,8 @@ interface LocaleFacadeInterface
     public function createLocale($localeName);
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return void
@@ -60,6 +74,8 @@ interface LocaleFacadeInterface
     public function deleteLocale($localeName);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void

@@ -20,6 +20,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
 {
 
     /**
+     * @api
+     *
      * @param int $idWishlist
      * @param int $idProduct
      *
@@ -35,6 +37,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
+     * @api
+     *
      * @param int $idWishlist
      * @param string $groupKey
      *
@@ -50,6 +54,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
      */
     public function queryWishlistItem()
@@ -58,6 +64,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
      */
     public function queryWishlist()

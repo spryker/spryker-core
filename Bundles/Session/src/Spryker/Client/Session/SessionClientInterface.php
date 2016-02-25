@@ -13,6 +13,8 @@ interface SessionClientInterface extends SessionInterface
 {
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $container
      *
      * @return \Spryker\Client\Session\SessionClientInterface

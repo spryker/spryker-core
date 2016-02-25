@@ -18,6 +18,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return bool
@@ -30,6 +32,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
@@ -44,6 +48,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentLocaleName()
@@ -52,6 +58,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAvailableLocales()
@@ -67,6 +75,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
@@ -77,6 +87,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
@@ -91,6 +103,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return void
@@ -102,6 +116,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void

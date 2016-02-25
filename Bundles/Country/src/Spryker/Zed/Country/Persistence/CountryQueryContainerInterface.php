@@ -11,11 +11,15 @@ interface CountryQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
     public function queryCountries();
 
     /**
+     * @api
+     *
      * @param string $iso2Code
      *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
@@ -23,11 +27,15 @@ interface CountryQueryContainerInterface
     public function queryCountryByIso2Code($iso2Code);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
      */
     public function queryRegions();
 
     /**
+     * @api
+     *
      * @param string $isoCode
      *
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery

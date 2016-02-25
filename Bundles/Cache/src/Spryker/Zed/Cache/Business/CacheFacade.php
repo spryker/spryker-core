@@ -17,6 +17,8 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return array
      */
     public function deleteAllFiles()

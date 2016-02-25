@@ -13,6 +13,8 @@ interface ProductOptionCartConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\ChangeTransfer
@@ -20,6 +22,8 @@ interface ProductOptionCartConnectorFacadeInterface
     public function expandProductOptions(ChangeTransfer $change);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\ChangeTransfer

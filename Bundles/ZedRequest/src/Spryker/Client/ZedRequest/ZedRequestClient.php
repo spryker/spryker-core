@@ -34,6 +34,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param string $url
      * @param \Spryker\Shared\Transfer\TransferInterface $object
      * @param int|null $timeoutInSeconds
@@ -47,6 +49,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getLastResponseInfoMessages()
@@ -55,6 +59,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getLastResponseErrorMessages()
@@ -63,6 +69,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getLastResponseSuccessMessages()

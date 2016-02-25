@@ -16,6 +16,8 @@ class SearchClient extends AbstractClient implements SearchClientInterface
 {
 
     /**
+     * @api
+     *
      * @return \Elastica\Index
      */
     public function getIndexClient()
