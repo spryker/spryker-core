@@ -25,7 +25,7 @@ class AbstractControllerTest extends \PHPUnit_Framework_TestCase
      *
      * @param mixed $input
      * @param int $expected
-     * 
+     *
      * @return void
      */
     public function testCastInt($input, $expected)
