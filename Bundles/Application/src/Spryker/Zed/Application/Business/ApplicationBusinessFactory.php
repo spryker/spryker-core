@@ -227,10 +227,14 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated 1.0.0 Use getUrlBuilder() instead.
+     *
      * @return \Spryker\Shared\Url\UrlBuilderInterface
      */
     protected function createUrlBuilder()
     {
+        trigger_error('Deprecated, use getUrlBuilder() instead.', E_USER_DEPRECATED);
+
         return $this->getUrlBuilder();
     }
 
