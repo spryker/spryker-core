@@ -9,6 +9,7 @@ namespace Spryker\Zed\Installer\Business\Model;
 
 use Psr\Log\AbstractLogger;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractInstaller extends AbstractLogger implements MessengerInterface
 {
@@ -47,6 +48,18 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
     public function log($level, $message, array $context = [])
     {
         $this->messenger->log($level, $message, $context);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param string $message
+     *
+     * @return void
+     */
+    public function updateOutput(OutputInterface $output, $message)
+    {
+        $output->write($message);
+        $output->write(str_repeat("\x08", strlen($message)));
     }
 
 }
