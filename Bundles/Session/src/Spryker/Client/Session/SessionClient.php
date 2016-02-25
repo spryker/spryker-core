@@ -44,8 +44,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * @param mixed $default The default value if not found.
      *
      * @return mixed
-     *
-     * @api
      */
     public function get($name, $default = null)
     {
@@ -57,8 +55,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *
      * @param string $name
      * @param mixed $value
-     *
-     * @api
      */
     public function set($name, $value)
     {
@@ -71,8 +67,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * @param string $name
      *
      * @return mixed The removed value or null when it does not exist
-     *
-     * @api
      */
     public function remove($name)
     {
@@ -85,8 +79,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * @throws \RuntimeException If session fails to start.
      *
      * @return bool True if session started.
-     *
-     * @api
      */
     public function start()
     {
@@ -97,8 +89,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * Returns the session ID.
      *
      * @return string The session ID.
-     *
-     * @api
      */
     public function getId()
     {
@@ -109,8 +99,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * Sets the session ID.
      *
      * @param string $id
-     *
-     * @api
      */
     public function setId($id)
     {
@@ -121,8 +109,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * Returns the session name.
      *
      * @return mixed The session name.
-     *
-     * @api
      */
     public function getName()
     {
@@ -133,8 +119,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * Sets the session name.
      *
      * @param string $name
-     *
-     * @api
      */
     public function setName($name)
     {
@@ -153,8 +137,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *   not a Unix timestamp.
      *
      * @return bool True if session invalidated, false if error.
-     *
-     * @api
      */
     public function invalidate($lifetime = null)
     {
@@ -172,8 +154,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *   not a Unix timestamp.
      *
      * @return bool True if session migrated, false if error.
-     *
-     * @api
      */
     public function migrate($destroy = false, $lifetime = null)
     {
@@ -186,6 +166,8 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * This method is generally not required for real sessions as
      * the session will be automatically saved at the end of
      * code execution.
+     *
+     * @return mixed
      */
     public function save()
     {
@@ -198,8 +180,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * @param string $name The attribute name
      *
      * @return bool true if the attribute is defined, false otherwise
-     *
-     * @api
      */
     public function has($name)
     {
@@ -210,8 +190,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * Returns attributes.
      *
      * @return array Attributes
-     *
-     * @api
      */
     public function all()
     {
@@ -231,7 +209,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Clears all attributes.
      *
-     * @api
+     * @return mixed
      */
     public function clear()
     {
