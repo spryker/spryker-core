@@ -79,8 +79,8 @@ abstract class AbstractClient
         return $this->getZedStub()->getSuccessMessages();
     }
 
-    /***
-     * @return Message[]
+    /**
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedErrorMessages()
     {

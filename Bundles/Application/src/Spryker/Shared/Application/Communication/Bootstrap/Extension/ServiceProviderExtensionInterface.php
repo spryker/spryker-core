@@ -14,6 +14,8 @@ interface ServiceProviderExtensionInterface
 
     /**
      * @param \Spryker\Shared\Application\Communication\Application $application
+     *
+     * @return array
      */
     public function getServiceProvider(Application $application);
 

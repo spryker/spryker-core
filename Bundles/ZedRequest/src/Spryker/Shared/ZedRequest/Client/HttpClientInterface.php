@@ -17,6 +17,8 @@ interface HttpClientInterface
 
     /**
      * @param int $timeoutInSeconds
+     *
+     * @return void
      */
     public static function setDefaultTimeout($timeoutInSeconds);
 

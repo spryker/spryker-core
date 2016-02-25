@@ -13,11 +13,15 @@ interface EventInterface
     /**
      * @param string $name
      * @param array|string $data
+     *
+     * @return void
      */
     public function setField($name, $data);
 
     /**
      * @param array $fields
+     *
+     * @return void
      */
     public function setFields(array $fields);
 

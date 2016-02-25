@@ -21,6 +21,8 @@ interface ResponseInterface
 
     /**
      * @param array $values
+     *
+     * @return void
      */
     public function fromArray(array $values);
 

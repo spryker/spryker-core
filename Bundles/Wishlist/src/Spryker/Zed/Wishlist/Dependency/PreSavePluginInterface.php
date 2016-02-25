@@ -12,6 +12,8 @@ interface PreSavePluginInterface
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return void
      */
     public function trigger(\ArrayObject $items);
 

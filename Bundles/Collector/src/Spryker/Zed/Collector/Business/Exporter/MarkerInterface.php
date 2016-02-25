@@ -24,6 +24,8 @@ interface MarkerInterface
      * @param string $exportType
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $timestamp
+     *
+     * @return void
      */
     public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, $timestamp);
 

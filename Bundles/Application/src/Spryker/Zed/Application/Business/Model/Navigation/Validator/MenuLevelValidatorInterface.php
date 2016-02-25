@@ -15,6 +15,8 @@ interface MenuLevelValidatorInterface
      * @param string $pageTitle
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function validate($currentLevel, $pageTitle);
 

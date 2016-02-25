@@ -16,6 +16,8 @@ interface SubscriptionManagerInterface
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
+     *
+     * @return void
      */
     public function subscribe(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType);
 

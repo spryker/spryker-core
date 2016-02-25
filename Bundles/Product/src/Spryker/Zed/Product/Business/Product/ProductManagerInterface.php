@@ -67,6 +67,8 @@ interface ProductManagerInterface
 
     /**
      * @param int $idProductAbstract
+     *
+     * @return void
      */
     public function touchProductActive($idProductAbstract);
 

@@ -23,6 +23,8 @@ interface RefundToSalesInterface
     /**
      * @param int $idRefund
      * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     *
+     * @return void
      */
     public function updateOrderItemsAndExpensesAfterRefund($idRefund, OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer);
 

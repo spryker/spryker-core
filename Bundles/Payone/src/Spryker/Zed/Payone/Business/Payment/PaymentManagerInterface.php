@@ -20,6 +20,8 @@ interface PaymentManagerInterface
 
     /**
      * @param \Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface $paymentMethodMapper
+     *
+     * @return void
      */
     public function registerPaymentMethodMapper(PaymentMethodMapperInterface $paymentMethodMapper);
 

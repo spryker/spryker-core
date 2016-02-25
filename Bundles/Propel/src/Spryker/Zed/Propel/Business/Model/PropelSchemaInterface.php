@@ -10,6 +10,9 @@ namespace Spryker\Zed\Propel\Business\Model;
 interface PropelSchemaInterface
 {
 
+    /**
+     * @return void
+     */
     public function copy();
 
 }

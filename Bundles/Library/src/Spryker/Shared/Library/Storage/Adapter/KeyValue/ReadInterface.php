@@ -39,6 +39,7 @@ interface ReadInterface
     public function getAllKeys();
 
     /**
+     * @return void
      */
     public function resetAccessStats();
 

@@ -20,6 +20,8 @@ interface ProductAbstractInterface
 
     /**
      * @param array $attributes
+     *
+     * @return void
      */
     public function setAbstractAttributes(array $attributes);
 
@@ -30,6 +32,8 @@ interface ProductAbstractInterface
 
     /**
      * @param array $products
+     *
+     * @return void
      */
     public function setProductConcreteCollection(array $products);
 
@@ -40,6 +44,8 @@ interface ProductAbstractInterface
 
     /**
      * @param bool $isActive
+     *
+     * @return void
      */
     public function setIsActive($isActive = true);
 
@@ -50,6 +56,8 @@ interface ProductAbstractInterface
 
     /**
      * @param string $sku
+     *
+     * @return void
      */
     public function setAbstractSku($sku);
 
@@ -60,6 +68,8 @@ interface ProductAbstractInterface
 
     /**
      * @param string $name
+     *
+     * @return void
      */
     public function setName($name);
 

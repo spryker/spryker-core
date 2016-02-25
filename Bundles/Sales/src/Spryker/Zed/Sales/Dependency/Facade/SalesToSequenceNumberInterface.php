@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 interface SalesToSequenceNumberInterface
 {
 
-    /***
-     * @param SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer
+    /**
+     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer
      *
      * @return string
      */

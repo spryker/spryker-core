@@ -10,11 +10,14 @@ namespace Spryker\Zed\CartCheckoutConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\CartCheckoutConnector\ProductOptionCheckoutConnectorConfig getConfig()
+ * @method \Spryker\Zed\CartCheckoutConnector\CartCheckoutConnectorConfig getConfig()
  */
 class CartCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
+    /**
+     * @return \Spryker\Zed\CartCheckoutConnector\Business\CartOrderHydrator
+     */
     public function createCartOrderHydrator()
     {
         return new CartOrderHydrator();

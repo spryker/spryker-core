@@ -206,11 +206,10 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $action
-     * @param TransferInterface $transfer
+     * @param \Spryker\Shared\Transfer\TransferInterface $transfer
      *
      * @return callable
      */
-
     private function executeMockedListenerTest($action, $transfer = null)
     {
         $eventMock = new FilterControllerEvent();

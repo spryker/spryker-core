@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class ProductOptionCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
+    /**
+     * @return \Spryker\Zed\ProductOptionCheckoutConnector\Business\ProductOptionOrderHydrator
+     */
     public function createProductOptionOrderHydrator()
     {
         return new ProductOptionOrderHydrator();

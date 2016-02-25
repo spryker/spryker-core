@@ -19,6 +19,8 @@ interface AuthorizationContainerInterface
 
     /**
      * @param string $narrative_text
+     *
+     * @return void
      */
     public function setNarrativeText($narrative_text);
 
@@ -44,6 +46,8 @@ interface AuthorizationContainerInterface
 
     /**
      * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer $personalData
+     *
+     * @return void
      */
     public function setPersonalData(PersonalContainer $personalData);
 
@@ -59,15 +63,19 @@ interface AuthorizationContainerInterface
 
     /**
      * @param string $currency
+     *
+     * @return void
      */
     public function setCurrency($currency);
 
     /**
      * set the system-Name
      *
-     * @param string $integrator_name
+     * @param string $integratorName
+     *
+     * @return void
      */
-    public function setIntegratorName($integrator_name);
+    public function setIntegratorName($integratorName);
 
     /**
      * @return string
@@ -82,9 +90,11 @@ interface AuthorizationContainerInterface
     /**
      * set the version of the solution-partner's app / extension / plugin / etc..
      *
-     * @param string $solution_version
+     * @param string $solutionVersion
+     *
+     * @return void
      */
-    public function setSolutionVersion($solution_version);
+    public function setSolutionVersion($solutionVersion);
 
     /**
      * @return array
@@ -108,11 +118,15 @@ interface AuthorizationContainerInterface
 
     /**
      * @param int $portalid
+     *
+     * @return void
      */
     public function setPortalid($portalid);
 
     /**
      * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer $delivery
+     *
+     * @return void
      */
     public function setShippingData(ShippingContainer $delivery);
 
@@ -128,6 +142,8 @@ interface AuthorizationContainerInterface
 
     /**
      * @param string $param
+     *
+     * @return void
      */
     public function setParam($param);
 
@@ -138,21 +154,29 @@ interface AuthorizationContainerInterface
 
     /**
      * @param string $encoding
+     *
+     * @return void
      */
     public function setEncoding($encoding);
 
     /**
      * @param string $api_version
+     *
+     * @return void
      */
     public function setApiVersion($api_version);
 
     /**
      * @param string $clearingType
+     *
+     * @return void
      */
     public function setClearingType($clearingType);
 
     /**
      * @param string $reference
+     *
+     * @return void
      */
     public function setReference($reference);
 
@@ -168,6 +192,8 @@ interface AuthorizationContainerInterface
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     public function setKey($key);
 
@@ -178,6 +204,8 @@ interface AuthorizationContainerInterface
 
     /**
      * @param PaymentMethod\AbstractPaymentMethodContainer $paymentMethod
+     *
+     * @return void
      */
     public function setPaymentMethod(AbstractPaymentMethodContainer $paymentMethod);
 
@@ -198,6 +226,8 @@ interface AuthorizationContainerInterface
 
     /**
      * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer $secure
+     *
+     * @return void
      */
     public function set3dsecure(ThreeDSecureContainer $secure);
 
@@ -205,21 +235,29 @@ interface AuthorizationContainerInterface
      * set the name of the solution-partner (company)
      *
      * @param string $solution_name
+     *
+     * @return void
      */
     public function setSolutionName($solution_name);
 
     /**
      * @param string $request
+     *
+     * @return void
      */
     public function setRequest($request);
 
     /**
      * @param int $aid
+     *
+     * @return void
      */
     public function setAid($aid);
 
     /**
      * @param string $mode
+     *
+     * @return void
      */
     public function setMode($mode);
 
@@ -230,6 +268,8 @@ interface AuthorizationContainerInterface
 
     /**
      * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer $invoicing
+     *
+     * @return void
      */
     public function setInvoicing(TransactionContainer $invoicing);
 
@@ -250,6 +290,8 @@ interface AuthorizationContainerInterface
 
     /**
      * @param int $amount
+     *
+     * @return void
      */
     public function setAmount($amount);
 

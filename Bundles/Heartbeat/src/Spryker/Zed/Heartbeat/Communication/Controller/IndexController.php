@@ -18,6 +18,9 @@ class IndexController extends AbstractController
     const SYSTEM_STATUS = 'status';
     const STATUS_REPORT = 'report';
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function indexAction()
     {
         if ($this->getFacade()->isSystemAlive()) {
@@ -25,12 +28,12 @@ class IndexController extends AbstractController
                 [self::SYSTEM_STATUS => self::SYSTEM_UP],
                 Response::HTTP_OK
             );
-        } else {
-            return $this->jsonResponse(
-                [self::SYSTEM_STATUS => self::SYSTEM_DOWN, self::STATUS_REPORT => $this->getFacade()->getReport()->toArray()],
-                Response::HTTP_SERVICE_UNAVAILABLE
-            );
         }
+
+        return $this->jsonResponse(
+            [self::SYSTEM_STATUS => self::SYSTEM_DOWN, self::STATUS_REPORT => $this->getFacade()->getReport()->toArray()],
+            Response::HTTP_SERVICE_UNAVAILABLE
+        );
     }
 
 }

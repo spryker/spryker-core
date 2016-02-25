@@ -54,19 +54,23 @@ class Installer implements InstallerInterface
     }
 
     /**
+     * @param array $usersArray
+     *
      * @return void
      */
     protected function addUsers(array $usersArray)
     {
         foreach ($usersArray as $user) {
-            if (!$this->user->hasUserByUsername($user['username'])) {
-                $this->user->addUser(
-                    $user['firstName'],
-                    $user['lastName'],
-                    $user['username'],
-                    $user['password']
-                );
+            if ($this->user->hasUserByUsername($user['username'])) {
+                continue;
             }
+
+            $this->user->addUser(
+                $user['firstName'],
+                $user['lastName'],
+                $user['username'],
+                $user['password']
+            );
         }
     }
 

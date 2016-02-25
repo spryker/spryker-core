@@ -94,9 +94,6 @@ class SequenceNumber implements SequenceNumberInterface
             ->findOneByName($this->sequenceNumberSettings->getName());
 
         $offset = $this->sequenceNumberSettings->getOffset();
-        if (!$offset) {
-            $offset = $this->sequenceNumberSettings->getMinimumNumber();
-        }
 
         if ($sequence === null) {
             $sequence = new SpySequenceNumber();

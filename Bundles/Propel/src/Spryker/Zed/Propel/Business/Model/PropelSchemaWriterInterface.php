@@ -13,6 +13,8 @@ interface PropelSchemaWriterInterface
     /**
      * @param string $fileName
      * @param string $content
+     *
+     * @return void
      */
     public function write($fileName, $content);
 

@@ -58,7 +58,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      *
-     * @deprecated Use sendPasswordRestoreMail() instead
+     * @deprecated Use CustomerFacade::sendPasswordRestoreMail() instead
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {

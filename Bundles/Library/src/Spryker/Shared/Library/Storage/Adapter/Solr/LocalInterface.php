@@ -32,17 +32,23 @@ interface LocalInterface
 
     /**
      * @param string $coreName
+     *
+     * @return void
      */
     public function reloadCore($coreName);
 
     /**
      * @param string $coreName
      * @param string $coreDir
+     *
+     * @return void
      */
     public function createCore($coreName, $coreDir);
 
     /**
      * @param string $coreName
+     *
+     * @return void
      */
     public function unloadCore($coreName);
 

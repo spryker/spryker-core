@@ -173,20 +173,24 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     public function deleteTaxRate($id)
     {
-        return $this->getFactory()->createWriterModel()->deleteTaxRate($id);
+        $this->getFactory()->createWriterModel()->deleteTaxRate($id);
     }
 
     /**
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     public function deleteTaxSet($id)
     {
-        return $this->getFactory()->createWriterModel()->deleteTaxSet($id);
+        $this->getFactory()->createWriterModel()->deleteTaxSet($id);
     }
 
 }

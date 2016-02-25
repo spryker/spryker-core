@@ -14,11 +14,15 @@ interface UrlUniqueValidatorInterface
      * @param string $url
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function validate($url);
 
     /**
      * @param string $url
+     *
+     * @return void
      */
     public function addUrl($url);
 

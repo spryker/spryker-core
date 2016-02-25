@@ -311,6 +311,9 @@ class GoogleGraph
         $this->chbh = $chbh;
     }
 
+    /**
+     * @return string
+     */
     public function toGetString()
     {
         $params = get_object_vars($this);

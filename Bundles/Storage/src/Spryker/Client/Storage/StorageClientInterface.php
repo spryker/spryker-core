@@ -13,21 +13,29 @@ interface StorageClientInterface
     /**
      * @param string $key
      * @param mixed $value
+     *
+     * @return mixed
      */
     public function set($key, $value);
 
     /**
      * @param array $items
+     *
+     * @return void
      */
     public function setMulti(array $items);
 
     /**
      * @param string $key
+     *
+     * @return mixed
      */
     public function delete($key);
 
     /**
      * @param array $keys
+     *
+     * @return void
      */
     public function deleteMulti(array $keys);
 
@@ -68,6 +76,7 @@ interface StorageClientInterface
     public function getKeys($pattern);
 
     /**
+     * @return void
      */
     public function resetAccessStats();
 

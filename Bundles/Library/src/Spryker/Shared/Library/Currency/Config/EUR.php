@@ -12,31 +12,49 @@ use Spryker\Shared\Library\Currency\CurrencyInterface;
 class EUR implements CurrencyInterface
 {
 
+    /**
+     * @return string
+     */
     public function getIsoCode()
     {
         return 'EUR';
     }
 
+    /**
+     * @return string
+     */
     public function getSymbol()
     {
         return '€';
     }
 
+    /**
+     * @return string
+     */
     public function getThousandsSeparator()
     {
         return '.';
     }
 
+    /**
+     * @return string
+     */
     public function getDecimalSeparator()
     {
         return ',';
     }
 
+    /**
+     * @return string
+     */
     public function getDecimalDigits()
     {
         return 2;
     }
 
+    /**
+     * @return string
+     */
     public function getFormatPattern()
     {
         return '{v} {s}';

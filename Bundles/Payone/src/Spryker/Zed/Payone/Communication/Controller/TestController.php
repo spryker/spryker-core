@@ -471,6 +471,11 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @param array $request
+     *
+     * @return string
+     */
     protected function rawResponseFromArray(array $request)
     {
         $rawResponse = '';

@@ -24,11 +24,15 @@ interface WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     *
+     * @return void
      */
     public function setPriceForProduct(PriceProductTransfer $transferPriceProduct);
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
     public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
