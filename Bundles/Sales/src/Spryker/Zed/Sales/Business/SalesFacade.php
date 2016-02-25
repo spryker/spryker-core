@@ -47,7 +47,7 @@ class SalesFacade extends AbstractFacade
     public function getDistinctOrderStates($idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderDetailsManager()
+            ->createOrderReader()
             ->getDistinctOrderStates($idSalesOrder);
     }
 
@@ -85,35 +85,37 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * TODO FW This method is just updating the order. Nothing to do with the customer... Please remove.
+     * Specification
+     * - Update sales order with data from order transfer
+     * - Returns true if order was successfully updated
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idOrder
+     * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     * @return bool
      */
-    public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder)
+    public function updateOrder(OrderTransfer $orderTransfer, $idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderDetailsManager()
-            ->updateOrderCustomer($orderTransfer, $idOrder);
+            ->createOrderUpdater()
+            ->update($orderTransfer, $idSalesOrder);
     }
 
     /**
      * Specification:
      * - Replaces all values of the order address by the values from the addresses transfer
-     * - Return the updated entity
+     * - Returns true if order was successfully updated
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
-     * @return mixed // TODO The entity is returned
+     * @return boolean
      */
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress)
     {
         return $this->getFactory()
-            ->createOrderDetailsManager()
-            ->updateOrderAddress($addressesTransfer, $idAddress);
+            ->createOrderAddressUpdater()
+            ->update($addressesTransfer, $idAddress);
     }
 
     /**
@@ -133,15 +135,12 @@ class SalesFacade extends AbstractFacade
     /**
      * Returns a list of of orders for the given customer id and (optional) filters.
      *
-     * TODO FW This method uses the same transfer as a parameter and return object
-     * TODO FW Hidden required field inside of the transfer. The customer id must be set as a another parameter.
-     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOrders(OrderListTransfer $orderListTransfer, $idCustomer)
+    public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer)
     {
         return $this->getFactory()
             ->createCustomerOrderReader()

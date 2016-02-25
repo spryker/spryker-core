@@ -21,25 +21,25 @@ class EditController extends AbstractController
      */
     public function customerAction(Request $request)
     {
-        $idOrder = $request->query->getInt('id-sales-order');
+        $idSalesOrder = $request->query->getInt('id-sales-order');
 
         $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
         $form = $this->getFactory()
             ->createCustomerForm(
-                $dataProvider->getData($idOrder),
+                $dataProvider->getData($idSalesOrder),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
         if ($form->isValid()) {
             $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
-            $this->getFacade()->updateOrderCustomer($orderTransfer, $idOrder);
+            $this->getFacade()->updateOrder($orderTransfer, $idSalesOrder);
 
-            return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
+            return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idSalesOrder));
         }
 
         return $this->viewResponse([
-            'idOrder' => $idOrder,
+            'idOrder' => $idSalesOrder,
             'form' => $form->createView(),
         ]);
     }

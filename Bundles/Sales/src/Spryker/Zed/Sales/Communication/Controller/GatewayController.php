@@ -23,7 +23,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function getOrdersAction(OrderListTransfer $orderListTransfer)
     {
-        return $this->getFacade()->getOrders($orderListTransfer, $orderListTransfer->getIdCustomer());
+        return $this->getFacade()->getCustomerOrders($orderListTransfer, $orderListTransfer->getIdCustomer());
     }
 
     /**

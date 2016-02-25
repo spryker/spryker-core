@@ -6,13 +6,16 @@
 
 namespace Spryker\Zed\Sales\Business;
 
-use Spryker\Zed\Sales\Business\Model\OrderCommentReader;
-use Spryker\Zed\Sales\Business\Model\OrderCommentSaver;
+use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
+use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
+use Spryker\Zed\Sales\Business\Model\Order\OrderAddressUpdater;
+use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
+use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\OrderReferenceGenerator;
-use Spryker\Zed\Sales\Business\Model\CustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
-use Spryker\Zed\Sales\Business\Model\OrderSaver;
+use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -23,7 +26,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\CustomerOrderReaderInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReaderInterface
      */
     public function createCustomerOrderReader()
     {
@@ -31,7 +34,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\OrderSaverInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderSaverInterface
      */
     public function createOrderSaver()
     {
@@ -44,7 +47,23 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\OrderCommentReaderInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderUpdaterInterface
+     */
+    public function createOrderUpdater()
+    {
+        return new OrderUpdater($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderReaderInterface
+     */
+    public function createOrderReader()
+    {
+        return new OrderReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReaderInterface
      */
     public function createOrderCommentReader()
     {
@@ -52,7 +71,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\OrderCommentSaverInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaverInterface
      */
     public function createOrderCommentSaver()
     {
@@ -82,6 +101,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getSequenceNumberFacade(),
             $sequenceNumberSettings
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderAddressUpdaterInterface
+     */
+    public function createOrderAddressUpdater()
+    {
+        return new OrderAddressUpdater($this->getQueryContainer());
     }
 
     /**

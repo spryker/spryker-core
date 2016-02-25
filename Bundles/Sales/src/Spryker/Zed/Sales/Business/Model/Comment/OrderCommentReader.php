@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Sales\Business\Model;
+namespace Spryker\Zed\Sales\Business\Model\Comment;
 
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderDetailsCommentsTransfer;

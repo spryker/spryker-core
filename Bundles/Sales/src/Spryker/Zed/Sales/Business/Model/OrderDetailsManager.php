@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Library\Copy;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -53,63 +52,6 @@ class OrderDetailsManager
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
         $this->logReceiverPluginStack = $logReceiverPluginStack;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idOrder
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
-     */
-    public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder)
-    {
-        $orderEntity = $this->queryContainer
-            ->querySalesOrderById($idOrder)
-            ->findOne();
-
-        $orderTransfer->fromArray($orderEntity->toArray(), true);
-
-        $orderEntity->save();
-
-        return $orderEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param int $idAddress
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
-     */
-    public function updateOrderAddress(AddressTransfer $addressTransfer, $idAddress)
-    {
-        $addressEntity = $this->queryContainer
-            ->querySalesOrderAddressById($idAddress)
-            ->findOne();
-
-        Copy::transferToEntity($addressTransfer, $addressEntity); // TODO FW Remove this outdated static function from here. It should set only these fields, which are modified in the transfer.
-
-        $addressEntity->save();
-
-        return $addressEntity;
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return array|string[]
-     */
-    public function getDistinctOrderStates($idSalesOrder)
-    {
-        $orderItems = $this->queryContainer
-            ->querySalesOrderItemsByIdSalesOrder($idSalesOrder)
-            ->find();
-
-        $states = [];
-        foreach ($orderItems as $orderItem) {
-            $states[$orderItem->getState()->getName()] = $orderItem->getState()->getName();
-        }
-
-        return $states;
     }
 
     /**
