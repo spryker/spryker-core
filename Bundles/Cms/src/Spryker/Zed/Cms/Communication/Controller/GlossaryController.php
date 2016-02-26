@@ -50,7 +50,7 @@ class GlossaryController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPage = $this->castId($request->get(CmsPageTable::REQUEST_ID_PAGE));
-        $idForm = (int) $request->get(self::ID_FORM);
+        $idForm = (int)$request->get(self::ID_FORM);
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
 
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();

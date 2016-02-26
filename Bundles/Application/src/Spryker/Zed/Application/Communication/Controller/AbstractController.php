@@ -356,7 +356,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return AssertionFacadeInterface
+     * @return \Spryker\Zed\Assertion\Business\AssertionFacadeInterface
      */
     protected function getAssertion()
     {
