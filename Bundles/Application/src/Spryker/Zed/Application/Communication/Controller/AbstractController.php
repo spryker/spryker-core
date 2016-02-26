@@ -9,6 +9,7 @@ namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Assertion\Business\AssertionFacadeInterface;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
@@ -166,6 +167,8 @@ abstract class AbstractController
      */
     protected function castId($id)
     {
+        $this->getAssertion()->assertNumericNotZero($id);
+
         return (int)$id;
     }
 
@@ -310,6 +313,11 @@ abstract class AbstractController
      */
     protected function getApplication()
     {
+        if ($this->application === null) {
+            $pimplePlugin = new Pimple();
+            $this->application = $pimplePlugin->getApplication();
+        }
+
         return $this->application;
     }
 

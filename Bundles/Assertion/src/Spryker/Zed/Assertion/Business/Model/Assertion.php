@@ -69,8 +69,7 @@ class Assertion implements AssertionInterface
      */
     public function assertAlpha($value, $message = null)
     {
-        $this->assertString($value, $message);
-        if (!preg_match('/^([a-zA-Z]+)$/', $value)) {
+        if (!ctype_alpha($value)) {
             $this->throwException('Value is not alpha', $message);
         }
     }

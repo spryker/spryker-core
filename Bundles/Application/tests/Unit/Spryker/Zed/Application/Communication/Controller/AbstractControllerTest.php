@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication\Controller;
 
+use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Unit\Spryker\Zed\Application\Communication\Controller\Fixtures\MockController;
 
 /**
@@ -25,12 +26,17 @@ class AbstractControllerTest extends \PHPUnit_Framework_TestCase
      *
      * @param mixed $input
      * @param int $expected
+     * @param bool $isValid
      *
      * @return void
      */
-    public function testCastInt($input, $expected)
+    public function testCastInt($input, $expected, $isValid)
     {
         $controller = new MockController();
+
+        if (!$isValid) {
+            $this->setExpectedException(InvalidArgumentException::class);
+        }
 
         $result = $controller->indexAction($input);
 
@@ -44,12 +50,13 @@ class AbstractControllerTest extends \PHPUnit_Framework_TestCase
     public function getTestData()
     {
         return [
-            [1, 1],
-            [1.5, 1],
-            [true, 1],
-            [false, 0],
-            ['string', 0],
-            [[], 0],
+            ['1', 1, true],
+            [1, 1, true],
+            [1.5, 1, true],
+            [true, 1, false],
+            [false, 0, false],
+            ['string', 0, false],
+            [[], 0, false],
         ];
     }
 

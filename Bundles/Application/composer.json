@@ -11,6 +11,7 @@
   },
   "require": {
     "spryker/acl": "^1.0.0",
+    "spryker/assertion": "^1.0.0",
     "spryker/auth": "^1.0.0",
     "spryker/console": "^1.0.0",
     "spryker/gui": "^1.0.0",
