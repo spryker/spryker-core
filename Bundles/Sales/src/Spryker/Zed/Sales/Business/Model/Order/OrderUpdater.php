@@ -6,6 +6,7 @@
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderUpdater implements OrderUpdaterInterface
@@ -16,7 +17,7 @@ class OrderUpdater implements OrderUpdaterInterface
     protected $queryContainer;
 
     /**
-     * OrderUpdater constructor.
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      */
     public function __construct(SalesQueryContainerInterface $queryContainer)
     {
@@ -39,10 +40,21 @@ class OrderUpdater implements OrderUpdaterInterface
             return false;
         }
 
-        $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $this->hydrateOrderTransferFromEntity($orderTransfer, $orderEntity);
 
         $orderEntity->save();
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return void
+     */
+    protected function hydrateOrderTransferFromEntity(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity)
+    {
+        $orderTransfer->fromArray($orderEntity->toArray(), true);
     }
 }

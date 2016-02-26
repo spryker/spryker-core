@@ -24,7 +24,7 @@ class OrdersTable extends AbstractTable
     const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
     const ID_ORDER_ITEM_STATE = 'id-order-item-state';
     const FILTER = 'filter';
-    const URL_SALES_DETAILS = '/sales/details';
+    const URL_SALES_DETAIL = '/sales/detail';
     const PARAM_ID_SALES_ORDER = 'id-sales-order';
     const GRAND_TOTAL = 'GrandTotal';
 
@@ -133,7 +133,7 @@ class OrdersTable extends AbstractTable
         $urls = [];
 
         $urls[] = $this->generateViewButton(
-            Url::generate(self::URL_SALES_DETAILS, [
+            Url::generate(self::URL_SALES_DETAIL, [
                 self::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
             ]),
             'View'
@@ -175,7 +175,8 @@ class OrdersTable extends AbstractTable
 
         $orders = $filterQuery->groupByFkSalesOrder()
             ->select(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
-            ->find()->toArray();
+            ->find()
+            ->toArray();
 
         $query->filterByIdSalesOrder($orders);
 
@@ -193,7 +194,15 @@ class OrdersTable extends AbstractTable
         if ($idOrderItemProcess) {
             $idOrderItemState = $this->request->get(self::ID_ORDER_ITEM_STATE);
             $filter = $this->request->get(self::FILTER);
-            $config->setUrl(sprintf('table?id-order-item-process=%s&id-order-item-state=%s&filter=%s', $idOrderItemProcess, $idOrderItemState, $filter));
+
+            $config->setUrl(
+                sprintf(
+                    'table?id-order-item-process=%s&id-order-item-state=%s&filter=%s',
+                    $idOrderItemProcess,
+                    $idOrderItemState,
+                    $filter
+                )
+            );
         }
     }
 

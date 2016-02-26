@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
-class DetailsController extends AbstractController // TODO FW No plural in controller names. Rename to DetailController
+class DetailController extends AbstractController // TODO FW No plural in controller names. Rename to DetailController
 {
 
     /**

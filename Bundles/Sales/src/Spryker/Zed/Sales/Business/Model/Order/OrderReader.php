@@ -15,7 +15,7 @@ class OrderReader implements OrderReaderInterface
     protected $queryContainer;
 
     /**
-     * OrderUpdater constructor.
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      */
     public function __construct(SalesQueryContainerInterface $queryContainer)
     {

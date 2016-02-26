@@ -35,8 +35,21 @@ class OrderCommentSaver implements OrderCommentSaverInterface
         $commentEntity->fromArray($commentTransfer->toArray());
         $commentEntity->save();
 
-        $commentTransfer->fromArray($commentEntity->toArray(), true);
+        $this->hydrateCommentTranferFromEntity($commentTransfer, $commentEntity);
 
         return $commentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderComment $commentEntity
+     *
+     * @return void
+     */
+    protected function hydrateCommentTranferFromEntity(
+        CommentTransfer $commentTransfer,
+        SpySalesOrderComment $commentEntity
+    ) {
+        $commentTransfer->fromArray($commentEntity->toArray(), true);
     }
 }
