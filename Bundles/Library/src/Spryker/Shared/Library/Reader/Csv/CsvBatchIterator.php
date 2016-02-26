@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model;
+namespace Spryker\Shared\Library\Reader\Csv;
 
-use Spryker\Zed\Library\Reader\CsvReaderInterface;
+use Spryker\Shared\Library\Reader\CountableIteratorInterface;
 
 class CsvBatchIterator implements CountableIteratorInterface
 {
@@ -23,7 +23,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     protected $chunkSize = 10;
 
     /**
-     * @var \Spryker\Zed\Library\Reader\CsvReaderInterface
+     * @var \Spryker\Shared\Library\Reader\Csv\CsvReaderInterface
      */
     protected $csvReader;
 
@@ -43,7 +43,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     protected $currentDataSet = [];
 
     /**
-     * @param \Spryker\Zed\Library\Reader\CsvReaderInterface $csvFile
+     * @param \Spryker\Shared\Library\Reader\Csv\CsvReaderInterface $csvFile
      * @param int $chunkSize
      */
     public function __construct(CsvReaderInterface $csvFile, $chunkSize = 100)
@@ -118,7 +118,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     *
+     * return void
      */
     public function __destruct()
     {

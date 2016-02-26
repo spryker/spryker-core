@@ -11,9 +11,9 @@ use Spryker\Zed\Library\Import\Input;
 use Spryker\Zed\Library\Import\ReaderInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\Library\Reader\CsvReader instead.
+ * @deprecated Use \Spryker\Shared\Library\CsvReader\CsvReader instead.
  *
- * @see \Spryker\Zed\Library\Reader\CsvReader
+ * @see \Spryker\Shared\Library\CsvReader\CsvReader
  */
 class CsvFileReader implements ReaderInterface
 {
@@ -46,9 +46,9 @@ class CsvFileReader implements ReaderInterface
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Library\Reader\CsvReader's load() instead.
+     * @deprecated Use \Spryker\Shared\Library\CsvReader\CsvReader's load() instead.
      *
-     * @see \Spryker\Zed\Library\Reader\CsvReader::load
+     * @see \Spryker\Shared\Library\CsvReader\CsvReader::load
      *
      * @param mixed $filepath
      *

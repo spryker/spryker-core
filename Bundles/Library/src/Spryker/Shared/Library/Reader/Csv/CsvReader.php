@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Library\Reader;
+namespace Spryker\Shared\Library\Reader\Csv;
 
 use SplFileObject;
 
@@ -26,6 +26,11 @@ class CsvReader implements CsvReaderInterface
      * @var int
      */
     protected $total;
+
+    /**
+     * @var int
+     */
+    protected $readIndex = 1;
 
     /**
      * @var \SplFileObject
@@ -60,7 +65,14 @@ class CsvReader implements CsvReaderInterface
      */
     public function composeItem(array $data)
     {
-        return array_combine(array_values($this->columns), array_values($data));
+        $data = array_values($data);
+        $columns = array_values($this->columns);
+
+        if (count($data) !== count($columns)) {
+            throw new \UnexpectedValueException('Expected "'. count($columns) . '" column(s) but received data with "'.count($data).'" column(s)');
+        }
+
+        return array_combine($columns, $data);
     }
 
     /**
@@ -113,21 +125,33 @@ class CsvReader implements CsvReaderInterface
 
         $this->csvFile = new SplFileObject($filename);
         $this->csvFile->setCsvControl(',', '"');
-        $this->csvFile->setFlags(SplFileObject::READ_CSV | SplFileObject::READ_AHEAD | SplFileObject::SKIP_EMPTY);
+        $this->csvFile->setFlags(SplFileObject::READ_CSV | SplFileObject::READ_AHEAD | SplFileObject::SKIP_EMPTY | SplFileObject::DROP_NEW_LINE);
 
         $this->setupColumns();
 
         $this->total = null;
 
+        $this->readIndex = 1;
+
         return $this;
     }
 
     /**
+     * @throws \UnexpectedValueException
+     *
      * @return array
      */
     public function read()
     {
-        return $this->composeItem($this->getFile()->fgetcsv());
+        $data = $this->getFile()->fgetcsv();
+        if (empty($data)) {
+            throw new \UnexpectedValueException('Malformed data at line ' . $this->readIndex);
+        }
+
+        $data = $this->composeItem($data);
+        $this->readIndex++;
+
+        return $data;
     }
 
     /**
@@ -136,10 +160,11 @@ class CsvReader implements CsvReaderInterface
     public function toArray()
     {
         $data = [];
-        $this->csvFile->rewind();
+        $csvFile = clone $this->csvFile;
+        $csvFile->rewind();
 
-        while (!$this->csvFile->eof()) {
-            $data[] = $this->read();
+        while (!$csvFile->eof()) {
+            $data[] = $this->composeItem($csvFile->fgetcsv());
         }
 
         return $data;

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Library\Reader;
+namespace Spryker\Shared\Library\Reader\Csv;
 
 interface CsvReaderInterface
 {
