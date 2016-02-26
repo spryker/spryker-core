@@ -11,11 +11,12 @@ interface CsvReaderInterface
 {
 
     /**
+     * @param array $columns
      * @param array $data
      *
      * @return array
      */
-    public function composeItem(array $data);
+    public function composeItem(array $columns, array $data);
 
     /**
      * @return array
@@ -31,6 +32,11 @@ interface CsvReaderInterface
      * @return int
      */
     public function getTotal();
+
+    /**
+     * @return bool
+     */
+    public function isLoaded();
 
     /**
      * @param string $filename
