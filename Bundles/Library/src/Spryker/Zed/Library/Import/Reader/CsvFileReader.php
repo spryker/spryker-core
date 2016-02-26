@@ -10,6 +10,11 @@ namespace Spryker\Zed\Library\Import\Reader;
 use Spryker\Zed\Library\Import\Input;
 use Spryker\Zed\Library\Import\ReaderInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\Library\Reader\CsvReader instead.
+ *
+ * @see \Spryker\Zed\Library\Reader\CsvReader
+ */
 class CsvFileReader implements ReaderInterface
 {
 
@@ -41,6 +46,10 @@ class CsvFileReader implements ReaderInterface
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Library\Reader\CsvReader's read() instead.
+     *
+     * @see \Spryker\Zed\Library\Reader\CsvReader::read
+     *
      * @param mixed $filepath
      *
      * @return \Spryker\Zed\Library\Import\Input
