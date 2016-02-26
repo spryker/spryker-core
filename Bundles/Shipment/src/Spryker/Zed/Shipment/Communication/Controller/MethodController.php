@@ -61,7 +61,7 @@ class MethodController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idMethod = $request->query->get(self::ID_METHOD_PARAMETER);
+        $idMethod = $this->castId($request->query->get(self::ID_METHOD_PARAMETER));
 
         if ($this->getFacade()->hasMethod($idMethod)) {
             $dataProvider = $this->getFactory()->createMethodFormDataProvider();
@@ -100,7 +100,7 @@ class MethodController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idMethod = $request->query->get(self::ID_METHOD_PARAMETER);
+        $idMethod = $this->castId($request->query->get(self::ID_METHOD_PARAMETER));
 
         if ($this->getFacade()->hasMethod($idMethod)) {
             $this->getFacade()->deleteMethod($idMethod);

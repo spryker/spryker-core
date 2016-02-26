@@ -157,6 +157,8 @@ abstract class AbstractController
     }
 
     /**
+     * This methods centralizes the way we cast IDs. This is needed to allow the usage of UUIDs in the future.
+     *
      * @param mixed $id
      *
      * @return int

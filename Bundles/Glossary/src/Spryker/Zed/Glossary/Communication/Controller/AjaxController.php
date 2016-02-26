@@ -29,7 +29,7 @@ class AjaxController extends AbstractController
      */
     public function keysAction(Request $request)
     {
-        $term = $request->query->get(self::SEARCH_TERM);
+        $term = $request->query->get(self::SEARCH_TERM); // TODO FW Validation
         $keys = $this->getFactory()
             ->getQueryContainer()
             ->queryActiveKeysByName('%' . $term . '%')

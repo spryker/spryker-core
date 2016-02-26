@@ -26,7 +26,7 @@ class DetailsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idRefund = $request->get('id-refund');
+        $idRefund = $this->castId($request->get('id-refund'));
 
         $refundEntity = $this->getQueryContainer()
             ->queryRefundByIdRefund($idRefund)

@@ -54,7 +54,7 @@ class CartRuleController extends AbstractController
      */
     public function decisionRuleAction(Request $request)
     {
-        $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
+        $elements = $this->castId($request->request->get(self::PARAM_CURRENT_ELEMENTS_COUNT));
 
         $form = $this
             ->getFactory()
@@ -74,7 +74,7 @@ class CartRuleController extends AbstractController
      */
     public function collectorPluginsAction(Request $request)
     {
-        $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
+        $elements = $this->castId($request->request->get(self::PARAM_CURRENT_ELEMENTS_COUNT));
 
         $form = $this
             ->getFactory()
@@ -124,7 +124,7 @@ class CartRuleController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idDiscount = $request->query->getInt(DiscountConstants::PARAM_ID_DISCOUNT);
+        $idDiscount = $this->castId($request->query->get(DiscountConstants::PARAM_ID_DISCOUNT));
 
         $dataProvider = $this->getFactory()->createCartRuleFormDataProvider();
         $form = $this

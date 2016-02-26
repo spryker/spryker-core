@@ -27,7 +27,7 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
+        $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $dataProvider = $this->getFactory()->createCustomerUpdateFormDataProvider();
         $form = $this->getFactory()

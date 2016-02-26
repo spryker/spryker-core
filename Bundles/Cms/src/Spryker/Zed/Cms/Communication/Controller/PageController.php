@@ -92,7 +92,7 @@ class PageController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idPage = $request->query->getInt(CmsPageTable::REQUEST_ID_PAGE);
+        $idPage = $this->castId($request->query->get(CmsPageTable::REQUEST_ID_PAGE));
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 

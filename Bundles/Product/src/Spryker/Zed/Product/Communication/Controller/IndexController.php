@@ -57,7 +57,7 @@ class IndexController extends AbstractController
      */
     public function viewAction(Request $request)
     {
-        $idProductAbstract = $request->query->getInt(self::ID_PRODUCT_ABSTRACT);
+        $idProductAbstract = $this->castId($request->query->get(self::ID_PRODUCT_ABSTRACT));
 
         $productAbstract = $this->getQueryContainer()
             ->querySkuFromProductAbstractById($idProductAbstract)

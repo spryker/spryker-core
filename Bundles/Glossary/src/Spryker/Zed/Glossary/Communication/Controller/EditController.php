@@ -32,7 +32,7 @@ class EditController extends AbstractController
             ->getFactory()
             ->createTranslationDataProvider()
             ->getData(
-                $request->query->getInt(self::URL_PARAMETER_GLOSSARY_KEY),
+                $this->castId($request->query->get(self::URL_PARAMETER_GLOSSARY_KEY)),
                 $this->getFactory()->getEnabledLocales()
             );
 

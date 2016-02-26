@@ -52,7 +52,7 @@ class IndexController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $idOrder = $request->query->get('id-sales-order');
+        $idOrder = $this->castId($request->query->get('id-sales-order'));
 
         $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idOrder);
 

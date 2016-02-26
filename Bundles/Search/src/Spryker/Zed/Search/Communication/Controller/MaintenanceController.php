@@ -84,7 +84,7 @@ class MaintenanceController extends AbstractController
      */
     public function keyAction(Request $request)
     {
-        $key = $request->get('key');
+        $key = $request->get('key'); // TODO FW Validation
 
         $type = $this->getFactory()->getElasticaDocumentType();
         $document = $this->getFacade()->getDocument($key, $type);
