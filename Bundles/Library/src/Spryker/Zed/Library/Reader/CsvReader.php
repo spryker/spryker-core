@@ -68,6 +68,8 @@ class CsvReader implements CsvReaderInterface
 
         $this->setupColumns();
 
+        $this->total = null;
+
         return $this;
     }
 
