@@ -16,7 +16,7 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
 {
 
     /**
-     * @param $value
+     * @param mixed $value
      * @param string|null $message
      *
      * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
@@ -29,7 +29,7 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @param string|null $message
      *
      * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
@@ -42,7 +42,7 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @param string|null $message
      *
      * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
@@ -55,7 +55,7 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @param string|null $message
      *
      * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
@@ -68,7 +68,7 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @param string|null $message
      *
      * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
