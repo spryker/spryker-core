@@ -7,7 +7,6 @@
     }
   },
   "require": {
-    "beberlei/assert": "~2.4"
   },
   "description": "assertion bundle",
   "license": "proprietary",
