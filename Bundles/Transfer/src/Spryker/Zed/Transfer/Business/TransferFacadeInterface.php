@@ -13,6 +13,8 @@ interface TransferFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
@@ -20,6 +22,8 @@ interface TransferFacadeInterface
     public function generateTransferObjects(LoggerInterface $messenger);
 
     /**
+     * @api
+     *
      * @return void
      */
     public function deleteGeneratedTransferObjects();

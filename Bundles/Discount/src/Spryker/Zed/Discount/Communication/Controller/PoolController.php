@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 

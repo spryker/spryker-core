@@ -17,6 +17,8 @@ class InstallerFacade extends AbstractFacade implements InstallerFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
      */
     public function getInstallers()
@@ -25,6 +27,8 @@ class InstallerFacade extends AbstractFacade implements InstallerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
      */
     public function getDemoDataInstallers()
@@ -33,6 +37,8 @@ class InstallerFacade extends AbstractFacade implements InstallerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\Installer\Business\Model\GlossaryInstaller
      */
     public function getGlossaryInstaller()

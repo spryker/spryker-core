@@ -12,6 +12,9 @@ use Spryker\Shared\ZedRequest\Provider\AbstractZedClientProvider;
 class ZedClientProvider extends AbstractZedClientProvider
 {
 
+    /**
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClient
+     */
     public function createZedClient()
     {
         return parent::createZedClient();

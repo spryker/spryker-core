@@ -16,6 +16,8 @@ interface CheckoutOrderHydrationInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     *
+     * @return void
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest);
 

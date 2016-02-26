@@ -10,6 +10,9 @@ namespace Spryker\Zed\Country\Business\Cldr;
 interface CldrDataProviderInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function getCldrData();
 
 }

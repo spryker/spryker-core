@@ -16,6 +16,8 @@ interface CheckoutPreConditionInterface
     /**
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function checkCondition(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse);
 

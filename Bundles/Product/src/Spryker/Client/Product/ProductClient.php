@@ -16,6 +16,8 @@ class ProductClient extends AbstractClient implements ProductClientInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return array
@@ -30,6 +32,8 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param string $locale
      *

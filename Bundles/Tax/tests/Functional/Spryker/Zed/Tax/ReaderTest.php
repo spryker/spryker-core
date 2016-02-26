@@ -127,6 +127,10 @@ class ReaderTest extends Test
         $this->taxFacade->getTaxRate(self::NON_EXISTENT_ID);
     }
 
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet
+     */
     private function loadFixtures()
     {
         $taxRateEntity = new SpyTaxRate();

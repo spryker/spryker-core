@@ -18,6 +18,8 @@ interface TouchUpdaterInterface
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
+     *
+     * @return void
      */
     public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale);
 

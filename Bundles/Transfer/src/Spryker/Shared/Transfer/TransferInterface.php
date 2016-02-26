@@ -27,6 +27,8 @@ interface TransferInterface
     /**
      * @param array $values
      * @param bool $fuzzyMatch
+     *
+     * @return $this
      */
     public function fromArray(array $values, $fuzzyMatch = false);
 

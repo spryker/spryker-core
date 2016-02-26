@@ -16,6 +16,8 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $localeName
      * @param array $parameters

@@ -11,6 +11,8 @@ interface CollectorClientInterface
 {
 
     /**
+     * @api
+     *
      * @param string $url
      * @param string $localeName
      *

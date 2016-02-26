@@ -17,11 +17,15 @@ interface ProductBatchResultInterface
 
     /**
      * @param int $failed
+     *
+     * @return void
      */
     public function setFailedCount($failed);
 
     /**
      * @param int $incrementCount
+     *
+     * @return void
      */
     public function increaseFailed($incrementCount = 1);
 
@@ -37,6 +41,8 @@ interface ProductBatchResultInterface
 
     /**
      * @param int $total
+     *
+     * @return void
      */
     public function setTotalCount($total);
 
@@ -47,6 +53,8 @@ interface ProductBatchResultInterface
 
     /**
      * @param bool $failed
+     *
+     * @return void
      */
     public function setIsFailed($failed = true);
 

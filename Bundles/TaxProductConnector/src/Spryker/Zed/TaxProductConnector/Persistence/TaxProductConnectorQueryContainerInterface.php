@@ -11,6 +11,8 @@ interface TaxProductConnectorQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idTaxRate
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -18,6 +20,8 @@ interface TaxProductConnectorQueryContainerInterface
     public function getAbstractAbstractIdsForTaxRate($idTaxRate);
 
     /**
+     * @api
+     *
      * @param int $idTaxSet
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery

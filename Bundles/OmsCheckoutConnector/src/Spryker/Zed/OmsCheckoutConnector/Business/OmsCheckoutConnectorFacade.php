@@ -18,6 +18,8 @@ class OmsCheckoutConnectorFacade extends AbstractFacade implements OmsCheckoutCo
 {
 
     /**
+     * @api
+     *
      * @return void
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)

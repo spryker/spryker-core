@@ -67,6 +67,8 @@ interface RedirectManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     *
+     * @return void
      */
     public function touchRedirectActive(RedirectTransfer $redirect);
 

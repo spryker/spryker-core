@@ -18,6 +18,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getPriceTypeValues()
@@ -26,6 +28,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param null $priceType
      *
@@ -37,6 +41,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceType
@@ -47,6 +53,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return mixed
@@ -57,6 +65,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
@@ -67,6 +77,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param null $priceType
      *
@@ -78,6 +90,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return void
@@ -88,6 +102,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultPriceTypeName()
@@ -96,6 +112,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $priceType
      *

@@ -20,6 +20,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
 {
 
     /**
+     * @api
+     *
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param int $idTaxRate
@@ -42,6 +44,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * @api
+     *
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param int $idTaxSet

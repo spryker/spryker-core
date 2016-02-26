@@ -16,6 +16,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 {
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      * @param string $localeCode
      *
@@ -27,6 +29,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      * @param string $localeCode
      *
@@ -38,6 +42,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param string $importKeyProductOptionType
      * @param array $localizedNames
      * @param string $importKeyTaxSet
@@ -50,6 +56,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param string $importKeyProductOptionValue
      * @param string $importKeyProductOptionType
      * @param array $localizedNames
@@ -65,6 +73,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $importKeyProductOptionType
      * @param bool $isOptional
@@ -80,6 +90,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      * @param string $importKeyProductOptionValue
      * @param int $sequence
@@ -95,6 +107,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $importKeyProductOptionTypeA
      * @param string $importKeyProductOptionTypeB
@@ -108,6 +122,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $idProductOptionValueUsageSource
      * @param string $importKeyProductOptionValueTarget
@@ -123,6 +139,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param array $importKeysOptionValues
      * @param bool $isDefault
@@ -140,6 +158,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      * @param int $idLocale
      *
@@ -151,6 +171,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      * @param int $idLocale
      *
@@ -162,6 +184,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAttributeTypeUsage
      *
      * @return array
@@ -172,6 +196,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idValueUsage
      *
      * @return array
@@ -182,6 +208,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idValueUsage
      * @param string $operator
      *
@@ -193,6 +221,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return array
@@ -203,6 +233,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idConfigPreset
      *
      * @return array
@@ -213,6 +245,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAttributeTypeUsage
      *
      * @return string|null
@@ -223,6 +257,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function flushBuffer()

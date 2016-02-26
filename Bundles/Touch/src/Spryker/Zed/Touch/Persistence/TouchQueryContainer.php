@@ -26,6 +26,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     const TOUCH_EXPORTER_ID = 'exporter_touch_id';
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
@@ -39,6 +41,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemId
      *
@@ -56,6 +60,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemId
      * @param string $itemEvent
@@ -74,6 +80,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
@@ -95,6 +103,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryExportTypes()
@@ -109,6 +119,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemEvent
      * @param array $itemIds
@@ -127,6 +139,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
@@ -145,6 +159,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @throws \Propel\Runtime\Exception\PropelException

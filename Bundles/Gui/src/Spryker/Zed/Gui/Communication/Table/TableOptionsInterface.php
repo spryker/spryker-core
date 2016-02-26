@@ -12,6 +12,8 @@ interface TableOptionsInterface
 
     /**
      * @param array $classesArray
+     *
+     * @return void
      */
     public function addClass(array $classesArray);
 

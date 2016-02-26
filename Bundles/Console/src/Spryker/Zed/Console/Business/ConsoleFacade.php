@@ -16,6 +16,8 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()

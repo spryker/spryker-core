@@ -15,6 +15,9 @@ use Spryker\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 class SeparatorToCamelCaseFilterTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return array
+     */
     public function dataProvider()
     {
         return [

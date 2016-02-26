@@ -11,6 +11,8 @@ interface CustomerMailConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $email
      * @param string $token
      *
@@ -19,6 +21,8 @@ interface CustomerMailConnectorFacadeInterface
     public function sendRegistrationToken($email, $token);
 
     /**
+     * @api
+     *
      * @param string $email
      * @param string $token
      *
@@ -27,6 +31,8 @@ interface CustomerMailConnectorFacadeInterface
     public function sendPasswordRestoreToken($email, $token);
 
     /**
+     * @api
+     *
      * @param string $email
      *
      * @return bool

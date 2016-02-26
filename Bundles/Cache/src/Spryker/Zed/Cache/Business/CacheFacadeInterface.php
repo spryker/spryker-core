@@ -11,6 +11,8 @@ interface CacheFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return array
      */
     public function deleteAllFiles();

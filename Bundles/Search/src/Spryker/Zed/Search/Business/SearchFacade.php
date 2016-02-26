@@ -17,6 +17,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
@@ -27,6 +29,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getTotalCount()
@@ -35,6 +39,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getMetaData()
@@ -43,6 +49,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Elastica\Response
      */
     public function delete()
@@ -51,6 +59,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $key
      * @param string $type
      *

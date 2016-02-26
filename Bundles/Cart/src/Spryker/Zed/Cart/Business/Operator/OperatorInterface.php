@@ -22,6 +22,8 @@ interface OperatorInterface
 
     /**
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface $itemExpander
+     *
+     * @return void
      */
     public function addItemExpanderPlugin(ItemExpanderPluginInterface $itemExpander);
 

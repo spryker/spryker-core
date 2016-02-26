@@ -13,6 +13,8 @@ interface ItemGrouperWishlistConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\GroupableContainerTransfer $items
      *
      * @return \Generated\Shared\Transfer\GroupableContainerTransfer

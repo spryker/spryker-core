@@ -17,6 +17,8 @@ interface TotalsCalculatorPluginInterface
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
+     *
+     * @return void
      */
     public function recalculateTotals(
         TotalsTransfer $totalsTransfer,

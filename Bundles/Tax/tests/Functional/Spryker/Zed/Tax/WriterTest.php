@@ -51,6 +51,9 @@ class WriterTest extends Test
         $this->taxFacade = new TaxFacade();
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\TaxRateTransfer
+     */
     private function createTaxRateTransfer()
     {
         $taxRateTransfer = new TaxRateTransfer();
@@ -60,6 +63,9 @@ class WriterTest extends Test
         return $taxRateTransfer;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
+     */
     private function createTaxSetTransfer()
     {
         $taxSetTransfer = new TaxSetTransfer();

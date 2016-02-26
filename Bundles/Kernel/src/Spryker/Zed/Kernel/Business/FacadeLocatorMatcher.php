@@ -15,6 +15,8 @@ class FacadeLocatorMatcher implements LocatorMatcherInterface
     const METHOD_PREFIX = 'facade';
 
     /**
+     * @api
+     *
      * @param string $method
      *
      * @return bool
@@ -25,6 +27,8 @@ class FacadeLocatorMatcher implements LocatorMatcherInterface
     }
 
     /**
+     * @api
+     *
      * @param string $method
      *
      * @return string

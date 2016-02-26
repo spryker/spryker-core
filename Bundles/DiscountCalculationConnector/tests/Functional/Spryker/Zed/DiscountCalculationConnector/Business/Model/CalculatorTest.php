@@ -56,6 +56,9 @@ class CalculatorTest extends Test
         parent::setUp();
     }
 
+    /**
+     * @return array
+     */
     protected function createCalculatorStack()
     {
         $stack = [

@@ -17,6 +17,8 @@ class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
@@ -27,6 +29,8 @@ class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
@@ -37,6 +41,8 @@ class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
@@ -47,6 +53,8 @@ class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages()

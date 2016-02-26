@@ -29,6 +29,9 @@ class IdeAutoCompletionGeneratorTest extends AbstractAutoCompletion
      */
     private $pathToFile;
 
+    /**
+     * @return string
+     */
     public function getGeneratedFileContent()
     {
         if ($this->generatedFileContent === null) {

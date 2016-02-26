@@ -105,6 +105,8 @@ abstract class AbstractOperator
 
     /**
      * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistItem
+     *
+     * @return void
      */
     abstract protected function applyOperation(WishlistChangeTransfer $wishlistItem);
 

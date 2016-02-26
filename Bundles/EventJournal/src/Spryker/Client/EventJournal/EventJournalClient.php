@@ -17,6 +17,8 @@ class EventJournalClient extends AbstractClient implements EventJournalClientInt
 {
 
     /**
+     * @api
+     *
      * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return void

@@ -18,6 +18,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $email
      *
      * @return bool
@@ -30,6 +32,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -42,6 +46,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -54,11 +60,13 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      *
-     * @deprecated Use sendPasswordRestoreMail() instead
+     * @deprecated Use CustomerFacade::sendPasswordRestoreMail() instead
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
@@ -66,6 +74,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -78,6 +88,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -90,6 +102,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
@@ -102,6 +116,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -114,6 +130,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -126,6 +144,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -138,6 +158,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -150,6 +172,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
@@ -162,6 +186,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -174,6 +200,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -186,6 +214,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -198,6 +228,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -210,6 +242,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return bool
@@ -222,6 +256,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return bool
@@ -234,6 +270,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return string
@@ -246,6 +284,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -258,6 +298,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -270,6 +312,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -282,6 +326,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool

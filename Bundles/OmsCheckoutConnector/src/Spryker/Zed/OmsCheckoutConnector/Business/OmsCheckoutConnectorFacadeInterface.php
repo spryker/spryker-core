@@ -14,6 +14,8 @@ interface OmsCheckoutConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return void
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request);

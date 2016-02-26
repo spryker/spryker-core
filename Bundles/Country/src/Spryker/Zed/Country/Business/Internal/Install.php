@@ -155,6 +155,12 @@ class Install extends AbstractInstaller
         return $result;
     }
 
+    /**
+     * @param array $countries
+     *
+     * @throws \Exception
+     * @return array
+     */
     protected function addIso3Code(array $countries)
     {
         $json = $this->codeMappings;
@@ -176,6 +182,12 @@ class Install extends AbstractInstaller
         return $countries;
     }
 
+    /**
+     * @param array $countries
+     *
+     * @throws \Exception
+     * @return array
+     */
     protected function addPostalCodeData(array $countries)
     {
         $json = $this->postalCodes;

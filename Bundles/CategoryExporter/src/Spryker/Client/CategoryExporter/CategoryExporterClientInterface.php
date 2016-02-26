@@ -11,6 +11,8 @@ interface CategoryExporterClientInterface
 {
 
     /**
+     * @api
+     *
      * @param string $locale
      *
      * @return array
@@ -18,6 +20,8 @@ interface CategoryExporterClientInterface
     public function getNavigationCategories($locale);
 
     /**
+     * @api
+     *
      * @param array $categoryNode
      * @param string $locale
      *

@@ -52,6 +52,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     const PRICE = 'price';
 
     /**
+     * @api
+     *
      * @param string $importKeyProductOptionType
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery
@@ -63,6 +65,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionType
      * @param int $fkLocale
      *
@@ -76,6 +80,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param string $idProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
@@ -87,6 +93,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param string $importKeyProductOptionValue
      * @param int $fkProductOptionType
      *
@@ -100,6 +108,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param string $importKeyProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
@@ -111,6 +121,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionValue
      * @param int $fkLocale
      *
@@ -124,6 +136,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery
@@ -135,6 +149,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $fkProduct
      * @param int $fkProductOptionType
      *
@@ -148,6 +164,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
@@ -159,6 +177,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionTypeUsage
      * @param int $fkProductOptionValue
      *
@@ -172,6 +192,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionTypeUsage
      * @param int $fkProductOptionType
      *
@@ -185,6 +207,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionTypeUsageA
      * @param int $fkProductOptionTypeUsageB
      *
@@ -198,6 +222,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionValueUsageA
      * @param int $fkProductOptionValueUsageB
      *
@@ -211,6 +237,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionType
      *
      * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
@@ -230,6 +258,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValue
      *
      * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
@@ -251,6 +281,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      *
      * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
@@ -267,6 +299,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetQuery
@@ -279,6 +313,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      * @param int $idLocale
      *
@@ -303,6 +339,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
@@ -320,6 +358,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      * @param int $idLocale
      *
@@ -349,6 +389,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      * @param int $idLocale
      *
@@ -382,6 +424,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      *
      * @return array
@@ -406,6 +450,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      *
      * @return array
@@ -432,6 +478,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      * @param string $operator
      *
@@ -466,6 +514,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return array
@@ -486,6 +536,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionConfigurationPreset
      *
      * @return array
@@ -504,6 +556,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery
@@ -518,6 +572,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      *
      * @return string|null

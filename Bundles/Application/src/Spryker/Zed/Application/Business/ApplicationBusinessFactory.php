@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Application\Business;
 
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\Application\ApplicationDependencyProvider;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory;
@@ -25,7 +26,6 @@ use Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder;
 use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
 use Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidator;
 use Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidator;
-use Spryker\Zed\Application\Business\Model\Url\UrlBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -185,7 +185,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createMenuFormatter()
     {
-        $urlBuilder = $this->createUrlBuilder();
+        $urlBuilder = $this->getUrlBuilder();
         $urlUniqueValidator = $this->createUrlUniqueValidator();
         $menuLevelValidator = $this->createMenuLevelValidator();
 
@@ -227,11 +227,23 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface
+     * @deprecated 1.0.0 Use getUrlBuilder() instead.
+     *
+     * @return \Spryker\Shared\Url\UrlBuilderInterface
      */
     protected function createUrlBuilder()
     {
-        return new UrlBuilder();
+        trigger_error('Deprecated, use getUrlBuilder() instead.', E_USER_DEPRECATED);
+
+        return $this->getUrlBuilder();
+    }
+
+    /**
+     * @return \Spryker\Shared\Url\UrlBuilderInterface
+     */
+    protected function getUrlBuilder()
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::URL_BUILDER);
     }
 
     /**

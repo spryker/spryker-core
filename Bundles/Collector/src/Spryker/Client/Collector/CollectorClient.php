@@ -19,6 +19,8 @@ class CollectorClient extends AbstractClient implements UrlMatcherInterface, Col
 {
 
     /**
+     * @api
+     *
      * @param string $url
      * @param string $localeName
      *

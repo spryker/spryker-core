@@ -12,31 +12,49 @@ use Spryker\Shared\Library\Currency\CurrencyInterface;
 class CHF implements CurrencyInterface
 {
 
+    /**
+     * @return string
+     */
     public function getIsoCode()
     {
         return 'CHF';
     }
 
+    /**
+     * @return string
+     */
     public function getSymbol()
     {
         return 'CHF';
     }
 
+    /**
+     * @return string
+     */
     public function getThousandsSeparator()
     {
         return '.';
     }
 
+    /**
+     * @return string
+     */
     public function getDecimalSeparator()
     {
         return ',';
     }
 
+    /**
+     * @return int
+     */
     public function getDecimalDigits()
     {
         return 2;
     }
 
+    /**
+     * @return string
+     */
     public function getFormatPattern()
     {
         return '{s} {v}';

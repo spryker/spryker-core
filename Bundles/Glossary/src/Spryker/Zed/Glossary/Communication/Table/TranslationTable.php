@@ -12,7 +12,7 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Propel\Runtime\Map\TableMap;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Glossary\Communication\Controller\EditController;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;

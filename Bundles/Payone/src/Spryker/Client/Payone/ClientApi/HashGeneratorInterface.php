@@ -12,6 +12,12 @@ use Spryker\Client\Payone\ClientApi\Request\AbstractRequest;
 interface HashGeneratorInterface
 {
 
+    /**
+     * @param \Spryker\Client\Payone\ClientApi\Request\AbstractRequest $request
+     * @param string $securityKey
+     *
+     * @return string
+     */
     public function generateHash(AbstractRequest $request, $securityKey);
 
 }

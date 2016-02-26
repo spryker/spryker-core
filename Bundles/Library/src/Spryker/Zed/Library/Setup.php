@@ -57,6 +57,12 @@ class Setup
         }
     }
 
+    /**
+     * @param callable|string $callBack
+     * @param mixed $value
+     *
+     * @return mixed
+     */
     public static function checkCondition($callBack, $value)
     {
         assert(function_exists($callBack));
@@ -70,6 +76,9 @@ class Setup
         return $success;
     }
 
+    /**
+     * @return string
+     */
     public static function getErrorMessagesAsList()
     {
         return '<h1>Enviroment failed</h1><ul><li>' . implode('</li><li>', self::$errorMessages) . '</li></ul>';

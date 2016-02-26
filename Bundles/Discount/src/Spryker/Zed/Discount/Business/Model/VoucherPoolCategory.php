@@ -26,6 +26,9 @@ class VoucherPoolCategory
         $this->discountQueryContainer = $discountQueryContainer;
     }
 
+    /**
+     * @return array
+     */
     public function getAvailableVoucherPoolCategories()
     {
         $categories = $this->discountQueryContainer

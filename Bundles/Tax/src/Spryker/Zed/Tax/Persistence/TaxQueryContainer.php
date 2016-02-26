@@ -21,6 +21,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
 {
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
@@ -31,6 +33,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
      */
     public function queryAllTaxRates()
@@ -39,6 +43,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
@@ -49,6 +55,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function queryAllTaxSets()
@@ -57,6 +65,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
      * @return $this

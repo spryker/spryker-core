@@ -14,6 +14,8 @@ interface PriceQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
@@ -21,11 +23,15 @@ interface PriceQueryContainerInterface
     public function queryPriceType($name);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
      */
     public function queryAllPriceTypes();
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -36,6 +42,8 @@ interface PriceQueryContainerInterface
     public function queryPriceEntityForProductAbstract($sku, SpyPriceType $priceType);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -46,6 +54,8 @@ interface PriceQueryContainerInterface
     public function queryPriceEntityForProductConcrete($sku, SpyPriceType $priceType);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -56,6 +66,8 @@ interface PriceQueryContainerInterface
     public function querySpecificPriceForProductAbstract(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -66,6 +78,8 @@ interface PriceQueryContainerInterface
     public function querySpecificPriceForProductConcrete(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType);
 
     /**
+     * @api
+     *
      * @param int $idPriceProduct
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery

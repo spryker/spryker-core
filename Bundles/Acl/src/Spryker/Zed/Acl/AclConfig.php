@@ -111,6 +111,9 @@ class AclConfig extends AbstractBundleConfig
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getInstallerUsers()
     {
         return [

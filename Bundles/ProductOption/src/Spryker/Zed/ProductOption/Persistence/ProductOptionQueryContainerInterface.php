@@ -11,6 +11,8 @@ interface ProductOptionQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $importKeyProductOptionType
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery
@@ -18,6 +20,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionTypeByImportKey($importKeyProductOptionType);
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionType
      * @param int $fkLocale
      *
@@ -26,6 +30,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionTypeTranslationByFks($fkProductOptionType, $fkLocale);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
@@ -33,6 +39,8 @@ interface ProductOptionQueryContainerInterface
     public function queryOptionValueById($idProductOptionValue);
 
     /**
+     * @api
+     *
      * @param string $importKeyProductOptionValue
      * @param int $fkProductOptionType
      *
@@ -41,6 +49,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyProductOptionValue, $fkProductOptionType);
 
     /**
+     * @api
+     *
      * @param string $importKeyProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
@@ -48,6 +58,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionValueByImportKey($importKeyProductOptionValue);
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionValue
      * @param int $fkLocale
      *
@@ -56,6 +68,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionValueTranslationByFks($fkProductOptionValue, $fkLocale);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery
@@ -63,6 +77,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionTypeUsageById($idProductOptionTypeUsage);
 
     /**
+     * @api
+     *
      * @param int $fkProduct
      * @param int $fkProductOptionType
      *
@@ -71,6 +87,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionTypeUsageByFKs($fkProduct, $fkProductOptionType);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
@@ -78,6 +96,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionValueUsageById($idProductOptionValueUsage);
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionTypeUsage
      * @param int $fkProductOptionValue
      *
@@ -86,6 +106,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionValue);
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionTypeUsage
      * @param int $fkProductOptionType
      *
@@ -94,6 +116,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionValueUsageIdByFKs($fkProductOptionTypeUsage, $fkProductOptionType);
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionTypeUsageA
      * @param int $fkProductOptionTypeUsageB
      *
@@ -102,6 +126,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionTypeUsageExclusionByFks($fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB);
 
     /**
+     * @api
+     *
      * @param int $fkProductOptionValueUsageA
      * @param int $fkProductOptionValueUsageB
      *
@@ -110,6 +136,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionValueUsageConstraintsByFks($fkProductOptionValueUsageA, $fkProductOptionValueUsageB);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionType
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -117,6 +145,8 @@ interface ProductOptionQueryContainerInterface
     public function queryAssociatedProductAbstractIdsForProductOptionType($idProductOptionType);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValue
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -124,6 +154,8 @@ interface ProductOptionQueryContainerInterface
     public function queryAssociatedProductAbstractIdsForProductOptionValue($idProductOptionValue);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -131,6 +163,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductAbstractIdForProductOptionTypeUsage($idProductOptionTypeUsage);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      * @param int $idLocale
      *
@@ -139,6 +173,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionValueUsageWithAssociatedAttributes($idProductOptionValueUsage, $idLocale);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      *
      * @return \Orm\Zed\Tax\Persistence\Base\SpyTaxSetQuery
@@ -146,6 +182,8 @@ interface ProductOptionQueryContainerInterface
     public function queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage);
 
     /**
+     * @api
+     *
      * @param int $idProduct
      * @param int $idLocale
      *
@@ -154,6 +192,8 @@ interface ProductOptionQueryContainerInterface
     public function queryTypeUsagesForProductConcrete($idProduct, $idLocale);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      * @param int $idLocale
      *
@@ -162,6 +202,8 @@ interface ProductOptionQueryContainerInterface
     public function queryValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      *
      * @return array
@@ -169,6 +211,8 @@ interface ProductOptionQueryContainerInterface
     public function queryTypeExclusionsForTypeUsage($idProductOptionTypeUsage);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      *
      * @return array
@@ -176,6 +220,8 @@ interface ProductOptionQueryContainerInterface
     public function queryValueConstraintsForValueUsage($idProductOptionValueUsage);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      * @param string $operator
      *
@@ -184,6 +230,8 @@ interface ProductOptionQueryContainerInterface
     public function queryValueConstraintsForValueUsageByOperator($idProductOptionValueUsage, $operator);
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return array
@@ -191,6 +239,8 @@ interface ProductOptionQueryContainerInterface
     public function queryConfigPresetsForProductConcrete($idProduct);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionConfigurationPreset
      *
      * @return array
@@ -198,6 +248,8 @@ interface ProductOptionQueryContainerInterface
     public function queryValueUsagesForConfigPreset($idProductOptionConfigurationPreset);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      *
      * @return string|null

@@ -36,6 +36,8 @@ class FacadeLocator extends AbstractLocator
     protected $suffix = 'Factory';
 
     /**
+     * @api
+     *
      * @param string $bundle
      *
      * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException

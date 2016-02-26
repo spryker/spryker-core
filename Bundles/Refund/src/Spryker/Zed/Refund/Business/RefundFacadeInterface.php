@@ -14,6 +14,8 @@ interface RefundFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
@@ -21,6 +23,8 @@ interface RefundFacadeInterface
     public function calculateRefundableAmount(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\RefundTransfer[]
@@ -28,6 +32,8 @@ interface RefundFacadeInterface
     public function getRefundsByIdSalesOrder($idSalesOrder);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -35,6 +41,8 @@ interface RefundFacadeInterface
     public function getOrderByIdSalesOrder($idSalesOrder);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return \Generated\Shared\Transfer\RefundTransfer
@@ -42,6 +50,8 @@ interface RefundFacadeInterface
     public function saveRefund(RefundTransfer $refundTransfer);
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem[]
@@ -49,6 +59,8 @@ interface RefundFacadeInterface
     public function getRefundableItems($idOrder);
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]

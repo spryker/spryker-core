@@ -38,6 +38,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory $factory
      *
      * @return $this
@@ -80,6 +82,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
+     * @api
+     *
      * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     public function getConnection()

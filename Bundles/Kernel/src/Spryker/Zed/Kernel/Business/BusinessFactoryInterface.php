@@ -15,11 +15,15 @@ interface BusinessFactoryInterface
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
      */
     public function setContainer(Container $container);
 
     /**
      * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer
+     *
+     * @return void
      */
     public function setQueryContainer(AbstractQueryContainer $queryContainer);
 

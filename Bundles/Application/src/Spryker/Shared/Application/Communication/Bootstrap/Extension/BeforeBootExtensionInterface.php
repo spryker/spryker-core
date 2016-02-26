@@ -14,6 +14,8 @@ interface BeforeBootExtensionInterface
 
     /**
      * @param \Spryker\Shared\Application\Communication\Application $application
+     *
+     * @return void
      */
     public function beforeBoot(Application $application);
 

@@ -117,6 +117,11 @@ class AuthFacadeTest extends Test
         $this->assertFalse($resetStatus);
     }
 
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\User\Persistence\SpyUser
+     */
     protected function createTestUser()
     {
         $userEntity = new SpyUser();

@@ -17,6 +17,8 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
@@ -27,6 +29,8 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function deleteGeneratedTransferObjects()

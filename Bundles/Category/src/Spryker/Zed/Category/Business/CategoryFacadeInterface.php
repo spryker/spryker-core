@@ -15,6 +15,8 @@ interface CategoryFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -23,6 +25,8 @@ interface CategoryFacadeInterface
     public function hasCategoryNode($categoryName, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idNode
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
@@ -30,6 +34,8 @@ interface CategoryFacadeInterface
     public function getNodeById($idNode);
 
     /**
+     * @api
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -38,6 +44,8 @@ interface CategoryFacadeInterface
     public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -46,6 +54,8 @@ interface CategoryFacadeInterface
     public function getCategoryIdentifier($categoryName, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
@@ -53,6 +63,8 @@ interface CategoryFacadeInterface
     public function getAllNodesByIdCategory($idCategory);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
@@ -60,6 +72,8 @@ interface CategoryFacadeInterface
     public function getMainNodesByIdCategory($idCategory);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
@@ -67,6 +81,8 @@ interface CategoryFacadeInterface
     public function getNotMainNodesByIdCategory($idCategory);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -75,6 +91,8 @@ interface CategoryFacadeInterface
     public function createCategory(CategoryTransfer $category, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -83,6 +101,8 @@ interface CategoryFacadeInterface
     public function updateCategory(CategoryTransfer $category, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -91,6 +111,8 @@ interface CategoryFacadeInterface
     public function addCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return void
@@ -98,6 +120,8 @@ interface CategoryFacadeInterface
     public function deleteCategory($idCategory);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $createUrlPath
@@ -107,6 +131,8 @@ interface CategoryFacadeInterface
     public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale, $createUrlPath = true);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -115,6 +141,8 @@ interface CategoryFacadeInterface
     public function updateCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $deleteChildren
@@ -124,16 +152,22 @@ interface CategoryFacadeInterface
     public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false);
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function renderCategoryTreeVisual();
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getRootNodes();
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -142,6 +176,8 @@ interface CategoryFacadeInterface
     public function getTree($idCategory, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -150,6 +186,8 @@ interface CategoryFacadeInterface
     public function getChildren($idNode, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeStartNode
@@ -159,6 +197,8 @@ interface CategoryFacadeInterface
     public function getParents($idNode, LocaleTransfer $locale, $excludeStartNode = true);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -167,11 +207,15 @@ interface CategoryFacadeInterface
     public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @return void
      */
     public function rebuildClosureTable();
 
     /**
+     * @api
+     *
      * @param array $pathTokens
      *
      * @return string

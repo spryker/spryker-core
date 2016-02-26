@@ -12,6 +12,8 @@ interface TaxProductConnectorToProductInterface
 
     /**
      * @param int $idProductAbstract
+     *
+     * @return void
      */
     public function touchProductActive($idProductAbstract);
 

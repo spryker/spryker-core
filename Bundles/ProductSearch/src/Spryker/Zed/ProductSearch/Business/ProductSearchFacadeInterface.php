@@ -14,6 +14,8 @@ interface ProductSearchFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param array $productsRaw
      * @param array $processedProducts
      *
@@ -22,6 +24,8 @@ interface ProductSearchFacadeInterface
     public function enrichProductsWithSearchAttributes(array $productsRaw, array $processedProducts);
 
     /**
+     * @api
+     *
      * @param array $productsRaw
      * @param array $processedProducts
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -31,6 +35,8 @@ interface ProductSearchFacadeInterface
     public function createSearchProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void

@@ -17,6 +17,8 @@ interface ReadWriteInterface extends ReadInterface
     /**
      * @param string $key
      * @param mixed $value
+     *
+     * @return void
      */
     public function set($key, $value);
 

@@ -14,6 +14,8 @@ interface NewsletterFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -21,6 +23,8 @@ interface NewsletterFacadeInterface
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -28,6 +32,8 @@ interface NewsletterFacadeInterface
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
@@ -35,6 +41,8 @@ interface NewsletterFacadeInterface
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -42,6 +50,8 @@ interface NewsletterFacadeInterface
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -49,6 +59,8 @@ interface NewsletterFacadeInterface
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return void

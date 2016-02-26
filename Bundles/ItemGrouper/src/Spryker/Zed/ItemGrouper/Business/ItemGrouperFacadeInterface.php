@@ -13,6 +13,8 @@ interface ItemGrouperFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupAbleItems
      *
      * @return \Generated\Shared\Transfer\GroupableContainerTransfer
@@ -20,6 +22,8 @@ interface ItemGrouperFacadeInterface
     public function groupItemsByKey(GroupableContainerTransfer $groupAbleItems);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupableItems
      *
      * @return \Generated\Shared\Transfer\GroupableContainerTransfer

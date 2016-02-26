@@ -10,6 +10,9 @@ namespace Spryker\Zed\Glossary\Dependency\Plugin;
 interface GlossaryInstallerPluginInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function installGlossaryData();
 
 }

@@ -14,6 +14,8 @@ interface MailFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
@@ -21,6 +23,8 @@ interface MailFacadeInterface
     public function sendMail(MailTransfer $mailTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $mailResponses
      *
      * @return bool

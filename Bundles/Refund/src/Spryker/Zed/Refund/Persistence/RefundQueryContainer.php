@@ -17,6 +17,8 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
     public function queryRefund()
@@ -25,6 +27,8 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
@@ -38,6 +42,8 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
     }
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery

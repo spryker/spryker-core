@@ -100,6 +100,8 @@ interface RuleInterface
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
+     *
+     * @return void
      */
     public function registerSystemUserRules(UserTransfer $userTransfer);
 

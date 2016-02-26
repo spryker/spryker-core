@@ -13,6 +13,8 @@ interface SequenceNumberFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
      *
      * @return string

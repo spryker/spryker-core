@@ -17,6 +17,8 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer

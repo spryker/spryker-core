@@ -14,11 +14,15 @@ interface ProductSearchQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
      */
     public function queryFieldOperations();
 
     /**
+     * @api
+     *
      * @param array $productIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -27,6 +31,8 @@ interface ProductSearchQueryContainerInterface
     public function getExportableProductsByLocale(array $productIds, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idAttribute
      * @param string $copyTarget
      *
@@ -35,6 +41,8 @@ interface ProductSearchQueryContainerInterface
     public function queryAttributeOperation($idAttribute, $copyTarget);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *

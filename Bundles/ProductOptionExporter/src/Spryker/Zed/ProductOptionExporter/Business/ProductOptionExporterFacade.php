@@ -17,6 +17,8 @@ class ProductOptionExporterFacade extends AbstractFacade implements ProductOptio
 {
 
     /**
+     * @api
+     *
      * @param array $resultSet
      * @param array $processedResultSet
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale

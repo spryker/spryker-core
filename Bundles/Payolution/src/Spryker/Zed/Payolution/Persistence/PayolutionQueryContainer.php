@@ -18,6 +18,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
      */
     public function queryPayments()
@@ -26,6 +28,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
@@ -38,6 +42,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
@@ -50,6 +56,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     public function queryTransactionStatusLog()
@@ -58,6 +66,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -71,6 +81,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -83,6 +95,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -97,6 +111,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -109,6 +125,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param string $paymentCode
      *
@@ -125,6 +143,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery

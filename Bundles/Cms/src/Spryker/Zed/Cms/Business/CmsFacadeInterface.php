@@ -16,6 +16,8 @@ interface CmsFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $name
      * @param string $path
      *
@@ -26,6 +28,8 @@ interface CmsFacadeInterface
     public function createTemplate($name, $path);
 
     /**
+     * @api
+     *
      * @param string $path
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
@@ -35,6 +39,8 @@ interface CmsFacadeInterface
     public function getTemplate($path);
 
     /**
+     * @api
+     *
      * @param string $path
      *
      * @return bool
@@ -42,6 +48,8 @@ interface CmsFacadeInterface
     public function hasTemplate($path);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
@@ -51,6 +59,8 @@ interface CmsFacadeInterface
     public function savePage(PageTransfer $pageTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
@@ -58,6 +68,8 @@ interface CmsFacadeInterface
     public function saveBlock(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
@@ -65,6 +77,8 @@ interface CmsFacadeInterface
     public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
@@ -72,6 +86,8 @@ interface CmsFacadeInterface
     public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer);
 
     /**
+     * @api
+     *
      * @param int $idPage
      * @param string $placeholder
      *
@@ -80,6 +96,8 @@ interface CmsFacadeInterface
     public function hasPagePlaceholderMapping($idPage, $placeholder);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return bool
@@ -87,6 +105,8 @@ interface CmsFacadeInterface
     public function hasBlockCategoryNodeMapping($idCategory);
 
     /**
+     * @api
+     *
      * @param int $idPage
      * @param string $placeholder
      *
@@ -97,6 +117,8 @@ interface CmsFacadeInterface
     public function getPagePlaceholderMapping($idPage, $placeholder);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
@@ -104,6 +126,8 @@ interface CmsFacadeInterface
     public function saveTemplate(CmsTemplateTransfer $cmsTemplateTransfer);
 
     /**
+     * @api
+     *
      * @param int $idPage
      * @param string $placeholder
      * @param array $data
@@ -116,6 +140,8 @@ interface CmsFacadeInterface
     public function translatePlaceholder($idPage, $placeholder, array $data = []);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      * @param string $value
@@ -125,6 +151,8 @@ interface CmsFacadeInterface
     public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      *
@@ -137,6 +165,8 @@ interface CmsFacadeInterface
     public function deletePageKeyMapping(PageTransfer $pageTransfer, $placeholder);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      *
@@ -147,6 +177,8 @@ interface CmsFacadeInterface
     public function createPageUrl(PageTransfer $pageTransfer, $url);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
@@ -154,6 +186,8 @@ interface CmsFacadeInterface
     public function touchPageActive(PageTransfer $pageTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
@@ -161,6 +195,8 @@ interface CmsFacadeInterface
     public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
@@ -168,6 +204,8 @@ interface CmsFacadeInterface
     public function touchBlockDelete(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      *
@@ -176,6 +214,8 @@ interface CmsFacadeInterface
     public function savePageUrlAndTouch(PageTransfer $pageTransfer, $url);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
      *
@@ -184,6 +224,8 @@ interface CmsFacadeInterface
     public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer);
 
     /**
+     * @api
+     *
      * @param int $idPage
      *
      * @return bool
@@ -191,6 +233,8 @@ interface CmsFacadeInterface
     public function deleteGlossaryKeysByIdPage($idPage);
 
     /**
+     * @api
+     *
      * @param string $cmsTemplateFolderPath
      *
      * @return bool
@@ -198,6 +242,8 @@ interface CmsFacadeInterface
     public function syncTemplate($cmsTemplateFolderPath);
 
     /**
+     * @api
+     *
      * @param string $templateName
      * @param string $placeholder
      *
@@ -206,6 +252,8 @@ interface CmsFacadeInterface
     public function generateGlossaryKeyName($templateName, $placeholder);
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      *
      * @return void
@@ -213,6 +261,8 @@ interface CmsFacadeInterface
     public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Collector\Business\Model;
 
+/**
+ * @deprecated 1.0.0 Must be refactored into a Transfer object instead.
+ */
 interface FailedResultInterface
 {
 
@@ -17,6 +20,8 @@ interface FailedResultInterface
 
     /**
      * @param int $itemId
+     *
+     * @return void
      */
     public function setFirstId($itemId);
 
@@ -27,6 +32,8 @@ interface FailedResultInterface
 
     /**
      * @param string $itemType
+     *
+     * @return void
      */
     public function setItemType($itemType);
 
@@ -37,6 +44,8 @@ interface FailedResultInterface
 
     /**
      * @param string $reason
+     *
+     * @return void
      */
     public function setReason($reason);
 
@@ -47,11 +56,15 @@ interface FailedResultInterface
 
     /**
      * @param int $lastId
+     *
+     * @return void
      */
     public function setLastId($lastId);
 
     /**
      * @param int $count
+     *
+     * @return void
      */
     public function setFailedCount($count);
 

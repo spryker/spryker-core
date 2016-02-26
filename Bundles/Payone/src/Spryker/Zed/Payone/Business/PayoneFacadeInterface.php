@@ -20,6 +20,8 @@ interface PayoneFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -27,6 +29,8 @@ interface PayoneFacadeInterface
     public function saveOrder(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
@@ -34,6 +38,8 @@ interface PayoneFacadeInterface
     public function authorizePayment($idPayment);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
@@ -41,6 +47,8 @@ interface PayoneFacadeInterface
     public function preAuthorizePayment($idPayment);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
@@ -48,6 +56,8 @@ interface PayoneFacadeInterface
     public function capturePayment($idPayment);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer
@@ -55,6 +65,8 @@ interface PayoneFacadeInterface
     public function debitPayment($idPayment);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PayoneRefundTransfer $refundTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
@@ -62,6 +74,8 @@ interface PayoneFacadeInterface
     public function refundPayment(PayoneRefundTransfer $refundTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
@@ -69,6 +83,8 @@ interface PayoneFacadeInterface
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
@@ -76,6 +92,8 @@ interface PayoneFacadeInterface
     public function processTransactionStatusUpdate(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -83,6 +101,8 @@ interface PayoneFacadeInterface
     public function isAuthorizationApproved(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -90,6 +110,8 @@ interface PayoneFacadeInterface
     public function isAuthorizationRedirect(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -97,6 +119,8 @@ interface PayoneFacadeInterface
     public function isPreauthorizationApproved(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -104,6 +128,8 @@ interface PayoneFacadeInterface
     public function isPreauthorizationRedirect(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -111,6 +137,8 @@ interface PayoneFacadeInterface
     public function isAuthorizationError(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -118,6 +146,8 @@ interface PayoneFacadeInterface
     public function isCaptureApproved(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -125,6 +155,8 @@ interface PayoneFacadeInterface
     public function isCaptureError(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -132,6 +164,8 @@ interface PayoneFacadeInterface
     public function isRefundApproved(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -139,6 +173,8 @@ interface PayoneFacadeInterface
     public function isRefundError(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -146,6 +182,8 @@ interface PayoneFacadeInterface
     public function isRefundPossible(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -153,6 +191,8 @@ interface PayoneFacadeInterface
     public function isPaymentDataRequired(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PayonePaymentTransfer $payment
      *
      * @return \Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer
@@ -160,6 +200,8 @@ interface PayoneFacadeInterface
     public function getAuthorizationResponse(PayonePaymentTransfer $payment);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
@@ -168,6 +210,8 @@ interface PayoneFacadeInterface
     public function isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
@@ -176,6 +220,8 @@ interface PayoneFacadeInterface
     public function isPaymentPaid($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
@@ -184,6 +230,8 @@ interface PayoneFacadeInterface
     public function isPaymentOverpaid($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
@@ -192,6 +240,8 @@ interface PayoneFacadeInterface
     public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
@@ -200,6 +250,8 @@ interface PayoneFacadeInterface
     public function isPaymentAppointed($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
@@ -208,6 +260,8 @@ interface PayoneFacadeInterface
     public function isPaymentOther($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
@@ -216,6 +270,8 @@ interface PayoneFacadeInterface
     public function isPaymentCapture($idSalesOrder, $idSalesOrderItem);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -224,6 +280,8 @@ interface PayoneFacadeInterface
     public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return \Generated\Shared\Transfer\PayonePaymentLogTransfer[]
@@ -231,6 +289,8 @@ interface PayoneFacadeInterface
     public function getPaymentLogs(ObjectCollection $orders);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PaymentDataTransfer
@@ -238,6 +298,8 @@ interface PayoneFacadeInterface
     public function getPaymentData($idPayment);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentData
      * @param int $idOrder
      *

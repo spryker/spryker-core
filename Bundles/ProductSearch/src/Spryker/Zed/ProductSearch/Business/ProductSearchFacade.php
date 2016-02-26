@@ -18,6 +18,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 {
 
     /**
+     * @api
+     *
      * @param array $productsRaw
      * @param array $processedProducts
      *
@@ -31,6 +33,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
+     * @api
+     *
      * @param array $productsRaw
      * @param array $processedProducts
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -71,6 +75,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void

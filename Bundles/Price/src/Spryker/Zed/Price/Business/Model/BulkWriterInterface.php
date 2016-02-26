@@ -24,14 +24,21 @@ interface BulkWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
      */
     public function setPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
     public function createPriceForProduct(PriceProductTransfer $transferPriceProduct);
 
+    /**
+     * @return void
+     */
     public function flush();
 
 }

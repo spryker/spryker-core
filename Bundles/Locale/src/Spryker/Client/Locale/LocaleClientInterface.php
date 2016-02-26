@@ -10,6 +10,11 @@ namespace Spryker\Client\Locale;
 interface LocaleClientInterface
 {
 
+    /**
+     * @api
+     *
+     * @return string
+     */
     public function getCurrentLocale();
 
 }

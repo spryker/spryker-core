@@ -13,6 +13,8 @@ interface ItemGrouperCheckoutConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\GroupableContainerTransfer $orderItems
      *
      * @return \Generated\Shared\Transfer\GroupableContainerTransfer

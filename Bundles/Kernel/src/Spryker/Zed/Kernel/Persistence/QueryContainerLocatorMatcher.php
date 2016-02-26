@@ -15,6 +15,8 @@ class QueryContainerLocatorMatcher implements LocatorMatcherInterface
     const METHOD_PREFIX = 'queryContainer';
 
     /**
+     * @api
+     *
      * @param string $method
      *
      * @return bool
@@ -25,6 +27,8 @@ class QueryContainerLocatorMatcher implements LocatorMatcherInterface
     }
 
     /**
+     * @api
+     *
      * @param string $method
      *
      * @return string

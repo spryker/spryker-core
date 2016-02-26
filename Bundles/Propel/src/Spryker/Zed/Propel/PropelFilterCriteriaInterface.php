@@ -19,6 +19,8 @@ interface PropelFilterCriteriaInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return void
      */
     public function setFilterTransfer(FilterTransfer $filterTransfer);
 

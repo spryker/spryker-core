@@ -15,6 +15,8 @@ interface CustomerCheckoutConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $order
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      *
@@ -23,6 +25,8 @@ interface CustomerCheckoutConnectorFacadeInterface
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -31,6 +35,8 @@ interface CustomerCheckoutConnectorFacadeInterface
     public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

@@ -120,6 +120,9 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
         return new FacadeResolver();
     }
 
+    /**
+     * @return void
+     */
     abstract public function run();
 
 }

@@ -15,6 +15,8 @@ interface DistributorInterface
     /**
      * @param array $discountableObjects
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return void
      */
     public function distribute(array $discountableObjects, DiscountTransfer $discountTransfer);
 

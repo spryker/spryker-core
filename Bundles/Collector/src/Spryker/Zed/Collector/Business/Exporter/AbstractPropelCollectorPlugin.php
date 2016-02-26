@@ -145,6 +145,8 @@ abstract class AbstractPropelCollectorPlugin
      * @param array $resultSet
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
+     *
+     * @return array
      */
     abstract protected function processData($resultSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet);
 

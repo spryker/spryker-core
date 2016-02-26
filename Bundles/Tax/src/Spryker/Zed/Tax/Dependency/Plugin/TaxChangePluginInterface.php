@@ -12,11 +12,15 @@ interface TaxChangePluginInterface
 
     /**
      * @param int $idTaxRate
+     *
+     * @return void
      */
     public function handleTaxRateChange($idTaxRate);
 
     /**
      * @param int $idTaxSet
+     *
+     * @return void
      */
     public function handleTaxSetChange($idTaxSet);
 

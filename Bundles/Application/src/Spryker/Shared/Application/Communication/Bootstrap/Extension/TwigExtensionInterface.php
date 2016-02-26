@@ -14,6 +14,8 @@ interface TwigExtensionInterface
 
     /**
      * @param \Spryker\Shared\Application\Communication\Application $application
+     *
+     * @return \Twig_Extension[]
      */
     public function getTwigExtensions(Application $application);
 

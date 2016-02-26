@@ -11,6 +11,8 @@ interface TouchFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param int $idItem
      * @param bool $keyChange
@@ -20,6 +22,8 @@ interface TouchFacadeInterface
     public function touchActive($itemType, $idItem, $keyChange = false);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param int $idItem
      *
@@ -28,6 +32,8 @@ interface TouchFacadeInterface
     public function touchInactive($itemType, $idItem);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param int $idItem
      *
@@ -36,6 +42,8 @@ interface TouchFacadeInterface
     public function touchDeleted($itemType, $idItem);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -44,6 +52,8 @@ interface TouchFacadeInterface
     public function bulkTouchActive($itemType, array $itemIds = []);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -52,6 +62,8 @@ interface TouchFacadeInterface
     public function bulkTouchInactive($itemType, array $itemIds = []);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -60,6 +72,8 @@ interface TouchFacadeInterface
     public function bulkTouchDeleted($itemType, array $itemIds = []);
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Generated\Shared\Transfer\TouchTransfer[]
