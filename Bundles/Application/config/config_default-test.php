@@ -26,3 +26,4 @@ $config[ApplicationConstants::NAVIGATION_CACHE_ENABLED] = false;
 
 $config[ApplicationConstants::HOST_YVES] = 'www.spryker.dev';
 $config[ApplicationConstants::NAVIGATION_ENABLED] = false;
+$config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] = APPLICATION_ROOT_DIR . '/vendor/spryker';

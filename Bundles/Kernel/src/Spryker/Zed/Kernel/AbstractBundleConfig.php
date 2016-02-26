@@ -14,14 +14,15 @@ abstract class AbstractBundleConfig
 
     /**
      * @param string $key
+     * @param mixed $default
      *
      * @throws \Exception
      *
      * @return mixed
      */
-    protected function get($key)
+    protected function get($key, $default = null)
     {
-        return $this->getConfig()->get($key);
+        return $this->getConfig()->get($key, $default);
     }
 
     /**

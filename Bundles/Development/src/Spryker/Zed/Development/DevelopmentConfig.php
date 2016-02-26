@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
@@ -17,7 +18,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getBundleDirectory()
     {
-        return APPLICATION_SPRYKER_ROOT . DIRECTORY_SEPARATOR;
+        return $this->getConfig()->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -47,6 +48,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getCodingStandard()
     {
         $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
+
         return $vendorDir . 'spryker/code-sniffer/Spryker/ruleset.xml';
     }
 

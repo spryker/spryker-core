@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Transfer;
 
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TransferConfig extends AbstractBundleConfig
@@ -34,7 +36,7 @@ class TransferConfig extends AbstractBundleConfig
     public function getSourceDirectories()
     {
         $directories = [
-            APPLICATION_SPRYKER_ROOT . '/*/src/*/Shared/*/Transfer/',
+            Config::get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/*/Shared/*/Transfer/',
         ];
 
         $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';

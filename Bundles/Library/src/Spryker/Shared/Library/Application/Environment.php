@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Library\Application;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Error\ErrorHandler;
@@ -24,14 +25,11 @@ class Environment
     ];
 
     /**
-     * @param string $application
-     * @param bool $disableApplicationCheck
-     *
      * @throws \Exception
      *
      * @return void
      */
-    public static function initialize($application, $disableApplicationCheck = false)
+    public static function initialize()
     {
         date_default_timezone_set('UTC');
 
@@ -43,12 +41,11 @@ class Environment
         self::defineApplicationStaticDir();
         self::defineApplicationVendorDir();
         self::defineApplicationDataDir();
-        self::defineApplicationSprykerRoot();
 
         $errorCode = error_reporting();
         self::initializeErrorHandler();
 
-        $configErrorCode = Config::get(LibraryConstants::ERROR_LEVEL);
+        $configErrorCode = Config::get(ApplicationConstants::ERROR_LEVEL);
         if ($configErrorCode !== $errorCode) {
             error_reporting($configErrorCode);
             self::initializeErrorHandler();
@@ -185,24 +182,6 @@ class Environment
                 define('APPLICATION_DATA', APPLICATION_ROOT_DIR . '/data');
             } else {
                 define('APPLICATION_DATA', getenv('APPLICATION_DATA'));
-            }
-        }
-    }
-
-    /**
-     * @return void
-     */
-    protected static function defineApplicationSprykerRoot()
-    {
-        if (!defined('APPLICATION_SPRYKER_ROOT')) {
-            if (!getenv('APPLICATION_SPRYKER_ROOT')) {
-                $sprykerRoot = APPLICATION_VENDOR_DIR . '/spryker';
-                if (is_dir($sprykerRoot . '/spryker/Bundles')) {
-                    $sprykerRoot = $sprykerRoot . '/spryker/Bundles';
-                }
-                define('APPLICATION_SPRYKER_ROOT', $sprykerRoot);
-            } else {
-                define('APPLICATION_SPRYKER_ROOT', getenv('APPLICATION_SPRYKER_ROOT'));
             }
         }
     }
