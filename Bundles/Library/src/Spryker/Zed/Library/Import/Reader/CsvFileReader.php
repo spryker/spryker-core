@@ -46,9 +46,9 @@ class CsvFileReader implements ReaderInterface
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Library\Reader\CsvReader's read() instead.
+     * @deprecated Use \Spryker\Zed\Library\Reader\CsvReader's load() instead.
      *
-     * @see \Spryker\Zed\Library\Reader\CsvReader::read
+     * @see \Spryker\Zed\Library\Reader\CsvReader::load
      *
      * @param mixed $filepath
      *

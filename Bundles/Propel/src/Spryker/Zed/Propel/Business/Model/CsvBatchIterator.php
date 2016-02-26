@@ -72,11 +72,8 @@ class CsvBatchIterator implements CountableIteratorInterface
         $batchSize = $this->offset + $this->chunkSize;
 
         while ($this->currentKey < $batchSize) {
+            $chunkData[] = $this->csvReader->read();
             $this->currentKey++;
-            $chunkData[] = array_combine(
-                $this->csvReader->getColumns(),
-                $this->csvReader->getFile()->fgetcsv()
-            );
         }
 
         $this->currentDataSet = $chunkData;
@@ -121,7 +118,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @return void
+     *
      */
     public function __destruct()
     {

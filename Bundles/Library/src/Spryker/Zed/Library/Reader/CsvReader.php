@@ -35,33 +35,9 @@ class CsvReader implements CsvReaderInterface
     /**
      * @param string $lineBreaker
      */
-    public function __construct($lineBreaker="\n")
+    public function __construct($lineBreaker = "\n")
     {
         $this->lineBreaker = $lineBreaker;
-    }
-
-    /**
-     * @param string $filename
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return $this
-     */
-    public function read($filename)
-    {
-        if (!is_file($filename)) {
-            throw new \InvalidArgumentException($filename);
-        }
-
-        $this->csvFile = new SplFileObject($filename);
-        $this->csvFile->setCsvControl(',', '"');
-        $this->csvFile->setFlags(SplFileObject::READ_CSV | SplFileObject::READ_AHEAD | SplFileObject::SKIP_EMPTY);
-
-        $this->setupColumns();
-
-        $this->total = null;
-
-        return $this;
     }
 
     /**
@@ -78,11 +54,29 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
+     * @param array $data
+     *
+     * @return array
+     */
+    public function composeItem(array $data)
+    {
+        return array_combine(array_values($this->columns), array_values($data));
+    }
+
+    /**
      * @return array
      */
     public function getColumns()
     {
         return $this->columns;
+    }
+
+    /**
+     * @return \SplFileObject
+     */
+    public function getFile()
+    {
+        return $this->csvFile;
     }
 
     /**
@@ -105,11 +99,35 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
-     * @return \SplFileObject
+     * @param string $filename
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return $this
      */
-    public function getFile()
+    public function load($filename)
     {
-        return $this->csvFile;
+        if (!is_file($filename)) {
+            throw new \InvalidArgumentException($filename);
+        }
+
+        $this->csvFile = new SplFileObject($filename);
+        $this->csvFile->setCsvControl(',', '"');
+        $this->csvFile->setFlags(SplFileObject::READ_CSV | SplFileObject::READ_AHEAD | SplFileObject::SKIP_EMPTY);
+
+        $this->setupColumns();
+
+        $this->total = null;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function read()
+    {
+        return $this->composeItem($this->getFile()->fgetcsv());
     }
 
     /**
@@ -121,8 +139,7 @@ class CsvReader implements CsvReaderInterface
         $this->csvFile->rewind();
 
         while (!$this->csvFile->eof()) {
-            $line = $this->csvFile->fgetcsv();
-            $data[] = array_combine(array_values($this->columns), array_values($line));
+            $data[] = $this->read();
         }
 
         return $data;

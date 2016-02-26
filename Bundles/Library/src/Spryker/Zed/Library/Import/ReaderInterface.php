@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Library\Import;
 
 /**
- * @deprecated Use \Spryker\Zed\Library\Reader\CsvReaderInterface read() instead.
+ * @deprecated Use \Spryker\Zed\Library\Reader\CsvReaderInterface load() instead.
  *
  * @see \Spryker\Zed\Library\Reader\CsvReaderInterface
  */
@@ -16,9 +16,9 @@ interface ReaderInterface
 {
 
     /**
-     * @deprecated Use \Spryker\Zed\Library\Reader\CsvReaderInterface's read() instead.
+     * @deprecated Use \Spryker\Zed\Library\Reader\CsvReaderInterface's load() instead.
      *
-     * @see \Spryker\Zed\Library\Reader\CsvReaderInterface::read
+     * @see \Spryker\Zed\Library\Reader\CsvReaderInterface::load
      *
      * @param mixed $inputData
      *
