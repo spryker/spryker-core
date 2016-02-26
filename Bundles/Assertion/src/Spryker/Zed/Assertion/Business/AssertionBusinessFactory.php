@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Assertion\Business;
 
-use Spryker\Zed\Assertion\AssertionConfig;
 use Spryker\Zed\Assertion\Business\Model\Assertion;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 

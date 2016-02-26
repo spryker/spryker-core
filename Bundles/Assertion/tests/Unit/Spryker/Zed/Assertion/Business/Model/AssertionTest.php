@@ -41,6 +41,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1', true],
             ['1.1', true],
             ['1foo', false],
+            [[], false],
             [new \StdClass(), false],
         ];
     }
@@ -69,6 +70,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1', true],
             ['1.1', true],
             ['1foo', false],
+            [[], false],
             [new \StdClass(), false],
         ];
     }
@@ -97,7 +99,9 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1', false],
             ['1.1', false],
             ['foo1bar', true],
+            ['1foo', false],
             [new \StdClass(), false],
+            [[], false],
             ['foo.bar', false],
         ];
     }
