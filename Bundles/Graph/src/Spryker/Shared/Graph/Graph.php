@@ -71,7 +71,7 @@ class Graph implements GraphInterface
 
     /**
      * @param string $type
-     * @param null $fileName
+     * @param string|null $fileName
      *
      * @return string
      */

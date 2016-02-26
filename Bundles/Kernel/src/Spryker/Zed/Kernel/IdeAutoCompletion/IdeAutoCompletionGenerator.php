@@ -11,11 +11,9 @@ class IdeAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerator
 {
 
     /**
-     * @param null $output
-     *
      * @return void
      */
-    public function create($output = null)
+    public function create()
     {
         $fileContent = $this->getBaseFile($this->options[self::OPTION_KEY_NAMESPACE]);
 

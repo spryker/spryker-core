@@ -43,7 +43,7 @@ class Config
 
     /**
      * @param string $key
-     * @param null $default
+     * @param string|null $default
      *
      * @throws \Exception
      *
@@ -77,7 +77,7 @@ class Config
     }
 
     /**
-     * @param null $environment
+     * @param string|null $environment
      *
      * @return void
      */

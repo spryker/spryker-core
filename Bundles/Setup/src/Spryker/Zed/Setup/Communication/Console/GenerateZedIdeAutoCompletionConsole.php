@@ -59,7 +59,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $generator
             ->addMethodTagBuilder(new GeneratedInterfaceMethodTagBuilder());
 
-        $generator->create('');
+        $generator->create();
 
         $this->info('Generated Zed IdeAutoCompletion file');
     }
@@ -97,7 +97,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
             ->addMethodTagBuilder(new QueryContainerMethodTagBuilder())
             ->addMethodTagBuilder(new ClientMethodTagBuilder());
 
-        $generator->create('');
+        $generator->create();
 
         $this->info('Generated Zed IdeBundleAutoCompletion file');
     }

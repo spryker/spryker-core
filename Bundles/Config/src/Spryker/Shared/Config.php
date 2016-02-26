@@ -10,7 +10,7 @@ namespace Spryker\Shared;
 use Spryker\Shared\Config\Config as SprykerConfig;
 
 /**
- * @deprecated use Spryker\Shared\Config\Config instead
+ * @deprecated 1.0.0 Use Spryker\Shared\Config\Config instead.
  */
 class Config extends SprykerConfig
 {
@@ -28,7 +28,7 @@ class Config extends SprykerConfig
     }
 
     /**
-     * @param null|string $environment
+     * @param string|null $environment
      *
      * @return void
      */

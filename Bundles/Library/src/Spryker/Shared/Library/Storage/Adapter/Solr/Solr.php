@@ -30,7 +30,7 @@ abstract class Solr implements AdapterInterface
 
     /**
      * @param array $config
-     * @param null $endpoint
+     * @param string|null $endpoint
      * @param bool $debug
      */
     public function __construct(array $config, $endpoint = null, $debug = false)

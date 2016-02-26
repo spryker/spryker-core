@@ -276,7 +276,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param null $tableIdentifier
+     * @param string|null $tableIdentifier
      *
      * @return void
      */

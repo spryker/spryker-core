@@ -26,7 +26,7 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param null $calculableItems
+     * @param \ArrayObject|null $calculableItems
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
