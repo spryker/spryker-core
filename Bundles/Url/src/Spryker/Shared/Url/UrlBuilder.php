@@ -22,8 +22,8 @@ class UrlBuilder implements UrlBuilderInterface
     {
         $hasQueryParameter = (count($queryParameter) > 0);
 
-        $moduleControllerAction = self::fillNullValues($hasQueryParameter, [$bundle, $controller, $action]);
-        $moduleControllerAction = self::removeNullValues($moduleControllerAction);
+        $moduleControllerAction = $this->fillNullValues($hasQueryParameter, [$bundle, $controller, $action]);
+        $moduleControllerAction = $this->removeNullValues($moduleControllerAction);
 
         $url = '/' . implode('/', $moduleControllerAction);
 
@@ -40,7 +40,7 @@ class UrlBuilder implements UrlBuilderInterface
      *
      * @return array
      */
-    protected static function fillNullValues($hasQueryParameter, array $mca)
+    protected function fillNullValues($hasQueryParameter, array $mca)
     {
         $mapCallback = function ($value) use ($hasQueryParameter) {
             return ($value) ?: (($hasQueryParameter) ? 'index' : null);
@@ -55,7 +55,7 @@ class UrlBuilder implements UrlBuilderInterface
      *
      * @return array
      */
-    protected static function removeNullValues(array $mca)
+    protected function removeNullValues(array $mca)
     {
         $filterCallback = function ($value) {
             return $value !== null;
