@@ -18,6 +18,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -30,6 +32,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -45,6 +49,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -58,6 +64,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -71,6 +79,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -84,6 +94,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -97,6 +109,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -110,6 +124,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
@@ -125,6 +141,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -138,6 +156,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -151,6 +171,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -164,6 +186,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -177,6 +201,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool

@@ -20,6 +20,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idOrderItem
      *
      * @return string[]
@@ -32,6 +34,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      * @param string $flag
      *
@@ -45,6 +49,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      * @param string $flag
      *
@@ -58,6 +64,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $eventId
      * @param array $orderItemIds
      * @param array $data
@@ -74,6 +82,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $orderItemIds
      * @param array $data
      *
@@ -87,6 +97,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $eventId
      * @param int $orderItemId
      * @param array $data
@@ -101,6 +113,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\Oms\Business\Process\Process[]
      */
     public function getProcesses()
@@ -111,6 +125,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getProcessList()
@@ -121,6 +137,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $logContext
      *
      * @return int
@@ -133,6 +151,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $logContext
      *
      * @return int
@@ -148,6 +168,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $processName
      * @param string|null $highlightState
      * @param string|null $format
@@ -165,6 +187,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return \Spryker\Zed\Oms\Business\Process\Event[]
@@ -177,6 +201,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
@@ -190,6 +216,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
@@ -203,6 +231,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
@@ -217,6 +247,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -229,6 +261,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -241,6 +275,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $stateName
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
@@ -253,6 +289,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $processName
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
@@ -265,6 +303,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getInitialStateEntity()
@@ -275,6 +315,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
      *
      * @return string
@@ -286,6 +328,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return string
@@ -298,6 +342,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $eventId
      * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
@@ -316,6 +362,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
@@ -332,6 +380,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $eventId
      * @param \Generated\Shared\Transfer\OrderTransfer $orderItem
      * @param array $logContext
@@ -349,6 +399,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getOrderItemMatrix()

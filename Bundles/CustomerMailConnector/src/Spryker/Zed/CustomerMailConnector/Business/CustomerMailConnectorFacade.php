@@ -16,6 +16,8 @@ class CustomerMailConnectorFacade extends AbstractFacade implements CustomerMail
 {
 
     /**
+     * @api
+     *
      * @param string $email
      * @param string $token
      *
@@ -29,6 +31,8 @@ class CustomerMailConnectorFacade extends AbstractFacade implements CustomerMail
     }
 
     /**
+     * @api
+     *
      * @param string $email
      * @param string $token
      *
@@ -42,6 +46,8 @@ class CustomerMailConnectorFacade extends AbstractFacade implements CustomerMail
     }
 
     /**
+     * @api
+     *
      * @param string $email
      *
      * @return bool

@@ -19,6 +19,8 @@ class DiscountCheckoutConnectorFacade extends AbstractFacade implements Discount
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
@@ -30,6 +32,8 @@ class DiscountCheckoutConnectorFacade extends AbstractFacade implements Discount
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

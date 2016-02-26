@@ -14,6 +14,8 @@ interface GlossaryQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -21,6 +23,8 @@ interface GlossaryQueryContainerInterface
     public function queryKey($keyName);
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -28,11 +32,15 @@ interface GlossaryQueryContainerInterface
     public function queryActiveKeysByName($keyName);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryKeys();
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param string $localeName
      *
@@ -41,6 +49,8 @@ interface GlossaryQueryContainerInterface
     public function queryTranslationByNames($keyName, $localeName);
 
     /**
+     * @api
+     *
      * @param int $idKey
      * @param int $idLocale
      *
@@ -49,11 +59,15 @@ interface GlossaryQueryContainerInterface
     public function queryTranslationByIds($idKey, $idLocale);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslations();
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -61,6 +75,8 @@ interface GlossaryQueryContainerInterface
     public function queryTranslationsByKey($keyName);
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -68,6 +84,8 @@ interface GlossaryQueryContainerInterface
     public function queryTranslationsByLocale($localeName);
 
     /**
+     * @api
+     *
      * @param int $idGlossaryTranslation
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -75,6 +93,8 @@ interface GlossaryQueryContainerInterface
     public function queryTranslationById($idGlossaryTranslation);
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -82,6 +102,8 @@ interface GlossaryQueryContainerInterface
     public function joinTranslationQueryWithKeysAndLocales(SpyGlossaryTranslationQuery $query);
 
     /**
+     * @api
+     *
      * @param array $relevantLocales
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -91,6 +113,8 @@ interface GlossaryQueryContainerInterface
     public function queryAllPossibleTranslations(array $relevantLocales);
 
     /**
+     * @api
+     *
      * @param array $relevantLocales
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -98,6 +122,8 @@ interface GlossaryQueryContainerInterface
     public function queryAllMissingTranslations(array $relevantLocales);
 
     /**
+     * @api
+     *
      * @param int $idKey
      * @param array $relevantLocales
      *
@@ -106,6 +132,8 @@ interface GlossaryQueryContainerInterface
     public function queryMissingTranslationsForKey($idKey, array $relevantLocales);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -113,6 +141,8 @@ interface GlossaryQueryContainerInterface
     public function queryDistinctKeysFromQuery(ModelCriteria $query);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -120,6 +150,8 @@ interface GlossaryQueryContainerInterface
     public function queryDistinctLocalesFromQuery(ModelCriteria $query);
 
     /**
+     * @api
+     *
      * @param string $key
      *
      * @return array
@@ -127,6 +159,8 @@ interface GlossaryQueryContainerInterface
     public function queryByKey($key);
 
     /**
+     * @api
+     *
      * @param int $fkGlossaryKey
      * @param array $locales
      *

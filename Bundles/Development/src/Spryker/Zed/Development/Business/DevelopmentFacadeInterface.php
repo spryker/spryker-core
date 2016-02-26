@@ -11,6 +11,8 @@ interface DevelopmentFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string|null $bundle
      * @param array $options
      *
@@ -19,6 +21,8 @@ interface DevelopmentFacadeInterface
     public function checkCodeStyle($bundle = null, array $options = []);
 
     /**
+     * @api
+     *
      * @param string|null $bundle
      * @param array $options
      *
@@ -27,6 +31,8 @@ interface DevelopmentFacadeInterface
     public function runTest($bundle, array $options = []);
 
     /**
+     * @api
+     *
      * @param string|null $bundle
      *
      * @return void
@@ -34,6 +40,8 @@ interface DevelopmentFacadeInterface
     public function runPhpMd($bundle);
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param string $toBundle
      *

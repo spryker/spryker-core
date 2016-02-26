@@ -16,6 +16,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
 {
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $quantity
      *
@@ -27,6 +29,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return int

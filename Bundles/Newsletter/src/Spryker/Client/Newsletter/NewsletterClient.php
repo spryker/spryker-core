@@ -18,6 +18,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -29,6 +31,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -40,6 +44,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
@@ -51,6 +57,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -62,6 +70,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer

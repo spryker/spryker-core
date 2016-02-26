@@ -18,6 +18,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -32,6 +34,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -47,6 +51,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -62,6 +68,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -76,6 +84,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getWishlist()
@@ -87,6 +97,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function synchronizeSession()

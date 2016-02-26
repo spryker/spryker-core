@@ -16,6 +16,8 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $key
      *
      * @return mixed
@@ -26,6 +28,8 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getTotalCount()
@@ -34,6 +38,8 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTimestamps()
@@ -42,6 +48,8 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function deleteAll()
@@ -50,6 +58,8 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return void

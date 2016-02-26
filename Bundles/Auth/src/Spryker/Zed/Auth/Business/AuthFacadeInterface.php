@@ -11,6 +11,8 @@ interface AuthFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $username
      * @param string $password
      *
@@ -19,11 +21,15 @@ interface AuthFacadeInterface
     public function login($username, $password);
 
     /**
+     * @api
+     *
      * @return void
      */
     public function logout();
 
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return bool
@@ -31,11 +37,15 @@ interface AuthFacadeInterface
     public function isAuthenticated($token);
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function hasCurrentUser();
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return string
@@ -43,6 +53,8 @@ interface AuthFacadeInterface
     public function getUserToken($user);
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -52,6 +64,8 @@ interface AuthFacadeInterface
     public function isIgnorable($bundle, $controller, $action);
 
     /**
+     * @api
+     *
      * @param string $hash
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -59,11 +73,15 @@ interface AuthFacadeInterface
     public function getSystemUser($hash);
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentUserToken();
 
     /**
+     * @api
+     *
      * @param string $email
      *
      * @return bool
@@ -71,6 +89,8 @@ interface AuthFacadeInterface
     public function requestPasswordReset($email);
 
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return bool
@@ -78,6 +98,8 @@ interface AuthFacadeInterface
     public function isValidPasswordResetToken($token);
 
     /**
+     * @api
+     *
      * @param string $token
      * @param string $password
      *

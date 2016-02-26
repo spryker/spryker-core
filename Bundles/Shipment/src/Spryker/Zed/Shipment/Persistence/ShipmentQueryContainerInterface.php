@@ -11,26 +11,36 @@ interface ShipmentQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryCarriers();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryActiveCarriers();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryMethods();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryActiveMethods();
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery

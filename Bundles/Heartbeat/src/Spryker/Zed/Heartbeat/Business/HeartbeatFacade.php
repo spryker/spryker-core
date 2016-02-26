@@ -16,6 +16,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isSystemAlive()
@@ -24,6 +26,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\HealthReportTransfer
      */
     public function getReport()
@@ -32,6 +36,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doPropelHealthCheck()
@@ -40,6 +46,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doSearchHealthCheck()
@@ -48,6 +56,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doSessionHealthCheck()
@@ -56,6 +66,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doStorageHealthCheck()

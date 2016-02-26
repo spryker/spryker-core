@@ -18,6 +18,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -28,6 +30,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -38,6 +42,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -48,6 +54,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -58,6 +66,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer

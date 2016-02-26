@@ -13,11 +13,15 @@ interface MaintenanceFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     public function getInstalledPackages();
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackages
      *
      * @return void
@@ -25,6 +29,8 @@ interface MaintenanceFacadeInterface
     public function writeInstalledPackagesToMarkDownFile(InstalledPackagesTransfer $installedPackages);
 
     /**
+     * @api
+     *
      * @param string $bundleName
      *
      * @return array
@@ -32,6 +38,8 @@ interface MaintenanceFacadeInterface
     public function showOutgoingDependenciesForBundle($bundleName);
 
     /**
+     * @api
+     *
      * @param string $bundleName
      *
      * @return array
@@ -39,6 +47,8 @@ interface MaintenanceFacadeInterface
     public function showIncomingDependenciesForBundle($bundleName);
 
     /**
+     * @api
+     *
      * @param string $bundleName
      *
      * @return mixed
@@ -46,6 +56,8 @@ interface MaintenanceFacadeInterface
     public function drawDependencyGraph($bundleName);
 
     /**
+     * @api
+     *
      * @todo move this to propel bundle
      *
      * @return bool
@@ -53,11 +65,15 @@ interface MaintenanceFacadeInterface
     public function cleanPropelMigration();
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAllBundles();
 
     /**
+     * @api
+     *
      * @param string $application
      * @param string $bundle
      * @param string $layer
@@ -67,6 +83,8 @@ interface MaintenanceFacadeInterface
     public function buildDependencyTree($application, $bundle, $layer);
 
     /**
+     * @api
+     *
      * @param string|bool $bundleToView
      *
      * @return bool
@@ -74,6 +92,8 @@ interface MaintenanceFacadeInterface
     public function drawDetailedDependencyTreeGraph($bundleToView);
 
     /**
+     * @api
+     *
      * @param string|bool $bundleToView
      *
      * @return bool
@@ -81,21 +101,29 @@ interface MaintenanceFacadeInterface
     public function drawSimpleDependencyTreeGraph($bundleToView);
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getAdjacencyMatrixData();
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getDependencyViolations();
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getEngineBundleList();
 
     /**
+     * @api
+     *
      * @return void
      */
     public function updateComposerJsonInBundles();

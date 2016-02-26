@@ -18,6 +18,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return bool
@@ -28,6 +30,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return int
@@ -38,6 +42,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
@@ -48,6 +54,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
@@ -58,6 +66,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
@@ -68,6 +78,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
      *
      * @return int
@@ -78,6 +90,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $decrementBy
      * @param string $stockType
@@ -90,6 +104,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $incrementBy
      * @param string $stockType
@@ -102,6 +118,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $stockType
      *
@@ -113,6 +131,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $stockType
      *

@@ -14,6 +14,8 @@ interface CustomerFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $email
      *
      * @return bool
@@ -21,6 +23,8 @@ interface CustomerFacadeInterface
     public function hasEmail($email);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -28,6 +32,8 @@ interface CustomerFacadeInterface
     public function registerCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -35,6 +41,8 @@ interface CustomerFacadeInterface
     public function confirmRegistration(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -44,6 +52,8 @@ interface CustomerFacadeInterface
     public function forgotPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -51,6 +61,8 @@ interface CustomerFacadeInterface
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -58,6 +70,8 @@ interface CustomerFacadeInterface
     public function restorePassword(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
@@ -65,6 +79,8 @@ interface CustomerFacadeInterface
     public function deleteCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -72,6 +88,8 @@ interface CustomerFacadeInterface
     public function getCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -79,6 +97,8 @@ interface CustomerFacadeInterface
     public function updateCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -86,6 +106,8 @@ interface CustomerFacadeInterface
     public function updateCustomerPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -93,6 +115,8 @@ interface CustomerFacadeInterface
     public function getAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
@@ -100,6 +124,8 @@ interface CustomerFacadeInterface
     public function getAddresses(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -107,6 +133,8 @@ interface CustomerFacadeInterface
     public function updateAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -114,6 +142,8 @@ interface CustomerFacadeInterface
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -121,6 +151,8 @@ interface CustomerFacadeInterface
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -128,6 +160,8 @@ interface CustomerFacadeInterface
     public function createAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return bool
@@ -135,6 +169,8 @@ interface CustomerFacadeInterface
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return bool
@@ -142,6 +178,8 @@ interface CustomerFacadeInterface
     public function setDefaultShippingAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return string
@@ -149,6 +187,8 @@ interface CustomerFacadeInterface
     public function renderAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -156,6 +196,8 @@ interface CustomerFacadeInterface
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -163,6 +205,8 @@ interface CustomerFacadeInterface
     public function getDefaultBillingAddress(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -170,6 +214,8 @@ interface CustomerFacadeInterface
     public function deleteAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool

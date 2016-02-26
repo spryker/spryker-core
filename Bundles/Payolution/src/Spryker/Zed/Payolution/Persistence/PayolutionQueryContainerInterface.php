@@ -11,11 +11,15 @@ interface PayolutionQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
      */
     public function queryPayments();
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
@@ -23,6 +27,8 @@ interface PayolutionQueryContainerInterface
     public function queryPaymentById($idPayment);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
@@ -30,11 +36,15 @@ interface PayolutionQueryContainerInterface
     public function queryPaymentBySalesOrderId($idSalesOrder);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     public function queryTransactionStatusLog();
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -42,6 +52,8 @@ interface PayolutionQueryContainerInterface
     public function queryTransactionStatusLogByPaymentId($idPayment);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -49,6 +61,8 @@ interface PayolutionQueryContainerInterface
     public function queryTransactionStatusLogByPaymentIdLatestFirst($idPayment);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -56,6 +70,8 @@ interface PayolutionQueryContainerInterface
     public function queryTransactionStatusLogBySalesOrderId($idSalesOrder);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -63,6 +79,8 @@ interface PayolutionQueryContainerInterface
     public function queryTransactionStatusLogBySalesOrderIdLatestFirst($idSalesOrder);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param string $paymentCode
      *
@@ -71,6 +89,8 @@ interface PayolutionQueryContainerInterface
     public function queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst($idSalesOrder, $paymentCode);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery

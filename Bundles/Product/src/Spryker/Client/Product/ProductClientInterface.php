@@ -11,6 +11,8 @@ interface ProductClientInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param string $locale
      *
@@ -19,6 +21,8 @@ interface ProductClientInterface
     public function getProductAbstractFromStorageById($idProductAbstract, $locale);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return array

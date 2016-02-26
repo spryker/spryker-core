@@ -17,6 +17,8 @@ class EventJournalFacade extends AbstractFacade implements EventJournalFacadeInt
 {
 
     /**
+     * @api
+     *
      * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return void

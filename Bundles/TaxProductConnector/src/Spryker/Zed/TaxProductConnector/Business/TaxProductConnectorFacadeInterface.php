@@ -11,6 +11,8 @@ interface TaxProductConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin
      */
     public function getTaxChangeTouchPlugin();

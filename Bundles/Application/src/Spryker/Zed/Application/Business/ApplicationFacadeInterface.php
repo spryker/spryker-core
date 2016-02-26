@@ -13,6 +13,8 @@ interface ApplicationFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return \Spryker\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep[]
@@ -20,6 +22,8 @@ interface ApplicationFacadeInterface
     public function getCheckSteps(LoggerInterface $logger = null);
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -27,6 +31,8 @@ interface ApplicationFacadeInterface
     public function runCheckStepCodeCeption(LoggerInterface $logger = null);
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -34,6 +40,8 @@ interface ApplicationFacadeInterface
     public function runCheckStepDeleteDatabase(LoggerInterface $logger = null);
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -41,6 +49,8 @@ interface ApplicationFacadeInterface
     public function runCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null);
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -48,6 +58,8 @@ interface ApplicationFacadeInterface
     public function runCheckStepExportKeyValue(LoggerInterface $logger = null);
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -55,6 +67,8 @@ interface ApplicationFacadeInterface
     public function runCheckStepExportSearch(LoggerInterface $logger = null);
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -62,6 +76,8 @@ interface ApplicationFacadeInterface
     public function runCheckStepInstallDemoData(LoggerInterface $logger = null);
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -69,6 +85,8 @@ interface ApplicationFacadeInterface
     public function runCheckStepSetupInstall(LoggerInterface $logger = null);
 
     /**
+     * @api
+     *
      * @param string $pathInfo
      *
      * @return array
@@ -76,6 +94,8 @@ interface ApplicationFacadeInterface
     public function buildNavigation($pathInfo);
 
     /**
+     * @api
+     *
      * @return void
      */
     public function writeNavigationCache();

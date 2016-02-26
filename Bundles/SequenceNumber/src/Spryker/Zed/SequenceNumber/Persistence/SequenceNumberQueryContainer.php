@@ -17,6 +17,8 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery
      */
     public function querySequenceNumber()
@@ -25,6 +27,8 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery
@@ -38,6 +42,8 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
     }
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery

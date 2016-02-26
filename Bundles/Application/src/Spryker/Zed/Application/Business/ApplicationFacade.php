@@ -17,6 +17,8 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
 {
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return \Spryker\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep[]
@@ -27,6 +29,8 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -37,6 +41,8 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -47,6 +53,8 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -57,6 +65,8 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -67,6 +77,8 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -77,6 +89,8 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -87,6 +101,8 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
@@ -97,6 +113,8 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string $pathInfo
      *
      * @return array
@@ -107,6 +125,8 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function writeNavigationCache()

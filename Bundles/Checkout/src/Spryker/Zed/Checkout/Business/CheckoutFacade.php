@@ -17,6 +17,8 @@ class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer

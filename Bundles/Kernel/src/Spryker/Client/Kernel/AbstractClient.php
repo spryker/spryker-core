@@ -64,6 +64,8 @@ abstract class AbstractClient
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedInfoMessages()
@@ -72,6 +74,8 @@ abstract class AbstractClient
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedSuccessMessages()
@@ -80,6 +84,8 @@ abstract class AbstractClient
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedErrorMessages()

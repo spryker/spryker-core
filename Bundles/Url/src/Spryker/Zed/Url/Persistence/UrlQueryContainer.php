@@ -21,6 +21,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     const STATUS = 'status';
 
     /**
+     * @api
+     *
      * @param string $url
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
@@ -34,6 +36,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -47,6 +51,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -60,6 +66,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrls()
@@ -70,6 +78,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlsWithRedirect()
@@ -83,6 +93,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
     public function queryRedirects()
@@ -93,6 +105,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idUrlRedirect
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
@@ -106,6 +120,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * @api
+     *
      * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinLocales()
@@ -116,6 +132,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -132,6 +150,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      * @param int $idLocale
      *

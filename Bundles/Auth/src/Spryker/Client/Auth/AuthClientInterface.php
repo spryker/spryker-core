@@ -11,6 +11,8 @@ interface AuthClientInterface
 {
 
     /**
+     * @api
+     *
      * @param string $rawToken
      *
      * @return string
@@ -18,6 +20,8 @@ interface AuthClientInterface
     public function generateToken($rawToken);
 
     /**
+     * @api
+     *
      * @param string $rawToken
      * @param string $token
      *

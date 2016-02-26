@@ -17,6 +17,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param int $idItem
      * @param bool $keyChange
@@ -36,6 +38,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param int $idItem
      *
@@ -53,6 +57,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param int $idItem
      *
@@ -70,6 +76,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -83,6 +91,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -96,6 +106,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -109,6 +121,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Generated\Shared\Transfer\TouchTransfer[]

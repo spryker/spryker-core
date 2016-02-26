@@ -14,6 +14,8 @@ interface PayolutionClientInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
@@ -21,6 +23,8 @@ interface PayolutionClientInterface
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
@@ -28,16 +32,22 @@ interface PayolutionClientInterface
     public function storeInstallmentPaymentsInSession(PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer);
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function hasInstallmentPaymentsInSession();
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPaymentsFromSession();
 
     /**
+     * @api
+     *
      * @return mixed
      */
     public function removeInstallmentPaymentsFromSession();

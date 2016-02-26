@@ -19,6 +19,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -32,6 +34,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idNode
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
@@ -48,6 +52,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -61,6 +67,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -74,6 +82,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
@@ -90,6 +100,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
@@ -106,6 +118,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
@@ -122,6 +136,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -135,6 +151,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -148,6 +166,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -161,6 +181,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return void
@@ -173,6 +195,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $createUrlPath
@@ -187,6 +211,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -200,6 +226,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $deleteChildren
@@ -214,6 +242,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function renderCategoryTreeVisual()
@@ -224,6 +254,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getRootNodes()
@@ -238,6 +270,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -251,6 +285,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -264,6 +300,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeStartNode
@@ -278,6 +316,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -291,6 +331,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function rebuildClosureTable()
@@ -301,6 +343,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $pathTokens
      *
      * @return string

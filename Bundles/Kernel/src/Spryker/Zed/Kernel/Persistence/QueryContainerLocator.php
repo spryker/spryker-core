@@ -36,6 +36,8 @@ class QueryContainerLocator extends AbstractLocator
     protected $application = 'Zed';
 
     /**
+     * @api
+     *
      * @param string $bundle
      *
      * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException

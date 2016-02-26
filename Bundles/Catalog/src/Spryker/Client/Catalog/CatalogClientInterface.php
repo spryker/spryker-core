@@ -13,11 +13,15 @@ interface CatalogClientInterface
 {
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Catalog\Model\Catalog
      */
     public function createCatalogModel();
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $category
      *
@@ -26,6 +30,8 @@ interface CatalogClientInterface
     public function createFacetSearch(Request $request, array $category);
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Client\Catalog\Model\FulltextSearch
@@ -33,6 +39,8 @@ interface CatalogClientInterface
     public function createFulltextSearch(Request $request);
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Catalog\Model\FacetConfig
      */
     public function createFacetConfig();

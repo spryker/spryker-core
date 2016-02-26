@@ -11,6 +11,8 @@ interface ShipmentCheckoutConnectorQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -18,6 +20,8 @@ interface ShipmentCheckoutConnectorQueryContainerInterface
     public function querySalesOrderById($idSalesOrder);
 
     /**
+     * @api
+     *
      * @param int $idShipmentMethod
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery

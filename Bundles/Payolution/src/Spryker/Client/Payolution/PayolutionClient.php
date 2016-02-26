@@ -18,6 +18,8 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
@@ -39,6 +41,8 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
@@ -51,6 +55,8 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function hasInstallmentPaymentsInSession()
@@ -59,6 +65,8 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPaymentsFromSession()
@@ -67,6 +75,8 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
+     * @api
+     *
      * @return mixed
      */
     public function removeInstallmentPaymentsFromSession()

@@ -17,6 +17,8 @@ class SequenceNumberFacade extends AbstractFacade implements SequenceNumberFacad
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
      *
      * @return string

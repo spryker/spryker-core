@@ -16,6 +16,8 @@ class CategoryExporterClient extends AbstractClient implements CategoryExporterC
 {
 
     /**
+     * @api
+     *
      * @param string $locale
      *
      * @return array
@@ -26,6 +28,8 @@ class CategoryExporterClient extends AbstractClient implements CategoryExporterC
     }
 
     /**
+     * @api
+     *
      * @param array $categoryNode
      * @param string $locale
      *

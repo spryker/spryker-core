@@ -13,11 +13,15 @@ interface UserFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return void
      */
     public function install();
 
     /**
+     * @api
+     *
      * @param string $username
      *
      * @return bool
@@ -25,6 +29,8 @@ interface UserFacadeInterface
     public function hasUserByUsername($username);
 
     /**
+     * @api
+     *
      * @param string $username
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -32,6 +38,8 @@ interface UserFacadeInterface
     public function getUserByUsername($username);
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -39,6 +47,8 @@ interface UserFacadeInterface
     public function getUserById($idUser);
 
     /**
+     * @api
+     *
      * @param string $firstName
      * @param string $lastName
      * @param string $username
@@ -49,6 +59,8 @@ interface UserFacadeInterface
     public function addUser($firstName, $lastName, $username, $password);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @throws Exception\UserNotFoundException
@@ -58,6 +70,8 @@ interface UserFacadeInterface
     public function updateUser(UserTransfer $user);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return mixed
@@ -65,16 +79,22 @@ interface UserFacadeInterface
     public function setCurrentUser(UserTransfer $user);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser();
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function hasCurrentUser();
 
     /**
+     * @api
+     *
      * @param string $password
      * @param string $hash
      *
@@ -83,6 +103,8 @@ interface UserFacadeInterface
     public function isValidPassword($password, $hash);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return bool
@@ -90,16 +112,22 @@ interface UserFacadeInterface
     public function isSystemUser(UserTransfer $user);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CollectionTransfer
      */
     public function getSystemUsers();
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUsers();
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -107,6 +135,8 @@ interface UserFacadeInterface
     public function removeUser($idUser);
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return bool
@@ -114,6 +144,8 @@ interface UserFacadeInterface
     public function activateUser($idUser);
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return bool

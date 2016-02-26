@@ -16,6 +16,8 @@ class GitFacade extends AbstractFacade implements GitFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()

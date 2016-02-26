@@ -21,6 +21,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
 {
 
     /**
+     * @api
+     *
      * @param array $states
      * @param string $processName
      *
@@ -44,6 +46,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -55,6 +59,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
@@ -67,6 +73,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      * @param bool $orderById
      *
@@ -87,6 +95,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \DateTime $now
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -100,6 +110,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -127,6 +139,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -153,6 +167,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param array $orderItemIds
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -164,6 +180,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -175,6 +193,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param array|string[] $activeProcesses
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
@@ -187,6 +207,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param array $orderItemStates
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
@@ -199,6 +221,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param array $processIds
      * @param array $stateBlacklist
      *
@@ -216,6 +240,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param string[] $orderItemStates
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery

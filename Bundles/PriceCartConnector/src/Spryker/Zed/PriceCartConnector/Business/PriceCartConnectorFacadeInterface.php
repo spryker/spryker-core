@@ -13,6 +13,8 @@ interface PriceCartConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $change
      * @param null $grossPriceType
      *

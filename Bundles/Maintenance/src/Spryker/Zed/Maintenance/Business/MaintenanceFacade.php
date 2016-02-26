@@ -17,6 +17,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
 {
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     public function getInstalledPackages()
@@ -25,6 +27,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackages
      *
      * @return void
@@ -35,6 +39,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string $bundleName
      *
      * @return array
@@ -45,6 +51,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string $bundleName
      *
      * @return array
@@ -55,6 +63,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string $bundleName
      *
      * @return mixed
@@ -65,6 +75,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @todo move this to propel bundle
      *
      * @return bool
@@ -75,6 +87,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAllBundles()
@@ -83,6 +97,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string $application
      * @param string $bundle
      * @param string $layer
@@ -95,6 +111,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string|bool $bundleToView
      *
      * @return bool
@@ -105,6 +123,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string|bool $bundleToView
      *
      * @return bool
@@ -115,6 +135,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string|bool $bundleToView
      *
      * @return bool
@@ -125,6 +147,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getAdjacencyMatrixData()
@@ -133,6 +157,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getDependencyViolations()
@@ -141,6 +167,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getEngineBundleList()
@@ -149,6 +177,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function updateComposerJsonInBundles()
@@ -157,6 +187,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getExternalDependencyTree()

@@ -15,6 +15,8 @@ class ClientLocatorMatcher implements LocatorMatcherInterface
     const METHOD_PREFIX = 'client';
 
     /**
+     * @api
+     *
      * @param string $method
      *
      * @return bool
@@ -25,6 +27,8 @@ class ClientLocatorMatcher implements LocatorMatcherInterface
     }
 
     /**
+     * @api
+     *
      * @param string $method
      *
      * @return string

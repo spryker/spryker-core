@@ -21,6 +21,8 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade implements Calcu
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $response
      *
@@ -46,6 +48,8 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade implements Calcu
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Checkout\Business\Calculation\CalculableContainer $calculableContainer
      *
      * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface

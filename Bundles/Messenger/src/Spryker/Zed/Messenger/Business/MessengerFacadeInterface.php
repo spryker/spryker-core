@@ -13,6 +13,8 @@ interface MessengerFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
@@ -20,6 +22,8 @@ interface MessengerFacadeInterface
     public function addSuccessMessage(MessageTransfer $message);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
@@ -27,6 +31,8 @@ interface MessengerFacadeInterface
     public function addErrorMessage(MessageTransfer $message);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
@@ -34,6 +40,8 @@ interface MessengerFacadeInterface
     public function addInfoMessage(MessageTransfer $message);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages();

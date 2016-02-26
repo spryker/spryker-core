@@ -11,6 +11,8 @@ interface UserQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $username
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
@@ -18,6 +20,8 @@ interface UserQueryContainerInterface
     public function queryUserByUsername($username);
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
@@ -25,11 +29,15 @@ interface UserQueryContainerInterface
     public function queryUserById($id);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUsers();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUser();
