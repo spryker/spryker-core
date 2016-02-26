@@ -67,9 +67,15 @@ class CsvReader implements CsvReaderInterface
     {
         $data = array_values($data);
         $columns = array_values($this->columns);
+        $columnCount = count($columns);
+        $dataCount = count($data);
 
-        if (count($data) !== count($columns)) {
-            throw new \UnexpectedValueException('Expected "'. count($columns) . '" column(s) but received data with "'.count($data).'" column(s)');
+        if ($columnCount !== $dataCount) {
+            throw new \UnexpectedValueException(sprintf(
+                'Expected %d column(s) but received data with %d column(s)',
+                $columnCount,
+                $dataCount
+            ));
         }
 
         return array_combine($columns, $data);
