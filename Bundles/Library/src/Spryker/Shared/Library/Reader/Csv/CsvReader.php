@@ -125,8 +125,11 @@ class CsvReader implements CsvReaderInterface
      */
     public function load($filename)
     {
-        if (!is_file($filename)) {
-            throw new \InvalidArgumentException($filename);
+        if (!is_readable($filename)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Could not open csv file "%s"',
+                $filename
+            ));
         }
 
         $this->csvFile = new SplFileObject($filename);
