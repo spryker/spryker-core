@@ -43,14 +43,26 @@ class CsvBatchIterator implements CountableIteratorInterface
     protected $currentDataSet = [];
 
     /**
-     * @param \Spryker\Shared\Library\Reader\Csv\CsvReaderInterface $csvFile
+     * @param string $filename
      * @param int $chunkSize
      */
-    public function __construct(CsvReaderInterface $csvFile, $chunkSize = 100)
+    public function __construct($filename, $chunkSize = 10)
     {
-        $this->csvReader = $csvFile;
-        $this->csvReader->getFile()->flock(LOCK_EX); //make sure nobody else will rewind
+        $this->filename = $filename;
         $this->chunkSize = $chunkSize;
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\Reader\Csv\CsvReaderInterface
+     */
+    protected function getCsvReader()
+    {
+        if ($this->csvReader === null) {
+            $this->csvReader = new CsvReader();
+            $this->csvReader->load($this->filename);
+        }
+
+        return $this->csvReader;
     }
 
     /**
@@ -63,7 +75,7 @@ class CsvBatchIterator implements CountableIteratorInterface
 
     /**
      * {@inheritdoc}
-     *
+     * x
      * @return void
      */
     public function next()
@@ -71,14 +83,26 @@ class CsvBatchIterator implements CountableIteratorInterface
         $chunkData = [];
         $batchSize = $this->offset + $this->chunkSize;
 
+        if ($batchSize > $this->getCsvReader()->getTotal()) {
+            $batchSize = $this->getCsvReader()->getTotal();
+        }
+
         while ($this->currentKey < $batchSize) {
-            $chunkData[] = $this->csvReader->read();
+            $chunkData[] = $this->getCsvReader()->read();
             $this->currentKey++;
+
+            if ($this->currentKey >= $this->getCsvReader()->getTotal()) {
+                break;
+            }
         }
 
         $this->currentDataSet = $chunkData;
         $this->isValid = is_array($this->currentDataSet) && !empty($this->currentDataSet);
         $this->offset += $this->chunkSize;
+
+        if ($this->offset > $this->getCsvReader()->getTotal()) {
+            $this->offset = $this->getCsvReader()->getTotal();
+        }
     }
 
     /**
@@ -114,15 +138,7 @@ class CsvBatchIterator implements CountableIteratorInterface
      */
     public function count()
     {
-        return $this->csvReader->getTotal();
-    }
-
-    /**
-     * return void
-     */
-    public function __destruct()
-    {
-        $this->csvReader->getFile()->flock(LOCK_UN);
+        return $this->getCsvReader()->getTotal();
     }
 
 }

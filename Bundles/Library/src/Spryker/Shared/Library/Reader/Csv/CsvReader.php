@@ -52,16 +52,40 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
+     * @param string $filename
+     *
      * @return void
      */
-    protected function setupColumns()
+    protected function setupScope()
     {
-        $this->getFile()->fseek(0);
+        $this->columns = $this->csvFile->fgetcsv();
 
-        while (!$this->getFile()->eof()) {
-            $this->columns = $this->getFile()->fgetcsv();
-            break;
+        $this->total = null;
+        $this->readIndex = 1;
+        $this->isValidated = false;
+    }
+
+    /**
+     * @param string $filename
+     *
+     * @return \SplFileObject
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function createCsvFile($filename)
+    {
+        if (!is_file($filename) || !is_readable($filename)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Could not open csv file "%s"',
+                $filename
+            ));
         }
+
+        $csvFile = new SplFileObject($filename);
+        $csvFile->setCsvControl(',', '"');
+        $csvFile->setFlags(SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD);
+
+        return $csvFile;
     }
 
     /**
@@ -132,11 +156,12 @@ class CsvReader implements CsvReaderInterface
     public function getTotal()
     {
         if ($this->total === null) {
-            $this->getFile()->rewind();
+            $csvFile = $this->createCsvFile($this->getFile()->getPathname());
+            $csvFile->rewind();
 
             $lines = 1;
-            while (!$this->getFile()->eof()) {
-                $lines += substr_count($this->getFile()->fread(8192), $this->lineBreaker);
+            while (!$csvFile->eof()) {
+                $lines += substr_count($csvFile->fread(8192), $this->lineBreaker);
             }
 
             $this->total = $lines;
@@ -162,34 +187,11 @@ class CsvReader implements CsvReaderInterface
      */
     public function load($filename)
     {
-        if (!is_readable($filename)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Could not open csv file "%s"',
-                $filename
-            ));
-        }
+        $this->csvFile = $this->createCsvFile($filename);
 
-        $this->loadCsvFile($filename);
-
-        $this->total = null;
-        $this->readIndex = 1;
-        $this->isValidated = false;
-
-        $this->setupColumns();
+        $this->setupScope();
 
         return $this;
-    }
-
-    /**
-     * @param string $filename
-     *
-     * @return void
-     */
-    protected function loadCsvFile($filename)
-    {
-        $this->csvFile = new SplFileObject($filename);
-        $this->csvFile->setCsvControl(',', '"');
-        $this->csvFile->setFlags(SplFileObject::READ_CSV | SplFileObject::READ_AHEAD | SplFileObject::SKIP_EMPTY | SplFileObject::DROP_NEW_LINE);
     }
 
     /**
@@ -216,7 +218,7 @@ class CsvReader implements CsvReaderInterface
     public function toArray()
     {
         $data = [];
-        $csvFile = clone $this->getFile();
+        $csvFile = $this->createCsvFile($this->getFile()->getPathname());
         $csvFile->rewind();
 
         while (!$csvFile->eof()) {
