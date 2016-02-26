@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Catalog\Model;
 
+// TODO: rethink whole facet config concept
 class FacetConfig
 {
 
@@ -73,33 +74,33 @@ class FacetConfig
         return null;
     }
 
-    /**
-     * @param string $internalName
-     *
-     * @return string|null
-     */
-    public function getSortNameFromInternalName($internalName)
-    {
-        return isset(static::$sortNamesMapping[$internalName]) ? static::$sortNamesMapping[$internalName] : null;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllSortNames()
-    {
-        return array_values(static::$sortNamesMapping);
-    }
-
-    /**
-     * @param string $facetName
-     *
-     * @return string|null
-     */
-    public function getParameterNameForFacet($facetName)
-    {
-        return isset(static::$attributes[$facetName]) ? static::$attributes[$facetName] : null;
-    }
+//    /**
+//     * @param string $internalName
+//     *
+//     * @return string|null
+//     */
+//    public function getSortNameFromInternalName($internalName)
+//    {
+//        return isset(static::$sortNamesMapping[$internalName]) ? static::$sortNamesMapping[$internalName] : null;
+//    }
+//
+//    /**
+//     * @return array
+//     */
+//    public function getAllSortNames()
+//    {
+//        return array_values(static::$sortNamesMapping);
+//    }
+//
+//    /**
+//     * @param string $facetName
+//     *
+//     * @return string|null
+//     */
+//    public function getParameterNameForFacet($facetName)
+//    {
+//        return isset(static::$attributes[$facetName]) ? static::$attributes[$facetName] : null;
+//    }
 
     /**
      * @param string $paramName
@@ -122,26 +123,26 @@ class FacetConfig
         return array_pop($keys);
     }
 
-    /**
-     * @param string $shortParamName
-     *
-     * @throws \RuntimeException
-     *
-     * @return string|null
-     */
-    public function getFacetNameFromShortParameter($shortParamName)
-    {
-        $callback = function ($facet) use ($shortParamName) {
-            return self::filterFacetByShortParamNameCallback($facet, $shortParamName);
-        };
-        $facetForParam = array_filter(static::$attributes, $callback);
-        $keys = array_keys($facetForParam);
-        if (count($keys) > 1) {
-            throw new \RuntimeException('Short Parameter names for Facets must be unique, Duplicates found for short param: ' . $shortParamName);
-        }
-
-        return array_pop($keys);
-    }
+//    /**
+//     * @param string $shortParamName
+//     *
+//     * @throws \RuntimeException
+//     *
+//     * @return string|null
+//     */
+//    public function getFacetNameFromShortParameter($shortParamName)
+//    {
+//        $callback = function ($facet) use ($shortParamName) {
+//            return self::filterFacetByShortParamNameCallback($facet, $shortParamName);
+//        };
+//        $facetForParam = array_filter(static::$attributes, $callback);
+//        $keys = array_keys($facetForParam);
+//        if (count($keys) > 1) {
+//            throw new \RuntimeException('Short Parameter names for Facets must be unique, Duplicates found for short param: ' . $shortParamName);
+//        }
+//
+//        return array_pop($keys);
+//    }
 
     /**
      * @param string $paramName

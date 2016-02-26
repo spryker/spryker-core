@@ -143,6 +143,8 @@ abstract class AbstractFactory
      */
     protected function createSearchClient()
     {
+        trigger_error('Use getSearchClient() instead.', E_USER_DEPRECATED);
+
         return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_SEARCH);
     }
 

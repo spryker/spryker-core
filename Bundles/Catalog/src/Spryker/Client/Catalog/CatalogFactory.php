@@ -15,85 +15,85 @@ use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
 use Spryker\Client\Catalog\Model\Extractor\FacetExtractor;
 use Spryker\Client\Catalog\Model\Extractor\RangeExtractor;
 use Spryker\Client\Catalog\Model\FacetConfig;
-use Spryker\Client\Catalog\Model\FacetFilterHandler;
-use Spryker\Client\Catalog\Model\FacetSearch;
-use Spryker\Client\Catalog\Model\FulltextSearch;
+use Spryker\Client\Catalog\Model\Query\CategorySearchQuery;
+use Spryker\Client\Catalog\Model\Query\Decorator\FacetAggregatedQuery;
+use Spryker\Client\Catalog\Model\Query\Decorator\FacetFilteredQuery;
+use Spryker\Client\Catalog\Model\Query\Decorator\PaginatedQuery;
+use Spryker\Client\Catalog\Model\Query\Decorator\SortedQuery;
+use Spryker\Client\Catalog\Model\Query\FulltextSearchQuery;
+use Spryker\Client\Catalog\Model\ResultFormatter\CatalogSearchResultFormatter;
+use Spryker\Client\Catalog\Model\ResultFormatter\Decorator\FacetResultFormatter;
+use Spryker\Client\Catalog\Model\ResultFormatter\Decorator\PaginatedResultFormatter;
+use Spryker\Client\Catalog\Model\ResultFormatter\Decorator\SortedResultFormatter;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Model\Query\QueryInterface;
+use Spryker\Client\Search\Model\ResultFormatter\AbstractElasticsearchResultFormatter;
 use Spryker\Shared\Kernel\Store;
-use Symfony\Component\HttpFoundation\Request;
 
 class CatalogFactory extends AbstractFactory
 {
 
     /**
-     * @var \Generated\Client\Ide\FactoryAutoCompletion\Catalog
+     * @return \Spryker\Client\Search\SearchClientInterface
      */
-    protected $factory;
-
-    /**
-     * @return Model\Catalog
-     */
-    public function createCatalogModel()
+    public function getSearchClient()
     {
-        return new ModelCatalog(
-            $this->getProductKeyBuilder(),
-            $this->createStorage(),
-            Store::getInstance()->getCurrentLocale()
-        );
+        return $this->getProvidedDependency(CatalogDependencyProvider::CLIENT_SEARCH);
     }
 
     /**
-     * @throws \ErrorException
+     * @param int $idCategory
+     * @param array $parameters
      *
-     * @return mixed
+     * @return \Spryker\Client\Search\Model\Query\QueryInterface
      */
-    public function createStorage()
-    {
-        return $this->getProvidedDependency(CatalogDependencyProvider::KVSTORAGE);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $category
-     *
-     * @return Model\FacetSearch
-     */
-    public function createFacetSearch(Request $request, array $category)
+    public function createCategorySearchQuery($idCategory, array $parameters)
     {
         $facetConfig = $this->createFacetConfig();
 
-        return new FacetSearch(
-            $request,
-            $facetConfig,
-            $this->getSearchIndex(),
-            $this->getFacetAggregationBuilder(),
-            $this->createFacetFilterHandler($facetConfig),
-            $this->getFacetExtractor(),
-            $this->getRangeExtractor(),
-            $this->createCatalogModel(),
-            $category
-        );
+        $searchQuery = new CategorySearchQuery($idCategory);
+        $searchQuery = $this->createSortedQuery($searchQuery, $facetConfig, $parameters);
+        $searchQuery = $this->createFacetAggregatedQuery($searchQuery, $facetConfig);
+        $searchQuery = $this->createFacetFilteredQuery($searchQuery, $facetConfig, $parameters);
+        $searchQuery = $this->createPaginatedQuery($searchQuery, $parameters);
+
+        return $searchQuery;
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $searchString
+     * @param array $parameters
      *
-     * @return Model\FulltextSearch
+     * @return \Spryker\Client\Search\Model\Query\QueryInterface
      */
-    public function createFulltextSearch(Request $request)
+    public function createFulltextSearchQuery($searchString, array $parameters)
     {
         $facetConfig = $this->createFacetConfig();
 
-        return new FulltextSearch(
-            $request,
-            $facetConfig,
-            $this->getSearchIndex(),
-            $this->getFacetAggregationBuilder(),
-            $this->createFacetFilterHandler($facetConfig),
-            $this->getFacetExtractor(),
-            $this->getRangeExtractor(),
-            $this->createCatalogModel()
-        );
+        $searchQuery = new FulltextSearchQuery($searchString);
+        $searchQuery = $this->createSortedQuery($searchQuery, $facetConfig, $parameters);
+        $searchQuery = $this->createFacetAggregatedQuery($searchQuery, $facetConfig);
+        $searchQuery = $this->createFacetFilteredQuery($searchQuery, $facetConfig, $parameters);
+        $searchQuery = $this->createPaginatedQuery($searchQuery, $parameters);
+
+        return $searchQuery;
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return \Spryker\Client\Search\Model\ResultFormatter\ResultFormatterInterface
+     */
+    public function createCatalogSearchResultFormatter(array $parameters)
+    {
+        $facetConfig = $this->createFacetConfig();
+
+        $resultFormatter = new CatalogSearchResultFormatter($this->createCatalogModel());
+        $resultFormatter = $this->createFacetResultFormatter($resultFormatter, $facetConfig, $parameters);
+        $resultFormatter = $this->createPaginatedResultFormatter($resultFormatter, $parameters);
+        $resultFormatter = $this->createSortedResultFormatter($resultFormatter, $facetConfig, $parameters);
+
+        return $resultFormatter;
     }
 
     /**
@@ -105,16 +105,104 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
+     * @param \Spryker\Client\Search\Model\Query\QueryInterface $searchQuery
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
+     * @param array $parameters
+     *
+     * @return \Spryker\Client\Search\Model\Query\QueryInterface
+     */
+    protected function createSortedQuery(QueryInterface $searchQuery, FacetConfig $facetConfig, array $parameters)
+    {
+        return new SortedQuery($searchQuery, $facetConfig, $parameters);
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Model\Query\QueryInterface $searchQuery
      * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
      *
-     * @return Model\FacetFilterHandler
+     * @return \Spryker\Client\Search\Model\Query\QueryInterface
      */
-    protected function createFacetFilterHandler(FacetConfig $facetConfig)
+    protected function createFacetAggregatedQuery(QueryInterface $searchQuery, FacetConfig $facetConfig)
     {
-        return new FacetFilterHandler(
-            $this->createNestedFilterBuilder(),
-            $facetConfig
+        return new FacetAggregatedQuery($searchQuery, $this->createFacetAggregationBuilder(), $facetConfig);
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Model\Query\QueryInterface $searchQuery
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
+     * @param array $parameters
+     *
+     * @return \Spryker\Client\Search\Model\Query\QueryInterface
+     */
+    protected function createFacetFilteredQuery(QueryInterface $searchQuery, FacetConfig $facetConfig, array $parameters)
+    {
+        return new FacetFilteredQuery($searchQuery, $facetConfig, $this->createNestedFilterBuilder(), $parameters);
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Model\Query\QueryInterface $searchQuery
+     * @param array $parameters
+     *
+     * @return \Spryker\Client\Search\Model\Query\QueryInterface
+     */
+    protected function createPaginatedQuery(QueryInterface $searchQuery, array $parameters)
+    {
+        return new PaginatedQuery($searchQuery, $parameters);
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Model\ResultFormatter\AbstractElasticsearchResultFormatter $resultFormatter
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
+     * @param array $parameters
+     *
+     * @return \Spryker\Client\Search\Model\ResultFormatter\AbstractElasticsearchResultFormatter
+     */
+    protected function createFacetResultFormatter(AbstractElasticsearchResultFormatter $resultFormatter, FacetConfig $facetConfig, array $parameters)
+    {
+        return new FacetResultFormatter($resultFormatter, $facetConfig, $this->createFacetExtractor(), $this->createRangeExtractor(), $parameters);
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Model\ResultFormatter\AbstractElasticsearchResultFormatter $resultFormatter
+     * @param array $parameters
+     *
+     * @return \Spryker\Client\Search\Model\ResultFormatter\AbstractElasticsearchResultFormatter
+     */
+    protected function createPaginatedResultFormatter(AbstractElasticsearchResultFormatter $resultFormatter, array $parameters)
+    {
+        return new PaginatedResultFormatter($resultFormatter, $parameters);
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Model\ResultFormatter\AbstractElasticsearchResultFormatter $resultFormatter
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
+     * @param array $parameters
+     *
+     * @return \Spryker\Client\Search\Model\ResultFormatter\AbstractElasticsearchResultFormatter
+     */
+    protected function createSortedResultFormatter(AbstractElasticsearchResultFormatter $resultFormatter, FacetConfig $facetConfig, array $parameters)
+    {
+        return new SortedResultFormatter($resultFormatter, $facetConfig, $parameters);
+    }
+
+    /**
+     * @return \Spryker\Client\Catalog\Model\Catalog
+     */
+    protected function createCatalogModel()
+    {
+        return new ModelCatalog(
+            $this->createProductKeyBuilder(),
+            $this->getKvStorage(),
+            Store::getInstance()->getCurrentLocale()
         );
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getKvStorage()
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::KVSTORAGE);
     }
 
     /**
@@ -128,7 +216,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @return Model\Builder\FacetAggregationBuilder
      */
-    protected function getFacetAggregationBuilder()
+    protected function createFacetAggregationBuilder()
     {
         return new FacetAggregationBuilder();
     }
@@ -136,7 +224,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @return Model\Extractor\FacetExtractor
      */
-    protected function getFacetExtractor()
+    protected function createFacetExtractor()
     {
         return new FacetExtractor();
     }
@@ -144,7 +232,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @return Model\Extractor\RangeExtractor
      */
-    protected function getRangeExtractor()
+    protected function createRangeExtractor()
     {
         return new RangeExtractor();
     }
@@ -152,7 +240,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
-    protected function getProductKeyBuilder()
+    protected function createProductKeyBuilder()
     {
         return new ProductResourceKeyBuilder();
     }

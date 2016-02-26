@@ -5,20 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Catalog\Model;
+namespace Spryker\Client\Catalog\Model\Query\Decorator;
 
 use Elastica\Filter\BoolAnd;
 use Elastica\Query;
 use Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Spryker\Client\Catalog\Model\FacetConfig;
+use Spryker\Client\Search\Model\Query\Decorator\AbstractQueryDecorator;
+use Spryker\Client\Search\Model\Query\QueryInterface;
 
-class FacetFilterHandler implements FacetFilterHandlerInterface
+class FacetFilteredQuery extends AbstractQueryDecorator
 {
-
-    /**
-     * @var \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface
-     */
-    protected $nestedFilterBuilder;
 
     /**
      * @var \Spryker\Client\Catalog\Model\FacetConfig
@@ -26,27 +23,46 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
     protected $facetConfig;
 
     /**
-     * @param \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface $nestedFilterBuilder
-     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
+     * @var \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface
      */
-    public function __construct(
-        NestedFilterBuilderInterface $nestedFilterBuilder,
-        FacetConfig $facetConfig
-    ) {
-        $this->nestedFilterBuilder = $nestedFilterBuilder;
+    protected $nestedFilterBuilder;
+
+    /**
+     * @var array
+     */
+    protected $parameters;
+
+    /**
+     * @param \Spryker\Client\Search\Model\Query\QueryInterface $searchQuery
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
+     * @param \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface $nestedFilterBuilder
+     * @param array $parameters
+     */
+    public function __construct(QueryInterface $searchQuery, FacetConfig $facetConfig, NestedFilterBuilderInterface $nestedFilterBuilder, array $parameters) {
+        parent::__construct($searchQuery);
+
         $this->facetConfig = $facetConfig;
+        $this->nestedFilterBuilder = $nestedFilterBuilder;
+        $this->parameters = $parameters;
+    }
+
+    /**
+     * @return \Elastica\Query
+     */
+    public function getSearchQuery()
+    {
+        return $this->addFacetFiltersToQuery($this->searchQuery->getSearchQuery());
     }
 
     /**
      * @param \Elastica\Query $query
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return void
+     * @return \Elastica\Query
      */
-    public function addFacetFiltersToQuery(Query $query, Request $request)
+    protected function addFacetFiltersToQuery(Query $query)
     {
         $filters = array_intersect(
-            $request->query->keys(),
+            array_keys($this->parameters),
             $this->facetConfig->getAllParamNamesForFacets(true)
         );
         if ($filters) {
@@ -54,7 +70,7 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
             foreach ($filters as $filter) {
                 $facetConfig = $this->facetConfig->getFacetSetupFromParameter($filter);
                 $filterFacetName = $this->facetConfig->getFacetNameFromParameter($filter);
-                $filterValue = $request->query->get($filter);
+                $filterValue = isset($this->parameters[$filter]) ? $this->parameters[$filter] : null;
 
                 if (trim($filterValue) === '') {
                     continue;
@@ -64,6 +80,8 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
             }
             $query->setPostFilter($filterObjects);
         }
+
+        return $query;
     }
 
     /**
@@ -71,7 +89,7 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
      * @param string $filterValue
      * @param string $filterFacetName
      *
-     * @return Filter\Range|null
+     * @return \Elastica\Filter\Range|null
      */
     protected function createFilterObject($facetConfig, $filterValue, $filterFacetName)
     {

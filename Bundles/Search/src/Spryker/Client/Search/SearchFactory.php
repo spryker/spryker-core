@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 
 class SearchFactory extends AbstractFactory
@@ -15,6 +16,7 @@ class SearchFactory extends AbstractFactory
 
     /**
      * @return \Spryker\Client\ZedRequest\Client\ZedClient
+     * TODO: deprecate / remove
      */
     public function createIndexClient()
     {
@@ -27,6 +29,16 @@ class SearchFactory extends AbstractFactory
     protected function createProviderIndexClientProvider()
     {
         return new IndexClientProvider();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Handler\SearchHandlerInterface
+     */
+    public function createElasticsearchSearchHandler()
+    {
+        return new ElasticsearchSearchHandler(
+            $this->createProviderIndexClientProvider()->getClient()
+        );
     }
 
 }

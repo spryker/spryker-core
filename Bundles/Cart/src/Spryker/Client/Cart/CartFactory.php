@@ -19,7 +19,7 @@ class CartFactory extends AbstractFactory
      */
     public function createSession()
     {
-        return new QuoteSession($this->createSessionClient());
+        return new QuoteSession($this->getSessionClient());
     }
 
     /**
@@ -27,7 +27,7 @@ class CartFactory extends AbstractFactory
      */
     public function createZedStub()
     {
-        return new CartStub($this->createZedRequestClient());
+        return new CartStub($this->getZedRequestClient());
     }
 
 }

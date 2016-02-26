@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductSearch\Communication\Plugin\Installer;
 use Spryker\Zed\Search\Dependency\Facade\SearchToCollectorBridge;
 
 class SearchDependencyProvider extends AbstractBundleDependencyProvider
@@ -75,13 +74,11 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return array
+     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
      */
     protected function getInstallers(Container $container)
     {
-        return [
-            new Installer(),
-        ];
+        return [];
     }
 
 }

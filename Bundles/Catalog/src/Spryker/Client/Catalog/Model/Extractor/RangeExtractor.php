@@ -11,6 +11,9 @@ class RangeExtractor extends AbstractAggregationExtractor
 {
 
     /**
+     * Lorem
+     * @api Lorem ipsum dolor sit amet
+     *
      * @param array $aggregation
      * @param string $fieldName
      *

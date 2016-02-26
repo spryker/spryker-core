@@ -14,8 +14,8 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
 {
 
     const INDEX = 'index';
-
-    const  KVSTORAGE = 'kvstorage';
+    const KVSTORAGE = 'kvstorage';
+    const CLIENT_SEARCH = 'search client';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,12 +24,19 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
+        $container = parent::provideServiceLayerDependencies($container);
+
+        // TODO: remove this dependency
         $container[self::INDEX] = function (Container $container) {
             return $container->getLocator()->search()->client()->getIndexClient();
         };
 
         $container[self::KVSTORAGE] = function (Container $container) {
             return $container->getLocator()->storage()->client();
+        };
+
+        $container[self::CLIENT_SEARCH] = function (Container $container) {
+            return $container->getLocator()->search()->client();
         };
 
         return $container;

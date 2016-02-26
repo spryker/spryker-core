@@ -7,36 +7,28 @@
 
 namespace Spryker\Client\Catalog;
 
-use Symfony\Component\HttpFoundation\Request;
-
 interface CatalogClientInterface
 {
 
     /**
      * @api
      *
-     * @return \Spryker\Client\Catalog\Model\Catalog
+     * @param int $idCategory
+     * @param array $parameters
+     *
+     * @return mixed
      */
-    public function createCatalogModel();
+    public function categorySearch($idCategory, array $parameters);
 
     /**
      * @api
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $category
+     * @param string $searchString
+     * @param array $parameters
      *
-     * @return \Spryker\Client\Catalog\Model\FacetSearch
+     * @return mixed
      */
-    public function createFacetSearch(Request $request, array $category);
-
-    /**
-     * @api
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Client\Catalog\Model\FulltextSearch
-     */
-    public function createFulltextSearch(Request $request);
+    public function fulltextSearch($searchString, array $parameters = []);
 
     /**
      * @api
