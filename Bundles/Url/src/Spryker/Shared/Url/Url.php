@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Business\Url;
+namespace Spryker\Shared\Url;
 
 use Spryker\Zed\Application\Business\Exception\UrlInvalidException;
 use Spryker\Zed\Library\Sanitize\Html;

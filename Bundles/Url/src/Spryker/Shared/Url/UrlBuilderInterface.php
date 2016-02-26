@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Business\Model\Url;
+namespace Spryker\Shared\Url;
 
 interface UrlBuilderInterface
 {

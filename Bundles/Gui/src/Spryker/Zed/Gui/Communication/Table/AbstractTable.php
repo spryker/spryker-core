@@ -13,7 +13,7 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Library\Sanitize\Html;
 use Symfony\Component\HttpFoundation\Request;
