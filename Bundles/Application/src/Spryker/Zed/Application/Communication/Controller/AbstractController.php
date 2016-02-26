@@ -9,6 +9,7 @@ namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
+use Spryker\Zed\Assertion\Business\AssertionFacadeInterface;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
@@ -352,6 +353,14 @@ abstract class AbstractController
     private function getLocator()
     {
         return Locator::getInstance();
+    }
+
+    /**
+     * @return AssertionFacadeInterface
+     */
+    protected function getAssertion()
+    {
+        return $this->getApplication()['assertion'];
     }
 
 }

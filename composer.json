@@ -25,6 +25,8 @@
       "Unit\\Spryker\\Yves\\Application\\": "Bundles/Application/tests",
       "Spryker\\Zed\\Application\\": "Bundles/Application/src",
       "Unit\\Spryker\\Zed\\Application\\": "Bundles/Application/tests",
+      "Spryker\\Zed\\Assertion\\": "Bundles/Assertion/src",
+      "Unit\\Spryker\\Zed\\Assertion\\": "Bundles/Assertion/tests",
       "Spryker\\Client\\Auth\\": "Bundles/Auth/src",
       "Unit\\Spryker\\Client\\Auth\\": "Bundles/Auth/tests",
       "Functional\\Spryker\\Client\\Auth\\": "Bundles/Auth/tests",
