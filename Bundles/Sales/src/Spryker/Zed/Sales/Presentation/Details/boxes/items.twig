@@ -7,7 +7,7 @@
 
                 <div>
                     {% for event in allEvents %}
-                        <a class="btn btn-primary trigger-order-event" data-id-sales-order="{{ orderItem.idSalesOrderItem }}" data-event="{{ event }}" href="#">{{ event }}</a>
+                        <a class="btn btn-primary trigger-order-event" data-id-sales-order="{{ order.idSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
                     {% endfor %}
                 </div>
 
