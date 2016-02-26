@@ -7,16 +7,10 @@
 
 namespace Spryker\Zed\Library\Reader;
 
-use Pyz\Zed\Installer\Business\Exception\DataFileNotFoundException;
 use SplFileObject;
 
 class CsvReader implements CsvReaderInterface
 {
-
-    /**
-     * @var string
-     */
-    protected $dataDirectory;
 
     /**
      * @var
@@ -39,27 +33,24 @@ class CsvReader implements CsvReaderInterface
     protected $csvFile;
 
     /**
-     * @param string $dataDirectory
+     * @param string $lineBreaker
      */
-    public function __construct($dataDirectory, $lineBreaker="\n")
+    public function __construct($lineBreaker="\n")
     {
-        $this->dataDirectory = $dataDirectory;
         $this->lineBreaker = $lineBreaker;
     }
 
     /**
      * @param string $filename
      *
-     * @throws \Pyz\Zed\Installer\Business\Exception\DataFileNotFoundException
+     * @throws \InvalidArgumentException
      *
      * @return $this
      */
     public function read($filename)
     {
-        $filename = $this->dataDirectory . DIRECTORY_SEPARATOR . $filename;
-
         if (!is_file($filename)) {
-            throw new DataFileNotFoundException($filename);
+            throw new \InvalidArgumentException($filename);
         }
 
         $this->csvFile = new SplFileObject($filename);
