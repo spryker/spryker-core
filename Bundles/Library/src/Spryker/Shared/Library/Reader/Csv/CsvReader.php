@@ -78,7 +78,7 @@ class CsvReader implements CsvReaderInterface
     /**
      * @return void
      */
-    protected function setupScope()
+    protected function setupScope() //TODO extract to separate class, inject here as dependency, to get rid of state
     {
         if (!$this->isScopeReady) {
             $this->columns = $this->csvFile->fgetcsv();
