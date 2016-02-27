@@ -14,43 +14,24 @@ class CsvReader implements CsvReaderInterface
 {
 
     /**
-     * @var
-     */
-    protected $lineBreaker = "\n";
-
-    /**
-     * @var array
-     */
-    protected $columns = [];
-
-    /**
-     * @var int
-     */
-    protected $total;
-
-    /**
-     * @var int
-     */
-    protected $readIndex = 1;
-
-    /**
      * @var \SplFileObject
      */
     protected $csvFile;
 
     /**
-     * @var bool
+     * @var \Spryker\Shared\Library\Reader\Csv\CsvMetaInterface
      */
-    protected $isScopeReady = false;
-
+    protected $csvMeta;
 
     /**
-     * @param string $lineBreaker
+     * @var string
      */
-    public function __construct($lineBreaker = "\n")
-    {
-        $this->lineBreaker = $lineBreaker;
-    }
+    protected $csvFilename;
+
+    /**
+     * @var int
+     */
+    protected $readIndex = 1;
 
     /**
      * @param string $filename
@@ -76,17 +57,26 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
-     * @return void
+     * @param string $filename
+     *
+     * @return \Spryker\Shared\Library\Reader\Csv\CsvMeta
      */
-    protected function setupScope() //TODO extract to separate class, inject here as dependency, to get rid of state
+    protected function createCsvMeta($filename)
     {
-        if (!$this->isScopeReady) {
-            $this->columns = $this->csvFile->fgetcsv();
+        $csvFile = $this->createCsvFile($filename);
+        return new CsvMeta($csvFile);
+    }
 
-            $this->total = null;
-            $this->readIndex = 1;
-            $this->isScopeReady = true;
+    /**
+     * @return \Spryker\Shared\Library\Reader\Csv\CsvMeta
+     */
+    public function getCsvMeta()
+    {
+        if ($this->csvMeta === null) {
+            $this->csvMeta = $this->createCsvMeta($this->getFile()->getPathname());
         }
+
+        return $this->csvMeta;
     }
 
     /**
@@ -118,9 +108,7 @@ class CsvReader implements CsvReaderInterface
      */
     public function getColumns()
     {
-        $this->setupScope();
-
-        return $this->columns;
+        return $this->getCsvMeta()->getColumns();
     }
 
     /**
@@ -130,7 +118,9 @@ class CsvReader implements CsvReaderInterface
      */
     public function getFile()
     {
-        $this->setupScope();
+        if ($this->csvFile === null) {
+            $this->csvFile = $this->createCsvFile($this->csvFilename);
+        }
 
         return $this->csvFile;
     }
@@ -140,27 +130,7 @@ class CsvReader implements CsvReaderInterface
      */
     public function getTotal()
     {
-        if ($this->total === null) {
-            $csvFile = $this->createCsvFile($this->getFile()->getPathname());
-            $csvFile->rewind();
-
-            $lines = 1;
-            while (!$csvFile->eof()) {
-                $lines += substr_count($csvFile->fread(8192), $this->lineBreaker);
-            }
-
-            $this->total = $lines;
-        }
-
-        return $this->total;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isReadable()
-    {
-        return $this->csvFile !== null && $this->csvFile->isReadable();
+        return $this->getCsvMeta()->getTotal();
     }
 
     /**
@@ -172,10 +142,12 @@ class CsvReader implements CsvReaderInterface
      */
     public function load($filename)
     {
-        $this->isScopeReady = false;
-        $this->csvFile = $this->createCsvFile($filename);
+        $this->csvFilename = $filename;
+        $this->csvFile = null;
+        $this->csvMeta = null;
+        $this->readIndex = 1;
 
-        $this->setupScope();
+        $this->getFile()->rewind();
 
         return $this;
     }
@@ -192,7 +164,7 @@ class CsvReader implements CsvReaderInterface
             throw new ResourceNotFoundException('Malformed data at line ' . $this->readIndex);
         }
 
-        $data = $this->composeItem($this->columns, $data);
+        $data = $this->composeItem($this->getCsvMeta()->getColumns(), $data);
         $this->readIndex++;
 
         return $data;
@@ -213,10 +185,11 @@ class CsvReader implements CsvReaderInterface
     {
         $data = [];
         $csvFile = $this->createCsvFile($this->getFile()->getPathname());
-        $csvFile->rewind();
+        $csvMeta = $this->createCsvMeta($this->getFile()->getPathname());
 
+        $csvFile->rewind();
         while (!$csvFile->eof()) {
-            $data[] = $this->composeItem($this->columns, $csvFile->fgetcsv());
+            $data[] = $this->composeItem($csvMeta->getColumns(), $csvFile->fgetcsv());
         }
 
         return $data;

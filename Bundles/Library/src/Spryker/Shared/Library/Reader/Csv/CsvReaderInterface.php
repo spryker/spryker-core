@@ -34,11 +34,6 @@ interface CsvReaderInterface
     public function getTotal();
 
     /**
-     * @return bool
-     */
-    public function isReadable();
-
-    /**
      * @param string $filename
      *
      * @return $this
