@@ -13,6 +13,16 @@ class CsvBatchIterator implements CountableIteratorInterface
 {
 
     /**
+     * @var \Spryker\Shared\Library\Reader\Csv\CsvReaderInterface
+     */
+    protected $csvReader;
+
+    /**
+     * @var
+     */
+    protected $csvFilename;
+
+    /**
      * @var int
      */
     protected $offset = 0;
@@ -21,11 +31,6 @@ class CsvBatchIterator implements CountableIteratorInterface
      * @var int
      */
     protected $chunkSize = 10;
-
-    /**
-     * @var \Spryker\Shared\Library\Reader\Csv\CsvReaderInterface
-     */
-    protected $csvReader;
 
     /**
      * @var int
@@ -48,7 +53,7 @@ class CsvBatchIterator implements CountableIteratorInterface
      */
     public function __construct($filename, $chunkSize = 10)
     {
-        $this->filename = $filename;
+        $this->csvFilename = $filename;
         $this->chunkSize = $chunkSize;
     }
 
@@ -59,7 +64,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     {
         if ($this->csvReader === null) {
             $this->csvReader = new CsvReader();
-            $this->csvReader->load($this->filename);
+            $this->csvReader->load($this->csvFilename);
         }
 
         return $this->csvReader;

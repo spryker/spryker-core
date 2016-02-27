@@ -41,7 +41,7 @@ class CsvReader implements CsvReaderInterface
     /**
      * @var bool
      */
-    protected $isValidated;
+    protected $isScopeReady = false;
 
 
     /**
@@ -80,30 +80,13 @@ class CsvReader implements CsvReaderInterface
      */
     protected function setupScope()
     {
-        $this->columns = $this->csvFile->fgetcsv();
+        if (!$this->isScopeReady) {
+            $this->columns = $this->csvFile->fgetcsv();
 
-        $this->total = null;
-        $this->readIndex = 1;
-        $this->isValidated = false;
-    }
-
-    /**
-     * @throws \LogicException
-     *
-     * @return void
-     */
-    protected function validate()
-    {
-        //skip unnecessary I/O reads, if called from loop
-        if ($this->isValidated) {
-            return;
+            $this->total = null;
+            $this->readIndex = 1;
+            $this->isScopeReady = true;
         }
-
-        if (!$this->isReadable()) {
-            throw new \LogicException('No CSV file has been loaded');
-        }
-
-        $this->isValidated = true;
     }
 
     /**
@@ -135,7 +118,7 @@ class CsvReader implements CsvReaderInterface
      */
     public function getColumns()
     {
-        $this->validate();
+        $this->setupScope();
 
         return $this->columns;
     }
@@ -147,7 +130,7 @@ class CsvReader implements CsvReaderInterface
      */
     public function getFile()
     {
-        $this->validate();
+        $this->setupScope();
 
         return $this->csvFile;
     }
@@ -189,6 +172,7 @@ class CsvReader implements CsvReaderInterface
      */
     public function load($filename)
     {
+        $this->isScopeReady = false;
         $this->csvFile = $this->createCsvFile($filename);
 
         $this->setupScope();
