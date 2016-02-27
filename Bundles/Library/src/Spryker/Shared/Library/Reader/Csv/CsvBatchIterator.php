@@ -33,11 +33,6 @@ class CsvBatchIterator implements CountableIteratorInterface
     protected $chunkSize = 10;
 
     /**
-     * @var int
-     */
-    protected $currentKey = 0;
-
-    /**
      * @var bool
      */
     protected $isValid = true;
@@ -45,7 +40,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     /**
      * @var array
      */
-    protected $currentDataSet = [];
+    protected $batchData = [];
 
     /**
      * @param string $filename
@@ -75,7 +70,7 @@ class CsvBatchIterator implements CountableIteratorInterface
      */
     public function current()
     {
-        return $this->currentDataSet;
+        return $this->batchData;
     }
 
     /**
@@ -85,25 +80,19 @@ class CsvBatchIterator implements CountableIteratorInterface
      */
     public function next()
     {
-        $chunkData = [];
         $batchSize = $this->offset + $this->chunkSize;
-
         if ($batchSize > $this->getCsvReader()->getTotal()) {
             $batchSize = $this->getCsvReader()->getTotal();
         }
 
-        while ($this->currentKey < $batchSize) {
-            $chunkData[] = $this->getCsvReader()->read();
-            $this->currentKey++;
-
-            if ($this->currentKey >= $this->getCsvReader()->getTotal()) {
-                break;
-            }
+        $batchData = [];
+        while ($this->offset < $batchSize) {
+            $batchData[] = $this->getCsvReader()->read();
+            $this->offset++;
         }
 
-        $this->currentDataSet = $chunkData;
-        $this->isValid = is_array($this->currentDataSet) && !empty($this->currentDataSet);
-        $this->offset += $this->chunkSize;
+        $this->batchData = $batchData;
+        $this->isValid = is_array($this->batchData) && !empty($this->batchData);
 
         if ($this->offset > $this->getCsvReader()->getTotal()) {
             $this->offset = $this->getCsvReader()->getTotal();
@@ -115,7 +104,7 @@ class CsvBatchIterator implements CountableIteratorInterface
      */
     public function key()
     {
-        return $this->currentKey;
+        return $this->offset;
     }
 
     /**
@@ -133,9 +122,8 @@ class CsvBatchIterator implements CountableIteratorInterface
      */
     public function rewind()
     {
-        $this->currentKey = 0;
         $this->offset = 0;
-        $this->next();
+        //$this->next(); TODO check if that's needed
     }
 
     /**
