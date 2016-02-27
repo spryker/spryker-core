@@ -53,18 +53,6 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
-     * @return void
-     */
-    protected function setupScope()
-    {
-        $this->columns = $this->csvFile->fgetcsv();
-
-        $this->total = null;
-        $this->readIndex = 1;
-        $this->isValidated = false;
-    }
-
-    /**
      * @param string $filename
      *
      * @return \SplFileObject
@@ -88,13 +76,30 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
+     * @return void
+     */
+    protected function setupScope()
+    {
+        $this->columns = $this->csvFile->fgetcsv();
+
+        $this->total = null;
+        $this->readIndex = 1;
+        $this->isValidated = false;
+    }
+
+    /**
      * @throws \LogicException
      *
      * @return void
      */
     protected function validate()
     {
-        if (!$this->isLoaded()) {
+        //skip unnecessary I/O reads, if called from loop
+        if ($this->isValidated) {
+            return;
+        }
+
+        if (!$this->isReadable()) {
             throw new \LogicException('No CSV file has been loaded');
         }
 
@@ -142,9 +147,7 @@ class CsvReader implements CsvReaderInterface
      */
     public function getFile()
     {
-        if (!$this->isValidated) {
-            $this->validate();
-        }
+        $this->validate();
 
         return $this->csvFile;
     }
@@ -172,7 +175,7 @@ class CsvReader implements CsvReaderInterface
     /**
      * @return bool
      */
-    public function isLoaded()
+    public function isReadable()
     {
         return $this->csvFile !== null && $this->csvFile->isReadable();
     }

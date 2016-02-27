@@ -36,7 +36,7 @@ interface CsvReaderInterface
     /**
      * @return bool
      */
-    public function isLoaded();
+    public function isReadable();
 
     /**
      * @param string $filename
