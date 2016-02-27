@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Library\Reader\Csv;
 
 use SplFileObject;
+use Spryker\Shared\Library\Reader\Exception\ResourceNotFoundException;
 
 class CsvReader implements CsvReaderInterface
 {
@@ -52,8 +53,6 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
-     * @param string $filename
-     *
      * @return void
      */
     protected function setupScope()
@@ -70,13 +69,13 @@ class CsvReader implements CsvReaderInterface
      *
      * @return \SplFileObject
      *
-     * @throws \InvalidArgumentException
+     * @throws \Spryker\Shared\Library\Reader\Exception\ResourceNotFoundException
      */
     protected function createCsvFile($filename)
     {
         if (!is_file($filename) || !is_readable($filename)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Could not open csv file "%s"',
+            throw new ResourceNotFoundException(sprintf(
+                'Could not open CSV file "%s"',
                 $filename
             ));
         }
@@ -181,7 +180,7 @@ class CsvReader implements CsvReaderInterface
     /**
      * @param string $filename
      *
-     * @throws \InvalidArgumentException
+     * @throws \Spryker\Shared\Library\Reader\Exception\ResourceNotFoundException
      *
      * @return $this
      */
@@ -195,7 +194,7 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
-     * @throws \UnexpectedValueException
+     * @throws \Spryker\Shared\Library\Reader\Exception\ResourceNotFoundException
      *
      * @return array
      */
@@ -203,13 +202,21 @@ class CsvReader implements CsvReaderInterface
     {
         $data = $this->getFile()->fgetcsv();
         if (empty($data)) {
-            throw new \UnexpectedValueException('Malformed data at line ' . $this->readIndex);
+            throw new ResourceNotFoundException('Malformed data at line ' . $this->readIndex);
         }
 
         $data = $this->composeItem($this->columns, $data);
         $this->readIndex++;
 
         return $data;
+    }
+
+    /**
+     * @return bool
+     */
+    public function eof()
+    {
+        return $this->getFile()->eof();
     }
 
     /**

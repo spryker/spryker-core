@@ -51,6 +51,11 @@ interface CsvReaderInterface
     public function read();
 
     /**
+     * @return bool
+     */
+    public function eof();
+
+    /**
      * @return array
      */
     public function toArray();
