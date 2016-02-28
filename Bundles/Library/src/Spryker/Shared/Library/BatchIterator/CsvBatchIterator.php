@@ -33,11 +33,6 @@ class CsvBatchIterator implements CountableIteratorInterface
     protected $chunkSize = 100;
 
     /**
-     * @var bool
-     */
-    protected $isValid = true;
-
-    /**
      * @var array
      */
     protected $batchData = [];
