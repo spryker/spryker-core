@@ -54,27 +54,6 @@ class XmlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @throws \Spryker\Shared\Library\Exception\ResourceNotFoundException
-     *
-     * @return \SimpleXMLElement
-     */
-    protected function getXmlReader()
-    {
-        if ($this->xmlReader === null) {
-            if (!is_file($this->xmlFilename) || !is_readable($this->xmlFilename)) {
-                throw new ResourceNotFoundException(sprintf(
-                    'Could not open Yaml file "%s"',
-                    $this->xmlFilename
-                ));
-            }
-
-            $this->xmlReader = new \SimpleXmlIterator(file_get_contents($this->xmlFilename));
-        }
-
-        return $this->xmlReader;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function current()
@@ -91,8 +70,14 @@ class XmlBatchIterator implements CountableIteratorInterface
     {
         if ($this->batchData === null) {
             try {
+                $xml = simplexml_load_string(
+                    file_get_contents($this->xmlFilename),
+                    'SimpleXMLElement',
+                    LIBXML_NOCDATA
+                );
+
                 $this->batchData = json_decode(
-                    json_encode($this->getXmlReader()), true
+                    json_encode($xml), true
                 );
 
                 $this->batchData = $this->batchData[$this->rootNodeName];
