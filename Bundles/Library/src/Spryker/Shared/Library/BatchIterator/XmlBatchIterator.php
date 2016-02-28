@@ -8,20 +8,24 @@
 namespace Spryker\Shared\Library\BatchIterator;
 
 use Spryker\Shared\Library\Exception\ResourceNotFoundException;
-use Symfony\Component\Yaml\Yaml;
 
-class YamlBatchIterator implements CountableIteratorInterface
+class XmlBatchIterator implements CountableIteratorInterface
 {
 
     /**
      * @var \Symfony\Component\Yaml\Yaml
      */
-    protected $yamlReader;
+    protected $xmlReader;
 
     /**
      * @var
      */
-    protected $yamlFilename;
+    protected $xmlFilename;
+
+    /**
+     * @var string
+     */
+    protected $rootNodeName;
 
     /**
      * @var int
@@ -42,31 +46,32 @@ class YamlBatchIterator implements CountableIteratorInterface
      * @param string $filename
      * @param int $chunkSize
      */
-    public function __construct($filename, $chunkSize = -1)
+    public function __construct($filename, $rootNodeName, $chunkSize = -1)
     {
-        $this->yamlFilename = $filename;
+        $this->xmlFilename = $filename;
+        $this->rootNodeName = $rootNodeName;
         $this->chunkSize = $chunkSize;
     }
 
     /**
      * @throws \Spryker\Shared\Library\Exception\ResourceNotFoundException
      *
-     * @return \Symfony\Component\Yaml\Yaml
+     * @return \SimpleXMLElement
      */
-    protected function getYamlReader()
+    protected function getXmlReader()
     {
-        if ($this->yamlReader === null) {
-            $this->yamlReader = new Yaml();
+        if ($this->xmlReader === null) {
+            $this->xmlReader = new \SimpleXMLElement(file_get_contents($this->xmlFilename));
 
-            if (!is_file($this->yamlFilename) || !is_readable($this->yamlFilename)) {
+            if (!is_file($this->xmlFilename) || !is_readable($this->xmlFilename)) {
                 throw new ResourceNotFoundException(sprintf(
                     'Could not open Yaml file "%s"',
-                    $this->yamlFilename
+                    $this->xmlFilename
                 ));
             }
         }
 
-        return $this->yamlReader;
+        return $this->xmlReader;
     }
 
     /**
@@ -85,9 +90,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     public function next()
     {
         if ($this->batchData === null) {
-            $this->batchData = $this->getYamlReader()->parse(
-                file_get_contents($this->yamlFilename)
-            );
+            $this->batchData = $this->getXmlReader()->{$this->rootNodeName};
         }
 
         $this->offset++;
