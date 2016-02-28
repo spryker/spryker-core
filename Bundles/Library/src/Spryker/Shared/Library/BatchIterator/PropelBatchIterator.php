@@ -28,11 +28,6 @@ class PropelBatchIterator implements CountableIteratorInterface
     protected $query;
 
     /**
-     * @var bool
-     */
-    protected $isValid = true;
-
-    /**
      * @var array
      */
     protected $currentDataSet = [];
@@ -50,13 +45,13 @@ class PropelBatchIterator implements CountableIteratorInterface
     /**
      * @return void
      */
-    protected function loadData()
+    protected function loadChunk()
     {
         $this->query->setOffset($this->offset);
         $this->query->setLimit($this->chunkSize);
-
         $this->currentDataSet = $this->query->find();
-        $this->isValid = $this->currentDataSet->count() > 0;
+
+        $this->offset += $this->chunkSize;
     }
 
     /**
@@ -74,8 +69,7 @@ class PropelBatchIterator implements CountableIteratorInterface
      */
     public function next()
     {
-        $this->loadData();
-        $this->offset += $this->chunkSize;
+        $this->loadChunk();
     }
 
     /**
@@ -91,7 +85,7 @@ class PropelBatchIterator implements CountableIteratorInterface
      */
     public function valid()
     {
-        return $this->isValid;
+        return count($this->currentDataSet);
     }
 
     /**
@@ -102,7 +96,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     public function rewind()
     {
         $this->offset = 0;
-        $this->loadData();
+        $this->loadChunk();
     }
 
     /**
@@ -110,10 +104,11 @@ class PropelBatchIterator implements CountableIteratorInterface
      */
     public function count()
     {
-        $this->query->setLimit(-1);
-        $this->query->setOffset(-1);
+        $query = clone $this->query;
+        $query->setLimit(-1);
+        $query->setOffset(-1);
 
-        return $this->query->count();
+        return $query->count();
     }
 
 }
