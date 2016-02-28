@@ -183,6 +183,8 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
+     * @param bool $skipColumns
+     *
      * @return void
      */
     public function rewind($skipColumns = true)
