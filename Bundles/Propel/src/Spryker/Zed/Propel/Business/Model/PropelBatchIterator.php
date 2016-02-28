@@ -9,7 +9,7 @@ namespace Spryker\Zed\Propel\Business\Model;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
-class PropelBatchIterator implements CountableIteratorInterface
+class PropelBatchIterator implements CountableIteratorInterface, \Spryker\Shared\Library\Reader\CountableIteratorInterface
 {
 
     /**

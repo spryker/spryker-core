@@ -161,7 +161,11 @@ class CsvReader implements CsvReaderInterface
     {
         $data = $this->getFile()->fgetcsv();
         if (empty($data)) {
-            throw new ResourceNotFoundException('Malformed data at line ' . $this->readIndex);
+            throw new ResourceNotFoundException(sprintf(
+                'Malformed data at line %d in %s',
+                $this->readIndex,
+                $this->csvFilename
+            ));
         }
 
         $data = $this->composeItem($this->getCsvMeta()->getColumns(), $data);

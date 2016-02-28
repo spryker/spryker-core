@@ -66,6 +66,21 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
+     * @return void
+     */
+    protected function loadChunk()
+    {
+        while (!$this->getCsvReader()->eof()) {
+            $this->batchData[] = $this->getCsvReader()->read();
+            $this->offset++;
+
+            if (count($this->batchData) >= $this->chunkSize) {
+                break;
+            }
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function current()
@@ -80,23 +95,8 @@ class CsvBatchIterator implements CountableIteratorInterface
      */
     public function next()
     {
-        $batchSize = $this->offset + $this->chunkSize;
-        if ($batchSize > $this->getCsvReader()->getTotal()) {
-            $batchSize = $this->getCsvReader()->getTotal();
-        }
-
-        $batchData = [];
-        while ($this->offset < $batchSize) {
-            $batchData[] = $this->getCsvReader()->read();
-            $this->offset++;
-        }
-
-        $this->batchData = $batchData;
-        $this->isValid = is_array($this->batchData) && !empty($this->batchData);
-
-        if ($this->offset > $this->getCsvReader()->getTotal()) {
-            $this->offset = $this->getCsvReader()->getTotal();
-        }
+        $this->batchData = [];
+        $this->loadChunk();
     }
 
     /**
@@ -112,7 +112,7 @@ class CsvBatchIterator implements CountableIteratorInterface
      */
     public function valid()
     {
-        return $this->isValid;
+        return !empty($this->batchData);
     }
 
     /**
@@ -123,7 +123,8 @@ class CsvBatchIterator implements CountableIteratorInterface
     public function rewind()
     {
         $this->offset = 0;
-        //$this->next(); TODO check if that's needed
+        $this->getCsvReader()->getFile()->rewind();
+        $this->loadChunk();
     }
 
     /**

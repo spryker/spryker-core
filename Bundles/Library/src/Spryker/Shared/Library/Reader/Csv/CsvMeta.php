@@ -85,7 +85,7 @@ class CsvMeta implements CsvMetaInterface
                 $lines += substr_count($this->csvFile->fread(8192), $this->lineSeparator);
             }
 
-            $this->total = $lines;
+            $this->total = (int)$lines;
         }
 
         return $this->total;
