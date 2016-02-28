@@ -143,7 +143,6 @@ class CsvMeta implements CsvMetaInterface
     public function getColumnsOffset()
     {
         if ($this->columnsOffset === null) {
-            //Do not use mb_strlen, as it counts characters, we need byte count here
             $this->columnsOffset = strlen($this->getColumnsAsString() . $this->lineSeparator);
         }
         return $this->columnsOffset;

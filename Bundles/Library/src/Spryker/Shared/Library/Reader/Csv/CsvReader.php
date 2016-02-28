@@ -59,7 +59,7 @@ class CsvReader implements CsvReaderInterface
     /**
      * @param string $filename
      *
-     * @return \Spryker\Shared\Library\Reader\Csv\CsvMeta
+     * @return \Spryker\Shared\Library\Reader\Csv\CsvMetaInterface
      */
     protected function createCsvMeta($filename)
     {
@@ -68,7 +68,7 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
-     * @return \Spryker\Shared\Library\Reader\Csv\CsvMeta
+     * @return \Spryker\Shared\Library\Reader\Csv\CsvMetaInterface
      */
     public function getCsvMeta()
     {
@@ -82,6 +82,8 @@ class CsvReader implements CsvReaderInterface
     /**
      * @param array $columns
      * @param array $data
+     *
+     * @throws \UnexpectedValueException
      *
      * @return array
      */
