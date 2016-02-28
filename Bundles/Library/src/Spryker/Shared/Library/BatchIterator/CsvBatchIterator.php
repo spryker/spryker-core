@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Library\Reader\Csv;
+namespace Spryker\Shared\Library\BatchIterator;
 
-use Spryker\Shared\Library\Reader\CountableIteratorInterface;
+use Spryker\Shared\Library\Reader\Csv\CsvReader;
 
 class CsvBatchIterator implements CountableIteratorInterface
 {
@@ -30,7 +30,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     /**
      * @var int
      */
-    protected $chunkSize = 10;
+    protected $chunkSize = 100;
 
     /**
      * @var bool

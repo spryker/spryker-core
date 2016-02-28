@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model;
+namespace Spryker\Shared\Library\BatchIterator;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 

@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Library\Reader\Yaml;
+namespace Spryker\Shared\Library\BatchIterator;
 
-use Spryker\Shared\Library\Reader\CountableIteratorInterface;
-use Spryker\Shared\Library\Reader\Exception\ResourceNotFoundException;
+use Spryker\Shared\Library\Exception\ResourceNotFoundException;
 use Symfony\Component\Yaml\Yaml;
 
 class YamlBatchIterator implements CountableIteratorInterface
@@ -50,7 +49,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @throws \Spryker\Shared\Library\Reader\Exception\ResourceNotFoundException
+     * @throws \Spryker\Shared\Library\Exception\ResourceNotFoundException
      *
      * @return \Symfony\Component\Yaml\Yaml
      */

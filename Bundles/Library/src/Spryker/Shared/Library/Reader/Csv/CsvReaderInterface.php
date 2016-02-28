@@ -41,6 +41,8 @@ interface CsvReaderInterface
     public function load($filename);
 
     /**
+     * @throws \UnexpectedValueException
+     *
      * @return array
      */
     public function read();

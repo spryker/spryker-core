@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Library\Reader\Csv;
 
 use SplFileObject;
-use Spryker\Shared\Library\Reader\Exception\ResourceNotFoundException;
+use Spryker\Shared\Library\Exception\ResourceNotFoundException;
 
 class CsvReader implements CsvReaderInterface
 {
@@ -38,7 +38,7 @@ class CsvReader implements CsvReaderInterface
      *
      * @return \SplFileObject
      *
-     * @throws \Spryker\Shared\Library\Reader\Exception\ResourceNotFoundException
+     * @throws \Spryker\Shared\Library\Exception\ResourceNotFoundException
      */
     protected function createCsvFile($filename)
     {
@@ -138,7 +138,7 @@ class CsvReader implements CsvReaderInterface
     /**
      * @param string $filename
      *
-     * @throws \Spryker\Shared\Library\Reader\Exception\ResourceNotFoundException
+     * @throws \Spryker\Shared\Library\Exception\ResourceNotFoundException
      *
      * @return $this
      */
@@ -155,7 +155,7 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
-     * @throws \Spryker\Shared\Library\Reader\Exception\ResourceNotFoundException
+     * @throws \UnexpectedValueException
      *
      * @return array
      */
@@ -163,7 +163,7 @@ class CsvReader implements CsvReaderInterface
     {
         $data = $this->getFile()->fgetcsv();
         if (empty($data)) {
-            throw new ResourceNotFoundException(sprintf(
+            throw new \UnexpectedValueException(sprintf(
                 'Malformed data at line %d in %s',
                 $this->readIndex,
                 $this->csvFilename

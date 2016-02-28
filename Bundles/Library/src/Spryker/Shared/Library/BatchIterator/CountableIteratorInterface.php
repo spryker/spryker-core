@@ -5,8 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Library\Reader\Exception;
+namespace Spryker\Shared\Library\BatchIterator;
 
-class ResourceNotFoundException extends \Exception
+interface CountableIteratorInterface extends \Iterator, \Countable
 {
 }
