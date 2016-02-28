@@ -61,14 +61,14 @@ class XmlBatchIterator implements CountableIteratorInterface
     protected function getXmlReader()
     {
         if ($this->xmlReader === null) {
-            $this->xmlReader = new \SimpleXMLElement(file_get_contents($this->xmlFilename));
-
             if (!is_file($this->xmlFilename) || !is_readable($this->xmlFilename)) {
                 throw new ResourceNotFoundException(sprintf(
                     'Could not open Yaml file "%s"',
                     $this->xmlFilename
                 ));
             }
+
+            $this->xmlReader = new \SimpleXmlIterator(file_get_contents($this->xmlFilename));
         }
 
         return $this->xmlReader;
@@ -90,7 +90,16 @@ class XmlBatchIterator implements CountableIteratorInterface
     public function next()
     {
         if ($this->batchData === null) {
-            $this->batchData = $this->getXmlReader()->{$this->rootNodeName};
+            try {
+                $this->batchData = json_decode(
+                    json_encode($this->getXmlReader()), true
+                );
+
+                $this->batchData = $this->batchData[$this->rootNodeName];
+            }
+            catch (\Exception $exception) {
+                $this->batchData = [];
+            }
         }
 
         $this->offset++;
