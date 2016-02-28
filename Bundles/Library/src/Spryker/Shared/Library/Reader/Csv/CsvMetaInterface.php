@@ -18,6 +18,11 @@ interface CsvMetaInterface
     public function getColumns();
 
     /**
+     * @return string
+     */
+    public function getColumnsAsString();
+
+    /**
      * @return int
      */
     public function getTotal();
@@ -31,6 +36,11 @@ interface CsvMetaInterface
      * @return string
      */
     public function getEnclosure();
+
+    /**
+     * @return int
+     */
+    public function getColumnsOffset();
 
 
 }

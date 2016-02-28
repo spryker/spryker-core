@@ -25,6 +25,16 @@ class CsvMeta implements CsvMetaInterface
     /**
      * @var string
      */
+    protected $columnsAsString;
+
+    /**
+     * @var int
+     */
+    protected $columnsOffset;
+
+    /**
+     * @var string
+     */
     protected $delimiter;
 
     /**
@@ -73,6 +83,18 @@ class CsvMeta implements CsvMetaInterface
     }
 
     /**
+     * @return string
+     */
+    public function getColumnsAsString()
+    {
+        if ($this->columnsAsString === null) {
+            $this->columnsAsString = implode($this->getDelimiter(), $this->getColumns());
+        }
+
+        return $this->columnsAsString;
+    }
+
+    /**
      * @return int
      */
     public function getTotal()
@@ -113,6 +135,18 @@ class CsvMeta implements CsvMetaInterface
         }
 
         return $this->enclosure;
+    }
+
+    /**
+     * @return int
+     */
+    public function getColumnsOffset()
+    {
+        if ($this->columnsOffset === null) {
+            //Do not use mb_strlen, as it counts characters, we need byte count here
+            $this->columnsOffset = strlen($this->getColumnsAsString() . $this->lineSeparator);
+        }
+        return $this->columnsOffset;
     }
 
 }

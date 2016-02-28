@@ -48,7 +48,12 @@ interface CsvReaderInterface
     /**
      * @return bool
      */
-    public function eof();
+    public function valid();
+
+    /**
+     * @return void
+     */
+    public function rewind($skipColumns = true);
 
     /**
      * @return array

@@ -177,9 +177,22 @@ class CsvReader implements CsvReaderInterface
     /**
      * @return bool
      */
-    public function eof()
+    public function valid()
     {
-        return $this->getFile()->eof();
+        return !$this->getFile()->eof();
+    }
+
+    /**
+     * @return void
+     */
+    public function rewind($skipColumns = true)
+    {
+        $this->csvFile->fseek(0);
+
+        if ($skipColumns) {
+            $this->getFile()->fseek($this->getCsvMeta()->getColumnsOffset());
+            return;
+        }
     }
 
     /**
