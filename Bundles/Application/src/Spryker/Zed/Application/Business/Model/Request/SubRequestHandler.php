@@ -50,12 +50,16 @@ class SubRequestHandler implements SubRequestHandlerInterface
      */
     protected function mergeRequestArguments(Request $request, array $parameters)
     {
-        $subRequestParameters = array_merge($parameters, $request->query->all());
+        $subRequestParameters = array_merge(
+            $parameters,
+            $request->query->all(),
+            $request->attributes->all()
+        );
 
         if ($request->getMethod() === Request::METHOD_POST) {
-            $subRequestParameters = array_merge($parameters, $request->request->all());
-            return $subRequestParameters;
+            $subRequestParameters = array_merge($subRequestParameters, $request->request->all());
         }
+
         return $subRequestParameters;
     }
 
@@ -63,7 +67,8 @@ class SubRequestHandler implements SubRequestHandlerInterface
      * @param Request $request
      * @param $url
      * @param $subRequestParameters
-     * @return mixed
+     *
+     * @return Request
      */
     protected function createSubRequest(Request $request, $url, $subRequestParameters)
     {
@@ -75,6 +80,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
             $request->files->all(),
             $request->server->all()
         );
+
         return $subRequest;
     }
 
