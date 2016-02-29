@@ -62,11 +62,11 @@ $(document).ready(function () {
         $('.small-chat-box').toggleClass('active');
     });
 
-    // Initialize slimscroll for small chat
-    $('.small-chat-box .content').slimScroll({
-        height: '234px',
-        railOpacity: 0.4
-    });
+    //// Initialize slimscroll for small chat
+    //$('.small-chat-box .content').slimScroll({
+    //    height: '234px',
+    //    railOpacity: 0.4
+    //});
 
     // Small todo handler
     $('.check-link').click(function () {
@@ -125,16 +125,6 @@ $(document).ready(function () {
 
     fix_height();
 
-    // Fixed Sidebar
-    // $(window).bind("load", function () {
-    //     if ($("body").hasClass('fixed-sidebar')) {
-    //         $('.sidebar-collapse').slimScroll({
-    //             height: '100%',
-    //             railOpacity: 0.9
-    //         });
-    //     }
-    // });
-
     // Move right sidebar top after scroll
     $(window).scroll(function () {
         if ($(window).scrollTop() > 0 && !$('body').hasClass('fixed-nav')) {
@@ -153,25 +143,22 @@ $(document).ready(function () {
     $("[data-toggle=popover]")
         .popover();
 
+
+    // Minimalize menu when screen is less than 768px
+    $(window).bind("resize", function () {
+        if ($(this).width() < 769) {
+            $('body').addClass('body-small')
+        } else {
+            $('body').removeClass('body-small')
+        }
+    });
+
     // Add slimscroll to element
     // $('.full-height-scroll').slimscroll({
     //     height: '100%'
     // });
 
-
-// Minimalize menu when screen is less than 768px
-$(window).bind("resize", function () {
-    if ($(this).width() < 769) {
-        $('body').addClass('body-small')
-    } else {
-        $('body').removeClass('body-small')
-    }
-});
-
-// Local Storage functions
-// Set proper body class and plugins based on user configuration
-$(document).ready(function () {
-    if (localStorageSupport) {
+    if (inspinia.localStorageSupport) {
 
         var collapse = localStorage.getItem("collapse_menu");
         var fixedsidebar = localStorage.getItem("fixedsidebar");
@@ -183,10 +170,6 @@ $(document).ready(function () {
 
         if (fixedsidebar == 'on') {
             body.addClass('fixed-sidebar');
-            // $('.sidebar-collapse').slimScroll({
-            //     height: '100%',
-            //     railOpacity: 0.9
-            // });
         }
 
         if (collapse == 'on') {
