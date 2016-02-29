@@ -20,6 +20,11 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
     protected $messenger;
 
     /**
+     * @return void
+     */
+    abstract public function install();
+
+    /**
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return $this
@@ -30,11 +35,6 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
 
         return $this;
     }
-
-    /**
-     * @return void
-     */
-    abstract public function install();
 
     /**
      * Logs with an arbitrary level.

@@ -19,11 +19,11 @@ class InstallerFacade extends AbstractFacade implements InstallerFacadeInterface
     /**
      * @api
      *
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
      */
-    public function getInstallers()
+    public function getInstallerPlugins()
     {
-        return $this->getFactory()->getInstallers();
+        return $this->getFactory()->getInstallerPlugins();
     }
 
     /**

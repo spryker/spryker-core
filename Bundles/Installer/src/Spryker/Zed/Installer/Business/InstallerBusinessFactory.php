@@ -19,11 +19,11 @@ class InstallerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
      */
-    public function getInstallers()
+    public function getInstallerPlugins()
     {
-        return $this->getProvidedDependency(InstallerDependencyProvider::INSTALLERS);
+        return $this->getProvidedDependency(InstallerDependencyProvider::INSTALLER_PLUGINS);
     }
 
     /**

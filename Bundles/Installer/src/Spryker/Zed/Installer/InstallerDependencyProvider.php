@@ -15,7 +15,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_GLOSSARY = 'facade_glossary';
-    const INSTALLERS = 'installer plugins';
+    const INSTALLER_PLUGINS = 'installer plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,7 +30,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
             return new InstallerToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
-        $container[self::INSTALLERS] = function (Container $container) {
+        $container[self::INSTALLER_PLUGINS] = function (Container $container) {
             return $this->getInstallerPlugins();
         };
 
