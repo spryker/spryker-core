@@ -44,13 +44,10 @@ class DetailController extends AbstractController // TODO FW No plural in contro
         //$logs = $this->getFacade()->getPaymentLogs($idSalesOrder); // TODO FW Needs another solution, see mails
         //$refunds = $this->getFacade()->getRefunds($idSalesOrder); // TODO FW Needs another solution, see mails
 
-        $blockResponseData =  $this->renderSalesDetailBlocks($request);
+        $blockResponseData =  $this->renderSalesDetailBlocks($request, $orderTransfer);
         if ($blockResponseData instanceof RedirectResponse) {
             return $blockResponseData;
         }
-
-//        dump($blockResponseData);
-//        die;
 
         return array_merge([
             'events' => $events,
@@ -66,13 +63,14 @@ class DetailController extends AbstractController // TODO FW No plural in contro
      * @param Request $request
      * @return array|string
      */
-    protected function renderSalesDetailBlocks(Request $request)
+    protected function renderSalesDetailBlocks(Request $request, OrderTransfer $orderTransfer)
     {
         $addCommentBlock = $this->renderAction($request, '/sales/comment/add');
 
         if ($addCommentBlock instanceof RedirectResponse) {
             return $addCommentBlock;
         }
+        $request->attributes->set('orderTransfer', $orderTransfer);
 
         $blockData = $this->renderMultipleActions($request, $this->getFactory()->getSalesDetailExternalBlocksUrls());
 
@@ -94,13 +92,16 @@ class DetailController extends AbstractController // TODO FW No plural in contro
      */
     protected function renderMultipleActions(Request $request, array $data)
     {
+        $subRequest = clone $request;
+        $subRequest->setMethod(Request::METHOD_POST);
+
         $responseData = [];
         /**
          * @var string $blockName
          * @var Response $blockResponse
          */
         foreach ($data as $blockName => $blockUrl) {
-            $responseData[$blockName] = $this->renderAction($request, $blockUrl);
+            $responseData[$blockName] = $this->renderAction($subRequest, $blockUrl);
         }
 
         return $responseData;

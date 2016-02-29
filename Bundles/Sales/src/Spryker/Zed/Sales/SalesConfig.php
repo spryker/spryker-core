@@ -175,16 +175,7 @@ class SalesConfig extends AbstractBundleConfig
      */
     public function getSalesDetailExternalBlocksUrls()
     {
-        return [
-            'totals' => '/sales/comment/list',
-        ]; // TODO remove this and use the right urls to render blocks
-
-        return [
-            'totals' => '/sales/comment/list',
-            'payment_logs' => '/sales/comment/add',
-            'shipment' => '/sales/comment/add',
-            'discount' => '/sales/comment/add',
-        ];
+        return [];
     }
 
 }

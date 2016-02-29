@@ -1,5 +1,7 @@
-<div class="row">
-    <div class="col-sm-12">
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Discount' } %}
+
+    {% block widget_content %}
+
         <div class="row">
             <div class="col-md-6">
                 <table class="table">
@@ -48,5 +50,7 @@
                 </table>
             </div>
         </div>
-    </div>
-</div>
+
+    {% endblock %}
+
+{% endembed %}
