@@ -3,6 +3,9 @@ modules:
         \Testify\Module\Environment:
             mode: 'isolated'
 
+        \Config\Module\ConfigInit:
+            enabled: true
+
         \Transfer\Module\TransferGenerate:
             enabled: true
 

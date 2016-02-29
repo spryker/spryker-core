@@ -29,7 +29,7 @@ class ApplicationConfig extends AbstractBundleConfig
     public function getNavigationSchemaPathPattern()
     {
         return [
-            APPLICATION_SPRYKER_ROOT . '/*/src/*/Zed/*/Communication',
+            $this->getBundlesDirectory() . '/*/src/*/Zed/*/Communication',
         ];
     }
 
@@ -70,7 +70,15 @@ class ApplicationConfig extends AbstractBundleConfig
      */
     public function getBundlesDirectory()
     {
-        return APPLICATION_SPRYKER_ROOT;
+        return $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNavigationEnabled()
+    {
+        return $this->get(ApplicationConstants::NAVIGATION_ENABLED, true);
     }
 
 }

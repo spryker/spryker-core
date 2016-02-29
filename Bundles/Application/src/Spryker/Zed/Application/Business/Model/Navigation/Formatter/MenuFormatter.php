@@ -93,7 +93,6 @@ class MenuFormatter implements MenuFormatterInterface
                 continue;
             }
             $formattedPage = $this->formatPage($page);
-
             if (isset($page[self::PAGES]) && !empty($page[self::PAGES])) {
                 $this->menuLevelValidator->validate($currentLevel, $page[self::TITLE]);
                 $children = $this->formatPages($page[self::PAGES], $pathInfo, $currentLevel, $includeInvisible);

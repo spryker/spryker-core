@@ -88,13 +88,25 @@ class ConfigInit extends Module
     private function initConfigDefault()
     {
         $finder = $this->getConfigDefaultFiles();
-
-        $config = new \ArrayObject();
+        $configHeader = '<?php' . PHP_EOL . PHP_EOL;
+        $configUseStatements = [];
+        $configBody = '';
         foreach ($finder as $file) {
-            include $file->getPathname();
+            $content = str_replace('<?php', '', $file->getContents());
+            $useStatements = [];
+            preg_match_all('/use\s(.*?);/', $content, $useStatements, PREG_SET_ORDER);
+
+            foreach ($useStatements as $useStatement) {
+                $content = str_replace($useStatement[0] . PHP_EOL, '', $content);
+                $configUseStatements[$useStatement[1]] = $useStatement[0];
+            }
+
+            $configBody .= $content;
         }
 
-        Config::getInstance($config);
+        $fileName = $this->getTargetDirectory() . '/config_default-test.php';
+
+        file_put_contents($fileName, $configHeader . implode(PHP_EOL, $configUseStatements) . $configBody);
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Propel\PropelConstants;
@@ -42,7 +43,7 @@ class PropelConfig extends AbstractBundleConfig
     public function getPropelSchemaPathPatterns()
     {
         return [
-            APPLICATION_SPRYKER_ROOT . '/*/src/*/Zed/*/Persistence/Propel/Schema/',
+            Config::get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/*/Zed/*/Persistence/Propel/Schema/',
         ];
     }
 

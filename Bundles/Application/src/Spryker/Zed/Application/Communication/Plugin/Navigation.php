@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */
 class Navigation extends AbstractPlugin
 {
@@ -23,6 +24,10 @@ class Navigation extends AbstractPlugin
      */
     public function buildNavigation($pathInfo)
     {
+        if (!$this->getConfig()->isNavigationEnabled()) {
+            return [];
+        }
+
         return $this->getFacade()
             ->buildNavigation($pathInfo);
     }
