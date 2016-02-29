@@ -10,7 +10,7 @@ namespace Spryker\Shared;
 use Spryker\Shared\Config\Config as SprykerConfig;
 
 /**
- * @deprecated 1.0.0 Use Spryker\Shared\Config\Config instead.
+ * @deprecated Use Spryker\Shared\Config\Config instead.
  */
 class Config extends SprykerConfig
 {

@@ -675,7 +675,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated 1.0.0 Will be removed in the next major version.
+     * @deprecated Will be removed in the next major version.
      *
      * @return array
      */

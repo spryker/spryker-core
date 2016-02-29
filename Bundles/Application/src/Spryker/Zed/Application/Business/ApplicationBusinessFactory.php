@@ -227,7 +227,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated 1.0.0 Use getUrlBuilder() instead.
+     * @deprecated Use getUrlBuilder() instead.
      *
      * @return \Spryker\Shared\Url\UrlBuilderInterface
      */
