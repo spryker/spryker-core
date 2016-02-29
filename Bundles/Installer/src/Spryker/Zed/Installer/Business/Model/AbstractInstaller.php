@@ -50,16 +50,4 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
         $this->messenger->log($level, $message, $context);
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $message
-     *
-     * @return void
-     */
-    public function updateOutput(OutputInterface $output, $message)
-    {
-        $output->write($message);
-        $output->write(str_repeat("\x08", strlen($message)));
-    }
-
 }
