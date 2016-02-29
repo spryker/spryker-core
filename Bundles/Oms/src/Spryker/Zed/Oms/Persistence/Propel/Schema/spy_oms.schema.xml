@@ -18,7 +18,7 @@
         <column name="command" type="VARCHAR" required="false"/>
         <column name="condition" type="VARCHAR" required="false"/>
         <column name="is_error" type="BOOLEAN" required="false"/>
-        <column name="error_message" type="VARCHAR" size="1024" required="false"/>
+        <column name="error_message" type="LONGVARCHAR" required="false"/>
 
         <behavior name="timestampable">
             <parameter name="disable_updated_at" value="true" />
