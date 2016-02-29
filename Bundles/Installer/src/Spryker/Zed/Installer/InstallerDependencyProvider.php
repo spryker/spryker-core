@@ -31,7 +31,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::INSTALLERS] = function (Container $container) {
-            return $this->getInstallers();
+            return $this->getInstallerPlugins();
         };
 
         return $container;
@@ -40,9 +40,9 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Overwrite on project level.
      *
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
      */
-    public function getInstallers()
+    public function getInstallerPlugins()
     {
         return [];
     }
