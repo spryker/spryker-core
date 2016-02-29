@@ -59,6 +59,9 @@ class AdjacencyMatrixBuilder
         foreach ($dependencyTree as $dependency) {
             $bundle = $dependency[DependencyTree::META_BUNDLE];
             $foreignBundle = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
+            if ($bundle === 'external' || $foreignBundle === 'external') {
+                continue;
+            }
             $info = $this->matrix[$bundle][$foreignBundle];
 
             $info[] = $dependency[DependencyTree::META_CLASS_NAME] . ' => ' . $dependency[DependencyTree::META_FOREIGN_CLASS_NAME];

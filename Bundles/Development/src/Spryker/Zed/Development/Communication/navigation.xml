@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <development>
-        <label>Development</label>
-        <title>Development</title>
-        <bundle>development</bundle>
-        <controller>dependency</controller>
-        <action>index</action>
-        <icon>fa-archive</icon>
+    <maintenance>
         <pages>
             <dependencies>
                 <label>Dependencies</label>
@@ -17,5 +11,5 @@
                 <icon>fa-archive</icon>
             </dependencies>
         </pages>
-    </development>
+    </maintenance>
 </config>
