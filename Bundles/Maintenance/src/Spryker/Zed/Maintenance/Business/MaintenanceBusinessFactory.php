@@ -28,7 +28,6 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ExternalDep
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ForeignEngineBundleFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\InternalDependencyFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\InvalidForeignBundleFilter;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\InvalidForeignClassNameFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\ExternalDependency;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
@@ -54,14 +53,7 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignCo
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignException;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinder;
 use Spryker\Zed\Maintenance\Business\Dependency\BundleParser;
-use Spryker\Zed\Maintenance\Business\Dependency\Graph as DependencyGraph;
 use Spryker\Zed\Maintenance\Business\Dependency\Manager;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
-use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
 use Spryker\Zed\Maintenance\MaintenanceDependencyProvider;
 use Symfony\Component\Finder\Finder as SfFinder;
 use Symfony\Component\Process\Process;
@@ -71,86 +63,6 @@ use Symfony\Component\Process\Process;
  */
 class MaintenanceBusinessFactory extends AbstractBusinessFactory
 {
-
-    /**
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface
-     */
-    public function createPackageCollector()
-    {
-        $collection = $this->createInstalledPackageTransfer();
-        $finder = [];
-        $finder[] = $this->createComposerInstalledPackageFinder($collection);
-        $finder[] = $this->createNodePackageManagerInstalledPackageFinder(
-            $collection,
-            $this->getConfig()->getPathToRoot()
-        );
-        $finder[] = $this->createComposerInstalledPackageFinder($collection);
-
-        $collector = $this->createInstalledPackageCollector($collection, $finder);
-        $collector = $this->createFilteredInstalledPackageCollector($collector);
-
-        return $collector;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
-     *
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder
-     */
-    protected function createComposerInstalledPackageFinder(InstalledPackagesTransfer $collection)
-    {
-        return new ComposerInstalledPackageFinder(
-            $collection,
-            $this->getConfig()->getPathToComposerLock()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
-     * @param string $path
-     *
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder
-     */
-    protected function createNodePackageManagerInstalledPackageFinder(InstalledPackagesTransfer $collection, $path)
-    {
-        return new InstalledPackageFinder(
-            $collection,
-            $this->createNpmListProcess(),
-            $path
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\Process\Process
-     */
-    protected function createNpmListProcess()
-    {
-        return new Process('npm list -json -long');
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackages
-     *
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter
-     */
-    public function createMarkDownWriter(InstalledPackagesTransfer $installedPackages)
-    {
-        return new MarkDownWriter(
-            $installedPackages,
-            $this->getConfig()->getPathToFossFile()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\Graph\Graph
-     */
-    public function createDependencyGraph()
-    {
-        $bundleParser = $this->createDependencyBundleParser();
-        $manager = $this->createDependencyManager();
-
-        return new DependencyGraph($bundleParser, $manager, $this->getGraph()->init('Dependency Tree'));
-    }
 
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
@@ -180,54 +92,6 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         $bundleParser = $this->createDependencyBundleParser();
 
         return new Manager($bundleParser, $this->getConfig()->getBundleDirectory());
-    }
-
-    /**
-     * @return \Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleanerInterface
-     */
-    public function createPropelMigrationCleaner()
-    {
-        return new PropelMigrationCleaner(
-            $this->createPropelBaseFolderFinder()
-        );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
-     */
-    protected function createInstalledPackageTransfer()
-    {
-        $collection = new InstalledPackagesTransfer();
-
-        return $collection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
-     * @param array $finder
-     *
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector
-     */
-    protected function createInstalledPackageCollector($collection, array $finder)
-    {
-        $collector = new InstalledPackageCollector(
-            $collection,
-            $finder
-        );
-
-        return $collector;
-    }
-
-    /**
-     * @param \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface $collector
-     *
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter
-     */
-    protected function createFilteredInstalledPackageCollector($collector)
-    {
-        $collector = new InstalledPackageCollectorFilter($collector);
-
-        return $collector;
     }
 
     /**

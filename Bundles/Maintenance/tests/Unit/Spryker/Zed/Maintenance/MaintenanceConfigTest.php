@@ -28,12 +28,4 @@ class MaintenanceConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($this->getConfig()->getPathToComposerLock()));
     }
 
-    /**
-     * @return void
-     */
-    public function testGetPathToFossFileShouldReturnString()
-    {
-        $this->assertTrue(is_string($this->getConfig()->getPathToFossFile()));
-    }
-
 }

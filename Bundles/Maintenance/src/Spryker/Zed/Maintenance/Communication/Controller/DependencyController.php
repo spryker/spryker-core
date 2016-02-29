@@ -9,7 +9,6 @@ namespace Spryker\Zed\Maintenance\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
@@ -63,23 +62,6 @@ class DependencyController extends AbstractController
             self::QUERY_BUNDLE => $bundleName,
             'dependencies' => $dependencies,
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
-    public function graphAction(Request $request)
-    {
-        $bundleName = $request->query->get(self::QUERY_BUNDLE);
-        $response = $this->getFacade()->drawDependencyGraph($bundleName);
-
-        $callback = function () use ($response) {
-            echo $response;
-        };
-
-        return $this->streamedResponse($callback);
     }
 
     /**

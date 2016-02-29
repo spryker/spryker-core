@@ -65,30 +65,6 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     /**
      * @api
      *
-     * @param string $bundleName
-     *
-     * @return mixed
-     */
-    public function drawDependencyGraph($bundleName)
-    {
-        return $this->getFactory()->createDependencyGraph()->draw($bundleName);
-    }
-
-    /**
-     * @api
-     *
-     * @todo move this to propel bundle
-     *
-     * @return bool
-     */
-    public function cleanPropelMigration()
-    {
-        return $this->getFactory()->createPropelMigrationCleaner()->clean();
-    }
-
-    /**
-     * @api
-     *
      * @return array
      */
     public function getAllBundles()

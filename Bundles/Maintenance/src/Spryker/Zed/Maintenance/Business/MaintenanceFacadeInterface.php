@@ -7,26 +7,8 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
-use Generated\Shared\Transfer\InstalledPackagesTransfer;
-
 interface MaintenanceFacadeInterface
 {
-
-    /**
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
-     */
-    public function getInstalledPackages();
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackages
-     *
-     * @return void
-     */
-    public function writeInstalledPackagesToMarkDownFile(InstalledPackagesTransfer $installedPackages);
 
     /**
      * @api
@@ -45,24 +27,6 @@ interface MaintenanceFacadeInterface
      * @return array
      */
     public function showIncomingDependenciesForBundle($bundleName);
-
-    /**
-     * @api
-     *
-     * @param string $bundleName
-     *
-     * @return mixed
-     */
-    public function drawDependencyGraph($bundleName);
-
-    /**
-     * @api
-     *
-     * @todo move this to propel bundle
-     *
-     * @return bool
-     */
-    public function cleanPropelMigration();
 
     /**
      * @api

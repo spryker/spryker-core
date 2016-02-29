@@ -86,8 +86,7 @@ class BundleParser
     {
         $files = (new Finder())
             ->files()
-            ->in($this->config->getBundleDirectory() . $bundle . '/src/*/Zed/')
-            ->exclude($this->config->getExcludedDirectoriesForDependencies());
+            ->in($this->config->getBundleDirectory() . $bundle . '/src/*/Zed/');
 
         return $files;
     }
@@ -139,50 +138,6 @@ class BundleParser
         }
 
         return $bundleDependencies;
-    }
-
-    /**
-     * @param string $bundleName
-     *
-     * @return bool
-     */
-    public function isEngine($bundleName)
-    {
-        $config = $this->getBundleConfig();
-        if (empty($config[$bundleName])) {
-            return false;
-        }
-
-        return $config[$bundleName] === self::ENGINE;
-    }
-
-    /**
-     * @param string $bundleName
-     *
-     * @return \Symfony\Component\Finder\SplFileInfo[]
-     */
-    protected function findBundleNamespaceDirectoriesForBundle($bundleName)
-    {
-        $directories = (new Finder())
-            ->directories()
-            ->depth('== 0')
-            ->in($this->config->getBundleDirectory() . $bundleName . '/src');
-
-        return $directories;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getBundleConfig()
-    {
-        if (isset($this->bundleConfig)) {
-            return $this->bundleConfig;
-        }
-
-        $this->bundleConfig = json_decode(file_get_contents($this->config->getPathToBundleConfig()), true);
-
-        return $this->bundleConfig;
     }
 
 }

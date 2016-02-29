@@ -23,7 +23,7 @@ class MaintenanceDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::PLUGIN_GRAPH] = function (Container $container) {
+        $container[self::PLUGIN_GRAPH] = function () {
             return $this->getGraphPlugin();
         };
 
