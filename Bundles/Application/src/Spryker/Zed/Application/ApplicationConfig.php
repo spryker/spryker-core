@@ -74,7 +74,7 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
+     * @return bool
      */
     public function isNavigationEnabled()
     {

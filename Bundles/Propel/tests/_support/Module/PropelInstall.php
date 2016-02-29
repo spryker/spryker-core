@@ -122,7 +122,6 @@ class PropelInstall extends Module
      */
     private function getBundlePersistenceSchemas($testBundleSchemaDirectory)
     {
-
         $finder = new Finder();
         $finder->files()->in($testBundleSchemaDirectory)->name('*.schema.xml');
 
