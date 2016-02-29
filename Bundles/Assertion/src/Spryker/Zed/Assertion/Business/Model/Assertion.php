@@ -38,7 +38,7 @@ class Assertion implements AssertionInterface
     public function assertNumericNotZero($value, $message = null)
     {
         $this->assertNumeric($value, $message);
-        if ($value <= 0) {
+        if ($value === 0) {
             $this->throwException('Value is zero', $message);
         }
     }

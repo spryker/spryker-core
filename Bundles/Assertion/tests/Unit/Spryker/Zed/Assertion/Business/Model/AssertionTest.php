@@ -38,6 +38,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [0, true],
+            [-2, true],
             [0.23, true],
             ['1', true],
             ['1.1', true],
@@ -67,6 +68,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [0, false],
+            [-1, true],
             [1, true],
             ['1', true],
             ['1.1', true],
