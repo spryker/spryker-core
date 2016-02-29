@@ -169,7 +169,6 @@ class Api implements ApiInterface
      */
     public function markAsBackgroundJob($flag = true)
     {
-        assert(is_bool($flag));
         if ($this->active) {
             newrelic_background_job($flag);
         }

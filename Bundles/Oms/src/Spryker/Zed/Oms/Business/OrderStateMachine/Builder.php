@@ -97,8 +97,6 @@ class Builder implements BuilderInterface
 
             $this->createTransitions($stateToProcessMap, $processMap, $eventMap);
 
-            assert('isset($mainProcess)');
-
             self::$processBuffer[$processName] = $mainProcess;
         }
 

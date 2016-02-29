@@ -122,9 +122,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     public function triggerEvent($eventId, array $orderItems, $data)
     {
-        assert('is_string($eventId)');
-        assert('count($orderItems) > 0');
-
         if ($this->checkForEventRepetitions($eventId) === false) {
             return [];
         }
@@ -479,8 +476,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function updateStateByEvent($eventId, array $orderItems, array $sourceStateBuffer, TransitionLogInterface $log)
     {
-        assert($eventId === null || is_string($eventId));
-
         if ($sourceStateBuffer === null) {
             $sourceStateBuffer = [];
         }

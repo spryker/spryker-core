@@ -34,7 +34,6 @@ class TransactionStatusResponse
      */
     public function __construct($isSuccess)
     {
-        assert(is_bool($isSuccess));
         $this->status = $isSuccess ? self::STATUS_OK : self::STATUS_ERROR;
     }
 
