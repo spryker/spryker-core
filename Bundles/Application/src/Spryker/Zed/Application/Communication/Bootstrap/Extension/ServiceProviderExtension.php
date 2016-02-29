@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServiceProvider;
 use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider as ServiceProviderSessionServiceProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\NewRelicServiceProvider;
@@ -64,6 +65,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
             new NewRelicServiceProvider(),
             new HttpFragmentServiceProvider(),
             new HeaderServiceProvider(),
+            new SubRequestServiceProvider(),
         ];
 
         if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {

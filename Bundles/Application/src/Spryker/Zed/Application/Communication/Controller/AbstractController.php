@@ -8,12 +8,14 @@ namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
+use Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractController
@@ -339,6 +341,30 @@ abstract class AbstractController
     private function getLocator()
     {
         return Locator::getInstance();
+    }
+
+    /**
+     * @param Request $request
+     * @param string $blockUrl
+     *
+     * @return string
+     */
+    protected function renderAction(Request $request, $blockUrl)
+    {
+        $blockResponse = $this->getSubrequestHandler()->handleSubRequest($request, $blockUrl);
+        if ($blockResponse instanceof RedirectResponse) {
+            return $blockResponse;
+        }
+
+        return $blockResponse->getContent();
+    }
+
+    /**
+     * @return SubRequestHandlerInterface
+     */
+    protected function getSubrequestHandler()
+    {
+        return $this->getApplication()['sub_request'];
     }
 
 }

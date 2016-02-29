@@ -168,4 +168,23 @@ class SalesConfig extends AbstractBundleConfig
         throw new \BadMethodCallException('You need to provide at least one state machine process for given method!');
     }
 
+    /**
+     * This method provides list of actions for zed order details external blocks
+     *
+     * @return array
+     */
+    public function getSalesDetailExternalBlocksUrls()
+    {
+        return [
+            'totals' => '/sales/comment/list',
+        ]; // TODO remove this and use the right urls to render blocks
+
+        return [
+            'totals' => '/sales/comment/list',
+            'payment_logs' => '/sales/comment/add',
+            'shipment' => '/sales/comment/add',
+            'discount' => '/sales/comment/add',
+        ];
+    }
+
 }

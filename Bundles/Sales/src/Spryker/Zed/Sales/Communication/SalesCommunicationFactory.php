@@ -123,4 +123,11 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SALES_AGGREGATOR);
     }
 
+    /**
+     * @return array
+     */
+    public function getSalesDetailExternalBlocksUrls()
+    {
+        return $this->getConfig()->getSalesDetailExternalBlocksUrls();
+    }
 }
