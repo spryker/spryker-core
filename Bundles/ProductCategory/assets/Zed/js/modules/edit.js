@@ -158,12 +158,6 @@ function TableHandler(sourceTable, destinationTable, checkBoxNamePrefix, labelCa
     return tableHandler;
 }
 
-// //all products table
-// function allProductsClickSelectAll() {
-//     allProductsTable.selectAll();
-
-// }
-
 function allProductsClickMarkAsSelected(checked, idProduct, sku, name) {
     if (checked) {
         allProductsTable.addSelectedProduct(idProduct, sku, name);
@@ -182,12 +176,6 @@ function selectedProductClickRemoveSelected(btn, idProduct) {
     allProductsTable.updateSelectedProductsLabelCount();
     $('#' + allProductsTable.getCheckBoxNamePrefix() + idProduct).prop('checked', false);
 }
-
-
-// //prodcut category table
-// function categoryProductClickDeSelectAll() {
-//     productCategoryTable.deSelectAll();
-// }
 
 function categoryTableClickMarkAsSelected(checked, idProduct, sku, name) {
     if (checked) {
@@ -216,13 +204,6 @@ function updateProductOrder(input, idProduct) {
     hiddenField.attr('value', JSON.stringify(productOrder));
 }
 
-/*        function updateProductCategoryPreconfig(select, idProduct) {
- var select = $(select);
- productCategoryPreconfig[idProduct] = select.val();
- var hiddenField = $('#form_product_category_preconfig');
- hiddenField.attr('value', JSON.stringify(productCategoryPreconfig));
- }*/
-
 $(document).ready(function() {
     productOrder = {};
     //productCategoryPreconfig = {};
@@ -232,14 +213,27 @@ $(document).ready(function() {
     $('#product-table').dataTable({
         destroy: true,
         fnDrawCallback: function(settings) {
+            $('.all-products-checkbox').change(function() {
+                var $checkbox = $(this);
+                var info = $.parseJSON($checkbox.attr('data-info'));
+
+                if ($checkbox.prop('checked')) {
+                    allProductsTable.addSelectedProduct(info.id, info.sku, info.name);
+                } else {
+                    allProductsTable.removeSelectedProduct(info.id);
+                }
+
+                return false;
+            });
+
             for (var i = 0; i < settings.json.data.length; i++) {
                 var product = settings.json.data[i];
                 var idProduct = parseInt(product[0]);
 
                 var selector = allProductsTable.getSelector();
                 if (selector.isProductSelected(idProduct)) {
-                    var checkbox = $('#' + allProductsTable.getCheckBoxNamePrefix() + idProduct);
-                    checkbox.prop('checked', true);
+                    var $checkbox = $('#' + allProductsTable.getCheckBoxNamePrefix() + idProduct);
+                    $checkbox.prop('checked', true);
                 }
             }
 
@@ -276,7 +270,6 @@ $(document).ready(function() {
     $('#product-category-table').dataTable({
         destroy: true,
         fnDrawCallback: function(settings) {
-            //this.fnDraw(false);
             for (var i = 0; i < settings.json.data.length; i++) {
                 var product = settings.json.data[i];
                 var idProduct = parseInt(product[0]);
@@ -289,10 +282,6 @@ $(document).ready(function() {
                 if (productOrder.hasOwnProperty(idProduct)) {
                     $('#product_category_order_' + idProduct).val(parseInt(productOrder[idProduct]) || 0);
                 }
-
-                /*                        if (productCategoryPreconfig.hasOwnProperty(idProduct)) {
-                 $('#product_category_preconfig_' + idProduct).val(parseInt(productCategoryPreconfig[idProduct]) || 0);
-                 }*/
             }
         }
     });
