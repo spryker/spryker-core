@@ -10,11 +10,16 @@
 
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
     <div id="items">{% include '@Sales/Detail/boxes/items.twig' %}</div>
-    <div id="totals">{% include '@Sales/Detail/boxes/totals.twig' %}</div>
-    <div id="payments">{% include '@Sales/Detail/boxes/payments.twig' %}</div>
-    <div id="shipment">{% include '@Sales/Detail/boxes/shipment.twig' %}</div>
-    <div id="discount">{% include '@Sales/Detail/boxes/discount.twig' %}</div>
-    <div id="address">{% include '@Sales/Detail/boxes/addresses.twig' %}</div>
-    <div id="refunds">{% include '@Sales/Detail/boxes/refunds.twig' %}</div>
+
+    {% for blockName, externalBlock in blocks %}
+    <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
+    {% endfor %}
+
+    {#<div id="totals">{% include '@Sales/Detail/boxes/totals.twig' %}</div>#}
+    {#<div id="payments">{% include '@Sales/Detail/boxes/payments.twig' %}</div>#}
+    {#<div id="shipment">{% include '@Sales/Detail/boxes/shipment.twig' %}</div>#}
+    {#<div id="discount">{% include '@Sales/Detail/boxes/discount.twig' %}</div>#}
+    {#<div id="address">{% include '@Sales/Detail/boxes/addresses.twig' %}</div>#}
+    {#<div id="refunds">{% include '@Sales/Detail/boxes/refunds.twig' %}</div>#}
 
 {% endblock %}

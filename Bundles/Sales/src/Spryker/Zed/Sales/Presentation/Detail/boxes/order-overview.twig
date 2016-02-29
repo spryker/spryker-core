@@ -20,12 +20,8 @@
                 <p><b>{{ 'Other order' | trans }}:</b> ({{ order.totalOrderCount }})</p>
             </div>
             <div class="col-xs-12 col-md-4">
-                {#{{ render(controller('/sales/comment/list', {'request': app.request})) }}#}
-                {#{{ render(controller('/sales/comment/add', {'request': app.request})) }}#}
-
-                {{ block.listComments.getContent | raw }}
-                {{ block.addComment.getContent | raw }}
-
+                {{ render(controller('/sales/comment/list', {'request': app.request})) }}
+                {{ add_comments | raw }}
             </div>
         </div>
 

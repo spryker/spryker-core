@@ -35,13 +35,8 @@ class CommentController extends AbstractController
         );
         $form->handleRequest($request);
 
-        dump($request->getMethod());
-        dump($request->request->all());
-        dump($_POST);
-
-        if ($form->isSubmitted()) {
-//            dump('submitted ok');
-            return $this->submitCommentForm($form);
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->submitCommentForm($request, $form);
         }
 
         return [
@@ -58,8 +53,6 @@ class CommentController extends AbstractController
     {
         $idSalesOrder = $request->query->get(SalesConfig::PARAM_IS_SALES_ORDER);
 
-        dump($idSalesOrder);
-
         $comments = $this->getFacade()->getOrderCommentsByIdSalesOrder($idSalesOrder);
 
         return [
@@ -72,7 +65,7 @@ class CommentController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function submitCommentForm(Form $form)
+    protected function submitCommentForm(Request $request, Form $form)
     {
         $formData = $form->getData();
         $idSalesOrder = $formData[CommentTransfer::FK_SALES_ORDER];
@@ -91,27 +84,13 @@ class CommentController extends AbstractController
             $this->getFacade()->saveComment($commentTransfer);
 
             $this->addSuccessMessage('Comment successfully added');
+            return $this->redirectResponse($request->headers->get('referer'));
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addErrorMessage($error->getMessage());
             }
         }
 
-        return $this->redirectUserToOrderDetails($idSalesOrder);
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function redirectUserToOrderDetails($idSalesOrder)
-    {
-        $url = Url::generate('/sales/details', [
-            SalesConfig::PARAM_IS_SALES_ORDER => $idSalesOrder,
-        ]);
-
-        return $this->redirectResponse($url->build());
     }
 
 }

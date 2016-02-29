@@ -11,6 +11,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
@@ -43,45 +44,66 @@ class DetailController extends AbstractController // TODO FW No plural in contro
         //$logs = $this->getFacade()->getPaymentLogs($idSalesOrder); // TODO FW Needs another solution, see mails
         //$refunds = $this->getFacade()->getRefunds($idSalesOrder); // TODO FW Needs another solution, see mails
 
-
-//        $commentsList = $this->getSubRequest($request, '/sales/comment/list');
-        $blockData = $this->getBlockData($request);
-
-        if ($blockData instanceof RedirectResponse) {
-            return $blockData;
+        $blockResponseData =  $this->renderSalesDetailBlocks($request);
+        if ($blockResponseData instanceof RedirectResponse) {
+            return $blockResponseData;
         }
 
-        return [
+//        dump($blockResponseData);
+//        die;
+
+        return array_merge([
             'events' => $events,
             'allEvents' => $allEvents,
             'distinctOrderStates' => $distinctOrderStates,
             'logs' => [],
             'refunds' => [],
             'order' => $orderTransfer,
-//            'commentsList' => $commentsList->getContent(),
-            'block' => $blockData,
+        ], $blockResponseData);
+    }
+
+    /**
+     * @param Request $request
+     * @return array|string
+     */
+    protected function renderSalesDetailBlocks(Request $request)
+    {
+        $addCommentBlock = $this->renderAction($request, '/sales/comment/add');
+
+        if ($addCommentBlock instanceof RedirectResponse) {
+            return $addCommentBlock;
+        }
+
+        $blockData = $this->renderMultipleActions($request, $this->getFactory()->getSalesDetailExternalBlocksUrls());
+
+        if ($blockData instanceof RedirectResponse) {
+            return $blockData;
+        }
+
+        return [
+            'add_comments' => $addCommentBlock,
+            'blocks' => $blockData,
         ];
     }
 
-    protected function getBlockData(Request $request)
+    /**
+     * @param Request $request
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function renderMultipleActions(Request $request, array $data)
     {
-        $data = [
-            'listComments' => $this->getSubRequest($request, '/sales/comment/list', [
-                SalesConfig::PARAM_IS_SALES_ORDER => $request->query->get(SalesConfig::PARAM_IS_SALES_ORDER),
-            ]),
-            'addComment' => $this->getSubRequest($request, '/sales/comment/add'),
-        ];
+        $responseData = [];
+        /**
+         * @var string $blockName
+         * @var Response $blockResponse
+         */
+        foreach ($data as $blockName => $blockUrl) {
+            $responseData[$blockName] = $this->renderAction($request, $blockUrl);
+        }
 
-//        $blockResponses = [];
-//        foreach ($data as $block) {
-//            $blockResponse = $this->getSubRequest($request, '');
-//            if ($blockResponse instanceof RedirectResponse) {
-//                return $blockResponse;
-//            }
-//            $blockResponses[] = $blockResponse;
-//        }
-
-        return $data;
+        return $responseData;
     }
 
     /**
@@ -99,54 +121,6 @@ class DetailController extends AbstractController // TODO FW No plural in contro
         }
 
         return array_unique($allEvents);
-    }
-
-    /**
-     * @param Request $request
-     * @param $url
-     * @param array $parameters
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function getSubRequest(Request $request, $url, array $parameters = [])
-    {
-        $subRequestParameters = array_merge($parameters, $request->query->all());
-
-        if ($request->getMethod() === Request::METHOD_POST) {
-            $subRequestParameters = array_merge($parameters, $request->request->all());
-        }
-
-        $subRequest = Request::create(
-            $url,
-            $request->getMethod(),
-            $subRequestParameters,
-            $request->cookies->all(),
-            $request->files->all(),
-            $request->server->all()
-        );
-
-        $urlChunks = explode('/', trim($url, '/'));
-
-//        dump($request);
-//        die;
-
-        dump($urlChunks);
-
-        $module = !empty($urlChunks[0]) ? $urlChunks[0] : 'Application';
-        $controller = !empty($urlChunks[1]) ? $urlChunks[1] : 'Index';
-        $action = !empty($urlChunks[2]) ? $urlChunks[2] : 'index';
-
-//        $subRequest->request->set('message', 'ads');
-
-        $subRequest->attributes->set('module', $module);
-        $subRequest->attributes->set('controller', $controller);
-        $subRequest->attributes->set('action', $action);
-
-        dump($subRequest);
-
-        $res = $this->getApplication()->handle($subRequest, HttpKernelInterface::SUB_REQUEST, true);
-
-        return $res;
     }
 
 }
