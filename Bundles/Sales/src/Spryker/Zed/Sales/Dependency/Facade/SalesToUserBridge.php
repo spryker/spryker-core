@@ -7,7 +7,7 @@ namespace Spryker\Zed\Sales\Dependency\Facade;
 
 use Spryker\Zed\User\Business\UserFacade;
 
-class SalesToUser implements SalesToUserInterface
+class SalesToUserBridge implements SalesToUserInterface
 {
 
     /**

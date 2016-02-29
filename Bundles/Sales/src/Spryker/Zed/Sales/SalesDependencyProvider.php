@@ -9,7 +9,7 @@ namespace Spryker\Zed\Sales;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToUser;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
@@ -64,7 +64,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_USER] = function (Container $container) {
-            return new SalesToUser($container->getLocator()->user()->facade());
+            return new SalesToUserBridge($container->getLocator()->user()->facade());
         };
 
         $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
