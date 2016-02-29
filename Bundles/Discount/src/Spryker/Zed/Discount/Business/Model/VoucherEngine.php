@@ -28,6 +28,9 @@ class VoucherEngine
     const MESSAGE_TYPE_SUCCESS = 'success';
     const MESSAGE_TYPE_ERROR = 'error';
 
+    /**
+     * @var int|null
+     */
     protected $remainingCodesToGenerate = null;
 
     /**

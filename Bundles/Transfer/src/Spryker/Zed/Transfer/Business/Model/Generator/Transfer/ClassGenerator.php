@@ -18,7 +18,7 @@ class ClassGenerator implements GeneratorInterface
     /**
      * @var string
      */
-    protected $targetDirectory = null;
+    protected $targetDirectory;
 
     /**
      * @var \Twig_Environment

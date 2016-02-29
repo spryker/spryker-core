@@ -16,6 +16,9 @@ class PriceFilter
 
     const DIVIDER = 100;
 
+    /**
+     * @var \Spryker\Shared\Library\Currency\CurrencyManager
+     */
     protected $currencyManager;
 
     /**

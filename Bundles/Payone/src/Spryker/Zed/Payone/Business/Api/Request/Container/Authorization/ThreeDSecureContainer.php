@@ -28,7 +28,7 @@ class ThreeDSecureContainer extends AbstractContainer
     protected $eci;
 
     /**
-     * @varb RedirectContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     protected $redirect;
 

@@ -20,7 +20,7 @@ class SessionHandlerRedis implements \SessionHandlerInterface
     /**
      * @var \Predis\Client
      */
-    protected $connection = null;
+    protected $connection;
 
     /**
      * @var string

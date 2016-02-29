@@ -44,7 +44,7 @@ class StackExecutor
     /**
      * @param array $calculatorStack
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param \ArrayObject|null $calculableItems
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */

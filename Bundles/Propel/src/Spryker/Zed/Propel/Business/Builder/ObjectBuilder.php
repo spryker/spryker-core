@@ -34,7 +34,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * Adds setter method for boolean columns.
      *
-     * @see parent::addColumnMutators()
+     * @see \Propel\Generator\Builder\Om\ObjectBuilder::addColumnMutators()
      *
      * @param string &$script The script will be modified in this method.
      * @param \Propel\Generator\Model\Column $col The current column.

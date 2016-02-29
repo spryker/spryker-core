@@ -10,6 +10,9 @@ namespace Spryker\Shared\Library\Communication;
 class Message extends AbstractObject
 {
 
+    /**
+     * @var array
+     */
     protected $values = [
         'data' => [],
         'message' => null,

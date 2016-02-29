@@ -40,7 +40,7 @@ interface GraphInterface
 
     /**
      * @param string $type
-     * @param string $fileName
+     * @param string|null $fileName
      *
      * @return string
      */

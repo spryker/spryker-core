@@ -12,6 +12,9 @@ use Spryker\Shared\Payone\PayoneApiConstants;
 class CreditCardCheck extends AbstractRequest
 {
 
+    /**
+     * @var string
+     */
     protected $request = PayoneApiConstants::REQUEST_TYPE_CREDITCARDCHECK;
 
     /**

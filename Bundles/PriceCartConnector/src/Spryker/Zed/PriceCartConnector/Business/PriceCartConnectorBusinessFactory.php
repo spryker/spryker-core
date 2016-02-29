@@ -19,7 +19,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param null $grossPriceType
+     * @param string|null $grossPriceType
      *
      * @return Manager\PriceManager
      */

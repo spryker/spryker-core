@@ -114,7 +114,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param null $data
+     * @param mixed|null $data
      * @param int $status
      * @param array $headers
      *

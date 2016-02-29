@@ -19,7 +19,7 @@ abstract class AbstractDecisionRule extends AbstractDiscountPlugin
     const KEY_DATA = 'data';
 
     /**
-     * @var
+     * @var array
      */
     protected $context = [];
 

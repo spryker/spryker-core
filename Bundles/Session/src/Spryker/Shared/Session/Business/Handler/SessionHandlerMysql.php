@@ -19,9 +19,9 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     const METRIC_SESSION_READ_TIME = 'Mysql/Session_read_time';
 
     /**
-     * @var \PDO
+     * @var \PDO|null
      */
-    protected $connection = null;
+    protected $connection;
 
     /**
      * @var string

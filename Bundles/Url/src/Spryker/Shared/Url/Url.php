@@ -25,20 +25,44 @@ class Url
     const QUERY = 'query';
     const FRAGMENT = 'fragment';
 
+    /**
+     * @var string
+     */
     protected $scheme;
 
+    /**
+     * @var string
+     */
     protected $host;
 
+    /**
+     * @var int
+     */
     protected $port;
 
+    /**
+     * @var string
+     */
     protected $username;
 
+    /**
+     * @var string
+     */
     protected $password;
 
+    /**
+     * @var string
+     */
     protected $path = '';
 
+    /**
+     * @var array
+     */
     protected $query = [];
 
+    /**
+     * @var string
+     */
     protected $fragment;
 
     /**

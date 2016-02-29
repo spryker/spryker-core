@@ -15,7 +15,7 @@ class Distributor implements DistributorInterface
     /**
      * @var float
      */
-    protected $roundingError = 0;
+    protected $roundingError = 0.0;
 
     /**
      * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects

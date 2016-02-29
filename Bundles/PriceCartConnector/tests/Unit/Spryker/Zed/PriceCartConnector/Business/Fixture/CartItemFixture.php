@@ -14,6 +14,9 @@ use Spryker\Shared\Transfer\AbstractTransfer;
 class CartItemFixture extends AbstractTransfer implements ItemInterface
 {
 
+    /**
+     * @var string
+     */
     private $id;
 
     public function __construct(LocatorLocatorInterface $locator = null)

@@ -13,6 +13,9 @@ use Symfony\Component\Validator\Constraint;
 class CodeExists extends Constraint
 {
 
+    /**
+     * @var string
+     */
     public $message = 'The Code {{ value }} already exists in the Database!';
 
     /**

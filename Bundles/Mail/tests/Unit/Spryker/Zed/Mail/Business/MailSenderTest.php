@@ -33,7 +33,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
     protected $mandrillMock;
 
     /**
-     * InclusionHandlerInterface
+     * @var \Spryker\Zed\Mail\Business\InclusionHandlerInterface
      */
     protected $inclusionHandler;
 

@@ -103,7 +103,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param string $pathInfo
      * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
-     * @param null $timeoutInSeconds
+     * @param int|null $timeoutInSeconds
      * @param bool $isBackgroundRequest
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\RequestException
@@ -171,7 +171,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param string $pathInfo
      * @param \Spryker\Shared\ZedRequest\Client\RequestInterface $requestTransfer
-     * @param null $timeoutInSeconds
+     * @param int|null $timeoutInSeconds
      *
      * @return \Guzzle\Http\Message\EntityEnclosingRequest
      */

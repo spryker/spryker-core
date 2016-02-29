@@ -12,6 +12,9 @@ use Spryker\Shared\Calculation\Dependency\Transfer\PriceItemInterface;
 class PriceItemFixture extends CartItemFixture implements PriceItemInterface
 {
 
+    /**
+     * @var int
+     */
     private $price = 0;
 
     /**

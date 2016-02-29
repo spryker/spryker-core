@@ -55,7 +55,7 @@ class Autoloader
     /**
      * @param string $rootDirectory
      * @param string $vendorDirectory
-     * @param null $application
+     * @param string|null $application
      * @param bool $disableApplicationCheck
      *
      * @return void

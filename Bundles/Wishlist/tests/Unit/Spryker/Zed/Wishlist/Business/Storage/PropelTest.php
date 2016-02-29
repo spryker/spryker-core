@@ -277,8 +277,14 @@ class PropelTest extends \PHPUnit_Framework_TestCase
 trait WishlistSpyTrait
 {
 
+    /**
+     * @var bool
+     */
     protected $delete = true;
 
+    /**
+     * @var bool
+     */
     protected $save = true;
 
     /**

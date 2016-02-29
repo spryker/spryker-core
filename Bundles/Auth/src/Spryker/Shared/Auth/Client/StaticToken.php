@@ -11,7 +11,7 @@ abstract class StaticToken
 {
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $rawToken = null;
 

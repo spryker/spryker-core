@@ -27,7 +27,7 @@ class IdeBundleAutoCompletionGeneratorTest extends AbstractAutoCompletion
         $this->cleanUpTestDir();
 
         $generator = new IdeBundleAutoCompletionGenerator($this->getOptions());
-        $generator->create('');
+        $generator->create();
 
         $this->assertFileExists($this->getFilePath());
     }
@@ -86,7 +86,7 @@ class IdeBundleAutoCompletionGeneratorTest extends AbstractAutoCompletion
     {
         $generator = new IdeBundleAutoCompletionGenerator($this->getOptions());
         $generator->addMethodTagBuilder(new MethodTagBuilder());
-        $generator->create('');
+        $generator->create();
 
         return file_get_contents($this->getFilePath());
     }
