@@ -1,8 +1,0 @@
-{
-  "private": true,
-  "name": "spryker-zed-cms",
-  "version": "1.0.0",
-  "dependencies": {
-    "supermegascript": "github:ilmente/TEST-supermegascript"
-  }
-}
