@@ -7,9 +7,6 @@
 
 namespace Spryker\Shared\Library;
 
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config\Config;
-
 class Json
 {
 
@@ -27,10 +24,6 @@ class Json
      */
     public static function encode($value, $options = self::DEFAULT_OPTIONS, $depth = self::DEFAULT_DEPTH)
     {
-        if (Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false)) {
-            $options = $options | JSON_PRETTY_PRINT;
-        }
-
         return json_encode($value, $options, $depth);
     }
 
