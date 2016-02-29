@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Development\Business;
 
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
-use Spryker\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;

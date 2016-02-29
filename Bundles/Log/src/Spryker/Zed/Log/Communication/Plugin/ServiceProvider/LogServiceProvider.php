@@ -10,6 +10,7 @@ namespace Spryker\Zed\Log\Communication\Plugin\ServiceProvider;
 use Monolog\Logger;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\LogConstants;
 
 class LogServiceProvider implements ServiceProviderInterface
