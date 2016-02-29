@@ -13,7 +13,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
  * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
  * @method \Spryker\Zed\Maintenance\Communication\MaintenanceCommunicationFactory getFactory()
  */
-class PhpinfoController extends AbstractController
+class PhpiniztdiztdcfoController extends AbstractController
 {
 
     /**

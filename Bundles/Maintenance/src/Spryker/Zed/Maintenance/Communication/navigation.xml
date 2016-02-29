@@ -16,15 +16,6 @@
                 <action>index</action>
                 <icon>fa-archive</icon>
             </dependencies>
-            <packages>
-                <label>Packages</label>
-                <title>Installed packages</title>
-                <bundle>maintenance</bundle>
-                <controller>index</controller>
-                <action>index</action>
-                <icon>fa-archive</icon>
-                <visible>0</visible>
-            </packages>
             <phpinfo>
                 <label>PHP Info</label>
                 <title>PHP Info</title>
