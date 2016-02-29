@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <development>
+        <label>Development</label>
+        <title>Development</title>
+        <bundle>development</bundle>
+        <controller>dependency</controller>
+        <action>index</action>
+        <icon>fa-archive</icon>
+        <pages>
+            <dependencies>
+                <label>Dependencies</label>
+                <title>Bundle dependencies</title>
+                <bundle>development</bundle>
+                <controller>dependency</controller>
+                <action>index</action>
+                <icon>fa-archive</icon>
+            </dependencies>
+        </pages>
+    </development>
+</config>

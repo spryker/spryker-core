@@ -8,19 +8,11 @@
         <action>index</action>
         <icon>fa-wrench</icon>
         <pages>
-            <dependencies>
-                <label>Dependencies</label>
-                <title>Bundle dependencies</title>
-                <bundle>maintenance</bundle>
-                <controller>dependency</controller>
-                <action>index</action>
-                <icon>fa-archive</icon>
-            </dependencies>
             <phpinfo>
                 <label>PHP Info</label>
                 <title>PHP Info</title>
                 <bundle>maintenance</bundle>
-                <controller>phpinfo</controller>
+                <controller>php-info</controller>
                 <action>index</action>
                 <icon>fa-heartbeat</icon>
             </phpinfo>
