@@ -35,7 +35,12 @@ class CommentController extends AbstractController
         );
         $form->handleRequest($request);
 
+        dump($request->getMethod());
+        dump($request->request->all());
+        dump($_POST);
+
         if ($form->isSubmitted()) {
+//            dump('submitted ok');
             return $this->submitCommentForm($form);
         }
 
@@ -52,6 +57,8 @@ class CommentController extends AbstractController
     public function listAction(Request $request)
     {
         $idSalesOrder = $request->query->get(SalesConfig::PARAM_IS_SALES_ORDER);
+
+        dump($idSalesOrder);
 
         $comments = $this->getFacade()->getOrderCommentsByIdSalesOrder($idSalesOrder);
 
