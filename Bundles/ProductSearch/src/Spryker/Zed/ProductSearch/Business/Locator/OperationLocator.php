@@ -17,6 +17,9 @@ class OperationLocator implements OperationLocatorInterface
 
     const COPY_TO_FIELD = 'CopyToField';
 
+    /**
+     * @var array
+     */
     protected $registeredOperations = [];
 
     /**

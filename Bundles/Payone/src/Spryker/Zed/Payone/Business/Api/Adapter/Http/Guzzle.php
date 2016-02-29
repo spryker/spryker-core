@@ -14,6 +14,9 @@ use Spryker\Zed\Payone\Business\Exception\TimeoutException;
 class Guzzle extends AbstractHttpAdapter
 {
 
+    /**
+     * @var \GuzzleHttp\Client
+     */
     protected $client;
 
     /**

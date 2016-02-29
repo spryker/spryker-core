@@ -23,10 +23,19 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 class TaxChangeTouchPluginTest extends Test
 {
 
+    /**
+     * @var array
+     */
     private $taxRateIds = [];
 
+    /**
+     * @var int|null
+     */
     private $taxSetId = null;
 
+    /**
+     * @var array
+     */
     private $productAbstractIds = [];
 
     /**

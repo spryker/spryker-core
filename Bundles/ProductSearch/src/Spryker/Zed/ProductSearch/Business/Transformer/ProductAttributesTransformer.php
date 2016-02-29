@@ -14,6 +14,9 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 class ProductAttributesTransformer implements ProductAttributesTransformerInterface
 {
 
+    /**
+     * @var array
+     */
     protected $fieldOperations = [];
 
     /**

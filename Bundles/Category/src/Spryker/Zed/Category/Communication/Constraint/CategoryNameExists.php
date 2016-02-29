@@ -14,6 +14,9 @@ use Symfony\Component\Validator\Constraint;
 class CategoryNameExists extends Constraint
 {
 
+    /**
+     * @var string
+     */
     public $message = 'A category with the name {{ value }} already exists in the Database!';
 
     /**
