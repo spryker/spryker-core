@@ -95,11 +95,14 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [0, false],
+            ['0A', true],
+            ['A0', true],
             [1, false],
-            ['1', false],
+            ['1A', true],
+            ['1', true],
             ['1.1', false],
             ['foo1bar', true],
-            ['1foo', false],
+            ['1foo', true],
             [new \StdClass(), false],
             [[], false],
             ['foo.bar', false],
