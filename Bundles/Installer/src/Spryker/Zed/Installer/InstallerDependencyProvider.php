@@ -16,7 +16,6 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_GLOSSARY = 'facade_glossary';
     const INSTALLERS = 'installer plugins';
-    const INSTALLERS_DEMO_DATA = 'demo data installer plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,9 +33,6 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::INSTALLERS] = function (Container $container) {
             return $this->getInstallers();
         };
-        $container[self::INSTALLERS_DEMO_DATA] = function (Container $container) {
-            return $this->getDemoDataInstallers();
-        };
 
         return $container;
     }
@@ -47,16 +43,6 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
      */
     public function getInstallers()
-    {
-        return [];
-    }
-
-    /**
-     * Overwrite on project level.
-     *
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
-     */
-    public function getDemoDataInstallers()
     {
         return [];
     }

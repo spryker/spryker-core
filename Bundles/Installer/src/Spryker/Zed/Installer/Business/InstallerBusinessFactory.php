@@ -27,14 +27,6 @@ class InstallerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
-     */
-    public function getDemoDataInstallers()
-    {
-        return $this->getProvidedDependency(InstallerDependencyProvider::INSTALLERS_DEMO_DATA);
-    }
-
-    /**
      * @return \Spryker\Zed\Installer\Business\Model\GlossaryInstaller
      */
     public function createGlossaryInstaller()
