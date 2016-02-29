@@ -46,7 +46,7 @@ class PrepaymentContainer extends AbstractPaymentMethodContainer
     protected $clearing_bankcity;
 
     /**
-     * @var
+     * @var string
      */
     protected $clearing_bankname;
 

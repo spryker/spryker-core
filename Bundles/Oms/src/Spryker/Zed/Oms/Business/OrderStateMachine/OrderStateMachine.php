@@ -31,12 +31,24 @@ class OrderStateMachine implements OrderStateMachineInterface
     const MAX_EVENT_REPEATS = 10;
     const MAX_ON_ENTER = 50;
 
+    /**
+     * @var array
+     */
     protected $eventCounter = [];
 
+    /**
+     * @var array
+     */
     protected $returnData = [];
 
+    /**
+     * @var array
+     */
     protected $processBuffer = [];
 
+    /**
+     * @var array
+     */
     protected $states = [];
 
     /**

@@ -44,7 +44,7 @@ class TableConfiguration
     private $sortableFields;
 
     /**
-     * @var string
+     * @var int
      */
     private $defaultSortColumnIndex = 0;
 

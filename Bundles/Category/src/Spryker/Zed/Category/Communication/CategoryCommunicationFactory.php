@@ -20,6 +20,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
 
+    /**
+     * @var string
+     */
     protected $currentLocale;
 
     /**

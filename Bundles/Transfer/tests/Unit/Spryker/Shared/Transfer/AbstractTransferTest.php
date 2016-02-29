@@ -326,11 +326,14 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
 
-        $serialized = $transfer->serialize();
+        $serialized = serialize($transfer);
+        $unserialized = unserialize($serialized);
 
-        $unserializedData = unserialize($serialized);
+        $expected = [
+            'string' => 'foo',
+        ];
 
-        $this->assertEquals($transfer->modifiedToArray(), $unserializedData);
+        $this->assertEquals($expected, $unserialized->modifiedToArray());
     }
 
     /**

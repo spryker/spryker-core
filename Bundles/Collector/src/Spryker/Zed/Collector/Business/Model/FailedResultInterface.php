@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Collector\Business\Model;
 
 /**
- * @deprecated 1.0.0 Must be refactored into a Transfer object instead.
+ * @deprecated Must be refactored into a Transfer object instead.
  */
 interface FailedResultInterface
 {

@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class CategoryFieldNotBlank extends NotBlank
 {
 
+    /**
+     * @var string
+     */
     public $message = "Please select a Category or check 'Delete subcategories'";
 
     /**

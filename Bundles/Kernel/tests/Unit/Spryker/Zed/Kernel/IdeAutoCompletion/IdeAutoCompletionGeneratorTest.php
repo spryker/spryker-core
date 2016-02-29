@@ -39,7 +39,7 @@ class IdeAutoCompletionGeneratorTest extends AbstractAutoCompletion
 
             $generator = new IdeAutoCompletionGenerator($options);
 
-            $generator->create('');
+            $generator->create();
 
             $interfaceName = $this->getOptions('')[IdeAutoCompletionGenerator::OPTION_KEY_INTERFACE_NAME];
             $this->pathToFile = $this->baseDir . 'test/' . $interfaceName . '.php';

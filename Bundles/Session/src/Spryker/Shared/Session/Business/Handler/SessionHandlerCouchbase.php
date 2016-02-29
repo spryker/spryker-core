@@ -19,7 +19,7 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
     /**
      * @var \Couchbase
      */
-    protected $connection = null;
+    protected $connection;
 
     /**
      * e.g. ['127.0.0.1:8091']
@@ -39,9 +39,9 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
     protected $password;
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected $bucketName = null;
+    protected $bucketName;
 
     /**
      * @var bool

@@ -181,7 +181,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param null $callback
+     * @param callable|null $callback
      * @param int $status
      * @param array $headers
      *

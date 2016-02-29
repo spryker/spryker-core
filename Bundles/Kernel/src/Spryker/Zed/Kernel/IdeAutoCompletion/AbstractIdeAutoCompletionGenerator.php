@@ -82,11 +82,9 @@ abstract class AbstractIdeAutoCompletionGenerator
     }
 
     /**
-     * @param null $output
-     *
      * @return void
      */
-    abstract public function create($output = null);
+    abstract public function create();
 
     /**
      * @return void

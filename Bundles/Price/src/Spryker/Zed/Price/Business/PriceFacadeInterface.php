@@ -24,7 +24,7 @@ interface PriceFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return int
      */
@@ -61,7 +61,7 @@ interface PriceFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return bool
      */

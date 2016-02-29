@@ -26,7 +26,7 @@ abstract class AbstractForm implements FormTypeInterface
      * This method is called for each type in the hierarchy starting from the
      * top most type. Type extensions can further modify the form.
      *
-     * @see FormTypeExtensionInterface::buildForm()
+     * @see \Symfony\Component\Form\FormTypeExtensionInterface::buildForm()
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
      * @param array $options The options
@@ -91,7 +91,7 @@ abstract class AbstractForm implements FormTypeInterface
      * This means that you cannot access child views in this method. If you need
      * to do so, move your logic to {@link finishView()} instead.
      *
-     * @see FormTypeExtensionInterface::buildView()
+     * @see \Symfony\Component\Form\FormTypeExtensionInterface::buildView()
      *
      * @param \Symfony\Component\Form\FormView $view The view
      * @param \Symfony\Component\Form\FormInterface $form The form
@@ -114,7 +114,7 @@ abstract class AbstractForm implements FormTypeInterface
      * such logic in this method that actually accesses child views. For everything
      * else you are recommended to implement {@link buildView()} instead.
      *
-     * @see FormTypeExtensionInterface::finishView()
+     * @see \Symfony\Component\Form\FormTypeExtensionInterface::finishView()
      *
      * @param \Symfony\Component\Form\FormView $view The view
      * @param \Symfony\Component\Form\FormInterface $form The form

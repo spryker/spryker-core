@@ -27,15 +27,12 @@ class Config
     private static $instance;
 
     /**
-     * @param \ArrayObject|null $config
-     *
-     * @return \Spryker\Shared\Config
+     * @return \Spryker\Shared\Config\Config
      */
-    public static function getInstance(\ArrayObject $config = null)
+    public static function getInstance()
     {
         if (self::$instance === null) {
             self::$instance = new self();
-            self::$config = $config;
         }
 
         return self::$instance;
@@ -43,7 +40,7 @@ class Config
 
     /**
      * @param string $key
-     * @param null $default
+     * @param string|null $default
      *
      * @throws \Exception
      *
@@ -77,7 +74,7 @@ class Config
     }
 
     /**
-     * @param null $environment
+     * @param string|null $environment
      *
      * @return void
      */

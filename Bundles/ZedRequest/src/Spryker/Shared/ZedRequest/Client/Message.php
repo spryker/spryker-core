@@ -10,6 +10,9 @@ namespace Spryker\Shared\ZedRequest\Client;
 class Message extends AbstractObject
 {
 
+    /**
+     * @var array
+     */
     protected $values = [
         'data' => [],
         'message' => null,

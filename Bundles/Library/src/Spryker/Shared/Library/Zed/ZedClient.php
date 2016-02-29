@@ -82,9 +82,9 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
-     * @param null $timeoutInSeconds
+     * @param int|null $timeoutInSeconds
      * @param bool $isBackgroundRequest
      *
      * @throws \LogicException
@@ -140,7 +140,7 @@ class ZedClient
     /**
      * @param string $pathInfo
      * @param \Spryker\Shared\Library\Communication\Request $requestTransfer
-     * @param int $timeoutInSeconds
+     * @param int|null $timeoutInSeconds
      *
      * @return \Guzzle\Http\Message\EntityEnclosingRequest
      */
@@ -284,7 +284,7 @@ class ZedClient
      */
     protected function doLog($pathInfo, $subType, ObjectInterface $transfer, $rawBody)
     {
-        $lumberjack = new EventJournalClient();
+        $eventJournalClient = new EventJournalClient();
         $event = new Event();
         $responseTransfer = $transfer->getTransfer();
         if ($responseTransfer instanceof TransferInterface) {
@@ -299,7 +299,7 @@ class ZedClient
         $event->setField('name', 'transfer');
         $event->setField('path_info', $pathInfo);
         $event->setField('sub_type', $subType);
-        $lumberjack->saveEvent($event);
+        $eventJournalClient->saveEvent($event);
     }
 
     /**

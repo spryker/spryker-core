@@ -17,7 +17,7 @@ interface ReaderInterface
 
     /**
      * @param string $sku
-     * @param string $priceTypeName
+     * @param string|null $priceTypeName
      *
      * @return int
      */
@@ -32,7 +32,7 @@ interface ReaderInterface
 
     /**
      * @param string $sku
-     * @param string $priceTypeName
+     * @param string|null $priceTypeName
      *
      * @return bool
      */

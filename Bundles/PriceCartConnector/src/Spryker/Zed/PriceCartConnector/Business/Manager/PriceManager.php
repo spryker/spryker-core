@@ -27,7 +27,7 @@ class PriceManager implements PriceManagerInterface
 
     /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
-     * @param null $grossPriceType
+     * @param string|null $grossPriceType
      */
     public function __construct(PriceCartToPriceInterface $priceFacade, $grossPriceType = null)
     {

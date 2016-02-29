@@ -14,7 +14,7 @@ class ModelResult
 {
 
     /**
-     * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null
      */
     protected $entity = null;
 
@@ -24,7 +24,7 @@ class ModelResult
     protected $entityModifiedColumns = [];
 
     /**
-     * @var \Spryker\Shared\Transfer\TransferInterface
+     * @var \Spryker\Shared\Transfer\TransferInterface|null
      */
     protected $transfer = null;
 
@@ -41,7 +41,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null $entity
      */
     public function __construct(ActiveRecordInterface $entity = null)
     {

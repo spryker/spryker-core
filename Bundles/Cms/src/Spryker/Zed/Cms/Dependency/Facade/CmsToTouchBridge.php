@@ -58,7 +58,7 @@ class CmsToTouchBridge implements CmsToTouchInterface
      */
     public function touchDeleted($itemType, $itemId)
     {
-        return $this->touchDeleted($itemType, $itemId);
+        return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
 
 }

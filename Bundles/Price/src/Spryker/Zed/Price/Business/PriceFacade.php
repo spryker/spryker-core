@@ -31,7 +31,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return int
      */
@@ -80,7 +80,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return bool
      */

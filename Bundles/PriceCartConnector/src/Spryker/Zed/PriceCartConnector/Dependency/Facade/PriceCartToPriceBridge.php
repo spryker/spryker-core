@@ -27,7 +27,7 @@ class PriceCartToPriceBridge implements PriceCartToPriceInterface
 
     /**
      * @param string $sku
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return bool
      */
@@ -38,7 +38,7 @@ class PriceCartToPriceBridge implements PriceCartToPriceInterface
 
     /**
      * @param string $sku
-     * @param null $priceType
+     * @param string|null $priceType
      *
      * @return int
      */
