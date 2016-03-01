@@ -705,7 +705,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createComposerJsonBranchAliasUpdater()
     {
-        return new BranchAliasUpdater('1.0.x-dev');
+        return new BranchAliasUpdater('0.20.x-dev');
     }
 
     /**
