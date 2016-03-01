@@ -18,7 +18,8 @@
     "spryker/session": "^1.0.0",
     "spryker/tax": "^1.0.0",
     "spryker/zed-request": "^1.0.0",
-    "spryker/symfony": "^1.0.0"
+    "spryker/symfony": "^1.0.0",
+    "spryker/url": "^1.0.0"
   },
   "description": "shipment bundle",
   "license": "proprietary",

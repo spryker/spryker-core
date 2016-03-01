@@ -24,7 +24,8 @@
     "spryker/symfony": "^1.0.0",
     "spryker/country": "^1.0.0",
     "spryker/customer": "^1.0.0",
-    "spryker/sales": "^1.0.0"
+    "spryker/sales": "^1.0.0",
+    "spryker/url": "^1.0.0"
   },
   "description": "payolution bundle",
   "license": "proprietary",

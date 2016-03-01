@@ -24,7 +24,8 @@
     "spryker/zed-request": "^1.0.0",
     "spryker/cart": "^1.0.0",
     "spryker/symfony": "^1.0.0",
-    "spryker/customer": "^1.0.0"
+    "spryker/customer": "^1.0.0",
+    "spryker/url": "^1.0.0"
   },
   "description": "sales bundle",
   "license": "proprietary",
