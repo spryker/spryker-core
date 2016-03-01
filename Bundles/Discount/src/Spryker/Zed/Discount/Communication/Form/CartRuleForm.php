@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Zed\Discount\DiscountConfig;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -35,13 +36,19 @@ class CartRuleForm extends AbstractRuleForm
     protected $discountConfig;
 
     /**
+     * @var \Symfony\Component\Form\DataTransformerInterface
+     */
+    protected $decisionRulesFormTransformer;
+
+    /**
      * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
      */
-    public function __construct(DiscountConfig $discountConfig)
+    public function __construct(DiscountConfig $discountConfig, DataTransformerInterface $decisionRulesFormTransformer)
     {
         parent::__construct($discountConfig);
 
         $this->discountConfig = $discountConfig;
+        $this->decisionRulesFormTransformer = $decisionRulesFormTransformer;
     }
 
     /**
@@ -72,6 +79,8 @@ class CartRuleForm extends AbstractRuleForm
             ->addIsPrivilegedField($builder)
             ->addIsActiveField($builder)
             ->addDecisionRulesField($builder);
+
+        $builder->addModelTransformer($this->decisionRulesFormTransformer);
     }
 
     /**
