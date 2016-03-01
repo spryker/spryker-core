@@ -17,7 +17,7 @@
     "spryker/kernel": "^0.20.0",
     "spryker/locale": "^0.20.0",
     "spryker/price": "^0.20.0",
-    "spryker/transfer": "^1.0.0",
+    "spryker/transfer": "^0.20.0",
     "spryker/zed-request": "^0.20.0",
     "spryker/log": "^0.20.0",
     "spryker/symfony": "^0.20.0",

@@ -24,7 +24,7 @@
     "spryker/assertion": "^0.20.0"
   },
   "require-dev": {
-    "spryker/testify": "^1.0.0"
+    "spryker/testify": "^0.20.0"
   },
   "description": "customer bundle",
   "license": "proprietary",
