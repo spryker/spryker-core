@@ -2,18 +2,18 @@ $colorUrl: #676a6c;
 $colorUrlHover: #1cbb9e;
 
 .overview-nav {
-  max-width: 1000px;
-  margin: 0 auto 30px;
-  border-right: 1px solid #ccc;
+  margin-bottom: 30px;
+  border-left: 1px solid #ccc;
 }
 
 .overview-nav .nav-item {
   width: 14.285%;
+  max-width: 142px;
   text-align: center;
 }
 
 .overview-nav .nav-item > div {
-  border-width: 1px 0 1px 1px;
+  border-width: 1px 1px 1px 0;
   border-color: #ccc;
   border-style: solid;
 }
