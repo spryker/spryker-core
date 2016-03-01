@@ -6,12 +6,27 @@
 
 $(document).ready(function () {
 
+    inspinia.fix_height();
+
+    // Add body-small class if window less than 768px
+    inspinia.fixBodyClassByResolution();
+
+    // Minimalize menu when screen is less than 768px
+    $(window).bind("resize", function () {
+        inspinia.fixBodyClassByResolution();
+    });
+
     // Add body-small class if window less than 768px
     if ($(this).width() < 769) {
         $('body').addClass('body-small')
     } else {
         $('body').removeClass('body-small')
     }
+
+    // enable WYSIWYG html editor
+    $('.html-editor').summernote({
+        airMode: true
+    });
 
     // MetsiMenu
     $('#side-menu').metisMenu();
@@ -66,6 +81,17 @@ $(document).ready(function () {
     //    railOpacity: 0.4
     //});
 
+    // Open close right sidebar
+    $('.right-sidebar-toggle').click(function () {
+        $('#right-sidebar').toggleClass('sidebar-open');
+    });
+
+    // Open close small chat
+    $('.open-small-chat').click(function () {
+        $(this).children().toggleClass('fa-comments').toggleClass('fa-remove');
+        $('.small-chat-box').toggleClass('active');
+    });
+
     // Small todo handler
     $('.check-link').click(function () {
         var button = $(this).find('i');
@@ -85,8 +111,7 @@ $(document).ready(function () {
     // Minimalize menu
     $('.navbar-minimalize').click(function () {
         $("body").toggleClass("mini-navbar");
-        SmoothlyMenu();
-
+        inspinia.SmoothlyMenu();
     });
 
     // Tooltips demo
@@ -99,29 +124,17 @@ $(document).ready(function () {
     // Fix Bootstrap backdrop issu with animation.css
     $('.modal').appendTo("body");
 
-    // Full height of sidebar
-    function fix_height() {
-        var heightWithoutNavbar = $("body > #wrapper").height() - 61;
-        $(".sidebard-panel").css("min-height", heightWithoutNavbar + "px");
-
-        var navbarHeigh = $('nav.navbar-default').height();
-        var wrapperHeigh = $('#page-wrapper').height();
-
-        if (navbarHeigh > wrapperHeigh) {
-            $('#page-wrapper').css("min-height", navbarHeigh + "px");
+    // Fixed Sidebar
+    $(window).bind("load", function () {
+        if ($("body").hasClass('fixed-sidebar')) {
+            $('.sidebar-collapse').slimScroll({
+                height: '100%',
+                railOpacity: 0.9
+            });
         }
+    });
 
-        if (navbarHeigh < wrapperHeigh) {
-            $('#page-wrapper').css("min-height", $(window).height() + "px");
-        }
-
-        if ($('body').hasClass('fixed-nav')) {
-            $('#page-wrapper').css("min-height", $(window).height() - 60 + "px");
-        }
-
-    }
-
-    fix_height();
+    inspinia.fix_height();
 
     // Move right sidebar top after scroll
     $(window).scroll(function () {
@@ -140,21 +153,6 @@ $(document).ready(function () {
 
     $("[data-toggle=popover]")
         .popover();
-
-
-    // Minimalize menu when screen is less than 768px
-    $(window).bind("resize", function () {
-        if ($(this).width() < 769) {
-            $('body').addClass('body-small')
-        } else {
-            $('body').removeClass('body-small')
-        }
-    });
-
-    // Add slimscroll to element
-    // $('.full-height-scroll').slimscroll({
-    //     height: '100%'
-    // });
 
     if (inspinia.localStorageSupport) {
 
@@ -179,7 +177,6 @@ $(document).ready(function () {
                 if (!body.hasClass('body-small')) {
                     body.addClass('mini-navbar');
                 }
-
             }
         }
 

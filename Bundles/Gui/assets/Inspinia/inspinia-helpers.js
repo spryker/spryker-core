@@ -26,34 +26,65 @@ module.exports = {
             $('#page-wrapper').css("min-height", $(window).height() - 60 + "px");
         }
     },
+
+    // check if browser support HTML5 local storage
     localStorageSupport: function() {
         return (('localStorage' in window) && window['localStorage'] !== null)
     },
+
+    // For demo purpose - animation css script
+    animationHover: function(element, animation) {
+        element = $(element);
+        element.hover(
+            function() {
+                element.addClass('animated ' + animation);
+            },
+            function() {
+                //wait for animation to finish before removing classes
+                window.setTimeout(function() {
+                    element.removeClass('animated ' + animation);
+                }, 2000);
+            });
+    },
+
+    removeStyleAttribute: function(elementId) {
+        setTimeout(function() {
+            $(elementId).removeAttr('style');
+        }, 500);
+    },
+
+    sideMenuFadeIn: function() {
+        $('#side-menu').fadeIn(500);
+    },
+
     SmoothlyMenu: function() {
         if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
             // Hide menu in order to smoothly turn on when maximize menu
             $('#side-menu').hide();
             // For smoothly turn on menu
-            setTimeout(
-                function () {
-                    $('#side-menu').fadeIn(500);
-                }, 100);
+            setTimeout("sideMenuFadeIn", 100);
+            removeStyleAttribute('#side-menu');
         } else if ($('body').hasClass('fixed-sidebar')) {
             $('#side-menu').hide();
-            setTimeout(
-                function () {
-                    $('#side-menu').fadeIn(500);
-                }, 300);
+            setTimeout("sideMenuFadeIn", 300);
         } else {
             // Remove all inline style from jquery fadeIn function to reset menu state
-            $('#side-menu').removeAttr('style');
+            removeStyleAttribute('#side-menu');
         }
     },
-    fixBodyClassByResolution: function(){
-        if ($(window).width() < 769) {
-            $('body').addClass('body-small')
-        } else {
-            $('body').removeClass('body-small')
-        }
+
+    // Dragable panels
+    WinMove: function() {
+        var element = "[class*=col]";
+        var handle = ".ibox-title";
+        var connect = "[class*=col]";
+        $(element).sortable({
+                handle: handle,
+                connectWith: connect,
+                tolerance: 'pointer',
+                forcePlaceholderSize: true,
+                opacity: 0.8
+            })
+            .disableSelection();
     }
 };
