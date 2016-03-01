@@ -26,7 +26,6 @@
             <thead>
             <tr class="text-left">
                 <th><input type="checkbox" id="check-all-orders" /></th>
-                <th>{{ 'Image' | trans }}</th> <!-- TODO FW Please outcomment the image for now. -->
                 <th>{{ 'Product' | trans }}</th>
                 <th>{{ 'SKU' | trans }}</th>
                 <th>{{ 'Unit Price' | trans }}</th>
@@ -44,7 +43,6 @@
             {% for orderItem in order.items %}
                 <tr>
                     <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
-                    <td>-image-</td>
                     <td>
                         <a href="#" target="_blank">{{ 'Yves view' }}</a><br>
                         <a href="#" target="_blank">{{ 'Zed View' }}</a>
