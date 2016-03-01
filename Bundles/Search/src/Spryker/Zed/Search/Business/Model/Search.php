@@ -10,6 +10,7 @@ namespace Spryker\Zed\Search\Business\Model;
 use Elastica\Exception\ResponseException;
 use Spryker\Client\Search\SearchClient;
 
+// TODO: refactor me
 class Search
 {
 

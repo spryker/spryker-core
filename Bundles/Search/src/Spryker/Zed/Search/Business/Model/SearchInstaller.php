@@ -15,20 +15,20 @@ class SearchInstaller implements SearchInstallerInterface
     /**
      * @var \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
      */
-    private $installer;
+    protected $installerPlugins;
 
     /**
      * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
-    private $messenger;
+    protected $messenger;
 
     /**
-     * @param array $installer
+     * @param \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[] $installerPlugins
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      */
-    public function __construct(array $installer, MessengerInterface $messenger)
+    public function __construct(array $installerPlugins, MessengerInterface $messenger)
     {
-        $this->installer = $installer;
+        $this->installerPlugins = $installerPlugins;
         $this->messenger = $messenger;
     }
 
@@ -37,7 +37,7 @@ class SearchInstaller implements SearchInstallerInterface
      */
     public function install()
     {
-        foreach ($this->installer as $installerPlugin) {
+        foreach ($this->installerPlugins as $installerPlugin) {
             $installerPlugin->setMessenger($this->messenger);
             $installerPlugin->run();
         }

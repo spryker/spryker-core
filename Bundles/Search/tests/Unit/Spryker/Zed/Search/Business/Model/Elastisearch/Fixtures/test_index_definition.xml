@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<indexes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../../../../../../../../src/Spryker/Shared/Search/File/elasticsearch_index_definition.xsd">
+
+    <index name="foo">
+        <settings>
+            <numberOfShards>1</numberOfShards>
+            <numberOfReplicas>1</numberOfReplicas>
+            <!--<analysis>-->
+                <!--<analyzers>-->
+                    <!--<analyzer name="asdf">-->
+                        <!--<thing name="thing" />-->
+                        <!--<thing name="thing" />-->
+                        <!--<thing name="thing" />-->
+                    <!--</analyzer>-->
+                <!--</analyzers>-->
+                <!--<charFilters>-->
+                    <!--<charFilter name="adsf">-->
+
+                    <!--</charFilter>-->
+                <!--</charFilters>-->
+                <!--<tokenizers>-->
+                    <!--<tokenizer name="adsf">-->
+
+                    <!--</tokenizer>-->
+                <!--</tokenizers>-->
+                <!--<filters>-->
+                    <!--<filter name="asdf">-->
+
+                    <!--</filter>-->
+                <!--</filters>-->
+            <!--</analysis>-->
+        </settings>
+        <mappingTypes>
+            <mappingType name="page">
+                <mapping>
+                    <property name="store" type="string" includeInAll="false"/>
+                    <property name="search-result-data" type="object" includeInAll="false">
+                        <properties>
+                            <property name="sku" type="string" index="not_analyzed"/>
+                            <property name="name" type="string"/>
+                        </properties>
+                    </property>
+                </mapping>
+            </mappingType>
+        </mappingTypes>
+    </index>
+</indexes>
