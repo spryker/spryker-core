@@ -37,7 +37,7 @@ class DependencyController extends AbstractController
      */
     public function outgoingAction(Request $request)
     {
-        $bundleName = $request->query->get(self::QUERY_BUNDLE);
+        $bundleName = $request->query->get(self::QUERY_BUNDLE); // TODO FW Validation
 
         $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($bundleName);
 
@@ -54,7 +54,7 @@ class DependencyController extends AbstractController
      */
     public function incomingAction(Request $request)
     {
-        $bundleName = $request->query->get(self::QUERY_BUNDLE);
+        $bundleName = $request->query->get(self::QUERY_BUNDLE); // TODO FW Validation
 
         $dependencies = $this->getFacade()->showIncomingDependenciesForBundle($bundleName);
 
@@ -71,14 +71,14 @@ class DependencyController extends AbstractController
      */
     public function dependencyTreeGraphAction(Request $request)
     {
-        if (!$request->query->get('bundle', false)) {
+        if (!$request->query->get('bundle', false)) { // TODO FW Validation
             $this->addErrorMessage('You must specify a bundle for which the graph should be build');
 
             return $this->redirectResponse('/maintenance/dependency');
         }
 
         $callback = function () use ($request) {
-            $bundleToView = $request->query->get('bundle', false);
+            $bundleToView = $request->query->get('bundle', false); // TODO FW Validation
             echo $this->getFacade()->drawDetailedDependencyTreeGraph($bundleToView);
         };
 
@@ -93,7 +93,7 @@ class DependencyController extends AbstractController
     public function simpleAction(Request $request)
     {
         $callback = function () use ($request) {
-            $bundleToView = $request->query->get('bundle', false);
+            $bundleToView = $request->query->get('bundle', false); // TODO FW Validation
             echo $this->getFacade()->drawSimpleDependencyTreeGraph($bundleToView);
         };
 
@@ -119,7 +119,7 @@ class DependencyController extends AbstractController
     public function externalDependencyTreeAction(Request $request)
     {
         $callback = function () use ($request) {
-            $bundleToView = $request->query->get('bundle', false);
+            $bundleToView = $request->query->get('bundle', false); // TODO FW Validation
             echo $this->getFacade()->drawExternalDependencyTreeGraph($bundleToView);
         };
 

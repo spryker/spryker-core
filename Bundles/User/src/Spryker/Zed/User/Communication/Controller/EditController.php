@@ -77,7 +77,7 @@ class EditController extends AbstractController
      */
     public function updateAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -122,7 +122,7 @@ class EditController extends AbstractController
      */
     public function activateUserAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -148,7 +148,7 @@ class EditController extends AbstractController
      */
     public function deactivateUserAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -174,7 +174,7 @@ class EditController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');

@@ -27,7 +27,7 @@ class AddressController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
+        $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $table = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
@@ -43,7 +43,7 @@ class AddressController extends AbstractController
      */
     public function tableAction(Request $request)
     {
-        $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
+        $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $table = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
@@ -59,7 +59,7 @@ class AddressController extends AbstractController
     public function viewAction(Request $request)
     {
         $idCustomer = false;
-        $idCustomerAddress = $request->get(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS);
+        $idCustomerAddress = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS));
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
@@ -92,7 +92,7 @@ class AddressController extends AbstractController
     public function editAction(Request $request)
     {
         $idCustomer = false;
-        $idCustomerAddress = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS);
+        $idCustomerAddress = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS));
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
@@ -140,7 +140,7 @@ class AddressController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
+        $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $dataProvider = $this->getFactory()->createAddressFormDataProvider();
         $addressForm = $this

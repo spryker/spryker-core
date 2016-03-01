@@ -55,7 +55,7 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
             foreach ($filters as $filter) {
                 $facetConfig = $this->facetConfig->getFacetSetupFromParameter($filter);
                 $filterFacetName = $this->facetConfig->getFacetNameFromParameter($filter);
-                $filterValue = $request->query->get($filter);
+                $filterValue = $request->query->get($filter); // TODO FW Validation
 
                 if (trim($filterValue) === '') {
                     continue;

@@ -91,7 +91,7 @@ class GroupController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idAclGroup = $request->query->get(self::PARAMETER_ID_GROUP);
+        $idAclGroup = $this->castId($request->query->get(self::PARAMETER_ID_GROUP));
 
         $dataProvider = $this->getFactory()->createGroupFormDataProvider();
 
@@ -149,7 +149,7 @@ class GroupController extends AbstractController
      */
     public function usersAction(Request $request)
     {
-        $idGroup = $request->query->get(self::PARAMETER_ID_GROUP);
+        $idGroup = $this->castId($request->query->get(self::PARAMETER_ID_GROUP));
 
         $usersTable = $this->getFactory()->createGroupUsersTable($idGroup);
 
@@ -165,8 +165,8 @@ class GroupController extends AbstractController
      */
     public function removeUserFromGroupAction(Request $request)
     {
-        $idGroup = (int)$request->request->get(self::PARAMETER_ID_GROUP);
-        $idUser = (int)$request->request->get(self::PARAMETER_ID_USER);
+        $idGroup = $this->castId($request->request->get(self::PARAMETER_ID_GROUP));
+        $idUser = $this->castId($request->request->get(self::PARAMETER_ID_USER));
 
         try {
             $this->getFacade()->removeUserFromGroup($idUser, $idGroup);
@@ -192,7 +192,7 @@ class GroupController extends AbstractController
      */
     public function rolesAction(Request $request)
     {
-        $idGroup = $request->get(self::PARAMETER_ID_GROUP);
+        $idGroup = $this->castId($request->get(self::PARAMETER_ID_GROUP));
 
         $roles = $this->getFactory()->getGroupRoleListByGroupId($idGroup);
 

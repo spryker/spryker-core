@@ -68,7 +68,7 @@ class PoolController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idPool = $request->query->getInt(DiscountConstants::PARAM_ID_POOL);
+        $idPool = $this->castId($request->query->get(DiscountConstants::PARAM_ID_POOL));
 
         $dataProvider = $this->getFactory()->createVoucherCodesFormDataProvider();
         $form = $this
@@ -104,7 +104,7 @@ class PoolController extends AbstractController
      */
     public function editCategoryAction(Request $request)
     {
-        $idPoolCategory = $request->query->get('id', 0);
+        $idPoolCategory = $this->castId($request->query->get('id', 0));
 
         return $this->createCategoryAction($idPoolCategory);
     }
@@ -164,7 +164,7 @@ class PoolController extends AbstractController
      */
     public function categorySuggestAction(Request $request)
     {
-        $term = $request->get(self::TERM);
+        $term = $request->get(self::TERM); // TODO FW Validation needed
 
         $categories = $this->getQueryContainer()
             ->queryDiscountVoucherPoolCategory()

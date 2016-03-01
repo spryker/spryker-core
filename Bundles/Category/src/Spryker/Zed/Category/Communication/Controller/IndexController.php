@@ -56,7 +56,7 @@ class IndexController extends AbstractController
      */
     public function nodeAction(Request $request)
     {
-        $idCategoryNode = $request->get(self::PARAM_ID_CATEGORY_NODE);
+        $idCategoryNode = $this->castId($request->get(self::PARAM_ID_CATEGORY_NODE));
 
         $categories = $this->getCategoryChildrenByIdCategory($idCategoryNode);
 
@@ -74,7 +74,7 @@ class IndexController extends AbstractController
      */
     public function nodeByNameAction(Request $request)
     {
-        $categoryName = $request->request->get('category-name');
+        $categoryName = $request->request->get('category-name'); // TODO FW Validation
 
         $idCategory = $this->getFacade()->getCategoryNodeIdentifier(
             trim($categoryName),
@@ -97,7 +97,7 @@ class IndexController extends AbstractController
      */
     public function attributesAction(Request $request)
     {
-        $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
+        $idCategory = $this->castId($request->get(self::PARAM_ID_CATEGORY_NODE));
 
         /** @var \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable $table */
         $table = $this->getFactory()
@@ -115,7 +115,7 @@ class IndexController extends AbstractController
      */
     public function urlsAction(Request $request)
     {
-        $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
+        $idCategory = $this->castId($request->get(self::PARAM_ID_CATEGORY_NODE));
 
         $table = $this->getFactory()
             ->createUrlTable($idCategory);
