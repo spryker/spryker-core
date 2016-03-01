@@ -32,10 +32,7 @@ class StringGenerator
      */
     public function generateRandomString()
     {
-        $function = 'openssl_random_pseudo_bytes';
-        if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
-            $function = 'random_bytes';
-        }
+        $function = $this->getFunction();
 
         $length = $this->length / 2;
         $token = bin2hex(call_user_func($function, (int)$length));
@@ -45,6 +42,24 @@ class StringGenerator
         }
 
         return $token;
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return string
+     */
+    protected function getFunction()
+    {
+        $function = 'random_bytes';
+        if (!function_exists($function)) {
+            $function = 'openssl_random_pseudo_bytes';
+            if (!function_exists($function)) {
+                throw new \Exception(__CLASS__ . ' requires to have openssl installed or a PHP version >=7 to work properly.');
+            }
+        }
+
+        return $function;
     }
 
 }

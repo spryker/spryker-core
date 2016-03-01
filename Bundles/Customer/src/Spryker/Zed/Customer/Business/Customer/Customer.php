@@ -23,6 +23,7 @@ use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPlu
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\Library\Generator\StringGenerator;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer
@@ -179,7 +180,9 @@ class Customer
      */
     protected function generateKey()
     {
-        return uniqid();
+        $generator = new StringGenerator();
+
+        return $generator->generateRandomString();
     }
 
     /**

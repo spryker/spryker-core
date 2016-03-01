@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
 
@@ -99,7 +100,7 @@ class InvoiceTest extends Test
      */
     public function testMapToReAuthorization()
     {
-        $uniqueId = uniqid('test_');
+        $uniqueId = $this->getRandomString();
         $methodMapper = new Invoice($this->getBundleConfigMock());
         $paymentEntityMock = $this->getPaymentEntityMock();
         $orderTransfer = $this->createOrderTransfer();
@@ -111,11 +112,21 @@ class InvoiceTest extends Test
     }
 
     /**
+     * @return string
+     */
+    private function getRandomString()
+    {
+        $generator = new StringGenerator();
+
+        return 'test_' . $generator->generateRandomString();
+    }
+
+    /**
      * @return void
      */
     public function testMapToReversal()
     {
-        $uniqueId = uniqid('test_');
+        $uniqueId = $this->getRandomString();
         $methodMapper = new Invoice($this->getBundleConfigMock());
         $paymentEntityMock = $this->getPaymentEntityMock();
         $orderTransfer = $this->createOrderTransfer();
@@ -131,7 +142,7 @@ class InvoiceTest extends Test
      */
     public function testMapToCapture()
     {
-        $uniqueId = uniqid('test_');
+        $uniqueId = $this->getRandomString();
         $methodMapper = new Invoice($this->getBundleConfigMock());
         $paymentEntityMock = $this->getPaymentEntityMock();
         $orderTransfer = $this->createOrderTransfer();
@@ -147,7 +158,7 @@ class InvoiceTest extends Test
      */
     public function testMapToRefund()
     {
-        $uniqueId = uniqid('test_');
+        $uniqueId = $this->getRandomString();
         $methodMapper = new Invoice($this->getBundleConfigMock());
         $paymentEntityMock = $this->getPaymentEntityMock();
         $orderTransfer = $this->createOrderTransfer();

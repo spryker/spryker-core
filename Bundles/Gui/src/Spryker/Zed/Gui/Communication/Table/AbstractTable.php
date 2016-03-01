@@ -16,6 +16,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Library\Sanitize\Html;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -271,7 +272,8 @@ abstract class AbstractTable
      */
     protected function generateTableIdentifier($prefix = 'table-')
     {
-        $this->tableIdentifier = uniqid($prefix);
+        $generator = new StringGenerator();
+        $this->tableIdentifier = $prefix . $generator->generateRandomString();
 
         return $this;
     }

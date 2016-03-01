@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Spryker\Shared\Graph\GraphInterface;
+use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
@@ -158,6 +159,13 @@ class Drawer implements DrawerInterface
         }
     }
 
+    private function getDiamondId()
+    {
+        $generator = new StringGenerator();
+
+        return $generator->generateRandomString();
+    }
+
     /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
@@ -177,7 +185,7 @@ class Drawer implements DrawerInterface
             }
 
             if (count($transitions) > 1) {
-                $diamondId = uniqid();
+                $diamondId = $this->getDiamondId();
 
                 $this->graph->addNode($diamondId, $this->attributesDiamond, $state->getProcess()->getName());
                 $this->addEdge($currentTransition, self::EDGE_UPPER_HALF, [], null, $diamondId);

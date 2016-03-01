@@ -164,7 +164,10 @@ class Calculator implements CalculatorInterface
     protected function sortByDiscountAmountDesc(array $calculatedDiscounts)
     {
         usort($calculatedDiscounts, function ($a, $b) {
-            return $b[self::KEY_DISCOUNT_TRANSFER]->getAmount() - $a[self::KEY_DISCOUNT_TRANSFER]->getAmount();
+            $amountA = (int)$a[self::KEY_DISCOUNT_TRANSFER]->getAmount();
+            $amountB = (int)$b[self::KEY_DISCOUNT_TRANSFER]->getAmount();
+
+            return $amountB - $amountA;
         });
 
         return $calculatedDiscounts;
