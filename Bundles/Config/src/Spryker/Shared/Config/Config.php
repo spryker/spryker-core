@@ -40,7 +40,7 @@ class Config
 
     /**
      * @param string $key
-     * @param string|null $default
+     * @param mixed|null $default
      *
      * @throws \Exception
      *
