@@ -80,7 +80,7 @@ class Drawer implements DrawerInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function draw(ProcessInterface $process, $highlightState = null, $format = null, $fontSize = null)
     {
