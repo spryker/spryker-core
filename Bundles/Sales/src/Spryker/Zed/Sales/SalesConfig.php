@@ -21,6 +21,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * TODO Not needed, remove
+     * this is used in project level src/Pyz/Zed/Sales/SalesConfig.php:28
      *
      * @var array|string[]
      */
@@ -28,73 +29,6 @@ class SalesConfig extends AbstractBundleConfig
         'invoice' => 'Invoice01',
         'no_payment' => 'Nopayment01',
     ];
-    /**
-     * TODO FW Not used. Please remove.
-     *
-     * @return string
-     */
-    public function getInvoiceIncrementPrefix()
-    {
-        return '3';
-    }
-
-    /**
-     * TODO FW Not used. Please remove.
-     *
-     * @return string
-     */
-    public function getInvoiceIncrementDivider()
-    {
-        return '-';
-    }
-
-    /**
-     * TODO FW Not used. Please remove.
-     *
-     * total count of digits in invoiceNumber including prefix (max 20)
-     *
-     * @return int
-     */
-    public function getInvoiceIncrementDigits()
-    {
-        return 16;
-    }
-
-    /**
-     * TODO FW Not used. Please remove.
-     *
-     * minimum incrementation of invoice number
-     *
-     * @return int
-     */
-    public function getInvoiceIncrementMin()
-    {
-        return 1;
-    }
-
-    /**
-     * TODO FW Not used. Please remove.
-     *
-     * maximum incrementation of invoice number
-     *
-     * @return int
-     */
-    public function getInvoiceIncrementMax()
-    {
-        return 5;
-    }
-
-    /**
-     * TODO FW Not used. Please remove.
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function getStateMachineTriggerQueueProcessMessageAmount()
-    {
-        return 50;
-    }
 
     /**
      * Separator for the sequence number
