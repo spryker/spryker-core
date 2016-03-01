@@ -170,18 +170,22 @@ class Drawer implements DrawerInterface
         $events = $state->getEvents();
         foreach ($events as $event) {
             $transitions = $state->getOutgoingTransitionsByEvent($event);
+
             $currentTransition = current($transitions);
+            if (!$currentTransition) {
+                throw new StatemachineException('Transitions container seems to be empty.');
+            }
 
             if (count($transitions) > 1) {
                 $diamondId = uniqid();
-                $this->graph->addNode($diamondId, $this->attributesDiamond, $state->getProcess()->getName());
 
+                $this->graph->addNode($diamondId, $this->attributesDiamond, $state->getProcess()->getName());
                 $this->addEdge($currentTransition, self::EDGE_UPPER_HALF, [], null, $diamondId);
 
                 foreach ($transitions as $transition) {
                     $this->addEdge($transition, self::EDGE_LOWER_HALF, [], $diamondId);
                 }
-            } elseif ($currentTransition) {
+            } else {
                 $this->addEdge($currentTransition, self::EDGE_FULL);
             }
         }
