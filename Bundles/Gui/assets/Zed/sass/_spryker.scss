@@ -105,3 +105,14 @@ body.login {
   width: 164px;
   height: 156px;
 }
+
+/* Zed Navigation .. */
+body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
+    span {
+        display: block;
+    }
+    i {
+        display: none;
+    }
+}
+/* .. Zed Navigation */
