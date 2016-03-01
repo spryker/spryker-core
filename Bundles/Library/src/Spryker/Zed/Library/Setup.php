@@ -65,7 +65,6 @@ class Setup
      */
     public static function checkCondition($callBack, $value)
     {
-        assert(function_exists($callBack));
         $success = $callBack($value);
         if ($success) {
             self::$successMessages[] = "OK - {$callBack} - {$value}";
