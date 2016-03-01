@@ -119,7 +119,7 @@ class Config
         /*
          * e.g. config_database.php
          */
-        self::buildConfig('database', $config);
+        self::buildConfig('propel', $config);
 
         self::$config = $config;
     }
