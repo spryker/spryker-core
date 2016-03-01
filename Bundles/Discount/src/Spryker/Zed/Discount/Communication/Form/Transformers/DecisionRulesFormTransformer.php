@@ -165,6 +165,10 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
         }
 
         foreach ($fromArray[self::DECISION_RULES] as &$decisionRule) {
+            if (array_key_exists(self::DECISION_RULE_PLUGIN_FORM, $decisionRule)) {
+                $decisionRulePluginKey = self::DECISION_RULE_PLUGIN_FORM;
+                $valueKey = self::VALUE;
+            }
             if (!array_key_exists($decisionRulePluginKey, $decisionRule)) {
                 continue;
             }

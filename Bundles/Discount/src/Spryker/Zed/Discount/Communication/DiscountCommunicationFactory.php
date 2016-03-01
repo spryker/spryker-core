@@ -111,7 +111,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCartRuleForm(array $formData = [], array $formOptions = [])
     {
-        $cartRuleForm = new CartRuleForm($this->getConfig());
+        $cartRuleForm = new CartRuleForm($this->getConfig(), $this->createDecisionRulesFormTransformer());
 
         return $this->getFormFactory()->create($cartRuleForm, $formData, $formOptions);
     }
