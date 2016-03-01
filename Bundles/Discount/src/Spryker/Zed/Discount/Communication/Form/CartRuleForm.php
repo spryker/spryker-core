@@ -41,7 +41,8 @@ class CartRuleForm extends AbstractRuleForm
     protected $decisionRulesFormTransformer;
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
+     * @param DiscountConfig $discountConfig
+     * @param DataTransformerInterface $decisionRulesFormTransformer
      */
     public function __construct(DiscountConfig $discountConfig, DataTransformerInterface $decisionRulesFormTransformer)
     {
