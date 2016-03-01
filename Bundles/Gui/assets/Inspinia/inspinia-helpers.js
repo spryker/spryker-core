@@ -5,6 +5,16 @@
 
 'use strict';
 
+function removeStyleAttribute(elementId) {
+    setTimeout(function() {
+        $(elementId).removeAttr('style');
+    }, 500);
+}
+
+function sideMenuFadeIn() {
+    $('#side-menu').fadeIn(500);
+}
+
 module.exports = {
     // Full height of sidebar
     fix_height: function() {
@@ -47,26 +57,16 @@ module.exports = {
             });
     },
 
-    removeStyleAttribute: function(elementId) {
-        setTimeout(function() {
-            $(elementId).removeAttr('style');
-        }, 500);
-    },
-
-    sideMenuFadeIn: function() {
-        $('#side-menu').fadeIn(500);
-    },
-
     SmoothlyMenu: function() {
         if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
             // Hide menu in order to smoothly turn on when maximize menu
             $('#side-menu').hide();
             // For smoothly turn on menu
-            setTimeout("sideMenuFadeIn", 100);
+            setTimeout(sideMenuFadeIn, 100);
             removeStyleAttribute('#side-menu');
         } else if ($('body').hasClass('fixed-sidebar')) {
             $('#side-menu').hide();
-            setTimeout("sideMenuFadeIn", 300);
+            setTimeout(sideMenuFadeIn, 300);
         } else {
             // Remove all inline style from jquery fadeIn function to reset menu state
             removeStyleAttribute('#side-menu');
@@ -78,7 +78,8 @@ module.exports = {
         var element = "[class*=col]";
         var handle = ".ibox-title";
         var connect = "[class*=col]";
-        $(element).sortable({
+        $(element)
+            .sortable({
                 handle: handle,
                 connectWith: connect,
                 tolerance: 'pointer',

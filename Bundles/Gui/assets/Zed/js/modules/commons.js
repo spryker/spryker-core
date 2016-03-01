@@ -19,6 +19,8 @@ require('datatables.net-responsive');
 require('datatables.net-select');
 require('nestable');
 require('select2');
+require('codemirror');
+require('summernote');
 
 // inspinia
 require('../../../Inspinia/inspinia');

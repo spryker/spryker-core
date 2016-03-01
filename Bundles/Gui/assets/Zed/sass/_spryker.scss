@@ -136,6 +136,10 @@ body.login {
   white-space: nowrap;
 }
 
+.note-editor *,
+.note-editor *:before {
+  color: #444 !important;
+}
 
 /* Zed Navigation .. */
 body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {

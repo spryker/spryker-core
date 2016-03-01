@@ -23,11 +23,6 @@ $(document).ready(function () {
         $('body').removeClass('body-small')
     }
 
-    // enable WYSIWYG html editor
-    $('.html-editor').summernote({
-        airMode: true
-    });
-
     // MetsiMenu
     $('#side-menu').metisMenu();
 

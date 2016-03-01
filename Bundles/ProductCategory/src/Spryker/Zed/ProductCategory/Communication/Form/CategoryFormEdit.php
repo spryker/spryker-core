@@ -157,7 +157,7 @@ class CategoryFormEdit extends CategoryFormAdd
             ->add(self::EXTRA_PARENTS, new Select2ComboBoxType(), [
                 'label' => 'Additional Parents',
                 'choices' => $choices,
-                'multiple' => true,
+                'multiple' => true
             ]);
 
         return $this;
