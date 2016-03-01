@@ -163,7 +163,7 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
         $directory = implode(DIRECTORY_SEPARATOR,  $directoryParts);
 
         if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
+            mkdir($directory, 0775, true);
         }
         $fileName = $directory . DIRECTORY_SEPARATOR . $class . '.php';
 

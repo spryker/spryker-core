@@ -24,7 +24,7 @@ abstract class AbstractAutoCompletion extends \PHPUnit_Framework_TestCase
     {
         $testDirectory = $this->baseDir . 'test';
         if (!is_dir($testDirectory)) {
-            mkdir($testDirectory, 0777, true);
+            mkdir($testDirectory, 0775, true);
         }
     }
 

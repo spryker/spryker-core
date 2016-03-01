@@ -95,7 +95,7 @@ class TransferGenerate extends Module
         }
 
         if (!is_dir($pathForTransferSchemas)) {
-            mkdir($pathForTransferSchemas, 0777, true);
+            mkdir($pathForTransferSchemas, 0775, true);
         }
 
         return $pathForTransferSchemas;

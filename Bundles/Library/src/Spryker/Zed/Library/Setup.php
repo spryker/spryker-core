@@ -52,7 +52,7 @@ class Setup
     {
         foreach ($directories as $directory) {
             if (!is_dir($directory)) {
-                mkdir($directory, 0777, true);
+                mkdir($directory, 0775, true);
             }
         }
     }

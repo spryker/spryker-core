@@ -92,7 +92,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     protected function makeDirIfNotExists()
     {
         if (!is_dir($this->options[self::OPTION_KEY_LOCATION_DIR])) {
-            mkdir($this->options[self::OPTION_KEY_LOCATION_DIR], 0777, true);
+            mkdir($this->options[self::OPTION_KEY_LOCATION_DIR], 0755, true);
         }
     }
 

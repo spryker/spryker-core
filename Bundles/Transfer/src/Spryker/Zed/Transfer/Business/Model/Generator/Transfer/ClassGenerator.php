@@ -48,7 +48,7 @@ class ClassGenerator implements GeneratorInterface
         $fileContent = $this->twig->render('class.php.twig', $twigData);
 
         if (!is_dir($this->targetDirectory)) {
-            mkdir($this->targetDirectory, 0755, true);
+            mkdir($this->targetDirectory, 0775, true);
         }
 
         file_put_contents($this->targetDirectory . $fileName, $fileContent);

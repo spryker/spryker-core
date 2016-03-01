@@ -107,7 +107,7 @@ class Log
         if ($dir === 'logs') {
             $logPath .= APPLICATION . DIRECTORY_SEPARATOR;
             if (is_dir($logPath) === false) {
-                mkdir($logPath, 0777, true);
+                mkdir($logPath, 0775, true);
             }
         }
 
