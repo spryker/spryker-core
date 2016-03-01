@@ -12,7 +12,7 @@
   },
   "require": {
     "spryker/kernel": "^0.20.0",
-    "spryker/propel": "^1.0.0"
+    "spryker/propel": "^0.20.0"
   },
   "description": "sequence number bundle",
   "license": "proprietary",

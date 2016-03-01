@@ -16,8 +16,8 @@
     "spryker/gui": "^0.20.0",
     "spryker/kernel": "^0.20.0",
     "spryker/library": "^0.20.0",
-    "spryker/redis": "^1.0.0",
-    "spryker/symfony": "^1.0.0",
+    "spryker/redis": "^0.20.0",
+    "spryker/symfony": "^0.20.0",
     "spryker/config": "^0.20.0"
   },
   "description": "storage bundle",

@@ -16,9 +16,9 @@
     "spryker/library": "^0.20.0",
     "spryker/oms": "^0.20.0",
     "spryker/refund": "^0.20.0",
-    "spryker/propel": "^1.0.0",
-    "spryker/symfony": "^1.0.0",
-    "spryker/guzzle": "^1.0.0",
+    "spryker/propel": "^0.20.0",
+    "spryker/symfony": "^0.20.0",
+    "spryker/guzzle": "^0.20.0",
     "spryker/sales": "^0.20.0"
   },
   "description": "payone bundle",

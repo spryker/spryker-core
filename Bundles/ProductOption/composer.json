@@ -14,7 +14,7 @@
     "spryker/kernel": "^0.20.0",
     "spryker/locale": "^0.20.0",
     "spryker/product": "^0.20.0",
-    "spryker/propel": "^1.0.0",
+    "spryker/propel": "^0.20.0",
     "spryker/tax": "^0.20.0",
     "spryker/touch": "^0.20.0"
   },

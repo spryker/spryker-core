@@ -15,9 +15,9 @@
     "spryker/kernel": "^0.20.0",
     "spryker/product": "^0.20.0",
     "spryker/touch": "^0.20.0",
-    "spryker/guzzle": "^1.0.0",
-    "spryker/propel": "^1.0.0",
-    "spryker/symfony": "^1.0.0"
+    "spryker/guzzle": "^0.20.0",
+    "spryker/propel": "^0.20.0",
+    "spryker/symfony": "^0.20.0"
   },
   "description": "stock bundle",
   "license": "proprietary",

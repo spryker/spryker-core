@@ -12,7 +12,7 @@
   },
   "require": {
     "spryker/kernel": "^0.20.0",
-    "spryker/graphviz": "^1.0.0"
+    "spryker/graphviz": "^0.20.0"
   },
   "description": "graph bundle",
   "license": "proprietary",

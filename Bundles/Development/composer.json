@@ -13,8 +13,8 @@
     "spryker/abstract-sniffs": "^1.0.0",
     "spryker/console": "^0.20.0",
     "spryker/kernel": "^0.20.0",
-    "spryker/symfony": "^1.0.0",
-    "spryker/zend": "^1.0.0",
+    "spryker/symfony": "^0.20.0",
+    "spryker/zend": "^0.20.0",
     "spryker/application": "^0.20.0",
     "spryker/graph": "^0.20.0"
   },

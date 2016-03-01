@@ -14,8 +14,8 @@
     "spryker/application": "^0.20.0",
     "spryker/glossary": "^0.20.0",
     "spryker/kernel": "^0.20.0",
-    "spryker/log": "^1.0.0",
-    "spryker/symfony": "^1.0.0"
+    "spryker/log": "^0.20.0",
+    "spryker/symfony": "^0.20.0"
   },
   "description": "messenger bundle",
   "license": "proprietary",

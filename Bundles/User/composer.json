@@ -18,8 +18,8 @@
     "spryker/kernel": "^0.20.0",
     "spryker/library": "^0.20.0",
     "spryker/session": "^0.20.0",
-    "spryker/propel": "^1.0.0",
-    "spryker/symfony": "^1.0.0",
+    "spryker/propel": "^0.20.0",
+    "spryker/symfony": "^0.20.0",
     "spryker/url": "^0.20.0"
   },
   "description": "user bundle",

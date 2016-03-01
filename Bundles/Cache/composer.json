@@ -13,7 +13,7 @@
   "require": {
     "spryker/console": "^0.20.0",
     "spryker/kernel": "^0.20.0",
-    "spryker/symfony": "^1.0.0"
+    "spryker/symfony": "^0.20.0"
   },
   "description": "cache bundle",
   "license": "proprietary",
