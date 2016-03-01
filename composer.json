@@ -3,7 +3,8 @@
   "description": "Spryker Framework",
   "license": "proprietary",
   "require":{
-    "phpdocumentor/graphviz": "dev-master#a906a90"
+    "phpdocumentor/graphviz": "dev-master#a906a90",
+    "ext-openssl": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
