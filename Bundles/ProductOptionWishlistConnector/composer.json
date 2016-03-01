@@ -11,7 +11,7 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0"
+    "spryker/kernel": "^0.20.0"
   },
   "description": "product option wishlist connector bundle",
   "license": "proprietary",

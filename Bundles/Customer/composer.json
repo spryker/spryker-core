@@ -8,19 +8,20 @@
     }
   },
   "require": {
-    "spryker/application": "^1.0.0",
-    "spryker/country": "^1.0.0",
-    "spryker/gui": "^1.0.0",
-    "spryker/installer": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/locale": "^1.0.0",
-    "spryker/mail": "^1.0.0",
-    "spryker/sequence-number": "^1.0.0",
-    "spryker/session": "^1.0.0",
-    "spryker/transfer": "^1.0.0",
-    "spryker/zed-request": "^1.0.0",
+    "spryker/application": "^0.20.0",
+    "spryker/country": "^0.20.0",
+    "spryker/gui": "^0.20.0",
+    "spryker/installer": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/locale": "^0.20.0",
+    "spryker/mail": "^0.20.0",
+    "spryker/sequence-number": "^0.20.0",
+    "spryker/session": "^0.20.0",
+    "spryker/transfer": "^0.20.0",
+    "spryker/zed-request": "^0.20.0",
     "spryker/propel": "^1.0.0",
-    "spryker/symfony": "^1.0.0"
+    "spryker/symfony": "^1.0.0",
+    "spryker/assertion": "^0.20.0"
   },
   "require-dev": {
     "spryker/testify": "^1.0.0"

@@ -11,9 +11,9 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0",
-    "spryker/sales": "^1.0.0",
-    "spryker/transfer": "^1.0.0"
+    "spryker/kernel": "^0.20.0",
+    "spryker/sales": "^0.20.0",
+    "spryker/transfer": "^0.20.0"
   },
   "description": "calculation bundle",
   "license": "proprietary",

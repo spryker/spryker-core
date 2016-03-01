@@ -11,17 +11,17 @@
     }
   },
   "require": {
-    "spryker/application": "^1.0.0",
-    "spryker/cache": "^1.0.0",
-    "spryker/console": "^1.0.0",
-    "spryker/installer": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/library": "^1.0.0",
-    "spryker/propel": "^1.0.0",
-    "spryker/search": "^1.0.0",
-    "spryker/transfer": "^1.0.0",
+    "spryker/application": "^0.20.0",
+    "spryker/cache": "^0.20.0",
+    "spryker/console": "^0.20.0",
+    "spryker/installer": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/library": "^0.20.0",
+    "spryker/propel": "^0.20.0",
+    "spryker/search": "^0.20.0",
+    "spryker/transfer": "^0.20.0",
     "spryker/symfony": "^1.0.0",
-    "spryker/config": "^1.0.0"
+    "spryker/config": "^0.20.0"
   },
   "description": "setup bundle",
   "license": "proprietary",

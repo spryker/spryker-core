@@ -11,10 +11,10 @@
     }
   },
   "require": {
-    "spryker/cart": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/price": "^1.0.0",
-    "spryker/transfer": "^1.0.0"
+    "spryker/cart": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/price": "^0.20.0",
+    "spryker/transfer": "^0.20.0"
   },
   "description": "price cart connector bundle",
   "license": "proprietary",

@@ -6,12 +6,12 @@
     }
   },
   "require": {
-    "spryker/customer": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/product": "^1.0.0",
-    "spryker/session": "^1.0.0",
-    "spryker/storage": "^1.0.0",
-    "spryker/zed-request": "^1.0.0",
+    "spryker/customer": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/product": "^0.20.0",
+    "spryker/session": "^0.20.0",
+    "spryker/storage": "^0.20.0",
+    "spryker/zed-request": "^0.20.0",
     "spryker/propel": "^1.0.0",
     "spryker/symfony": "^1.0.0"
   },

@@ -11,9 +11,9 @@
     }
   },
   "require": {
-    "spryker/glossary": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/mail": "^1.0.0"
+    "spryker/glossary": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/mail": "^0.20.0"
   },
   "description": "customer mail connector bundle",
   "license": "proprietary",

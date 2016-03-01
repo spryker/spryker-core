@@ -11,9 +11,9 @@
     }
   },
   "require": {
-    "spryker/availability": "^1.0.0",
-    "spryker/checkout": "^1.0.0",
-    "spryker/kernel": "^1.0.0"
+    "spryker/availability": "^0.20.0",
+    "spryker/checkout": "^0.20.0",
+    "spryker/kernel": "^0.20.0"
   },
   "description": "availability checkout connector bundle",
   "license": "proprietary",

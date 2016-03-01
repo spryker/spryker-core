@@ -11,11 +11,11 @@
     }
   },
   "require": {
-    "spryker/console": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
+    "spryker/console": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
     "spryker/guzzle": "^1.0.0",
     "spryker/symfony": "^1.0.0",
-    "spryker/config": "^1.0.0"
+    "spryker/config": "^0.20.0"
   },
   "description": "new relic bundle",
   "license": "proprietary",

@@ -11,10 +11,10 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0",
-    "spryker/oms": "^1.0.0",
-    "spryker/stock": "^1.0.0",
-    "spryker/product": "^1.0.0"
+    "spryker/kernel": "^0.20.0",
+    "spryker/oms": "^0.20.0",
+    "spryker/stock": "^0.20.0",
+    "spryker/product": "^0.20.0"
   },
   "description": "availability bundle",
   "license": "proprietary",

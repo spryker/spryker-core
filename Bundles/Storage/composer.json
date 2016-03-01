@@ -11,14 +11,14 @@
     }
   },
   "require": {
-    "spryker/application": "^1.0.0",
-    "spryker/collector": "^1.0.0",
-    "spryker/gui": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/library": "^1.0.0",
+    "spryker/application": "^0.20.0",
+    "spryker/collector": "^0.20.0",
+    "spryker/gui": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/library": "^0.20.0",
     "spryker/redis": "^1.0.0",
     "spryker/symfony": "^1.0.0",
-    "spryker/config": "^1.0.0"
+    "spryker/config": "^0.20.0"
   },
   "description": "storage bundle",
   "license": "proprietary",
