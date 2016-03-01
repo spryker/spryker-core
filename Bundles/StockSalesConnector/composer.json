@@ -11,8 +11,8 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0",
-    "spryker/stock": "^1.0.0"
+    "spryker/kernel": "^0.20.0",
+    "spryker/stock": "^0.20.0"
   },
   "description": "stock sales connector bundle",
   "license": "proprietary",

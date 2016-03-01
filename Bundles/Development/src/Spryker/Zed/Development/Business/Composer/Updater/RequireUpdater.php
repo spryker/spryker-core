@@ -53,7 +53,7 @@ class RequireUpdater implements UpdaterInterface
         foreach ($dependentBundles as $dependentBundle) {
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
-            $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = self::RELEASE_OPERATOR . '1.0.0';
+            $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = self::RELEASE_OPERATOR . '0.20.0';
         }
 
         return $composerJson;

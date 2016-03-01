@@ -66,7 +66,7 @@ class RequireExternalUpdater implements UpdaterInterface
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
 
-            $composerJson[self::KEY_REQUIRE][$dependentBundle] = self::RELEASE_OPERATOR . '1.0.0';
+            $composerJson[self::KEY_REQUIRE][$dependentBundle] = self::RELEASE_OPERATOR . '0.20.0';
         }
 
         return $composerJson;

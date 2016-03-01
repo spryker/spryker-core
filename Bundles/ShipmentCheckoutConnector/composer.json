@@ -11,10 +11,10 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0",
-    "spryker/sales": "^1.0.0",
-    "spryker/shipment": "^1.0.0",
-    "spryker/propel": "^1.0.0"
+    "spryker/kernel": "^0.20.0",
+    "spryker/sales": "^0.20.0",
+    "spryker/shipment": "^0.20.0",
+    "spryker/propel": "^0.20.0"
   },
   "description": "shipment checkout connector bundle",
   "license": "proprietary",

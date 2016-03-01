@@ -11,8 +11,8 @@
     }
   },
   "require": {
-    "spryker/item-grouper": "^1.0.0",
-    "spryker/kernel": "^1.0.0"
+    "spryker/item-grouper": "^0.20.0",
+    "spryker/kernel": "^0.20.0"
   },
   "description": "item grouper wishlist connector bundle",
   "license": "proprietary",
