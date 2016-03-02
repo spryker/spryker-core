@@ -21,45 +21,45 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     /**
      * @api
      *
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function exportStorage(OutputInterface $output = null)
+    public function exportStorage(OutputInterface $output)
     {
         $exporter = $this->getFactory()->createYvesKeyValueExporter();
 
-        return $exporter->exportForStorage($output);
+        return $exporter->exportStorage($output);
     }
 
     /**
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output = null)
+    public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output)
     {
         $exporter = $this->getFactory()->createYvesKeyValueExporter();
 
-        return $exporter->exportForLocale($locale, $output);
+        return $exporter->exportStorageByLocale($locale, $output);
     }
 
     /**
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function exportSearchByLocale(LocaleTransfer $locale, OutputInterface $output = null)
+    public function exportSearchByLocale(LocaleTransfer $locale, OutputInterface $output)
     {
         $exporter = $this->getFactory()->createYvesSearchExporter();
 
-        return $exporter->exportForLocale($locale, $output);
+        return $exporter->exportStorageByLocale($locale, $output);
     }
 
     /**
@@ -70,11 +70,11 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function updateSearchByLocale(LocaleTransfer $locale, OutputInterface $output = null)
+    public function updateSearchByLocale(LocaleTransfer $locale, OutputInterface $output)
     {
         $exporter = $this->getFactory()->createYvesSearchUpdateExporter();
 
-        return $exporter->exportForLocale($locale, $output);
+        return $exporter->exportStorageByLocale($locale, $output);
     }
 
     /**

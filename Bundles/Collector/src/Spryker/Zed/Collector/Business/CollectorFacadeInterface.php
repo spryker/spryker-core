@@ -18,29 +18,31 @@ interface CollectorFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportSearchByLocale(LocaleTransfer $locale, OutputInterface $output);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output = null);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
-     */
-    public function exportSearchByLocale(LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
-     */
-    public function updateSearchByLocale(LocaleTransfer $locale);
+    public function updateSearchByLocale(LocaleTransfer $locale, OutputInterface $output);
 
     /**
      * @api
