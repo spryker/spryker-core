@@ -3,9 +3,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 $(document).ready(function () {
-
     inspinia.fix_height();
 
     // Add body-small class if window less than 768px
@@ -15,13 +13,6 @@ $(document).ready(function () {
     $(window).bind("resize", function () {
         inspinia.fixBodyClassByResolution();
     });
-
-    // Add body-small class if window less than 768px
-    if ($(this).width() < 769) {
-        $('body').addClass('body-small')
-    } else {
-        $('body').removeClass('body-small')
-    }
 
     // MetsiMenu
     $('#side-menu').metisMenu();
@@ -57,24 +48,11 @@ $(document).ready(function () {
         $('#right-sidebar').toggleClass('sidebar-open');
     });
 
-    // Initialize slimscroll for right sidebar
-    // $('.sidebar-container').slimScroll({
-    //     height: '100%',
-    //     railOpacity: 0.4,
-    //     wheelStep: 10
-    // });
-
     // Open close small chat
     $('.open-small-chat').click(function () {
         $(this).children().toggleClass('fa-comments').toggleClass('fa-remove');
         $('.small-chat-box').toggleClass('active');
     });
-
-    //// Initialize slimscroll for small chat
-    //$('.small-chat-box .content').slimScroll({
-    //    height: '234px',
-    //    railOpacity: 0.4
-    //});
 
     // Open close right sidebar
     $('.right-sidebar-toggle').click(function () {
@@ -96,13 +74,6 @@ $(document).ready(function () {
         return false;
     });
 
-    // Append config box / Only for demo purpose
-    // Uncomment on server mode to enable XHR calls
-    //$.get("skin-config.html", function (data) {
-    //    if (!$('body').hasClass('no-skin-config'))
-    //        $('body').append(data);
-    //});
-
     // Minimalize menu
     $('.navbar-minimalize').click(function () {
         $("body").toggleClass("mini-navbar");
@@ -119,18 +90,6 @@ $(document).ready(function () {
     // Fix Bootstrap backdrop issu with animation.css
     $('.modal').appendTo("body");
 
-    // Fixed Sidebar
-    $(window).bind("load", function () {
-        if ($("body").hasClass('fixed-sidebar')) {
-            $('.sidebar-collapse').slimScroll({
-                height: '100%',
-                railOpacity: 0.9
-            });
-        }
-    });
-
-    inspinia.fix_height();
-
     // Move right sidebar top after scroll
     $(window).scroll(function () {
         if ($(window).scrollTop() > 0 && !$('body').hasClass('fixed-nav')) {
@@ -142,7 +101,7 @@ $(document).ready(function () {
 
     $(window).bind("load resize scroll", function () {
         if (!$("body").hasClass('body-small')) {
-            fix_height();
+            inspinia.fix_height();
         }
     });
 
@@ -150,13 +109,11 @@ $(document).ready(function () {
         .popover();
 
     if (inspinia.localStorageSupport) {
-
         var collapse = localStorage.getItem("collapse_menu");
         var fixedsidebar = localStorage.getItem("fixedsidebar");
         var fixednavbar = localStorage.getItem("fixednavbar");
         var boxedlayout = localStorage.getItem("boxedlayout");
         var fixedfooter = localStorage.getItem("fixedfooter");
-
         var body = $('body');
 
         if (fixedsidebar == 'on') {
@@ -189,62 +146,3 @@ $(document).ready(function () {
         }
     }
 });
-
-// check if browser support HTML5 local storage
-function localStorageSupport() {
-    return (('localStorage' in window) && window['localStorage'] !== null)
-}
-
-// For demo purpose - animation css script
-function animationHover(element, animation) {
-    element = $(element);
-    element.hover(
-        function () {
-            element.addClass('animated ' + animation);
-        },
-        function () {
-            //wait for animation to finish before removing classes
-            window.setTimeout(function () {
-                element.removeClass('animated ' + animation);
-            }, 2000);
-        });
-}
-
-function SmoothlyMenu() {
-    if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
-        // Hide menu in order to smoothly turn on when maximize menu
-        $('#side-menu').hide();
-        // For smoothly turn on menu
-        setTimeout(
-            function () {
-                $('#side-menu').fadeIn(500);
-            }, 100);
-    } else if ($('body').hasClass('fixed-sidebar')) {
-        $('#side-menu').hide();
-        setTimeout(
-            function () {
-                $('#side-menu').fadeIn(500);
-            }, 300);
-    } else {
-        // Remove all inline style from jquery fadeIn function to reset menu state
-        $('#side-menu').removeAttr('style');
-    }
-}
-
-// Dragable panels
-function WinMove() {
-    var element = "[class*=col]";
-    var handle = ".ibox-title";
-    var connect = "[class*=col]";
-    $(element).sortable(
-        {
-            handle: handle,
-            connectWith: connect,
-            tolerance: 'pointer',
-            forcePlaceholderSize: true,
-            opacity: 0.8
-        })
-        .disableSelection();
-}
-
-

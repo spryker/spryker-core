@@ -37,6 +37,14 @@ module.exports = {
         }
     },
 
+    fixBodyClassByResolution: function() {
+        if ($(document).width() < 769) {
+            $('body').addClass('body-small')
+        } else {
+            $('body').removeClass('body-small')
+        }
+    },
+
     // check if browser support HTML5 local storage
     localStorageSupport: function() {
         return (('localStorage' in window) && window['localStorage'] !== null)
