@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Refund\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Refund\Communication\RefundCommunicationFactory getFactory()
@@ -19,10 +20,13 @@ class SalesController extends AbstractController
     /**
      * @return array
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
+        $idSalesOrder = $request->request->get('id-sales-order');
+
         $table = $this->getFactory()->createRefundTable($this->getFacade());
 
         return $this->viewResponse(['refunds' => $table->render()]);
     }
+
 }
