@@ -14,8 +14,6 @@ use Spryker\Zed\Collector\CollectorConfig;
 interface TouchUpdaterInterface
 {
 
-    const COLLECTOR_TOUCH_ID = CollectorConfig::COLLECTOR_TOUCH_ID;
-
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
