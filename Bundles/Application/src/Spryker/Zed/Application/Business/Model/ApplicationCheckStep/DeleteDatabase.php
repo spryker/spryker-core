@@ -20,9 +20,9 @@ class DeleteDatabase extends AbstractApplicationCheckStep
         $this->info('Delete database');
 
         if (Config::get(ApplicationConstants::ZED_DB_ENGINE) === Config::get(ApplicationConstants::ZED_DB_ENGINE_PGSQL)) {
-            $this->deletePostgresDatabaseIfNotExists();
+            $this->deletePostgresDatabaseIfExists();
         } else {
-            $this->deleteMysqlDatabaseIfNotExists();
+            $this->deleteMysqlDatabaseIfExists();
         }
     }
 
@@ -52,7 +52,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
      *
      * @return void
      */
-    protected function deletePostgresDatabaseIfNotExists()
+    protected function deletePostgresDatabaseIfExists()
     {
         $this->closePostgresConnections();
 
@@ -73,7 +73,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     /**
      * @return void
      */
-    protected function deleteMysqlDatabaseIfNotExists()
+    protected function deleteMysqlDatabaseIfExists()
     {
         $con = new \PDO(
             Config::get(ApplicationConstants::ZED_DB_ENGINE)

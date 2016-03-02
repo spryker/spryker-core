@@ -297,7 +297,6 @@ abstract class AbstractCollectorPlugin
         LocaleTransfer $locale)
     {
         $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
-        $keysToDelete = [];
         $batchCount = 1;
         $offset = 0;
         $deletedCount = 0;
@@ -305,30 +304,16 @@ abstract class AbstractCollectorPlugin
         $this->touchQueryContainer->getConnection()->beginTransaction();
         try {
             while ($batchCount > 0) {
-                $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
-                $deleteQuery
-                    ->setOffset($offset)
-                    ->setLimit($this->chunkSize);
-
-                $entityCollection = $deleteQuery->find();
+                $entityCollection = $this->getTouchEntitiesToDelete($offset, $itemType);
                 $batchCount = count($entityCollection);
 
                 if ($batchCount > 0) {
                     $deletedCount += $batchCount;
                     $offset += $this->chunkSize;
 
-                    foreach ($entityCollection as $touchEntity) {
-                        $entityData = $touchEntity->toArray();
-                        $key = $entityData[$touchUpdater->getTouchKeyColumnName()];
-
-                        if (trim($key) !== '') {
-                            $keysToDelete[$key] = true;
-                            $touchUpdaterSet->add($key, $touchEntity->getIdTouch(), [
-                                CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($entityData),
-                                CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($entityData),
-                            ]);
-                        }
-                    }
+                    $keysToDelete = $this->getKeysToDeleteAndUpdateTouchUpdaterSet(
+                        $entityCollection, $touchUpdater->getTouchKeyColumnName(), $touchUpdaterSet
+                    );
 
                     if (!empty($keysToDelete)) {
                         $touchUpdater->deleteMulti($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
@@ -344,6 +329,50 @@ abstract class AbstractCollectorPlugin
         $this->touchQueryContainer->getConnection()->commit();
     }
 
+
+    /**
+     * @param int $offset
+     * @param string $itemType
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch[]
+     */
+    protected function getTouchEntitiesToDelete($offset, $itemType)
+    {
+        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
+        $deleteQuery
+            ->setOffset($offset)
+            ->setLimit($this->chunkSize);
+
+        return $deleteQuery->find();
+    }
+
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouch[] $entityCollection
+     * @param string $touchKeyColumnName
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
+     *
+     * @return array
+     */
+    protected function getKeysToDeleteAndUpdateTouchUpdaterSet($entityCollection, $touchKeyColumnName, TouchUpdaterSet $touchUpdaterSet)
+    {
+        $keysToDelete = [];
+
+        foreach ($entityCollection as $touchEntity) {
+            $entityData = $touchEntity->toArray();
+            $key = $entityData[$touchKeyColumnName];
+
+            if (trim($key) !== '') {
+                $keysToDelete[$key] = true;
+                $touchUpdaterSet->add($key, $touchEntity->getIdTouch(), [
+                    CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($entityData),
+                    CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($entityData),
+                ]);
+            }
+        }
+
+        return $keysToDelete;
+    }
+
     /**
      * @param string $itemType
      *
@@ -353,7 +382,6 @@ abstract class AbstractCollectorPlugin
      */
     protected function pruneTouchStorageAndSearchKeys($itemType)
     {
-        $idList = [];
         $batchCount = 1;
         $offset = 0;
         $deletedCount = 0;
@@ -361,34 +389,14 @@ abstract class AbstractCollectorPlugin
         $this->touchQueryContainer->getConnection()->beginTransaction();
         try {
             while ($batchCount > 0) {
-                $deleteQuery = $this->touchQueryContainer
-                    ->queryTouchDeleteStorageAndSearch($itemType);
-
-                $deleteQuery
-                    ->setOffset($offset)
-                    ->setLimit($this->chunkSize);
-
-                $entityCollection = $deleteQuery->find();
+                $entityCollection = $this->getTouchStorageAndSearchDeletedEntities($offset, $itemType);
                 $batchCount = count($entityCollection);
 
                 if ($batchCount > 0) {
                     $deletedCount += $batchCount;
                     $offset += $this->chunkSize;
 
-                    foreach ($entityCollection as $entity) {
-                        $idList[] = $entity->getIdTouch();
-                    }
-
-                    if (!empty($idList)) {
-                        $idListSql = rtrim(implode(',', $idList), ',');
-                        $sql = sprintf('DELETE FROM %s WHERE %s IN (%s)',
-                            SpyTouchTableMap::TABLE_NAME,
-                            SpyTouchTableMap::COL_ID_TOUCH,
-                            $idListSql
-                        );
-
-                        $this->touchQueryContainer->getConnection()->exec($sql);
-                    }
+                    $this->bulkDeleteTouchEntities($entityCollection);
                 }
             }
         } catch (\Exception $exception) {
@@ -399,6 +407,50 @@ abstract class AbstractCollectorPlugin
         $this->touchQueryContainer->getConnection()->commit();
 
         return $deletedCount;
+    }
+
+    /**
+     * @param int $offset
+     * @param string $itemType
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch[]
+     */
+    protected function getTouchStorageAndSearchDeletedEntities($offset, $itemType)
+    {
+        $deleteQuery = $this->touchQueryContainer
+            ->queryTouchDeleteStorageAndSearch($itemType);
+
+        $deleteQuery
+            ->setOffset($offset)
+            ->setLimit($this->chunkSize);
+
+        return $deleteQuery->find();
+    }
+
+
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouch[] $entityCollection
+     *
+     * @return void
+     */
+    protected function bulkDeleteTouchEntities(array $entityCollection)
+    {
+        foreach ($entityCollection as $entity) {
+            $idList[] = $entity->getIdTouch();
+        }
+
+        if (empty($idList)) {
+            return;
+        }
+
+        $idListSql = rtrim(implode(',', $idList), ',');
+        $sql = sprintf('DELETE FROM %s WHERE %s IN (%s)',
+            SpyTouchTableMap::TABLE_NAME,
+            SpyTouchTableMap::COL_ID_TOUCH,
+            $idListSql
+        );
+
+        $this->touchQueryContainer->getConnection()->exec($sql);
     }
 
     /**
