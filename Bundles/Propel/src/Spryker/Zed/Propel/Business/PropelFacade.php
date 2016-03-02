@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Propel\Business;
@@ -14,6 +16,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return void
      */
     public function cleanPropelSchemaDirectory()
@@ -22,6 +26,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function copySchemaFilesToTargetDirectory()
@@ -30,6 +36,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function adjustPropelSchemaFilesForPostgresql()
@@ -38,6 +46,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function adjustPostgresqlFunctions()
@@ -46,6 +56,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()

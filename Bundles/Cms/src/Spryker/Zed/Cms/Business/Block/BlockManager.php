@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Business\Block;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Orm\Zed\Cms\Persistence\SpyCmsBlock;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Orm\Zed\Cms\Persistence\SpyCmsBlock;
 
 class BlockManager implements BlockManagerInterface
 {

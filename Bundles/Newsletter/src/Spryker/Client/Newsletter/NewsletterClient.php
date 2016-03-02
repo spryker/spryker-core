@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Newsletter;
@@ -17,6 +18,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -28,6 +31,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -39,6 +44,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
@@ -50,6 +57,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -61,6 +70,8 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer

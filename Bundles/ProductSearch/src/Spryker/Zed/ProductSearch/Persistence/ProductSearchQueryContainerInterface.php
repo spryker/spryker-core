@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductSearch\Persistence;
@@ -14,11 +15,15 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
      */
     public function queryFieldOperations();
 
     /**
+     * @api
+     *
      * @param array $productIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -27,6 +32,8 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function getExportableProductsByLocale(array $productIds, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idAttribute
      * @param string $copyTarget
      *
@@ -35,6 +42,8 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryAttributeOperation($idAttribute, $copyTarget);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *

@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Shipment\Business;
 
-use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -18,6 +19,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
@@ -31,6 +34,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
@@ -44,6 +49,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
@@ -57,6 +64,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
@@ -70,6 +79,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return bool
@@ -83,6 +94,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return bool
@@ -96,6 +109,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer

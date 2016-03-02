@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Cart;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -18,7 +19,9 @@ class CartClient extends AbstractClient implements CartClientInterface
 {
 
     /**
-     * @return \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\CartTransfer
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function getCart()
     {
@@ -34,6 +37,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCart()
@@ -48,6 +53,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getItemCount()
@@ -56,6 +63,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -77,6 +86,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -116,6 +127,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -142,6 +155,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -157,6 +172,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
@@ -172,6 +189,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculate()
@@ -208,6 +227,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $coupon
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -223,6 +244,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $coupon
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -238,6 +261,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCoupons()

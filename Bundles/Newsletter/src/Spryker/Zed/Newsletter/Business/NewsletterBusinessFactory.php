@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Newsletter\Business;
 
-use Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGenerator;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandler;
 use Spryker\Zed\Newsletter\Business\Subscription\SingleOptInHandler;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGenerator;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriberManager;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManager;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler;
 use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()

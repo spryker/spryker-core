@@ -9,16 +9,19 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0",
-    "spryker/product": "^1.0.0"
+    "spryker/kernel": "^0.20.0",
+    "spryker/product": "^0.20.0",
+    "spryker/propel": "^0.20.0",
+    "spryker/tax": "^0.20.0",
+    "spryker/touch": "^0.20.0"
   },
-  "require-dev": {},
   "description": "tax product connector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

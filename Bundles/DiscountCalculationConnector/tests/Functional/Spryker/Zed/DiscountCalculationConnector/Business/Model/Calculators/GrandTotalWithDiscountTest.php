@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
-use Generated\Shared\Transfer\ExpenseTotalsTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;

@@ -1,23 +1,24 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Persistence;
 
 use Generated\Shared\Transfer\RolesTransfer;
-use Propel\Runtime\ActiveQuery\Join;
-use Spryker\Shared\Acl\AclConstants;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupsHasRolesTableMap;
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;
 use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
 use Orm\Zed\Acl\Persistence\Map\SpyAclUserHasGroupTableMap;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Join;
+use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\Acl\AclConstants;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Acl\Persistence\AclPersistenceFactory getFactory()
@@ -37,6 +38,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     const GROUP_JOIN = 'groupJoin';
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
@@ -51,6 +54,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
@@ -65,6 +70,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
     public function queryGroup()
@@ -73,6 +80,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
      */
     public function queryRole()
@@ -81,6 +90,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
@@ -95,6 +106,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idRole
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery
@@ -108,6 +121,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
@@ -122,6 +137,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idGroup
      * @param int $idRole
      *
@@ -138,6 +155,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idGroup
      * @param int $idUser
      *
@@ -154,6 +173,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idGroup
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
@@ -181,6 +202,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idGroup
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
@@ -197,6 +220,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
@@ -211,6 +236,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $roleId
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
@@ -224,6 +251,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $relationshipCollection
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
@@ -237,6 +266,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idGroup
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery
@@ -250,6 +281,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RolesTransfer $roles
      * @param string $bundle
      * @param string $controller
@@ -288,6 +321,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idAclRole
      * @param string $bundle
      * @param string $controller
@@ -311,6 +346,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
@@ -326,6 +363,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUsersWithGroup()
@@ -351,6 +390,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idGroup
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
@@ -92,7 +93,7 @@ class VoucherCodesFormDataProvider
         $voucherCodesTransfer->setDecisionRules($decisionRuleEntities->toArray());
         $voucherCodesTransfer->setCalculatorPlugin($discountEntity->getCalculatorPlugin());
 
-        $voucherCodesTransfer->setIsPrivileged((bool) $discountEntity->getIsPrivileged());
+        $voucherCodesTransfer->setIsPrivileged((bool)$discountEntity->getIsPrivileged());
         $voucherCodesTransfer->setValidFrom($discountEntity->getValidFrom());
         $voucherCodesTransfer->setValidTo($discountEntity->getValidTo());
 

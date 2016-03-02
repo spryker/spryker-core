@@ -1,6 +1,11 @@
-# Zed Package
+# Glossary Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/glossary
+```
+
+## Documentation
+
+[Glossary Documentation](https://spryker.github.io/glossary/index.html)

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model;
@@ -11,16 +12,16 @@ use Generated\Shared\Transfer\DiscountItemsTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpensesTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Zed\Calculation\Business\Model\StackExecutor;
 use Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Spryker\Zed\Calculation\Business\Model\StackExecutor;
 use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\DiscountCalculatorPlugin;
 use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\GrandTotalWithDiscountsTotalsCalculatorPlugin;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
@@ -55,6 +56,9 @@ class CalculatorTest extends Test
         parent::setUp();
     }
 
+    /**
+     * @return array
+     */
     protected function createCalculatorStack()
     {
         $stack = [
@@ -111,11 +115,11 @@ class CalculatorTest extends Test
 
         $expensesCollection = $this->getExpenseCollection();
         $expensesCollection->addCalculationExpense($expense);
-        $order->getCalculableObject()->setExpenses($expensesCollection);
+        $order->getCalculableObject()->setExpenses($expensesCollection->getCalculationExpenses());
 
-        $item->setDiscounts($discountCollection);
+        $item->setDiscounts($discountCollection->getDiscounts());
         $items->addOrderItem($item);
-        $order->getCalculableObject()->setItems($items);
+        $order->getCalculableObject()->setItems($items->getOrderItems());
 
         $calculator = $this->getCalculator();
 

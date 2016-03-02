@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business;
@@ -14,6 +15,8 @@ interface CollectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
@@ -22,6 +25,8 @@ interface CollectorFacadeInterface
     public function exportKeyValueForLocale(LocaleTransfer $locale, OutputInterface $output = null);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
@@ -29,6 +34,8 @@ interface CollectorFacadeInterface
     public function exportSearchForLocale(LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
@@ -36,6 +43,8 @@ interface CollectorFacadeInterface
     public function updateSearchForLocale(LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
@@ -43,16 +52,22 @@ interface CollectorFacadeInterface
     public function install(MessengerInterface $messenger);
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchIndexName();
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchDocumentType();
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return bool
@@ -60,6 +75,8 @@ interface CollectorFacadeInterface
     public function deleteSearchTimestamps(array $keys = []);
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return bool

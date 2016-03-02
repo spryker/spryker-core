@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Gui\Communication\Table;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Library\Sanitize\Html;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -275,7 +276,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param null $tableIdentifier
+     * @param string|null $tableIdentifier
      *
      * @return void
      */
@@ -741,8 +742,8 @@ abstract class AbstractTable
         $query->where(sprintf(
             "%s = '%s'",
             $searchColumns[$column->getData()],
-            $value)
-        );
+            $value
+        ));
     }
 
 }

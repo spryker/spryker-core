@@ -1,26 +1,27 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication;
 
 use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
+use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
+use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
+use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsBlockFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
-use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
-use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()

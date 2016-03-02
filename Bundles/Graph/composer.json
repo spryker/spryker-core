@@ -1,17 +1,26 @@
 {
   "name": "spryker/graph",
-  "require": {
-    "phpdocumentor/graphviz": "dev-master#a906a90"
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Acceptance": "tests/",
+      "Function": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/",
+      "YvesUnit": "tests/"
+    }
   },
-  "require-dev": {
-    "codeception/codeception": "~2.1.0"
+  "require": {
+    "spryker/kernel": "^0.20.0",
+    "spryker/graphviz": "^0.20.0"
   },
   "description": "graph bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

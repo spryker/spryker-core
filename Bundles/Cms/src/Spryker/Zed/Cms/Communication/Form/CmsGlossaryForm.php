@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Form;
@@ -67,7 +68,7 @@ class CmsGlossaryForm extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults([
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
 
                 if (!isset($defaultData[self::FIELD_ID_KEY_MAPPING])) {

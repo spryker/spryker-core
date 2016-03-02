@@ -1,13 +1,15 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorBusinessFactory getFactory()
@@ -16,6 +18,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      * @param \ArrayObject $discountableContainers
@@ -32,6 +36,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      * @param \ArrayObject $items
@@ -48,6 +54,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
      * @return void

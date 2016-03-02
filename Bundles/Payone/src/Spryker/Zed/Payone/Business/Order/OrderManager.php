@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\Order;
@@ -9,10 +10,10 @@ namespace Spryker\Zed\Payone\Business\Order;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
-use Propel\Runtime\Propel;
-use Spryker\Zed\Payone\PayoneConfig;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneDetail;
+use Propel\Runtime\Propel;
+use Spryker\Zed\Payone\PayoneConfig;
 
 class OrderManager implements OrderManagerInterface
 {

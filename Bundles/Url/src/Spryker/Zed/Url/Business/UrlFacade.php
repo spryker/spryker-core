@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Url\Business;
@@ -18,6 +19,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
@@ -37,6 +40,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $url
      * @param string $resourceType
      * @param int $idResource
@@ -55,6 +60,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -67,6 +74,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $url
      *
      * @return bool
@@ -79,6 +88,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @return bool
@@ -91,6 +102,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $urlString
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
@@ -106,6 +119,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
@@ -121,6 +136,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -139,6 +156,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @return void
@@ -149,6 +168,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @return void
@@ -159,6 +180,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $toUrl
      * @param int $status
      *
@@ -177,6 +200,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $toUrl
      * @param int $status
      *
@@ -191,6 +216,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
@@ -208,6 +235,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
      *
      * @return void
@@ -218,6 +247,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
@@ -232,6 +263,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
@@ -244,6 +277,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return void
@@ -256,6 +291,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -268,6 +305,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
@@ -280,6 +319,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
@@ -292,6 +333,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *

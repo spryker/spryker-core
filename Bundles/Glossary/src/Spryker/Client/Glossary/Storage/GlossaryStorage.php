@@ -1,9 +1,14 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Glossary\Storage;
+
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class GlossaryStorage implements GlossaryStorageInterface
 {
@@ -11,33 +16,33 @@ class GlossaryStorage implements GlossaryStorageInterface
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $storage;
+    protected $storage;
 
     /**
      * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
-    private $keyBuilder;
+    protected $keyBuilder;
 
     /**
      * @var string
      */
-    private $locale;
+    protected $localeName;
 
     /**
      * @var array
      */
-    private $translations = [];
+    protected $translations = [];
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
      * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
-    public function __construct($storage, $keyBuilder, $localeName)
+    public function __construct(StorageClientInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
     {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
-        $this->locale = $localeName;
+        $this->localeName = $localeName;
     }
 
     /**
@@ -48,12 +53,16 @@ class GlossaryStorage implements GlossaryStorageInterface
      */
     public function translate($keyName, array $parameters = [])
     {
+        if ((string)$keyName === '') {
+            return $keyName;
+        }
+
         if (!isset($this->translations[$keyName])) {
             $this->loadTranslation($keyName);
         }
 
-        if (!isset($this->translations[$keyName])) {
-            return $keyName;
+        if (empty($parameters)) {
+            return $this->translations[$keyName];
         }
 
         return str_replace(array_keys($parameters), array_values($parameters), $this->translations[$keyName]);
@@ -64,10 +73,24 @@ class GlossaryStorage implements GlossaryStorageInterface
      *
      * @return void
      */
-    private function loadTranslation($keyName)
+    protected function loadTranslation($keyName)
     {
-        $key = $this->keyBuilder->generateKey($keyName, $this->locale);
-        $this->translations[$keyName] = $this->storage->get($key);
+        $key = $this->keyBuilder->generateKey($keyName, $this->localeName);
+        $this->addTranslation($keyName, $this->storage->get($key));
+    }
+
+    /**
+     * @param string $keyName
+     * @param string $translation
+     *
+     * @return void
+     */
+    protected function addTranslation($keyName, $translation)
+    {
+        if ($translation === null) {
+            $translation = $keyName;
+        }
+        $this->translations[$keyName] = $translation;
     }
 
 }

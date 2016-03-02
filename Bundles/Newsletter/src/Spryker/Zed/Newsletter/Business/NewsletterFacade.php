@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Newsletter\Business;
@@ -17,6 +18,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -33,6 +36,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -49,6 +54,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
@@ -61,6 +68,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -75,6 +84,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -89,6 +100,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return void

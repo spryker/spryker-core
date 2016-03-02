@@ -1,10 +1,17 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Glossary\Persistence;
 
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -12,11 +19,6 @@ use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 
 /**
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryPersistenceFactory getFactory()
@@ -33,6 +35,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     const VALUE = 'value';
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -46,6 +50,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -59,6 +65,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryKeys()
@@ -67,6 +75,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param string $localeName
      *
@@ -88,6 +98,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslations()
@@ -96,6 +108,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param int $idKey
      * @param int $idLocale
      *
@@ -112,6 +126,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param int $idSpyGlossaryTranslation
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -125,6 +141,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -141,6 +159,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param int $localeId
      * @param int $glossaryKeyId
      *
@@ -156,6 +176,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param int $fkGlossaryKeyId
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -169,6 +191,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -185,6 +209,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -204,6 +230,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param array $localeIds
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -238,6 +266,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param array $relevantLocales
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -252,6 +282,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param array $relevantLocales
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -313,6 +345,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -328,6 +362,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -343,6 +379,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param int $idKey
      * @param array $relevantLocales
      *
@@ -369,6 +407,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param string $key
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -382,6 +422,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param string $value
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -395,6 +437,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * @api
+     *
      * @param int $fkGlossaryKey
      * @param array $locales
      *
@@ -406,7 +450,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $query = $this->queryTranslations()
             ->useLocaleQuery(null, Criteria::LEFT_JOIN)
             ->leftJoinSpyGlossaryTranslation(SpyGlossaryTranslationTableMap::TABLE_NAME)
-            ->addJoinCondition(SpyGlossaryTranslationTableMap::TABLE_NAME, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY . ' = ?', (int) $fkGlossaryKey)
+            ->addJoinCondition(SpyGlossaryTranslationTableMap::TABLE_NAME, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY . ' = ?', (int)$fkGlossaryKey)
             ->where(SpyLocaleTableMap::COL_LOCALE_NAME . ' IN ?', $locales)
             ->groupBy(SpyLocaleTableMap::COL_ID_LOCALE)
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE)

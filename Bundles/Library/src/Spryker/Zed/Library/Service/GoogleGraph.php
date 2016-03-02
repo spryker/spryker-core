@@ -1,12 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
- */
-
-/**
- * @link http://code.google.com/intl/de-DE/apis/chart/image/docs/data_formats.html
- * @link https://developers.google.com/chart/image/docs/chart_params
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Library\Service;
@@ -315,6 +311,9 @@ class GoogleGraph
         $this->chbh = $chbh;
     }
 
+    /**
+     * @return string
+     */
     public function toGetString()
     {
         $params = get_object_vars($this);

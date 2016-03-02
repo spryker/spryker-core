@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\Api\Request\Container;
 
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 
 class DebitContainer extends AbstractRequestContainer
 {

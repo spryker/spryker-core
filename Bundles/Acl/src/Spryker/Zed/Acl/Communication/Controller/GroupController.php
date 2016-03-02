@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Communication\Controller;
@@ -90,7 +91,7 @@ class GroupController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idAclGroup = $request->query->get(self::PARAMETER_ID_GROUP);
+        $idAclGroup = $this->castId($request->query->get(self::PARAMETER_ID_GROUP));
 
         $dataProvider = $this->getFactory()->createGroupFormDataProvider();
 
@@ -148,7 +149,7 @@ class GroupController extends AbstractController
      */
     public function usersAction(Request $request)
     {
-        $idGroup = $request->query->get(self::PARAMETER_ID_GROUP);
+        $idGroup = $this->castId($request->query->get(self::PARAMETER_ID_GROUP));
 
         $usersTable = $this->getFactory()->createGroupUsersTable($idGroup);
 
@@ -164,8 +165,8 @@ class GroupController extends AbstractController
      */
     public function removeUserFromGroupAction(Request $request)
     {
-        $idGroup = (int) $request->request->get(self::PARAMETER_ID_GROUP);
-        $idUser = (int) $request->request->get(self::PARAMETER_ID_USER);
+        $idGroup = $this->castId($request->request->get(self::PARAMETER_ID_GROUP));
+        $idUser = $this->castId($request->request->get(self::PARAMETER_ID_USER));
 
         try {
             $this->getFacade()->removeUserFromGroup($idUser, $idGroup);
@@ -191,39 +192,11 @@ class GroupController extends AbstractController
      */
     public function rolesAction(Request $request)
     {
-        $idGroup = $request->get(self::PARAMETER_ID_GROUP);
+        $idGroup = $this->castId($request->get(self::PARAMETER_ID_GROUP));
 
         $roles = $this->getFactory()->getGroupRoleListByGroupId($idGroup);
 
         return $this->jsonResponse($roles);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function listAction(Request $request)
-    {
-        $grid = $this->getFactory()->createGroupsGrid($request);
-        $data = $grid->renderData();
-
-        return $this->jsonResponse($data);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function rulesAction(Request $request)
-    {
-        $idGroup = $request->get('id');
-        $grid = $this->getFactory()->createRulesetGrid($request, $idGroup);
-
-        $data = $grid->renderData();
-
-        return $this->jsonResponse($data);
     }
 
 }

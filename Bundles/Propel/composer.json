@@ -3,24 +3,31 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
       "Function": "tests/",
-      "Integration": "tests/",
       "Unit": "tests/"
+    },
+    "psr-4": {
+      "Propel\\Module\\": "tests/_support/Module"
     }
   },
   "require": {
-    "spryker/application": "^1.0.0",
-    "spryker/console": "^1.0.0",
-    "spryker/kernel": "^1.0.0"
+    "propel/propel": "~2.0@dev",
+    "spryker/application": "^0.20.0",
+    "spryker/console": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/library": "^0.20.0",
+    "spryker/monolog": "^0.20.0",
+    "spryker/silex": "^0.20.0",
+    "spryker/symfony": "^0.20.0",
+    "spryker/config": "^0.20.0"
   },
-  "require-dev": {},
   "description": "propel bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

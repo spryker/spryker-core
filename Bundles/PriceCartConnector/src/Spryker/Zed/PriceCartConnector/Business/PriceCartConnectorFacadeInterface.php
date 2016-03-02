@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\PriceCartConnector\Business;
@@ -12,8 +13,10 @@ interface PriceCartConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $change
-     * @param null $grossPriceType
+     * @param string|null $grossPriceType
      *
      * @return \Generated\Shared\Transfer\ChangeTransfer
      */

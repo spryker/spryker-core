@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Storage\Business;
@@ -15,6 +16,8 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $key
      *
      * @return mixed
@@ -25,6 +28,8 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getTotalCount()
@@ -33,6 +38,8 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTimestamps()
@@ -41,6 +48,8 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function deleteAll()
@@ -49,6 +58,8 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return void

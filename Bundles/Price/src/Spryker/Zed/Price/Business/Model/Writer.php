@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Price\Business\Model;
 
-use Spryker\Zed\Price\Persistence\PriceQueryContainer;
-use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
-use Spryker\Zed\Price\PriceConfig;
 use Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
+use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
+use Spryker\Zed\Price\Persistence\PriceQueryContainer;
+use Spryker\Zed\Price\PriceConfig;
 
 class Writer implements WriterInterface
 {
@@ -83,8 +84,7 @@ class Writer implements WriterInterface
     public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
-        if (
-            !$this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
+        if (!$this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
             && !$this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
         ) {
             $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
@@ -113,8 +113,7 @@ class Writer implements WriterInterface
     {
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
 
-        if (
-            $this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
+        if ($this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
             || $this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
         ) {
             $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
@@ -152,8 +151,7 @@ class Writer implements WriterInterface
      */
     protected function loadProductConcreteIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
     {
-        if (
-            $transferPriceProduct->getIdProduct() === null &&
+        if ($transferPriceProduct->getIdProduct() === null &&
             $this->reader->hasProductConcrete($transferPriceProduct->getSkuProduct())
         ) {
             $transferPriceProduct->setIdProduct(

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Url\Business;
@@ -14,6 +15,8 @@ interface UrlFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
@@ -27,6 +30,8 @@ interface UrlFacadeInterface
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource);
 
     /**
+     * @api
+     *
      * @param string $url
      * @param string $resourceType
      * @param int $idResource
@@ -39,6 +44,8 @@ interface UrlFacadeInterface
     public function createUrlForCurrentLocale($url, $resourceType, $idResource);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -46,6 +53,8 @@ interface UrlFacadeInterface
     public function saveUrl(UrlTransfer $urlTransfer);
 
     /**
+     * @api
+     *
      * @param string $url
      *
      * @return bool
@@ -53,6 +62,8 @@ interface UrlFacadeInterface
     public function hasUrl($url);
 
     /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @return bool
@@ -60,6 +71,8 @@ interface UrlFacadeInterface
     public function hasUrlId($idUrl);
 
     /**
+     * @api
+     *
      * @param string $urlString
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
@@ -69,6 +82,8 @@ interface UrlFacadeInterface
     public function getUrlByPath($urlString);
 
     /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
@@ -78,6 +93,8 @@ interface UrlFacadeInterface
     public function getUrlById($idUrl);
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -86,6 +103,8 @@ interface UrlFacadeInterface
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @return void
@@ -93,6 +112,8 @@ interface UrlFacadeInterface
     public function touchUrlActive($idUrl);
 
     /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @return void
@@ -100,6 +121,8 @@ interface UrlFacadeInterface
     public function touchUrlDeleted($idUrl);
 
     /**
+     * @api
+     *
      * @param string $toUrl
      * @param int $status
      *
@@ -112,6 +135,8 @@ interface UrlFacadeInterface
     public function createRedirect($toUrl, $status = 303);
 
     /**
+     * @api
+     *
      * @param string $toUrl
      * @param int $status
      *
@@ -120,6 +145,8 @@ interface UrlFacadeInterface
     public function createRedirectAndTouch($toUrl, $status = 303);
 
     /**
+     * @api
+     *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
@@ -132,6 +159,8 @@ interface UrlFacadeInterface
     public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect);
 
     /**
+     * @api
+     *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
@@ -141,6 +170,8 @@ interface UrlFacadeInterface
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
@@ -148,6 +179,8 @@ interface UrlFacadeInterface
     public function saveRedirect(RedirectTransfer $redirect);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return void
@@ -155,6 +188,8 @@ interface UrlFacadeInterface
     public function touchRedirectActive(RedirectTransfer $redirect);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -162,6 +197,8 @@ interface UrlFacadeInterface
     public function saveUrlAndTouch(UrlTransfer $urlTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
@@ -169,6 +206,8 @@ interface UrlFacadeInterface
     public function deleteUrl(UrlTransfer $urlTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
@@ -176,6 +215,8 @@ interface UrlFacadeInterface
     public function saveRedirectAndTouch(RedirectTransfer $redirect);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *

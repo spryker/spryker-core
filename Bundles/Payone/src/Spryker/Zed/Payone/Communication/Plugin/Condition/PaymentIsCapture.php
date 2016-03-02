@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneCommunicationFactory getFactory()

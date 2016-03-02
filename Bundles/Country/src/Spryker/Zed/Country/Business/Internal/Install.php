@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Country\Business\Internal;
 
-use Spryker\Zed\Country\CountryConfig;
-use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\CountryManagerInterface;
 use Spryker\Zed\Country\Business\RegionManagerInterface;
+use Spryker\Zed\Country\CountryConfig;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 
 class Install extends AbstractInstaller
 {
@@ -154,6 +155,12 @@ class Install extends AbstractInstaller
         return $result;
     }
 
+    /**
+     * @param array $countries
+     *
+     * @throws \Exception
+     * @return array
+     */
     protected function addIso3Code(array $countries)
     {
         $json = $this->codeMappings;
@@ -175,6 +182,12 @@ class Install extends AbstractInstaller
         return $countries;
     }
 
+    /**
+     * @param array $countries
+     *
+     * @throws \Exception
+     * @return array
+     */
     protected function addPostalCodeData(array $countries)
     {
         $json = $this->postalCodes;

@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Stock\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Stock\Persistence\StockPersistenceFactory getFactory()
@@ -18,6 +19,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
 {
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -30,6 +33,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -41,6 +46,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idStock
      * @param int $idProduct
      *
@@ -54,6 +61,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $type
      *
@@ -74,6 +83,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
@@ -85,6 +96,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
      */
     public function queryAllStockTypes()
@@ -93,6 +106,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryAllStockProducts()
@@ -101,6 +116,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryAllStockProductsJoinedStockJoinedProduct()
@@ -117,6 +134,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idStockProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery

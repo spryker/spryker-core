@@ -1,32 +1,33 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Discount\Business;
 
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Generated\Shared\Transfer\DecisionRuleTransfer;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderItemsTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderItemsTransfer;
-use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
-use Spryker\Zed\Discount\Business\DiscountFacade;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
+use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -430,7 +431,6 @@ class DiscountFacadeTest extends Test
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
         $order->getCalculableObject()->addExpense($expense);
 
-        $itemCollection = new OrderItemsTransfer();
         $item = new ItemTransfer();
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
 
@@ -438,8 +438,7 @@ class DiscountFacadeTest extends Test
         $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
 
         $item->addExpense($expense);
-        $itemCollection->addOrderItem($item);
-        $order->getCalculableObject()->setItems($itemCollection);
+        $order->getCalculableObject()->addItem($item);
 
         $result = $this->discountFacade->getDiscountableOrderExpenses($order, new DiscountCollectorTransfer());
         $this->assertEquals(1, count($result));

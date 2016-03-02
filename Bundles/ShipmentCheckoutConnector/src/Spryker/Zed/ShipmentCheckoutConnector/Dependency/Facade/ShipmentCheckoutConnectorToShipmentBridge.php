@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade;
 
-use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
+use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
 class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConnectorToShipmentInterface
 {

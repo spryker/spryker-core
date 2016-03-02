@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Shipment\Business;
@@ -14,6 +15,8 @@ interface ShipmentFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
@@ -21,6 +24,8 @@ interface ShipmentFacadeInterface
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
@@ -28,6 +33,8 @@ interface ShipmentFacadeInterface
     public function createMethod(ShipmentMethodTransfer $methodTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
@@ -35,6 +42,8 @@ interface ShipmentFacadeInterface
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer);
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
@@ -42,6 +51,8 @@ interface ShipmentFacadeInterface
     public function getShipmentMethodTransferById($idMethod);
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return bool
@@ -49,6 +60,8 @@ interface ShipmentFacadeInterface
     public function hasMethod($idMethod);
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return bool
@@ -56,6 +69,8 @@ interface ShipmentFacadeInterface
     public function deleteMethod($idMethod);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer

@@ -1,24 +1,25 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Business\Model;
 
-use Generated\Shared\Transfer\OrderListTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\AddressTransfer;
-use Propel\Runtime\Propel;
-use Spryker\Zed\Propel\PropelFilterCriteria;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Propel;
+use Spryker\Zed\Propel\PropelFilterCriteria;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderManager

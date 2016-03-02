@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Application\Communication\Bootstrap\Extension;
@@ -13,6 +14,8 @@ interface AfterBootExtensionInterface
 
     /**
      * @param \Spryker\Shared\Application\Communication\Application $application
+     *
+     * @return void
      */
     public function afterBoot(Application $application);
 

@@ -1,19 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use Spryker\Shared\Payolution\PayolutionConstants;
-use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
@@ -21,6 +19,9 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Spryker\Shared\Payolution\PayolutionConstants;
+use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
 
 class AbstractFacadeTest extends Test
 {

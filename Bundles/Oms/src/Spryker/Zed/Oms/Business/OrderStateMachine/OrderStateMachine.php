@@ -1,26 +1,27 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use DateTime;
+use Exception;
+use LogicException;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Propel\Runtime\Propel;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
-use DateTime;
-use Exception;
-use LogicException;
-use Propel\Runtime\Propel;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {
@@ -30,12 +31,24 @@ class OrderStateMachine implements OrderStateMachineInterface
     const MAX_EVENT_REPEATS = 10;
     const MAX_ON_ENTER = 50;
 
+    /**
+     * @var array
+     */
     protected $eventCounter = [];
 
+    /**
+     * @var array
+     */
     protected $returnData = [];
 
+    /**
+     * @var array
+     */
     protected $processBuffer = [];
 
+    /**
+     * @var array
+     */
     protected $states = [];
 
     /**
@@ -109,9 +122,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     public function triggerEvent($eventId, array $orderItems, $data)
     {
-        assert('is_string($eventId)');
-        assert('count($orderItems) > 0');
-
         if ($this->checkForEventRepetitions($eventId) === false) {
             return [];
         }
@@ -466,8 +476,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function updateStateByEvent($eventId, array $orderItems, array $sourceStateBuffer, TransitionLogInterface $log)
     {
-        assert($eventId === null || is_string($eventId));
-
         if ($sourceStateBuffer === null) {
             $sourceStateBuffer = [];
         }

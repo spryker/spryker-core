@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Transfer;
@@ -26,6 +27,8 @@ interface TransferInterface
     /**
      * @param array $values
      * @param bool $fuzzyMatch
+     *
+     * @return $this
      */
     public function fromArray(array $values, $fuzzyMatch = false);
 

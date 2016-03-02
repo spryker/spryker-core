@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
@@ -19,6 +20,9 @@ use Spryker\Zed\Category\Communication\Table\UrlTable;
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
 
+    /**
+     * @var string
+     */
     protected $currentLocale;
 
     /**

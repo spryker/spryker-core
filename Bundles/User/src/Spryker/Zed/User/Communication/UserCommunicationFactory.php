@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Communication;
@@ -10,10 +11,10 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserFormDataProvider;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserUpdateFormDataProvider;
+use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 use Spryker\Zed\User\Communication\Table\UsersTable;
-use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\User\UserDependencyProvider;
 
 /**

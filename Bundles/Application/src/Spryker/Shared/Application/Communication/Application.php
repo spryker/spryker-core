@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Application\Communication;
@@ -16,9 +17,9 @@ use Symfony\Component\Routing\RouterInterface;
 class Application extends \Silex\Application
 {
 
-    use UrlGeneratorTrait;
-    use TwigTrait;
     use TranslationTrait;
+    use TwigTrait;
+    use UrlGeneratorTrait;
 
     const COOKIES = 'cookies';
     const REQUEST = 'request';

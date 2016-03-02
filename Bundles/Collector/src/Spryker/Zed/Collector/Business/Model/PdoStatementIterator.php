@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business\Model;
@@ -67,7 +68,7 @@ class PdoStatementIterator implements \Iterator, \Countable
     {
         $this->currentRow = $this->statement->fetch(\PDO::FETCH_ASSOC);
         $this->currentKey++;
-        $this->isValid = (bool) $this->currentRow;
+        $this->isValid = (bool)$this->currentRow;
 
         if (!$this->isValid) {
             $this->statement->closeCursor();

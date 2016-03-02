@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount;
@@ -10,13 +11,13 @@ use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\MissingCalculatorException;
 use Spryker\Zed\Discount\Business\Exception\MissingCollectorException;
 use Spryker\Zed\Discount\Business\Exception\MissingDecisionRuleException;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemExpense;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemExpense;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
 use Spryker\Zed\Kernel\AbstractBundleConfig;

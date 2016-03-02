@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Communication\Plugin\Checkout;
 
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneCommunicationFactory getFactory()

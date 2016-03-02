@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Communication\Controller;
@@ -26,7 +27,7 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
+        $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $dataProvider = $this->getFactory()->createCustomerUpdateFormDataProvider();
         $form = $this->getFactory()

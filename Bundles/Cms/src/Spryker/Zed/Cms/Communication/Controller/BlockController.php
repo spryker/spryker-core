@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Controller;
@@ -94,7 +95,7 @@ class BlockController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idBlock = $request->query->getInt(CmsBlockTable::REQUEST_ID_BLOCK);
+        $idBlock = $this->castId($request->query->get(CmsBlockTable::REQUEST_ID_BLOCK));
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $dataProvider = $this->getFactory()->createCmsBlockFormDataProvider();
@@ -145,7 +146,7 @@ class BlockController extends AbstractController
      */
     protected function updatePageAndBlock(array $data, PageTransfer $pageTransfer)
     {
-        if ((int) $data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int) $data[CmsPageForm::FIELD_FK_TEMPLATE]) {
+        if ((int)$data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int)$data[CmsPageForm::FIELD_FK_TEMPLATE]) {
             $this->getFacade()->deleteGlossaryKeysByIdPage($data[CmsBlockForm::FIELD_FK_PAGE]);
         }
         $blockTransfer = $this->createBlockTransfer($data);
@@ -184,7 +185,7 @@ class BlockController extends AbstractController
      */
     public function searchCategoryAction(Request $request)
     {
-        $term = $request->query->get('term');
+        $term = $request->query->get('term'); // TODO FW Validation
 
         $searchedItems = $this->getQueryContainer()
             ->queryNodeByCategoryName($term, $this->getCurrentIdLocale())

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Touch\Business;
@@ -10,6 +11,8 @@ interface TouchFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param int $idItem
      * @param bool $keyChange
@@ -19,6 +22,8 @@ interface TouchFacadeInterface
     public function touchActive($itemType, $idItem, $keyChange = false);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param int $idItem
      *
@@ -27,6 +32,8 @@ interface TouchFacadeInterface
     public function touchInactive($itemType, $idItem);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param int $idItem
      *
@@ -35,6 +42,8 @@ interface TouchFacadeInterface
     public function touchDeleted($itemType, $idItem);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -43,6 +52,8 @@ interface TouchFacadeInterface
     public function bulkTouchActive($itemType, array $itemIds = []);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -51,6 +62,8 @@ interface TouchFacadeInterface
     public function bulkTouchInactive($itemType, array $itemIds = []);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -59,6 +72,8 @@ interface TouchFacadeInterface
     public function bulkTouchDeleted($itemType, array $itemIds = []);
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Generated\Shared\Transfer\TouchTransfer[]

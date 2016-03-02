@@ -1,21 +1,22 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Business\Model\Twig;
 
-use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPriceFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\PanelFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ModalFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ListGroupFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPriceFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\ModalFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\PanelFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 
 class ZedExtension extends \Twig_Extension
 {

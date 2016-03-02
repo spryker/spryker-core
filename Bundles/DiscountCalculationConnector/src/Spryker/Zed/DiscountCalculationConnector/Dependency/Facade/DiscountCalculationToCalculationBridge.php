@@ -1,12 +1,14 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class DiscountCalculationToCalculationBridge implements DiscountCalculationToCalculationInterface

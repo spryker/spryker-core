@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Country\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Country\Business\CountryBusinessFactory getFactory()
@@ -16,6 +17,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
@@ -26,6 +29,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $iso2Code
      *
      * @return bool
@@ -36,6 +41,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $iso2Code
      *
      * @return int
@@ -46,6 +53,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getAvailableCountries()
@@ -58,6 +67,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $countryName
      *
      * @return \Generated\Shared\Transfer\CountryTransfer

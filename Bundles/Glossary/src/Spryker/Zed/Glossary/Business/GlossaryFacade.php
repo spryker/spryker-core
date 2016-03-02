@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Glossary\Business;
@@ -17,6 +19,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
@@ -31,6 +35,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return bool
@@ -43,6 +49,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return int
@@ -55,6 +63,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $oldKeyName
      * @param string $newKeyName
      *
@@ -70,6 +80,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return bool
@@ -82,6 +94,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
@@ -101,6 +115,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param string $value
      * @param bool $isActive
@@ -119,6 +135,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
@@ -138,6 +156,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
@@ -151,6 +171,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -166,6 +188,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
@@ -183,6 +207,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
@@ -200,6 +226,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @return bool
@@ -212,6 +240,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
@@ -228,6 +258,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
@@ -244,6 +276,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -257,6 +291,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      * @param array $data
      *
@@ -272,6 +308,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idKey
      * @param array $data
      *
@@ -287,6 +325,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idKey
      *
      * @return void
@@ -299,6 +339,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return int

@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Invoice;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 class Invoice extends AbstractPaymentMethod implements InvoiceInterface
 {
@@ -97,7 +98,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         $requestData = $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
-            null);
+            null
+        );
         $this->addRequestData(
             $requestData,
             [
@@ -134,7 +136,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -148,7 +151,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -162,7 +166,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -176,7 +181,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
 }

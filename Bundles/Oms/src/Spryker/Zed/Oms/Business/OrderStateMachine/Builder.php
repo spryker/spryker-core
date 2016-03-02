@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use LogicException;
+use SimpleXMLElement;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
-use SimpleXMLElement;
-use LogicException;
 
 class Builder implements BuilderInterface
 {
@@ -95,8 +96,6 @@ class Builder implements BuilderInterface
             $eventMap = $this->createEvents();
 
             $this->createTransitions($stateToProcessMap, $processMap, $eventMap);
-
-            assert('isset($mainProcess)');
 
             self::$processBuffer[$processName] = $mainProcess;
         }
@@ -251,7 +250,7 @@ class Builder implements BuilderInterface
                 $xmlSubProcesses = $xmlProcess->subprocesses->children();
 
                 foreach ($xmlSubProcesses as $xmlSubProcess) {
-                    $subProcessName = (string) $xmlSubProcess;
+                    $subProcessName = (string)$xmlSubProcess;
                     $subProcess = $processMap[$subProcessName];
                     $process->addSubProcess($subProcess);
                 }
@@ -286,7 +285,7 @@ class Builder implements BuilderInterface
                     if ($xmlState->flag) {
                         $flags = $xmlState->children();
                         foreach ($flags->flag as $flag) {
-                            $state->addFlag((string) $flag);
+                            $state->addFlag((string)$flag);
                         }
                     }
 
@@ -323,13 +322,13 @@ class Builder implements BuilderInterface
 
                     $transition->setHappy($this->getAttributeBoolean($xmlTransition, 'happy'));
 
-                    $sourceName = (string) $xmlTransition->source;
+                    $sourceName = (string)$xmlTransition->source;
                     $sourceProcess = $stateToProcessMap[$sourceName];
                     $sourceState = $sourceProcess->getState($sourceName);
                     $transition->setSource($sourceState);
                     $sourceState->addOutgoingTransition($transition);
 
-                    $targetName = (string) $xmlTransition->target;
+                    $targetName = (string)$xmlTransition->target;
 
                     if (!isset($stateToProcessMap[$targetName])) {
                         throw new LogicException('Target: "' . $targetName . '" does not exist from source: "' . $sourceName . '"');
@@ -340,7 +339,7 @@ class Builder implements BuilderInterface
                     $targetState->addIncomingTransition($transition);
 
                     if (isset($xmlTransition->event)) {
-                        $eventId = (string) $xmlTransition->event;
+                        $eventId = (string)$xmlTransition->event;
 
                         if (!isset($eventMap[$eventId])) {
                             throw new LogicException('Event: "' . $eventId . '" does not exist from source: "' . $sourceName . '"');
@@ -365,7 +364,7 @@ class Builder implements BuilderInterface
      */
     protected function getAttributeString(SimpleXMLElement $xmlElement, $attributeName)
     {
-        $string = (string) $xmlElement->attributes()[$attributeName];
+        $string = (string)$xmlElement->attributes()[$attributeName];
         $string = ($string === '') ? null : $string;
 
         return $string;
@@ -379,7 +378,7 @@ class Builder implements BuilderInterface
      */
     protected function getAttributeBoolean(SimpleXMLElement $xmlElement, $attributeName)
     {
-        return (string) $xmlElement->attributes()[$attributeName] === 'true';
+        return (string)$xmlElement->attributes()[$attributeName] === 'true';
     }
 
 }

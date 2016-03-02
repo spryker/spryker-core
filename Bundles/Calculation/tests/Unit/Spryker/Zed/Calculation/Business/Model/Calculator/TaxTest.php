@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\PriceCalculationHelper;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;

@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Glossary\Business\Translation;
@@ -149,6 +151,8 @@ interface TranslationManagerInterface
 
     /**
      * @param int $idKey
+     *
+     * @return void
      */
     public function touchCurrentTranslationForKeyId($idKey);
 

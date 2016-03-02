@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Touch\Persistence;
@@ -25,6 +26,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
@@ -38,6 +41,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemId
      *
@@ -55,6 +60,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemId
      * @param string $itemEvent
@@ -73,6 +80,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
@@ -93,6 +102,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryExportTypes()
@@ -108,6 +119,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemEvent
      * @param array $itemIds
@@ -126,6 +139,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
@@ -144,6 +159,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @throws \Propel\Runtime\Exception\PropelException

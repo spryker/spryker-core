@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
-use Spryker\Zed\Application\Communication\Plugin\Navigation;
-use Spryker\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface;
-use Spryker\Shared\Application\Communication\Application;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Application\Communication\Plugin\Navigation;
 use Symfony\Component\HttpFoundation\Request;
 
 class GlobalTemplateVariablesExtension extends LocatorAwareExtension implements GlobalTemplateVariableExtensionInterface

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
@@ -26,7 +27,7 @@ class DeleteController extends EditController
      */
     public function indexAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
+        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
 
         if (!$this->categoryExists($idCategory)) {
             $this->addErrorMessage(sprintf('The category with id "%s" does not exist.', $idCategory));

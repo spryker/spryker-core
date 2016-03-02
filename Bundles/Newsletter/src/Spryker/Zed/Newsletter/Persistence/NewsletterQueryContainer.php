@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Newsletter\Persistence;
@@ -15,6 +16,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
 {
 
     /**
+     * @api
+     *
      * @param string $email
      * @param string $newsletterTypeName
      *
@@ -36,6 +39,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * @api
+     *
      * @param string $subscriberKey
      * @param string $newsletterTypeName
      *
@@ -57,6 +62,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      * @param string $newsletterTypeName
      *
@@ -78,6 +85,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */
     public function querySubscriber()
@@ -86,6 +95,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
      */
     public function querySubscription()
@@ -94,6 +105,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterTypeQuery
      */
     public function queryNewsletterType()

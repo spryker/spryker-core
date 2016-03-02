@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Propel\Business\Model;
@@ -21,7 +23,11 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     public function merge(array $schemaFiles)
     {
         $this->checkConsistency($schemaFiles);
-        $mergeTargetXmlElement = $this->createMergeTargetXmlElement(current($schemaFiles));
+        $currentSchema = current($schemaFiles);
+        if (!$currentSchema) {
+            throw new SchemaMergeException('Could not merge schema file. Given schema file container seems to be empty.');
+        }
+        $mergeTargetXmlElement = $this->createMergeTargetXmlElement($currentSchema);
         $schemaXmlElements = $this->createSchemaXmlElements($schemaFiles);
 
         return $this->mergeSchema($mergeTargetXmlElement, $schemaXmlElements);
@@ -96,7 +102,8 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function createNewXml($schemaDatabase, $schemaNamespace, $schemaPackage)
     {
-        return new \SimpleXMLElement(sprintf('<database
+        return new \SimpleXMLElement(sprintf(
+            '<database
             name="%s"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
@@ -212,7 +219,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function getElementName(\SimpleXMLElement $fromXmlChildElement, $tagName)
     {
-        $elementName = (array) $fromXmlChildElement->attributes();
+        $elementName = (array)$fromXmlChildElement->attributes();
         $elementName = current($elementName);
         if (is_array($elementName) && array_key_exists('name', $elementName)) {
             $elementName = $tagName . '|' . $elementName['name'];
@@ -235,7 +242,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function mergeAttributes(\SimpleXMLElement $toXmlElement, \SimpleXMLElement $fromXmlElement)
     {
-        $toXmlAttributes = (array) $toXmlElement->attributes();
+        $toXmlAttributes = (array)$toXmlElement->attributes();
         if (count($toXmlAttributes) > 0) {
             $toXmlAttributes = current($toXmlAttributes);
             $alreadyHasAttributes = true;
@@ -245,13 +252,13 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         foreach ($fromXmlElement->attributes() as $key => $value) {
             if ($alreadyHasAttributes
                 && array_key_exists($key, $toXmlAttributes)
-                && $toXmlAttributes[$key] !== (string) $value
+                && $toXmlAttributes[$key] !== (string)$value
             ) {
                 throw new SchemaMergeException('Ambiguous value for the same attribute for key "' . $key . '": "' . $toXmlAttributes[$key] . '" !== "' . $value . '"');
             }
 
             if (!$alreadyHasAttributes || !array_key_exists($key, $toXmlAttributes)) {
-                $value = (string) $value;
+                $value = (string)$value;
                 $toXmlElement->addAttribute($key, $value);
             }
         }

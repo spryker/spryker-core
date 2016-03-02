@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Business;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -20,6 +21,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTransfer
@@ -32,6 +35,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return array
@@ -44,6 +49,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return array
@@ -56,6 +63,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @deprecated
      *
      * @param int $idOrderItem
@@ -68,6 +77,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -80,6 +91,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -92,6 +105,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrderItem
      * @param int $quantity
      *
@@ -103,6 +118,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idRefund
      * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
      *
@@ -116,6 +133,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idOrder
      *
@@ -129,6 +148,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
@@ -142,6 +163,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $idOrder
      *
      * @return array
@@ -154,6 +177,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
@@ -166,6 +191,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -178,6 +205,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\RefundTransfer[]

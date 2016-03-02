@@ -1,15 +1,20 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Refund\Business\Model;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
+use Orm\Zed\Refund\Persistence\SpyRefund;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
-use Orm\Zed\Refund\Persistence\SpyRefund;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 class Refund

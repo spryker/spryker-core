@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Form;
@@ -59,10 +60,9 @@ class CmsRedirectForm extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults([
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
-                if (
-                    array_key_exists(self::FIELD_FROM_URL, $defaultData) === false ||
+                if (array_key_exists(self::FIELD_FROM_URL, $defaultData) === false ||
                     $defaultData[self::FIELD_FROM_URL] !== $form->getData()[self::FIELD_FROM_URL]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_URL_CHECK];

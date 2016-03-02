@@ -1,33 +1,34 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Checkout\Business;
 
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\Checkout\Dependency\MockOmsOrderHydrator;
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Shared\Checkout\CheckoutConstants;
-use Spryker\Zed\Checkout\Business\CheckoutFacade;
-use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
+use Spryker\Zed\Checkout\Business\CheckoutFacade;
+use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * @group Spryker

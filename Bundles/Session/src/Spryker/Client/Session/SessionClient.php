@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Session;
@@ -19,6 +20,8 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     protected static $container = null;
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $container
      *
      * @return void
@@ -39,12 +42,12 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Returns an attribute.
      *
+     * @api
+     *
      * @param string $name The attribute name
      * @param mixed $default The default value if not found.
      *
      * @return mixed
-     *
-     * @api
      */
     public function get($name, $default = null)
     {
@@ -54,10 +57,10 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Sets an attribute.
      *
+     * @api
+     *
      * @param string $name
      * @param mixed $value
-     *
-     * @api
      */
     public function set($name, $value)
     {
@@ -67,11 +70,11 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Removes an attribute.
      *
+     * @api
+     *
      * @param string $name
      *
      * @return mixed The removed value or null when it does not exist
-     *
-     * @api
      */
     public function remove($name)
     {
@@ -81,11 +84,11 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Starts the session storage.
      *
+     * @api
+     *
      * @throws \RuntimeException If session fails to start.
      *
      * @return bool True if session started.
-     *
-     * @api
      */
     public function start()
     {
@@ -95,9 +98,9 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Returns the session ID.
      *
-     * @return string The session ID.
-     *
      * @api
+     *
+     * @return string The session ID.
      */
     public function getId()
     {
@@ -107,9 +110,9 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Sets the session ID.
      *
-     * @param string $id
-     *
      * @api
+     *
+     * @param string $id
      */
     public function setId($id)
     {
@@ -119,9 +122,9 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Returns the session name.
      *
-     * @return mixed The session name.
-     *
      * @api
+     *
+     * @return mixed The session name.
      */
     public function getName()
     {
@@ -131,9 +134,9 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Sets the session name.
      *
-     * @param string $name
-     *
      * @api
+     *
+     * @param string $name
      */
     public function setName($name)
     {
@@ -146,14 +149,14 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * Clears all session attributes and flashes and regenerates the
      * session and deletes the old session from persistence.
      *
+     * @api
+     *
      * @param int $lifetime Sets the cookie lifetime for the session cookie. A null value
      *   will leave the system settings unchanged, 0 sets the cookie
      *   to expire with browser session. Time is in seconds, and is
      *   not a Unix timestamp.
      *
      * @return bool True if session invalidated, false if error.
-     *
-     * @api
      */
     public function invalidate($lifetime = null)
     {
@@ -164,6 +167,8 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * Migrates the current session to a new session id while maintaining all
      * session attributes.
      *
+     * @api
+     *
      * @param bool $destroy Whether to delete the old session or leave it to garbage collection.
      * @param int $lifetime Sets the cookie lifetime for the session cookie. A null value
      *   will leave the system settings unchanged, 0 sets the cookie
@@ -171,8 +176,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *   not a Unix timestamp.
      *
      * @return bool True if session migrated, false if error.
-     *
-     * @api
      */
     public function migrate($destroy = false, $lifetime = null)
     {
@@ -185,6 +188,10 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * This method is generally not required for real sessions as
      * the session will be automatically saved at the end of
      * code execution.
+     *
+     * @api
+     *
+     * @return mixed
      */
     public function save()
     {
@@ -194,11 +201,11 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Checks if an attribute is defined.
      *
+     * @api
+     *
      * @param string $name The attribute name
      *
      * @return bool true if the attribute is defined, false otherwise
-     *
-     * @api
      */
     public function has($name)
     {
@@ -208,9 +215,9 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Returns attributes.
      *
-     * @return array Attributes
-     *
      * @api
+     *
+     * @return array Attributes
      */
     public function all()
     {
@@ -219,6 +226,8 @@ class SessionClient extends AbstractClient implements SessionClientInterface
 
     /**
      * Sets attributes.
+     *
+     * @api
      *
      * @param array $attributes Attributes
      */
@@ -231,6 +240,8 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * Clears all attributes.
      *
      * @api
+     *
+     * @return mixed
      */
     public function clear()
     {
@@ -239,6 +250,8 @@ class SessionClient extends AbstractClient implements SessionClientInterface
 
     /**
      * Checks if the session was started.
+     *
+     * @api
      *
      * @return bool
      */
@@ -250,6 +263,8 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Registers a SessionBagInterface with the session.
      *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Session\SessionBagInterface $bag
      */
     public function registerBag(SessionBagInterface $bag)
@@ -259,6 +274,8 @@ class SessionClient extends AbstractClient implements SessionClientInterface
 
     /**
      * Gets a bag instance by name.
+     *
+     * @api
      *
      * @param string $name
      *
@@ -271,6 +288,8 @@ class SessionClient extends AbstractClient implements SessionClientInterface
 
     /**
      * Gets session meta.
+     *
+     * @api
      *
      * @return \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
      */

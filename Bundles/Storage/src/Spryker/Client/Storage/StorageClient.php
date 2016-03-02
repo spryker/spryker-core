@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Storage;
@@ -15,14 +16,18 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 {
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Storage\StorageClientInterface $service
      */
     public function getService()
     {
-        return $this->getFactory()->createService();
+        return $this->getFactory()->createCachedService();
     }
 
     /**
+     * @api
+     *
      * @param string $key
      * @param mixed $value
      *
@@ -34,6 +39,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @param array $items
      *
      * @return void
@@ -44,6 +51,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $key
      *
      * @return void
@@ -54,6 +63,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return void
@@ -64,6 +75,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function deleteAll()
@@ -72,6 +85,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $key
      *
      * @return mixed
@@ -82,6 +97,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return array
@@ -92,6 +109,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getStats()
@@ -100,6 +119,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAllKeys()
@@ -108,6 +129,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function resetAccessStats()
@@ -116,6 +139,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAccessStats()
@@ -124,6 +149,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCountItems()
@@ -132,6 +159,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $pattern
      *
      * @return array

@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\TransactionStatus;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
 use Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
 use Spryker\Shared\Payone\PayoneTransactionStatusConstants;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
 
 class TransactionStatusUpdateManager
 {
@@ -41,8 +42,9 @@ class TransactionStatusUpdateManager
     public function __construct(
         PayoneQueryContainerInterface $queryContainer,
         PayoneStandardParameterTransfer $standardParameter,
-        HashGenerator $hashGenerator)
-    {
+        HashGenerator $hashGenerator
+    ) {
+
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
         $this->hashGenerator = $hashGenerator;
@@ -134,11 +136,11 @@ class TransactionStatusUpdateManager
             return $this->createErrorResponse('Payone transaction status update: Given and internal key do not match!');
         }
 
-        if ((int) $request->getAid() !== (int) $this->standardParameter->getAid()) {
+        if ((int)$request->getAid() !== (int)$this->standardParameter->getAid()) {
             return $this->createErrorResponse('Payone transaction status update: Invalid Aid! System: ' . $this->standardParameter->getAid() . ' Request: ' . $request->getAid());
         }
 
-        if ((int) $request->getPortalid() !== (int) $this->standardParameter->getPortalId()) {
+        if ((int)$request->getPortalid() !== (int)$this->standardParameter->getPortalId()) {
             return $this->createErrorResponse('Payone transaction status update: Invalid Portalid! System: ' . $this->standardParameter->getPortalId() . ' Request: ' . $request->getPortalid());
         }
 

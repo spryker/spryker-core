@@ -11,25 +11,26 @@
     }
   },
   "require": {
-    "spryker/application": "^1.0.0",
-    "spryker/category": "^1.0.0",
-    "spryker/collector": "^1.0.0",
-    "spryker/glossary": "^1.0.0",
-    "spryker/gui": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/locale": "^1.0.0",
-    "spryker/propel": "^1.0.0",
-    "spryker/storage": "^1.0.0",
-    "spryker/touch": "^1.0.0",
-    "spryker/url": "^1.0.0"
+    "spryker/application": "^0.20.0",
+    "spryker/category": "^0.20.0",
+    "spryker/collector": "^0.20.0",
+    "spryker/glossary": "^0.20.0",
+    "spryker/gui": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/locale": "^0.20.0",
+    "spryker/propel": "^0.20.0",
+    "spryker/storage": "^0.20.0",
+    "spryker/touch": "^0.20.0",
+    "spryker/url": "^0.20.0",
+    "spryker/symfony": "^0.20.0"
   },
-  "require-dev": {},
   "description": "cms bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

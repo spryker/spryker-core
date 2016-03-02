@@ -1,8 +1,10 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Functional\Spryker\Zed\Payolution\Business\Order;
 
 use Codeception\TestCase\Test;
@@ -10,21 +12,21 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
-use Spryker\Shared\Payolution\PayolutionConstants;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-use Spryker\Zed\Payolution\Business\Order\Saver;
-use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundleItem;
+use Spryker\Shared\Payolution\PayolutionConstants;
+use Spryker\Zed\Payolution\Business\Order\Saver;
+use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
 
 class SaverTest extends Test
 {

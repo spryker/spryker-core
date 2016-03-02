@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Persistence;
@@ -37,6 +38,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory $factory
      *
      * @return $this
@@ -79,6 +82,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
+     * @api
+     *
      * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     public function getConnection()

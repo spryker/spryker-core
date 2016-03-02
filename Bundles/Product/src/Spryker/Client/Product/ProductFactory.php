@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Product;
 
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Product\KeyBuilder\ProductResourceKeyBuilder;
 use Spryker\Client\Product\Storage\ProductStorage;
-use Spryker\Client\Kernel\AbstractFactory;
 
 class ProductFactory extends AbstractFactory
 {

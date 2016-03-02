@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Persistence;
@@ -71,7 +72,7 @@ class PropelBatchIterator implements CountableIteratorInterface
         $this->query->setLimit($this->chunkSize);
         $this->currentDataSet = $this->query->find();
         $this->currentKey++;
-        $this->isValid = (bool) $this->currentDataSet;
+        $this->isValid = (bool)$this->currentDataSet;
         $this->offset += $this->chunkSize;
     }
 

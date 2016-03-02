@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Copyright Spryker Systems GmbH 2015
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\EventJournal\Model\Collector;
@@ -34,7 +35,7 @@ class ServerDataCollector extends AbstractDataCollector
     {
         return [
             self::FIELD_URL => $this->getUrl(),
-            self::FIELD_IS_HTTPS => (int) $this->isSecureConnection(),
+            self::FIELD_IS_HTTPS => (int)$this->isSecureConnection(),
             self::FIELD_HOST_NAME => $this->getHost(),
             self::FIELD_USER_AGENT => $this->getUserAgent(),
             self::FIELD_USER_IP => $this->getRemoteAddress(),

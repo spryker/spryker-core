@@ -1,17 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Business\Model\Split;
 
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Propel;
-use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\Propel;
+use Spryker\Zed\Sales\Business\Model\Split\Validation\Messages;
+use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderItem implements ItemInterface
@@ -86,7 +88,7 @@ class OrderItem implements ItemInterface
                 ->setSuccess(true)
                 ->setIdOrderItem($newSalesOrderItem->getIdSalesOrderItem())
                 ->setSuccessMessage(
-                    sprintf(Validation\Messages::SPLIT_SUCCESS_MESSAGE, $salesOrderItem->getIdSalesOrderItem())
+                    sprintf(Messages::SPLIT_SUCCESS_MESSAGE, $salesOrderItem->getIdSalesOrderItem())
                 );
         } catch (\Exception $e) {
             $this->getConnection()->rollBack();

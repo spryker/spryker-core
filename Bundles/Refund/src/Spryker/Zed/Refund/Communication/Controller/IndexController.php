@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Refund\Communication\Controller;
@@ -51,7 +52,7 @@ class IndexController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $idOrder = $request->query->get('id-sales-order');
+        $idOrder = $this->castId($request->query->get('id-sales-order'));
 
         $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idOrder);
 

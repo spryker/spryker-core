@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Discount\Business\Model;
@@ -11,14 +12,14 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\DiscountConfig;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
@@ -146,7 +147,10 @@ class VoucherEngineTest extends Test
 
         $order = $this->getOrderWithTwoItems();
         $result = $calculator->calculate(
-            [$discount1, $discount2, $discount3], $order, $settings, new Distributor()
+            [$discount1, $discount2, $discount3],
+            $order,
+            $settings,
+            new Distributor()
         );
         $this->assertEquals(2, count($result));
     }

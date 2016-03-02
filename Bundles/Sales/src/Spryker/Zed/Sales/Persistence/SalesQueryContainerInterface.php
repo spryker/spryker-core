@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Persistence;
@@ -13,6 +14,8 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -20,11 +23,15 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderById($idSalesOrder);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrder();
 
     /**
+     * @api
+     *
      * @var int
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -32,6 +39,8 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderItemsByIdSalesOrder($idOrder);
 
     /**
+     * @api
+     *
      * @var int
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -39,16 +48,22 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderItemsWithState($idOrder);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItem();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
      */
     public function querySalesExpense();
 
     /**
+     * @api
+     *
      * @param int $orderId
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
@@ -56,6 +71,8 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesExpensesByOrderId($orderId);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrderAddress
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
@@ -63,14 +80,18 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderAddressById($idSalesOrderAddress);
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria=null);
+    public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria = null);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param int $idCustomer
      *

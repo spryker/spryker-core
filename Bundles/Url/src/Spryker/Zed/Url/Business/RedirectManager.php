@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
+use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Url\Business\Exception\MissingRedirectException;
 use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
-use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class RedirectManager implements RedirectManagerInterface

@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Sales\Business\Model\OrderItemSplit\Validation;
 
-use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
+use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
 
 class ItemSplitTest extends \PHPUnit_Framework_TestCase
 {
@@ -71,13 +72,13 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
 
         foreach ($options as $option) {
             $oldOption = $this->filterOutNotCopiedFields(
-                 $option->toArray(),
-                 $this->notCopiedOrderItemOptionFields
-             );
+                $option->toArray(),
+                $this->notCopiedOrderItemOptionFields
+            );
             $copyOfOptions = $this->filterOutNotCopiedFields(
-                 $option->getCreatedCopy()->toArray(),
-                 $this->notCopiedOrderItemOptionFields
-             );
+                $option->getCreatedCopy()->toArray(),
+                $this->notCopiedOrderItemOptionFields
+            );
 
             $this->assertEquals($oldOption, $copyOfOptions);
         }

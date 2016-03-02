@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Calculation\Business\Model;
 
 class PriceCalculationHelper implements PriceCalculationHelperInterface
@@ -17,7 +22,7 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getTaxValueFromPrice($price, $taxPercentage, $round = true)
     {
-        $price = (int) $price;
+        $price = (int)$price;
         $amount = ($price * $taxPercentage) / ($taxPercentage + 100);
         if (!$round) {
             return $amount;
@@ -37,7 +42,7 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getNetValueFromPrice($price, $taxPercentage)
     {
-        $price = (int) $price;
+        $price = (int)$price;
         $amount = ($price * 100) / ($taxPercentage + 100);
 
         return round($amount);
@@ -53,8 +58,8 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getTaxRateFromPrice($price, $taxAmount)
     {
-        $price = (int) $price;
-        $taxAmount = (int) $taxAmount;
+        $price = (int)$price;
+        $taxAmount = (int)$taxAmount;
 
         if ($taxAmount === 0) {
             return 0;

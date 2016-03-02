@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Glossary;
@@ -14,6 +16,8 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $localeName
      * @param array $parameters
@@ -22,17 +26,10 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
      */
     public function translate($id, $localeName, array $parameters = [])
     {
-        return $this->createTranslator($localeName)->translate($id, $parameters);
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
-     */
-    private function createTranslator($localeName)
-    {
-        return $this->getFactory()->createTranslator($localeName);
+        return $this
+            ->getFactory()
+            ->createTranslator($localeName)
+            ->translate($id, $parameters);
     }
 
 }

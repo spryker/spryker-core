@@ -1,25 +1,26 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOption\Business\Model;
 
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusion;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraint;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPreset;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValue;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusion;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraint;
 use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
-use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
 use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
 use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class DataImportWriter implements DataImportWriterInterface
 {

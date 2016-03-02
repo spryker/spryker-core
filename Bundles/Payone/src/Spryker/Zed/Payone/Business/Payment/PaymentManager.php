@@ -1,43 +1,44 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\PayoneCreditCardTransfer;
-use Generated\Shared\Transfer\PayoneRefundTransfer;
-use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
-use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
+use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
+use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\Payone\PayoneApiConstants;
-use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
-use Spryker\Zed\Library\Copy;
-use Spryker\Zed\Payone\Business\Api\Call\CreditCardCheck;
-use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
-use Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
-use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
-use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
-use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
-use Spryker\Zed\Payone\Business\Key\HashGenerator;
-use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
-use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
+use Generated\Shared\Transfer\PayoneRefundTransfer;
+use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
+use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Library\Copy;
+use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payone\Business\Api\Call\CreditCardCheck;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
+use Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
+use Spryker\Zed\Payone\Business\Key\HashGenerator;
+use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
+use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 
 class PaymentManager implements PaymentManagerInterface
 {
@@ -89,8 +90,9 @@ class PaymentManager implements PaymentManagerInterface
         PayoneStandardParameterTransfer $standardParameter,
         HashGenerator $hashGenerator,
         SequenceNumberProviderInterface $sequenceNumberProvider,
-        ModeDetectorInterface $modeDetector)
-    {
+        ModeDetectorInterface $modeDetector
+    ) {
+
         $this->executionAdapter = $executionAdapter;
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;

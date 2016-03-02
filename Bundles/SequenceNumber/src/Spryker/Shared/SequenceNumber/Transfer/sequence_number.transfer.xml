@@ -7,7 +7,6 @@
         <property name="name" type="string" />
         <property name="prefix" type="string" />
         <property name="padding" type="int" />
-        <property name="minimumNumber" type="int" />
         <property name="offset" type="int" />
         <property name="incrementMinimum" type="int" />
         <property name="incrementMaximum" type="int" />

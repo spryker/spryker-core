@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
-use Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtensionInterface;
-use Spryker\Shared\Application\Communication\Application;
 use Spryker\Shared\Application\Business\Routing\SilexRouter;
+use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtensionInterface;
 use Spryker\Zed\Application\Business\Model\Router\MvcRouter;
 
 class RouterExtension implements RouterExtensionInterface

@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class PhpinfoController extends AbstractController
 {
@@ -19,7 +20,7 @@ class PhpinfoController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $what = $request->query->get('what');
+        $what = $request->query->get('what'); // TODO FW Validation
         echo $this->facadeSetup->getPhpInfo($what);
     }
 

@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 
 class ProductTable extends AbstractTable
 {
@@ -43,7 +44,7 @@ class ProductTable extends AbstractTable
     {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->locale = $locale;
-        $this->idCategory = (int) $idCategory;
+        $this->idCategory = (int)$idCategory;
         $this->defaultUrl = sprintf('product-table?%s=%d', ProductCategoryConstants::PARAM_ID_CATEGORY, $this->idCategory);
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }

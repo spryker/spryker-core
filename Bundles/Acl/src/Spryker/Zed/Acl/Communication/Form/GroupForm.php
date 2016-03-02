@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Communication\Form;
@@ -64,12 +65,12 @@ class GroupForm extends AbstractType
                 $defaultData = $form->getConfig()->getData();
                 $submittedData = $form->getData();
 
-                if (
-                    array_key_exists(self::FIELD_TITLE, $defaultData) === false ||
+                if (array_key_exists(self::FIELD_TITLE, $defaultData) === false ||
                     $defaultData[self::FIELD_TITLE] !== $submittedData[self::FIELD_TITLE]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_GROUP_CHECK];
                 }
+
                 return [Constraint::DEFAULT_GROUP];
             },
         ]);

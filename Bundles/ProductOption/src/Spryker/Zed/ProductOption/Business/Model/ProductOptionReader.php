@@ -1,22 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOption\Business\Model;
 
 use Generated\Shared\Transfer\ProductOptionsNameValueTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ArrayCollection;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionTypeTranslationTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTranslationTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ArrayCollection;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionReader implements ProductOptionReaderInterface
 {
@@ -48,7 +49,6 @@ class ProductOptionReader implements ProductOptionReaderInterface
     public function __construct(
         ProductOptionQueryContainerInterface $queryContainer,
         ProductOptionToLocaleInterface $localeFacade
-
     ) {
         $this->queryContainer = $queryContainer;
         $this->localeFacade = $localeFacade;
@@ -69,7 +69,8 @@ class ProductOptionReader implements ProductOptionReaderInterface
             ->setLocaleCode($localeCode);
 
         $result = $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
-            $idProductOptionValueUsage, $localeTransfer->getIdLocale()
+            $idProductOptionValueUsage,
+            $localeTransfer->getIdLocale()
         )->select([
             self::COL_PRICE,
             self::COL_TRANSLATION_TYPE,
@@ -88,7 +89,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
         if ($price === null) {
             $productOptionTransfer->setGrossPrice(0);
         } else {
-            $productOptionTransfer->setGrossPrice((int) $price);
+            $productOptionTransfer->setGrossPrice((int)$price);
         }
 
         $taxSetEntity = $this->queryContainer->queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage)

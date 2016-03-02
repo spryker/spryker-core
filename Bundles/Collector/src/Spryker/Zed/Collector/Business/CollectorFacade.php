@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business;
@@ -18,6 +19,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
@@ -30,6 +33,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
@@ -43,6 +48,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
@@ -56,6 +63,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
@@ -69,6 +78,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
@@ -79,6 +90,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchIndexName()
@@ -87,6 +100,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchDocumentType()
@@ -95,6 +110,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return bool
@@ -105,6 +122,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return bool
@@ -115,6 +134,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAllCollectorTypes()
@@ -125,6 +146,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getEnabledCollectorTypes()

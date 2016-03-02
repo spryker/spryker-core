@@ -1,16 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Spryker\Shared\Graph\GraphInterface;
+use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 
 class Drawer implements DrawerInterface
 {
@@ -78,7 +80,7 @@ class Drawer implements DrawerInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function draw(ProcessInterface $process, $highlightState = null, $format = null, $fontSize = null)
     {
@@ -123,6 +125,8 @@ class Drawer implements DrawerInterface
     /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
+     * @throws \Spryker\Zed\Oms\Business\Exception\StatemachineException
+     *
      * @return void
      */
     public function drawTransitionsEvents(StateInterface $state)
@@ -136,7 +140,12 @@ class Drawer implements DrawerInterface
 
                 $this->graph->addNode($diamondId, $this->attributesDiamond, $state->getProcess()->getName());
 
-                $this->addEdge(current($transitions), self::EDGE_UPPER_HALF, [], null, $diamondId);
+                $currentTransition = current($transitions);
+                if (!$currentTransition) {
+                    throw new StatemachineException('Transitions container seems to be empty.');
+                }
+
+                $this->addEdge($currentTransition, self::EDGE_UPPER_HALF, [], null, $diamondId);
 
                 foreach ($transitions as $transition) {
                     $this->addEdge($transition, self::EDGE_LOWER_HALF, [], $diamondId);

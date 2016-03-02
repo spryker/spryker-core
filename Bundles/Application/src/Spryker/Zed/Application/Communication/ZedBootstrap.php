@@ -1,16 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication;
 
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\AfterBootExtension;
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension;
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension;
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Shared\Application\Communication\Bootstrap;
+use Spryker\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension;
+use Spryker\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension;
 use Spryker\Zed\Application\Communication\Bootstrap\Extension\RouterExtension;
 use Spryker\Zed\Application\Communication\Bootstrap\Extension\ServiceProviderExtension;
 use Spryker\Zed\Application\Communication\Bootstrap\Extension\TwigExtension;
@@ -25,10 +25,6 @@ class ZedBootstrap extends Bootstrap
 
         $this->addBeforeBootExtension(
             $this->getBeforeBootExtension()
-        );
-
-        $this->addAfterBootExtension(
-            $this->getAfterBootExtension()
         );
 
         $this->addServiceProviderExtension(
@@ -78,14 +74,6 @@ class ZedBootstrap extends Bootstrap
     protected function getBeforeBootExtension()
     {
         return new BeforeBootExtension();
-    }
-
-    /**
-     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\AfterBootExtension
-     */
-    protected function getAfterBootExtension()
-    {
-        return new AfterBootExtension();
     }
 
     /**

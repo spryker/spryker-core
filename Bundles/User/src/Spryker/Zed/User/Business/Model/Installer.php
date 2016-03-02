@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Business\Model;
@@ -53,19 +54,23 @@ class Installer implements InstallerInterface
     }
 
     /**
+     * @param array $usersArray
+     *
      * @return void
      */
     protected function addUsers(array $usersArray)
     {
         foreach ($usersArray as $user) {
-            if (!$this->user->hasUserByUsername($user['username'])) {
-                $this->user->addUser(
-                    $user['firstName'],
-                    $user['lastName'],
-                    $user['username'],
-                    $user['password']
-                );
+            if ($this->user->hasUserByUsername($user['username'])) {
+                continue;
             }
+
+            $this->user->addUser(
+                $user['firstName'],
+                $user['lastName'],
+                $user['username'],
+                $user['password']
+            );
         }
     }
 

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Business;
@@ -17,6 +18,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -29,6 +32,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -44,6 +49,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -57,6 +64,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -70,6 +79,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -83,6 +94,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -96,6 +109,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -109,6 +124,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
@@ -124,6 +141,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -137,6 +156,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -150,6 +171,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -163,6 +186,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -176,6 +201,8 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool

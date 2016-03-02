@@ -1,8 +1,10 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Unit\Spryker\Zed\Payolution\Business\Payment\MethodMapper;
 
 use Codeception\TestCase\Test;
@@ -11,9 +13,9 @@ use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
-use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 
 class InvoiceTest extends Test
 {
@@ -175,7 +177,7 @@ class InvoiceTest extends Test
             []
         );
 
-        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock*/
         $paymentEntityMock = $this->getMock(
             'Orm\Zed\Payolution\Persistence\SpyPaymentPayolution',
             [

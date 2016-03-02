@@ -1,19 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Functional\Spryker\Zed\Cart\Business;
 
 use Codeception\TestCase\Test;
-use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
+use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\CartTransfer;
-use Spryker\Zed\Cart\Business\CartFacade;
-use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Price\Business\PriceFacade;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\Cart\Business\CartFacade;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Price\Business\PriceFacade;
 
 /**
  * @group Spryker

@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,14 +39,14 @@ class IndexController extends AbstractController
      */
     public function drawAction(Request $request)
     {
-        $processName = $request->query->get('process');
+        $processName = $request->query->get('process'); // TODO FW Validation
         if ($processName === null) {
             return $this->redirectResponse('/oms');
         }
 
-        $format = $request->query->get('format');
-        $fontSize = $request->query->getInt('font');
-        $highlightState = $request->query->get('state');
+        $format = $request->query->get('format'); // TODO FW Validation
+        $fontSize = $request->query->getInt('font'); // TODO FW Validation
+        $highlightState = $request->query->get('state'); // TODO FW Validation
 
         $reload = false;
         if ($format === null) {
@@ -77,10 +78,10 @@ class IndexController extends AbstractController
      */
     public function drawItemAction(Request $request)
     {
-        $id = $request->query->get('id');
+        $id = $this->castId($request->query->get('id'));
 
-        $format = $request->query->get('format', self::DEFAULT_FORMAT);
-        $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE);
+        $format = $request->query->get('format', self::DEFAULT_FORMAT); // TODO FW Validation
+        $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE); // TODO FW Validation
 
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
@@ -95,7 +96,7 @@ class IndexController extends AbstractController
      */
     public function drawPreviewVersionAction(Request $request)
     {
-        $processName = $request->query->get('process');
+        $processName = $request->query->get('process'); // TODO FW Validation
         if ($processName === null) {
             return $this->redirectResponse('/oms');
         }

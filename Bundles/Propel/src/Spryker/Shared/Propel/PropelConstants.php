@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Propel;
@@ -13,6 +14,8 @@ interface PropelConstants
 
     const PROPEL = ApplicationConstants::PROPEL;
     const PROPEL_DEBUG = ApplicationConstants::PROPEL_DEBUG;
+
+    const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
 
     const ZED_DB_DATABASE = ApplicationConstants::ZED_DB_DATABASE;
 

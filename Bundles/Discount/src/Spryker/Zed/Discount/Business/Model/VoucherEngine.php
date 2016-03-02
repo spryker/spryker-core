@@ -1,22 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Business\Model;
 
-use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
+use Generated\Shared\Transfer\VoucherTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 
 /**
  * Class VoucherEngine
@@ -27,6 +28,9 @@ class VoucherEngine
     const MESSAGE_TYPE_SUCCESS = 'success';
     const MESSAGE_TYPE_ERROR = 'error';
 
+    /**
+     * @var int|null
+     */
     protected $remainingCodesToGenerate = null;
 
     /**
@@ -219,7 +223,7 @@ class VoucherEngine
     protected function getRandomVoucherCode($length, $asMd5 = false)
     {
         $allowedCharacters = $this->settings->getVoucherCodeCharacters();
-        srand((double) microtime() * 1000000);
+        srand((double)microtime() * 1000000);
 
         $consonants = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_CONSONANTS];
         $vowels = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_VOWELS];

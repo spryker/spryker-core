@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Model;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Propel\Runtime\Propel;
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
+use Propel\Runtime\Propel;
 use Spryker\Shared\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConstants;
 use Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainerInterface;
 

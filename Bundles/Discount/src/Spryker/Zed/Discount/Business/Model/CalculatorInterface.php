@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Business\Model;
@@ -18,6 +19,8 @@ interface CalculatorInterface
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      * @param \Spryker\Zed\Discount\DiscountConfigInterface $config
      * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
+     *
+     * @return array
      */
     public function calculate(
         array $discountCollection,

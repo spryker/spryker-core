@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cart\Business;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Cart\Business\Model\CalculableContainer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Cart\Business\CartBusinessFactory getFactory()
@@ -18,6 +19,8 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -30,6 +33,8 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -42,6 +47,8 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -54,6 +61,8 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -66,6 +75,8 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @todo call calculator client from cart client.
      *
      * @param \Generated\Shared\Transfer\CartTransfer $cart
@@ -81,6 +92,8 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -93,6 +106,8 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -105,6 +120,8 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer

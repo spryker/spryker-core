@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Library\Sanitize;
 
 /**
@@ -34,7 +39,7 @@ class Html
             return $texts;
         } elseif (is_object($text)) {
             if (method_exists($text, '__toString')) {
-                $text = (string) $text;
+                $text = (string)$text;
             } else {
                 $text = '(object)' . get_class($text);
             }

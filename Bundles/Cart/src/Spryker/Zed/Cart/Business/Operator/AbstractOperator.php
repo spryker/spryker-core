@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cart\Business\Operator;
 
 use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Cart\Business\Model\CalculableContainer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
@@ -56,8 +57,8 @@ abstract class AbstractOperator implements OperatorInterface
         CartToCalculationInterface $cartCalculator,
         CartToItemGrouperInterface $itemGrouperFacade,
         LoggerInterface $messenger = null //@todo to be discussed
-)
-    {
+    ) {
+
         $this->storageProvider = $storageProvider;
         $this->messenger = $messenger;
         $this->cartCalculator = $cartCalculator;

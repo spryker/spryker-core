@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Wishlist;
 
-use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -17,6 +18,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -31,6 +34,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -46,6 +51,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -61,6 +68,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -75,6 +84,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getWishlist()
@@ -86,6 +97,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function synchronizeSession()

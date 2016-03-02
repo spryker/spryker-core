@@ -1,22 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
-use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 
 class EWallet extends AbstractMapper
 {

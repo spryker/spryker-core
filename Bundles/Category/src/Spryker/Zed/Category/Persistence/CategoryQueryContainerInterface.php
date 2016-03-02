@@ -1,18 +1,23 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Category\Persistence;
 
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CategoryQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -20,6 +25,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryNodeWithDirectParent($idLocale);
 
     /**
+     * @api
+     *
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -27,6 +34,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryNodeById($idNode);
 
     /**
+     * @api
+     *
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -34,6 +43,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryFirstLevelChildren($idNode);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param int $idParentNode
      *
@@ -42,11 +53,15 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
     public function queryRootNodes();
 
     /**
+     * @api
+     *
      * @param int $idNode
      * @param int $idLocale
      *
@@ -55,6 +70,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryFirstLevelChildrenByIdLocale($idNode, $idLocale);
 
     /**
+     * @api
+     *
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
@@ -62,6 +79,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryClosureTableByNodeId($idNode);
 
     /**
+     * @api
+     *
      * @param int $idNode
      * @param string $idLocale
      * @param bool $onlyOneLevel
@@ -72,6 +91,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true);
 
     /**
+     * @api
+     *
      * @param int $idNode
      * @param int $idLocale
      * @param bool $excludeRootNode
@@ -84,6 +105,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false);
 
     /**
+     * @api
+     *
      * @param int $idParentNode
      * @param bool $excludeRoot
      *
@@ -92,6 +115,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function getChildrenPath($idParentNode, $excludeRoot = true);
 
     /**
+     * @api
+     *
      * @param int $idChildNode
      * @param int $idLocale
      * @param bool $excludeRoot
@@ -101,11 +126,15 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function getParentPath($idChildNode, $idLocale, $excludeRoot = true);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryRootNode();
 
     /**
+     * @api
+     *
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
@@ -113,6 +142,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryDescendant($idNode);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
@@ -120,6 +151,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryAttributeByCategoryId($idCategory);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -127,6 +160,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryAllNodesByCategoryId($idCategory);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -134,6 +169,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryMainNodesByCategoryId($idCategory);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -141,6 +178,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryNotMainNodesByCategoryId($idCategory);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
@@ -148,6 +187,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryById($idCategory);
 
     /**
+     * @api
+     *
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -155,6 +196,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryNodeByNodeId($idNode);
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
@@ -162,6 +205,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryCategory($idLocale);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param int $idLocale
      *
@@ -170,6 +215,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryAttributeByCategoryIdAndLocale($idCategory, $idLocale);
 
     /**
+     * @api
+     *
      * @param string $name
      * @param int $idLocale
      *
@@ -180,6 +227,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryAttributesByName($name, $idLocale);
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -189,6 +238,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryNode($idLocale);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $rightTableAlias
      * @param string $fieldIdentifier
@@ -199,6 +250,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function joinCategoryQueryWithChildrenCategories(ModelCriteria $expandableQuery, $rightTableAlias = 'categoryChildren', $fieldIdentifier = 'child', $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
@@ -213,6 +266,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function joinCategoryQueryWithParentCategories(ModelCriteria $expandableQuery, $excludeDirectParent = true, $excludeRoot = true, $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME, $relationTableAlias = 'categoryParents', $fieldIdentifier = 'parent');
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $leftAlias
      *
@@ -221,6 +276,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function joinCategoryQueryWithUrls(ModelCriteria $expandableQuery, $leftAlias = SpyCategoryNodeTableMap::TABLE_NAME);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
@@ -230,6 +287,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function joinLocalizedRelatedCategoryQueryWithAttributes(ModelCriteria $expandableQuery, $relationTableAlias, $fieldIdentifier);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
@@ -241,6 +300,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function joinRelatedCategoryQueryWithUrls(ModelCriteria $expandableQuery, $relationTableAlias, $fieldIdentifier);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $tableAlias
      *
@@ -249,6 +310,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function selectCategoryAttributeColumns(ModelCriteria $expandableQuery, $tableAlias = SpyCategoryAttributeTableMap::TABLE_NAME);
 
     /**
+     * @api
+     *
      * @param string $categoryName
      * @param int $idLocale
      *
@@ -259,6 +322,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryNodeByCategoryName($categoryName, $idLocale);
 
     /**
+     * @api
+     *
      * @param string $categoryKey
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -266,6 +331,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryNodeByCategoryKey($categoryKey);
 
     /**
+     * @api
+     *
      * @param string $categoryKey
      * @param int $idLocale
      *
@@ -274,6 +341,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryByCategoryKey($categoryKey, $idLocale);
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -281,6 +350,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryUrlByIdCategoryNode($idCategoryNode);
 
     /**
+     * @api
+     *
      * @param int $idParentNode
      * @param int $idLocale
      *

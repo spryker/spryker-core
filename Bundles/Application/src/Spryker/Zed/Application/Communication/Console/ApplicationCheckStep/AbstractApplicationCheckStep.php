@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication\Console\ApplicationCheckStep;
 
-use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\Container;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Container;
 
 abstract class AbstractApplicationCheckStep extends AbstractLogger implements LoggerAwareInterface, LoggerInterface
 {
@@ -119,6 +120,9 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
         return new FacadeResolver();
     }
 
+    /**
+     * @return void
+     */
     abstract public function run();
 
 }

@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Shipment\Persistence;
 
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentPersistenceFactory getFactory()
@@ -17,6 +18,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryCarriers()
@@ -25,6 +28,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryActiveCarriers()
@@ -33,6 +38,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryMethods()
@@ -41,6 +48,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryActiveMethods()
@@ -49,6 +58,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     }
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery

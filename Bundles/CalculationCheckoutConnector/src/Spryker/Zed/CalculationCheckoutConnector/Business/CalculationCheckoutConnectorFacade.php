@@ -1,13 +1,18 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CalculationCheckoutConnector\Business;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Shared\Checkout\CheckoutConstants;
 use Spryker\Zed\Checkout\Business\Calculation\CalculableContainer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CalculationCheckoutConnector\Business\CalculationCheckoutConnectorBusinessFactory getFactory()
@@ -16,6 +21,8 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade implements Calcu
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $response
      *
@@ -41,6 +48,8 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade implements Calcu
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Checkout\Business\Calculation\CalculableContainer $calculableContainer
      *
      * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface

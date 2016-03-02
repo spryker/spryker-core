@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
@@ -11,6 +12,8 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class CodeStyleSniffer
 {
+
+    const CODE_SUCCESS = 0;
 
     const BUNDLE_ALL = 'all';
 
@@ -53,7 +56,7 @@ class CodeStyleSniffer
      *
      * @throws \ErrorException
      *
-     * @return void
+     * @return int Exit code
      */
     public function checkCodeStyle($bundle, array $options = [])
     {
@@ -73,7 +76,7 @@ class CodeStyleSniffer
         ];
         $options += $defaults;
 
-        $this->runSnifferCommand($path, $options);
+        return $this->runSnifferCommand($path, $options);
     }
 
     /**
@@ -122,7 +125,7 @@ class CodeStyleSniffer
      * @param string $path
      * @param array $options
      *
-     * @return void
+     * @return int Exit code
      */
     protected function runSnifferCommand($path, array $options)
     {
@@ -147,13 +150,15 @@ class CodeStyleSniffer
         if (!empty($options[self::OPTION_DRY_RUN])) {
             echo $command;
 
-            return;
+            return self::CODE_SUCCESS;
         }
 
         $process = new Process($command, $this->applicationRoot, null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
+
+        return $process->getExitCode();
     }
 
 }

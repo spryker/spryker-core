@@ -1,22 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Application\Communication;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtensionInterface;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config;
-use Symfony\Component\HttpFoundation\Request;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class Bootstrap
 {

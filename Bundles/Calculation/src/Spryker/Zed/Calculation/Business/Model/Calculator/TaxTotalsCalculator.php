@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
@@ -39,7 +40,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -54,7 +55,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -64,13 +65,13 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
             $this->calculateTax($item);
         }
 
-        /** @var \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\OrderTransfer $order **/
+        /** @var \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\OrderTransfer $order */
         $order = $calculableContainer->getCalculableObject();
         $this->calculateTaxForOrderExpenses($order->getExpenses());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer $taxableItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $taxableItem
      *
      * @return void
      */

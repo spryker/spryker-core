@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\NewRelic;
 
 use Guzzle\Http\Client;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\NewRelic\Exception\RecordDeploymentException;
 
 /**
@@ -168,9 +169,8 @@ class Api implements ApiInterface
      */
     public function markAsBackgroundJob($flag = true)
     {
-        assert(is_bool($flag));
         if ($this->active) {
-            newrelic_background_job($flag);
+            newrelic_background_job((bool)$flag);
         }
 
         return $this;

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
@@ -142,24 +143,6 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $givenProperty = $properties['property1'];
         $expectedProperty = $this->getProperty('property1', 'array');
         $this->assertEquals($expectedProperty, $givenProperty);
-    }
-
-    /**
-     * @return void
-     */
-    public function testIfPropertyTypeIsCollectionConstructorDefinitionMustContainArrayWithThisEntry()
-    {
-        $transferDefinition = [
-            'name' => 'name',
-            'property' => [$this->getProperty('property1', 'Collection[]')],
-        ];
-
-        $classDefinition = new ClassDefinition();
-        $classDefinition->setDefinition($transferDefinition);
-
-        $constructorDefinition = $classDefinition->getConstructorDefinition();
-        $this->assertArrayHasKey('property1', $constructorDefinition);
-        $this->assertSame('\\ArrayObject', $constructorDefinition['property1']);
     }
 
     /**

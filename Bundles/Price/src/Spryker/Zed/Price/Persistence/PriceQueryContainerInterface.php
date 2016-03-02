@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Price\Persistence;
@@ -13,6 +14,8 @@ interface PriceQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
@@ -20,11 +23,15 @@ interface PriceQueryContainerInterface
     public function queryPriceType($name);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
      */
     public function queryAllPriceTypes();
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -35,6 +42,8 @@ interface PriceQueryContainerInterface
     public function queryPriceEntityForProductAbstract($sku, SpyPriceType $priceType);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -45,6 +54,8 @@ interface PriceQueryContainerInterface
     public function queryPriceEntityForProductConcrete($sku, SpyPriceType $priceType);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -55,6 +66,8 @@ interface PriceQueryContainerInterface
     public function querySpecificPriceForProductAbstract(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -65,27 +78,12 @@ interface PriceQueryContainerInterface
     public function querySpecificPriceForProductConcrete(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType);
 
     /**
+     * @api
+     *
      * @param int $idPriceProduct
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function queryPriceProductEntity($idPriceProduct);
-
-    /**
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
-     */
-    public function queryPriceGrid();
-
-    /**
-     * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
-     */
-    public function queryPriceTypeGrid();
-
-    /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryPriceTypeForm();
 
 }

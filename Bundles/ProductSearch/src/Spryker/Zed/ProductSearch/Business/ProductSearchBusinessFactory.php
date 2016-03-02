@@ -1,26 +1,27 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductSearch\Business;
 
-use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
-use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
-use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;
-use Spryker\Zed\ProductSearch\Business\Operation\DefaultOperation;
-use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
-use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
+use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
+use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;
 use Spryker\Zed\ProductSearch\Business\Operation\AddToResult;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToField;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField;
+use Spryker\Zed\ProductSearch\Business\Operation\DefaultOperation;
+use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
+use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
+use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**

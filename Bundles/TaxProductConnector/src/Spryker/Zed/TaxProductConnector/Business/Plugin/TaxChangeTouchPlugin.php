@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\TaxProductConnector\Business\Plugin;
 
-use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
+use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 
 class TaxChangeTouchPlugin implements TaxChangePluginInterface
 {
@@ -44,7 +45,7 @@ class TaxChangeTouchPlugin implements TaxChangePluginInterface
     {
         $productAbstractIds = $this->queryContainer->getAbstractAbstractIdsForTaxRate($idTaxRate)->find();
         foreach ($productAbstractIds as $id) {
-            $this->productFacade->touchProductActive((int) $id);
+            $this->productFacade->touchProductActive((int)$id);
         }
     }
 
@@ -57,7 +58,7 @@ class TaxChangeTouchPlugin implements TaxChangePluginInterface
     {
         $productAbstractIds = $this->queryContainer->getProductAbstractIdsForTaxSet($idTaxSet)->find();
         foreach ($productAbstractIds as $id) {
-            $this->productFacade->touchProductActive((int) $id);
+            $this->productFacade->touchProductActive((int)$id);
         }
     }
 

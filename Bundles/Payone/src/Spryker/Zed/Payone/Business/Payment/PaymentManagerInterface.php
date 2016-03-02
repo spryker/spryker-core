@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PayoneCreditCardTransfer;
-use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
+use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface PaymentManagerInterface
@@ -19,6 +20,8 @@ interface PaymentManagerInterface
 
     /**
      * @param \Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface $paymentMethodMapper
+     *
+     * @return void
      */
     public function registerPaymentMethodMapper(PaymentMethodMapperInterface $paymentMethodMapper);
 

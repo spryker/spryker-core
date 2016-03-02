@@ -1,18 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
@@ -20,8 +22,7 @@ use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer
@@ -124,7 +125,7 @@ class Customer
     public function get(CustomerTransfer $customerTransfer)
     {
         $customerEntity = $this->getCustomer($customerTransfer);
-        $customerTransfer->fromArray($customerEntity->toArray());
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
         $addresses = $customerEntity->getAddresses();
         if ($addresses) {
             $customerTransfer->setAddresses($this->entityCollectionToTransferCollection($addresses, $customerEntity));
@@ -247,7 +248,7 @@ class Customer
         $customerEntity->setRegistrationKey(null);
 
         $customerEntity->save();
-        $customerTransfer->fromArray($customerEntity->toArray());
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         return $customerTransfer;
     }

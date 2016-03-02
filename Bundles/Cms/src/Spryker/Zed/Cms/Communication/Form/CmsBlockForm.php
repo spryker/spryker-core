@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Form;
@@ -72,22 +73,20 @@ class CmsBlockForm extends AbstractType
         $resolver->setRequired(self::OPTION_TEMPLATE_CHOICES);
 
         $resolver->setDefaults([
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
                 $formData = $form->getData();
 
-                if (
-                    !array_key_exists(self::FIELD_NAME, $defaultData) ||
+                if (!array_key_exists(self::FIELD_NAME, $defaultData) ||
                     !array_key_exists(self::FIELD_TYPE, $defaultData) ||
                     !array_key_exists(self::FIELD_VALUE, $defaultData)
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_BLOCK_CHECK];
                 }
 
-                if (
-                    $defaultData[self::FIELD_NAME] !== $formData[self::FIELD_NAME] ||
+                if ($defaultData[self::FIELD_NAME] !== $formData[self::FIELD_NAME] ||
                     $defaultData[self::FIELD_TYPE] !== $formData[self::FIELD_TYPE] ||
-                    (int) $defaultData[self::FIELD_VALUE] !== (int) $formData[self::FIELD_VALUE]
+                    (int)$defaultData[self::FIELD_VALUE] !== (int)$formData[self::FIELD_VALUE]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_BLOCK_CHECK];
                 }

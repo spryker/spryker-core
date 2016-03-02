@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -100,7 +105,7 @@ class DiscountVoucherCodesTable extends AbstractTable
         foreach ($collectionObject as $code) {
             $result[] = [
                 SpyDiscountVoucherTableMap::COL_CODE => $code->getCode(),
-                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => (int) $code->getNumberOfUses(),
+                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => (int)$code->getNumberOfUses(),
                 SpyDiscountVoucherTableMap::COL_CREATED_AT => $code->getCreatedAt('Y-m-d'),
                 SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => $code->getVoucherBatch(),
             ];

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Messenger\Business;
@@ -12,6 +13,8 @@ interface MessengerFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
@@ -19,6 +22,8 @@ interface MessengerFacadeInterface
     public function addSuccessMessage(MessageTransfer $message);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
@@ -26,6 +31,8 @@ interface MessengerFacadeInterface
     public function addErrorMessage(MessageTransfer $message);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
@@ -33,6 +40,8 @@ interface MessengerFacadeInterface
     public function addInfoMessage(MessageTransfer $message);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages();

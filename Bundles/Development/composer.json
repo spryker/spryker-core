@@ -10,23 +10,21 @@
     }
   },
   "require": {
-    "spryker/abstract-sniffs": "^1.0.0",
-    "spryker/console": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/two": "^1.0.0",
-    "spryker/two-five": "^1.0.0",
-    "spryker/two-four": "^1.0.0",
-    "spryker/two-three": "^1.0.0",
-    "spryker/two-two": "^1.0.0",
-    "spryker/x": "^1.0.0"
+    "spryker/abstract-sniffs": "^0.20.0",
+    "spryker/console": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/symfony": "^0.20.0",
+    "spryker/zend": "^0.20.0",
+    "spryker/application": "^0.20.0",
+    "spryker/graph": "^0.20.0"
   },
-  "require-dev": {},
   "description": "development bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Development\Communication\Console;
@@ -48,7 +49,7 @@ class CodeStyleSnifferConsole extends Console
      *
      * @throws \Exception
      *
-     * @return void
+     * @return int Exit code
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -63,7 +64,7 @@ class CodeStyleSnifferConsole extends Console
         }
         $this->info($message);
 
-        $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions());
+        return $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions());
     }
 
 }

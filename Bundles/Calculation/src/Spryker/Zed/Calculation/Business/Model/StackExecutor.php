@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Calculation\Business\Model;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -43,7 +44,7 @@ class StackExecutor
     /**
      * @param array $calculatorStack
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param \ArrayObject|null $calculableItems
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Console\Business\Model\Console;
@@ -19,7 +20,8 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $console = $this->getConsole();
         $console->setFactory($this->getCommunicationFactoryMock());
 
-        $this->assertInstanceOf('Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
+        $this->assertInstanceOf(
+            'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
             $console->getFactory()
         );
     }
@@ -53,7 +55,8 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $console = $this->getConsole();
         $console->setQueryContainer($this->getQueryContainerMock());
 
-        $this->assertInstanceOf('Spryker\Zed\Kernel\Persistence\AbstractQueryContainer',
+        $this->assertInstanceOf(
+            'Spryker\Zed\Kernel\Persistence\AbstractQueryContainer',
             $console->getQueryContainer()
         );
     }
@@ -63,8 +66,12 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
      */
     private function getCommunicationFactoryMock()
     {
-        return $this->getMock('Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory', [], [],
-            '', false
+        return $this->getMock(
+            'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
+            [],
+            [],
+            '',
+            false
         );
     }
 

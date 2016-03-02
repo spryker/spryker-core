@@ -1,13 +1,15 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOptionCartConnector\Business\Model;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class GroupKeyExpander
 {
@@ -38,7 +40,7 @@ class GroupKeyExpander
             return $currentGroupKey;
         }
 
-        $sortedProductOptions = $this->sortOptions((array) $cartItem->getProductOptions());
+        $sortedProductOptions = $this->sortOptions((array)$cartItem->getProductOptions());
         $optionGroupKey = $this->combineOptionParts($sortedProductOptions);
 
         if (empty($optionGroupKey)) {

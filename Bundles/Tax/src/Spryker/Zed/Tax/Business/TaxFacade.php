@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Tax\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Tax\Business\TaxBusinessFactory getFactory()
@@ -17,6 +18,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\TaxRateCollectionTransfer
@@ -27,6 +30,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -40,6 +45,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -52,6 +59,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
@@ -62,6 +71,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -75,6 +86,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -87,6 +100,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRate
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -99,6 +114,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -112,6 +129,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSet
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -126,6 +145,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -140,6 +161,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $taxSetId
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
@@ -154,6 +177,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $taxSetId
      * @param int $taxRateId
      *
@@ -169,23 +194,31 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     public function deleteTaxRate($id)
     {
-        return $this->getFactory()->createWriterModel()->deleteTaxRate($id);
+        $this->getFactory()->createWriterModel()->deleteTaxRate($id);
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     public function deleteTaxSet($id)
     {
-        return $this->getFactory()->createWriterModel()->deleteTaxSet($id);
+        $this->getFactory()->createWriterModel()->deleteTaxSet($id);
     }
 
 }

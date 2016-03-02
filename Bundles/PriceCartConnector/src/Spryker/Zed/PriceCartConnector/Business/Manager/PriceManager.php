@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
+use Spryker\Zed\Price\Business\PriceFacade;
 
 class PriceManager implements PriceManagerInterface
 {
@@ -26,7 +27,7 @@ class PriceManager implements PriceManagerInterface
 
     /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
-     * @param null $grossPriceType
+     * @param string|null $grossPriceType
      */
     public function __construct(PriceCartToPriceInterface $priceFacade, $grossPriceType = null)
     {

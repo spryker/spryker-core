@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cart\Business;
@@ -13,6 +14,8 @@ interface CartFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -20,6 +23,8 @@ interface CartFacadeInterface
     public function addToCart(ChangeTransfer $cartChange);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -27,6 +32,8 @@ interface CartFacadeInterface
     public function increaseQuantity(ChangeTransfer $cartChange);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -34,6 +41,8 @@ interface CartFacadeInterface
     public function removeFromCart(ChangeTransfer $cartChange);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -41,6 +50,8 @@ interface CartFacadeInterface
     public function decreaseQuantity(ChangeTransfer $cartChange);
 
     /**
+     * @api
+     *
      * @todo call calculator client from cart client.
      *
      * @param \Generated\Shared\Transfer\CartTransfer $cart
@@ -50,6 +61,8 @@ interface CartFacadeInterface
     public function recalculate(CartTransfer $cart);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -57,6 +70,8 @@ interface CartFacadeInterface
     public function addCouponCode(ChangeTransfer $cartChange);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -64,6 +79,8 @@ interface CartFacadeInterface
     public function removeCouponCode(ChangeTransfer $cartChange);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer

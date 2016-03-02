@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\ZedRequest\Client;
@@ -16,14 +17,16 @@ interface HttpClientInterface
 
     /**
      * @param int $timeoutInSeconds
+     *
+     * @return void
      */
     public static function setDefaultTimeout($timeoutInSeconds);
 
     /**
      * @param string $pathInfo
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
-     * @param null $timeoutInSeconds
+     * @param int|null $timeoutInSeconds
      * @param bool $isBackgroundRequest
      *
      * @throws \LogicException
