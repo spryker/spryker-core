@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
-use Spryker\Zed\Collector\CollectorConfig;
 
 interface TouchUpdaterInterface
 {
