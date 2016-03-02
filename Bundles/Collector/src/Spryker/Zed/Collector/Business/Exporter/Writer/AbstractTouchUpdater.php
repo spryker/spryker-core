@@ -10,7 +10,7 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 use Orm\Zed\Touch\Persistence\SpyTouchSearch;
 use Orm\Zed\Touch\Persistence\SpyTouchStorage;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\CollectorConfig;
 
 abstract class AbstractTouchUpdater implements TouchUpdaterInterface
@@ -72,7 +72,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     }
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
@@ -104,7 +104,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     }
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *

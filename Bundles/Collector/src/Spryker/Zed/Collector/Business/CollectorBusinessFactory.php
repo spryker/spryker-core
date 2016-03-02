@@ -12,16 +12,16 @@ use Spryker\Zed\Collector\Business\Exporter\Collector;
 use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
-use Spryker\Zed\Collector\Business\Exporter\KeyValueExporter;
-use Spryker\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
+use Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\RedisWriter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdater as KeyValueTouchUpdater;
+use Spryker\Zed\Collector\Business\Exporter\StorageExporter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\Search\TouchUpdater;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Search\TouchUpdater as SearchTouchUpdater;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\RedisWriter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdater as StorageTouchUpdater;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Internal\InstallElasticsearch;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
@@ -40,12 +40,12 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\Collector
      */
-    public function createYvesKeyValueExporter()
+    public function createYvesStorageExporter()
     {
         return new Collector(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createKeyValueExporter(),
+            $this->createStorageExporter(),
             $this->getConfig()->getAvailableCollectorTypes()
         );
     }
@@ -81,28 +81,28 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\ExporterInterface
      */
-    protected function createKeyValueExporter()
+    protected function createStorageExporter()
     {
-        $keyValueExporter = new KeyValueExporter(
+        $storageExporter = new StorageExporter(
             $this->getTouchQueryContainer(),
-            $this->createKeyValueWriter(),
-            $this->createKeyValueMarker(),
+            $this->createStorageWriter(),
+            $this->createStorageMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterKeyValueTouchUpdater()
+            $this->createExporterWriterStorageTouchUpdater()
         );
 
         foreach ($this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS) as $touchItemType => $collectorPlugin) {
-            $keyValueExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
+            $storageExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
         }
 
-        return $keyValueExporter;
+        return $storageExporter;
     }
 
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
-    protected function createKeyValueWriter()
+    protected function createStorageWriter()
     {
         return new RedisWriter(
             StorageInstanceBuilder::getStorageReadWriteInstance()
@@ -112,17 +112,17 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\MarkerInterface
      */
-    public function createKeyValueMarker()
+    public function createStorageMarker()
     {
         return new ExportMarker(
-            $this->createKeyValueWriter(),
+            $this->createStorageWriter(),
             $this->createRedisReader(),
             $this->createKvMarkerKeyBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader
+     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader
      */
     protected function createRedisReader()
     {
@@ -160,15 +160,15 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExporterWriterSearchTouchUpdater()
     {
-        return new TouchUpdater();
+        return new SearchTouchUpdater();
     }
 
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
      */
-    protected function createExporterWriterKeyValueTouchUpdater()
+    protected function createExporterWriterStorageTouchUpdater()
     {
-        return new KeyValueTouchUpdater();
+        return new StorageTouchUpdater();
     }
 
     /**

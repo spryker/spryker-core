@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\CollectorConfig;
 
 interface TouchUpdaterInterface
@@ -17,7 +17,7 @@ interface TouchUpdaterInterface
     const COLLECTOR_TOUCH_ID = CollectorConfig::COLLECTOR_TOUCH_ID;
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
@@ -26,7 +26,7 @@ interface TouchUpdaterInterface
     public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *

@@ -7,6 +7,6 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter;
 
-class KeyValueExporter extends AbstractExporter
+class StorageExporter extends AbstractExporter
 {
 }

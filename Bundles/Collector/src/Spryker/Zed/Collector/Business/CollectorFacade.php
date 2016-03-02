@@ -27,7 +27,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      */
     public function exportStorage(OutputInterface $output)
     {
-        $exporter = $this->getFactory()->createYvesKeyValueExporter();
+        $exporter = $this->getFactory()->createYvesStorageExporter();
 
         return $exporter->exportStorage($output);
     }
@@ -42,7 +42,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      */
     public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output)
     {
-        $exporter = $this->getFactory()->createYvesKeyValueExporter();
+        $exporter = $this->getFactory()->createYvesStorageExporter();
 
         return $exporter->exportStorageByLocale($locale, $output);
     }
@@ -130,7 +130,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      */
     public function deleteStorageTimestamps(array $keys = [])
     {
-        return $this->getFactory()->createKeyValueMarker()->deleteTimestamps($keys);
+        return $this->getFactory()->createStorageMarker()->deleteTimestamps($keys);
     }
 
     /**
@@ -140,7 +140,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      */
     public function getAllCollectorTypes()
     {
-        $exporter = $this->getFactory()->createYvesKeyValueExporter();
+        $exporter = $this->getFactory()->createYvesStorageExporter();
 
         return $exporter->getAllCollectorTypes();
     }
@@ -152,7 +152,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      */
     public function getEnabledCollectorTypes()
     {
-        $exporter = $this->getFactory()->createYvesKeyValueExporter();
+        $exporter = $this->getFactory()->createYvesStorageExporter();
 
         return $exporter->getEnabledCollectorTypes();
     }

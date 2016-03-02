@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue;
+namespace Spryker\Zed\Collector\Business\Exporter\Writer\Storage;
 
 use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
