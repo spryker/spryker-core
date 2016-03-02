@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
@@ -17,6 +16,7 @@ use Spryker\Zed\Collector\Business\Model\FailedResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractExporter implements ExporterInterface
@@ -129,6 +129,7 @@ abstract class AbstractExporter implements ExporterInterface
         $baseQuery->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID);
         $baseQuery->setFormatter($this->getFormatter());
 
+        //TODO remove state
         $collectorPlugin = $this->collectorPlugins[$type];
         $collectorPlugin->setOutput($output);
         $collectorPlugin->setDataWriter($this->writer);

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer;
@@ -61,7 +62,8 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      */
     protected function getUpdateSql($idKey, $key)
     {
-        return sprintf("UPDATE %s SET key = '%s' WHERE %s = '%s'; \n",
+        return sprintf(
+            "UPDATE %s SET key = '%s' WHERE %s = '%s'; \n",
             $this->touchKeyTableName,
             $key,
             $this->touchKeyIdColumnName,

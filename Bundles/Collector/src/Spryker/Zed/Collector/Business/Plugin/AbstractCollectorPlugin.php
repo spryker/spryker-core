@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business\Plugin;
@@ -9,16 +10,16 @@ namespace Spryker\Zed\Collector\Business\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Spryker\Zed\Collector\Business\Model\ProgressBarBuilder;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\Business\Model\ProgressBarBuilder;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractCollectorPlugin
@@ -150,10 +151,14 @@ abstract class AbstractCollectorPlugin
      */
     protected function processCollectedItem($touchKey, array $collectItemData, TouchUpdaterSet $touchUpdaterSet)
     {
-        $touchUpdaterSet->add($touchKey, $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID], [
+        $touchUpdaterSet->add(
+            $touchKey,
+            $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID],
+            [
             CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($collectItemData),
             CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($collectItemData),
-        ]);
+            ]
+        );
 
         return $this->collectItem($touchKey, $collectItemData);
     }
@@ -196,9 +201,15 @@ abstract class AbstractCollectorPlugin
      *
      * @return void
      */
-    public function run(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result,
-        WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, OutputInterface $output)
-    {
+    public function run(
+        SpyTouchQuery $baseQuery,
+        LocaleTransfer $locale,
+        BatchResultInterface $result,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
+    ) {
+
         $this->validateDependencies();
 
         $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
@@ -217,9 +228,15 @@ abstract class AbstractCollectorPlugin
      *
      * @return void
      */
-    protected function runInsertion(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $batchResult,
-        WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, OutputInterface $output)
-    {
+    protected function runInsertion(
+        SpyTouchQuery $baseQuery,
+        LocaleTransfer $locale,
+        BatchResultInterface $batchResult,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
+    ) {
+
         $this->prepareCollectorScope($baseQuery, $locale);
 
         $batchCollection = $this->generateBatchIterator();
@@ -259,9 +276,14 @@ abstract class AbstractCollectorPlugin
      *
      * @return void
      */
-    public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result,
-        WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater)
-    {
+    public function postRun(
+        SpyTouchQuery $baseQuery,
+        LocaleTransfer $locale,
+        BatchResultInterface $result,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater
+    ) {
+
         $this->validateDependencies();
     }
 
@@ -275,9 +297,15 @@ abstract class AbstractCollectorPlugin
      *
      * @return void
      */
-    protected function runDeletion(LocaleTransfer $locale, BatchResultInterface $batchResult,
-        WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, $itemType, OutputInterface $output)
-    {
+    protected function runDeletion(
+        LocaleTransfer $locale,
+        BatchResultInterface $batchResult,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater,
+        $itemType,
+        OutputInterface $output
+    ) {
+
         $this->delete($itemType, $dataWriter, $touchUpdater, $locale);
         $deletedCount = $this->pruneTouchStorageAndSearchKeys($itemType);
         $batchResult->setDeletedCount($deletedCount);
@@ -293,9 +321,13 @@ abstract class AbstractCollectorPlugin
      *
      * @return void
      */
-    protected function delete($itemType, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater,
-        LocaleTransfer $locale)
-    {
+    protected function delete(
+        $itemType,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater,
+        LocaleTransfer $locale
+    ) {
+
         $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
         $batchCount = 1;
         $offset = 0;
@@ -312,7 +344,9 @@ abstract class AbstractCollectorPlugin
                     $offset += $this->chunkSize;
 
                     $keysToDelete = $this->getKeysToDeleteAndUpdateTouchUpdaterSet(
-                        $entityCollection, $touchUpdater->getTouchKeyColumnName(), $touchUpdaterSet
+                        $entityCollection,
+                        $touchUpdater->getTouchKeyColumnName(),
+                        $touchUpdaterSet
                     );
 
                     if (!empty($keysToDelete)) {
@@ -363,10 +397,14 @@ abstract class AbstractCollectorPlugin
 
             if (trim($key) !== '') {
                 $keysToDelete[$key] = true;
-                $touchUpdaterSet->add($key, $touchEntity->getIdTouch(), [
+                $touchUpdaterSet->add(
+                    $key,
+                    $touchEntity->getIdTouch(),
+                    [
                     CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($entityData),
                     CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($entityData),
-                ]);
+                    ]
+                );
             }
         }
 
@@ -444,7 +482,8 @@ abstract class AbstractCollectorPlugin
         }
 
         $idListSql = rtrim(implode(',', $idList), ',');
-        $sql = sprintf('DELETE FROM %s WHERE %s IN (%s)',
+        $sql = sprintf(
+            'DELETE FROM %s WHERE %s IN (%s)',
             SpyTouchTableMap::TABLE_NAME,
             SpyTouchTableMap::COL_ID_TOUCH,
             $idListSql

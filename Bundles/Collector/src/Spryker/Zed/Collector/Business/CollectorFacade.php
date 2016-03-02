@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Collector\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -25,7 +25,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function exportKeyValueByStorage(OutputInterface $output = null)
+    public function exportStorage(OutputInterface $output = null)
     {
         $exporter = $this->getFactory()->createYvesKeyValueExporter();
 
@@ -40,7 +40,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function exportKeyValueForLocale(LocaleTransfer $locale, OutputInterface $output = null)
+    public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
         $exporter = $this->getFactory()->createYvesKeyValueExporter();
 
@@ -55,7 +55,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function exportSearchForLocale(LocaleTransfer $locale, OutputInterface $output = null)
+    public function exportSearchByLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
         $exporter = $this->getFactory()->createYvesSearchExporter();
 
@@ -70,7 +70,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function updateSearchForLocale(LocaleTransfer $locale, OutputInterface $output = null)
+    public function updateSearchByLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
         $exporter = $this->getFactory()->createYvesSearchUpdateExporter();
 

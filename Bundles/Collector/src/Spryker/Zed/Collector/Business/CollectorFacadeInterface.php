@@ -22,7 +22,7 @@ interface CollectorFacadeInterface
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function exportKeyValueForLocale(LocaleTransfer $locale, OutputInterface $output = null);
+    public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output = null);
 
     /**
      * @api
@@ -31,7 +31,7 @@ interface CollectorFacadeInterface
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
      */
-    public function exportSearchForLocale(LocaleTransfer $locale);
+    public function exportSearchByLocale(LocaleTransfer $locale);
 
     /**
      * @api
@@ -40,7 +40,7 @@ interface CollectorFacadeInterface
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
      */
-    public function updateSearchForLocale(LocaleTransfer $locale);
+    public function updateSearchByLocale(LocaleTransfer $locale);
 
     /**
      * @api

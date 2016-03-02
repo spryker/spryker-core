@@ -69,7 +69,8 @@ class Collector
         if (isset($output)) {
             $output->writeln('');
             $output->writeln(
-                sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>',
+                sprintf(
+                    '<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>',
                     $locale->getLocaleName()
                 )
             );
@@ -115,7 +116,8 @@ class Collector
         $types = array_keys($this->exporter->getCollectorPlugins());
         $availableTypes = $this->getAvailableCollectorTypes();
 
-        sprintf('<fg=yellow>%d out of %d collectors available:</fg=yellow>',
+        sprintf(
+            '<fg=yellow>%d out of %d collectors available:</fg=yellow>',
             count($types),
             count($availableTypes)
         );

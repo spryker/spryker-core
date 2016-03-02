@@ -9,8 +9,8 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchSearch;
-use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater;
+use Spryker\Zed\Collector\CollectorConfig;
 
 class TouchUpdater extends AbstractTouchUpdater
 {

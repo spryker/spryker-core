@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class PropelConfig extends AbstractBundleConfig
 {
 
+    const DB_ENGINE_MYSQL = 'mysql';
+    const DB_ENGINE_PGSQL = 'pgsql';
+
     /**
      * @return string
      */

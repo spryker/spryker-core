@@ -42,7 +42,8 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
         $enabledCollectors = $this->getFacade()->getEnabledCollectorTypes();
         $allCollectors = $this->getFacade()->getAllCollectorTypes();
 
-        $collectorInfo = sprintf('<fg=yellow>%d out of %d collectors available.</fg=yellow>',
+        $collectorInfo = sprintf(
+            '<fg=yellow>%d out of %d collectors available.</fg=yellow>',
             count($enabledCollectors),
             count($allCollectors)
         );
@@ -50,7 +51,7 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
         $output->writeln('');
         $output->writeln($collectorInfo);
 
-        $exportResults = $this->getFacade()->exportKeyValueByStorage($output);
+        $exportResults = $this->getFacade()->exportStorage($output);
         $message = $this->buildNestedSummary($exportResults);
         $message = '<info>' . $message . '</info>';
 
