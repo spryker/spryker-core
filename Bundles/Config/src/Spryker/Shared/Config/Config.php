@@ -117,6 +117,11 @@ class Config
          */
         self::buildConfig('local_' . $storeName, $config);
 
+        /*
+         * e.g. config_propel.php
+         */
+        self::buildConfig('propel' , $config);
+
         self::$config = $config;
     }
 

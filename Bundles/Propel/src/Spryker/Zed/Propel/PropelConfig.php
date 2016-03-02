@@ -55,4 +55,28 @@ class PropelConfig extends AbstractBundleConfig
         return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/logs/ZED/propel.log';
     }
 
+    /**
+     * @return string
+     */
+    public function getCurrentDatabaseEngine()
+    {
+        return $this->get(ApplicationConstants::ZED_DB_ENGINE);
+    }
+
+    /**
+     * @throws \UnexpectedValueException
+     *
+     * @return string
+     */
+    public function getCurrentDatabaseEngineName()
+    {
+        $dbEngine = $this->get(ApplicationConstants::ZED_DB_ENGINE);
+        $supportedEngines = $this->get(ApplicationConstants::ZED_DB_SUPPORTED_ENGINES);
+
+        if (!array_key_exists($dbEngine, $supportedEngines)) {
+            throw new \UnexpectedValueException('Unsupported database engine: ' . $dbEngine);
+        }
+
+        return $supportedEngines[$dbEngine];
+    }
 }

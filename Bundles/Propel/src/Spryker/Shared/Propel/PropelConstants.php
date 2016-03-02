@@ -20,12 +20,16 @@ interface PropelConstants
     const ZED_DB_DATABASE = ApplicationConstants::ZED_DB_DATABASE;
 
     const ZED_DB_ENGINE = ApplicationConstants::ZED_DB_ENGINE;
-    const ZED_DB_ENGINE_MYSQL = ApplicationConstants::ZED_DB_ENGINE_MYSQL;
-    const ZED_DB_ENGINE_PGSQL = ApplicationConstants::ZED_DB_ENGINE_PGSQL;
 
     const ZED_DB_HOST = ApplicationConstants::ZED_DB_HOST;
     const ZED_DB_PASSWORD = ApplicationConstants::ZED_DB_PASSWORD;
     const ZED_DB_PORT = ApplicationConstants::ZED_DB_PORT;
     const ZED_DB_USERNAME = ApplicationConstants::ZED_DB_USERNAME;
+
+    const ZED_DB_ENGINE_MYSQL = ApplicationConstants::ZED_DB_ENGINE_MYSQL;
+    const ZED_DB_ENGINE_PGSQL = ApplicationConstants::ZED_DB_ENGINE_PGSQL;
+
+    const ZED_DB_ENGINE_MYSQL_VALUE = 'mysql';
+    const ZED_DB_ENGINE_PGSQL_VALUE = 'pgsql';
 
 }
