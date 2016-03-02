@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Touch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
 /**

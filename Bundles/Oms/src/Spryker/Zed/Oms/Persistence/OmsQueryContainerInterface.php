@@ -11,7 +11,7 @@ use DateTime;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface OmsQueryContainerInterface  extends QueryContainerInterface
+interface OmsQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

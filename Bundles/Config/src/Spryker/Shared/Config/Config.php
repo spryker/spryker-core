@@ -120,7 +120,7 @@ class Config
         /*
          * e.g. config_propel.php
          */
-        self::buildConfig('propel' , $config);
+        self::buildConfig('propel', $config);
 
         self::$config = $config;
     }
