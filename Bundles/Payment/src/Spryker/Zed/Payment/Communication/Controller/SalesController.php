@@ -9,6 +9,8 @@ class SalesController extends AbstractController
 {
     public function listAction(Request $request)
     {
+        $idSalesOrder = $request->request->get('id-sales-order');
+
         return [
             'logs' => [
                 [
