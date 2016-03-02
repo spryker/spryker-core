@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Collector\KeyValue;
+namespace Spryker\Zed\Collector\Business\Collector\Storage;
 
 use Spryker\Zed\Collector\Business\Plugin\AbstractPdoCollectorPlugin;
 use Spryker\Zed\Collector\CollectorConfig;
 
-abstract class AbstractKeyValuePdoCollector extends AbstractPdoCollectorPlugin
+abstract class AbstractStoragePdoCollector extends AbstractPdoCollectorPlugin
 {
 
     /**

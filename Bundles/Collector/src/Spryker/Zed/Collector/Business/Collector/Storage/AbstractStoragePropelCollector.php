@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Collector\KeyValue;
+namespace Spryker\Zed\Collector\Business\Collector\Storage;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
@@ -15,7 +15,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Collector\Business\Plugin\AbstractPropelCollectorPlugin;
 use Spryker\Zed\Collector\CollectorConfig;
 
-abstract class AbstractKeyValuePropelCollector extends AbstractPropelCollectorPlugin
+abstract class AbstractStoragePropelCollector extends AbstractPropelCollectorPlugin
 {
 
     /**
