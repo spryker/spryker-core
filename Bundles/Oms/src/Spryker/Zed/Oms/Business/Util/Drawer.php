@@ -159,7 +159,10 @@ class Drawer implements DrawerInterface
         }
     }
 
-    private function getDiamondId()
+    /**
+     * @return string
+     */
+    protected function getDiamondId()
     {
         $generator = new StringGenerator();
 

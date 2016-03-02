@@ -6,6 +6,7 @@
  */
 
 namespace Unit\Spryker\Zed\Library\Generator;
+
 use Spryker\Zed\Library\Generator\StringGenerator;
 
 /**
