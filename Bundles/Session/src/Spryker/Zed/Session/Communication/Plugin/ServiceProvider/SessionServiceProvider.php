@@ -47,9 +47,10 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         $app['session.test'] = Config::get(SessionConstants::SESSION_IS_TEST, false);
 
         $app['session.storage.options'] = [
+            'name' => str_replace('.', '-', Config::get(ApplicationConstants::ZED_STORAGE_SESSION_COOKIE_NAME)),
             'cookie_lifetime' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_TIME_TO_LIVE),
-            'name' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_COOKIE_NAME),
             'cookie_secure' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_COOKIE_SECURE, true),
+            'use_only_cookies' => true
         ];
 
         $this->client->setContainer($app['session']);

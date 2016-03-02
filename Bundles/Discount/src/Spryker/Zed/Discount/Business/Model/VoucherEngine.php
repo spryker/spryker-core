@@ -18,6 +18,7 @@ use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\Library\Generator\StringGenerator;
 
 /**
  * Class VoucherEngine
@@ -216,14 +217,17 @@ class VoucherEngine
 
     /**
      * @param int $length
-     * @param bool $asMd5
      *
      * @return string
      */
-    protected function getRandomVoucherCode($length, $asMd5 = false)
+    protected function getRandomVoucherCode($length)
     {
         $allowedCharacters = $this->settings->getVoucherCodeCharacters();
-        srand((double)microtime() * 1000000);
+
+        $generator = new StringGenerator();
+        $random = $generator->generateRandomString();
+
+        srand(ord($random));
 
         $consonants = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_CONSONANTS];
         $vowels = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_VOWELS];
@@ -243,10 +247,6 @@ class VoucherEngine
             if (count($numbers)) {
                 $code .= $numbers[rand(0, count($numbers) - 1)];
             }
-        }
-
-        if ($asMd5) {
-            return substr(md5($code), 0, $length);
         }
 
         return substr($code, 0, $length);
