@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-sm-12">
+
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Shipment' } %}
+
+            {% block widget_content %}
+
+                <table class="footable table table-striped toggle-arrow-tiny">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Carrier' | trans }}</th>
+                            <th>{{ 'Method' | trans }}</th>
+                            <th>{{ 'Price' | trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ shipmentMethod.carrierName }}</td>
+                            <td>{{ shipmentMethod.name }}</td>
+                            <td>
+                                {% for expense in expenses %}
+                                    {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
+                                      {{ expense.sumGrossPriceWithDiscounts | currency }}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
+</div>
