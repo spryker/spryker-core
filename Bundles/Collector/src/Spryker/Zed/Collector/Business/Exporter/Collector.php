@@ -47,8 +47,12 @@ class Collector
      * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
      * @param array $availableCollectorTypes
      */
-    public function __construct(TouchQueryContainer $touchQueryContainer, CollectorToLocaleInterface $localeFacade, ExporterInterface $exporter, array $availableCollectorTypes)
-    {
+    public function __construct(
+        TouchQueryContainer $touchQueryContainer,
+        CollectorToLocaleInterface $localeFacade,
+        ExporterInterface $exporter,
+        array $availableCollectorTypes
+    ) {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->exporter = $exporter;
@@ -56,34 +60,26 @@ class Collector
     }
 
     /**
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     * @return array
      */
-    public function exportForLocale(LocaleTransfer $locale, OutputInterface $output = null)
+    public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output)
     {
         $results = [];
         $types = array_keys($this->exporter->getCollectorPlugins());
         $availableTypes = $this->getAvailableCollectorTypes();
 
-        if (isset($output)) {
-            $output->writeln('');
-            $output->writeln(
-                sprintf(
-                    '<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>',
-                    $locale->getLocaleName()
-                )
-            );
-            $output->writeln('<fg=yellow>-------------</fg=yellow>');
-        }
+        $output->writeln('');
+        $output->writeln(sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>', $locale->getLocaleName()));
+        $output->writeln('<fg=yellow>-------------</fg=yellow>');
 
         foreach ($availableTypes as $type) {
             if (!in_array($type, $types)) {
-                if (isset($output)) {
-                    $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green> ');
-                    $output->write('<fg=white>N/A</fg=white>');
-                    $output->writeln('');
-                }
+                $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green> ');
+                $output->write('<fg=white>N/A</fg=white>');
+                $output->writeln('');
                 continue;
             }
 
@@ -103,11 +99,11 @@ class Collector
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return array
      */
-    public function exportForStorage(OutputInterface $output = null)
+    public function exportStorage(OutputInterface $output)
     {
         $locales = Store::getInstance()->getLocales();
 
@@ -116,15 +112,11 @@ class Collector
         $types = array_keys($this->exporter->getCollectorPlugins());
         $availableTypes = $this->getAvailableCollectorTypes();
 
-        sprintf(
-            '<fg=yellow>%d out of %d collectors available:</fg=yellow>',
-            count($types),
-            count($availableTypes)
-        );
+        sprintf('<fg=yellow>%d out of %d collectors available:</fg=yellow>', count($types), count($availableTypes));
 
         foreach ($locales as $locale) {
             $localeTransfer = $this->localeFacade->getLocale($locale);
-            $results[$locale] = $this->exportForLocale($localeTransfer, $output);
+            $results[$locale] = $this->exportStorageByLocale($localeTransfer, $output);
         }
 
         return $results;

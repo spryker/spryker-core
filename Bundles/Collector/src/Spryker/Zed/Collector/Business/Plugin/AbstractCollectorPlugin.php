@@ -151,14 +151,10 @@ abstract class AbstractCollectorPlugin
      */
     protected function processCollectedItem($touchKey, array $collectItemData, TouchUpdaterSet $touchUpdaterSet)
     {
-        $touchUpdaterSet->add(
-            $touchKey,
-            $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID],
-            [
+        $touchUpdaterSet->add($touchKey, $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID], [
             CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($collectItemData),
             CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($collectItemData),
-            ]
-        );
+        ]);
 
         return $this->collectItem($touchKey, $collectItemData);
     }
@@ -343,11 +339,7 @@ abstract class AbstractCollectorPlugin
                     $deletedCount += $batchCount;
                     $offset += $this->chunkSize;
 
-                    $keysToDelete = $this->getKeysToDeleteAndUpdateTouchUpdaterSet(
-                        $entityCollection,
-                        $touchUpdater->getTouchKeyColumnName(),
-                        $touchUpdaterSet
-                    );
+                    $keysToDelete = $this->getKeysToDeleteAndUpdateTouchUpdaterSet($entityCollection, $touchUpdater->getTouchKeyColumnName(), $touchUpdaterSet);
 
                     if (!empty($keysToDelete)) {
                         $touchUpdater->deleteMulti($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
@@ -355,7 +347,8 @@ abstract class AbstractCollectorPlugin
                     }
                 }
             }
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             $this->touchQueryContainer->getConnection()->rollBack();
             throw $exception;
         }
@@ -373,9 +366,7 @@ abstract class AbstractCollectorPlugin
     protected function getTouchEntitiesToDelete($offset, $itemType)
     {
         $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
-        $deleteQuery
-            ->setOffset($offset)
-            ->setLimit($this->chunkSize);
+        $deleteQuery->setOffset($offset)->setLimit($this->chunkSize);
 
         return $deleteQuery->find();
     }
@@ -387,8 +378,11 @@ abstract class AbstractCollectorPlugin
      *
      * @return array
      */
-    protected function getKeysToDeleteAndUpdateTouchUpdaterSet($entityCollection, $touchKeyColumnName, TouchUpdaterSet $touchUpdaterSet)
-    {
+    protected function getKeysToDeleteAndUpdateTouchUpdaterSet(
+        $entityCollection,
+        $touchKeyColumnName,
+        TouchUpdaterSet $touchUpdaterSet
+    ) {
         $keysToDelete = [];
 
         foreach ($entityCollection as $touchEntity) {
@@ -397,14 +391,10 @@ abstract class AbstractCollectorPlugin
 
             if (trim($key) !== '') {
                 $keysToDelete[$key] = true;
-                $touchUpdaterSet->add(
-                    $key,
-                    $touchEntity->getIdTouch(),
-                    [
+                $touchUpdaterSet->add($key, $touchEntity->getIdTouch(), [
                     CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($entityData),
                     CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($entityData),
-                    ]
-                );
+                ]);
             }
         }
 
@@ -437,7 +427,8 @@ abstract class AbstractCollectorPlugin
                     $this->bulkDeleteTouchEntities($entityCollection);
                 }
             }
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             $this->touchQueryContainer->getConnection()->rollBack();
             throw $exception;
         }
@@ -455,12 +446,9 @@ abstract class AbstractCollectorPlugin
      */
     protected function getTouchStorageAndSearchDeletedEntities($offset, $itemType)
     {
-        $deleteQuery = $this->touchQueryContainer
-            ->queryTouchDeleteStorageAndSearch($itemType);
+        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
 
-        $deleteQuery
-            ->setOffset($offset)
-            ->setLimit($this->chunkSize);
+        $deleteQuery->setOffset($offset)->setLimit($this->chunkSize);
 
         return $deleteQuery->find();
     }
@@ -482,12 +470,7 @@ abstract class AbstractCollectorPlugin
         }
 
         $idListSql = rtrim(implode(',', $idList), ',');
-        $sql = sprintf(
-            'DELETE FROM %s WHERE %s IN (%s)',
-            SpyTouchTableMap::TABLE_NAME,
-            SpyTouchTableMap::COL_ID_TOUCH,
-            $idListSql
-        );
+        $sql = sprintf('DELETE FROM %s WHERE %s IN (%s)', SpyTouchTableMap::TABLE_NAME, SpyTouchTableMap::COL_ID_TOUCH, $idListSql);
 
         $this->touchQueryContainer->getConnection()->exec($sql);
     }
