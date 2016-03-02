@@ -22,8 +22,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class AbstractExporter implements ExporterInterface
 {
 
-    const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
-
     /**
      * @var \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
      */
@@ -111,8 +109,6 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function exportByType($type, LocaleTransfer $locale, OutputInterface $output = null)
     {
-        $timestamp = $this->createNewTimestamp();
-
         $result = clone $this->batchResultPrototype;
         $result->setProcessedLocale($locale);
 
@@ -129,14 +125,14 @@ abstract class AbstractExporter implements ExporterInterface
         $baseQuery->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID);
         $baseQuery->setFormatter($this->getFormatter());
 
-        //TODO remove state
         $collectorPlugin = $this->collectorPlugins[$type];
-        $collectorPlugin->setOutput($output);
-        $collectorPlugin->setDataWriter($this->writer);
-        $collectorPlugin->setTouchUpdater($this->touchUpdater);
-        $collectorPlugin->run($baseQuery, $locale, $result);
+        $collectorPlugin->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater, $output);
 
-        $this->finishExport($result, $type, $timestamp);
+        $this->finishExport(
+            $result,
+            $type,
+            $this->createNewTimestamp()
+        );
 
         return $result;
     }
@@ -168,9 +164,17 @@ abstract class AbstractExporter implements ExporterInterface
      */
     protected function createNewTimestamp()
     {
-        $timestamp = (new \DateTime())->format(self::DATE_TIME_FORMAT);
+        return (new \DateTime())->format(
+            $this->getTimeFormat()
+        );
+    }
 
-        return $timestamp;
+    /**
+     * @return string
+     */
+    protected function getTimeFormat()
+    {
+        return 'Y-m-d H:i:s';
     }
 
     /**
