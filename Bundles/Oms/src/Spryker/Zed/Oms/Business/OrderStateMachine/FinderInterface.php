@@ -91,4 +91,11 @@ interface FinderInterface
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+
 }

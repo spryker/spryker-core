@@ -75,6 +75,23 @@ class Finder implements FinderInterface
     }
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder)
+    {
+        $events = $this->getManualEventsByIdSalesOrder($idSalesOrder);
+
+        $allEvents = [];
+        foreach ($events as $eventList) {
+            $allEvents = array_merge($allEvents, $eventList);
+        }
+
+        return array_unique($allEvents);
+    }
+
+    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return array|\Spryker\Zed\Oms\Business\Process\EventInterface[]

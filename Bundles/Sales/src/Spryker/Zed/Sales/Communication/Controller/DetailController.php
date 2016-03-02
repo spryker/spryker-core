@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
-class DetailController extends AbstractController // TODO FW No plural in controller names. Rename to DetailController
+class DetailController extends AbstractController
 {
 
     /**
@@ -38,9 +38,9 @@ class DetailController extends AbstractController // TODO FW No plural in contro
 
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
 
-        $events = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
+        $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+        $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
 
-        $allEvents = $this->groupEvents($events);
         //$logs = $this->getFacade()->getPaymentLogs($idSalesOrder); // TODO FW Needs another solution, see mails
         //$refunds = $this->getFacade()->getRefunds($idSalesOrder); // TODO FW Needs another solution, see mails
 
@@ -50,8 +50,8 @@ class DetailController extends AbstractController // TODO FW No plural in contro
         }
 
         return array_merge([
+            'eventsGroupedByItem' => $eventsGroupedByItem,
             'events' => $events,
-            'allEvents' => $allEvents,
             'distinctOrderStates' => $distinctOrderStates,
             'logs' => [],
             'refunds' => [],
@@ -106,22 +106,4 @@ class DetailController extends AbstractController // TODO FW No plural in contro
 
         return $responseData;
     }
-
-    /**
-     * TODO FE By convention we dissallow protected methods in controller.
-     *
-     * @param array $events
-     *
-     * @return array
-     */
-    protected function groupEvents($events)
-    {
-        $allEvents = [];
-        foreach ($events as $eventList) {
-            $allEvents = array_merge($allEvents, $eventList);
-        }
-
-        return array_unique($allEvents);
-    }
-
 }

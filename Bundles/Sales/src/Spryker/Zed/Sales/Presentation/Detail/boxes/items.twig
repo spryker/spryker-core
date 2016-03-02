@@ -6,7 +6,7 @@
             {% block widget_content %}
 
                 <div>
-                    {% for event in allEvents %}
+                    {% for event in events %}
                         <a class="btn btn-primary trigger-order-event" data-id-sales-order="{{ order.idSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
                     {% endfor %}
                 </div>
@@ -71,8 +71,8 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if events[orderItem.IdSalesOrderItem] | length > 0 %}
-                            {% for event in events[orderItem.IdSalesOrderItem] %}
+                        {% if eventsGroupedByItem[orderItem.IdSalesOrderItem] | length > 0 %}
+                            {% for event in eventsGroupedByItem[orderItem.IdSalesOrderItem] %}
                                 <a class="btn btn-primary btn-sm trigger-order-single-event" data-id-item="{{ orderItem.idSalesOrderItem }}" data-id-sales-order="{{ orderItem.idSalesOrderItem }}" data-event="{{ event }}" href="#">{{ event }}</a>
                             {% endfor %}
                         {% else -%}
