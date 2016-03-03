@@ -18,7 +18,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Intl\Locale;
 
-class Collector
+class CollectorExporter
 {
 
     /**

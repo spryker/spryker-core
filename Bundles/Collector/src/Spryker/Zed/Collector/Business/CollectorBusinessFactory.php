@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Collector\Business;
 
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
-use Spryker\Zed\Collector\Business\Exporter\Collector;
+use Spryker\Zed\Collector\Business\Exporter\CollectorExporter;
 use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
@@ -38,11 +38,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Collector
+     * @return \Spryker\Zed\Collector\Business\Exporter\CollectorExporter
      */
     public function createYvesStorageExporter()
     {
-        return new Collector(
+        return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
             $this->createStorageExporter(),
@@ -172,14 +172,14 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Collector
+     * @return \Spryker\Zed\Collector\Business\Exporter\CollectorExporter
      */
     public function createYvesSearchExporter()
     {
         $config = $this->getConfig();
         $searchWriter = $this->createSearchWriter();
 
-        return new Collector(
+        return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
             $this->createElasticsearchExporter(
@@ -191,11 +191,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Collector
+     * @return \Spryker\Zed\Collector\Business\Exporter\CollectorExporter
      */
     public function createYvesSearchUpdateExporter()
     {
-        return new Collector(
+        return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
             $this->createElasticsearchExporter(

@@ -50,8 +50,6 @@ class CreateDatabaseConsole extends Console
     /**
      * @throws \Exception
      *
-     * @todo no sudo, vagrant user is missing for pgsql
-     *
      * @return void
      */
     protected function createPostgresDatabaseIfNotExists()
@@ -77,8 +75,6 @@ class CreateDatabaseConsole extends Console
      * @throws \Exception
      *
      * @return bool
-     *
-     * @todo no sudo, vagrant user is missing for pgsql
      */
     protected function existsPostgresDatabase()
     {
@@ -95,8 +91,8 @@ class CreateDatabaseConsole extends Console
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        $returnValue = (int) $process->getOutput();
-        return (bool) $returnValue;
+        $returnValue = (int)$process->getOutput();
+        return (bool)$returnValue;
     }
 
     /**
