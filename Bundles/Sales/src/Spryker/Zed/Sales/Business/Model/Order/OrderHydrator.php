@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -34,6 +32,7 @@ class OrderHydrator implements OrderHydratorInterface
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     protected $omsFacade;
+
     /**
      * @var SalesToSalesAggregatorInterface
      */
@@ -69,14 +68,7 @@ class OrderHydrator implements OrderHydratorInterface
             throw new InvalidSalesOrderException();
         }
 
-        foreach ($orderEntity->getItems() as $orderItem) {
-
-            // TODO FW Move this to query container
-            $criteria = new Criteria();
-            $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
-            $orderItem->getStateHistoriesJoinState($criteria);
-            $orderItem->resetPartialStateHistories(false);
-        }
+        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
 
         $orderTransfer = $this->convertOrderDetailsEntityIntoTransfer($orderEntity);
         $orderTransfer = $this->addTotalOrderCount($orderTransfer);

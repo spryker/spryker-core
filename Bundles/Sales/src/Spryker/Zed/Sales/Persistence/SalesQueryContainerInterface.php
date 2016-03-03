@@ -8,6 +8,7 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface SalesQueryContainerInterface
 {
@@ -91,5 +92,12 @@ interface SalesQueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function queryCustomerOrders($idCustomer, FilterTransfer $filterTransfer = null);
+
+    /**
+     * @param ObjectCollection $salesOrderItems
+     *
+     * @return void
+     */
+    public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems);
 
 }

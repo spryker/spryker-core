@@ -20,37 +20,13 @@ class SalesConfig extends AbstractBundleConfig
     const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
     /**
-     * TODO Not needed, remove
-     * this is used in project level src/Pyz/Zed/Sales/SalesConfig.php:28
-     *
-     * @var array|string[]
-     */
-    protected static $stateMachineMapper = [
-        'invoice' => 'Invoice01',
-        'no_payment' => 'Nopayment01',
-    ];
-
-    /**
      * Separator for the sequence number
+     *
      * @return string
      */
     public function getUniqueIdentifierSeparator()
     {
         return '-';
-    }
-
-    /**
-     * TODO FW Move the whole algortithm to the bundle config
-     *
-     * OR-condition
-     *
-     * @return array
-     */
-    public function getMarkAsTestConditions()
-    {
-        return [
-            'last_name' => 'Tester',
-        ];
     }
 
     /**
@@ -74,6 +50,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * Defines logic to determine if order is placed for testing purposes. When order is persisted, is_test flag is set.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -103,7 +81,14 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * This method provides list of actions for zed order details external blocks
+     * This method provides list of urls to render blocks inside order detail page.
+     * Url defines path to external bundle controller.  For example: /discount/sales/list would call discount bundle, sales controller, list action.
+     * Action should return return array or redirect response.
+     *
+     * example:
+     * [
+     *    'discount' => '/discount/sales/index',
+     * ]
      *
      * @return array
      */

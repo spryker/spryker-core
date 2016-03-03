@@ -7,7 +7,9 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 
@@ -188,5 +190,21 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
         return $this->querySalesOrdersByCustomerId($idCustomer, $criteria);
     }
-    
+
+    /**
+     * @param ObjectCollection $salesOrderItems
+     *
+     * @return void
+     */
+    public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems)
+    {
+        foreach ($salesOrderItems as $orderItemEntity) {
+
+            $criteria = new Criteria();
+            $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
+            $orderItemEntity->getStateHistoriesJoinState($criteria);
+            $orderItemEntity->resetPartialStateHistories(false);
+        }
+    }
+
 }

@@ -22,6 +22,39 @@ class SalesFacade extends AbstractFacade
 
     /**
      * Specification:
+     *  - Returns persisted order information stored into OrderTransfer
+     *  - Aggregates order totals calls -> SalesAggregator
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()
+            ->createOrderHydrator()
+            ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * Specification:
+     *  - Returns a list of of orders for the given customer id and (optional) filters.
+     * - Aggregates order totals calls -> SalesAggregator
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer)
+    {
+        return $this->getFactory()
+            ->createCustomerOrderReader()
+            ->getOrders($orderListTransfer, $idCustomer);
+    }
+
+    /**
+     * Specification:
      * - Add username to comment
      * - Save comment to database
      *
@@ -71,6 +104,7 @@ class SalesFacade extends AbstractFacade
      * - Save order and items to database
      * - Set "is test" flag
      * - update checkout response with saved order data
+     * - set initial state for state machine
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -116,32 +150,5 @@ class SalesFacade extends AbstractFacade
         return $this->getFactory()
             ->createOrderAddressUpdater()
             ->update($addressesTransfer, $idAddress);
-    }
-
-    /**
-     * Returns a list of of orders for the given customer id and (optional) filters.
-     *
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param int $idCustomer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer)
-    {
-        return $this->getFactory()
-            ->createCustomerOrderReader()
-            ->getOrders($orderListTransfer, $idCustomer);
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderByIdSalesOrder($idSalesOrder)
-    {
-        return $this->getFactory()
-            ->createOrderHydrator()
-            ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
     }
 }
