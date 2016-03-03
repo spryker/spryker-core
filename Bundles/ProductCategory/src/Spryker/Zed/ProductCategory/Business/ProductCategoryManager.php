@@ -458,8 +458,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             }
 
             $nodeExists = $this->categoryQueryContainer
-                    ->queryNodeById($node->getIdCategoryNode())
-                    ->count() > 0;
+                ->queryNodeById($node->getIdCategoryNode())
+                ->count() > 0;
 
             if ($nodeExists) {
                 $this->categoryFacade->deleteNode($node->getIdCategoryNode(), $localeTransfer, true);

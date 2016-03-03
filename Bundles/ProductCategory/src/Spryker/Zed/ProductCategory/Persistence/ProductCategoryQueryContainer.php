@@ -194,7 +194,6 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      *
      * @param string $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param int|null $idExcludedCategory
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */

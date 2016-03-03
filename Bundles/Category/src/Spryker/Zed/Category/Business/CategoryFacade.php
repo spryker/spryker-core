@@ -357,6 +357,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $categoryKey
      * @param int $idLocale
      *
