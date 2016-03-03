@@ -8,17 +8,13 @@
 namespace Spryker\Shared\EventJournal\Model\Collector;
 
 use Spryker\Zed\Library\Generator\StringGenerator;
-use Symfony\Component\HttpFoundation\Request;
 
 class RequestDataCollector extends AbstractDataCollector
 {
 
     const TYPE = 'request';
-
     const FIELD_REQUEST_ID = 'request_id';
-
     const FIELD_MICROTIME = 'microtime';
-
     const FIELD_REQUEST_PARAMS = 'request_params';
 
     /**
@@ -26,6 +22,9 @@ class RequestDataCollector extends AbstractDataCollector
      */
     public static $idRequest;
 
+    /**
+     * @param array $options
+     */
     public function __construct(array $options)
     {
         parent::__construct($options);
@@ -38,7 +37,7 @@ class RequestDataCollector extends AbstractDataCollector
     /**
      * @return string
      */
-    private function getRandomString()
+    protected function getRandomString()
     {
         $generator = new StringGenerator();
 
