@@ -7,6 +7,6 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter;
 
-class SearchCollector extends AbstractCollector
+class StorageExporter extends AbstractExporter
 {
 }

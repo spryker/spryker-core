@@ -45,4 +45,18 @@ interface PropelFacadeInterface
      */
     public function getConsoleCommands();
 
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getCurrentDatabaseEngine();
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getCurrentDatabaseEngineName();
+
 }

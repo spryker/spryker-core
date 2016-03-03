@@ -5,12 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue;
+namespace Spryker\Zed\Collector\Business\Exporter\Writer\Storage;
 
 class TouchUpdaterSet
 {
-
-    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
 
     /**
      * @var array
@@ -18,10 +16,16 @@ class TouchUpdaterSet
     protected $data = [];
 
     /**
+     * @var string
+     */
+    protected $exporterIdTouch;
+
+    /**
      * @param array $data
      */
-    public function __construct(array $data = [])
+    public function __construct($exporterIdTouch, array $data = [])
     {
+        $this->exporterIdTouch = $exporterIdTouch;
         $this->data = $data;
     }
 
@@ -53,7 +57,7 @@ class TouchUpdaterSet
     public function add($key, $idTouch, $data = null)
     {
         $this->data[$key] = [
-            self::TOUCH_EXPORTER_ID => $idTouch,
+            $this->exporterIdTouch => $idTouch,
             'data' => $data,
         ];
     }

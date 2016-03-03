@@ -923,6 +923,28 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @api
      *
+     * @param string $categoryKey
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    public function queryByCategoryKey($categoryKey, $idLocale)
+    {
+        $query = $this->getFactory()->createCategoryQuery();
+        $query
+            ->filterByCategoryKey($categoryKey)
+            ->useAttributeQuery()
+                ->joinLocale()
+                ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name');
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
      * @param int $idCategoryNode
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery

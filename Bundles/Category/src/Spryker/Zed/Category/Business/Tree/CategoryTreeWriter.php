@@ -176,10 +176,10 @@ class CategoryTreeWriter
     protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
     {
         $closureQuery= new SpyCategoryClosureTableQuery();
-        $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
+        $nodes = $closureQuery->findByFkCategoryNode($categoryNode->getIdCategoryNode());
 
         foreach ($nodes as $node) {
-            $this->touchCategoryActive($node->getFkCategoryNode());
+            $this->touchCategoryActive($node->getFkCategoryNodeDescendant());
         }
 
         $this->touchCategoryActive($categoryNode->getIdCategoryNode());
@@ -193,10 +193,10 @@ class CategoryTreeWriter
     protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
     {
         $closureQuery= new SpyCategoryClosureTableQuery();
-        $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
+        $nodes = $closureQuery->findByFkCategoryNode($categoryNode->getIdCategoryNode());
 
         foreach ($nodes as $node) {
-            $this->touchCategoryDeleted($node->getFkCategoryNode());
+            $this->touchCategoryDeleted($node->getFkCategoryNodeDescendant());
         }
 
         $this->touchCategoryDeleted($categoryNode->getIdCategoryNode());

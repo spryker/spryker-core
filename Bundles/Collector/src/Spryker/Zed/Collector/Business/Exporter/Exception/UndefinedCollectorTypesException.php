@@ -5,8 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Exporter;
+namespace Spryker\Zed\Collector\Business\Exporter\Exception;
 
-class KeyValueCollector extends AbstractCollector
+class UndefinedCollectorTypesException extends \RuntimeException
 {
+
+    protected $message = 'Undefined collector types';
+
 }

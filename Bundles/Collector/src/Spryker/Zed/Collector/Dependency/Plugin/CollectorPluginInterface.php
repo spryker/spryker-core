@@ -12,6 +12,7 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 interface CollectorPluginInterface
 {
@@ -22,10 +23,18 @@ interface CollectorPluginInterface
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
-    public function run(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater);
+    public function run(
+        SpyTouchQuery $baseQuery,
+        LocaleTransfer $locale,
+        BatchResultInterface $result,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
+    );
 
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -33,9 +42,17 @@ interface CollectorPluginInterface
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
-    public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater);
+    public function postRun(
+        SpyTouchQuery $baseQuery,
+        LocaleTransfer $locale,
+        BatchResultInterface $result,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
+    );
 
 }

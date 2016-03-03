@@ -108,4 +108,12 @@ interface ProductCategoryToCategoryInterface
      */
     public function generatePath(array $pathTokens);
 
+    /**
+     * @param string $categoryKey
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function getCategoryByKey($categoryKey, $idLocale);
+
 }

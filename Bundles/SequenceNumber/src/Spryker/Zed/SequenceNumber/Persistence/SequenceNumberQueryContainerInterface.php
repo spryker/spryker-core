@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SequenceNumber\Persistence;
 
-interface SequenceNumberQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface SequenceNumberQueryContainerInterface extends QueryContainerInterface
 {
 }

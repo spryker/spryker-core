@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Business\Tree;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
@@ -208,6 +209,23 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         $categoryQuery = $this->queryContainer->queryNodeByCategoryName($categoryName, $locale->getIdLocale());
 
         return $categoryQuery->count() > 0;
+    }
+
+    /**
+     * @param string $categoryKey
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function getCategoryByKey($categoryKey, $idLocale)
+    {
+        $categoryQuery = $this->queryContainer->queryByCategoryKey($categoryKey, $idLocale);
+        $entity = $categoryQuery->findOne();
+
+        $transfer = new CategoryTransfer();
+        $transfer->fromArray($entity->toArray());
+
+        return $transfer;
     }
 
     /**
