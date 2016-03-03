@@ -7,28 +7,33 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 
 interface TouchUpdaterInterface
 {
 
-    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
+    /**
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
+     * @param int $idLocale
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
+     *
+     * @return
+     */
+    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
      * @return void
      */
-    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale);
+    public function deleteMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
 
     /**
-     * @param int $idTouch
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch
+     * @return string
      */
-    public function getKeyById($idTouch, LocaleTransfer $locale);
+    public function getTouchKeyColumnName();
 
 }

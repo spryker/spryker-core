@@ -12,6 +12,7 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
@@ -23,7 +24,6 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
 
     const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
     const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
-    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
 
     /**
      * @api
@@ -96,8 +96,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
-            ->filterByTouched(['min' => $lastTouchedAt])
-            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_EXPORTER_ID);
+            ->filterByTouched(['min' => $lastTouchedAt]);
 
         return $query;
     }
@@ -113,6 +112,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->addSelectColumn(SpyTouchTableMap::COL_ITEM_TYPE)
             ->setDistinct()
+            ->orderBy(SpyTouchTableMap::COL_ITEM_TYPE)
             ->setFormatter(new PropelArraySetFormatter());
 
         return $query;
@@ -171,7 +171,11 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     {
         $query = $this->getFactory()->createTouchQuery();
         $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-            ->filterByItemType($itemType);
+            ->filterByItemType($itemType)
+            ->leftJoinTouchSearch()
+            ->leftJoinTouchStorage()
+            ->withColumn(SpyTouchSearchTableMap::COL_KEY, CollectorConfig::COLLECTOR_SEARCH_KEY)
+            ->withColumn(SpyTouchStorageTableMap::COL_KEY, CollectorConfig::COLLECTOR_STORAGE_KEY);
 
         return $query;
     }

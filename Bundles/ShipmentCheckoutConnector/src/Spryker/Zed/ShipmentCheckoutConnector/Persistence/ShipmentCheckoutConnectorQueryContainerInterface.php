@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Persistence;
 
-interface ShipmentCheckoutConnectorQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface ShipmentCheckoutConnectorQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

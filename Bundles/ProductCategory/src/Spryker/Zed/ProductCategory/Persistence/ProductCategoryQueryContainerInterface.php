@@ -9,8 +9,9 @@ namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface ProductCategoryQueryContainerInterface
+interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
@@ -77,10 +78,9 @@ interface ProductCategoryQueryContainerInterface
      *
      * @param string $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param null $idExcludedCategory
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstractCollectionBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);
+    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $locale);
 
 }

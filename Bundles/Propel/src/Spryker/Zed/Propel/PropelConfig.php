@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class PropelConfig extends AbstractBundleConfig
 {
 
+    const DB_ENGINE_MYSQL = 'mysql';
+    const DB_ENGINE_PGSQL = 'pgsql';
+
     /**
      * @return string
      */
@@ -53,6 +56,31 @@ class PropelConfig extends AbstractBundleConfig
     public function getLogPath()
     {
         return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/logs/ZED/propel.log';
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentDatabaseEngine()
+    {
+        return $this->get(ApplicationConstants::ZED_DB_ENGINE);
+    }
+
+    /**
+     * @throws \UnexpectedValueException
+     *
+     * @return string
+     */
+    public function getCurrentDatabaseEngineName()
+    {
+        $dbEngine = $this->get(ApplicationConstants::ZED_DB_ENGINE);
+        $supportedEngines = $this->get(ApplicationConstants::ZED_DB_SUPPORTED_ENGINES);
+
+        if (!array_key_exists($dbEngine, $supportedEngines)) {
+            throw new \UnexpectedValueException('Unsupported database engine: ' . $dbEngine);
+        }
+
+        return $supportedEngines[$dbEngine];
     }
 
 }

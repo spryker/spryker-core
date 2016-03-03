@@ -8,18 +8,19 @@
 namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Business\Model\FailedResultInterface;
+use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
+use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class AbstractCollector implements ExporterInterface
+abstract class AbstractExporter implements ExporterInterface
 {
-
-    const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @var \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
@@ -92,36 +93,48 @@ abstract class AbstractCollector implements ExporterInterface
     }
 
     /**
+     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
+     */
+    public function getCollectorPlugins()
+    {
+        return $this->collectorPlugins;
+    }
+
+    /**
      * @param string $type
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
-    public function exportByType($type, LocaleTransfer $locale)
+    public function exportByType($type, LocaleTransfer $locale, OutputInterface $output = null)
     {
-        $timestamp = $this->createNewTimestamp();
-
         $result = clone $this->batchResultPrototype;
         $result->setProcessedLocale($locale);
 
-        if (!array_key_exists($type, $this->collectorPlugins)) {
-            $result->setProcessedCount(0);
-            $result->setIsFailed(false);
-            $result->setTotalCount(0);
-            $result->setDeletedCount(0);
+        if (!$this->isCollectorRegistered($type)) {
+            $this->resetResult($result);
 
             return $result;
         }
 
-        $collector = $this->collectorPlugins[$type];
-
         $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $locale, $lastRunDatetime);
+        $baseQuery->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID);
+        $baseQuery->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID);
         $baseQuery->setFormatter($this->getFormatter());
-        $collector->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater);
 
-        return $this->finishExport($result, $type, $timestamp);
+        $collectorPlugin = $this->collectorPlugins[$type];
+        $collectorPlugin->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater, $output);
+
+        $this->finishExport(
+            $result,
+            $type,
+            $this->createNewTimestamp()
+        );
+
+        return $result;
     }
 
     /**
@@ -129,15 +142,13 @@ abstract class AbstractCollector implements ExporterInterface
      * @param string $type
      * @param string $timestamp
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
+     * @return void
      */
     protected function finishExport(BatchResultInterface $batchResult, $type, $timestamp)
     {
         if (!$batchResult->isFailed()) {
             $this->marker->setLastExportMarkByTypeAndLocale($type, $batchResult->getProcessedLocale(), $timestamp);
         }
-
-        return $batchResult;
     }
 
     /**
@@ -153,9 +164,40 @@ abstract class AbstractCollector implements ExporterInterface
      */
     protected function createNewTimestamp()
     {
-        $timestamp = (new \DateTime())->format(self::DATE_TIME_FORMAT);
+        return (new \DateTime())->format(
+            $this->getTimeFormat()
+        );
+    }
 
-        return $timestamp;
+    /**
+     * @return string
+     */
+    protected function getTimeFormat()
+    {
+        return 'Y-m-d H:i:s';
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function isCollectorRegistered($type)
+    {
+        return array_key_exists($type, $this->collectorPlugins);
+    }
+
+    /**
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     *
+     * @return void
+     */
+    protected function resetResult(BatchResultInterface $result)
+    {
+        $result->setProcessedCount(0);
+        $result->setIsFailed(false);
+        $result->setTotalCount(0);
+        $result->setDeletedCount(0);
     }
 
 }

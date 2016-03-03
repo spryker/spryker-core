@@ -63,4 +63,14 @@ class PriceToProductBridge implements PriceToProductInterface
         return $this->productFacade->hasProductConcrete($sku);
     }
 
+    /**
+     * @param string $sku
+     *
+     * @return string
+     */
+    public function getAbstractSkuFromProductConcrete($sku)
+    {
+        return $this->productFacade->getAbstractSkuFromProductConcrete($sku);
+    }
+
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Exporter\Reader\KeyValue;
+namespace Spryker\Zed\Collector\Business\Exporter\Reader\Storage;
 
 use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;

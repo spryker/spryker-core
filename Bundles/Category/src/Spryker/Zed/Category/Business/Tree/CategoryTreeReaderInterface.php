@@ -94,6 +94,14 @@ interface CategoryTreeReaderInterface
     public function hasCategoryNode($categoryName, LocaleTransfer $locale);
 
     /**
+     * @param string $categoryKey
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function getCategoryByKey($categoryKey, $idLocale);
+
+    /**
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *

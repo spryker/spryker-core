@@ -1,0 +1,18 @@
+{
+  "name": "spryker/sql-criteria-builder",
+  "require": {
+    "everon/collection": "~1.0.2",
+    "everon/criteria-builder": "~1.0.2",
+    "everon/factory": "~1.0.2",
+    "everon/utils": "~1.0.2"
+  },
+  "description": "sql criteria builder bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

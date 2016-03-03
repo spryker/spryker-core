@@ -9,8 +9,9 @@ namespace Spryker\Zed\Glossary\Persistence;
 
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface GlossaryQueryContainerInterface
+interface GlossaryQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

@@ -65,4 +65,24 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
         return $this->getFactory()->getConsoleCommands();
     }
 
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getCurrentDatabaseEngine()
+    {
+        return $this->getFactory()->getConfig()->getCurrentDatabaseEngine();
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getCurrentDatabaseEngineName()
+    {
+        return $this->getFactory()->getConfig()->getCurrentDatabaseEngineName();
+    }
+
 }

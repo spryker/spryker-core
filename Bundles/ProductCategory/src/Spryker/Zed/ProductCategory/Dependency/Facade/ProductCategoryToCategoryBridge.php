@@ -21,8 +21,6 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     protected $categoryFacade;
 
     /**
-     * ProductCategoryToCategoryBridge constructor.
-     *
      * @param \Spryker\Zed\Category\Business\CategoryFacade $categoryFacade
      */
     public function __construct($categoryFacade)
@@ -39,6 +37,17 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     public function hasCategoryNode($categoryName, LocaleTransfer $locale)
     {
         return $this->categoryFacade->hasCategoryNode($categoryName, $locale);
+    }
+
+    /**
+     * @param string $categoryKey
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function getCategoryByKey($categoryKey, $idLocale)
+    {
+        return $this->categoryFacade->getCategoryByKey($categoryKey, $idLocale);
     }
 
     /**

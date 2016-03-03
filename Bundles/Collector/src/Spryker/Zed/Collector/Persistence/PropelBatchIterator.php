@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Exporter;
+namespace Spryker\Zed\Collector\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
 
-class BatchIterator implements CountableIteratorInterface
+class PropelBatchIterator implements CountableIteratorInterface
 {
 
     /**

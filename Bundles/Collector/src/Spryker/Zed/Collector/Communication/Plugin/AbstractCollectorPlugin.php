@@ -14,6 +14,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Collector\Business\CollectorFacade getFacade()
@@ -28,6 +29,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -36,7 +38,8 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
         LocaleTransfer $locale,
         BatchResultInterface $result,
         WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
     );
 
     /**
@@ -45,6 +48,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -53,7 +57,8 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
         LocaleTransfer $locale,
         BatchResultInterface $result,
         WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
     ) {
     }
 

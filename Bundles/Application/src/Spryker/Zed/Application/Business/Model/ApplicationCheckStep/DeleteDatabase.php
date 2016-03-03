@@ -21,20 +21,49 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     {
         $this->info('Delete database');
 
-        if (Config::get(ApplicationConstants::ZED_DB_ENGINE) === 'pgsql') {
-            $this->deletePostgresDatabaseIfNotExists();
+        if (Config::get(ApplicationConstants::ZED_DB_ENGINE) === Config::get(ApplicationConstants::ZED_DB_ENGINE_PGSQL)) {
+            $this->deletePostgresDatabaseIfExists();
         } else {
-            $this->deleteMysqlDatabaseIfNotExists();
+            $this->deleteMysqlDatabaseIfExists();
         }
     }
 
     /**
+     * @throws \RuntimeException
+     *
      * @return void
      */
-    private function deletePostgresDatabaseIfNotExists()
+    protected function closePostgresConnections()
     {
-        // @todo make it work without sudo
-        $dropDatabaseCommand = 'sudo dropdb --if-exists ' . Config::get(ApplicationConstants::ZED_DB_DATABASE);
+        $dropDatabaseCommand = sprintf(
+            'psql -U %s -w  -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid() AND pg_stat_activity.datname = \'%s\';"',
+            'postgres',
+            Config::get(ApplicationConstants::ZED_DB_DATABASE)
+        );
+
+        $process = new Process($dropDatabaseCommand);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException($process->getErrorOutput());
+        }
+    }
+
+    /**
+     * @throws \RuntimeException
+     *
+     * @return void
+     */
+    protected function deletePostgresDatabaseIfExists()
+    {
+        $this->closePostgresConnections();
+
+        $dropDatabaseCommand = sprintf(
+            'psql -U %s -w  -c "DROP DATABASE IF EXISTS \"%s\";"',
+            'postgres',
+            Config::get(ApplicationConstants::ZED_DB_DATABASE)
+        );
+
         $process = new Process($dropDatabaseCommand);
         $process->run();
 
@@ -46,7 +75,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     /**
      * @return void
      */
-    private function deleteMysqlDatabaseIfNotExists()
+    protected function deleteMysqlDatabaseIfExists()
     {
         $con = new \PDO(
             Config::get(ApplicationConstants::ZED_DB_ENGINE)

@@ -356,4 +356,19 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->generate($pathTokens);
     }
 
+    /**
+     * @api
+     *
+     * @param array $categoryKey
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function getCategoryByKey($categoryKey, $idLocale)
+    {
+        return $this->getFactory()
+            ->createCategoryTreeReader()
+            ->getCategoryByKey($categoryKey, $idLocale);
+    }
+
 }
