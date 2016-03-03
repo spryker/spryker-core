@@ -119,20 +119,6 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * TODO FW This needs to be discussed. The sales-bunde should not know anything about payment logs.
-     *
-     * @param string $idOrder
-     *
-     * @return array
-     */
-    public function getPaymentLogs($idOrder)
-    {
-        return $this->getFactory()
-            ->createOrderDetailsManager()
-            ->getPaymentLogs($idOrder);
-    }
-
-    /**
      * Returns a list of of orders for the given customer id and (optional) filters.
      *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
@@ -148,17 +134,14 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * TODO FW This method returns strange things, which are need for a specific GUI probably. What the heck are "order details"... Split it into smaller parts and collect the data in the gateway controller.
-     * TODO FW The name is misleading. It would be ok for getOrderDetails($idSalesOrder), but in this case it enriches the given $orderTransfer. I would prefer to not have an in/out parameter
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderDetails(OrderTransfer $orderTransfer)
+    public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderDetailsManager()
-            ->getOrderDetails($orderTransfer);
+            ->createOrderHydrator()
+            ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
     }
 }

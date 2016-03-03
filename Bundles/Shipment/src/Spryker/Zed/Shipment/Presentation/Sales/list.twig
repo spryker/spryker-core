@@ -15,10 +15,10 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ shipmentMethod.carrierName }}</td>
-                            <td>{{ shipmentMethod.name }}</td>
+                            <td>{{ order.shipmentMethod.carrierName }}</td>
+                            <td>{{ order.shipmentMethod.name }}</td>
                             <td>
-                                {% for expense in expenses %}
+                                {% for expense in order.expenses %}
                                     {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
                                       {{ expense.sumGrossPriceWithDiscounts | currency }}
                                     {% endif %}

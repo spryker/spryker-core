@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Business\Model\Customer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class CustomerOrderReader implements CustomerOrderReaderInterface
@@ -20,11 +21,20 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @var SalesToSalesAggregatorInterface
      */
-    public function __construct(SalesQueryContainerInterface $queryContainer)
-    {
+    protected $salesAggregatorFacade;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @param SalesToSalesAggregatorInterface $salesAggregatorFacade
+     */
+    public function __construct(
+        SalesQueryContainerInterface $queryContainer,
+        SalesToSalesAggregatorInterface $salesAggregatorFacade
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->salesAggregatorFacade = $salesAggregatorFacade;
     }
 
     /**
@@ -58,6 +68,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
             $orderTransfer = new OrderTransfer();
             $orderTransfer->fromArray($salesOrderEntity->toArray(), true);
 
+            $orderTransfer = $this->salesAggregatorFacade->getOrderTotalByOrderTransfer($orderTransfer);
             $orderList->append($orderTransfer);
         }
 

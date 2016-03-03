@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Propel\Runtime\Propel;
-use Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface;
+use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -33,7 +33,7 @@ class OrderSaver implements OrderSaverInterface
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface
+     * @var \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface
      */
     protected $orderReferenceGenerator;
 
@@ -45,7 +45,7 @@ class OrderSaver implements OrderSaverInterface
     /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface $orderReferenceGenerator
+     * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      */
     public function __construct(

@@ -1,21 +1,27 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 namespace Spryker\Zed\Sales\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
-use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
+
+/**
+ * @method \Spryker\Zed\Sales\Business\SalesBusinessFactory getFactory()
+ */
 interface SalesFacadeInterface
 {
-
     /**
+     * Specification:
+     * - Add username to comment
+     * - Save comment to database
+     *
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTransfer
@@ -23,11 +29,71 @@ interface SalesFacadeInterface
     public function saveComment(CommentTransfer $commentTransfer);
 
     /**
-     * @param int $idOrder
+     * Specification:
+     * - Return the distinct states of all order items for the given order id
      *
-     * @return array
+     * @param int $idSalesOrder
+     *
+     * @return array|string[]
      */
-    public function getArrayWithManualEvents($idOrder);
+    public function getDistinctOrderStates($idSalesOrder);
+
+    /**
+     * Specification:
+     * - Return all comments for the given order id
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderDetailsCommentsTransfer
+     */
+    public function getOrderCommentsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * Specification:
+     * - Save order and items to database
+     * - Set "is test" flag
+     * - update checkout response with saved order data
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
+    /**
+     * Specification
+     * - Update sales order with data from order transfer
+     * - Returns true if order was successfully updated
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idSalesOrder
+     *
+     * @return bool
+     */
+    public function updateOrder(OrderTransfer $orderTransfer, $idSalesOrder);
+
+    /**
+     * Specification:
+     * - Replaces all values of the order address by the values from the addresses transfer
+     * - Returns true if order was successfully updated
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     * @param int $idAddress
+     *
+     * @return boolean
+     */
+    public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
+
+    /**
+     * Returns a list of of orders for the given customer id and (optional) filters.
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer);
 
     /**
      * @param int $idSalesOrder
@@ -35,72 +101,4 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function saveOrder(OrderTransfer $orderTransfer);
-
-    /**
-     * @param int $idSalesOrderItem
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
-     */
-    public function splitSalesOrderItem($idSalesOrderItem, $quantity);
-
-    /**
-     * @param int $idRefund
-     * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
-     *
-     * @return void
-     */
-    public function updateOrderItemsAndExpensesAfterRefund($idRefund, OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idOrder
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
-     */
-    public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder);
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
-     * @param int $idAddress
-     *
-     * @return mixed
-     */
-    public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
-
-    /**
-     * @param string $idOrder
-     *
-     * @return array
-     */
-    public function getPaymentLogs($idOrder);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function getOrders(OrderListTransfer $orderListTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderDetails(OrderTransfer $orderTransfer);
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\RefundTransfer[]
-     */
-    public function getRefunds($idSalesOrder);
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
@@ -31,18 +30,11 @@ class DetailController extends AbstractController
     {
         $idSalesOrder = $request->get(SalesConfig::PARAM_IS_SALES_ORDER); // TODO FW Use $this->castId(SalesConfig::PARAM_IS_SALES_ORDER) See #1409
 
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer->setIdSalesOrder($idSalesOrder);
-        $orderTransfer = $this->getFacade()->getOrderDetails($orderTransfer); // TODO FW See comments in facade. Needs split into smaller parts
-        $orderTransfer = $this->getFactory()->getSalesAggregator()->getOrderTotalByOrderTransfer($orderTransfer);
+        $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
 
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
-
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
-
-        //$logs = $this->getFacade()->getPaymentLogs($idSalesOrder); // TODO FW Needs another solution, see mails
-        //$refunds = $this->getFacade()->getRefunds($idSalesOrder); // TODO FW Needs another solution, see mails
 
         $blockResponseData =  $this->renderSalesDetailBlocks($request, $orderTransfer);
         if ($blockResponseData instanceof RedirectResponse) {
@@ -59,6 +51,8 @@ class DetailController extends AbstractController
 
     /**
      * @param Request $request
+     * @param OrderTransfer $orderTransfer
+     *
      * @return array|string
      */
     protected function renderSalesDetailBlocks(Request $request, OrderTransfer $orderTransfer)

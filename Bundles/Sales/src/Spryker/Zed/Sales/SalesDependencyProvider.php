@@ -24,8 +24,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_USER = 'FACADE_USER';
     const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
 
-    const PLUGINS_PAYMENT_LOGS = 'PLUGINS_PAYMENT_LOGS';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -45,8 +43,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             return new SalesToOmsBridge($container->getLocator()->oms()->facade());
         };
 
-        $container[self::PLUGINS_PAYMENT_LOGS] = function (Container $container) {
-            return $this->getPaymentLogPlugins($container);
+        $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
+            return new SalesToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
 
         return $container;
@@ -73,15 +71,4 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return array
-     */
-    protected function getPaymentLogPlugins(Container $container)
-    {
-        return [];
-    }
-
 }

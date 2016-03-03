@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Sales\Business\Model;
+namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
@@ -18,10 +18,11 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
-class OrderDetailsManager
+class OrderHydrator implements OrderHydratorInterface
 {
 
     /**
@@ -33,58 +34,35 @@ class OrderDetailsManager
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     protected $omsFacade;
-
     /**
-     * @var \Spryker\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface[]
+     * @var SalesToSalesAggregatorInterface
      */
-    protected $logReceiverPluginStack;
+    protected $salesAggregatorFacade;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param array|\Spryker\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface[] $logReceiverPluginStack
+     * @param SalesToSalesAggregatorInterface $salesAggregatorFacade
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
-        array $logReceiverPluginStack
+        SalesToSalesAggregatorInterface $salesAggregatorFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
-        $this->logReceiverPluginStack = $logReceiverPluginStack;
+        $this->salesAggregatorFacade = $salesAggregatorFacade;
     }
 
     /**
-     * @param string $idOrder
-     *
-     * @return array
-     */
-    public function getPaymentLogs($idOrder)
-    {
-        $orders = $this->queryContainer->querySalesOrderById($idOrder)
-            ->find();
-
-        $logs = [];
-        foreach ($this->logReceiverPluginStack as $logReceiver) {
-            $logs = $logReceiver->getPaymentLogs($orders);
-        }
-
-        return $logs;
-    }
-
-    /**
-     * TODO FW This method returns strange things, which are need for a specific GUI probably.
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderDetails(OrderTransfer $orderTransfer)
+    public function hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder)
     {
         $orderEntity = $this->queryContainer
-            ->querySalesOrderDetails($orderTransfer->getIdSalesOrder())
+            ->querySalesOrderDetails($idSalesOrder)
             ->findOne();
 
         if ($orderEntity === null) {
@@ -102,6 +80,7 @@ class OrderDetailsManager
 
         $orderTransfer = $this->convertOrderDetailsEntityIntoTransfer($orderEntity);
         $orderTransfer = $this->addTotalOrderCount($orderTransfer);
+        $orderTransfer = $this->salesAggregatorFacade->getOrderTotalByOrderTransfer($orderTransfer);
 
         return $orderTransfer;
     }
@@ -229,7 +208,7 @@ class OrderDetailsManager
     {
         $totalOrderCount = $this->queryContainer
             ->querySalesOrder()
-            ->filterByFkCustomer($orderTransfer->getFkCustomer())->count(); // TODO FW filer not allowed here
+            ->findByFkCustomer($orderTransfer->getFkCustomer())->count();
 
         $orderTransfer->setTotalOrderCount($totalOrderCount);
 

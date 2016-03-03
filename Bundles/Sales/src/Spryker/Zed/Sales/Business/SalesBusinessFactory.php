@@ -11,10 +11,10 @@ use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
-use Spryker\Zed\Sales\Business\Model\OrderReferenceGenerator;
+use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
+use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
@@ -30,7 +30,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerOrderReader()
     {
-        return new CustomerOrderReader($this->getQueryContainer());
+        return new CustomerOrderReader($this->getQueryContainer(), $this->getSalesAggregator());
     }
 
     /**
@@ -79,19 +79,19 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\OrderDetailsManager
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
      */
-    public function createOrderDetailsManager()
+    public function createOrderHydrator()
     {
-        return new OrderDetailsManager(
+        return new OrderHydrator(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
-            $this->getPaymentLogPlugins()
+            $this->getSalesAggregator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface
      */
     public function createReferenceGenerator()
     {
@@ -136,12 +136,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface
      */
-    protected function getPaymentLogPlugins()
+    public function getSalesAggregator()
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_PAYMENT_LOGS);
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SALES_AGGREGATOR);
     }
-
-
 }
