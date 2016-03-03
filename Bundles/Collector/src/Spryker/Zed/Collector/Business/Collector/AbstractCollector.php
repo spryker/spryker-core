@@ -156,7 +156,10 @@ abstract class AbstractCollector
     protected function processCollectedItem($touchKey, array $collectItemData, TouchUpdaterSet $touchUpdaterSet)
     {
         $this->appendTouchUpdaterSetItem(
-            $touchUpdaterSet, $touchKey, $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID], $collectItemData
+            $touchUpdaterSet,
+            $touchKey,
+            $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID],
+            $collectItemData
         );
 
         return $this->collectItem($touchKey, $collectItemData);
@@ -541,12 +544,13 @@ abstract class AbstractCollector
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
-     * @param $collectorKey
-     * @param $data
+     * @param string $collectorKey
+     * @param int $touchId
+     * @param array $data
      *
      * @return void
      */
-    protected function appendTouchUpdaterSetItem(TouchUpdaterSet $touchUpdaterSet, $collectorKey, $touchId, $data)
+    protected function appendTouchUpdaterSetItem(TouchUpdaterSet $touchUpdaterSet, $collectorKey, $touchId, array $data)
     {
         $touchUpdaterSet->add($collectorKey, $touchId, [
             CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($data),
