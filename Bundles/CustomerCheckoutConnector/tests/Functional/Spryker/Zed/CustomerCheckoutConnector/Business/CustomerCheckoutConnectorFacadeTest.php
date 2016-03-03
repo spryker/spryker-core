@@ -104,7 +104,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setAddress2('A2')
             ->setAddress3('A3')
             ->setCity('City1')
-            ->setIso2Code('de')
+            ->setIso2Code('DE')
             ->setZipCode('11111');
 
         $shippingAddress = new AddressTransfer();
@@ -113,7 +113,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setAddress2('B1')
             ->setAddress3('B1')
             ->setCity('City2')
-            ->setIso2Code('de')
+            ->setIso2Code('DE')
             ->setZipCode('11111');
 
         $checkoutRequest

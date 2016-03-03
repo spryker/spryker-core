@@ -30,7 +30,7 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idParentNode = $request->get(ProductCategoryConstants::PARAM_ID_PARENT_NODE);
+        $idParentNode = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_PARENT_NODE));
 
         $dataProvider = $this->getFactory()->createCategoryFormAddDataProvider();
         $form = $this
@@ -69,7 +69,7 @@ class AddController extends AbstractController
      */
     public function productCategoryTableAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
+        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
         $locale = $this->getFactory()
             ->getCurrentLocale();
 
@@ -88,7 +88,7 @@ class AddController extends AbstractController
      */
     public function productTableAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
+        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
         $locale = $this->getFactory()
             ->getCurrentLocale();
 

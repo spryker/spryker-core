@@ -45,7 +45,9 @@ class Log
             $string .= date('c', time()) . ' ';
         }
 
-        $string .= print_r($expression, true);
+        $sanitizedExpression = print_r($expression, true);
+
+        $string .= htmlentities($sanitizedExpression, ENT_QUOTES);
         $string .= PHP_EOL;
 
         $filePath = self::getFilePath($fileName, $dir);

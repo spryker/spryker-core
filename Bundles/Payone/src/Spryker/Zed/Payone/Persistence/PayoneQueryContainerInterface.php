@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Payone\Persistence;
 
-interface PayoneQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface PayoneQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

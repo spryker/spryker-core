@@ -11,9 +11,9 @@
     }
   },
   "require": {
-    "spryker/checkout": "^1.0.0",
-    "spryker/customer": "^1.0.0",
-    "spryker/kernel": "^1.0.0"
+    "spryker/checkout": "^0.20.0",
+    "spryker/customer": "^0.20.0",
+    "spryker/kernel": "^0.20.0"
   },
   "description": "customer checkout connector bundle",
   "license": "proprietary",
@@ -21,7 +21,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

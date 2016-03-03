@@ -40,7 +40,7 @@ class CreateDatabaseConsole extends Console
     {
         $this->info('Creating Database');
 
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) === 'pgsql') {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_PGSQL)) {
             $this->createPostgresDatabaseIfNotExists();
         } else {
             $this->createMysqlDatabaseIfNotExists();
@@ -50,15 +50,18 @@ class CreateDatabaseConsole extends Console
     /**
      * @throws \Exception
      *
-     * @todo no sudo, vagrant user is missing for pgsql
-     *
      * @return void
      */
-    private function createPostgresDatabaseIfNotExists()
+    protected function createPostgresDatabaseIfNotExists()
     {
         $databaseExists = $this->existsPostgresDatabase();
         if (!$databaseExists) {
-            $createDatabaseCommand = 'sudo createdb '  . Config::get(PropelConstants::ZED_DB_DATABASE) . ' -E UTF8 -T template0';
+            $createDatabaseCommand = sprintf(
+                'psql -U %s -w  -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; "',
+                'postgres',
+                Config::get(PropelConstants::ZED_DB_DATABASE)
+            );
+
             $process = new Process($createDatabaseCommand);
             $process->run();
 
@@ -72,12 +75,15 @@ class CreateDatabaseConsole extends Console
      * @throws \Exception
      *
      * @return bool
-     *
-     * @todo no sudo, vagrant user is missing for pgsql
      */
-    private function existsPostgresDatabase()
+    protected function existsPostgresDatabase()
     {
-        $databaseExistsCommand = 'echo -n "$(sudo psql -lqt | cut -d \| -f 1 | grep -w ' . Config::get(PropelConstants::ZED_DB_DATABASE) . ' | wc -l)"';
+        $databaseExistsCommand = sprintf(
+            'psql -U %s -lqt | cut -d \| -f 1 | grep -w %s | wc -l',
+            'postgres',
+            Config::get(PropelConstants::ZED_DB_DATABASE)
+        );
+
         $process = new Process($databaseExistsCommand);
         $process->run();
 
@@ -85,7 +91,8 @@ class CreateDatabaseConsole extends Console
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        return (bool)$process->getOutput();
+        $returnValue = (int)$process->getOutput();
+        return (bool)$returnValue;
     }
 
     /**

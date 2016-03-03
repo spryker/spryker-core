@@ -40,7 +40,7 @@ class Config
 
     /**
      * @param string $key
-     * @param string|null $default
+     * @param mixed|null $default
      *
      * @throws \Exception
      *
@@ -116,6 +116,11 @@ class Config
          * e.g. config_local_DE.php
          */
         self::buildConfig('local_' . $storeName, $config);
+
+        /*
+         * e.g. config_propel.php
+         */
+        self::buildConfig('propel', $config);
 
         self::$config = $config;
     }

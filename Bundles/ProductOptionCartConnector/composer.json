@@ -11,8 +11,8 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0",
-    "spryker/product-option": "^1.0.0"
+    "spryker/kernel": "^0.20.0",
+    "spryker/product-option": "^0.20.0"
   },
   "description": "product option cart connector bundle",
   "license": "proprietary",
@@ -20,7 +20,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

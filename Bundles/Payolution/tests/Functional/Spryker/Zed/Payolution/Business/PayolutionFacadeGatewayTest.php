@@ -83,7 +83,7 @@ class PayolutionFacadeGatewayTest extends Test
             ->setFirstName('Jane')
             ->setLastName('Doe')
             ->setEmail('jane@family-doe.org')
-            ->setIso2Code('de')
+            ->setIso2Code('DE')
             ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR);
 
         $paymentTransfer = new PayolutionPaymentTransfer();
@@ -93,7 +93,7 @@ class PayolutionFacadeGatewayTest extends Test
             ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
             ->setAddress($addressTransfer)
             ->setAccountBrand(ApiConstants::BRAND_INVOICE)
-            ->setLanguageIso2Code('de')
+            ->setLanguageIso2Code('DE')
             ->setCurrencyIso3Code('EUR');
 
         // PayolutionCheckoutConnector-HydrateOrderPlugin emulation
@@ -136,7 +136,7 @@ class PayolutionFacadeGatewayTest extends Test
             ->setLastName('Doe')
             ->setSalutation('Mr')
             ->setEmail('john@doe.com')
-            ->setIso2Code('de');
+            ->setIso2Code('DE');
 
         $paymentTransfer = (new PayolutionPaymentTransfer())
             ->setGender('Male')
@@ -144,7 +144,7 @@ class PayolutionFacadeGatewayTest extends Test
             ->setClientIp('127.0.0.1')
             ->setAccountBrand(ApiConstants::BRAND_INVOICE)
             ->setAddress($addressTransfer)
-            ->setLanguageIso2Code('de')
+            ->setLanguageIso2Code('DE')
             ->setCurrencyIso3Code('EUR');
 
         $checkoutRequestTransfer = new CheckoutRequestTransfer();
@@ -295,7 +295,7 @@ class PayolutionFacadeGatewayTest extends Test
      */
     private function setBaseTestData()
     {
-        $country = SpyCountryQuery::create()->findOneByIso2Code('de');
+        $country = SpyCountryQuery::create()->findOneByIso2Code('DE');
 
         $billingAddress = (new SpySalesOrderAddress())
             ->setFkCountry($country->getIdCountry())
@@ -344,11 +344,11 @@ class PayolutionFacadeGatewayTest extends Test
             ->setEmail('jane@family-doe.org')
             ->setGender(SpyPaymentPayolutionTableMap::COL_GENDER_MALE)
             ->setSalutation(SpyPaymentPayolutionTableMap::COL_SALUTATION_MR)
-            ->setCountryIso2Code('de')
+            ->setCountryIso2Code('DE')
             ->setCity('Berlin')
             ->setStreet('Straße des 17. Juni 135')
             ->setZipCode('10623')
-            ->setLanguageIso2Code('de')
+            ->setLanguageIso2Code('DE')
             ->setCurrencyIso3Code('EUR');
         $this->paymentEntity->save();
     }

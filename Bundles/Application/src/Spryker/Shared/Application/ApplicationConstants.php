@@ -92,12 +92,19 @@ interface ApplicationConstants
     /**
      * Database
      */
-    const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
     const ZED_DB_USERNAME = 'ZED_DB_USERNAME';
     const ZED_DB_PASSWORD = 'ZED_DB_PASSWORD';
     const ZED_DB_DATABASE = 'ZED_DB_DATABASE';
     const ZED_DB_HOST = 'ZED_DB_HOST';
     const ZED_DB_PORT = 'ZED_DB_PORT';
+
+    /**
+     * Database engines
+     */
+    const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
+    const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
+    const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
+    const ZED_DB_SUPPORTED_ENGINES = 'ZED_DB_SUPPORTED_ENGINES';
 
     /**
      * RabbitMQ

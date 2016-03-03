@@ -95,7 +95,7 @@ class BlockController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idBlock = $request->query->getInt(CmsBlockTable::REQUEST_ID_BLOCK);
+        $idBlock = $this->castId($request->query->get(CmsBlockTable::REQUEST_ID_BLOCK));
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $dataProvider = $this->getFactory()->createCmsBlockFormDataProvider();
@@ -185,7 +185,7 @@ class BlockController extends AbstractController
      */
     public function searchCategoryAction(Request $request)
     {
-        $term = $request->query->get('term');
+        $term = $request->query->get('term'); // TODO FW Validation
 
         $searchedItems = $this->getQueryContainer()
             ->queryNodeByCategoryName($term, $this->getCurrentIdLocale())

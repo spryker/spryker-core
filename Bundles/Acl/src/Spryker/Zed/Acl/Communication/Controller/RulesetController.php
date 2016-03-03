@@ -27,7 +27,7 @@ class RulesetController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idRule = $request->get('id-rule');
+        $idRule = $this->castId($request->get('id-rule'));
         $idRole = $request->get('id-role');
 
         if (empty($idRule)) {

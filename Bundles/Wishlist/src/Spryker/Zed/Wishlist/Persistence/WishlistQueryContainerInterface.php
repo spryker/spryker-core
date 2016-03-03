@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Wishlist\Persistence;
 
-interface WishlistQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface WishlistQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

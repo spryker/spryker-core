@@ -27,6 +27,7 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceP
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider as ServiceProviderTwigServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
+use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
 use Spryker\Zed\Auth\Communication\Plugin\Bootstrap\AuthBootstrapProvider;
 use Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
@@ -67,6 +68,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
             new NewRelicServiceProvider(),
             new HttpFragmentServiceProvider(),
             new HeaderServiceProvider(),
+            new AssertionServiceProvider(),
         ];
 
         if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {

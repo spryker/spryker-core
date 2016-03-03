@@ -39,10 +39,23 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locale = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
-        $exportResults = $this->getFacade()->exportKeyValueForLocale($locale, $output);
+        $enabledCollectors = $this->getFacade()->getEnabledCollectorTypes();
+        $allCollectors = $this->getFacade()->getAllCollectorTypes();
 
-        $this->info($this->buildSummary($exportResults));
+        $collectorInfo = sprintf(
+            '<fg=yellow>%d out of %d collectors available.</fg=yellow>',
+            count($enabledCollectors),
+            count($allCollectors)
+        );
+
+        $output->writeln('');
+        $output->writeln($collectorInfo);
+
+        $exportResults = $this->getFacade()->exportStorage($output);
+        $message = $this->buildNestedSummary($exportResults);
+        $message = '<info>' . $message . '</info>';
+
+        $output->write($message);
     }
 
 }

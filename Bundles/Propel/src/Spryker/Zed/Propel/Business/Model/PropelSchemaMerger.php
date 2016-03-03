@@ -23,7 +23,11 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     public function merge(array $schemaFiles)
     {
         $this->checkConsistency($schemaFiles);
-        $mergeTargetXmlElement = $this->createMergeTargetXmlElement(current($schemaFiles));
+        $currentSchema = current($schemaFiles);
+        if (!$currentSchema) {
+            throw new SchemaMergeException('Could not merge schema file. Given schema file container seems to be empty.');
+        }
+        $mergeTargetXmlElement = $this->createMergeTargetXmlElement($currentSchema);
         $schemaXmlElements = $this->createSchemaXmlElements($schemaFiles);
 
         return $this->mergeSchema($mergeTargetXmlElement, $schemaXmlElements);

@@ -32,7 +32,7 @@ class EditController extends AddController
      */
     public function indexAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
+        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
 
         $currentCategory = $this->getFactory()
             ->getCategoryQueryContainer()

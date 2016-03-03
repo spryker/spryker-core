@@ -8,8 +8,9 @@
 namespace Spryker\Zed\Tax\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface TaxQueryContainerInterface
+interface TaxQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

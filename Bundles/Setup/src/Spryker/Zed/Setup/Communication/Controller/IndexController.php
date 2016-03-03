@@ -165,12 +165,6 @@ class IndexController extends AbstractController
         for ($i = 0; $i < 100; $i++) {
             $redis->set(md5($i), microtime(true));
         }
-
-        echo '<pre>';
-        var_dump($i);
-        echo '<hr>';
-        echo __FILE__ . ' ' . __LINE__;
-        die;
     }
 
 }

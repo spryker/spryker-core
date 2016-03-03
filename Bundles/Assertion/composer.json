@@ -1,0 +1,22 @@
+{
+  "name": "spryker/assertion",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+    "spryker/kernel": "^0.20.0",
+    "spryker/silex": "^0.20.0"
+  },
+  "description": "assertion bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.20.x-dev"
+    }
+  }
+}

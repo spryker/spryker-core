@@ -10,6 +10,8 @@ namespace Functional\Spryker\Zed\Customer\Communication\Controller;
 use Codeception\TestCase\Test;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Assertion\Business\AssertionFacade;
+use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
 use Spryker\Zed\Customer\Communication\Controller\EditController;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
 use Symfony\Component\Form\FormView;
@@ -51,6 +53,7 @@ class EditControllerTest extends Test
         $customer->save();
 
         $this->customer = $customer;
+
         $this->controller = new EditController();
     }
 
@@ -90,6 +93,8 @@ class EditControllerTest extends Test
         ];
 
         $request = Request::create('/customer/edit?id-customer=' . $this->customer->getIdCustomer(), 'POST', $data);
+        $application = (new Pimple())->getApplication();
+        $application['request'] = $request;
 
         $result = $this->controller->indexAction($request);
         $this->customer->reload();
