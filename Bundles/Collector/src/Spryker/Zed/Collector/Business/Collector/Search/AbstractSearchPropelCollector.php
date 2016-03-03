@@ -12,10 +12,10 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Collector\Business\Plugin\AbstractPropelCollectorPlugin;
+use Spryker\Zed\Collector\Business\Collector\AbstractPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
 
-abstract class AbstractSearchPropelCollector extends AbstractPropelCollectorPlugin
+abstract class AbstractSearchPropelCollector extends AbstractPropelCollector
 {
 
     /**

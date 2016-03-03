@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Plugin;
+namespace Spryker\Zed\Collector\Business\Collector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
@@ -22,7 +22,7 @@ use Spryker\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class AbstractCollectorPlugin
+abstract class AbstractCollector
 {
 
     use KeyBuilderTrait;
@@ -123,7 +123,11 @@ abstract class AbstractCollectorPlugin
         $setToExport = [];
 
         foreach ($collectedSet as $index => $collectedItemData) {
-            $touchKey = $this->collectKey($collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID], $locale->getLocaleName(), $collectedItemData);
+            $touchKey = $this->collectKey(
+                $collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID],
+                $locale->getLocaleName(),
+                $collectedItemData
+            );
             $setToExport[$touchKey] = $this->processCollectedItem($touchKey, $collectedItemData, $touchUpdaterSet);
         }
 
@@ -151,10 +155,9 @@ abstract class AbstractCollectorPlugin
      */
     protected function processCollectedItem($touchKey, array $collectItemData, TouchUpdaterSet $touchUpdaterSet)
     {
-        $touchUpdaterSet->add($touchKey, $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID], [
-            CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($collectItemData),
-            CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($collectItemData),
-        ]);
+        $this->appendTouchUpdaterSetItem(
+            $touchUpdaterSet, $touchKey, $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID], $collectItemData
+        );
 
         return $this->collectItem($touchKey, $collectItemData);
     }
@@ -339,10 +342,18 @@ abstract class AbstractCollectorPlugin
                     $deletedCount += $batchCount;
                     $offset += $this->chunkSize;
 
-                    $keysToDelete = $this->getKeysToDeleteAndUpdateTouchUpdaterSet($entityCollection, $touchUpdater->getTouchKeyColumnName(), $touchUpdaterSet);
+                    $keysToDelete = $this->getKeysToDeleteAndUpdateTouchUpdaterSet(
+                        $entityCollection,
+                        $touchUpdater->getTouchKeyColumnName(),
+                        $touchUpdaterSet
+                    );
 
                     if (!empty($keysToDelete)) {
-                        $touchUpdater->deleteMulti($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
+                        $touchUpdater->deleteMulti(
+                            $touchUpdaterSet,
+                            $locale->getIdLocale(),
+                            $this->touchQueryContainer->getConnection()
+                        );
                         $dataWriter->delete($keysToDelete);
                     }
                 }
@@ -366,7 +377,9 @@ abstract class AbstractCollectorPlugin
     protected function getTouchEntitiesToDelete($offset, $itemType)
     {
         $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
-        $deleteQuery->setOffset($offset)->setLimit($this->chunkSize);
+        $deleteQuery
+            ->setOffset($offset)
+            ->setLimit($this->chunkSize);
 
         return $deleteQuery->find();
     }
@@ -391,10 +404,7 @@ abstract class AbstractCollectorPlugin
 
             if (trim($key) !== '') {
                 $keysToDelete[$key] = true;
-                $touchUpdaterSet->add($key, $touchEntity->getIdTouch(), [
-                    CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($entityData),
-                    CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($entityData),
-                ]);
+                $this->appendTouchUpdaterSetItem($touchUpdaterSet, $key, $touchEntity->getIdTouch(), $entityData);
             }
         }
 
@@ -527,6 +537,21 @@ abstract class AbstractCollectorPlugin
     public function getBundleName()
     {
         return 'resource';
+    }
+
+    /**
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
+     * @param $collectorKey
+     * @param $data
+     *
+     * @return void
+     */
+    protected function appendTouchUpdaterSetItem(TouchUpdaterSet $touchUpdaterSet, $collectorKey, $touchId, $data)
+    {
+        $touchUpdaterSet->add($collectorKey, $touchId, [
+            CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($data),
+            CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($data),
+        ]);
     }
 
     /**

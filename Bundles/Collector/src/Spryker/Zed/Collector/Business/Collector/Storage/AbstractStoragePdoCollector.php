@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Collector\Business\Collector\Storage;
 
-use Spryker\Zed\Collector\Business\Plugin\AbstractPdoCollectorPlugin;
+use Spryker\Zed\Collector\Business\Collector\AbstractPdoCollector;
 use Spryker\Zed\Collector\CollectorConfig;
 
-abstract class AbstractStoragePdoCollector extends AbstractPdoCollectorPlugin
+abstract class AbstractStoragePdoCollector extends AbstractPdoCollector
 {
 
     /**

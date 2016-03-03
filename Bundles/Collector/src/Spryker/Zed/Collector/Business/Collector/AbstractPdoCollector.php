@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Plugin;
+namespace Spryker\Zed\Collector\Business\Collector;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -15,7 +15,7 @@ use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery;
 use Spryker\Zed\Collector\Persistence\PdoBatchIterator;
 
-abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
+abstract class AbstractPdoCollector extends AbstractCollector
 {
 
     /**

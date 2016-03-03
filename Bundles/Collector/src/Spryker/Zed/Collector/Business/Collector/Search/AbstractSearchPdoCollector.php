@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Collector\Business\Collector\Search;
 
-use Spryker\Zed\Collector\Business\Plugin\AbstractPdoCollectorPlugin;
+use Spryker\Zed\Collector\Business\Collector\AbstractPdoCollector;
 use Spryker\Zed\Collector\CollectorConfig;
 
-abstract class AbstractSearchPdoCollector extends AbstractPdoCollectorPlugin
+abstract class AbstractSearchPdoCollector extends AbstractPdoCollector
 {
 
     /**

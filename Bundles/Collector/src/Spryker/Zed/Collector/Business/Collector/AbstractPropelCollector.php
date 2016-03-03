@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Plugin;
+namespace Spryker\Zed\Collector\Business\Collector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -13,7 +13,7 @@ use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\Persistence\Exporter\AbstractPropelCollectorQuery;
 use Spryker\Zed\Collector\Persistence\PropelBatchIterator;
 
-abstract class AbstractPropelCollectorPlugin extends AbstractCollectorPlugin
+abstract class AbstractPropelCollector extends AbstractCollector
 {
 
     /**
