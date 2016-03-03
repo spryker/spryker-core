@@ -4,7 +4,6 @@
   "license": "proprietary",
   "require":{
     "phpdocumentor/graphviz": "dev-master#a906a90",
-    "ext-openssl": "*",
     "paragonie/random_compat": "~1.2.1"
   },
   "require-dev": {
