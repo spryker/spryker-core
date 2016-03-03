@@ -76,7 +76,7 @@ class CreateDatabaseConsole extends Console
     /**
      * @throws \Exception
      *
-     * @return bool
+     * @return int
      *
      * @todo no sudo, vagrant user is missing for pgsql
      */
