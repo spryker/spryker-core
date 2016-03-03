@@ -53,8 +53,6 @@ class DetailController extends AbstractController
             'eventsGroupedByItem' => $eventsGroupedByItem,
             'events' => $events,
             'distinctOrderStates' => $distinctOrderStates,
-            'logs' => [],
-            'refunds' => [],
             'order' => $orderTransfer,
         ], $blockResponseData);
     }

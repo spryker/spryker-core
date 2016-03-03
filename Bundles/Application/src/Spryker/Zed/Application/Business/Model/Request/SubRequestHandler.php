@@ -65,12 +65,12 @@ class SubRequestHandler implements SubRequestHandlerInterface
 
     /**
      * @param Request $request
-     * @param $url
-     * @param $subRequestParameters
+     * @param string $url
+     * @param array $subRequestParameters
      *
      * @return Request
      */
-    protected function createSubRequest(Request $request, $url, $subRequestParameters)
+    protected function createSubRequest(Request $request, $url, array $subRequestParameters)
     {
         $subRequest = Request::create(
             $url,

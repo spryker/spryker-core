@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\CommentTransfer;
-use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\Form\Form;

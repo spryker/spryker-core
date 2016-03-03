@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Discount\Communication\Controller;
+namespace Spryker\Zed\SalesAggregator\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

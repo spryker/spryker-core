@@ -347,7 +347,7 @@ abstract class AbstractController
      * @param Request $request
      * @param string $blockUrl
      *
-     * @return string
+     * @return string|RedirectResponse
      */
     protected function renderAction(Request $request, $blockUrl)
     {
