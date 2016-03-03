@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Product\ProductConstants;
+use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
@@ -496,7 +497,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     protected function touchProductAbstractActive($idProductAbstract)
     {
-        $this->touchFacade->touchActive('product_abstract', $idProductAbstract);
+        $this->touchFacade->touchActive(ProductCategoryConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
     }
 
     /**
@@ -506,7 +507,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     protected function touchProductAbstractDeleted($idProductAbstract)
     {
-        $this->touchFacade->touchDeleted('product_abstract', $idProductAbstract);
+        $this->touchFacade->touchDeleted(ProductCategoryConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
     }
 
 }
