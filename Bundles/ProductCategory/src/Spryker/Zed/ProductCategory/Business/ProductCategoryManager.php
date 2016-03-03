@@ -496,7 +496,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     protected function touchProductAbstractActive($idProductAbstract)
     {
-        $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchActive('product_abstract', $idProductAbstract);
     }
 
     /**
@@ -506,7 +506,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     protected function touchProductAbstractDeleted($idProductAbstract)
     {
-        $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchDeleted('product_abstract', $idProductAbstract);
     }
 
 }
