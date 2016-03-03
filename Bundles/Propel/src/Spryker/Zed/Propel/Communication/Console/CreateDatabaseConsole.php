@@ -76,7 +76,7 @@ class CreateDatabaseConsole extends Console
     /**
      * @throws \Exception
      *
-     * @return int
+     * @return bool
      *
      * @todo no sudo, vagrant user is missing for pgsql
      */
@@ -95,7 +95,8 @@ class CreateDatabaseConsole extends Console
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        return (int)$process->getOutput();
+        $returnValue = (int) $process->getOutput();
+        return (bool) $returnValue;
     }
 
     /**
