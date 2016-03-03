@@ -53,7 +53,7 @@ class PoolController extends AbstractController
                 DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
             ]);
 
-            return $this->redirectResponse($url->__toString());
+            return $this->redirectResponse($url->build());
         }
 
         return [
@@ -89,7 +89,7 @@ class PoolController extends AbstractController
                 DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
             ]);
 
-            return $this->redirectResponse($url->__toString());
+            return $this->redirectResponse($url->build());
         }
 
         return [

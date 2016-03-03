@@ -1,0 +1,154 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ */
+
+.icon-holder {
+    float: left;
+    width: 19px;
+    overflow: hidden;
+}
+
+.tooltip-inner {
+    max-width: 600px;
+}
+
+/* Login .. */
+body.login {
+
+    .login-spryker-logo {
+        margin: 0 auto;
+        width: 165px;
+        padding-top: 100px;
+
+        span {
+            background: url(../img/logo.svg);
+            width: 165px;
+            height: 159px;
+            display: block;
+        }
+    }
+
+    .loginColumns {
+        padding-top: 30px;
+    }
+
+    .spryker-login {
+        width: 380px;
+        margin: 0 auto;
+    }
+
+    input,
+    .input-group-addon {
+        background: #2f4050;
+        border: 0;
+        border-bottom: 1px solid #888888;
+        color: #fff;
+
+        &:focus {
+            border-color: #888888 !important;
+        }
+    }
+
+  .forgot {
+      text-align: center;
+      font-size: 80%;
+
+      a:hover {
+          color: #eee;
+      }
+  }
+}
+
+
+// login
+@mixin svg-common() {
+  background: url(../img/logo.svg) no-repeat;
+}
+
+.svg-commerce {
+  @include svg-common();
+  background-position: 100% 0;
+}
+
+.svg-commerce-size {
+  width: 142px;
+  height: 11px;
+}
+
+.svg-mail {
+  @include svg-common();
+  background-position: 56.74740484429066% 7.746478873239437%;
+}
+
+.svg-mail-size {
+  width: 17px;
+  height: 14px;
+}
+
+.svg-padlock {
+  @include svg-common();
+  background-position: 56.3573883161512% 17.985611510791365%;
+}
+
+.svg-padlock-size {
+  width: 15px;
+  height: 17px;
+}
+
+.svg-spryker {
+  @include svg-common();
+  background-position: 0 0;
+}
+
+.svg-spryker-size {
+  width: 164px;
+  height: 156px;
+}
+
+.product-title {
+  position: relative;
+  padding: 10px 20px 0;
+}
+
+.product-view {
+  .product-desc {
+    padding-top: 0;
+    .product-image {
+      width: 150px;
+      height: 150px;
+      background: #ccc;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 145px; /* @todo remove when real image is added */
+    }
+  }
+}
+.element-inline {
+  display: inline;
+}
+
+.show-scroll {
+  overflow: scroll !important;
+}
+
+.table.nowrap, .nowrap {
+  white-space: nowrap;
+}
+
+.note-editor *,
+.note-editor *:before {
+  color: #444 !important;
+}
+
+/* Zed Navigation .. */
+body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
+    span {
+        display: block;
+    }
+    i {
+        display: none;
+    }
+}
+/* .. Zed Navigation */
+

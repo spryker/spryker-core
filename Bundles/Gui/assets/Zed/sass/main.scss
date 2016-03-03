@@ -1,0 +1,23 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ */
+
+// external dependencies
+@import '~jquery-ui/themes/base/jquery-ui';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+@import '~font-awesome/scss/font-awesome';
+@import '~animate.css/animate';
+@import '~datatables.net-bs/css/dataTables.bootstrap';
+@import '~datatables.net-buttons-bs/css/buttons.bootstrap';
+@import '~datatables.net-responsive-bs/css/responsive.bootstrap';
+@import '~datatables.net-select-bs/css/select.bootstrap';
+@import '~select2/dist/css/select2';
+@import '~summernote/dist/summernote';
+
+// inspinia
+@import '../../Inspinia/css/style';
+@import '../../Inspinia/css/fonts';
+
+// spryker customization
+@import './spryker';

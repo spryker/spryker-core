@@ -17,3 +17,8 @@
     {% endembed %}
 
 {% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-refund-main.js"></script>
+{% endblock %}

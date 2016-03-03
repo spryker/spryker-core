@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "spryker-zed-gui",
+  "version": "1.0.0",
+  "dependencies": {
+    "animate.css": "~3.5.1",
+    "bootstrap-sass": "~3.3.6",
+    "codemirror": "^5.12.0",
+    "datatables.net": "~1.10.10",
+    "datatables.net-bs": "~1.10.10",
+    "datatables.net-buttons": "~1.1.0",
+    "datatables.net-buttons-bs": "~1.1.0",
+    "datatables.net-responsive": "~2.0.0",
+    "datatables.net-responsive-bs": "~2.0.0",
+    "datatables.net-select": "~1.1.0",
+    "datatables.net-select-bs": "~1.1.0",
+    "font-awesome": "~4.5.0",
+    "jquery": "~2.2.0",
+    "jquery-ui": "~1.10.5",
+    "metismenu": "~2.2.0",
+    "nestable": "github:ilmente/Nestable#v1.1.0",
+    "pace": "github:hubspot/pace#v1.0.2",
+    "select2": "github:select2/select2",
+    "summernote": "^0.8.1"
+  }
+}
