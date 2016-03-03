@@ -23,7 +23,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::URL_BUILDER] = function (Container $container) {
+        $container[self::URL_BUILDER] = function () {
             return new UrlBuilder();
         };
 
