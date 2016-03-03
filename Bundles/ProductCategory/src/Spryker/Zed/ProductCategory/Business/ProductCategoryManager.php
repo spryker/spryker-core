@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Shared\Product\ProductConstants;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
