@@ -224,11 +224,6 @@ class VoucherEngine
     {
         $allowedCharacters = $this->settings->getVoucherCodeCharacters();
 
-        $generator = new StringGenerator();
-        $random = $generator->generateRandomString();
-
-        srand(ord($random));
-
         $consonants = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_CONSONANTS];
         $vowels = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_VOWELS];
         $numbers = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_NUMBERS];
@@ -237,15 +232,15 @@ class VoucherEngine
 
         while (strlen($code) < $length) {
             if (count($consonants)) {
-                $code .= $consonants[rand(0, count($consonants) - 1)];
+                $code .= $consonants[random_int(0, count($consonants) - 1)];
             }
 
             if (count($vowels)) {
-                $code .= $vowels[rand(0, count($vowels) - 1)];
+                $code .= $vowels[random_int(0, count($vowels) - 1)];
             }
 
             if (count($numbers)) {
-                $code .= $numbers[rand(0, count($numbers) - 1)];
+                $code .= $numbers[random_int(0, count($numbers) - 1)];
             }
         }
 

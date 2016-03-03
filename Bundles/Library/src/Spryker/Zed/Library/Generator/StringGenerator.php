@@ -32,34 +32,14 @@ class StringGenerator
      */
     public function generateRandomString()
     {
-        $function = $this->getFunction();
-
         $length = $this->length / 2;
-        $token = bin2hex(call_user_func($function, (int)$length));
+        $token = bin2hex(random_bytes($length));
 
         if (strlen($token) !== $this->length) {
             $token = str_pad($token, $this->length, '0');
         }
 
         return $token;
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return string
-     */
-    protected function getFunction()
-    {
-        $function = 'random_bytes';
-        if (!function_exists($function)) {
-            $function = 'openssl_random_pseudo_bytes';
-            if (!function_exists($function)) {
-                throw new \Exception(__CLASS__ . ' requires to have openssl installed or a PHP version >=7 to work properly.');
-            }
-        }
-
-        return $function;
     }
 
 }

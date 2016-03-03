@@ -26,6 +26,7 @@
     "spryker/twig": "^1.0.0-RC2",
     "spryker/zend": "^1.0.0-RC2",
     "spryker/config": "^1.0.0-RC2"
+    "paragonie/random_compat": "~1.2.1"
   },
   "description": "library bundle",
   "license": "proprietary",
