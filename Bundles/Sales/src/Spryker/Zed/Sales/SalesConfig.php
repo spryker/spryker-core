@@ -19,6 +19,18 @@ class SalesConfig extends AbstractBundleConfig
     const PARAM_IS_SALES_ORDER = 'id-sales-order';
     const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
+
+    /**
+     * TODO Not needed, remove
+     * this is used in project level src/Pyz/Zed/Sales/SalesConfig.php:28
+     *
+     * @var array|string[]
+     */
+    protected static $stateMachineMapper = [
+        'invoice' => 'Invoice01',
+        'no_payment' => 'Nopayment01',
+    ];
+
     /**
      * Separator for the sequence number
      *
@@ -59,7 +71,6 @@ class SalesConfig extends AbstractBundleConfig
     public function isTestOrder(QuoteTransfer $quoteTransfer)
     {
         $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
-
         if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
             return false;
         }
