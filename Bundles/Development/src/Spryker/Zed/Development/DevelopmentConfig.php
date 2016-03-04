@@ -58,7 +58,8 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getArchitectureStandard() {
+    public function getArchitectureStandard()
+    {
         return dirname(__FILE__) . '/Business/PhpMd/ruleset.xml';
     }
 
