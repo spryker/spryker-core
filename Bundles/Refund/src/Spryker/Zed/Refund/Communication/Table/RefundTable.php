@@ -60,6 +60,8 @@ class RefundTable extends AbstractTable
             self::ACTIONS => self::ACTIONS,
         ]);
 
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyRefundTableMap::COL_CREATED_AT,
         ]);

@@ -56,6 +56,8 @@ class MethodTable extends AbstractTable
         $this->configureSearchable($config);
         $this->configureUrl($config);
 
+        $config->addRawColumn(self::ACTIONS);
+
         return $config;
     }
 

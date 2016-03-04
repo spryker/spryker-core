@@ -66,6 +66,8 @@ class GroupUsersTable extends AbstractTable
             self::COL_OPTIONS => 'Options',
         ]);
 
+        $config->addRawColumn(self::COL_OPTIONS);
+
         return $config;
     }
 

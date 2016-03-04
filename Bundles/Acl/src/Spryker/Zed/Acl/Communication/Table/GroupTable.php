@@ -60,6 +60,8 @@ class GroupTable extends AbstractTable
             SpyAclGroupTableMap::COL_NAME,
         ]);
 
+        $config->setRawColumns([self::EDIT, self::ROLES]);
+
         return $config;
     }
 

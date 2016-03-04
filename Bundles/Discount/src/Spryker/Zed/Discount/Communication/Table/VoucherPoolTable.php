@@ -77,6 +77,8 @@ class VoucherPoolTable extends AbstractTable
             SpyDiscountVoucherPoolTableMap::COL_NAME,
         ]);
 
+        $config->addRawColumn(self::COL_OPTIONS);
+
         return $config;
     }
 

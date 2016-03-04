@@ -73,6 +73,9 @@ class CmsGlossaryTable extends AbstractTable
             CmsQueryContainer::TRANS => 'Glossary Value',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
         ]);

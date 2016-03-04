@@ -71,6 +71,8 @@ class CustomerTable extends AbstractTable
 
         $config->addRawColumn(self::ACTIONS);
 
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             self::COL_ID_CUSTOMER,
             self::COL_CREATED_AT,

@@ -48,6 +48,9 @@ class CmsRedirectTable extends AbstractTable
             SpyUrlRedirectTableMap::COL_STATUS => 'Status',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyUrlTableMap::COL_ID_URL,
             SpyUrlTableMap::COL_URL,

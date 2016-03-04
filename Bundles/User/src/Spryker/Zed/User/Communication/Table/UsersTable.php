@@ -60,6 +60,8 @@ class UsersTable extends AbstractTable
             self::ACTION => self::ACTION,
         ]);
 
+        $config->setRawColumns([SpyUserTableMap::COL_STATUS, self::ACTION]);
+
         $config->setSortable([
             SpyUserTableMap::COL_USERNAME,
             SpyUserTableMap::COL_FIRST_NAME,

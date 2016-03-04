@@ -64,6 +64,8 @@ class AddressTable extends AbstractTable
             self::ACTIONS => 'Actions',
         ]);
 
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS,
             SpyCustomerAddressTableMap::COL_FIRST_NAME,
