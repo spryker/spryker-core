@@ -16,11 +16,11 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idSalesOrder
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function querySalesOrderById($idSalesOrder);
+    public function querySalesOrderById($idOrder);
 
     /**
      * @api
@@ -32,7 +32,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @var int
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -41,7 +41,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @var int
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -73,11 +73,11 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idSalesOrderAddress
+     * @param int $idOrderAddress
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
      */
-    public function querySalesOrderAddressById($idSalesOrderAddress);
+    public function querySalesOrderAddressById($idOrderAddress);
 
     /**
      * @api
@@ -92,11 +92,11 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idSalesOrder
+     * @param int $idOrder
      * @param int $idCustomer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function querySalesOrderDetails($idSalesOrder, $idCustomer);
+    public function querySalesOrderDetails($idOrder, $idCustomer);
 
 }

@@ -36,7 +36,6 @@ interface CalculationFacadeInterface
      * @api
      *
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
      */

@@ -19,6 +19,8 @@ class UrlGeneratorServiceProvider implements ServiceProviderInterface
     /**
      * {@inheritdoc}
      *
+     * @param \Silex\Application $app
+     *
      * @return void
      */
     public function register(Application $app)
@@ -32,6 +34,8 @@ class UrlGeneratorServiceProvider implements ServiceProviderInterface
 
     /**
      * @codeCoverageIgnore
+     *
+     * @param \Silex\Application $app
      *
      * @return void
      */

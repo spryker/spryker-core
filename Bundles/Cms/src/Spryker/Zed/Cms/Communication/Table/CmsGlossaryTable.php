@@ -49,7 +49,6 @@ class CmsGlossaryTable extends AbstractTable
      * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      * @param int $idPage
      * @param array $placeholders
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      * @param array $searchArray
      */
     public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, $idPage, array $placeholders = [], array $searchArray = [])

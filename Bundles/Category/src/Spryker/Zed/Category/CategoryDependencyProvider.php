@@ -27,7 +27,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_GRAPH = 'graph plugin';
 
     /**
-     * @var \Spryker\Zed\Kernel\Container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

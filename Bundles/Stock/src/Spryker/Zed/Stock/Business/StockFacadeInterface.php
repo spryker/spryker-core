@@ -71,8 +71,8 @@ interface StockFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param int $decrementBy
      * @param string $stockType
+     * @param int $decrementBy
      *
      * @return void
      */
@@ -82,8 +82,8 @@ interface StockFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param int $incrementBy
      * @param string $stockType
+     * @param int $incrementBy
      *
      * @return void
      */
