@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cart\Business;
 
 use Spryker\Zed\Cart\Business\Model\Operation;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -25,11 +24,11 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function createCartOperation()
     {
         return new Operation(
-             $this->createStorageProvider(),
-             $this->getCalculatorFacade(),
-             $this->getItemGrouperFacade(),
-             $this->getMessengerFacade(),
-             $this->getItemExpanderPlugins()
+            $this->createStorageProvider(),
+            $this->getCalculatorFacade(),
+            $this->getItemGrouperFacade(),
+            $this->getMessengerFacade(),
+            $this->getItemExpanderPlugins()
         );
     }
 

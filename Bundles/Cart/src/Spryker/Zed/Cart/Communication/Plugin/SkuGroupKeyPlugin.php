@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\Cart\Communication\Plugin;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 

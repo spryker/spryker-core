@@ -1,20 +1,24 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payment\Business\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Payment\PaymentDependencyProvider;
-use Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
+use Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException;
+use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentPluginExecutor
 {
+
+
     /**
      * @var array
      */
@@ -29,7 +33,7 @@ class PaymentPluginExecutor
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -40,7 +44,7 @@ class PaymentPluginExecutor
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -51,7 +55,7 @@ class PaymentPluginExecutor
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      *
@@ -64,11 +68,11 @@ class PaymentPluginExecutor
 
     /**
      * @param string $pluginType
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @throws PaymentProviderNotFoundException
+     * @throws \Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException
      *
-     * @return CheckoutPreConditionInterface|CheckoutSaveOrderInterface|CheckoutPostSaveHookInterface
+     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface
      */
     protected function findPlugin($pluginType, QuoteTransfer $quoteTransfer)
     {
@@ -80,7 +84,7 @@ class PaymentPluginExecutor
         if (array_key_exists($paymentProviderName, $plugins) === false) {
             throw new PaymentProviderNotFoundException(
                 sprintf(
-                  'Payment provider with name "%s" is not register in checkout "%s" stack. You can add it in "%s".',
+                    'Payment provider with name "%s" is not register in checkout "%s" stack. You can add it in "%s".',
                     $paymentProviderName,
                     $pluginType,
                     PaymentDependencyProvider::class
@@ -92,7 +96,7 @@ class PaymentPluginExecutor
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -102,4 +106,5 @@ class PaymentPluginExecutor
         $quoteTransfer->getPayment()
             ->requirePaymentProvider();
     }
+
 }

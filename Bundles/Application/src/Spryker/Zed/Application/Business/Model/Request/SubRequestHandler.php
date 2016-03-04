@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Application\Business\Model\Request;
 
 use Silex\Application;
@@ -10,12 +15,12 @@ class SubRequestHandler implements SubRequestHandlerInterface
 {
 
     /**
-     * @var Application
+     * @var \Silex\Application
      */
     protected $app;
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      */
     public function __construct(Application $app)
     {
@@ -23,7 +28,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $url
      * @param array $additionalSubRequestParameters
      *
@@ -44,7 +49,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $parameters
      * @return array
      */
@@ -64,11 +69,11 @@ class SubRequestHandler implements SubRequestHandlerInterface
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $url
      * @param array $subRequestParameters
      *
-     * @return Request
+     * @return \Symfony\Component\HttpFoundation\Request
      */
     protected function createSubRequest(Request $request, $url, array $subRequestParameters)
     {
@@ -108,7 +113,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
     }
 
     /**
-     * @param Request $subRequest
+     * @param \Symfony\Component\HttpFoundation\Request $subRequest
      * @param array|string[] $urlParts
      *
      * @return void
@@ -119,4 +124,5 @@ class SubRequestHandler implements SubRequestHandlerInterface
         $subRequest->attributes->set('controller', $urlParts[1]);
         $subRequest->attributes->set('action', $urlParts[2]);
     }
+
 }

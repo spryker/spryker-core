@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\SalesSplit\Business;
@@ -17,6 +18,7 @@ use Spryker\Zed\SalesSplit\SalesSplitDependencyProvider;
  */
 class SalesSplitBusinessFactory extends AbstractBusinessFactory
 {
+
     /**
      * @return \Spryker\Zed\SalesSplit\Business\Model\OrderItemSplitInterface
      */
@@ -50,6 +52,7 @@ class SalesSplitBusinessFactory extends AbstractBusinessFactory
      */
     protected function getSalesQueryContainer()
     {
-       return $this->getProvidedDependency(SalesSplitDependencyProvider::SALES_QUERY_CONTAINER);
+        return $this->getProvidedDependency(SalesSplitDependencyProvider::SALES_QUERY_CONTAINER);
     }
+
 }

@@ -10,9 +10,9 @@ namespace Functional\Spryker\Zed\Discount\Business\DecisionRule;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use Spryker\Zed\Kernel\Locator;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 
 /**
  * @group DiscountDecisionRuleMinimumCartSubtotalTest

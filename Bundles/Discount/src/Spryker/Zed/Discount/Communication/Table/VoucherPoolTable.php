@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Discount\Communication\Table;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Shared\Discount\DiscountConstants;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -38,6 +38,7 @@ class VoucherPoolTable extends AbstractTable
      * @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
      */
     protected $poolQuery;
+
     /**
      * @var array
      */

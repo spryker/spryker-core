@@ -9,8 +9,8 @@ namespace Unit\Spryker\Zed\Checkout\Business\Workflow;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Unit\Spryker\Zed\Checkout\Business\Fixture\MockOrderSaver;

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Discount;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
@@ -19,7 +20,6 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider

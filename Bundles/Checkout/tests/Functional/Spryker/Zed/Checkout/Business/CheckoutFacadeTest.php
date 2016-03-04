@@ -8,23 +8,14 @@
 namespace Functional\Spryker\Zed\Checkout\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Shared\Oms\OmsConstants;
-use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
-use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
-use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
-use Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Shared\Checkout\CheckoutConstants;
-use Spryker\Zed\Checkout\Business\CheckoutFacade;
-use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -33,6 +24,15 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Shared\Oms\OmsConstants;
+use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
+use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
+use Spryker\Zed\Checkout\Business\CheckoutFacade;
+use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
+use Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin;
 
 /**

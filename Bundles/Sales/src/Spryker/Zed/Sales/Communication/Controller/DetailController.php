@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Communication\Controller;
@@ -50,8 +51,8 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param OrderTransfer $orderTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array|string
      */
@@ -77,7 +78,7 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $data
      *
      * @return array
@@ -90,7 +91,7 @@ class DetailController extends AbstractController
         $responseData = [];
         /**
          * @var string $blockName
-         * @var Response $blockResponse
+         * @var \Symfony\Component\HttpFoundation\Response $blockResponse
          */
         foreach ($data as $blockName => $blockUrl) {
             $responseData[$blockName] = $this->renderAction($subRequest, $blockUrl);
@@ -98,4 +99,5 @@ class DetailController extends AbstractController
 
         return $responseData;
     }
+
 }

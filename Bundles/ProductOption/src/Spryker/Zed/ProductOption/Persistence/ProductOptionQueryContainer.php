@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductOption\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionConfigurationPresetTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionConfigurationPresetValueTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionTypeTranslationTableMap;
@@ -18,7 +16,9 @@ use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValuePriceTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTranslationTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueUsageConstraintTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueUsageTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionPersistenceFactory getFactory()

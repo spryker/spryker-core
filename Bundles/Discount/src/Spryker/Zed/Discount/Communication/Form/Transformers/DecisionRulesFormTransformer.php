@@ -40,10 +40,12 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     private $calculatorPlugins;
+
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
      */
     private $collectorPlugins;
+
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */

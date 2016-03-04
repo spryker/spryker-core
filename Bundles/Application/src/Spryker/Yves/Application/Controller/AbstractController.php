@@ -8,22 +8,13 @@
 namespace Spryker\Yves\Application\Controller;
 
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Generated\Yves\Ide\AutoCompletion;
-use Pyz\Yves\Application\Business\Model\FlashMessengerInterface;
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Yves\Application\Application;
-use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
-use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Locator;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractController
 {
@@ -272,7 +263,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Generated\Yves\Ide\AutoCompletion
+     * @return \Generated\Client\Ide\AutoCompletion
      */
     protected function getLocator()
     {

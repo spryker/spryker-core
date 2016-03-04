@@ -10,8 +10,6 @@ namespace Spryker\Zed\Payone\Business\Order;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Propel\Runtime\Propel;
-use Spryker\Zed\Payone\PayoneConfig;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneDetail;
 use Propel\Runtime\Propel;

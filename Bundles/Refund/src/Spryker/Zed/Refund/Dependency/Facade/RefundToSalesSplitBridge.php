@@ -1,12 +1,16 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Refund\Dependency\Facade;
 
 class RefundToSalesSplit implements RefundToSalesSplitInterface
 {
+
+
     /**
      * @var \Spryker\Zed\SalesSplit\Business\SalesSplitFacade SalesSplitFacade
      */
@@ -31,4 +35,5 @@ class RefundToSalesSplit implements RefundToSalesSplitInterface
     {
         return $this->salesSplitFacade->splitSalesOrderItem($idSalesOrderItem, $quantity);
     }
+
 }

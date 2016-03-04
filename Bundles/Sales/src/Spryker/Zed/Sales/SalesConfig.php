@@ -20,7 +20,6 @@ class SalesConfig extends AbstractBundleConfig
     const PARAM_IS_SALES_ORDER = 'id-sales-order';
     const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
-
     /**
      * TODO Not needed, remove
      * this is used in project level src/Pyz/Zed/Sales/SalesConfig.php:28
@@ -94,7 +93,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * This method provides list of urls to render blocks inside order detail page.
-     * Url defines path to external bundle controller.  For example: /discount/sales/list would call discount bundle, sales controller, list action.
+     * Url defines path to external bundle controller. For example: /discount/sales/list would call discount bundle, sales controller, list action.
      * Action should return return array or redirect response.
      *
      * example:

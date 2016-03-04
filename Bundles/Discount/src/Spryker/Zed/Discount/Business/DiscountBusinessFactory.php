@@ -24,9 +24,9 @@ use Spryker\Zed\Discount\Business\Model\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpensesWithDiscounts;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts;
 use Spryker\Zed\Discount\Business\Model\VoucherCode;
 use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
 use Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter;
@@ -267,8 +267,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
                 $this->createItemCollector(),
                 $this->createItemProductOptionCollector(),
                 $this->createOrderExpenseCollector(),
-            ]
-        );
+            ]);
     }
 
     /**

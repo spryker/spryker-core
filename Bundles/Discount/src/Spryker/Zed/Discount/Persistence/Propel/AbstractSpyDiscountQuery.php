@@ -21,4 +21,3 @@ use Orm\Zed\Discount\Persistence\Base\SpyDiscountQuery as BaseSpyDiscountQuery;
 abstract class AbstractSpyDiscountQuery extends BaseSpyDiscountQuery
 {
 } // SpyDiscountQuery
-

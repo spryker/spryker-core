@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountCode;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountOrderSaver implements DiscountSaverInterface
 {

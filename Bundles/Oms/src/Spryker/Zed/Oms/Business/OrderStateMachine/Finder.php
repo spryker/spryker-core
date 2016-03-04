@@ -375,6 +375,4 @@ class Finder implements FinderInterface
         return $state->getDisplay();
     }
 
-
-
 }

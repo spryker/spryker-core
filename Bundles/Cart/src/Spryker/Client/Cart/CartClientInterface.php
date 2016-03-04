@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Cart;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartClientInterface
 {

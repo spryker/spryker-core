@@ -8,16 +8,16 @@
 namespace Functional\Spryker\Zed\ProductCartConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
-use Spryker\Zed\Locale\Business\LocaleFacade;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 
 /**
  * @group Spryker

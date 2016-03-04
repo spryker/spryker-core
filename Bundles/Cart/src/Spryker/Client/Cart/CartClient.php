@@ -10,8 +10,8 @@ namespace Spryker\Client\Cart;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Cart\Exception\CartItemNotFoundException;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method \Spryker\Client\Cart\CartFactory getFactory()

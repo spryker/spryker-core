@@ -60,4 +60,5 @@ interface SalesToOmsInterface
      * @return array
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+
 }

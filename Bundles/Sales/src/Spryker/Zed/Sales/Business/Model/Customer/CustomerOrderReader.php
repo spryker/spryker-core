@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Business\Model\Customer;
@@ -21,13 +22,13 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected $queryContainer;
 
     /**
-     * @var SalesToSalesAggregatorInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface
      */
     protected $salesAggregatorFacade;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
-     * @param SalesToSalesAggregatorInterface $salesAggregatorFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,

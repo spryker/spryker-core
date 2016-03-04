@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -166,4 +166,5 @@ class SalesFacade extends AbstractFacade
             ->createOrderAddressUpdater()
             ->update($addressesTransfer, $idAddress);
     }
+
 }

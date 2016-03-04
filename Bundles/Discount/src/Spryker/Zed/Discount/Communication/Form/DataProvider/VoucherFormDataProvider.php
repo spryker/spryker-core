@@ -25,6 +25,7 @@ class VoucherFormDataProvider
      * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
+
     /**
      * @var array
      */

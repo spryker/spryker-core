@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\Discount\Business;
 
+use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\CartRuleTransfer;
-use Generated\Shared\Transfer\DecisionRuleTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -134,7 +134,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return self
+     * @return $this
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
     {

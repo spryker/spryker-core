@@ -10,8 +10,8 @@ namespace Spryker\Zed\Discount\Communication\Table;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Shared\Url\Url;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 

@@ -9,8 +9,8 @@ namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
@@ -373,10 +373,10 @@ abstract class AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $blockUrl
      *
-     * @return string|RedirectResponse
+     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function renderAction(Request $request, $blockUrl)
     {
@@ -389,7 +389,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return SubRequestHandlerInterface
+     * @return \Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface
      */
     protected function getSubrequestHandler()
     {

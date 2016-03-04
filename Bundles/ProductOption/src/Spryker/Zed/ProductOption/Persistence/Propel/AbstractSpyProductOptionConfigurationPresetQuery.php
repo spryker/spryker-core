@@ -21,4 +21,3 @@ use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionConfigurationPresetQu
 abstract class AbstractSpyProductOptionConfigurationPresetQuery extends BaseSpyProductOptionConfigurationPresetQuery
 {
 } // SpyProductOptionConfigurationPresetQuery
-

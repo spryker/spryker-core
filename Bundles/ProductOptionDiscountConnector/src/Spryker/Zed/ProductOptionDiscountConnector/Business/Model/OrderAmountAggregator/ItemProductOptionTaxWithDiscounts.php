@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
@@ -52,11 +54,13 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
                 ->requireSumGrossPriceWithProductOptionAndDiscountAmounts();
 
             $unitTaxAmount = $this->taxFacade->getTaxAmountFromGrossPrice(
-                $itemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts(), $effectiveTaxRate
+                $itemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts(),
+                $effectiveTaxRate
             );
 
             $sumTaxAmount = $this->taxFacade->getTaxAmountFromGrossPrice(
-                $itemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts(), $effectiveTaxRate
+                $itemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts(),
+                $effectiveTaxRate
             );
 
             $itemTransfer->setUnitTaxAmountWithProductOptionAndDiscountAmounts($unitTaxAmount);

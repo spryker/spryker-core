@@ -122,7 +122,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param ObjectCollection $salesOrderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
      * @return void
      */

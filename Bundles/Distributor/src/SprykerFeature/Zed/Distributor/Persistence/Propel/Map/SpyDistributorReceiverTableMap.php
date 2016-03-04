@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Distributor\Persistence\Propel\Map;
 
-use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
 use Propel\Runtime\Connection\ConnectionInterface;
@@ -11,9 +10,9 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Map\TableMapTrait;
+use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorReceiver;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorReceiverQuery;
-
 
 /**
  * This class defines the structure of the 'spy_distributor_receiver' table.
@@ -28,6 +27,7 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorReceiverQuer
  */
 class SpyDistributorReceiverTableMap extends TableMap
 {
+
     use InstancePoolTrait;
     use TableMapTrait;
 
@@ -92,13 +92,13 @@ class SpyDistributorReceiverTableMap extends TableMap
      * first dimension keys are the type constants
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
-    protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('IdDistributorReceiver', 'ReceiverKey', ),
-        self::TYPE_CAMELNAME     => array('idDistributorReceiver', 'receiverKey', ),
-        self::TYPE_COLNAME       => array(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER, SpyDistributorReceiverTableMap::COL_RECEIVER_KEY, ),
-        self::TYPE_FIELDNAME     => array('id_distributor_receiver', 'receiver_key', ),
-        self::TYPE_NUM           => array(0, 1, )
-    );
+    protected static $fieldNames =  [
+        self::TYPE_PHPNAME       => ['IdDistributorReceiver', 'ReceiverKey', ],
+        self::TYPE_CAMELNAME     => ['idDistributorReceiver', 'receiverKey', ],
+        self::TYPE_COLNAME       => [SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER, SpyDistributorReceiverTableMap::COL_RECEIVER_KEY, ],
+        self::TYPE_FIELDNAME     => ['id_distributor_receiver', 'receiver_key', ],
+        self::TYPE_NUM           => [0, 1, ]
+    ];
 
     /**
      * holds an array of keys for quick access to the fieldnames array
@@ -106,13 +106,13 @@ class SpyDistributorReceiverTableMap extends TableMap
      * first dimension keys are the type constants
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
-    protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('IdDistributorReceiver' => 0, 'ReceiverKey' => 1, ),
-        self::TYPE_CAMELNAME     => array('idDistributorReceiver' => 0, 'receiverKey' => 1, ),
-        self::TYPE_COLNAME       => array(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER => 0, SpyDistributorReceiverTableMap::COL_RECEIVER_KEY => 1, ),
-        self::TYPE_FIELDNAME     => array('id_distributor_receiver' => 0, 'receiver_key' => 1, ),
-        self::TYPE_NUM           => array(0, 1, )
-    );
+    protected static $fieldKeys =  [
+        self::TYPE_PHPNAME       => ['IdDistributorReceiver' => 0, 'ReceiverKey' => 1, ],
+        self::TYPE_CAMELNAME     => ['idDistributorReceiver' => 0, 'receiverKey' => 1, ],
+        self::TYPE_COLNAME       => [SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER => 0, SpyDistributorReceiverTableMap::COL_RECEIVER_KEY => 1, ],
+        self::TYPE_FIELDNAME     => ['id_distributor_receiver' => 0, 'receiver_key' => 1, ],
+        self::TYPE_NUM           => [0, 1, ]
+    ];
 
     /**
      * Initialize the table attributes and columns
@@ -134,23 +134,27 @@ class SpyDistributorReceiverTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id_distributor_receiver', 'IdDistributorReceiver', 'INTEGER', true, null, null);
         $this->addColumn('receiver_key', 'ReceiverKey', 'VARCHAR', true, 255, null);
-    } // initialize()
+    }
+
+ // initialize()
 
     /**
      * Build the RelationMap objects for this table relationships
      */
     public function buildRelations()
     {
-    } // buildRelations()
+    }
+
+ // buildRelations()
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
      *
-     * For tables with a single-column primary key, that simple pkey value will be returned.  For tables with
+     * For tables with a single-column primary key, that simple pkey value will be returned. For tables with
      * a multi-column primary key, a serialize()d version of the primary key will be returned.
      *
-     * @param array  $row       resultset row.
-     * @param int    $offset    The 0-based offset for reading from the resultset row.
+     * @param array $row resultset row.
+     * @param int $offset The 0-based offset for reading from the resultset row.
      * @param string $indexType One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                           TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM
      *
@@ -163,16 +167,16 @@ class SpyDistributorReceiverTableMap extends TableMap
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('IdDistributorReceiver', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string)$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('IdDistributorReceiver', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
      * Retrieves the primary key from the DB resultset row
-     * For tables with a single-column primary key, that simple pkey value will be returned.  For tables with
+     * For tables with a single-column primary key, that simple pkey value will be returned. For tables with
      * a multi-column primary key, an array of the primary key columns will be returned.
      *
-     * @param array  $row       resultset row.
-     * @param int    $offset    The 0-based offset for reading from the resultset row.
+     * @param array $row resultset row.
+     * @param int $offset The 0-based offset for reading from the resultset row.
      * @param string $indexType One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                           TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM
      *
@@ -180,11 +184,9 @@ class SpyDistributorReceiverTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (int) $row[
-            $indexType == TableMap::TYPE_NUM
+        return (int)$row[$indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('IdDistributorReceiver', TableMap::TYPE_PHPNAME, $indexType)
-        ];
+                : self::translateFieldName('IdDistributorReceiver', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -206,15 +208,15 @@ class SpyDistributorReceiverTableMap extends TableMap
     /**
      * Populates an object of the default type or an object that inherit from the default.
      *
-     * @param array  $row       row returned by DataFetcher->fetch().
-     * @param int    $offset    The 0-based offset for reading from the resultset row.
+     * @param array $row row returned by DataFetcher->fetch().
+     * @param int $offset The 0-based offset for reading from the resultset row.
      * @param string $indexType The index type of $row. Mostly DataFetcher->getIndexType().
                                  One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                           TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *
      * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (SpyDistributorReceiver object, last column rank)
+     * @return array (SpyDistributorReceiver object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
@@ -235,7 +237,7 @@ class SpyDistributorReceiverTableMap extends TableMap
             SpyDistributorReceiverTableMap::addInstanceToPool($obj, $key);
         }
 
-        return array($obj, $col);
+        return [$obj, $col];
     }
 
     /**
@@ -249,7 +251,7 @@ class SpyDistributorReceiverTableMap extends TableMap
      */
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
-        $results = array();
+        $results = [];
 
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
@@ -275,6 +277,7 @@ class SpyDistributorReceiverTableMap extends TableMap
 
         return $results;
     }
+
     /**
      * Add all the columns needed to create a new object.
      *
@@ -283,7 +286,7 @@ class SpyDistributorReceiverTableMap extends TableMap
      * on demand.
      *
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria object containing the columns to add.
-     * @param string   $alias    optional table alias
+     * @param string $alias optional table alias
      * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
@@ -324,16 +327,16 @@ class SpyDistributorReceiverTableMap extends TableMap
     /**
      * Performs a DELETE on the database, given a SpyDistributorReceiver or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or SpyDistributorReceiver object or primary key or array of primary keys
+     * @param mixed $values Criteria or SpyDistributorReceiver object or primary key or array of primary keys
      *              which is used to create the DELETE statement
-     * @param  \Propel\Runtime\Connection\ConnectionInterface $con the connection to use
-     * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con the connection to use
+     * @return int The number of affected rows (if supported by underlying database driver). This includes CASCADE-related rows
      *                         if supported by native driver or if emulated using Propel.
      * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
-     public static function doDelete($values, ConnectionInterface $con = null)
-     {
+    public static function doDelete($values, ConnectionInterface $con = null)
+    {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(SpyDistributorReceiverTableMap::DATABASE_NAME);
         }
@@ -346,7 +349,7 @@ class SpyDistributorReceiverTableMap extends TableMap
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(SpyDistributorReceiverTableMap::DATABASE_NAME);
-            $criteria->add(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER, (array) $values, Criteria::IN);
+            $criteria->add(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER, (array)$values, Criteria::IN);
         }
 
         $query = SpyDistributorReceiverQuery::create()->mergeWith($criteria);
@@ -354,7 +357,7 @@ class SpyDistributorReceiverTableMap extends TableMap
         if ($values instanceof Criteria) {
             SpyDistributorReceiverTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
-            foreach ((array) $values as $singleval) {
+            foreach ((array)$values as $singleval) {
                 SpyDistributorReceiverTableMap::removeInstanceFromPool($singleval);
             }
         }
@@ -376,9 +379,9 @@ class SpyDistributorReceiverTableMap extends TableMap
     /**
      * Performs an INSERT on the database, given a SpyDistributorReceiver or Criteria object.
      *
-     * @param mixed               $criteria Criteria or SpyDistributorReceiver object containing data that is used to create the INSERT statement.
+     * @param mixed $criteria Criteria or SpyDistributorReceiver object containing data that is used to create the INSERT statement.
      * @param \Propel\Runtime\Connection\ConnectionInterface $con the ConnectionInterface connection to use
-     * @return mixed           The new primary key.
+     * @return mixed The new primary key.
      * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
@@ -394,10 +397,9 @@ class SpyDistributorReceiverTableMap extends TableMap
             $criteria = $criteria->buildCriteria(); // build Criteria from SpyDistributorReceiver object
         }
 
-        if ($criteria->containsKey(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER) && $criteria->keyContainsValue(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER) ) {
+        if ($criteria->containsKey(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER) && $criteria->keyContainsValue(SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER)) {
             throw new PropelException('Cannot insert a value for auto-increment primary key ('.SpyDistributorReceiverTableMap::COL_ID_DISTRIBUTOR_RECEIVER.')');
         }
-
 
         // Set the correct dbName
         $query = SpyDistributorReceiverQuery::create()->mergeWith($criteria);

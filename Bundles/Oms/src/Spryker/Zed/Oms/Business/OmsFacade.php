@@ -428,4 +428,5 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
             ->createOrderStateMachineFinder()
             ->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
     }
+
 }

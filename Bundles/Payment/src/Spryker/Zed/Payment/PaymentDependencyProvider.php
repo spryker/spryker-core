@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payment;
@@ -10,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 
 class PaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const CHECKOUT_PLUGINS = 'checkout plugins';
     const CHECKOUT_PRE_CHECK_PLUGINS = 'pre check';
     const CHECKOUT_ORDER_SAVER_PLUGINS = 'order saver';
@@ -30,7 +33,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      * @return array
      */
     protected function getCheckoutPlugins(Container $container)
@@ -41,4 +44,5 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
             self::CHECKOUT_POST_SAVE_PLUGINS => [],
         ];
     }
+
 }

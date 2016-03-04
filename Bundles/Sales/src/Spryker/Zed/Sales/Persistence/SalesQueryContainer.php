@@ -217,7 +217,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @param ObjectCollection $salesOrderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
      * @return void
      */

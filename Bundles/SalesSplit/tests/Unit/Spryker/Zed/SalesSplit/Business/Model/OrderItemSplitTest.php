@@ -7,14 +7,14 @@
 
 namespace Unit\Spryker\Zed\SalesSplit\Business\Model\Validation;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface;
-use Spryker\Zed\SalesSplit\Business\Model\OrderOrderItemSplitSplit;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface;
+use Spryker\Zed\SalesSplit\Business\Model\OrderOrderItemSplitSplit;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
 {

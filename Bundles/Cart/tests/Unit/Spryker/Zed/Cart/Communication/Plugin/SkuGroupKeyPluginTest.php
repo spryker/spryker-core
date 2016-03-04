@@ -9,9 +9,9 @@ namespace Unit\Spryker\Zed\Cart\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
 use Spryker\Zed\Kernel\Communication\Factory;
 use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
 
 /**
  * @group Spryker

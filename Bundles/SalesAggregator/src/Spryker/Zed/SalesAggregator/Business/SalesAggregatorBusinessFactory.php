@@ -1,11 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\SalesAggregator\Business;
 
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ExpenseTax;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ExpenseTotal;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\GrandTotal;
@@ -14,7 +16,6 @@ use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ItemTax;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderTaxAmount;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\Subtotal;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderTotalsAggregator;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesAggregator\SalesAggregatorDependencyProvider;
 
 /**

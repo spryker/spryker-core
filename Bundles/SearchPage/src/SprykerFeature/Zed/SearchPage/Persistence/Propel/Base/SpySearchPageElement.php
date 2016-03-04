@@ -2,9 +2,6 @@
 
 namespace SprykerFeature\Zed\SearchPage\Persistence\Propel\Base;
 
-use \Exception;
-use \PDO;
-use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
@@ -15,27 +12,30 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
+use Propel\Runtime\Propel;
+use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchPageElementTableMap;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute as ChildSpySearchDocumentAttribute;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttributeQuery as ChildSpySearchDocumentAttributeQuery;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementQuery as ChildSpySearchPageElementQuery;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplate as ChildSpySearchPageElementTemplate;
 use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplateQuery as ChildSpySearchPageElementTemplateQuery;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchPageElementTableMap;
+use \Exception;
+use \PDO;
 
 /**
  * Base class that represents a row from the 'spy_search_page_element' table.
  *
  *
  *
-* @package    propel.generator.vendor.spryker.spryker.Bundles.SearchPage.src.SprykerFeature.Zed.SearchPage.Persistence.Propel.Base
-*/
+ * @package propel.generator.vendor.spryker.spryker.Bundles.SearchPage.src.SprykerFeature.Zed.SearchPage.Persistence.Propel.Base
+ */
 abstract class SpySearchPageElement implements ActiveRecordInterface
 {
+
     /**
      * TableMap class name
      */
     const TABLE_MAP = '\\SprykerFeature\\Zed\\SearchPage\\Persistence\\Propel\\Map\\SpySearchPageElementTableMap';
-
 
     /**
      * attribute to determine if this object has previously been saved.
@@ -54,53 +54,53 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * Tracking modified columns allows us to only update modified columns.
      * @var array
      */
-    protected $modifiedColumns = array();
+    protected $modifiedColumns = [];
 
     /**
      * The (virtual) columns that are added at runtime
      * The formatters can add supplementary columns based on a resultset
      * @var array
      */
-    protected $virtualColumns = array();
+    protected $virtualColumns = [];
 
     /**
      * The value for the id_search_page_element field.
-     * @var        int
+     * @var int
      */
     protected $id_search_page_element;
 
     /**
      * The value for the element_key field.
-     * @var        string
+     * @var string
      */
     protected $element_key;
 
     /**
      * The value for the is_element_active field.
      * Note: this column has a database default value of: false
-     * @var        boolean
+     * @var boolean
      */
     protected $is_element_active;
 
     /**
      * The value for the fk_search_document_attribute field.
-     * @var        int
+     * @var int
      */
     protected $fk_search_document_attribute;
 
     /**
      * The value for the fk_search_page_element_template field.
-     * @var        int
+     * @var int
      */
     protected $fk_search_page_element_template;
 
     /**
-     * @var        \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute
+     * @var \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute
      */
     protected $aDocumentAttribute;
 
     /**
-     * @var        \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplate
+     * @var \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplate
      */
     protected $aElementTemplate;
 
@@ -139,13 +139,13 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      */
     public function isModified()
     {
-        return !!$this->modifiedColumns;
+        return (bool)$this->modifiedColumns;
     }
 
     /**
      * Has specified column been modified?
      *
-     * @param  string  $col column fully qualified name (TableMap::TYPE_COLNAME), e.g. Book::AUTHOR_ID
+     * @param string $col column fully qualified name (TableMap::TYPE_COLNAME), e.g. Book::AUTHOR_ID
      * @return boolean True if $col has been modified.
      */
     public function isColumnModified($col)
@@ -163,7 +163,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     }
 
     /**
-     * Returns whether the object has ever been saved.  This will
+     * Returns whether the object has ever been saved. This will
      * be false, if the object was retrieved from storage or was created
      * and then saved.
      *
@@ -175,14 +175,14 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     }
 
     /**
-     * Setter for the isNew attribute.  This method will be called
+     * Setter for the isNew attribute. This method will be called
      * by Propel-generated children and objects.
      *
      * @param boolean $b the state of the object.
      */
     public function setNew($b)
     {
-        $this->new = (boolean) $b;
+        $this->new = (bool)$b;
     }
 
     /**
@@ -196,17 +196,17 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
 
     /**
      * Specify whether this object has been deleted.
-     * @param  boolean $b The deleted state of this object.
+     * @param boolean $b The deleted state of this object.
      * @return void
      */
     public function setDeleted($b)
     {
-        $this->deleted = (boolean) $b;
+        $this->deleted = (bool)$b;
     }
 
     /**
      * Sets the modified state for the object to be false.
-     * @param  string $col If supplied, only the specified column is reset.
+     * @param string $col If supplied, only the specified column is reset.
      * @return void
      */
     public function resetModified($col = null)
@@ -216,16 +216,16 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
                 unset($this->modifiedColumns[$col]);
             }
         } else {
-            $this->modifiedColumns = array();
+            $this->modifiedColumns = [];
         }
     }
 
     /**
-     * Compares this with another <code>SpySearchPageElement</code> instance.  If
+     * Compares this with another <code>SpySearchPageElement</code> instance. If
      * <code>obj</code> is an instance of <code>SpySearchPageElement</code>, delegates to
-     * <code>equals(SpySearchPageElement)</code>.  Otherwise, returns <code>false</code>.
+     * <code>equals(SpySearchPageElement)</code>. Otherwise, returns <code>false</code>.
      *
-     * @param  mixed   $obj The object to compare to.
+     * @param mixed $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
      */
     public function equals($obj)
@@ -258,7 +258,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Checks the existence of a virtual column in this object
      *
-     * @param  string  $name The virtual column name
+     * @param string $name The virtual column name
      * @return boolean
      */
     public function hasVirtualColumn($name)
@@ -269,7 +269,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Get the value of a virtual column in this object
      *
-     * @param  string $name The virtual column name
+     * @param string $name The virtual column name
      * @return mixed
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -286,8 +286,8 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Set the value of a virtual column in this object
      *
-     * @param string $name  The virtual column name
-     * @param mixed  $value The value to give to the virtual column
+     * @param string $name The virtual column name
+     * @param mixed $value The value to give to the virtual column
      *
      * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\Base\SpySearchPageElement The current object, for fluid interface
      */
@@ -301,8 +301,8 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Logs a message using Propel::log().
      *
-     * @param  string  $msg
-     * @param  int     $priority One of the Propel::LOG_* logging levels
+     * @param string $msg
+     * @param int $priority One of the Propel::LOG_* logging levels
      * @return boolean
      */
     protected function log($msg, $priority = Propel::LOG_INFO)
@@ -318,9 +318,9 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      *  => {"Id":9012,"Title":"Don Juan","ISBN":"0140422161","Price":12.99,"PublisherId":1234,"AuthorId":5678}');
      * </code>
      *
-     * @param  mixed   $parser                 A AbstractParser instance, or a format name ('XML', 'YAML', 'JSON', 'CSV')
-     * @param  boolean $includeLazyLoadColumns (optional) Whether to include lazy load(ed) columns. Defaults to TRUE.
-     * @return string  The exported data
+     * @param mixed $parser A AbstractParser instance, or a format name ('XML', 'YAML', 'JSON', 'CSV')
+     * @param boolean $includeLazyLoadColumns (optional) Whether to include lazy load(ed) columns. Defaults to TRUE.
+     * @return string The exported data
      */
     public function exportTo($parser, $includeLazyLoadColumns = true)
     {
@@ -328,7 +328,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
             $parser = AbstractParser::getParser($parser);
         }
 
-        return $parser->fromArray($this->toArray(TableMap::TYPE_PHPNAME, $includeLazyLoadColumns, array(), true));
+        return $parser->fromArray($this->toArray(TableMap::TYPE_PHPNAME, $includeLazyLoadColumns, [], true));
     }
 
     /**
@@ -411,7 +411,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     public function setIdSearchPageElement($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (int)$v;
         }
 
         if ($this->id_search_page_element !== $v) {
@@ -420,7 +420,9 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
         }
 
         return $this;
-    } // setIdSearchPageElement()
+    }
+
+ // setIdSearchPageElement()
 
     /**
      * Set the value of [element_key] column.
@@ -431,7 +433,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     public function setElementKey($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (string)$v;
         }
 
         if ($this->element_key !== $v) {
@@ -440,31 +442,33 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
         }
 
         return $this;
-    } // setElementKey()
+    }
+
+ // setElementKey()
 
     /**
      * Sets the value of the [is_element_active] column.
      * Non-boolean arguments are converted using the following rules:
-     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
-     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     *   * 1, '1', 'true', 'on', and 'yes' are converted to boolean true
+     *   * 0, '0', 'false', 'off', and 'no' are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
      *
-     * @param  boolean|integer|string $v The new value
+     * @param boolean|integer|string $v The new value
      * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement The current object (for fluent API support)
      */
     public function setIsElementActive($v)
     {
         if ($v !== null) {
             if (is_string($v)) {
-                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+                $v = in_array(strtolower($v), ['false', 'off', '-', 'no', 'n', '0', '']) ? false : true;
             } else {
-                $v = (boolean) $v;
+                $v = (bool)$v;
             }
         }
 
         $allowNullValues = false;
 
-        if (is_null($v) && !$allowNullValues) {
+        if ($v === null && !$allowNullValues) {
             return $this;
         }
 
@@ -474,7 +478,9 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
         }
 
         return $this;
-    } // setIsElementActive()
+    }
+
+ // setIsElementActive()
 
     /**
      * Set the value of [fk_search_document_attribute] column.
@@ -485,7 +491,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     public function setFkSearchDocumentAttribute($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (int)$v;
         }
 
         if ($this->fk_search_document_attribute !== $v) {
@@ -498,7 +504,9 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
         }
 
         return $this;
-    } // setFkSearchDocumentAttribute()
+    }
+
+ // setFkSearchDocumentAttribute()
 
     /**
      * Set the value of [fk_search_page_element_template] column.
@@ -509,7 +517,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     public function setFkSearchPageElementTemplate($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (int)$v;
         }
 
         if ($this->fk_search_page_element_template !== $v) {
@@ -522,7 +530,9 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
         }
 
         return $this;
-    } // setFkSearchPageElementTemplate()
+    }
+
+ // setFkSearchPageElementTemplate()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -534,30 +544,32 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->is_element_active !== false) {
-                return false;
-            }
+        if ($this->is_element_active !== false) {
+            return false;
+        }
 
         // otherwise, everything was equal, so return TRUE
         return true;
-    } // hasOnlyDefaultValues()
+    }
+
+ // hasOnlyDefaultValues()
 
     /**
      * Hydrates (populates) the object variables with values from the database resultset.
      *
      * An offset (0-based "start column") is specified so that objects can be hydrated
-     * with a subset of the columns in the resultset rows.  This is needed, for example,
+     * with a subset of the columns in the resultset rows. This is needed, for example,
      * for results of JOIN queries where the resultset row includes columns from two or
      * more tables.
      *
-     * @param array   $row       The row returned by DataFetcher->fetch().
-     * @param int     $startcol  0-based offset column which indicates which restultset column to start with.
+     * @param array $row The row returned by DataFetcher->fetch().
+     * @param int $startcol 0-based offset column which indicates which restultset column to start with.
      * @param boolean $rehydrate Whether this object is being re-hydrated from the database.
-     * @param string  $indexType The index type of $row. Mostly DataFetcher->getIndexType().
+     * @param string $indexType The index type of $row. Mostly DataFetcher->getIndexType().
                                   One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                            TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *
-     * @return int             next starting column
+     * @return int next starting column
      * @throws \Propel\Runtime\Exception\PropelException - Any caught Exception will be rewrapped as a PropelException.
      */
     public function hydrate($row, $startcol = 0, $rehydrate = false, $indexType = TableMap::TYPE_NUM)
@@ -565,19 +577,19 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
         try {
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : SpySearchPageElementTableMap::translateFieldName('IdSearchPageElement', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->id_search_page_element = (null !== $col) ? (int) $col : null;
+            $this->id_search_page_element = (null !== $col) ? (int)$col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpySearchPageElementTableMap::translateFieldName('ElementKey', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->element_key = (null !== $col) ? (string) $col : null;
+            $this->element_key = (null !== $col) ? (string)$col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SpySearchPageElementTableMap::translateFieldName('IsElementActive', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->is_element_active = (null !== $col) ? (boolean) $col : null;
+            $this->is_element_active = (null !== $col) ? (bool)$col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : SpySearchPageElementTableMap::translateFieldName('FkSearchDocumentAttribute', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->fk_search_document_attribute = (null !== $col) ? (int) $col : null;
+            $this->fk_search_document_attribute = (null !== $col) ? (int)$col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : SpySearchPageElementTableMap::translateFieldName('FkSearchPageElementTemplate', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->fk_search_page_element_template = (null !== $col) ? (int) $col : null;
+            $this->fk_search_page_element_template = (null !== $col) ? (int)$col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -597,7 +609,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * Checks and repairs the internal consistency of the object.
      *
      * This method is executed after an already-instantiated object is re-hydrated
-     * from the database.  It exists to check any foreign keys to make sure that
+     * from the database. It exists to check any foreign keys to make sure that
      * the objects related to the current object are correct based on foreign key.
      *
      * You can override this method in the stub class, but you should always invoke
@@ -614,15 +626,17 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
         if ($this->aElementTemplate !== null && $this->fk_search_page_element_template !== $this->aElementTemplate->getIdSearchPageElementTemplate()) {
             $this->aElementTemplate = null;
         }
-    } // ensureConsistency
+    }
+
+ // ensureConsistency
 
     /**
      * Reloads this object from datastore based on primary key and (optionally) resets all associated objects.
      *
      * This will only work if the object has been saved and has a valid primary key set.
      *
-     * @param      boolean $deep (optional) Whether to also de-associated any related objects.
-     * @param      \Propel\Runtime\Connection\ConnectionInterface $con (optional) The ConnectionInterface connection to use.
+     * @param boolean $deep (optional) Whether to also de-associated any related objects.
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con (optional) The ConnectionInterface connection to use.
      * @return void
      * @throws \Propel\Runtime\Exception\PropelException - if this object is deleted, unsaved or doesn't have pk match in db
      */
@@ -661,7 +675,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Removes this object from datastore and sets delete attribute.
      *
-     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      * @return void
      * @throws \Propel\Runtime\Exception\PropelException
      * @see SpySearchPageElement::setDeleted()
@@ -694,11 +708,11 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      *
      * If the object is new, it inserts it; otherwise an update is performed.
      * All modified related objects will also be persisted in the doSave()
-     * method.  This method wraps all precipitate database operations in a
+     * method. This method wraps all precipitate database operations in a
      * single transaction.
      *
-     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
-     * @return int             The number of rows affected by this insert/update and any referring fk objects' save() operations.
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     * @return int The number of rows affected by this insert/update and any referring fk objects' save() operations.
      * @throws \Propel\Runtime\Exception\PropelException
      * @see doSave()
      */
@@ -743,8 +757,8 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * If the object is new, it inserts it; otherwise an update is performed.
      * All related objects are also updated in this method.
      *
-     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
-     * @return int             The number of rows affected by this insert/update and any referring fk objects' save() operations.
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     * @return int The number of rows affected by this insert/update and any referring fk objects' save() operations.
      * @throws \Propel\Runtime\Exception\PropelException
      * @see save()
      */
@@ -789,19 +803,21 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
         }
 
         return $affectedRows;
-    } // doSave()
+    }
+
+ // doSave()
 
     /**
      * Insert the row in the database.
      *
-     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @see doSave()
      */
     protected function doInsert(ConnectionInterface $con)
     {
-        $modifiedColumns = array();
+        $modifiedColumns = [];
         $index = 0;
 
         $this->modifiedColumns[SpySearchPageElementTableMap::COL_ID_SEARCH_PAGE_ELEMENT] = true;
@@ -843,7 +859,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
                         $stmt->bindValue($identifier, $this->element_key, PDO::PARAM_STR);
                         break;
                     case 'is_element_active':
-                        $stmt->bindValue($identifier, (int) $this->is_element_active, PDO::PARAM_INT);
+                        $stmt->bindValue($identifier, (int)$this->is_element_active, PDO::PARAM_INT);
                         break;
                     case 'fk_search_document_attribute':
                         $stmt->bindValue($identifier, $this->fk_search_document_attribute, PDO::PARAM_INT);
@@ -872,7 +888,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Update the row in the database.
      *
-     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      *
      * @return Integer Number of updated rows
      * @see doSave()
@@ -888,8 +904,8 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Retrieves a field from the object by name passed in as a string.
      *
-     * @param      string $name name
-     * @param      string $type The type of fieldname the $name is of:
+     * @param string $name name
+     * @param string $type The type of fieldname the $name is of:
      *                     one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                     TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                     Defaults to TableMap::TYPE_FIELDNAME.
@@ -907,7 +923,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * Retrieves a field from the object by Position as specified in the xml schema.
      * Zero-based.
      *
-     * @param      int $pos position in xml schema
+     * @param int $pos position in xml schema
      * @return mixed Value of field at $pos
      */
     public function getByPosition($pos)
@@ -940,16 +956,16 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * You can specify the key type of the array by passing one of the class
      * type constants.
      *
-     * @param     string  $keyType (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
+     * @param string $keyType (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
      *                    TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                    Defaults to TableMap::TYPE_FIELDNAME.
-     * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
-     * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
-     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
+     * @param boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
+     * @param array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_FIELDNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
+    public function toArray($keyType = TableMap::TYPE_FIELDNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = [], $includeForeignObjects = false)
     {
 
         if (isset($alreadyDumpedObjects['SpySearchPageElement'][$this->hashCode()])) {
@@ -957,13 +973,13 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
         }
         $alreadyDumpedObjects['SpySearchPageElement'][$this->hashCode()] = true;
         $keys = SpySearchPageElementTableMap::getFieldNames($keyType);
-        $result = array(
+        $result = [
             $keys[0] => $this->getIdSearchPageElement(),
             $keys[1] => $this->getElementKey(),
             $keys[2] => $this->getIsElementActive(),
             $keys[3] => $this->getFkSearchDocumentAttribute(),
             $keys[4] => $this->getFkSearchPageElementTemplate(),
-        );
+        ];
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
@@ -1008,9 +1024,9 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Sets a field from the object by name passed in as a string.
      *
-     * @param  string $name
-     * @param  mixed  $value field value
-     * @param  string $type The type of fieldname the $name is of:
+     * @param string $name
+     * @param mixed $value field value
+     * @param string $type The type of fieldname the $name is of:
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_FIELDNAME.
@@ -1027,8 +1043,8 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * Sets a field from the object by Position as specified in the xml schema.
      * Zero-based.
      *
-     * @param  int $pos position in xml schema
-     * @param  mixed $value field value
+     * @param int $pos position in xml schema
+     * @param mixed $value field value
      * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement
      */
     public function setByPosition($pos, $value)
@@ -1058,7 +1074,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * Populates the object using an array.
      *
      * This is particularly useful when populating an object from one of the
-     * request arrays (e.g. $_POST).  This method goes through the column
+     * request arrays (e.g. $_POST). This method goes through the column
      * names, checking to see whether a matching key exists in populated
      * array. If so the setByName() method is called for that column.
      *
@@ -1067,8 +1083,8 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      * The default key type is the column's TableMap::TYPE_FIELDNAME.
      *
-     * @param      array  $arr     An array to populate the object from.
-     * @param      string $keyType The type of keys the array uses.
+     * @param array $arr An array to populate the object from.
+     * @param string $keyType The type of keys the array uses.
      * @return void
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_FIELDNAME)
@@ -1093,24 +1109,24 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     }
 
      /**
-     * Populate the current object from a string, using a given parser format
-     * <code>
-     * $book = new Book();
-     * $book->importFrom('JSON', '{"Id":9012,"Title":"Don Juan","ISBN":"0140422161","Price":12.99,"PublisherId":1234,"AuthorId":5678}');
-     * </code>
-     *
-     * You can specify the key type of the array by additionally passing one
-     * of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
-     * TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
-     * The default key type is the column's TableMap::TYPE_FIELDNAME.
-     *
-     * @param mixed $parser A AbstractParser instance,
-     *                       or a format name ('XML', 'YAML', 'JSON', 'CSV')
-     * @param string $data The source data to import from
-     * @param string $keyType The type of keys the array uses.
-     *
-     * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement The current object, for fluid interface
-     */
+      * Populate the current object from a string, using a given parser format
+      * <code>
+      * $book = new Book();
+      * $book->importFrom('JSON', '{"Id":9012,"Title":"Don Juan","ISBN":"0140422161","Price":12.99,"PublisherId":1234,"AuthorId":5678}');
+      * </code>
+      *
+      * You can specify the key type of the array by additionally passing one
+      * of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
+      * TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
+      * The default key type is the column's TableMap::TYPE_FIELDNAME.
+      *
+      * @param mixed $parser A AbstractParser instance,
+      *                       or a format name ('XML', 'YAML', 'JSON', 'CSV')
+      * @param string $data The source data to import from
+      * @param string $keyType The type of keys the array uses.
+      *
+      * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement The current object, for fluid interface
+      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_FIELDNAME)
     {
         if (!$parser instanceof AbstractParser) {
@@ -1202,7 +1218,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Generic method to set the primary key (id_search_page_element column).
      *
-     * @param       int $key Primary key.
+     * @param int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
@@ -1225,9 +1241,9 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement (or compatible) type.
-     * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
+     * @param object $copyObj An object of \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement (or compatible) type.
+     * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
+     * @param boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws \Propel\Runtime\Exception\PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
@@ -1238,7 +1254,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
         $copyObj->setFkSearchPageElementTemplate($this->getFkSearchPageElementTemplate());
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setIdSearchPageElement(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setIdSearchPageElement(null); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1250,7 +1266,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
+     * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @return \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement Clone of current object.
      * @throws \Propel\Runtime\Exception\PropelException
      */
@@ -1267,14 +1283,14 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Declares an association between this object and a ChildSpySearchDocumentAttribute object.
      *
-     * @param  \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute $v
+     * @param \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute $v
      * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement The current object (for fluent API support)
      * @throws \Propel\Runtime\Exception\PropelException
      */
     public function setDocumentAttribute(ChildSpySearchDocumentAttribute $v = null)
     {
         if ($v === null) {
-            $this->setFkSearchDocumentAttribute(NULL);
+            $this->setFkSearchDocumentAttribute(null);
         } else {
             $this->setFkSearchDocumentAttribute($v->getIdSearchDocumentAttribute());
         }
@@ -1287,7 +1303,6 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
             $v->addSpySearchPageElement($this);
         }
 
-
         return $this;
     }
 
@@ -1295,7 +1310,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Get the associated ChildSpySearchDocumentAttribute object
      *
-     * @param  \Propel\Runtime\Connection\ConnectionInterface $con Optional Connection object.
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con Optional Connection object.
      * @return \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute The associated ChildSpySearchDocumentAttribute object.
      * @throws \Propel\Runtime\Exception\PropelException
      */
@@ -1318,14 +1333,14 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Declares an association between this object and a ChildSpySearchPageElementTemplate object.
      *
-     * @param  \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplate $v
+     * @param \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplate $v
      * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement The current object (for fluent API support)
      * @throws \Propel\Runtime\Exception\PropelException
      */
     public function setElementTemplate(ChildSpySearchPageElementTemplate $v = null)
     {
         if ($v === null) {
-            $this->setFkSearchPageElementTemplate(NULL);
+            $this->setFkSearchPageElementTemplate(null);
         } else {
             $this->setFkSearchPageElementTemplate($v->getIdSearchPageElementTemplate());
         }
@@ -1338,7 +1353,6 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
             $v->addSpySearchPageElement($this);
         }
 
-
         return $this;
     }
 
@@ -1346,7 +1360,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
     /**
      * Get the associated ChildSpySearchPageElementTemplate object
      *
-     * @param  \Propel\Runtime\Connection\ConnectionInterface $con Optional Connection object.
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con Optional Connection object.
      * @return \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplate The associated ChildSpySearchPageElementTemplate object.
      * @throws \Propel\Runtime\Exception\PropelException
      */
@@ -1398,7 +1412,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * This method is used to reset all php object references (not the actual reference in the database).
      * Necessary for object serialisation.
      *
-     * @param      boolean $deep Whether to also clear the references on all referrer objects.
+     * @param boolean $deep Whether to also clear the references on all referrer objects.
      */
     public function clearAllReferences($deep = false)
     {
@@ -1416,12 +1430,12 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(SpySearchPageElementTableMap::DEFAULT_STRING_FORMAT);
+        return (string)$this->exportTo(SpySearchPageElementTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**
      * Code to be run before persisting the object
-     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preSave(ConnectionInterface $con = null)
@@ -1440,7 +1454,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
 
     /**
      * Code to be run before inserting to database
-     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preInsert(ConnectionInterface $con = null)
@@ -1459,7 +1473,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
 
     /**
      * Code to be run before updating the object in database
-     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preUpdate(ConnectionInterface $con = null)
@@ -1478,7 +1492,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
 
     /**
      * Code to be run before deleting the object in database
-     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preDelete(ConnectionInterface $con = null)
@@ -1503,7 +1517,7 @@ abstract class SpySearchPageElement implements ActiveRecordInterface
      * Allows to define default __call() behavior if you overwrite __call()
      *
      * @param string $name
-     * @param mixed  $params
+     * @param mixed $params
      *
      * @return array|string
      */

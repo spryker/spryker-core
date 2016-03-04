@@ -12,16 +12,16 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
+use Spryker\Zed\Discount\Business\Model\CollectorResolver;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
-use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\Discount\Business\Model\CollectorResolver;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Kernel\Locator;
 
 /**
  * @group VoucherEngineTest
@@ -143,7 +143,9 @@ class VoucherEngineTest extends Test
 
         $quoteTransfer = $this->getQuoteTransferWithTwoItems();
         $result = $calculator->calculate(
-            [$discount1, $discount2, $discount3], $quoteTransfer, new Distributor(Locator::getInstance())
+            [$discount1, $discount2, $discount3],
+            $quoteTransfer,
+            new Distributor(Locator::getInstance())
         );
         $this->assertEquals(2, count($result));
     }

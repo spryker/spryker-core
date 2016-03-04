@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\SalesAggregator\Business\Model;
@@ -8,8 +10,8 @@ namespace Spryker\Zed\SalesAggregator\Business\Model;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\SalesAggregator\Business\Exception\OrderTotalHydrationException;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderTotalsAggregator
 {

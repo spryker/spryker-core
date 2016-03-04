@@ -21,4 +21,3 @@ use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueQuery as BaseSpy
 abstract class AbstractSpyProductOptionValueQuery extends BaseSpyProductOptionValueQuery
 {
 } // SpyProductOptionValueQuery
-

@@ -1,12 +1,16 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Refund\Dependency\Facade;
 
 class RefundToSalesAggregator implements RefundToSalesAggregatorInterface
 {
+
+
     /**
      * @var \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade
      */
@@ -29,4 +33,5 @@ class RefundToSalesAggregator implements RefundToSalesAggregatorInterface
     {
         return $this->salesAggregatorFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
     }
+
 }

@@ -8,10 +8,10 @@
 namespace Unit\Spryker\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
 
 class CollectorResolverTest extends Test

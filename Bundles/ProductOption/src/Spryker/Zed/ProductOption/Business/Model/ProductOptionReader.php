@@ -47,7 +47,6 @@ class ProductOptionReader implements ProductOptionReaderInterface
     public function __construct(
         ProductOptionQueryContainerInterface $queryContainer,
         ProductOptionToLocaleInterface $localeFacade
-
     ) {
         $this->queryContainer = $queryContainer;
         $this->localeFacade = $localeFacade;
@@ -68,7 +67,8 @@ class ProductOptionReader implements ProductOptionReaderInterface
             ->setLocaleCode($localeCode);
 
         $result = $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
-            $idProductOptionValueUsage, $localeTransfer->getIdLocale()
+            $idProductOptionValueUsage,
+            $localeTransfer->getIdLocale()
         )->select([
             self::COL_PRICE,
             self::COL_TRANSLATION_TYPE,
@@ -87,7 +87,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
         if ($price === null) {
             $productOptionTransfer->setUnitGrossPrice(0);
         } else {
-            $productOptionTransfer->setUnitGrossPrice((int) $price);
+            $productOptionTransfer->setUnitGrossPrice((int)$price);
         }
 
         $taxSetEntity = $this->queryContainer->queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage)

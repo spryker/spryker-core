@@ -21,4 +21,3 @@ use Orm\Zed\Discount\Persistence\Base\SpyDiscountVoucherPoolQuery as BaseSpyDisc
 abstract class AbstractSpyDiscountVoucherPoolQuery extends BaseSpyDiscountVoucherPoolQuery
 {
 } // SpyDiscountVoucherPoolQuery
-

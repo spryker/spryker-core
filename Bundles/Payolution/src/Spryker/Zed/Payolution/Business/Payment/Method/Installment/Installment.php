@@ -181,7 +181,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
             $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
-            null);
+            null
+        );
         $this->addRequestData(
             $requestData,
             [
@@ -230,7 +231,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
             $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -249,7 +251,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
             $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -268,7 +271,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
             $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
@@ -287,7 +291,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
             $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
 }

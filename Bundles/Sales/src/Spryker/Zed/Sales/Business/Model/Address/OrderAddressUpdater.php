@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
@@ -11,6 +13,8 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderAddressUpdater implements OrderAddressUpdaterInterface
 {
+
+
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface SalesQueryContainerInterface
      */
@@ -59,4 +63,5 @@ class OrderAddressUpdater implements OrderAddressUpdaterInterface
     ) {
         $addressTransfer->fromArray($addressEntity->toArray(), true);
     }
+
 }

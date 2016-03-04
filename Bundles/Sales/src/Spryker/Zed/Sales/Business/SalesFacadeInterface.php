@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-
 /**
  * @method \Spryker\Zed\Sales\Business\SalesBusinessFactory getFactory()
  */
 interface SalesFacadeInterface
 {
+
     /**
      * Specification:
      * - Add username to comment
@@ -118,4 +118,5 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder);
+
 }

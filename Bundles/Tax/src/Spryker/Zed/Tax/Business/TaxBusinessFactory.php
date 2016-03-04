@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Tax\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
-use Spryker\Zed\Tax\Business\Model\TaxWriter;
+use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
+use Spryker\Zed\Tax\Business\Model\TaxWriter;
 
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()

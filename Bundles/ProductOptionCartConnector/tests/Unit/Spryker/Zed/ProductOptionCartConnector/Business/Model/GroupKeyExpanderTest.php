@@ -7,10 +7,10 @@
 
 namespace Unit\Spryker\Zed\ProductOptionCartConnector\Business\Model;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
-use Generated\Shared\Transfer\CartChangeTransfer;
 
 class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
 {
