@@ -8,12 +8,10 @@
 namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Application\Business\Routing\SilexRouter;
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\DataDirectory;
-use Spryker\Zed\Application\Business\Model\Router\MvcRouter;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
