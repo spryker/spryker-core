@@ -120,6 +120,7 @@ class PhpMdRunner
 
     /**
      * @param string $path
+     * @param array $options
      *
      * @return int Exit code
      */
