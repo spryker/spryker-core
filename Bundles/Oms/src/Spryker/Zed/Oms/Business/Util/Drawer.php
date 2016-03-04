@@ -17,35 +17,71 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 class Drawer implements DrawerInterface
 {
 
-    protected $attributesProcess = ['fontname' => 'Verdana', 'fillcolor' => '#cfcfcf', 'style' => 'filled', 'color' => '#ffffff', 'fontsize' => 12, 'fontcolor' => 'black'];
-
-    protected $attributesState = ['fontname' => 'Verdana', 'fontsize' => 14, 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
-
-    protected $attributesDiamond = ['fontname' => 'Verdana', 'label' => '?', 'shape' => 'diamond', 'fontcolor' => 'white', 'fontsize' => '1', 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
-
-    protected $attributesTransition = ['fontname' => 'Verdana', 'fontsize' => 12];
-
-    protected $brLeft = '<br align="left" />  ';
-
-    protected $notImplemented = '<font color="red">(not implemented)</font>';
-
-    protected $br = '<br/>';
-
-    protected $format = 'svg';
-
-    protected $fontSizeBig = null;
-
-    protected $fontSizeSmall = null;
-
-    protected $conditionModels = [];
-
-    protected $commandModels = [];
-
     const ATTRIBUTE_FONT_SIZE = 'fontsize';
 
     const EDGE_UPPER_HALF = 'upper half';
     const EDGE_LOWER_HALF = 'lower half';
     const EDGE_FULL = 'edge full';
+
+    /**
+     * @var array
+     */
+    protected $attributesProcess = ['fontname' => 'Verdana', 'fillcolor' => '#cfcfcf', 'style' => 'filled', 'color' => '#ffffff', 'fontsize' => 12, 'fontcolor' => 'black'];
+
+    /**
+     * @var array
+     */
+    protected $attributesState = ['fontname' => 'Verdana', 'fontsize' => 14, 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
+
+    /**
+     * @var array
+     */
+    protected $attributesDiamond = ['fontname' => 'Verdana', 'label' => '?', 'shape' => 'diamond', 'fontcolor' => 'white', 'fontsize' => '1', 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
+
+    /**
+     * @var array
+     */
+    protected $attributesTransition = ['fontname' => 'Verdana', 'fontsize' => 12];
+
+    /**
+     * @var string
+     */
+    protected $brLeft = '<br align="left" />  ';
+
+    /**
+     * @var string
+     */
+    protected $notImplemented = '<font color="red">(not implemented)</font>';
+
+    /**
+     * @var string
+     */
+    protected $br = '<br/>';
+
+    /**
+     * @var string
+     */
+    protected $format = 'svg';
+
+    /**
+     * @var int|null
+     */
+    protected $fontSizeBig = null;
+
+    /**
+     * @var int|null
+     */
+    protected $fontSizeSmall = null;
+
+    /**
+     * @var array
+     */
+    protected $conditionModels = [];
+
+    /**
+     * @var array
+     */
+    protected $commandModels = [];
 
     /**
      * @var array

@@ -54,7 +54,6 @@ class Rule implements RuleInterface
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
      * @param \Spryker\Zed\Acl\Business\Model\RuleValidator $rulesValidator
-     * @param \Spryker\Zed\Acl\Business\Model\RuleValidator $rulesValidator
      * @param \Spryker\Zed\Acl\AclConfig $settings
      */
     public function __construct(

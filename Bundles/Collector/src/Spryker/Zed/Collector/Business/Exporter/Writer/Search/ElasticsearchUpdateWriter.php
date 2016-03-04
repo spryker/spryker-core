@@ -58,6 +58,8 @@ class ElasticsearchUpdateWriter implements WriterInterface
     }
 
     /**
+     * @param array $dataSet
+     *
      * @return void
      */
     public function delete(array $dataSet)

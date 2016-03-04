@@ -22,7 +22,6 @@ interface OrderStateMachineInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param array $data
-     * @param array $logContext
      *
      * @return array
      */

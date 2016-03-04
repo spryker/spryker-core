@@ -24,7 +24,7 @@ class CodeExists extends Constraint
     protected $queryContainer;
 
     /**
-     * @var
+     * @var string
      */
     protected $voucherId;
 

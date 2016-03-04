@@ -21,6 +21,7 @@ class TouchUpdaterSet
     protected $exporterIdTouch;
 
     /**
+     * @param string $exporterIdTouch
      * @param array $data
      */
     public function __construct($exporterIdTouch, array $data = [])

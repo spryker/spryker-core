@@ -39,6 +39,7 @@ class OrdersTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderQuery
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $orderItemQuery
      */
     public function __construct(SpySalesOrderQuery $orderQuery, SpySalesOrderItemQuery $orderItemQuery)
     {

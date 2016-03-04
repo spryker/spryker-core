@@ -20,6 +20,9 @@ class CartCheckoutConnectorFacade extends AbstractFacade implements CartCheckout
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderTransfer $order
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
+     *
      * @return void
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)

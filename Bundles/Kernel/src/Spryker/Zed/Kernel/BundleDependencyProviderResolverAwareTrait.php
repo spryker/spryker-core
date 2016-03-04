@@ -14,7 +14,7 @@ trait BundleDependencyProviderResolverAwareTrait
 {
 
     /**
-     * @var \Spryker\Zed\Kernel\Container
+     * @param \Spryker\Zed\Kernel\Container $container
      */
     private $container;
 

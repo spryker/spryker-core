@@ -29,7 +29,7 @@ class Group
 
     /**
      * @param int $threshold
-     * @param bool $regroupAllItemCollection;
+     * @param bool $regroupAllItemCollection
      */
     public function __construct($threshold, $regroupAllItemCollection)
     {

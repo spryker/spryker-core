@@ -40,8 +40,8 @@ class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInte
 
     /**
      * @param string $sku
-     * @param int $decrementBy
      * @param string $stockType
+     * @param int $decrementBy
      *
      * @return void
      */
