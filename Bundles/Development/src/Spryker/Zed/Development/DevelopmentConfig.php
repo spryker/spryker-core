@@ -53,6 +53,16 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Either a relative or full path to the ruleset.xml or a name of an installed
+     * standard. Can also be a comma separated list of multiple ones.
+     *
+     * @return string
+     */
+    public function getArchitectureStandard() {
+        return dirname(__FILE__) . '/Business/PhpMd/ruleset.xml';
+    }
+
+    /**
      * @return string
      */
     public function getPathToComposerLock()
