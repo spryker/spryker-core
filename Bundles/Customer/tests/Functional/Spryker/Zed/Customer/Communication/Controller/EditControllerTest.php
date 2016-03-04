@@ -10,8 +10,6 @@ namespace Functional\Spryker\Zed\Customer\Communication\Controller;
 use Codeception\TestCase\Test;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
-use Spryker\Zed\Assertion\Business\AssertionFacade;
-use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
 use Spryker\Zed\Customer\Communication\Controller\EditController;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
 use Symfony\Component\Form\FormView;

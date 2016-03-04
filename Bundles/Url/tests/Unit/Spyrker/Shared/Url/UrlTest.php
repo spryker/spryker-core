@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Shared\Application\Url;
+namespace Functional\Spryker\Shared\Url\Url;
 
 use Codeception\TestCase\Test;
 use Spryker\Shared\Url\Url;
