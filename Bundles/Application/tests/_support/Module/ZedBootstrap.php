@@ -21,8 +21,8 @@ class ZedBootstrap extends Module
     {
         parent::__construct($moduleContainer, $config);
 
-        $application = new SprykerZedBootstrap();
-        $application->boot();
+//        $application = new SprykerZedBootstrap();
+//        $application->boot();
     }
 
 }

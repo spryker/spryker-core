@@ -9,8 +9,6 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 use Spryker\Zed\Application\Communication\Plugin\Navigation;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;

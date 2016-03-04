@@ -19,8 +19,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class ZedBootstrap
 {
@@ -52,21 +50,10 @@ class ZedBootstrap
         $this->optimizeApp();
 
         $this->registerServiceProvider();
-        $this->registerRouters();
 
         $this->addVariablesToTwig();
-        $this->addProtocolCheck();
 
         return $this->application;
-    }
-
-    /**
-     * @return void
-     */
-    protected function registerRouters()
-    {
-        $this->application->addRouter(new MvcRouter($this->application));
-        $this->application->addRouter(new SilexRouter($this->application));
     }
 
     /**
@@ -139,32 +126,6 @@ class ZedBootstrap
 
                 return $variables;
             })
-        );
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return void
-     */
-    protected function addProtocolCheck()
-    {
-        if (!Config::get(ApplicationConstants::ZED_SSL_ENABLED)) {
-            return;
-        }
-        $application = $this->application;
-        $application->before(
-            function (Request $request) {
-                if (!$request->isSecure() && !in_array($request->getPathInfo(), Config::get(ApplicationConstants::ZED_SSL_EXCLUDED))) {
-                    $fakeRequest = clone $request;
-                    $fakeRequest->server->set('HTTPS', true);
-
-                    return new RedirectResponse($fakeRequest->getUri(), 301);
-                }
-
-                return null;
-            },
-            255
         );
     }
 
