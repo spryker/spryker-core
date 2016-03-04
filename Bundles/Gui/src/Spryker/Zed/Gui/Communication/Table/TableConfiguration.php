@@ -54,6 +54,43 @@ class TableConfiguration
     private $defaultSortDirection = self::SORT_ASC;
 
     /**
+     * @var array
+     */
+    private $rawColumns = [];
+
+    /**
+     * @return array
+     */
+    public function getRawColumns()
+    {
+        return $this->rawColumns;
+    }
+
+    /**
+     * @param array $rawColumns
+     *
+     * @return $this
+     */
+    public function setRawColumns(array $rawColumns)
+    {
+        $this->rawColumns = $rawColumns;
+
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     *
+     * @return $this
+     */
+    public function addRawColumn($column)
+    {
+        $this->rawColumns[] = $column;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getHeader()
