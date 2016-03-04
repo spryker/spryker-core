@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\ProductOption\Persistence;
@@ -13,11 +14,11 @@ use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
-use Spryker\Zed\Product\Business\ProductBusinessFactory;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionPersistenceFactory;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionPersistenceFactory;
+use Spryker\Zed\Product\Business\ProductBusinessFactory;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 /**
  * @group Business

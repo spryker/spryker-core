@@ -1,17 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -158,6 +160,20 @@ abstract class AbstractController
     }
 
     /**
+     * This methods centralizes the way we cast IDs. This is needed to allow the usage of UUIDs in the future.
+     *
+     * @param mixed $id
+     *
+     * @return int
+     */
+    protected function castId($id)
+    {
+        $this->getAssertion()->assertNumericNotZero($id);
+
+        return (int)$id;
+    }
+
+    /**
      * @param string $url
      * @param int $status
      * @param array $headers
@@ -182,7 +198,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param null $callback
+     * @param callable|null $callback
      * @param int $status
      * @param array $headers
      *
@@ -298,6 +314,11 @@ abstract class AbstractController
      */
     protected function getApplication()
     {
+        if ($this->application === null) {
+            $pimplePlugin = new Pimple();
+            $this->application = $pimplePlugin->getApplication();
+        }
+
         return $this->application;
     }
 
@@ -341,6 +362,14 @@ abstract class AbstractController
     private function getLocator()
     {
         return Locator::getInstance();
+    }
+
+    /**
+     * @return \Spryker\Zed\Assertion\Business\AssertionFacadeInterface
+     */
+    protected function getAssertion()
+    {
+        return $this->getApplication()['assertion'];
     }
 
     /**

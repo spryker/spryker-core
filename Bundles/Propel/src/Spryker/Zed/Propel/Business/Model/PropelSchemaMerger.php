@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Propel\Business\Model;
@@ -21,7 +23,11 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     public function merge(array $schemaFiles)
     {
         $this->checkConsistency($schemaFiles);
-        $mergeTargetXmlElement = $this->createMergeTargetXmlElement(current($schemaFiles));
+        $currentSchema = current($schemaFiles);
+        if (!$currentSchema) {
+            throw new SchemaMergeException('Could not merge schema file. Given schema file container seems to be empty.');
+        }
+        $mergeTargetXmlElement = $this->createMergeTargetXmlElement($currentSchema);
         $schemaXmlElements = $this->createSchemaXmlElements($schemaFiles);
 
         return $this->mergeSchema($mergeTargetXmlElement, $schemaXmlElements);

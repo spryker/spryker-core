@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Country\Business;
 
+use Orm\Zed\Country\Persistence\SpyRegion;
 use Spryker\Zed\Country\Business\Exception\RegionExistsException;
 use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
-use Orm\Zed\Country\Persistence\SpyRegion;
 
 class RegionManager implements RegionManagerInterface
 {

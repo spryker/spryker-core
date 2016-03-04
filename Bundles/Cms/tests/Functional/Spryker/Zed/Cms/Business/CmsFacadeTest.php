@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Cms\Business;
@@ -10,14 +11,14 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**

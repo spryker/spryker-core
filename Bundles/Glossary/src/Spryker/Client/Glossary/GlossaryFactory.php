@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Glossary;
@@ -15,7 +17,7 @@ class GlossaryFactory extends AbstractFactory
     /**
      * @var \Spryker\Client\Glossary\Storage\GlossaryStorageInterface[]
      */
-    protected $translator = [];
+    protected static $translator = [];
 
     /**
      * @param string $localeName
@@ -24,11 +26,7 @@ class GlossaryFactory extends AbstractFactory
      */
     public function createTranslator($localeName)
     {
-        return new GlossaryStorage(
-            $this->getStorage(),
-            $this->createKeyBuilder(),
-            $localeName
-        );
+        return $this->getTranslatorInstance($localeName);
     }
 
     /**
@@ -36,13 +34,27 @@ class GlossaryFactory extends AbstractFactory
      *
      * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */
-    public function createCachedTranslator($localeName)
+    protected function getTranslatorInstance($localeName)
     {
-        if (array_key_exists($localeName, $this->translator) === false) {
-            $this->translator[$localeName] = $this->createTranslator($localeName);
+        if (!isset(static::$translator[$localeName])) {
+            static::$translator[$localeName] = $this->createGlossaryStorage($localeName);
         }
 
-        return $this->translator[$localeName];
+        return static::$translator[$localeName];
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
+     */
+    protected function createGlossaryStorage($localeName)
+    {
+        return new GlossaryStorage(
+            $this->getStorage(),
+            $this->createKeyBuilder(),
+            $localeName
+        );
     }
 
     /**

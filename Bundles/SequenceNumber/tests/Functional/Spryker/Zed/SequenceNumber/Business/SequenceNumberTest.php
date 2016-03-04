@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\SequenceNumber;
@@ -111,7 +112,7 @@ class SequenceNumberTest extends Test
         $config = $this->generateConfig();
         $sequenceNumberSettings = $config->getDefaultSettings();
         $sequenceNumberSettings->setName('Other');
-        $sequenceNumberSettings->setMinimumNumber(2);
+        $sequenceNumberSettings->setOffset(2);
 
         $sequenceNumberOther = new SequenceNumber(
             $generator,

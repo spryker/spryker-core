@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
@@ -179,7 +184,7 @@ class VoucherForm extends AbstractType
                                 return;
                             }
 
-                            if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[VoucherForm::FIELD_QUANTITY]) {
+                            if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[self::FIELD_QUANTITY]) {
                                 $context->addViolation('The quantity of required codes is to high regarding the code length');
 
                                 return;

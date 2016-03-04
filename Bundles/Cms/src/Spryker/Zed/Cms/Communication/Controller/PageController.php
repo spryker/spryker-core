@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Controller;
@@ -91,7 +92,7 @@ class PageController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idPage = $request->query->getInt(CmsPageTable::REQUEST_ID_PAGE);
+        $idPage = $this->castId($request->query->get(CmsPageTable::REQUEST_ID_PAGE));
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 

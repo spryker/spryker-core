@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\User\Persistence\UserPersistenceFactory getFactory()
@@ -16,6 +17,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
 {
 
     /**
+     * @api
+     *
      * @param string $username
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
@@ -29,6 +32,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
@@ -42,6 +47,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUsers()
@@ -53,6 +60,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUser()

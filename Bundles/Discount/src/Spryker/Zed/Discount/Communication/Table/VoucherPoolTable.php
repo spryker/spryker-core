@@ -1,15 +1,20 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Table;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 

@@ -1,15 +1,17 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Generated\Shared\Transfer\DiscountTransfer;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()

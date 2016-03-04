@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Glossary\Business;
@@ -8,8 +10,8 @@ namespace Functional\Spryker\Zed\Glossary\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 
 /**
  * @group Spryker

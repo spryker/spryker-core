@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Application\Plugin\Provider;
 
+use Silex\Application;
+use Silex\Controller;
+use Silex\ControllerCollection;
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
-use Silex\Application;
-use Silex\Controller;
-use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

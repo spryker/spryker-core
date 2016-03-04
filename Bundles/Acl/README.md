@@ -1,6 +1,11 @@
-# Zed Package
+# Acl Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/acl
+```
+
+## Documentation
+
+[Acl Documentation](https://spryker.github.io/acl/index.html)

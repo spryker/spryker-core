@@ -8,9 +8,7 @@
     <title>{% block head_title %}{{ title | trans }}{% endblock %}</title>
 
     {% block head_css %}
-        <link href="/bundles/css/style.external.min.css" rel="stylesheet">
-        <link href="/bundles/css/style.internal.min.css" rel="stylesheet">
-        <link href="/bundles/css/style.custom.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/css/spryker-zed-gui-commons.css">
     {% endblock %}
 
 </head>
@@ -19,7 +17,9 @@
 <div id="wrapper">
 
     {% block body_menu %}
-        {% include '@Gui/Partials/menu.twig' %}
+        {% if navigation is defined %}
+            {% include '@Gui/Partials/menu.twig' %}
+        {% endif %}
     {% endblock %}
 
     <div id="page-wrapper" class="gray-bg">
@@ -37,7 +37,7 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
-                        <span class="m-r-sm text-muted welcome-message">{{ 'Welcome' | trans }} <strong>{{ username }}</strong> <em>[{{ environment }}]</em></span>
+                        <span class="m-r-sm text-muted welcome-message">{{ 'Welcome' | trans }}{% if username is defined %} <strong>{{ username }}</strong>{% endif %} <em>[{{ environment }}]</em></span>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -59,7 +59,7 @@
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-xs-12 col-md-6">
                 <h2>{% block section_title %}{{ title|trans }}{% endblock %}</h2>
-                {% if navigation.path|length > 0 %}
+                {% if navigation is defined and navigation.path|length > 0 %}
                 <ol class="breadcrumb">
                     <li>
                         <a href="/">{{ 'Dashboard' | trans }}</a>
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="wrapper wrapper-content">
 
             {% include '@Messenger/Partials/flash-messages.twig' %}
 
@@ -118,12 +118,7 @@
 </div>
 
 {% block footer_js %}
-    <script src="/bundles/js/resources.external.min.js"></script>
-    <script src="/bundles/js/resources.internal.min.js"></script>
-    <script src="/bundles/js/resources.custom.min.js"></script>
-    <script src="/bundles/js/templates.external.min.js"></script>
-    <script src="/bundles/js/templates.internal.min.js"></script>
-    <script src="/bundles/js/templates.custom.min.js"></script>
+    <script src="/assets/js/spryker-zed-gui-commons.js"></script>
 {% endblock %}
 
 </body>

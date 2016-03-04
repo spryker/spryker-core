@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Dependency\Facade;
 
-use Spryker\Zed\Mail\Business\MailFacade;
 use Generated\Shared\Transfer\MailTransfer;
+use Spryker\Zed\Mail\Business\MailFacade;
 
 class PayolutionToMailBridge implements PayolutionToMailInterface
 {

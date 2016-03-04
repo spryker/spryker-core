@@ -1,19 +1,21 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Wishlist\Business\Storage;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Zed\Wishlist\Business\Storage\Propel;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\Wishlist\Business\Storage\Propel;
 
 class PropelTest extends \PHPUnit_Framework_TestCase
 {
@@ -206,6 +208,9 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         return $wishlistQueryContainerMock;
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getSpyWishlistQueryMock()
     {
         $spyWishlistMock = $this
@@ -217,6 +222,9 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         return $spyWishlistMock;
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getSpyWishlistItemQueryMock()
     {
         $spyWishlistMock = $this
@@ -269,8 +277,14 @@ class PropelTest extends \PHPUnit_Framework_TestCase
 trait WishlistSpyTrait
 {
 
+    /**
+     * @var bool
+     */
     protected $delete = true;
 
+    /**
+     * @var bool
+     */
     protected $save = true;
 
     /**

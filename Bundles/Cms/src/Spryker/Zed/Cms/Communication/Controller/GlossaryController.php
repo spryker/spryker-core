@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Controller;
@@ -11,6 +12,8 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
+use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -19,8 +22,6 @@ use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -48,8 +49,8 @@ class GlossaryController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
-        $idForm = $request->get(self::ID_FORM);
+        $idPage = $this->castId($request->get(CmsPageTable::REQUEST_ID_PAGE));
+        $idForm = (int)$request->get(self::ID_FORM);
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
 
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
@@ -94,8 +95,8 @@ class GlossaryController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idMapping = $request->get(CmsGlossaryTable::REQUEST_ID_MAPPING);
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
+        $idMapping = $this->castId($request->get(CmsGlossaryTable::REQUEST_ID_MAPPING));
+        $idPage = $this->castId($request->get(CmsPageTable::REQUEST_ID_PAGE));
         $mappingGlossary = $this->getQueryContainer()
             ->queryGlossaryKeyMappingById($idMapping)
             ->findOne();
@@ -136,8 +137,8 @@ class GlossaryController extends AbstractController
      */
     public function searchAction(Request $request)
     {
-        $value = $request->get('value');
-        $key = $request->get('key');
+        $value = $request->get('value'); // TODO FW Validation
+        $key = $request->get('key'); // TODO FW Validation
 
         $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key);
 

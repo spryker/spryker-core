@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\PriceCartConnector\Business\Fixture;
@@ -21,11 +22,23 @@ class PriceFacadeStub extends PriceFacade
      */
     private $validities = [];
 
+    /**
+     * @param string $sku
+     * @param string|null $priceType
+     *
+     * @return mixed
+     */
     public function getPriceBySku($sku, $priceType = null)
     {
         return $this->prices[$sku];
     }
 
+    /**
+     * @param string $sku
+     * @param string|null $priceType
+     *
+     * @return bool
+     */
     public function hasValidPrice($sku, $priceType = null)
     {
         if (!isset($this->validities[$sku])) {

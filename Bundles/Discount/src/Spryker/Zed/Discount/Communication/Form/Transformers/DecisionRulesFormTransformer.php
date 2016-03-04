@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Communication\Form\Transformers;
@@ -182,6 +183,10 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
         }
 
         foreach ($fromArray[self::DECISION_RULES] as &$decisionRule) {
+            if (array_key_exists(self::DECISION_RULE_PLUGIN_FORM, $decisionRule)) {
+                $decisionRulePluginKey = self::DECISION_RULE_PLUGIN_FORM;
+                $valueKey = self::VALUE;
+            }
             if (!array_key_exists($decisionRulePluginKey, $decisionRule)) {
                 continue;
             }

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Wishlist\Business;
@@ -17,6 +18,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -27,6 +30,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -37,6 +42,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -47,6 +54,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -57,6 +66,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer

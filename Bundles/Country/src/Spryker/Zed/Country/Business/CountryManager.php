@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Country\Business;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Spryker\Zed\Country\Business\Exception\CountryExistsException;
 use Spryker\Zed\Country\Business\Exception\MissingCountryException;
 use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
-use Orm\Zed\Country\Persistence\SpyCountry;
 
 class CountryManager implements CountryManagerInterface
 {

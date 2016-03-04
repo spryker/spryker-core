@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Business\Model;
@@ -47,6 +48,8 @@ interface GroupInterface
     /**
      * @param int $idGroup
      * @param int $idUser
+     *
+     * @return void
      */
     public function removeUser($idGroup, $idUser);
 
@@ -59,6 +62,8 @@ interface GroupInterface
      * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNameExistsException
+     *
+     * @return void
      */
     public function assertGroupHasName(GroupTransfer $group);
 
@@ -66,6 +71,8 @@ interface GroupInterface
      * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
+     *
+     * @return void
      */
     public function assertGroupExists(GroupTransfer $group);
 

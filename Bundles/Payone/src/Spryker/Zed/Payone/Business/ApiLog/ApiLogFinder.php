@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\ApiLog;
 
-use Generated\Shared\Transfer\PayonePaymentTransfer;
-use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use Spryker\Shared\Payone\PayoneApiConstants;
+use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 
 class ApiLogFinder
 {

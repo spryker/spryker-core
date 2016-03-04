@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Setup\Business;
@@ -12,6 +13,8 @@ interface SetupFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param array $roles
      *
      * @return mixed
@@ -19,21 +22,29 @@ interface SetupFacadeInterface
     public function generateCronjobs(array $roles);
 
     /**
+     * @api
+     *
      * @return string
      */
     public function enableJenkins();
 
     /**
+     * @api
+     *
      * @return string
      */
     public function disableJenkins();
 
     /**
+     * @api
+     *
      * @return void
      */
     public function removeGeneratedDirectory();
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
@@ -41,6 +52,8 @@ interface SetupFacadeInterface
     public function getRepeatData(Request $request);
 
     /**
+     * @api
+     *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands();

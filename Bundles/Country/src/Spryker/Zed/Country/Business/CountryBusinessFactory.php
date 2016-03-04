@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Country\Business;
 
 use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Country\Business\Internal\Install;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()

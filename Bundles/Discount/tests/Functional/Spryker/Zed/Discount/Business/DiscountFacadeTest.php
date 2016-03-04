@@ -1,32 +1,31 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Discount\Business;
 
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Generated\Shared\Transfer\DecisionRuleTransfer;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderItemsTransfer;
 use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\Discount\Business\DiscountFacade;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 
 /**
  * @group Spryker
@@ -404,21 +403,21 @@ class DiscountFacadeTest extends Test
      */
     public function testGetDiscountableOrderExpenses()
     {
-        $quoteTransfer = $this->createQuoteTransfer();
+            $quoteTransfer = $this->createQuoteTransfer();
 
-        $expense = new ExpenseTransfer();
-        $expense->setUnitGrossPrice(self::EXPENSE_GROSS_PRICE);
-        $quoteTransfer->addExpense($expense);
+            $expense = new ExpenseTransfer();
+            $expense->setUnitGrossPrice(self::EXPENSE_GROSS_PRICE);
+            $quoteTransfer->addExpense($expense);
 
-        $itemCollection = new OrderItemsTransfer();
-        $item = new ItemTransfer();
-        $item->setUnitGrossPrice(self::ITEM_GROSS_PRICE);
+            $itemCollection = new OrderItemsTransfer();
+            $item = new ItemTransfer();
+            $item->setUnitGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $itemCollection->addOrderItem($item);
-        $quoteTransfer->setItems($itemCollection);
+            $itemCollection->addOrderItem($item);
+            $quoteTransfer->setItems($itemCollection);
 
-        $result = $this->discountFacade->getDiscountableOrderExpenses($quoteTransfer, new DiscountCollectorTransfer());
-        $this->assertEquals(1, count($result));
+            $result = $this->discountFacade->getDiscountableOrderExpenses($quoteTransfer, new DiscountCollectorTransfer());
+            $this->assertEquals(1, count($result));
     }
 
     /**

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Stock\Business;
@@ -17,6 +18,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return bool
@@ -27,6 +30,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return int
@@ -37,6 +42,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
@@ -47,6 +54,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
@@ -57,6 +66,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
@@ -67,6 +78,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
      *
      * @return int
@@ -77,6 +90,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $decrementBy
      * @param string $stockType
@@ -89,6 +104,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $incrementBy
      * @param string $stockType
@@ -101,6 +118,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $stockType
      *
@@ -112,6 +131,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $stockType
      *

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Product\Business;
@@ -15,6 +16,8 @@ interface ProductFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \SplFileInfo $file
      *
      * @return \Spryker\Zed\Product\Business\Model\ProductBatchResult
@@ -22,6 +25,8 @@ interface ProductFacadeInterface
     public function importProductsFromFile(\SplFileInfo $file);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -31,6 +36,8 @@ interface ProductFacadeInterface
     public function getProductAbstractIdBySku($sku);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -40,6 +47,8 @@ interface ProductFacadeInterface
     public function getProductConcreteIdBySku($sku);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -49,6 +58,8 @@ interface ProductFacadeInterface
     public function getProductAbstractIdByConcreteSku($sku);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -58,6 +69,8 @@ interface ProductFacadeInterface
     public function getEffectiveTaxRateForProductConcrete($sku);
 
     /**
+     * @api
+     *
      * @param string $attributeName
      *
      * @return bool
@@ -65,6 +78,8 @@ interface ProductFacadeInterface
     public function hasAttribute($attributeName);
 
     /**
+     * @api
+     *
      * @param string $attributeType
      *
      * @return bool
@@ -72,6 +87,8 @@ interface ProductFacadeInterface
     public function hasAttributeType($attributeType);
 
     /**
+     * @api
+     *
      * @param string $name
      * @param string $inputType
      * @param int|null $fkParentAttributeType
@@ -83,6 +100,8 @@ interface ProductFacadeInterface
     public function createAttributeType($name, $inputType, $fkParentAttributeType = null);
 
     /**
+     * @api
+     *
      * @param string $attributeName
      * @param string $attributeType
      * @param bool $isEditable
@@ -95,6 +114,8 @@ interface ProductFacadeInterface
     public function createAttribute($attributeName, $attributeType, $isEditable = true);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return bool
@@ -102,6 +123,8 @@ interface ProductFacadeInterface
     public function hasProductAbstract($sku);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return int
@@ -109,6 +132,8 @@ interface ProductFacadeInterface
     public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return bool
@@ -116,6 +141,8 @@ interface ProductFacadeInterface
     public function hasProductConcrete($sku);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
      *
@@ -124,6 +151,8 @@ interface ProductFacadeInterface
     public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return void
@@ -131,6 +160,8 @@ interface ProductFacadeInterface
     public function touchProductActive($idProductAbstract);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -144,6 +175,8 @@ interface ProductFacadeInterface
     public function createProductUrl($sku, $url, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -157,6 +190,8 @@ interface ProductFacadeInterface
     public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
@@ -164,6 +199,8 @@ interface ProductFacadeInterface
     public function install(MessengerInterface $messenger = null);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return string
@@ -171,6 +208,8 @@ interface ProductFacadeInterface
     public function getAbstractSkuFromProductConcrete($sku);
 
     /**
+     * @api
+     *
      * @param string $concreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

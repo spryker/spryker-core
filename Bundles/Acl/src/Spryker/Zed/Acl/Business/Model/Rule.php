@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Business\Model;
@@ -11,12 +12,12 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RulesTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\Acl\Persistence\SpyAclRule;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
-use Orm\Zed\Acl\Persistence\SpyAclRule;
 use Spryker\Zed\Library\Copy;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 

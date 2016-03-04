@@ -1,6 +1,7 @@
 <?php
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 namespace Spryker\Zed\Sales\Business;
 
@@ -22,6 +23,8 @@ interface SalesFacadeInterface
      * - Add username to comment
      * - Save comment to database
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTransfer
@@ -32,6 +35,8 @@ interface SalesFacadeInterface
      * Specification:
      * - Return the distinct states of all order items for the given order id
      *
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return array|string[]
@@ -41,6 +46,8 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Return all comments for the given order id
+     *
+     * @api
      *
      * @param int $idSalesOrder
      *
@@ -54,6 +61,8 @@ interface SalesFacadeInterface
      * - Set "is test" flag
      * - update checkout response with saved order data
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -65,6 +74,8 @@ interface SalesFacadeInterface
      * Specification
      * - Update sales order with data from order transfer
      * - Returns true if order was successfully updated
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idSalesOrder
@@ -78,6 +89,8 @@ interface SalesFacadeInterface
      * - Replaces all values of the order address by the values from the addresses transfer
      * - Returns true if order was successfully updated
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
@@ -88,6 +101,8 @@ interface SalesFacadeInterface
     /**
      * Returns a list of of orders for the given customer id and (optional) filters.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param int $idCustomer
      *
@@ -96,6 +111,8 @@ interface SalesFacadeInterface
     public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

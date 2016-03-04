@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Shipment\Communication\Table;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
-use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class MethodTable extends AbstractTable
 {

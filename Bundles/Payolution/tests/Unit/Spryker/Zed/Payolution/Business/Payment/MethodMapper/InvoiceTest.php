@@ -1,8 +1,10 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Unit\Spryker\Zed\Payolution\Business\Payment\MethodMapper;
 
 use Codeception\TestCase\Test;
@@ -12,9 +14,9 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
-use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 
 class InvoiceTest extends Test
 {
@@ -55,7 +57,7 @@ class InvoiceTest extends Test
             ->setLastName('Doe')
             ->setSalutation('Mr')
             ->setCity('Berlin')
-            ->setIso2Code('de')
+            ->setIso2Code('DE')
             ->setAddress1('Straße des 17. Juni')
             ->setAddress2('135')
             ->setZipCode('10623');
@@ -184,7 +186,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     private function getPaymentEntityMock()
     {
@@ -193,7 +195,7 @@ class InvoiceTest extends Test
             []
         );
 
-        /** @var SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock*/
         $paymentEntityMock = $this->getMock(
             'Orm\Zed\Payolution\Persistence\SpyPaymentPayolution',
             [
@@ -214,7 +216,7 @@ class InvoiceTest extends Test
             ->setEmail('john@doe.com')
             ->setSalutation('Mr')
             ->setDateOfBirth('1970-01-01')
-            ->setCountryIso2Code('de')
+            ->setCountryIso2Code('DE')
             ->setCity('Berlin')
             ->setStreet('Straße des 17. Juni 135')
             ->setZipCode('10623')

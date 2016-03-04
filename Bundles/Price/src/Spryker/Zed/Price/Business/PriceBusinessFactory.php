@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Price\Business;
 
-use Spryker\Zed\Price\Business\Model\BulkWriter;
-use Spryker\Zed\Price\Business\Model\Writer;
-use Spryker\Zed\Price\Business\Model\Reader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Price\Business\Internal\Install;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Price\Business\Internal\Install;
+use Spryker\Zed\Price\Business\Model\BulkWriter;
+use Spryker\Zed\Price\Business\Model\Reader;
+use Spryker\Zed\Price\Business\Model\Writer;
 use Spryker\Zed\Price\PriceDependencyProvider;
 
 /**

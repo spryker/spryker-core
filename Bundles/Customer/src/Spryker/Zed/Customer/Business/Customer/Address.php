@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Business\Customer;
@@ -9,15 +10,15 @@ namespace Spryker\Zed\Customer\Business\Customer;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CountryNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 class Address
 {

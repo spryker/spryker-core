@@ -1,50 +1,41 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Touch\Persistence\SpyTouchSearchQuery;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
-use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
+use Orm\Zed\Touch\Persistence\SpyTouchSearch;
+use Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater;
+use Spryker\Zed\Collector\CollectorConfig;
 
-class TouchUpdater implements TouchUpdaterInterface
+class TouchUpdater extends AbstractTouchUpdater
 {
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
-     * @param int $idLocale
-     *
-     * @return void
+     * @var string
      */
-    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale)
-    {
-        foreach ($touchUpdaterSet->getData() as $key => $touchData) {
-            $query = SpyTouchSearchQuery::create();
-            $query->filterByFkTouch($touchData[self::TOUCH_EXPORTER_ID]);
-            $query->filterByFkLocale($idLocale);
-            $entity = $query->findOneOrCreate();
-            $entity->setKey($key);
-            $entity->save();
-        }
-    }
+    protected $touchKeyTableName = SpyTouchSearchTableMap::TABLE_NAME;
 
     /**
-     * @param int $idTouch
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
+     * @var string
+     */
+    protected $touchKeyIdColumnName = SpyTouchSearchTableMap::COL_ID_TOUCH_SEARCH;
+
+    /**
+     * @var string
+     */
+    protected $touchKeyColumnName = CollectorConfig::COLLECTOR_SEARCH_KEY;
+
+    /**
      * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch
      */
-    public function getKeyById($idTouch, LocaleTransfer $locale)
+    protected function createTouchKeyEntity()
     {
-        $query = SpyTouchSearchQuery::create();
-        $query->filterByFkTouch($idTouch);
-        $query->filterByFkLocale($locale->getIdLocale());
-
-        return $query->findOne();
+        return new SpyTouchSearch();
     }
 
 }

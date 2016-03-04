@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Business;
@@ -13,6 +14,8 @@ interface PayolutionFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -20,6 +23,8 @@ interface PayolutionFacadeInterface
     public function saveOrderPayment(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -27,6 +32,8 @@ interface PayolutionFacadeInterface
     public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -34,6 +41,8 @@ interface PayolutionFacadeInterface
     public function preAuthorizePayment($idPayment);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -41,6 +50,8 @@ interface PayolutionFacadeInterface
     public function reAuthorizePayment($idPayment);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -48,6 +59,8 @@ interface PayolutionFacadeInterface
     public function revertPayment($idPayment);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -55,6 +68,8 @@ interface PayolutionFacadeInterface
     public function capturePayment($idPayment);
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
@@ -62,6 +77,8 @@ interface PayolutionFacadeInterface
     public function refundPayment($idPayment);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
@@ -69,6 +86,8 @@ interface PayolutionFacadeInterface
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -76,6 +95,8 @@ interface PayolutionFacadeInterface
     public function isPreAuthorizationApproved(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -83,6 +104,8 @@ interface PayolutionFacadeInterface
     public function isReAuthorizationApproved(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -90,6 +113,8 @@ interface PayolutionFacadeInterface
     public function isReversalApproved(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
@@ -97,6 +122,8 @@ interface PayolutionFacadeInterface
     public function isCaptureApproved(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool

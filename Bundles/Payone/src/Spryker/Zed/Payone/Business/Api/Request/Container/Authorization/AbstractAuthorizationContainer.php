@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\Api\Request\Container\Authorization;
 
 use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 
 abstract class AbstractAuthorizationContainer extends AbstractRequestContainer implements AuthorizationContainerInterface
@@ -133,7 +134,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @param string $clearingtype
+     * @param string $clearingType
      *
      * @return void
      */

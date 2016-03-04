@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Development\Business\PhpMd;
@@ -39,7 +40,7 @@ class PhpMdRunner
      *
      * @throws \ErrorException
      *
-     * @return void
+     * @return int Exit code
      */
     public function run($bundle)
     {
@@ -54,7 +55,7 @@ class PhpMdRunner
             throw new \ErrorException($message);
         }
 
-        $this->runPhpMdCommand($path);
+        return $this->runPhpMdCommand($path);
     }
 
     /**
@@ -102,7 +103,7 @@ class PhpMdRunner
     /**
      * @param string $path
      *
-     * @return void
+     * @return int Exit code
      */
     protected function runPhpMdCommand($path)
     {
@@ -115,6 +116,8 @@ class PhpMdRunner
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
+
+        return $process->getExitCode();
     }
 
 }

@@ -1,28 +1,29 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business;
 
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
-use Spryker\Zed\Oms\Business\Process\ProcessSelector;
-use Spryker\Zed\Oms\Business\Util\Drawer;
-use Spryker\Zed\Oms\Business\Process\Process;
-use Spryker\Zed\Oms\Business\Process\Transition;
-use Spryker\Zed\Oms\Business\Process\State;
-use Spryker\Zed\Oms\Business\Process\Event;
-use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
-use Spryker\Zed\Oms\Business\Util\TransitionLog;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
-use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
+use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
+use Spryker\Zed\Oms\Business\Process\Event;
+use Spryker\Zed\Oms\Business\Process\Process;
+use Spryker\Zed\Oms\Business\Process\ProcessSelector;
+use Spryker\Zed\Oms\Business\Process\State;
+use Spryker\Zed\Oms\Business\Process\Transition;
+use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Business\Util\TransitionLog;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**

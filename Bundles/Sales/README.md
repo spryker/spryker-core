@@ -1,6 +1,11 @@
-# Zed Package
+# Sales Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/sales
+```
+
+## Documentation
+
+[Sales Documentation](https://spryker.github.io/sales/index.html)

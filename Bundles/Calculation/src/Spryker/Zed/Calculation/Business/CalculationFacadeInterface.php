@@ -1,6 +1,7 @@
 <?php
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 namespace Spryker\Zed\Calculation\Business;
 
@@ -17,6 +18,8 @@ interface CalculationFacadeInterface
     /**
      * Executes all calculators in plugin stack.
      *
+     * @api
+     *
      * @see CalculationConfig::getCalculatorStack
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -26,6 +29,8 @@ interface CalculationFacadeInterface
     public function recalculate(QuoteTransfer $quoteTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -33,6 +38,8 @@ interface CalculationFacadeInterface
     public function calculateExpenseGrossSumAmount(QuoteTransfer $quoteTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -40,6 +47,8 @@ interface CalculationFacadeInterface
     public function calculateExpenseTotals(QuoteTransfer $quoteTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -47,6 +56,8 @@ interface CalculationFacadeInterface
     public function calculateGrandTotalTotals(QuoteTransfer $quoteTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -54,6 +65,8 @@ interface CalculationFacadeInterface
     public function calculateItemGrossAmounts(QuoteTransfer $quoteTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -61,6 +74,8 @@ interface CalculationFacadeInterface
     public function calculateOptionGrossSum(QuoteTransfer $quoteTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -68,6 +83,8 @@ interface CalculationFacadeInterface
     public function removeTotals(QuoteTransfer $quoteTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -75,6 +92,8 @@ interface CalculationFacadeInterface
     public function calculateSubtotalTotals(QuoteTransfer $quoteTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

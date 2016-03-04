@@ -1,15 +1,20 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Product\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
-use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Zed\Url\Business\UrlFacade;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
+use Spryker\Zed\Url\Business\UrlFacade;
 
 class ProductTable extends AbstractTable
 {

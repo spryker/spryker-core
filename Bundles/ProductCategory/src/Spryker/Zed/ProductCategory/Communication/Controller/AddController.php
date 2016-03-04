@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
@@ -11,8 +12,8 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
@@ -29,7 +30,7 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idParentNode = $request->get(ProductCategoryConstants::PARAM_ID_PARENT_NODE);
+        $idParentNode = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_PARENT_NODE));
 
         $dataProvider = $this->getFactory()->createCategoryFormAddDataProvider();
         $form = $this
@@ -68,7 +69,7 @@ class AddController extends AbstractController
      */
     public function productCategoryTableAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
+        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
         $locale = $this->getFactory()
             ->getCurrentLocale();
 
@@ -87,7 +88,7 @@ class AddController extends AbstractController
      */
     public function productTableAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
+        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
         $locale = $this->getFactory()
             ->getCurrentLocale();
 

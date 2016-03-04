@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
-use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer;
+use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Spryker\Shared\Newsletter\Messages\Messages;
 use Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Stock\Persistence;
@@ -10,6 +11,8 @@ interface StockQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -17,6 +20,8 @@ interface StockQueryContainerInterface
     public function queryStockByNeverOutOfStockAllTypes($idProduct);
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -24,6 +29,8 @@ interface StockQueryContainerInterface
     public function queryStockByProducts($idProduct);
 
     /**
+     * @api
+     *
      * @param int $idStock
      * @param int $idProduct
      *
@@ -32,6 +39,8 @@ interface StockQueryContainerInterface
     public function queryStockProductByStockAndProduct($idStock, $idProduct);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $type
      *
@@ -40,6 +49,8 @@ interface StockQueryContainerInterface
     public function queryStockProductBySkuAndType($sku, $type);
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
@@ -47,21 +58,29 @@ interface StockQueryContainerInterface
     public function queryStockByName($name);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
      */
     public function queryAllStockTypes();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryAllStockProducts();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryAllStockProductsJoinedStockJoinedProduct();
 
     /**
+     * @api
+     *
      * @param int $idStockProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery

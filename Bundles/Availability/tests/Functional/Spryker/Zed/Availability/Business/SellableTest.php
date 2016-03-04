@@ -1,24 +1,25 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Availability;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Availability\AvailabilityDependencyProvider;
-use Spryker\Zed\Availability\Business\AvailabilityBusinessFactory;
-use Spryker\Zed\Availability\Business\AvailabilityFacade;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Spryker\Zed\Availability\AvailabilityDependencyProvider;
+use Spryker\Zed\Availability\Business\AvailabilityBusinessFactory;
+use Spryker\Zed\Availability\Business\AvailabilityFacade;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * @group Spryker

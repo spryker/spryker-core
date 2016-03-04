@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Business;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,6 +20,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
 {
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -38,6 +41,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -52,6 +57,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
@@ -68,6 +75,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productIdsToAssign
      *
@@ -83,6 +92,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productIdsToUnAssign
      *
@@ -96,6 +107,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productOrderList
      *
@@ -111,6 +124,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productPreConfig
      *
@@ -124,6 +139,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -137,6 +154,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -151,6 +170,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -165,6 +186,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren

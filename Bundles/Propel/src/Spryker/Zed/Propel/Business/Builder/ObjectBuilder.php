@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Propel\Business\Builder;
 
-use Propel\Generator\Model\Column;
 use Propel\Generator\Builder\Om\ObjectBuilder as PropelObjectBuilder;
+use Propel\Generator\Model\Column;
 use Propel\Generator\Model\IdMethod;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Application\Environment;
 
 class ObjectBuilder extends PropelObjectBuilder
@@ -33,7 +34,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * Adds setter method for boolean columns.
      *
-     * @see parent::addColumnMutators()
+     * @see \Propel\Generator\Builder\Om\ObjectBuilder::addColumnMutators()
      *
      * @param string &$script The script will be modified in this method.
      * @param \Propel\Generator\Model\Column $col The current column.

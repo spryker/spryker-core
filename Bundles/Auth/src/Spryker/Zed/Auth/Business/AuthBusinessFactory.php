@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Auth\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Auth\AuthDependencyProvider;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Model\Auth;
 use Spryker\Zed\Auth\Business\Model\PasswordReset;
-use Spryker\Zed\Auth\AuthDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Auth\AuthConfig getConfig()

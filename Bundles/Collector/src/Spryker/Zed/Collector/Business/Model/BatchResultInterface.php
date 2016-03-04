@@ -1,13 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business\Model;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
+/**
+ * @deprecated Must be refactored into a Transfer object instead.
+ */
 interface BatchResultInterface
 {
 
@@ -18,16 +22,22 @@ interface BatchResultInterface
 
     /**
      * @param int $processedCount
+     *
+     * @return void
      */
     public function setProcessedCount($processedCount);
 
     /**
      * @param int $amount
+     *
+     * @return void
      */
     public function increaseProcessedCount($amount);
 
     /**
      * @param int $fetchedCount
+     *
+     * @return void
      */
     public function setFetchedCount($fetchedCount);
 
@@ -43,11 +53,15 @@ interface BatchResultInterface
 
     /**
      * @param int $totalCount
+     *
+     * @return void
      */
     public function setTotalCount($totalCount);
 
     /**
      * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failed
+     *
+     * @return void
      */
     public function addFailedResult(FailedResultInterface $failed);
 
@@ -63,6 +77,8 @@ interface BatchResultInterface
 
     /**
      * @param int $increment
+     *
+     * @return void
      */
     public function increaseProcessed($increment = 1);
 
@@ -73,6 +89,8 @@ interface BatchResultInterface
 
     /**
      * @param bool $failed
+     *
+     * @return void
      */
     public function setIsFailed($failed = true);
 
@@ -83,6 +101,8 @@ interface BatchResultInterface
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $processedLocale
+     *
+     * @return void
      */
     public function setProcessedLocale(LocaleTransfer $processedLocale);
 
@@ -93,11 +113,15 @@ interface BatchResultInterface
 
     /**
      * @param int $deletedCount
+     *
+     * @return void
      */
     public function setDeletedCount($deletedCount);
 
     /**
      * @param int $amount
+     *
+     * @return void
      */
     public function increaseDeletedCount($amount);
 

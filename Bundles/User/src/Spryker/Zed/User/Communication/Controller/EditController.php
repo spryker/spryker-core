@@ -1,18 +1,20 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Communication\Controller;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
-use Spryker\Zed\User\Communication\Form\UserForm;
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
+use Spryker\Zed\User\Communication\Form\UserForm;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\User\Business\UserFacade getFacade()
@@ -75,7 +77,7 @@ class EditController extends AbstractController
      */
     public function updateAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -120,7 +122,7 @@ class EditController extends AbstractController
      */
     public function activateUserAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -146,7 +148,7 @@ class EditController extends AbstractController
      */
     public function deactivateUserAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -172,7 +174,7 @@ class EditController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');

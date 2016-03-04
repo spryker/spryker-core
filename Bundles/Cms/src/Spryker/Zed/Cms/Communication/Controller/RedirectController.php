@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Controller;
@@ -87,7 +88,7 @@ class RedirectController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idUrl = $request->query->getInt(self::REQUEST_ID_URL);
+        $idUrl = $this->castId($request->query->get(self::REQUEST_ID_URL));
 
         $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
@@ -178,7 +179,7 @@ class RedirectController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idUrlRedirect = $request->query->getInt(self::REQUEST_ID_URL_REDIRECT);
+        $idUrlRedirect = $this->castId($request->query->get(self::REQUEST_ID_URL_REDIRECT));
         if ($idUrlRedirect === 0) {
             $this->addErrorMessage('Id redirect url not set');
 

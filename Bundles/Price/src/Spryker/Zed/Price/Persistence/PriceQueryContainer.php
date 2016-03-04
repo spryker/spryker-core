@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Price\Persistence;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Price\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Price\Persistence\PricePersistenceFactory getFactory()
@@ -22,6 +23,8 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     const DATE_NOW = 'now';
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
@@ -32,6 +35,8 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
      */
     public function queryAllPriceTypes()
@@ -40,6 +45,8 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -57,6 +64,8 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -74,6 +83,8 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -92,6 +103,8 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
@@ -110,6 +123,8 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idPriceProduct
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery

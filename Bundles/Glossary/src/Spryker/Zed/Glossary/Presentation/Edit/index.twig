@@ -1,62 +1,9 @@
-{% extends '@Gui/Layout/layout.twig' %}
+{% extends '@Glossary/Add/index.twig' %}
 
 {% set widget_title = 'Edit translation' %}
 
-{% block head_title widget_title %}
-{% block section_title widget_title %}
-
-{% form_theme form '@Glossary/Twig/filter-label-form.twig' %}
-
 {% block action %}
-    {{ backActionButton('/glossary/', 'List Translations' | trans) }}
-    {{ createActionButton('/glossary/add', 'Add Translation' | trans) }}
-{% endblock %}
-
-{% block content %}
-
-    {% embed '@Gui/Partials/widget.twig' %}
-
-        {% block widget_content %}
-
-            {{ form_start(form) }}
-                {{ form_widget(form) }}
-
-                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
-            {{ form_end(form) }}
-
-        {% endblock %}
-
-    {% endembed %}
-
-{% endblock %}
-
-{% block footer_js %}
     {{ parent() }}
-    <script type="text/javascript">
-        ;(function ($) {
-
-            $(document).ready(function () {
-                $('#form_glossary_key').blur(function () {
-                    var obj = $('#form_glossary_key').val();
-
-                    $.ajax({
-                        url: '/glossary/key/ajax',
-                        type: 'GET',
-                        data: {term: obj}
-                    }).done(function(data) {
-                        $.each(data, function(i, item) {
-                            var key = '#form_locale_' + i;
-
-                            value = $(key).val();
-                            if (!value.length) {
-                                $(key).val(item);
-                            }
-                        });
-                    });
-                });
-            });
-
-        })(jQuery);
-    </script>
+    {{ createActionButton('/glossary/add', 'Add Translation' | trans) }}
 {% endblock %}
 

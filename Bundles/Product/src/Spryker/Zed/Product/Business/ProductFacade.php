@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Product\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Product\Business\ProductBusinessFactory getFactory()
@@ -19,6 +20,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \SplFileInfo $file
      *
      * @return \Spryker\Zed\Product\Business\Model\ProductBatchResult
@@ -31,6 +34,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -43,6 +48,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -55,6 +62,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -67,6 +76,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -79,6 +90,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $attributeName
      *
      * @return bool
@@ -91,6 +104,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $attributeType
      *
      * @return bool
@@ -103,6 +118,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $name
      * @param string $inputType
      * @param int|null $fkParentAttributeType
@@ -119,6 +136,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $attributeName
      * @param string $attributeType
      * @param bool $isEditable
@@ -136,6 +155,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return bool
@@ -148,6 +169,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return int
@@ -160,6 +183,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return bool
@@ -172,6 +197,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
      *
@@ -185,6 +212,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return void
@@ -197,6 +226,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -213,6 +244,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -229,6 +262,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
@@ -239,6 +274,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return string
@@ -249,6 +286,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $concreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

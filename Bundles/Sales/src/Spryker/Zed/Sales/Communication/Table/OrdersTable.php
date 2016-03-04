@@ -1,20 +1,21 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Communication\Table;
 
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 
 class OrdersTable extends AbstractTable

@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category;
 
-use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 {

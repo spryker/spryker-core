@@ -1,21 +1,22 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Business;
 
-use Spryker\Zed\Payolution\Business\Log\TransactionStatusLog;
-use Spryker\Zed\Payolution\Business\Api\Converter\Converter;
-use Spryker\Zed\Payolution\Business\Order\Saver;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payolution\Business\Api\Adapter\Http\Guzzle;
+use Spryker\Zed\Payolution\Business\Api\Converter\Converter;
+use Spryker\Zed\Payolution\Business\Log\TransactionStatusLog;
+use Spryker\Zed\Payolution\Business\Order\Saver;
 use Spryker\Zed\Payolution\Business\Payment\Handler\Calculation\Calculation;
+use Spryker\Zed\Payolution\Business\Payment\Handler\Transaction\Transaction;
+use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Business\Payment\Method\Installment\Installment;
 use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
-use Spryker\Zed\Payolution\Business\Payment\Handler\Transaction\Transaction;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 /**
  * @method \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface getQueryContainer()

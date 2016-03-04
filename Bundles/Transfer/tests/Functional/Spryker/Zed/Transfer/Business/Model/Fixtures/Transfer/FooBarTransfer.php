@@ -61,11 +61,6 @@ class FooBarTransfer extends AbstractTransfer
         ],
     ];
 
-    public function __construct()
-    {
-        $this->selfReference = new \ArrayObject();
-    }
-
     /**
      * @bundle Test
      *

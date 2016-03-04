@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Business\Model\Navigation\Formatter;
 
+use Spryker\Shared\Url\UrlBuilderInterface;
 use Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface;
 use Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface;
-use Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface;
 
 class MenuFormatter implements MenuFormatterInterface
 {
@@ -41,14 +42,14 @@ class MenuFormatter implements MenuFormatterInterface
     protected $menuLevelValidator;
 
     /**
-     * @var \Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface
+     * @var \Spryker\Shared\Url\UrlBuilderInterface
      */
     protected $urlBuilder;
 
     /**
      * @param \Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface $urlUniqueValidator
      * @param \Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface $menuLevelValidator
-     * @param \Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface $urlBuilder
+     * @param \Spryker\Shared\Url\UrlBuilderInterface $urlBuilder
      */
     public function __construct(
         UrlUniqueValidatorInterface $urlUniqueValidator,
@@ -92,7 +93,6 @@ class MenuFormatter implements MenuFormatterInterface
                 continue;
             }
             $formattedPage = $this->formatPage($page);
-
             if (isset($page[self::PAGES]) && !empty($page[self::PAGES])) {
                 $this->menuLevelValidator->validate($currentLevel, $page[self::TITLE]);
                 $children = $this->formatPages($page[self::PAGES], $pathInfo, $currentLevel, $includeInvisible);

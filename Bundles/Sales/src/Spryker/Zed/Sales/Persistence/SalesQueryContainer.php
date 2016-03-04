@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Persistence;
@@ -20,6 +21,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrder()
@@ -28,6 +31,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItem()
@@ -36,6 +41,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
      */
     public function querySalesExpense()
@@ -44,6 +51,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @var int
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -56,6 +65,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @var int
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -70,6 +81,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrderAddress
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
@@ -83,6 +96,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
@@ -96,6 +111,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idOrderItem
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -109,6 +126,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
      */
     public function queryComments()
@@ -129,6 +148,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -142,6 +163,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
@@ -156,6 +179,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery

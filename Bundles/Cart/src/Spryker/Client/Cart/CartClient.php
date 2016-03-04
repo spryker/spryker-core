@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Cart;
@@ -20,6 +21,8 @@ class CartClient extends AbstractClient implements CartClientInterface
 
     /**
      * Returns the stored quote
+     *
+     * @api
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -41,6 +44,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * Returns number of items in quote
      *
+     * @api
+     *
      * @return int
      */
     public function getItemCount()
@@ -50,6 +55,8 @@ class CartClient extends AbstractClient implements CartClientInterface
 
     /**
      * Stores quote
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -62,6 +69,8 @@ class CartClient extends AbstractClient implements CartClientInterface
 
     /**
      * Adds an item (identfied by SKU and quantity) makes zed request, stored cart into persistant store if used.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -76,6 +85,8 @@ class CartClient extends AbstractClient implements CartClientInterface
 
     /**
      * Removes the item with the given SKU
+     *
+     * @api
      *
      * @param string $sku
      * @param string $groupKey
@@ -92,7 +103,6 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     *
      * @param string $sku
      * @param string $groupKey
      *
@@ -119,6 +129,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * Changes the quantity of the given item in the quote. If the quantity is equal to 0, the item
      * is removed from the quote.
+     *
+     * @api
      *
      * @param string $sku
      * @param string $groupKey
@@ -152,6 +164,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * Decreases the quantity of the given item in the quote.
      *
+     * @api
+     *
      * @param string $sku
      * @param string $groupKey
      * @param int $quantity
@@ -169,6 +183,8 @@ class CartClient extends AbstractClient implements CartClientInterface
 
     /**
      * Increases the quantity of the given item in the quote.
+     *
+     * @api
      *
      * @param string$sku
      * @param string $groupKey

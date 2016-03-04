@@ -1,14 +1,16 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Glossary\Business\Key;
 
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
 use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 
 class KeyManager implements KeyManagerInterface
 {

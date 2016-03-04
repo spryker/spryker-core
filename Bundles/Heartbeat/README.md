@@ -1,6 +1,11 @@
-# Heartbeat Package
+# Heartbeat Bundle
 
-## 1.0.0
-*2015-09-30 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/heartbeat
+```
+
+## Documentation
+
+[Heartbeat Documentation](https://spryker.github.io/heartbeat/index.html)

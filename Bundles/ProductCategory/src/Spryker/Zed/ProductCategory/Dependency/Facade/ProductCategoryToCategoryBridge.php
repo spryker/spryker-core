@@ -1,14 +1,16 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
-use Spryker\Zed\Category\Business\CategoryFacade;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Spryker\Zed\Category\Business\CategoryFacade;
 
 class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterface
 {
@@ -19,8 +21,6 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     protected $categoryFacade;
 
     /**
-     * ProductCategoryToCategoryBridge constructor.
-     *
      * @param \Spryker\Zed\Category\Business\CategoryFacade $categoryFacade
      */
     public function __construct($categoryFacade)
@@ -37,6 +37,17 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     public function hasCategoryNode($categoryName, LocaleTransfer $locale)
     {
         return $this->categoryFacade->hasCategoryNode($categoryName, $locale);
+    }
+
+    /**
+     * @param string $categoryKey
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function getCategoryByKey($categoryKey, $idLocale)
+    {
+        return $this->categoryFacade->getCategoryByKey($categoryKey, $idLocale);
     }
 
     /**

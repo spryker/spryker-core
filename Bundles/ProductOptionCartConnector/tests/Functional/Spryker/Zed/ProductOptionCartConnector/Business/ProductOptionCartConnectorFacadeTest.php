@@ -1,16 +1,18 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
+use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
+use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
 
 /**
  * @group Business

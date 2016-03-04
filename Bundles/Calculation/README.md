@@ -1,6 +1,11 @@
-# Zed Package
+# Calculation Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/calculation
+```
+
+## Documentation
+
+[Calculation Documentation](https://spryker.github.io/calculation/index.html)

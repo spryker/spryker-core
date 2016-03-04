@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CustomerConfig extends AbstractBundleConfig
 {

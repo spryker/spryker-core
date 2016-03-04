@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\ZedRequest\Client;
@@ -14,7 +15,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     /**
      * @var \Spryker\Shared\ZedRequest\Client\HttpClientInterface
      */
-    private $httpClient = null;
+    private $httpClient;
 
     /**
      * @var \Spryker\Shared\ZedRequest\Client\ResponseInterface
@@ -25,7 +26,6 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      * @var \Spryker\Shared\Transfer\TransferInterface[]|\Closure[]
      */
     private $metaTransfers = [
-
     ];
 
     /**

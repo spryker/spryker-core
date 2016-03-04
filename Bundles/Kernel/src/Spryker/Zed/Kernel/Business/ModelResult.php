@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Business;
 
-use Spryker\Shared\Transfer\TransferInterface;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
+use Spryker\Shared\Transfer\TransferInterface;
 
 class ModelResult
 {
 
     /**
-     * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null
      */
     protected $entity = null;
 
@@ -23,7 +24,7 @@ class ModelResult
     protected $entityModifiedColumns = [];
 
     /**
-     * @var \Spryker\Shared\Transfer\TransferInterface
+     * @var \Spryker\Shared\Transfer\TransferInterface|null
      */
     protected $transfer = null;
 
@@ -40,7 +41,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null $entity
      */
     public function __construct(ActiveRecordInterface $entity = null)
     {

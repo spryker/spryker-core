@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Session\Business\Handler;
@@ -18,7 +19,7 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
     /**
      * @var \Couchbase
      */
-    protected $connection = null;
+    protected $connection;
 
     /**
      * e.g. ['127.0.0.1:8091']
@@ -38,9 +39,9 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
     protected $password;
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected $bucketName = null;
+    protected $bucketName;
 
     /**
      * @var bool

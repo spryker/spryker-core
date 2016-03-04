@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Tax\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTaxTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Tax\Persistence\TaxPersistenceFactory getFactory()
@@ -20,6 +21,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
 {
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
@@ -30,6 +33,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
      */
     public function queryAllTaxRates()
@@ -38,6 +43,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
@@ -48,6 +55,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function queryAllTaxSets()
@@ -56,6 +65,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
      * @return $this

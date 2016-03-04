@@ -1,6 +1,11 @@
-# Session bundle
+# Session Bundle
 
-## 1.0.0
-*2015-06-30 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/session
+```
+
+## Documentation
+
+[Session Documentation](https://spryker.github.io/session/index.html)

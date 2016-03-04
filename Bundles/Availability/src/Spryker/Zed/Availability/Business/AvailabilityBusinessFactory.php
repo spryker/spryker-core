@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Availability\Business;
 
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
+use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()

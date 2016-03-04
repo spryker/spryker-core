@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Business\Distributor;
@@ -15,7 +16,7 @@ class Distributor implements DistributorInterface
     /**
      * @var float
      */
-    protected $roundingError = 0;
+    protected $roundingError = 0.0;
 
     /**
      * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects

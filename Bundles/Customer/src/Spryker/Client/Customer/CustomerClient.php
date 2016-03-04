@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Customer;
@@ -17,6 +18,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
@@ -36,6 +39,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
@@ -50,6 +55,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -62,6 +69,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -74,6 +83,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -86,6 +97,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -98,6 +111,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -112,6 +127,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer()
@@ -124,6 +141,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -138,6 +157,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -150,6 +171,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -162,6 +185,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Spryker\Client\ZedRequest\Client\Response
@@ -174,6 +199,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
@@ -192,6 +219,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @return mixed
      */
     public function logout()
@@ -202,6 +231,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isLoggedIn()
@@ -212,6 +243,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
@@ -224,6 +257,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -236,6 +271,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -248,6 +285,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -260,6 +299,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -272,6 +313,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -284,6 +327,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -296,6 +341,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -308,6 +355,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer

@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\ProductOptionExporter\Business\Model;
 
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
-use Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 
 /**
  * @group Business

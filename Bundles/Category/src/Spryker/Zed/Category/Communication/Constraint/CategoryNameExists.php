@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Communication\Constraint;
@@ -13,6 +14,9 @@ use Symfony\Component\Validator\Constraint;
 class CategoryNameExists extends Constraint
 {
 
+    /**
+     * @var string
+     */
     public $message = 'A category with the name {{ value }} already exists in the Database!';
 
     /**

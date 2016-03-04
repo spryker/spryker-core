@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Communication\Plugin\Checkout;
@@ -13,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
@@ -30,7 +32,6 @@ class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPre
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        return;
         $payolutionTransactionResponseTransfer = $this->getFacade()->preCheckPayment($quoteTransfer);
         $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransfer);
         $quoteTransfer->getPayment()->getPayolution()

@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Transfer\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Transfer\Business\TransferBusinessFactory getFactory()
@@ -16,6 +17,8 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
@@ -26,6 +29,8 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function deleteGeneratedTransferObjects()

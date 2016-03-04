@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\SalesSplit\Business\Model;
 
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Messages;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderOrderItemSplitSplit implements OrderItemSplitInterface

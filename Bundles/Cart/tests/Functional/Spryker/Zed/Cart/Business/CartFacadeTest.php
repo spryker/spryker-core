@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Functional\Spryker\Zed\Cart\Business;
 
 use Codeception\TestCase\Test;
@@ -13,7 +18,9 @@ use Spryker\Zed\Price\Business\PriceFacade;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 
 /**
  * @group Spryker

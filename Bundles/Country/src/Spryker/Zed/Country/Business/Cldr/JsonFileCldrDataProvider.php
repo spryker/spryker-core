@@ -22,6 +22,9 @@ class JsonFileCldrDataProvider implements CldrDataProviderInterface
         $this->cldrFilePath = $cldrFilePath;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCldrData()
     {
         $rawFileInput = file_get_contents(

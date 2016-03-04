@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\ZedRequest\Client;
@@ -15,15 +16,15 @@ use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
 use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Client\ZedRequest\Client\Request;
-use Spryker\Shared\Config;
+use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\EventJournal\Model\Event;
+use Spryker\Shared\EventJournal\Model\SharedEventJournal;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use Spryker\Shared\EventJournal\Model\SharedEventJournal;
-use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
-use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 abstract class AbstractHttpClient implements HttpClientInterface
@@ -102,7 +103,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param string $pathInfo
      * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
-     * @param null $timeoutInSeconds
+     * @param int|null $timeoutInSeconds
      * @param bool $isBackgroundRequest
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\RequestException
@@ -170,7 +171,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param string $pathInfo
      * @param \Spryker\Shared\ZedRequest\Client\RequestInterface $requestTransfer
-     * @param null $timeoutInSeconds
+     * @param int|null $timeoutInSeconds
      *
      * @return \Guzzle\Http\Message\EntityEnclosingRequest
      */
@@ -312,7 +313,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function doLog($pathInfo, $subType, ObjectInterface $transfer, $rawBody)
     {
-        $lumberjack = new SharedEventJournal();
+        $eventJournal = new SharedEventJournal();
         $event = new Event();
         $responseTransfer = $transfer->getTransfer();
         if ($responseTransfer instanceof TransferInterface) {
@@ -327,7 +328,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $event->setField(self::EVENT_FIELD_PATH_INFO, $pathInfo);
         $event->setField(self::EVENT_FIELD_SUB_TYPE, $subType);
 
-        $lumberjack->saveEvent($event);
+        $eventJournal->saveEvent($event);
     }
 
     /**

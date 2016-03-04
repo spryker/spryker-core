@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\Api\TransactionStatus;
@@ -33,7 +34,6 @@ class TransactionStatusResponse
      */
     public function __construct($isSuccess)
     {
-        assert(is_bool($isSuccess));
         $this->status = $isSuccess ? self::STATUS_OK : self::STATUS_ERROR;
     }
 

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Communication\Controller;
@@ -13,7 +14,6 @@ use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
@@ -140,8 +140,8 @@ class VoucherController extends AbstractController
      */
     public function viewAction(Request $request)
     {
-        $idPool = $request->query->get(self::ID_POOL_PARAMETER);
-        $batchValue = $request->query->get(self::BATCH_PARAMETER);
+        $idPool = $this->castId($request->query->get(self::ID_POOL_PARAMETER));
+        $batchValue = $request->query->get(self::BATCH_PARAMETER); // TODO FW Validation
 
         $pool = $this->getFactory()
             ->getVoucherPoolById($idPool);
@@ -185,8 +185,8 @@ class VoucherController extends AbstractController
      */
     protected function getGeneratedCodesTable(Request $request)
     {
-        $idPool = $request->query->get(self::ID_POOL_PARAMETER);
-        $batch = $request->query->get(self::BATCH_PARAMETER);
+        $idPool = $this->castId($request->query->get(self::ID_POOL_PARAMETER));
+        $batch = $request->query->get(self::BATCH_PARAMETER); // TODO FW Validation
 
         $tableParameters = TableParameters::getTableParameters($request);
 
@@ -200,8 +200,8 @@ class VoucherController extends AbstractController
      */
     public function exportAction(Request $request)
     {
-        $idPool = $request->query->get(self::ID_POOL_PARAMETER);
-        $batch = $request->query->get(self::BATCH_PARAMETER);
+        $idPool = $this->castId($request->query->get(self::ID_POOL_PARAMETER));
+        $batch = $request->query->get(self::BATCH_PARAMETER); // TODO FW Validation
 
         return $this->generateCsvFromVouchers($idPool, $batch);
     }

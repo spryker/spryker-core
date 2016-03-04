@@ -1,23 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Business\Payment\Handler\Transaction;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface;
 use Spryker\Zed\Payolution\Business\Payment\Handler\AbstractPaymentHandler;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Spryker\Zed\Payolution\PayolutionConfig;
-use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 
 class Transaction extends AbstractPaymentHandler implements TransactionInterface
 {

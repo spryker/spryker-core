@@ -1,15 +1,20 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Refund\Communication\Table;
 
+use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
+use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Library\DateFormatter;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Refund\Business\RefundFacade;
-use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
-use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 
 class RefundTable extends AbstractTable
 {

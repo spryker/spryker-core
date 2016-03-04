@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Payolution\Business;
@@ -13,9 +14,6 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use Spryker\Shared\Payolution\PayolutionConstants;
-use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
@@ -23,6 +21,9 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Spryker\Shared\Payolution\PayolutionConstants;
+use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
 
 class AbstractFacadeTest extends Test
 {
@@ -70,7 +71,7 @@ class AbstractFacadeTest extends Test
      */
     protected function setUpSalesOrderTestData()
     {
-        $country = SpyCountryQuery::create()->findOneByIso2Code('de');
+        $country = SpyCountryQuery::create()->findOneByIso2Code('DE');
 
         $billingAddress = (new SpySalesOrderAddress())
             ->setFkCountry($country->getIdCountry())
@@ -132,11 +133,11 @@ class AbstractFacadeTest extends Test
             ->setEmail('jane@family-doe.org')
             ->setGender(SpyPaymentPayolutionTableMap::COL_GENDER_MALE)
             ->setSalutation(SpyPaymentPayolutionTableMap::COL_SALUTATION_MR)
-            ->setCountryIso2Code('de')
+            ->setCountryIso2Code('DE')
             ->setCity('Berlin')
             ->setStreet('Straße des 17. Juni 135')
             ->setZipCode('10623')
-            ->setLanguageIso2Code('de')
+            ->setLanguageIso2Code('DE')
             ->setCurrencyIso3Code('EUR');
         $this->paymentEntity->save();
     }

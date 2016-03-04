@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library;
@@ -54,7 +55,7 @@ class Autoloader
     /**
      * @param string $rootDirectory
      * @param string $vendorDirectory
-     * @param null $application
+     * @param string|null $application
      * @param bool $disableApplicationCheck
      *
      * @return void

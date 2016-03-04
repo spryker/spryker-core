@@ -1,20 +1,21 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Price;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\Price\Business\PriceFacade;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\Price\Business\PriceFacade;
 
 /**
  * @group PriceTest
@@ -139,6 +140,13 @@ class WriterTest extends Test
         $this->assertEquals(self::DUMMY_NEW_PRICE_2, $request->getPrice());
     }
 
+    /**
+     * @param string $sku
+     * @param string $abstractSku
+     * @param string $priceType
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
     protected function setTransferPriceProduct($sku, $abstractSku, $priceType)
     {
         $transferPriceProduct = new PriceProductTransfer();
@@ -151,6 +159,12 @@ class WriterTest extends Test
         return $transferPriceProduct;
     }
 
+    /**
+     * @param string $abstractSku
+     * @param string $priceType
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
     protected function setTransferPriceProductAbstract($abstractSku, $priceType)
     {
         $transferPriceProduct = new PriceProductTransfer();
@@ -162,6 +176,13 @@ class WriterTest extends Test
         return $transferPriceProduct;
     }
 
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstract
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct[]|\Propel\Runtime\Collection\ObjectCollection
+     */
     protected function findPriceEntitiesProductAbstract($productAbstract, $priceType)
     {
         return SpyPriceProductQuery::create()
@@ -170,6 +191,13 @@ class WriterTest extends Test
             ->find();
     }
 
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcrete
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct[]|\Propel\Runtime\Collection\ObjectCollection
+     */
     protected function findPriceEntitiesProductConcrete($productConcrete, $priceType)
     {
         return SpyPriceProductQuery::create()

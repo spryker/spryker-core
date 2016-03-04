@@ -1,20 +1,25 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Environment;
 use Spryker\Shared\Setup\SetupConstants;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
 
+    /**
+     * @throws \Exception
+     * @return array
+     */
     public function indexAction()
     {
         $developmentLinks = [];
@@ -113,7 +118,7 @@ class IndexController extends AbstractController
             ];
         } else {
             $developmentLinks[] = [
-                'href' => Config::get(SetupConstants::JENKINS_BASE_URL),
+                'href' => Config::get(ApplicationConstants::JENKINS_BASE_URL),
                 'target' => '_blank',
                 'label' => __('Jenkins'),
             ];
@@ -130,6 +135,9 @@ class IndexController extends AbstractController
         ]);
     }
 
+    /**
+     * @return array
+     */
     public function showCronjobsAction()
     {
         return $this->viewResponse([
@@ -137,6 +145,9 @@ class IndexController extends AbstractController
         ]);
     }
 
+    /**
+     * @return mixed
+     */
     protected function getClient()
     {
         $redis = Redis::getInstance();
@@ -154,12 +165,6 @@ class IndexController extends AbstractController
         for ($i = 0; $i < 100; $i++) {
             $redis->set(md5($i), microtime(true));
         }
-
-        echo '<pre>';
-        var_dump($i);
-        echo '<hr>';
-        echo __FILE__ . ' ' . __LINE__;
-        die;
     }
 
 }

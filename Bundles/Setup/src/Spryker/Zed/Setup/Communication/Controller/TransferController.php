@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * @method \Spryker\Zed\Setup\Business\SetupFacade getFacade()

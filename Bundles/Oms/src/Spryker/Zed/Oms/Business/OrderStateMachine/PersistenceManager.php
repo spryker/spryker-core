@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Spryker\Shared\Oms\OmsConstants;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Spryker\Shared\Oms\OmsConstants;
 
 class PersistenceManager implements PersistenceManagerInterface
 {

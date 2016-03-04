@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Application\Business\Model\Twig\EnvironmentInfo;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Zed\Application\Business\Model\Twig\EnvironmentInfo;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()

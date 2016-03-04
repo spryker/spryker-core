@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Payone\ClientApi\Call;
@@ -18,8 +19,6 @@ class CreditCardCheck extends AbstractCall
     private $storeCardData = PayoneApiConstants::STORE_CARD_DATA_YES;
 
     /**
-     * @void
-     *
      * @return void
      */
     public function setDoStoreCardData()
@@ -28,8 +27,6 @@ class CreditCardCheck extends AbstractCall
     }
 
     /**
-     * @void
-     *
      * @return void
      */
     public function setDoNotStoreCardData()

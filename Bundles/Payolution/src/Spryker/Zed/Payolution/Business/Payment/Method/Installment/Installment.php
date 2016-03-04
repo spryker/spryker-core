@@ -1,16 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Installment;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 class Installment extends AbstractPaymentMethod implements InstallmentInterface
 {

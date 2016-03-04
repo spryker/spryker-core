@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use LogicException;
+use SimpleXMLElement;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
-use SimpleXMLElement;
-use LogicException;
 
 class Builder implements BuilderInterface
 {
@@ -95,8 +96,6 @@ class Builder implements BuilderInterface
             $eventMap = $this->createEvents();
 
             $this->createTransitions($stateToProcessMap, $processMap, $eventMap);
-
-            assert('isset($mainProcess)');
 
             self::$processBuffer[$processName] = $mainProcess;
         }

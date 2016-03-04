@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Table;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -117,6 +118,11 @@ class CmsBlockTable extends AbstractTable
         return $buttons;
     }
 
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
     private function buildValueItem(array $item)
     {
         $result = $item[CmsQueryContainer::CATEGORY_NAME] . '<br><div style="font-size:.8em">' . $item[CmsQueryContainer::URL] . '<div>';

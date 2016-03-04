@@ -1,15 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Touch\Persistence;
 
-interface TouchQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface TouchQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
@@ -17,6 +22,8 @@ interface TouchQueryContainerInterface
     public function queryTouchListByItemType($itemType);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemId
      *
@@ -25,6 +32,8 @@ interface TouchQueryContainerInterface
     public function queryTouchEntry($itemType, $itemId);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemId
      * @param string $itemEvent
@@ -34,6 +43,8 @@ interface TouchQueryContainerInterface
     public function queryUpdateTouchEntry($itemType, $itemId, $itemEvent);
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemEvent
      * @param array $itemIds
@@ -43,6 +54,8 @@ interface TouchQueryContainerInterface
     public function queryTouchEntries($itemType, $itemEvent, array $itemIds);
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
@@ -50,6 +63,8 @@ interface TouchQueryContainerInterface
     public function queryTouchDeleteStorageAndSearch($itemType);
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @throws \Propel\Runtime\Exception\PropelException
