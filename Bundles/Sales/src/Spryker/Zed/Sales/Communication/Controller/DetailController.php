@@ -58,7 +58,7 @@ class DetailController extends AbstractController
      */
     protected function renderSalesDetailBlocks(Request $request, OrderTransfer $orderTransfer)
     {
-        $addCommentBlock = $this->renderAction($request, '/sales/comment/add');
+        $addCommentBlock = $this->handleSubRequest($request, '/sales/comment/add');
 
         if ($addCommentBlock instanceof RedirectResponse) {
             return $addCommentBlock;
@@ -94,7 +94,7 @@ class DetailController extends AbstractController
          * @var \Symfony\Component\HttpFoundation\Response $blockResponse
          */
         foreach ($data as $blockName => $blockUrl) {
-            $responseData[$blockName] = $this->renderAction($subRequest, $blockUrl);
+            $responseData[$blockName] = $this->handleSubRequest($subRequest, $blockUrl);
         }
 
         return $responseData;

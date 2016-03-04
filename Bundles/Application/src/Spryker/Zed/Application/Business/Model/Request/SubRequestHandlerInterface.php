@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
- Spryker\Zed\Application\Business\Model\Request;
+namespace Spryker\Zed\Application\Business\Model\Request;
 
 use Symfony\Component\HttpFoundation\Request;
 
