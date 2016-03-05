@@ -11,6 +11,7 @@ use Elastica\SearchableInterface;
 use Spryker\Client\Search\Model\Query\QueryInterface;
 use Spryker\Client\Search\Model\ResultFormatter\ResultFormatterInterface;
 
+// FIXME: try Tobi's suggestion
 class ElasticsearchSearchHandler implements SearchHandlerInterface
 {
 

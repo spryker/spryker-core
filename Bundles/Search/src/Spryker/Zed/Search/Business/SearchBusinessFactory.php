@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Search\Business;
 
+use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\XmlIndexDefinitionLoader;
 use Spryker\Zed\Search\Business\Model\Search;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
 use Spryker\Zed\Search\SearchDependencyProvider;
@@ -33,6 +36,17 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller::__construct
+     */
+    public function createElasticsearchIndexInstaller()
+    {
+        return new IndexInstaller(
+            $this->createXmlIndexDefinitionLoader(),
+            $this->getElasticsearchClient()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Search\Business\Model\Search
      */
     public function createSearch()
@@ -48,6 +62,23 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function getInstallers()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::INSTALLERS);
+    }
+
+    /**
+     * @return \Elastica\Client
+     */
+    protected function getElasticsearchClient()
+    {
+        // FIXME
+        return StorageInstanceBuilder::getElasticsearchInstance();
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\XmlIndexDefinitionLoader
+     */
+    protected function createXmlIndexDefinitionLoader()
+    {
+        return new XmlIndexDefinitionLoader($this->getConfig()->getXmlIndexDefinitionDirectories());
     }
 
 }

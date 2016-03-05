@@ -8,10 +8,13 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 use Symfony\Component\Finder\Finder;
+use Zend\Config\Config;
 use Zend\Config\Factory;
+use Zend\Filter\Word\CamelCaseToUnderscore;
 
-class XmlIndexDefinitionLoader
+class XmlIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 {
+    const INDEX = 'index';
 
     /**
      * @var array
@@ -26,15 +29,20 @@ class XmlIndexDefinitionLoader
         $this->sourceDirectories = $sourceDirectories;
     }
 
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition[]
+     */
     public function loadIndexDefinitions()
     {
-        $definitions = [];
+        $indexDefinitions = [];
         $xmlFiles = $this->getXmlFiles();
         foreach ($xmlFiles as $xmlFile) {
-            $definitions[] = Factory::fromFile($xmlFile->getPathname(), true)->toArray();
+            $definitionConfig = Factory::fromFile($xmlFile->getPathname());
+
+            $indexDefinitions = array_merge($indexDefinitions, $this->createIndexDefinitions($definitionConfig));
         }
 
-        return $definitions;
+        return $indexDefinitions;
     }
 
     /**
@@ -47,4 +55,45 @@ class XmlIndexDefinitionLoader
 
         return $finder;
     }
+
+    /**
+     * @param array $definitionConfig
+     *
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition[]
+     */
+    protected function createIndexDefinitions(array $definitionConfig)
+    {
+        $indexDefinitionData = $definitionConfig[self::INDEX];
+        if ($this->isAssociativeArray($indexDefinitionData)) {
+            return [$this->createIndexDefinition($indexDefinitionData)];
+        }
+
+        $definitions = [];
+        foreach ($indexDefinitionData as $data) {
+            $definitions[] = $this->createIndexDefinition($data);
+        }
+
+        return $definitions;
+    }
+
+    /**
+     * @param array $definitionData
+     *
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition
+     */
+    protected function createIndexDefinition(array $definitionData)
+    {
+        return new IndexDefinition($definitionData);
+    }
+
+    /**
+     * @param array $array
+     *
+     * @return bool
+     */
+    protected function isAssociativeArray(array $array)
+    {
+        return array_values($array) !== $array;
+    }
+
 }

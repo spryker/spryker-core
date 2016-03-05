@@ -21,4 +21,14 @@ class SearchConfig extends AbstractBundleConfig
         return $this->get(ApplicationConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
     }
 
+    /**
+     * @return array
+     */
+    public function getXmlIndexDefinitionDirectories()
+    {
+        return [
+            APPLICATION_ROOT_DIR . '/config/Zed/search/',
+        ];
+    }
+
 }

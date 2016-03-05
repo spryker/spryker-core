@@ -20,61 +20,67 @@ class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\XmlIndexDefinitionLoader::__construct
+     * @return void
      */
-    protected $xmlIndexDefinitionLoader;
-
-    public function setUp()
+    public function testSingleIndexDefinitionLoadingWithMultipleMappingTypes()
     {
-        $this->xmlIndexDefinitionLoader = new XmlIndexDefinitionLoader([
-            __DIR__ . '/Fixtures/',
-        ]);
+        $xmlIndexDefinitionLoader = new XmlIndexDefinitionLoader([__DIR__ . '/Fixtures/SingleIndex']);
+
+        $definitions = $xmlIndexDefinitionLoader->loadIndexDefinitions();
+
+        $this->assertEquals('foo', $definitions[0]->getIndexName());
     }
 
-    public function test()
+    /**
+     * @return void
+     */
+    public function testSingleIndexDefinitionSettings()
     {
-        $definitions = $this->xmlIndexDefinitionLoader->loadIndexDefinitions();
+        $xmlIndexDefinitionLoader = new XmlIndexDefinitionLoader([__DIR__ . '/Fixtures/SingleIndex']);
 
-        $expected = [[
-            'index' => [
-                'name' => 'foo',
-                'settings' => [
-                    'number_of_shards' => '1',
-                    'number_of_replicas' => '1',
-//                    'analysis' => [],
-                ],
-                'mapping_types' => [
-                    [
-                        'name' => 'page',
-                        'mapping' => [
-                            [
-                                'name' => 'store',
-                                'type' => 'string',
-                                'include_in_all' => 'false',
-                            ],
-                            [
-                                'name' => 'search-result-data',
-                                'type' => 'object',
-                                'include_in_all' => 'false',
-                                'properties' => [
-                                    [
-                                        'name' => 'sku',
-                                        'type' => 'string',
-                                        'index' => 'not_analyzed',
-                                    ],
-                                    [
-                                        'name' => 'name',
-                                        'type' => 'string',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]];
+        $expectedSettings = [
+            'number_of_shards' => '1',
+            'number_of_replicas' => '1',
+        ];
 
-        $this->assertEquals($expected, $definitions);
+        $definitions = $xmlIndexDefinitionLoader->loadIndexDefinitions();
+
+        $this->assertEquals($expectedSettings, $definitions[0]->getSettings());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSingleIndexDefinitionMappingTypes()
+    {
+        $xmlIndexDefinitionLoader = new XmlIndexDefinitionLoader([__DIR__ . '/Fixtures/SingleIndex']);
+
+        $expectedMappingTypes = [[
+            'name' => 'page1',
+            'mapping' => [],
+        ],[
+            'name' => 'page2',
+            'mapping' => [],
+        ],];
+
+        $definitions = $xmlIndexDefinitionLoader->loadIndexDefinitions();
+
+        $this->assertEquals($expectedMappingTypes, $definitions[0]->getMappingTypes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMultipleIndexDefinitionLoading()
+    {
+        $xmlIndexDefinitionLoader = new XmlIndexDefinitionLoader([__DIR__ . '/Fixtures/MultipleIndex']);
+
+        $definitions = $xmlIndexDefinitionLoader->loadIndexDefinitions();
+
+        $this->assertEquals(3, count($definitions));
+        $this->assertEquals('foo', $definitions[0]->getIndexName(), 'Name of IndexDefinition #0 should be foo');
+        $this->assertEquals('bar', $definitions[1]->getIndexName(), 'Name of IndexDefinition #1 should be bar');
+        $this->assertEquals('baz', $definitions[2]->getIndexName(), 'Name of IndexDefinition #2 should be baz');
     }
 
 }
