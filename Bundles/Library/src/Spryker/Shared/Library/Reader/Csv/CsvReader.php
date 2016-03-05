@@ -89,20 +89,40 @@ class CsvReader implements CsvReaderInterface
      */
     public function composeItem(array $columns, array $data)
     {
+        if (count($columns) !== count($data)) {
+            return [];
+        }
+
+        return array_combine(
+            array_values($columns),
+            array_values($data)
+        );
+    }
+
+    /**
+     * @param $columns
+     * @param $data
+     * @param $filename
+     * @param $lineNumber
+     *
+     * @return array
+     */
+    protected function composeAndValidateLine($columns, $data, $filename, $lineNumber)
+    {
         $data = array_values($data);
         $columns = array_values($columns);
-        $columnCount = count($columns);
-        $dataCount = count($data);
 
-        if ($columnCount !== $dataCount) {
+        if (empty($data)) {
             throw new \UnexpectedValueException(sprintf(
-                'Expected %d column(s) but received data with %d column(s)',
-                $columnCount,
-                $dataCount
+                'Expected %d column(s) but received data with %d column(s) in %s on line %d',
+                count($columns),
+                count($data),
+                $filename,
+                $lineNumber
             ));
         }
 
-        return array_combine($columns, $data);
+        return $this->composeItem($columns, $data);
     }
 
     /**
@@ -170,7 +190,13 @@ class CsvReader implements CsvReaderInterface
             ));
         }
 
-        $data = $this->composeItem($this->getCsvMeta()->getColumns(), $data);
+        $data = $this->composeAndValidateLine(
+            $this->getCsvMeta()->getColumns(),
+            $data,
+            $this->getFile()->getRealPath(),
+            $this->readIndex + 1
+        );
+
         $this->readIndex++;
 
         return $data;
@@ -207,13 +233,20 @@ class CsvReader implements CsvReaderInterface
         $data = [];
         $csvFile = $this->createCsvFile($this->getFile()->getPathname());
         $csvMeta = $this->createCsvMeta($this->getFile()->getPathname());
+        $currentLine = 1;
 
         $csvFile->rewind();
         while (!$csvFile->eof()) {
-            $data[] = $this->composeItem($csvMeta->getColumns(), $csvFile->fgetcsv());
+            $data[] = $this->composeAndValidateLine(
+                $csvMeta->getColumns(),
+                $csvFile->fgetcsv(),
+                $csvFile->getRealPath(),
+                $currentLine++
+            );
         }
 
         return $data;
     }
+
 
 }
