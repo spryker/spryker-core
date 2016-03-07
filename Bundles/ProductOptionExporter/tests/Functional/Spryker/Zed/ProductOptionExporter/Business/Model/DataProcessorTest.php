@@ -92,7 +92,7 @@ class DataProcessorTest extends Test
         $this->assertArrayHasKey('allow', $value['constraints']);
         $allowConstraints = $value['constraints']['allow'];
         $this->assertCount(2, $allowConstraints);
-        $this->assertEquals($ids['idUsageLarge'], $allowConstraints[0]);
+        $this->assertEquals($ids['idUsageLarge'], $allowConstraints[1]);
 
         $this->assertEquals('199', $product['options'][1]['values'][0]['price']);
     }
