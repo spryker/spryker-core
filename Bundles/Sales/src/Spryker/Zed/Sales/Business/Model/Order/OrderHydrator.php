@@ -34,14 +34,14 @@ class OrderHydrator implements OrderHydratorInterface
     protected $omsFacade;
 
     /**
-     * @var SalesToSalesAggregatorInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface
      */
     protected $salesAggregatorFacade;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param SalesToSalesAggregatorInterface $salesAggregatorFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
@@ -70,8 +70,7 @@ class OrderHydrator implements OrderHydratorInterface
 
         $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
 
-        $orderTransfer = $this->convertOrderDetailsEntityIntoTransfer($orderEntity);
-        $orderTransfer = $this->addTotalOrderCount($orderTransfer);
+        $orderTransfer = $this->applyOrderTransferHydrators($orderEntity);
         $orderTransfer = $this->salesAggregatorFacade->getOrderTotalByOrderTransfer($orderTransfer);
 
         return $orderTransfer;
@@ -82,16 +81,18 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function convertOrderDetailsEntityIntoTransfer(SpySalesOrder $orderEntity)
+    protected function applyOrderTransferHydrators(SpySalesOrder $orderEntity)
     {
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $orderTransfer = $this->hydrateBaseOrderTransfer($orderEntity);
 
-        $this->addOrderItemsToOrderTransfer($orderEntity, $orderTransfer);
-        $this->addBillingAddressToOrderTransfer($orderEntity, $orderTransfer);
-        $this->addShippingAddressToOrderTransfer($orderEntity, $orderTransfer);
-        $this->addShipmentMethodToOrderTransfer($orderEntity, $orderTransfer);
-        $this->addExpensesToOrderTransfer($orderEntity, $orderTransfer);
+        $this->hydrateOrderItemsToOrderTransfer($orderEntity, $orderTransfer);
+        $this->hydrateBillingAddressToOrderTransfer($orderEntity, $orderTransfer);
+        $this->hydrateShippingAddressToOrderTransfer($orderEntity, $orderTransfer);
+        $this->hydrateShipmentMethodToOrderTransfer($orderEntity, $orderTransfer);
+        $this->hydrateExpensesToOrderTransfer($orderEntity, $orderTransfer);
+        $orderTransfer->setTotalOrderCount(
+            $this->getTotalCustomerOrderCount($orderTransfer->getFkCustomer())
+        );
 
         return $orderTransfer;
     }
@@ -102,12 +103,25 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function addOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    public function hydrateOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         foreach ($orderEntity->getItems() as $orderItemEntity) {
-            $itemTransfer = $this->createOrderItemTransfer($orderItemEntity);
+            $itemTransfer = $this->hydrateOrderItemTransfer($orderItemEntity);
             $orderTransfer->addItem($itemTransfer);
         }
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateBaseOrderTransfer(SpySalesOrder $orderEntity)
+    {
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->fromArray($orderEntity->toArray(), true);
+
+        return $orderTransfer;
     }
 
     /**
@@ -115,7 +129,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createOrderItemTransfer(SpySalesOrderItem $orderItemEntity)
+    public function hydrateOrderItemTransfer(SpySalesOrderItem $orderItemEntity)
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->fromArray($orderItemEntity->toArray(), true);
@@ -138,7 +152,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function addBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         $billingAddressTransfer = new AddressTransfer();
         $billingAddressTransfer->fromArray($orderEntity->getBillingAddress()->toArray(), true);
@@ -152,7 +166,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function addShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         $shippingAddressTransfer = new AddressTransfer();
         $shippingAddressTransfer->fromArray($orderEntity->getShippingAddress()->toArray(), true);
@@ -166,7 +180,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function addShipmentMethodToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    protected function hydrateShipmentMethodToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
         $shipmentMethodEntity = $orderEntity->getShipmentMethod();
@@ -181,7 +195,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function addExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    protected function hydrateExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         foreach ($orderEntity->getExpenses() as $expenseEntity) {
             $expenseTransfer = new ExpenseTransfer();
@@ -192,19 +206,17 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return int
      */
-    protected function addTotalOrderCount(OrderTransfer $orderTransfer)
+    protected function getTotalCustomerOrderCount($idCustomer)
     {
         $totalOrderCount = $this->queryContainer
             ->querySalesOrder()
-            ->findByFkCustomer($orderTransfer->getFkCustomer())->count();
+            ->findByFkCustomer($idCustomer)->count();
 
-        $orderTransfer->setTotalOrderCount($totalOrderCount);
-
-        return $orderTransfer;
+        return $totalOrderCount;
     }
 
     /**

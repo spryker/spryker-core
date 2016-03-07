@@ -39,7 +39,7 @@ class SalesFacade extends AbstractFacade
     /**
      * Specification:
      *  - Returns a list of of orders for the given customer id and (optional) filters.
-     * - Aggregates order totals calls -> SalesAggregator
+     *  - Aggregates order totals calls -> SalesAggregator
      *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param int $idCustomer
@@ -51,6 +51,25 @@ class SalesFacade extends AbstractFacade
         return $this->getFactory()
             ->createCustomerOrderReader()
             ->getOrders($orderListTransfer, $idCustomer);
+    }
+
+    /**
+     * Specification:
+     * - Save order and items to database
+     * - Set "is test" flag
+     * - update checkout response with saved order data
+     * - set initial state for state machine
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        $this->getFactory()
+            ->createOrderSaver()
+            ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -97,25 +116,6 @@ class SalesFacade extends AbstractFacade
         return $this->getFactory()
             ->createOrderCommentReader()
             ->getCommentsByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * Specification:
-     * - Save order and items to database
-     * - Set "is test" flag
-     * - update checkout response with saved order data
-     * - set initial state for state machine
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return void
-     */
-    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
-        $this->getFactory()
-            ->createOrderSaver()
-            ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**

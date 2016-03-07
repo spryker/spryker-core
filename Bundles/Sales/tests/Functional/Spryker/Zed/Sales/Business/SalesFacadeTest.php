@@ -7,6 +7,7 @@ namespace Functional\Spryker\Zed\Sales\Business;
 
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -37,7 +38,24 @@ class SalesFacadeTest extends Test
     }
 
     /**
-     * @return SalesFacade
+     * return void
+     */
+    public function testCustomerOrderShouldReturnListOfCustomerPlacdOrders()
+    {
+        $testOrderCreator = $this->createTestOrderCreator();
+        $salesOrderEntity = $testOrderCreator->create();
+
+        $salesFacade = $this->createSalesFacade();
+
+        $orderListTransfer = new OrderListTransfer();
+
+        $orderListTransfer = $salesFacade->getCustomerOrders($orderListTransfer, $salesOrderEntity->getFkCustomer());
+
+        $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected function createSalesFacade()
     {
@@ -45,7 +63,7 @@ class SalesFacadeTest extends Test
     }
 
     /**
-     * @return TestOrderCreator
+     * @return \Functional\Spryker\Zed\Sales\Business\TestOrderCreator
      */
     protected function createTestOrderCreator()
     {

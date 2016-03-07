@@ -30,7 +30,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerOrderReader()
     {
-        return new CustomerOrderReader($this->getQueryContainer(), $this->getSalesAggregator());
+        return new CustomerOrderReader(
+            $this->getQueryContainer(),
+            $this->getSalesAggregator(),
+            $this->createOrderHydrator()
+        );
     }
 
     /**
@@ -59,7 +63,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderReader()
     {
-        return new OrderReader($this->getQueryContainer());
+        return new OrderReader($this->getQueryContainer(), $this->getSalesAggregator());
     }
 
     /**

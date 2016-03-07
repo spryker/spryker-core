@@ -50,8 +50,8 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param OrderTransfer $orderTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array|string
      */
@@ -62,7 +62,7 @@ class DetailController extends AbstractController
         if ($addCommentBlock instanceof RedirectResponse) {
             return $addCommentBlock;
         }
-        $request->attributes->set('orderTransfer', $orderTransfer);
+        $request->request->set('orderTransfer', $orderTransfer);
 
         $blockData = $this->renderMultipleActions($request, $this->getFactory()->getSalesDetailExternalBlocksUrls());
 
@@ -77,7 +77,7 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $data
      *
      * @return array
@@ -90,7 +90,7 @@ class DetailController extends AbstractController
         $responseData = [];
         /**
          * @var string $blockName
-         * @var Response $blockResponse
+         * @var \Symfony\Component\HttpFoundation\Response $blockResponse
          */
         foreach ($data as $blockName => $blockUrl) {
             $responseData[$blockName] = $this->renderAction($subRequest, $blockUrl);

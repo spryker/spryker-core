@@ -33,7 +33,14 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Spryker\Zed\Sales\Business\SalesBusinessFactory;
+use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
+use Spryker\Zed\Sales\SalesConfig;
+use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @group Spryker
@@ -349,9 +356,14 @@ class CheckoutFacadeTest extends Test
             ];
         };
 
+
+
         $container[CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
+
+            $salesOrderSaverPlugin = $this->createOrderSaverPlugin();
+
             return [
-                new SalesOrderSaverPlugin(),
+                $salesOrderSaverPlugin,
                 new OrderCustomerSavePlugin(),
             ];
         };
@@ -378,6 +390,40 @@ class CheckoutFacadeTest extends Test
         $factory->setContainer($container);
 
         return $factory;
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin
+     */
+    protected function createOrderSaverPlugin()
+    {
+        $salesOrderSaverPlugin = new SalesOrderSaverPlugin();
+
+        $salesConfigMock = $this->getMock(SalesConfig::class, ['determineProcessForOrderItem']);
+        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('NoPayment01');
+
+        $salesBusinessFactoryMock = $this->getMock(SalesBusinessFactory::class, ['getConfig']);
+        $salesBusinessFactoryMock->method('getConfig')->willReturn($salesConfigMock);
+
+        $container = new Container();
+        $container[SalesDependencyProvider::FACADE_COUNTRY] = function(Container $container) {
+              return new SalesToCountryBridge($container->getLocator()->country()->facade());
+        };
+        $container[SalesDependencyProvider::FACADE_OMS] = function(Container $container) {
+            return new SalesToOmsBridge($container->getLocator()->oms()->facade());
+        };
+        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = function(Container $container) {
+            return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
+        };
+
+        $salesBusinessFactoryMock->setContainer($container);
+
+        $salesFacade = new SalesFacade();
+        $salesFacade->setFactory($salesBusinessFactoryMock);
+
+        $salesOrderSaverPlugin->setFacade($salesFacade);
+
+        return $salesOrderSaverPlugin;
     }
 
 }
