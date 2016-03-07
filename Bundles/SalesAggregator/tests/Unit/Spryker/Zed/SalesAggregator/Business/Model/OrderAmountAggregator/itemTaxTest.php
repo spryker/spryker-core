@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ItemTax;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 use Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 
 class itemTaxTest extends \PHPUnit_Framework_TestCase
 {

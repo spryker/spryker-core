@@ -357,8 +357,6 @@ class CheckoutFacadeTest extends Test
             ];
         };
 
-
-
         $container[CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
 
             $salesOrderSaverPlugin = $this->createOrderSaverPlugin();
@@ -407,13 +405,13 @@ class CheckoutFacadeTest extends Test
         $salesBusinessFactoryMock->method('getConfig')->willReturn($salesConfigMock);
 
         $container = new Container();
-        $container[SalesDependencyProvider::FACADE_COUNTRY] = function(Container $container) {
+        $container[SalesDependencyProvider::FACADE_COUNTRY] = function (Container $container) {
               return new SalesToCountryBridge($container->getLocator()->country()->facade());
         };
-        $container[SalesDependencyProvider::FACADE_OMS] = function(Container $container) {
+        $container[SalesDependencyProvider::FACADE_OMS] = function (Container $container) {
             return new SalesToOmsBridge($container->getLocator()->oms()->facade());
         };
-        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = function(Container $container) {
+        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
             return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
         };
 
