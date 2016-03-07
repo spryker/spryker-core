@@ -107,10 +107,9 @@ class RoleTable extends AbstractTable
         );
 
         if ($rule[SpyAclRoleTableMap::COL_NAME] !== AclConstants::ROOT_ROLE) {
-            $buttons[] = $this->generateRemoveButton(
-                Url::generate(self::DELETE_ROLE_URL, [self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]]),
-                'Delete'
-            );
+            $buttons[] = $this->generateRemoveButton(self::DELETE_ROLE_URL, 'Delete', [
+                self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]
+            ]);
         }
 
         return $buttons;

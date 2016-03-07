@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
+use Symfony\Component\HttpFoundation\Request;
 
 class ZedBootstrap
 {
@@ -31,6 +32,8 @@ class ZedBootstrap
     public function __construct()
     {
         $this->application = $this->getBaseApplication();
+        Request::enableHttpMethodParameterOverride();
+
     }
 
     /**

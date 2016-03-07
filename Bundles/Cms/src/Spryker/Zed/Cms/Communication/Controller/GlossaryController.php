@@ -23,6 +23,7 @@ use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
@@ -95,8 +96,13 @@ class GlossaryController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idMapping = $this->castId($request->get(CmsGlossaryTable::REQUEST_ID_MAPPING));
-        $idPage = $this->castId($request->get(CmsPageTable::REQUEST_ID_PAGE));
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $idMapping = $this->castId($request->request->get(CmsGlossaryTable::REQUEST_ID_MAPPING));
+        $idPage = $this->castId($request->request->get(CmsPageTable::REQUEST_ID_PAGE));
+
         $mappingGlossary = $this->getQueryContainer()
             ->queryGlossaryKeyMappingById($idMapping)
             ->findOne();

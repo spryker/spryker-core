@@ -14,6 +14,7 @@ use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
@@ -163,26 +164,23 @@ class GroupController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function removeUserFromGroupAction(Request $request)
+    public function deleteUserFromGroupAction(Request $request)
     {
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
         $idGroup = $this->castId($request->request->get(self::PARAMETER_ID_GROUP));
         $idUser = $this->castId($request->request->get(self::PARAMETER_ID_USER));
 
         try {
             $this->getFacade()->removeUserFromGroup($idUser, $idGroup);
-            $response = [
-                'code' => Response::HTTP_OK,
-                'id-group' => $idGroup,
-                'id-user' => $idUser,
-            ];
+            $this->addSuccessMessage('Deleted user from group');
         } catch (UserAndGroupNotFoundException $e) {
-            $response = [
-                'code' => Response::HTTP_NOT_FOUND,
-                'message' => 'User and group not found',
-            ];
+            $this->addErrorMessage('User and group not found');
         }
 
-        return $this->jsonResponse($response);
+        return $this->redirectResponse('/acl/group/edit?id-group=' . $idGroup);
     }
 
     /**

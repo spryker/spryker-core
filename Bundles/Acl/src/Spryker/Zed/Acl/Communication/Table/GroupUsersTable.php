@@ -25,7 +25,7 @@ class GroupUsersTable extends AbstractTable
     const COL_EMAIL = 'email';
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
-    const COL_OPTIONS = 'Options';
+    const ACTION = 'Action';
 
     /**
      * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
@@ -63,7 +63,7 @@ class GroupUsersTable extends AbstractTable
             self::COL_FIRST_NAME => 'First Name',
             self::COL_LAST_NAME => 'Last Name',
             self::COL_EMAIL => 'Email',
-            self::COL_OPTIONS => 'Options',
+            self::ACTION => self::ACTION,
         ]);
 
         $config->addRawColumn(self::COL_OPTIONS);
@@ -90,7 +90,7 @@ class GroupUsersTable extends AbstractTable
                 self::COL_FIRST_NAME => $user->getFirstName(),
                 self::COL_LAST_NAME => $user->getLastName(),
                 self::COL_EMAIL => $user->getUsername(),
-                self::COL_OPTIONS => $this->getRemoveUrl($user),
+                self::ACTION => $this->getRemoveUrl($user),
             ];
         }
 
@@ -104,11 +104,17 @@ class GroupUsersTable extends AbstractTable
      */
     protected function getRemoveUrl(SpyUser $user)
     {
-        return $this->generateRemoveButton('#', 'Remove', [
-            'id' => sprintf('row-%d-%d', $user->getIdUser(), $this->idGroup),
-            'data-options' => sprintf('{"idUser": %d, "idGroup": %d}', $user->getIdUser(), $this->idGroup),
-            'class' => 'remove-user-from-group',
+        return $this->generateRemoveButton('/acl/group/delete-user-from-group', 'Delete', [
+            'id-user' => $user->getIdUser(),
+            'id-group' => $this->idGroup
         ]);
+
+
+//        return $this->generateRemoveButton('#', 'Remove', [
+//            'id' => sprintf('row-%d-%d', $user->getIdUser(), $this->idGroup),
+//            'data-options' => sprintf('{"idUser": %d, "idGroup": %d}', $user->getIdUser(), $this->idGroup),
+//            'class' => 'remove-user-from-group',
+//        ]);
     }
 
 }

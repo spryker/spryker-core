@@ -106,13 +106,10 @@ class RulesetTable extends AbstractTable
     public function createTableActions(array $ruleset)
     {
         $buttons = [];
-        $buttons[] = $this->generateRemoveButton(
-            Url::generate(self::REMOVE_ACL_RULESET_URL, [
-                self::PARAM_ID_RULE => $ruleset[SpyAclRuleTableMap::COL_ID_ACL_RULE],
-                self::PARAM_ID_ROLE => $ruleset[SpyAclRuleTableMap::COL_FK_ACL_ROLE],
-            ]),
-            'Remove'
-        );
+        $buttons[] = $this->generateRemoveButton(self::REMOVE_ACL_RULESET_URL, 'Delete', [
+            self::PARAM_ID_RULE => $ruleset[SpyAclRuleTableMap::COL_ID_ACL_RULE],
+            self::PARAM_ID_ROLE => $ruleset[SpyAclRuleTableMap::COL_FK_ACL_ROLE],
+        ]);
 
         return $buttons;
     }
