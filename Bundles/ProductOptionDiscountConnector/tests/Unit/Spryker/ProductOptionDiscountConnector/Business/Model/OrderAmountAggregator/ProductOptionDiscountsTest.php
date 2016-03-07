@@ -33,6 +33,32 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testWhenDiscountUsedThenItemShouldHaveDiscountsApplied()
+    {
+        $productOptionAggregator = $this->createProductOptionsAggregator();
+        $orderTransfer = $this->createOrderTransfer();
+        $productOptionAggregator->aggregate($orderTransfer);
+
+        $this->assertEquals(300, $orderTransfer->getItems()[0]->getSumGrossPriceWithProductOptionAndDiscountAmounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRefundableAmountShouldBeAfterDiscounts()
+    {
+        $productOptionAggregator = $this->createProductOptionsAggregator();
+        $orderTransfer = $this->createOrderTransfer();
+        $productOptionAggregator->aggregate($orderTransfer);
+
+        $refundableAmount = $orderTransfer->getItems()[0]->getRefundableAmount();
+
+        $this->assertEquals(300, $refundableAmount);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts
      */
     protected function createProductOptionsAggregator()
@@ -56,11 +82,21 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
         $objectColletion->append($salesDiscountEntity);
 
         $salesDiscountQueryMock->expects($this->once())
-            ->method('filterByFkSalesOrder')
-            //->with($this->isType('integer'))
+            ->method('filterByFkSalesOrderItem')
+            ->willReturnSelf();
+
+        $salesDiscountQueryMock
+            ->expects($this->once())
+            ->method('where')
+            ->willReturnSelf();
+
+        $salesDiscountQueryMock
+            ->expects($this->once())
+            ->method('find')
             ->willReturn($objectColletion);
 
-        $discountQueryContainerMock->expects($this->once())
+        $discountQueryContainerMock
+            ->expects($this->once())
             ->method('querySalesDisount')
             ->willReturn($salesDiscountQueryMock);
 
@@ -73,7 +109,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
     protected function createDiscountQueryMock()
     {
         return $this->getMockBuilder(SpySalesDiscountQuery::class)
-            ->setMethods(['filterByFkSalesOrder'])
+            ->setMethods(['filterByFkSalesOrderItem', 'where', 'find'])
             ->disableArgumentCloning()
             ->getMock();
     }
@@ -97,6 +133,9 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
         $orderTransfer->setIdSalesOrder(1);
 
         $itemTransfer = new ItemTransfer();
+        $itemTransfer->setUnitGrossPriceWithProductOptions(900);
+        $itemTransfer->setSumGrossPriceWithProductOptions(900);
+        $itemTransfer->setRefundableAmount(900);
         $itemTransfer->setIdSalesOrderItem(1);
 
         $productOptionTransfer = new ProductOptionTransfer();

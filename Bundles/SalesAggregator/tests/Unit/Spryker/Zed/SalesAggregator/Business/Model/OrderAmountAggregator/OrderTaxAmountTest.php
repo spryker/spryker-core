@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderTaxAmount;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
+use Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface;
 
 class OrderTaxAmountTest extends \PHPUnit_Framework_TestCase
 {
@@ -42,7 +43,7 @@ class OrderTaxAmountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\OrderTaxAmount
+     * @return OrderTaxAmount
      */
     protected function createOrderTaxAmountAggregator()
     {
@@ -58,11 +59,11 @@ class OrderTaxAmountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface
      */
     protected function createTaxFacadeMock()
     {
-        return $this->getMockBuilder(SalesToTaxInterface::class)->disableOriginalConstructor()->getMock();
+        return $this->getMockBuilder(SalesAggregatorToTaxInterface::class)->disableOriginalConstructor()->getMock();
     }
 
     /**

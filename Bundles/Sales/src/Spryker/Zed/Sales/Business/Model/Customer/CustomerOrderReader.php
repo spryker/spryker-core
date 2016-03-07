@@ -55,10 +55,6 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
      */
     public function getOrders(OrderListTransfer $orderListTransfer, $idCustomer)
     {
-        if (empty($idCustomer)) {
-            throw new OrderNotFoundException('Customer id is not provided!');
-        }
-
         $orderCollection = $this
             ->queryContainer
             ->queryCustomerOrders($idCustomer, $orderListTransfer->getFilter())

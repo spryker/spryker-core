@@ -30,32 +30,6 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return void
-     */
-    public function testWhenDiscountUsedThenItemShouldHaveDiscountsApplied()
-    {
-        $discountTotalAmountAggregator = $this->createDiscountTotalAmountAggregator();
-        $orderTransfer = $this->createOrderTransfer();
-        $discountTotalAmountAggregator->aggregate($orderTransfer);
-
-        $this->assertEquals(100, $orderTransfer->getItems()[0]->getSumGrossPriceWithProductOptionAndDiscountAmounts());
-    }
-
-    /**
-     * @return void
-     */
-    public function testRefundableAmountShouldBeAfterDiscounts()
-    {
-        $discountTotalAmountAggregator = $this->createDiscountTotalAmountAggregator();
-        $orderTransfer = $this->createOrderTransfer();
-        $discountTotalAmountAggregator->aggregate($orderTransfer);
-
-        $refundableAmount = $orderTransfer->getItems()[0]->getRefundableAmount();
-
-        $this->assertEquals(100, $refundableAmount);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
