@@ -37,7 +37,7 @@ class DeleteForm extends AbstractType
 
         $resolver->setDefaults([
             'attr' => [
-                'style' => 'display:inline;'
+                'class' => 'form-inline'
             ],
         ]);
     }
