@@ -1,10 +1,10 @@
 {
-  "name": "spryker/payolution",
+  "name": "spryker/refund",
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
       "Acceptance": "tests/",
-      "Function": "tests/",
+      "Functional": "tests/",
       "Integration": "tests/",
       "Unit": "tests/",
       "YvesUnit": "tests/"
@@ -12,23 +12,19 @@
   },
   "require": {
     "spryker/application": "^0.20.0",
-    "spryker/glossary": "^0.20.0",
     "spryker/gui": "^0.20.0",
     "spryker/kernel": "^0.20.0",
     "spryker/library": "^0.20.0",
-    "spryker/mail": "^0.20.0",
     "spryker/oms": "^0.20.0",
-    "spryker/zed-request": "^0.20.0",
-    "spryker/guzzle": "^0.20.0",
-    "spryker/propel": "^0.20.0",
-    "spryker/symfony": "^0.20.0",
-    "spryker/country": "^0.20.0",
-    "spryker/customer": "^0.20.0",
+    "spryker/payone": "^0.20.0",
     "spryker/sales": "^0.20.0",
+    "spryker/sales-aggregator": "^0.20.0",
+    "spryker/sales-split": "^0.20.0",
     "spryker/url": "^0.20.0",
-    "spryker/sales-aggregator": "^0.20.0"
+    "spryker/propel": "^0.20.0",
+    "spryker/symfony": "^0.20.0"
   },
-  "description": "payolution bundle",
+  "description": "refund bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

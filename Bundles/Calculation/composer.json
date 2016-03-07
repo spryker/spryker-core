@@ -13,7 +13,11 @@
   "require": {
     "spryker/kernel": "^0.20.0",
     "spryker/sales": "^0.20.0",
-    "spryker/transfer": "^0.20.0"
+    "spryker/transfer": "^0.20.0",
+    "spryker/checkout": "^0.20.0",
+    "spryker/discount-calculation-connector": "^0.20.0",
+    "spryker/library": "^0.20.0",
+    "spryker/zed-request": "^0.20.0"
   },
   "description": "calculation bundle",
   "license": "proprietary",

@@ -14,7 +14,8 @@
     "spryker/kernel": "^0.20.0",
     "spryker/oms": "^0.20.0",
     "spryker/stock": "^0.20.0",
-    "spryker/product": "^0.20.0"
+    "spryker/product": "^0.20.0",
+    "spryker/checkout": "^0.20.0"
   },
   "description": "availability bundle",
   "license": "proprietary",

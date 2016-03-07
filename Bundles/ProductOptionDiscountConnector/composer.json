@@ -11,7 +11,20 @@
     }
   },
   "require": {
+    "spryker/discount": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/sales": "^0.20.0",
+    "spryker/tax": "^0.20.0",
+    "spryker/propel": "^0.20.0"
   },
-  "require-dev": {
+  "require-dev": {},
+  "description": "product option discount connector bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.20.x-dev"
+    }
   }
 }

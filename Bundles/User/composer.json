@@ -20,7 +20,8 @@
     "spryker/session": "^0.20.0",
     "spryker/propel": "^0.20.0",
     "spryker/symfony": "^0.20.0",
-    "spryker/url": "^0.20.0"
+    "spryker/url": "^0.20.0",
+    "spryker/silex": "^0.20.0"
   },
   "description": "user bundle",
   "license": "proprietary",
