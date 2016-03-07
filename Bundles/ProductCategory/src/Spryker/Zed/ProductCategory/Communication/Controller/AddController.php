@@ -31,7 +31,7 @@ class AddController extends AbstractController
     public function indexAction(Request $request)
     {
         $idParentNode = $request->get(ProductCategoryConstants::PARAM_ID_PARENT_NODE);
-        if (!empty($idParentNode)) {
+        if ($idParentNode) {
             $idParentNode = $this->castId($idParentNode);
         }
 
