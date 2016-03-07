@@ -17,7 +17,7 @@ class SalesFacadeTest extends Test
 {
 
     /**
-     * return void
+     * @return void
      */
     public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals()
     {
@@ -37,7 +37,7 @@ class SalesFacadeTest extends Test
     }
 
     /**
-     * return void
+     * @return void
      */
     public function testCustomerOrderShouldReturnListOfCustomerPlacdOrders()
     {

@@ -50,6 +50,12 @@ class Calculation extends AbstractPaymentHandler implements CalculationInterface
         return $responseTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer $responseTransfer
+     * @param string $hash
+     *
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
+     */
     protected function setHash(PayolutionCalculationResponseTransfer $responseTransfer, $hash)
     {
         return $responseTransfer->setTotalsAmountHash($hash);

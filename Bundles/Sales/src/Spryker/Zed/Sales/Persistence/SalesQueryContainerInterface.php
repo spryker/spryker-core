@@ -105,7 +105,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idSalesOrder
      *
-     * @return @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
      */
     public function queryCommentsByIdSalesOrder($idSalesOrder);
 

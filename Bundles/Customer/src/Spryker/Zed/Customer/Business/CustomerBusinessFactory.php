@@ -23,14 +23,6 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
-     */
-    public function createQueryContainer()
-    {
-        return $this->getQueryContainer();
-    }
-
-    /**
      * @return \Spryker\Zed\Customer\Business\Customer\Customer
      */
     public function createCustomer()
@@ -39,7 +31,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         $senderPlugins = $this->getProvidedDependency(CustomerDependencyProvider::SENDER_PLUGINS);
 
         $customer = new Customer(
-            $this->createQueryContainer(),
+            $this->getQueryContainer(),
             $this->createCustomerReferenceGenerator(),
             $config
         );
@@ -64,7 +56,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createAddress()
     {
-        return new Address($this->createQueryContainer(), $this->getCountryFacade(), $this->getLocaleFacade());
+        return new Address($this->getQueryContainer(), $this->getCountryFacade(), $this->getLocaleFacade());
     }
 
     /**

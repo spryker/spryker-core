@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\Refund\Dependency\Facade;
 
-class RefundToSalesSplit implements RefundToSalesSplitInterface
+class RefundToSalesSplitBridge implements RefundToSalesSplitInterface
 {
-
 
     /**
      * @var \Spryker\Zed\SalesSplit\Business\SalesSplitFacade SalesSplitFacade

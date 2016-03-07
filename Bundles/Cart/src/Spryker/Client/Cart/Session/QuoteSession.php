@@ -68,7 +68,7 @@ class QuoteSession implements QuoteSessionInterface
     }
 
     /**
-     * @param $itemCount
+     * @param int $itemCount
      *
      * @return \Spryker\Client\Cart\Session\QuoteSession
      */

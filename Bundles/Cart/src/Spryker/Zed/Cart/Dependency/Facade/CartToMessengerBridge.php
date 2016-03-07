@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 class CartToMessengerBridge implements CartToMessengerBridgeInterface
 {
 
-
     /**
      * @var \Spryker\Zed\Messenger\Business\MessengerFacade
      */

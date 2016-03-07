@@ -219,7 +219,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param $idDiscount
+     * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */
@@ -234,7 +234,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param $idDiscountVoucherPool
+     * @param int $idDiscountVoucherPool
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */

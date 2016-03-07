@@ -60,16 +60,22 @@ interface DiscountFacadeInterface
     /**
      * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return void
      */
     public function distributeAmount(array $discountableObjects, DiscountTransfer $discountTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
+     *
+     * @return void
      */
     public function createVoucherCodes(VoucherTransfer $voucherTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
+     *
+     * @return void
      */
     public function createVoucherCode(VoucherTransfer $voucherTransfer);
 

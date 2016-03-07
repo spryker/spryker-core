@@ -37,7 +37,7 @@ class ExpenseTax implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]| $taxableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $taxableItems
      *
      * @return void
      */

@@ -90,7 +90,7 @@ class Method
     }
 
     /**
-     * @param $idMethod
+     * @param int $idMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
@@ -165,11 +165,11 @@ class Method
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
-     * @param $availabilityPlugins
+     * @param array $availabilityPlugins
      *
      * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface
      */
-    protected function getAvailabilityPlugin(SpyShipmentMethod $method, $availabilityPlugins)
+    protected function getAvailabilityPlugin(SpyShipmentMethod $method, array $availabilityPlugins)
     {
         return $availabilityPlugins[$method->getAvailabilityPlugin()];
     }
@@ -195,11 +195,11 @@ class Method
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
-     * @param $pricePlugins
+     * @param array $pricePlugins
      *
      * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface
      */
-    protected function getPricePlugin(SpyShipmentMethod $method, $pricePlugins)
+    protected function getPricePlugin(SpyShipmentMethod $method, array $pricePlugins)
     {
         return $pricePlugins[$method->getPricePlugin()];
     }
@@ -225,11 +225,11 @@ class Method
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
-     * @param $deliveryTimePlugins
+     * @param array $deliveryTimePlugins
      *
      * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface
      */
-    protected function getDeliveryTimePlugin(SpyShipmentMethod $method, $deliveryTimePlugins)
+    protected function getDeliveryTimePlugin(SpyShipmentMethod $method, array $deliveryTimePlugins)
     {
         return $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
     }

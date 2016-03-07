@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToPayoneBridge;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregator;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplit;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplitBridge;
 
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -49,7 +49,7 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_SALES_SPLIT] = function (Container $container) {
-            return new RefundToSalesSplit($container->getLocator()->salesSplit()->facade());
+            return new RefundToSalesSplitBridge($container->getLocator()->salesSplit()->facade());
         };
 
         return $container;
@@ -71,7 +71,7 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
-            return new RefundToSalesAggregator($container->getLocator()->salesAggregator()->facade());
+            return new RefundToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
 
         return $container;

@@ -14,7 +14,7 @@ use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ItemTax;
 use Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 
-class itemTaxTest extends \PHPUnit_Framework_TestCase
+class OrderItemTaxTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -72,7 +72,7 @@ class itemTaxTest extends \PHPUnit_Framework_TestCase
 
         $taxFacadeMock->expects($this->exactly(2))->method('getTaxAmountFromGrossPrice')->willReturnCallback(
             function ($grosPrice, $taxRate) {
-                return round($grosPrice / $taxRate); //not testing calculation. just make sure it was applied.
+                return round($grosPrice / $taxRate); //not testing calculation. just make sure it was applied
             }
         );
 

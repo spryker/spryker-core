@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\Refund\Dependency\Facade;
 
-class RefundToSalesAggregator implements RefundToSalesAggregatorInterface
+class RefundToSalesAggregatorBridge implements RefundToSalesAggregatorInterface
 {
-
 
     /**
      * @var \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade

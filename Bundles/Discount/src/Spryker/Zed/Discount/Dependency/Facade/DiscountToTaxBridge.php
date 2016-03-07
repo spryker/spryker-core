@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Discount\Dependency\Facade;
 
-use Spryker\Zed\Tax\Business\TaxFacade;
-
 class DiscountToTaxBridge implements DiscountToTaxBridgeInterface
 {
 
@@ -18,9 +16,7 @@ class DiscountToTaxBridge implements DiscountToTaxBridgeInterface
     protected $taxFacade;
 
     /**
-     * DiscountToTax constructor.
-     *
-     * @param $taxFacade
+     * @param \Spryker\Zed\Tax\Business\TaxFacade $taxFacade
      */
     public function __construct($taxFacade)
     {

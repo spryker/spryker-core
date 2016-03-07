@@ -84,9 +84,9 @@ class TestOrderCreator
     /**
      * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $omsState
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrder
-     * @param $quantity
-     * @param $grossPrice
-     * @param $taxRate
+     * @param int $quantity
+     * @param int $grossPrice
+     * @param int $taxRate
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\Item;
 
-class itemTest extends \PHPUnit_Framework_TestCase
+class ItemTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -52,7 +52,7 @@ class itemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\Item
+     * @return \Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\Item
      */
     protected function createItemAggregator()
     {

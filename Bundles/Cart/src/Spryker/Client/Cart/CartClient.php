@@ -186,7 +186,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
-     * @param string$sku
+     * @param string $sku
      * @param string $groupKey
      * @param int $quantity
      *

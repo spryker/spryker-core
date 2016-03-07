@@ -14,7 +14,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 class OrderUpdater implements OrderUpdaterInterface
 {
 
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */

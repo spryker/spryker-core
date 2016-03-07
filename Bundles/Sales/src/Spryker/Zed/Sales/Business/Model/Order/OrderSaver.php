@@ -24,7 +24,6 @@ use Spryker\Zed\Sales\SalesConfig;
 class OrderSaver implements OrderSaverInterface
 {
 
-
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
@@ -215,6 +214,8 @@ class OrderSaver implements OrderSaverInterface
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
      */
     protected function hydrateCheckoutResponseTransfer(
         CheckoutResponseTransfer $checkoutResponseTransfer,
