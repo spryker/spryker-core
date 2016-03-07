@@ -378,7 +378,9 @@ class Customer
             ->setIsSuccess($changedRows > 0)
             ->setCustomerTransfer($customerTransfer);
 
-        $this->sendRegistrationToken($customerTransfer);
+        if ($customerTransfer->getSendPasswordToken()) {
+            $this->sendPasswordRestoreMail($customerTransfer);
+        }
 
         return $customerResponseTransfer;
     }
