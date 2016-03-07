@@ -23,7 +23,7 @@ function createTriggerUrl(idOrder, eventName) {
     var parameters = {
         event: eventName,
         'id-sales-order': idOrder,
-        redirect: '/sales/details?id-sales-order=' + idOrder
+        redirect: '/sales/detail?id-sales-order=' + idOrder
     };
 
     parameters.items = getSelectedItems();
