@@ -82,7 +82,7 @@ class OrderSaver implements OrderSaverInterface
 
         Propel::getConnection()->commit();
 
-        $this->hydrateCheckoutResponseTransfer($checkoutResponseTransfer, $salesOrderEntity);
+        $this->hydrateCheckoutResponseTransfer($checkoutResponseTransfer, $quoteTransfer, $salesOrderEntity);
     }
 
     /**
@@ -173,6 +173,7 @@ class OrderSaver implements OrderSaverInterface
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
             $this->hydrateSalesOrderItemEntity($salesOrderEntity, $quoteTransfer, $salesOrderItemEntity, $itemTransfer);
             $salesOrderItemEntity->save();
+            $itemTransfer->setIdSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem());
         }
     }
 
@@ -207,40 +208,36 @@ class OrderSaver implements OrderSaverInterface
             $this->omsFacade->getInitialStateEntity()->getIdOmsOrderItemState()
         );
         $salesOrderItemEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
-
         $salesOrderItemEntity->setProcess($omsOrderProcessEntity);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     *
-     * @return void
      */
     protected function hydrateCheckoutResponseTransfer(
         CheckoutResponseTransfer $checkoutResponseTransfer,
+        QuoteTransfer $quoteTransfer,
         SpySalesOrder $salesOrderEntity
     ) {
         $saveOrderTransfer = $this->getSaveOrderTransfer($checkoutResponseTransfer);
-        $this->hydrateSaveOrderTransfer($saveOrderTransfer, $salesOrderEntity);
+        $this->hydrateSaveOrderTransfer($saveOrderTransfer, $quoteTransfer);
+        $saveOrderTransfer->fromArray($salesOrderEntity->toArray(), true);
 
         $checkoutResponseTransfer->setSaveOrder($saveOrderTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    protected function hydrateSaveOrderTransfer(SaveOrderTransfer $saveOrderTransfer, SpySalesOrder $salesOrderEntity)
+    protected function hydrateSaveOrderTransfer(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer)
     {
-        $saveOrderTransfer->fromArray($salesOrderEntity->toArray(), true);
-        foreach ($salesOrderEntity->getItems() as $salesOrderItemEntity) {
-            $itemTransfer = $this->createItemTransfer();
-            $itemTransfer->setUnitGrossPrice($salesOrderItemEntity->getGrossPrice());
-            $itemTransfer->fromArray($salesOrderItemEntity->toArray(), true);
-            $saveOrderTransfer->addOrderItem($itemTransfer);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $saveOrderTransfer->addOrderItem(clone $itemTransfer);
         }
     }
 
