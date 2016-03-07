@@ -152,7 +152,7 @@ class VoucherForm extends AbstractType
                 'data-toggle' => 'tooltip',
                 'data-placement' => 'top',
                 'title' => 'Add [code] template to position generated code',
-                'help' => 'Please enter a string that will be used as custom code, the string code can be used to put the code in a certain position, e.g. "summer-code-special"',
+                'help' => 'Please enter a string that will be used as custom code, the string code can be used to put the code in a certain position, e.g. "summer-[code]-special"',
             ],
         ]);
 

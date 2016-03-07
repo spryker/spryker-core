@@ -109,18 +109,7 @@ class UsersTable extends AbstractTable
             ]),
             'Edit'
         );
-        $urls[] = $this->generateViewButton(
-            Url::generate(self::DEACTIVATE_USER_URL, [
-                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
-            ]),
-            'Deactivate'
-        );
-        $urls[] = $this->generateViewButton(
-            Url::generate(self::ACTIVATE_USER_URL, [
-                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
-            ]),
-            'Activate'
-        );
+        $urls[] = $this->createStatusButton($user);
         $urls[] = $this->generateRemoveButton(
             Url::generate(self::DELETE_USER_URL, [
                 self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
@@ -152,6 +141,30 @@ class UsersTable extends AbstractTable
         }
 
         return $statusLabel;
+    }
+
+    /**
+     * @param array $user
+     *
+     * @return array
+     */
+    protected function createStatusButton(array $user)
+    {
+        if ($user[SpyUserTableMap::COL_STATUS] === SpyUserTableMap::COL_STATUS_BLOCKED) {
+            return $this->generateViewButton(
+                Url::generate(self::ACTIVATE_USER_URL, [
+                    self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+                ]),
+                'Activate'
+            );
+        }
+
+        return $urls[] = $this->generateViewButton(
+            Url::generate(self::DEACTIVATE_USER_URL, [
+                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+            ]),
+            'Deactivate'
+        );
     }
 
 }
