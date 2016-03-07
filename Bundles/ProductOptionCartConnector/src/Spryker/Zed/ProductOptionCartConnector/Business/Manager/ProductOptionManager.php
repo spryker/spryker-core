@@ -20,7 +20,7 @@ class ProductOptionManager implements ProductOptionManagerInterface
     private $productOptionFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
+     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface $productOptionFacade
      */
     public function __construct(ProductOptionCartConnectorToProductOptionInterface $productOptionFacade)
     {

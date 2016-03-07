@@ -16,6 +16,9 @@ class Curl extends AbstractHttpAdapter
 {
 
     /**
+     * @param array $params
+     *
+     * @throws \Spryker\Zed\Payone\Business\Exception\TimeoutException
      * @throws \ErrorException
      *
      * @return array

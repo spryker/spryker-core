@@ -38,8 +38,8 @@ class RootNodeTable extends AbstractTable
     protected $idLocale;
 
     /**
-     * @param int $idLocale
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param int $idLocale
      */
     public function __construct(CategoryQueryContainerInterface $productCategoryQueryContainer, $idLocale)
     {

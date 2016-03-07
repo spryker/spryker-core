@@ -87,7 +87,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $responses
+     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $mailResponses
      *
      * @return bool
      */

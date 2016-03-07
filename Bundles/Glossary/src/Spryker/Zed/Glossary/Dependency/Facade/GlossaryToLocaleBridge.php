@@ -20,7 +20,7 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     /**
      * GlossaryToLocaleBridge constructor.
      *
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {

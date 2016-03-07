@@ -28,6 +28,7 @@ class Aggregate implements CollectorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */

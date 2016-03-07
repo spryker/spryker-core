@@ -76,7 +76,7 @@ class GlossaryController extends AbstractController
             $formViews[] = $form->createView();
         }
 
-        if ($idForm !== null) {
+        if ($idForm !== null && $request->isXmlHttpRequest()) {
             return $this->handleAjaxRequest($forms, $idForm, $localeTransfer);
         }
 

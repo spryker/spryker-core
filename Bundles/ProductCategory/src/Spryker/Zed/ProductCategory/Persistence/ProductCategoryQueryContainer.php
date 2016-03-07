@@ -57,6 +57,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @api
      *
+     * @param int $idCategory
+     *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryMappingsByCategoryId($idCategory)
