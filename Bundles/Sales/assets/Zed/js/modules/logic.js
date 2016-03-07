@@ -68,6 +68,14 @@ $(document).ready(function() {
         return true;
     });
 
+    $('.more-history').click(function(e){
+        e.preventDefault();
+        var theID = $(this).data('id');
+        console.log('asd');
+
+        $('#history_details_' + theID).toggle();
+    });
+
     $('#check-all-orders').click(function(){
         if ($(this).prop('checked') === true) {
             var checked = true;

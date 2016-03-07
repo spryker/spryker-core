@@ -67,7 +67,7 @@
                                 {% endfor %}
                             </div>
 
-                            <a class="btn btn-sm" onclick="{{ "$('#history_details_" ~ orderItem.IdSalesOrderItem ~ "').toggle();" }}">{{ "Show more" | trans }}</a>
+                            <a class="btn btn-sm more-history" data-id="{{ orderItem.IdSalesOrderItem }}">{{ "Show more" | trans }}</a>
                         {% endif %}
                     </td>
                     <td>
