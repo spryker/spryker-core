@@ -1,21 +1,22 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Heartbeat\Business;
 
 use Elastica\Client as ElasticaClient;
 use Predis\Client as PredisClient;
-use Spryker\Shared\Config;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 use Spryker\Zed\Heartbeat\Business\Assistant\PropelHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\SearchHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\SessionHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\StorageHealthIndicator;
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Heartbeat\HeartbeatConfig getConfig()

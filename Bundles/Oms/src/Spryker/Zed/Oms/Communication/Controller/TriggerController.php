@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Communication\Controller;
@@ -18,15 +19,15 @@ class TriggerController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
-        $idOrderItem = $request->query->get('id-sales-order-item');
-        $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', '/');
+        $idOrderItem = $this->castId($request->query->get('id-sales-order-item'));
+        $event = $request->query->get('event'); // TODO FW Validation
+        $redirect = $request->query->get('redirect', '/'); // TODO FW Validation
 
         $this->getFacade()->triggerEventForOrderItems($event, [$idOrderItem]);
 
@@ -34,15 +35,15 @@ class TriggerController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function triggerEventForOrderAction(Request $request)
     {
-        $idOrder = $request->query->get('id-sales-order');
-        $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', '/');
+        $idOrder = $this->castId($request->query->get('id-sales-order'));
+        $event = $request->query->get('event'); // TODO FW Validation
+        $redirect = $request->query->get('redirect', '/'); // TODO FW Validation
         $itemsList = $request->query->get('items');
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);

@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Checkout\Business\Workflow;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Unit\Spryker\Zed\Checkout\Business\Fixture\MockOrderSaver;
@@ -166,7 +167,6 @@ class CheckoutWorkflowTest extends Test
         $error = new CheckoutErrorTransfer();
 
         $checkoutResponse
-            ->addError($error)
             ->setIsSuccess(true);
 
         $mock = new MockPostHook($checkoutResponse);
@@ -177,7 +177,7 @@ class CheckoutWorkflowTest extends Test
 
         $result = $checkoutWorkflow->placeOrder($quoteTransfer);
 
-        $this->assertEquals($checkoutResponse, $result);
+        $this->assertTrue($result->getIsSuccess());
     }
 
     /**

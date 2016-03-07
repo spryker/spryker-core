@@ -1,23 +1,24 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\Join;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Join;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Product\Persistence\ProductPersistenceFactory getFactory()
@@ -26,6 +27,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 {
 
     /**
+     * @api
+     *
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param string $skus
@@ -52,6 +55,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param string $concreteSku
      * @param int $idLocale
      *
@@ -72,6 +77,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
@@ -85,6 +92,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstract()
@@ -93,6 +102,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
@@ -104,6 +115,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -115,6 +128,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -126,6 +141,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -142,6 +159,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -158,6 +177,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param string $attributeName
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
@@ -171,6 +192,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param string $attributeType
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery
@@ -184,6 +207,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $fkCurrentLocale
      *
@@ -200,6 +225,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param int $idProductConcrete
      * @param int $fkCurrentLocale
      *
@@ -216,6 +243,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
      * @return $this
@@ -248,6 +277,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -346,8 +377,15 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         return $this;
     }
 
-    // @todo refactor queries from below
-
+    /**
+     * @api
+     *
+     * @todo refactor queries from below
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
     public function queryProductConcreteByProductAbstract(SpyProductAbstract $productAbstract)
     {
         return $this->getFactory()->createProductQuery()

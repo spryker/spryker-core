@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Communication\Controller;
@@ -63,7 +64,7 @@ class NodeController extends AbstractController
         $locale = $this->getFactory()
             ->getCurrentLocale();
 
-        $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true);
+        $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true); // TODO FW Validation
 
         $order = count($categoryNodesToReorder) - 1;
         foreach ($categoryNodesToReorder as $index => $nodeData) {

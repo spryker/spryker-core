@@ -1,18 +1,22 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\PriceCartConnector\Business\Fixture;
 
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Cart\Transfer\ItemInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Transfer\AbstractTransfer;
 
 class CartItemFixture extends AbstractTransfer implements ItemInterface
 {
 
+    /**
+     * @var string
+     */
     private $id;
 
     public function __construct(LocatorLocatorInterface $locator = null)

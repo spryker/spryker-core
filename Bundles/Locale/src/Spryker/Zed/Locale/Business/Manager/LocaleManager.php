@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Locale\Business\Manager;
 
+use Orm\Zed\Locale\Persistence\SpyLocale;
 use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 use Spryker\Zed\Locale\Business\TransferGeneratorInterface;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
-use Orm\Zed\Locale\Persistence\SpyLocale;
 
 class LocaleManager
 {

@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payment\Business;
@@ -11,6 +13,7 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentBusinessFactory extends AbstractBusinessFactory
 {
+
     /**
      * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor
      */
@@ -26,4 +29,5 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     {
          return $this->getProvidedDependency(PaymentDependencyProvider::CHECKOUT_PLUGINS);
     }
+
 }

@@ -11,10 +11,11 @@
     }
   },
   "require": {
-    "spryker/application": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/library": "^1.0.0",
-    "spryker/symfony": "^1.0.0"
+    "spryker/application": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/library": "^0.20.0",
+    "spryker/symfony": "^0.20.0",
+    "spryker/config": "^0.20.0"
   },
   "description": "mail bundle",
   "license": "proprietary",
@@ -22,7 +23,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

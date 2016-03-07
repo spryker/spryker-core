@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Heartbeat\Communication\Controller;
@@ -17,6 +18,9 @@ class IndexController extends AbstractController
     const SYSTEM_STATUS = 'status';
     const STATUS_REPORT = 'report';
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function indexAction()
     {
         if ($this->getFacade()->isSystemAlive()) {
@@ -24,12 +28,12 @@ class IndexController extends AbstractController
                 [self::SYSTEM_STATUS => self::SYSTEM_UP],
                 Response::HTTP_OK
             );
-        } else {
-            return $this->jsonResponse(
-                [self::SYSTEM_STATUS => self::SYSTEM_DOWN, self::STATUS_REPORT => $this->getFacade()->getReport()->toArray()],
-                Response::HTTP_SERVICE_UNAVAILABLE
-            );
         }
+
+        return $this->jsonResponse(
+            [self::SYSTEM_STATUS => self::SYSTEM_DOWN, self::STATUS_REPORT => $this->getFacade()->getReport()->toArray()],
+            Response::HTTP_SERVICE_UNAVAILABLE
+        );
     }
 
 }

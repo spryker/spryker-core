@@ -1,7 +1,10 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
@@ -10,6 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface OrderHydratorInterface
 {
+
     /**
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *

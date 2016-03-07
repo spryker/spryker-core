@@ -1,21 +1,21 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Communication;
 
-use Spryker\Zed\Sales\Business\SalesFacade;
-use Spryker\Zed\Sales\Communication\Form\CommentForm;
-use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Sales\SalesDependencyProvider;
-use Spryker\Zed\Sales\Communication\Table\OrdersTable;
-use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
-use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\CommentForm;
+use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
+use Spryker\Zed\Sales\Communication\Table\OrdersTable;
+use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
@@ -130,4 +130,5 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getConfig()->getSalesDetailExternalBlocksUrls();
     }
+
 }

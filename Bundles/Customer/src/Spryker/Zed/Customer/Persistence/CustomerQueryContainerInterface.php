@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Persistence;
@@ -12,6 +13,8 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $email
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
@@ -19,6 +22,8 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerByEmail($email);
 
     /**
+     * @api
+     *
      * @param string $email
      * @param int $exceptIdCustomer
      *
@@ -27,6 +32,8 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerByEmailApartFromIdCustomer($email, $exceptIdCustomer);
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
@@ -34,6 +41,8 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerById($id);
 
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
@@ -41,6 +50,8 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerByRegistrationKey($token);
 
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
@@ -48,6 +59,8 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerByRestorePasswordKey($token);
 
     /**
+     * @api
+     *
      * @param int $idAddress
      * @param string $email
      *
@@ -58,6 +71,8 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryAddressForCustomer($idAddress, $email);
 
     /**
+     * @api
+     *
      * @param int $idAddress
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -67,6 +82,8 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryAddress($idAddress);
 
     /**
+     * @api
+     *
      * @param string $email
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
@@ -74,16 +91,22 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryAddressesForCustomer($email);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
     public function queryAddresses();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomers();
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery

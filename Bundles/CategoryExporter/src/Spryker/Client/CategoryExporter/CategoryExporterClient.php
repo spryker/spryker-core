@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\CategoryExporter;
@@ -15,6 +16,8 @@ class CategoryExporterClient extends AbstractClient implements CategoryExporterC
 {
 
     /**
+     * @api
+     *
      * @param string $locale
      *
      * @return array
@@ -25,6 +28,8 @@ class CategoryExporterClient extends AbstractClient implements CategoryExporterC
     }
 
     /**
+     * @api
+     *
      * @param array $categoryNode
      * @param string $locale
      *

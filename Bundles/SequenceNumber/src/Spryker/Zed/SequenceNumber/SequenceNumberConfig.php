@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\SequenceNumber;
@@ -23,7 +24,7 @@ class SequenceNumberConfig extends AbstractBundleConfig
         $defaultSettings->setName($this->getSequenceName());
         $defaultSettings->setIncrementMinimum($this->getNumberIncrementMin());
         $defaultSettings->setIncrementMaximum($this->getNumberIncrementMax());
-        $defaultSettings->setOffset($this->getOffset() ?: $this->getNumberMinimum());
+        $defaultSettings->setOffset($this->getOffset());
 
         if ($settings === null) {
             return $defaultSettings;
@@ -61,14 +62,7 @@ class SequenceNumberConfig extends AbstractBundleConfig
 
     /**
      * @return int
-     *
-     * @deprecated Use getOffset instead.
      */
-    public function getNumberMinimum()
-    {
-        return $this->getOffset();
-    }
-
     public function getOffset()
     {
         return 0;
@@ -90,7 +84,9 @@ class SequenceNumberConfig extends AbstractBundleConfig
         return 1;
     }
 
-    /** @return string */
+    /**
+     * @return string
+     */
     public function getSequenceName()
     {
         return 'Sequence';

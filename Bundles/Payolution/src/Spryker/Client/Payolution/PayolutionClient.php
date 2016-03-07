@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Payolution;
@@ -17,6 +18,8 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
@@ -38,6 +41,8 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
@@ -50,6 +55,8 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function hasInstallmentPaymentsInSession()
@@ -58,6 +65,8 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPaymentsFromSession()
@@ -66,6 +75,8 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
+     * @api
+     *
      * @return mixed
      */
     public function removeInstallmentPaymentsFromSession()

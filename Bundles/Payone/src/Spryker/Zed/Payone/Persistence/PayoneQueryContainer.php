@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Persistence;
@@ -16,6 +17,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 {
 
     /**
+     * @api
+     *
      * @param int $transactionId
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
@@ -30,6 +33,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createCurrentSequenceNumberQuery instead
      *
      * @param int $transactionId
@@ -44,6 +49,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @param int $transactionId
      *
      * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
@@ -57,6 +64,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createPaymentByTransactionIdQuery() instead
      *
      * @param int $transactionId
@@ -71,6 +80,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @param int $fkPayment
      * @param string $requestName
      *
@@ -86,6 +97,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createApiLogByPaymentAndRequestTypeQuery() instead
      *
      * @param int $fkPayment
@@ -101,6 +114,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
@@ -114,6 +129,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createPaymentByOrderId() instead
      *
      * @param int $idOrder
@@ -128,6 +145,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      * @param string $request
      *
@@ -147,6 +166,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createApiLogsByOrderIdAndRequest() instead
      *
      * @param int $orderId
@@ -162,6 +183,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @param int $paymentId
      *
      * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
@@ -175,6 +198,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createPaymentById() instead
      *
      * @param int $paymentId
@@ -189,6 +214,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @param int $idIdSalesOrder
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog[]
@@ -205,6 +232,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createTransactionStatusLogsBySalesOrder() instead
      *
      * @param int $idIdSalesOrder
@@ -219,6 +248,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrderItem
      * @param array $ids
      *
@@ -234,6 +265,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createTransactionStatusLogOrderItemsByLogIds() instead
      *
      * @param int $idSalesOrderItem
@@ -249,6 +282,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
@@ -266,6 +301,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createLastApiLogsByOrderId() instead
      *
      * @param int $idSalesOrder
@@ -280,6 +317,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
@@ -302,6 +341,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createApiLogsByOrderIds() instead
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
@@ -316,6 +357,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orders
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
@@ -337,6 +380,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @api
+     *
      * @deprecated use createTransactionStatusLogsByOrderIds() instead
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orders

@@ -61,3 +61,8 @@
     {% endembed %}
 
 {% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-discount-main.js"></script>
+{% endblock %}

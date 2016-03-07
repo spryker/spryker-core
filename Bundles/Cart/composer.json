@@ -12,15 +12,16 @@
     }
   },
   "require": {
-    "spryker/calculation": "^1.0.0",
-    "spryker/item-grouper": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/locale": "^1.0.0",
-    "spryker/price": "^1.0.0",
-    "spryker/transfer": "^1.0.0",
-    "spryker/zed-request": "^1.0.0",
-    "spryker/log": "^1.0.0",
-    "spryker/symfony": "^1.0.0"
+    "spryker/calculation": "^0.20.0",
+    "spryker/item-grouper": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/locale": "^0.20.0",
+    "spryker/price": "^0.20.0",
+    "spryker/transfer": "^0.20.0",
+    "spryker/zed-request": "^0.20.0",
+    "spryker/log": "^0.20.0",
+    "spryker/symfony": "^0.20.0",
+    "spryker/product": "^0.20.0"
   },
   "description": "cart bundle",
   "license": "proprietary",
@@ -28,7 +29,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

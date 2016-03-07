@@ -1,0 +1,18 @@
+# IDEs
+/.idea
+/.project
+/nbproject
+/.buildpath
+/.settings
+*.sublime-*
+*.AppleDouble
+*.AppleDB
+*.AppleDesktop
+
+# OS
+.DS_Store
+
+config/*
+data/*
+src/Generated/*
+src/Orm/*

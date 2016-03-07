@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Stock\Business\Model;
@@ -74,6 +75,8 @@ interface ReaderInterface
      * @param int $idProduct
      *
      * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
+     *
+     * @return void
      */
     public function checkStockDoesNotExist($idStockType, $idProduct);
 

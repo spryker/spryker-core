@@ -1,0 +1,14 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* eol=lf
+* text=auto
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.gif binary
+*.jpeg binary
+*.ttf binary
+*.woff binary
+*.ico binary
+*.pdf binary
+*.svg binary

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Business;
@@ -19,6 +20,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $name
      * @param string $path
      *
@@ -34,6 +37,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $path
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
@@ -48,6 +53,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $path
      *
      * @return bool
@@ -60,6 +67,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
@@ -74,6 +83,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
@@ -86,6 +97,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
@@ -98,6 +111,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
@@ -110,6 +125,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idPage
      * @param string $placeholder
      *
@@ -123,6 +140,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return bool
@@ -135,6 +154,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idPage
      * @param string $placeholder
      *
@@ -150,6 +171,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
@@ -162,6 +185,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idPage
      * @param string $placeholder
      * @param array $data
@@ -179,6 +204,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      * @param string $value
@@ -193,6 +220,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      *
@@ -210,6 +239,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      *
@@ -225,6 +256,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
@@ -236,6 +269,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
@@ -247,6 +282,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
@@ -258,6 +295,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      *
@@ -271,6 +310,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
      *
@@ -284,6 +325,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idPage
      *
      * @return bool
@@ -296,6 +339,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $cmsTemplateFolderPath
      *
      * @return bool
@@ -308,6 +353,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $templateName
      * @param string $placeholder
      *
@@ -321,6 +368,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      *
      * @return void
@@ -333,6 +382,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]

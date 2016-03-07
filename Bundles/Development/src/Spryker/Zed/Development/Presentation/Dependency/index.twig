@@ -1,0 +1,20 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Dependency graphs of all core bundles' } %}
+        {% block widget_content %}
+            <div class="spy-layout sparse">
+                <p><a href="/development/dependency/simple">Simple Dependency Graph</a> | <a href="/development/dependency/adjacency-matrix">Adjacency Matrix</a></p>
+                <ul>
+                    {% for bundle in bundles %}
+                        <li>
+                            {{ bundle }} (<a href="/development/dependency/incoming?bundle={{ bundle }}">in</a>/<a href="/development/dependency/outgoing?bundle={{ bundle }}">out</a>/<a href="/development/dependency/simple?bundle={{ bundle }}">simple</a>/<a href="/development/dependency/dependency-tree-graph?bundle={{ bundle }}">detailed</a>/<a href="/development/dependency/adjacency-matrix?bundle={{ bundle }}">adjacency</a>)
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

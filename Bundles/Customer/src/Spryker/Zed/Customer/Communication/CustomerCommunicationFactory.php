@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Communication;
@@ -12,10 +13,10 @@ use Spryker\Zed\Customer\Communication\Form\CustomerUpdateForm;
 use Spryker\Zed\Customer\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerUpdateFormDataProvider;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
 use Spryker\Zed\Customer\Communication\Table\CustomerTable;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainer getQueryContainer()

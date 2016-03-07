@@ -1,31 +1,39 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 
 interface TouchUpdaterInterface
 {
 
-    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
-
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
+     *
+     * @return
      */
-    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale);
+    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
 
     /**
-     * @param int $idTouch
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
+     * @param int $idLocale
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch
+     * @return void
      */
-    public function getKeyById($idTouch, LocaleTransfer $locale);
+    public function deleteMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
+
+    /**
+     * @return string
+     */
+    public function getTouchKeyColumnName();
 
 }

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Persistence;
@@ -14,6 +15,8 @@ class QueryContainerLocatorMatcher implements LocatorMatcherInterface
     const METHOD_PREFIX = 'queryContainer';
 
     /**
+     * @api
+     *
      * @param string $method
      *
      * @return bool
@@ -24,6 +27,8 @@ class QueryContainerLocatorMatcher implements LocatorMatcherInterface
     }
 
     /**
+     * @api
+     *
      * @param string $method
      *
      * @return string

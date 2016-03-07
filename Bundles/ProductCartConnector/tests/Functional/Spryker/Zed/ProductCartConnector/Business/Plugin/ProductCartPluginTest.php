@@ -1,22 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\ProductCartConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
-use Spryker\Zed\Locale\Business\LocaleFacade;
+use Generated\Shared\Transfer\ItemTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 
 /**
  * @group Spryker

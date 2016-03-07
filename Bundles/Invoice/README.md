@@ -1,6 +1,11 @@
-# Zed Package
+# Invoice Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/invoice
+```
+
+## Documentation
+
+[Invoice Documentation](https://spryker.github.io/invoice/index.html)

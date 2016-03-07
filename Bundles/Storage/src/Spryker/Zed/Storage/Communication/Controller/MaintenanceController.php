@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Storage\Communication\Controller;
@@ -88,7 +89,7 @@ class MaintenanceController extends AbstractController
      */
     public function keyAction(Request $request)
     {
-        $key = $request->get('key');
+        $key = $request->get('key'); // TODO FW Validation
         $value = $this->getFacade()->get($key);
 
         return $this->viewResponse([

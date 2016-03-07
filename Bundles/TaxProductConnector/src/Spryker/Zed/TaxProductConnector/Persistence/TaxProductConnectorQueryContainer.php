@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\TaxProductConnector\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorPersistenceFactory getFactory()
@@ -19,6 +20,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
 {
 
     /**
+     * @api
+     *
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param int $idTaxRate
@@ -41,6 +44,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * @api
+     *
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param int $idTaxSet

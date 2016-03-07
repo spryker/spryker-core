@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Payment\Business\Checkout;
@@ -8,12 +10,12 @@ namespace Unit\Spryker\Zed\Payment\Business\Checkout;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
-use Spryker\Zed\Payment\PaymentDependencyProvider;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
+use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
 use Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException;
+use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
 {
@@ -132,7 +134,7 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createPreCheckPluginMock()
     {
-       return $this->getMockBuilder(CheckoutPreConditionInterface::class)->getMock();
+        return $this->getMockBuilder(CheckoutPreConditionInterface::class)->getMock();
     }
 
     /**
@@ -163,4 +165,5 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
 
         return $quoteTransfer;
     }
+
 }

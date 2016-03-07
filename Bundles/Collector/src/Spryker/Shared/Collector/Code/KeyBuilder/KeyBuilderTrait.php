@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Collector\Code\KeyBuilder;
@@ -20,16 +21,27 @@ trait KeyBuilderTrait
      * @param mixed $data
      * @param string $localeName
      *
-     * @return string
+     * @return array
      */
-    public function generateKey($data, $localeName)
+    protected function getKeyParts($data, $localeName)
     {
-        $keyParts = [
+        return [
             Store::getInstance()->getStoreName(),
             $localeName,
             $this->getBundleName(),
             $this->buildKey($data),
         ];
+    }
+
+    /**
+     * @param mixed $data
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function generateKey($data, $localeName)
+    {
+        $keyParts = $this->getKeyParts($data, $localeName);
 
         return $this->escapeKey(implode($this->keySeparator, $keyParts));
     }

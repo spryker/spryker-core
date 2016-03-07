@@ -1,23 +1,24 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\SalesAggregator\Communication;
 
-use Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade;
-use Spryker\Zed\SalesAggregator\Communication\Form\CommentForm;
-use Spryker\Zed\SalesAggregator\Communication\Form\DataProvider\CommentFormDataProvider;
-use Spryker\Zed\SalesAggregator\Communication\Form\OrderItemSplitForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SalesAggregator\SalesAggregatorDependencyProvider;
-use Spryker\Zed\SalesAggregator\Communication\Table\OrdersTable;
-use Spryker\Zed\SalesAggregator\Communication\Form\CustomerForm;
+use Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade;
 use Spryker\Zed\SalesAggregator\Communication\Form\AddressForm;
+use Spryker\Zed\SalesAggregator\Communication\Form\CommentForm;
+use Spryker\Zed\SalesAggregator\Communication\Form\CustomerForm;
+use Spryker\Zed\SalesAggregator\Communication\Form\DataProvider\AddressFormDataProvider;
+use Spryker\Zed\SalesAggregator\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\SalesAggregator\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\SalesAggregator\Communication\Form\DataProvider\OrderItemSplitDataProvider;
-use Spryker\Zed\SalesAggregator\Communication\Form\DataProvider\AddressFormDataProvider;
+use Spryker\Zed\SalesAggregator\Communication\Form\OrderItemSplitForm;
+use Spryker\Zed\SalesAggregator\Communication\Table\OrdersTable;
+use Spryker\Zed\SalesAggregator\SalesAggregatorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesAggregator\Persistence\SalesAggregatorQueryContainerInterface getQueryContainer()

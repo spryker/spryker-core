@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Library;
@@ -56,9 +57,14 @@ class Setup
         }
     }
 
+    /**
+     * @param callable|string $callBack
+     * @param mixed $value
+     *
+     * @return mixed
+     */
     public static function checkCondition($callBack, $value)
     {
-        assert(function_exists($callBack));
         $success = $callBack($value);
         if ($success) {
             self::$successMessages[] = "OK - {$callBack} - {$value}";
@@ -69,6 +75,9 @@ class Setup
         return $success;
     }
 
+    /**
+     * @return string
+     */
     public static function getErrorMessagesAsList()
     {
         return '<h1>Enviroment failed</h1><ul><li>' . implode('</li><li>', self::$errorMessages) . '</li></ul>';

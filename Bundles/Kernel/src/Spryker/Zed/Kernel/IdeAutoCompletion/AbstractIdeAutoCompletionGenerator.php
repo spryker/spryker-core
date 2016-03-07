@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\IdeAutoCompletion;
@@ -81,11 +82,9 @@ abstract class AbstractIdeAutoCompletionGenerator
     }
 
     /**
-     * @param null $output
-     *
      * @return void
      */
-    abstract public function create($output = null);
+    abstract public function create();
 
     /**
      * @return void

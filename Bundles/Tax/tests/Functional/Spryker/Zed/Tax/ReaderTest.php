@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Tax;
 
 use Codeception\TestCase\Test;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
@@ -126,6 +127,10 @@ class ReaderTest extends Test
         $this->taxFacade->getTaxRate(self::NON_EXISTENT_ID);
     }
 
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet
+     */
     private function loadFixtures()
     {
         $taxRateEntity = new SpyTaxRate();

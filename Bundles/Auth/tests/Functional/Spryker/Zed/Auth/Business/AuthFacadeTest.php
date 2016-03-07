@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Auth\Business;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\Auth\Business\AuthFacade;
+use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 use Orm\Zed\Auth\Persistence\SpyResetPasswordQuery;
 use Orm\Zed\User\Persistence\SpyUser;
-use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
+use Spryker\Zed\Auth\Business\AuthFacade;
 
 class AuthFacadeTest extends Test
 {
@@ -116,6 +117,11 @@ class AuthFacadeTest extends Test
         $this->assertFalse($resetStatus);
     }
 
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\User\Persistence\SpyUser
+     */
     protected function createTestUser()
     {
         $userEntity = new SpyUser();

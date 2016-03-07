@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
@@ -178,7 +179,6 @@ class ClassDefinition implements ClassDefinitionInterface
 
         $this->properties[$property['name']] = $propertyInfo;
         $this->addUseForType($property);
-        $this->addPropertyConstructorIfCollection($property);
     }
 
     /**
@@ -326,18 +326,6 @@ class ClassDefinition implements ClassDefinitionInterface
         } else {
             $this->buildGetterAndSetter($property);
             $this->buildRequireMethod($property, false);
-        }
-    }
-
-    /**
-     * @param array $property
-     *
-     * @return void
-     */
-    private function addPropertyConstructorIfCollection(array $property)
-    {
-        if ($this->isCollection($property)) {
-            $this->constructorDefinition[$property['name']] = '\ArrayObject';
         }
     }
 

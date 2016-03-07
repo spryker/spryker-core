@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Auth\Business;
@@ -15,6 +16,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $username
      * @param string $password
      *
@@ -28,6 +31,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function logout()
@@ -38,6 +43,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return bool
@@ -50,6 +57,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function hasCurrentUser()
@@ -60,6 +69,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return string
@@ -72,6 +83,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -86,6 +99,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $hash
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -98,6 +113,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentUserToken()
@@ -108,6 +125,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $email
      *
      * @return bool
@@ -118,6 +137,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return bool
@@ -128,6 +149,8 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $token
      * @param string $password
      *

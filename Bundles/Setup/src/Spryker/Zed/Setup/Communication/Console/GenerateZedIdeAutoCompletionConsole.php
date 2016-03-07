@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Setup\Communication\Console;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config;
-use Spryker\Zed\Kernel\BundleNameFinder;
-use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Kernel\BundleNameFinder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
+use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\FacadeMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\QueryContainerMethodTagBuilder;
@@ -58,7 +59,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $generator
             ->addMethodTagBuilder(new GeneratedInterfaceMethodTagBuilder());
 
-        $generator->create('');
+        $generator->create();
 
         $this->info('Generated Zed IdeAutoCompletion file');
     }
@@ -96,7 +97,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
             ->addMethodTagBuilder(new QueryContainerMethodTagBuilder())
             ->addMethodTagBuilder(new ClientMethodTagBuilder());
 
-        $generator->create('');
+        $generator->create();
 
         $this->info('Generated Zed IdeBundleAutoCompletion file');
     }

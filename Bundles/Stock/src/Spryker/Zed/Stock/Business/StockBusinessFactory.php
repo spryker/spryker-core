@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Stock\Business;
 
-use Spryker\Zed\Stock\Business\Model\Writer;
-use Spryker\Zed\Stock\Business\Model\Reader;
-use Spryker\Zed\Stock\Business\Model\Calculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Stock\Business\Model\Calculator;
+use Spryker\Zed\Stock\Business\Model\Reader;
+use Spryker\Zed\Stock\Business\Model\Writer;
 use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**

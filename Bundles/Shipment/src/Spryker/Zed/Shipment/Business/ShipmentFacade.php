@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Shipment\Business;
@@ -19,6 +20,8 @@ class ShipmentFacade extends AbstractFacade
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
      * @return int
@@ -31,6 +34,8 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return int
@@ -43,6 +48,8 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
@@ -55,6 +62,8 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
@@ -67,6 +76,8 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return bool
@@ -79,6 +90,8 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return bool
@@ -91,6 +104,8 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return int
@@ -103,6 +118,8 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

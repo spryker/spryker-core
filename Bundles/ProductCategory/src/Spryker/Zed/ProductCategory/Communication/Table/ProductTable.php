@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 
 class ProductTable extends AbstractTable
 {
@@ -79,7 +80,7 @@ class ProductTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->productCategoryQueryContainer->queryProductAbstractCollectionBySearchTerm(null, $this->locale, $this->idCategory);
+        $query = $this->productCategoryQueryContainer->queryProductsAbstractBySearchTerm(null, $this->locale);
         $query->setModelAlias('spy_product_abstract');
 
         $queryResults = $this->runQuery($query, $config);
@@ -87,7 +88,7 @@ class ProductTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $product) {
             $checkbox_html = sprintf(
-                '<input id="all_products_checkbox_%d" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
+                "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='{\"id\": %d, \"sku\": \"%s\", \"name\": \"%s\"}'>",
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 $product[SpyProductAbstractTableMap::COL_SKU],

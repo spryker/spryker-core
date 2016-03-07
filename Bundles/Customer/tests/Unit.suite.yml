@@ -2,4 +2,16 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-        - \Customer\Module\Unit
+        - \Testify\Module\Environment
+        - \Config\Module\ConfigInit
+        - \Propel\Module\PropelInstall
+        - \Transfer\Module\TransferGenerate
+        - \Propel\Module\Database
+
+    config:
+        \Propel\Module\Database:
+          dump: 'tests/_data/dump.sql'
+          cleanup: false
+          populate: true
+
+

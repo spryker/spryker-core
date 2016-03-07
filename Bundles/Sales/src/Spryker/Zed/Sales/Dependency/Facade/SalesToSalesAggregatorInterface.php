@@ -1,13 +1,17 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
 interface SalesToSalesAggregatorInterface
 {
+
     /**
      * @param int $idSalesOrder
      *
@@ -30,4 +34,5 @@ interface SalesToSalesAggregatorInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderTotalByOrderTransfer(OrderTransfer $orderTransfer);
+
 }

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\SalesSplit\Business;
@@ -13,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SalesSplitFacade extends AbstractFacade
 {
+
     /**
      * Splits sales order items which have a quantity > 1 into two parts. One part with the new given quantity and
      * the other part with the rest.

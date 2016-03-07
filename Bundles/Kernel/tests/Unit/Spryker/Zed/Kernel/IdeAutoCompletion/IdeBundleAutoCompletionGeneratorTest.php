@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion;
@@ -26,7 +27,7 @@ class IdeBundleAutoCompletionGeneratorTest extends AbstractAutoCompletion
         $this->cleanUpTestDir();
 
         $generator = new IdeBundleAutoCompletionGenerator($this->getOptions());
-        $generator->create('');
+        $generator->create();
 
         $this->assertFileExists($this->getFilePath());
     }
@@ -85,7 +86,7 @@ class IdeBundleAutoCompletionGeneratorTest extends AbstractAutoCompletion
     {
         $generator = new IdeBundleAutoCompletionGenerator($this->getOptions());
         $generator->addMethodTagBuilder(new MethodTagBuilder());
-        $generator->create('');
+        $generator->create();
 
         return file_get_contents($this->getFilePath());
     }

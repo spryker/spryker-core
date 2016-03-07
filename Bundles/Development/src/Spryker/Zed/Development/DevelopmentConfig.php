@@ -1,11 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Development;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
@@ -16,7 +18,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getBundleDirectory()
     {
-        return APPLICATION_SPRYKER_ROOT . DIRECTORY_SEPARATOR;
+        return $this->getConfig()->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -46,7 +48,81 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getCodingStandard()
     {
         $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
+
         return $vendorDir . 'spryker/code-sniffer/Spryker/ruleset.xml';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToComposerLock()
+    {
+        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'composer.lock';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToJsonDependencyTree()
+    {
+        $pathParts = [
+            APPLICATION_ROOT_DIR,
+            'data',
+            'dependencyTree.json',
+        ];
+
+        return implode(DIRECTORY_SEPARATOR, $pathParts);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToBundleConfig()
+    {
+        return $this->getBundleDirectory() . '/../bundle_config.json';
+    }
+
+    /**
+     * @return array
+     */
+    public function getExternalToInternalMap()
+    {
+        return [
+            'psr/log' => 'spryker/log',
+            'propel/propel' => 'spryker/propel',
+            'silex/silex' => 'spryker/silex',
+            'pimple/pimple' => 'spryker/pimple',
+            'mandrill/mandrill' => 'spryker/mandrill',
+            'predis/predis' => 'spryker/redis',
+            'guzzle/guzzle' => 'spryker/guzzle',
+            'guzzlehttp/guzzle' => 'spryker/guzzle',
+            'league/csv' => 'spryker/csv',
+            'monolog/monolog' => 'spryker/monolog',
+            'ruflin/elastica' => 'spryker/elastica',
+            '/symfony/' => 'spryker/symfony',
+            'twig/twig' => 'spryker/twig',
+            '/zendframework/' => 'spryker/zend',
+            'phpdocumentor/graphviz' => 'spryker/graphviz'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getIgnorableDependencies()
+    {
+        return [
+            'codeception/codeception',
+            'spryker/code-sniffer',
+            'pdepend/pdepend',
+            'phploc/phploc',
+            'phpmd/phpmd',
+            'sebastian/phpcpd',
+            'codeception/codeception',
+            'fabpot/php-cs-fixer',
+            'sensiolabs/security-checker',
+            'sllh/composer-versions-check',
+        ];
     }
 
 }

@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Product;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Library\DataDirectory;
 use Spryker\Shared\Product\ProductConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductConfig extends AbstractBundleConfig
 {

@@ -1,3 +1,11 @@
 # Development Bundle
 
-This is a require-dev dependency, not to be used in production.
+## Installation
+
+```
+composer require spryker/development
+```
+
+## Documentation
+
+[Development Documentation](https://spryker.github.io/development/index.html)

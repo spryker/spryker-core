@@ -1,12 +1,14 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ItemGrouper\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ItemGrouper\Business\ItemGrouperBusinessFactory getFactory()
@@ -15,6 +17,8 @@ class ItemGrouperFacade extends AbstractFacade implements ItemGrouperFacadeInter
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupAbleItems
      *
      * @return \Generated\Shared\Transfer\GroupableContainerTransfer
@@ -25,6 +29,8 @@ class ItemGrouperFacade extends AbstractFacade implements ItemGrouperFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupableItems
      *
      * @return \Generated\Shared\Transfer\GroupableContainerTransfer

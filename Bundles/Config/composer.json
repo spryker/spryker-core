@@ -3,21 +3,26 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Config\\Module\\": "tests/_support/Module"
+    },
+    "files": {
+      "0": "src/Spryker/Shared/Config.php"
     }
   },
-  "require": {},
+  "require": {
+    "spryker/kernel": "^0.20.0",
+    "spryker/library": "^0.20.0"
+  },
   "description": "config bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

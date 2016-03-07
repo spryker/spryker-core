@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Persistence;
 
-use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Shared\Kernel\AbstractLocator;
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 
 class QueryContainerLocator extends AbstractLocator
 {
@@ -35,6 +36,8 @@ class QueryContainerLocator extends AbstractLocator
     protected $application = 'Zed';
 
     /**
+     * @api
+     *
      * @param string $bundle
      *
      * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException

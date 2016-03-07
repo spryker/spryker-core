@@ -1,27 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Application\Controller;
 
-use Generated\Yves\Ide\AutoCompletion;
-use Pyz\Yves\Application\Business\Model\FlashMessengerInterface;
-use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Yves\Application\Application;
-use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
-use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Locator;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractController
 {
@@ -102,7 +95,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param null $data
+     * @param mixed|null $data
      * @param int $status
      * @param array $headers
      *
@@ -270,7 +263,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Generated\Yves\Ide\AutoCompletion
+     * @return \Generated\Client\Ide\AutoCompletion
      */
     protected function getLocator()
     {

@@ -1,22 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOption\Persistence;
 
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValueQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusionQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslationQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraintQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 

@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Product\Model;
 
 /**
- * @deprecated 1.0.0 Will be removed in the next major version. Please use Transfer objects instead.
+ * @deprecated Will be removed in the next major version. Please use Transfer objects instead.
  */
 interface ProductAbstractInterface
 {
@@ -19,6 +20,8 @@ interface ProductAbstractInterface
 
     /**
      * @param array $attributes
+     *
+     * @return void
      */
     public function setAbstractAttributes(array $attributes);
 
@@ -29,6 +32,8 @@ interface ProductAbstractInterface
 
     /**
      * @param array $products
+     *
+     * @return void
      */
     public function setProductConcreteCollection(array $products);
 
@@ -39,6 +44,8 @@ interface ProductAbstractInterface
 
     /**
      * @param bool $isActive
+     *
+     * @return void
      */
     public function setIsActive($isActive = true);
 
@@ -49,6 +56,8 @@ interface ProductAbstractInterface
 
     /**
      * @param string $sku
+     *
+     * @return void
      */
     public function setAbstractSku($sku);
 
@@ -59,6 +68,8 @@ interface ProductAbstractInterface
 
     /**
      * @param string $name
+     *
+     * @return void
      */
     public function setName($name);
 

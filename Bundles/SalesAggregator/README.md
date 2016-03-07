@@ -1,5 +1,11 @@
-# Zed Package
+# CalculationCheckoutConnector Bundle
 
-## 1.0.0
+## Installation
 
-- Spryker init
+```
+composer require spryker/calculation-checkout-connector
+```
+
+## Documentation
+
+[CalculationCheckoutConnector Documentation](https://spryker.github.io/calculation-checkout-connector/index.html)

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library;
@@ -130,6 +131,12 @@ class TestAutoloader
         }
     }
 
+    /**
+     * @param int $resourceName
+     *
+     * @throws \Exception
+     * @return bool|string
+     */
     protected function findFile($resourceName)
     {
         // We always work with FQCN in our context

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales;
@@ -81,7 +82,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * This method provides list of urls to render blocks inside order detail page.
-     * Url defines path to external bundle controller.  For example: /discount/sales/list would call discount bundle, sales controller, list action.
+     * Url defines path to external bundle controller. For example: /discount/sales/list would call discount bundle, sales controller, list action.
      * Action should return return array or redirect response.
      *
      * example:

@@ -1,20 +1,27 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Persistence;
 
-interface CmsQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface CmsQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
     public function queryTemplates();
 
     /**
+     * @api
+     *
      * @param string $path
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
@@ -22,6 +29,8 @@ interface CmsQueryContainerInterface
     public function queryTemplateByPath($path);
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
@@ -29,16 +38,22 @@ interface CmsQueryContainerInterface
     public function queryTemplateById($id);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPages();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryBlocks();
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
@@ -46,6 +61,8 @@ interface CmsQueryContainerInterface
     public function queryPageById($id);
 
     /**
+     * @api
+     *
      * @param int $idPage
      * @param string $placeholder
      *
@@ -54,6 +71,8 @@ interface CmsQueryContainerInterface
     public function queryGlossaryKeyMapping($idPage, $placeholder);
 
     /**
+     * @api
+     *
      * @param int $idMapping
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
@@ -61,11 +80,15 @@ interface CmsQueryContainerInterface
     public function queryGlossaryKeyMappingById($idMapping);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappings();
 
     /**
+     * @api
+     *
      * @param int $idCmsPage
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
@@ -73,6 +96,8 @@ interface CmsQueryContainerInterface
     public function queryGlossaryKeyMappingsByPageId($idCmsPage);
 
     /**
+     * @api
+     *
      * @param int $idCmsPage
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
@@ -80,6 +105,8 @@ interface CmsQueryContainerInterface
     public function queryBlockByIdPage($idCmsPage);
 
     /**
+     * @api
+     *
      * @param string $blockName
      * @param string $blockType
      * @param string $blockValue
@@ -89,6 +116,8 @@ interface CmsQueryContainerInterface
     public function queryBlockByNameAndTypeValue($blockName, $blockType, $blockValue);
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery

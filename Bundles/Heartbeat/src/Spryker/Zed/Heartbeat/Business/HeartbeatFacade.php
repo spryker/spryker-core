@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Heartbeat\Business;
@@ -15,6 +16,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isSystemAlive()
@@ -23,6 +26,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\HealthReportTransfer
      */
     public function getReport()
@@ -31,6 +36,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doPropelHealthCheck()
@@ -39,6 +46,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doSearchHealthCheck()
@@ -47,6 +56,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doSessionHealthCheck()
@@ -55,6 +66,8 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doStorageHealthCheck()

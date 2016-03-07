@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Business\Tree;
 
-use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
-use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 
 class CategoryTreeWriter
 {
@@ -175,10 +176,10 @@ class CategoryTreeWriter
     protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
     {
         $closureQuery= new SpyCategoryClosureTableQuery();
-        $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
+        $nodes = $closureQuery->findByFkCategoryNode($categoryNode->getIdCategoryNode());
 
         foreach ($nodes as $node) {
-            $this->touchCategoryActive($node->getFkCategoryNode());
+            $this->touchCategoryActive($node->getFkCategoryNodeDescendant());
         }
 
         $this->touchCategoryActive($categoryNode->getIdCategoryNode());
@@ -192,10 +193,10 @@ class CategoryTreeWriter
     protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
     {
         $closureQuery= new SpyCategoryClosureTableQuery();
-        $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
+        $nodes = $closureQuery->findByFkCategoryNode($categoryNode->getIdCategoryNode());
 
         foreach ($nodes as $node) {
-            $this->touchCategoryDeleted($node->getFkCategoryNode());
+            $this->touchCategoryDeleted($node->getFkCategoryNodeDescendant());
         }
 
         $this->touchCategoryDeleted($categoryNode->getIdCategoryNode());

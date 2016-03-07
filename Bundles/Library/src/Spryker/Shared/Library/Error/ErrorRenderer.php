@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\Error;
@@ -22,6 +23,7 @@ class ErrorRenderer
     protected static function renderForWeb(\Exception $e)
     {
         $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'n/a';
+        $uri = urlencode($uri);
 
         $errorString = '<div style="font-family: courier; font-size: 14px">';
         $message = get_class($e) . ' - ' . $e->getMessage();
@@ -63,6 +65,7 @@ class ErrorRenderer
         } else {
             $uri = 'n/a';
         }
+        $uri = urlencode($uri);
 
         $message = get_class($e) . ' - ' . $e->getMessage();
         $errorString = PHP_EOL . APPLICATION . ' Exception: ' . $message . PHP_EOL;

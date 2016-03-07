@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Kernel\AbstractClient;
@@ -12,6 +17,8 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
 {
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Catalog\Model\Catalog
      */
     public function createCatalogModel()
@@ -20,6 +27,8 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $category
      *
@@ -31,6 +40,8 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Client\Catalog\Model\FulltextSearch
@@ -41,6 +52,8 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Catalog\Model\FacetConfig
      */
     public function createFacetConfig()

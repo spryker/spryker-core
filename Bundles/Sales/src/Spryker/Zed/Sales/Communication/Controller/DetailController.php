@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Communication\Controller;
@@ -57,7 +58,7 @@ class DetailController extends AbstractController
      */
     protected function renderSalesDetailBlocks(Request $request, OrderTransfer $orderTransfer)
     {
-        $addCommentBlock = $this->renderAction($request, '/sales/comment/add');
+        $addCommentBlock = $this->handleSubRequest($request, '/sales/comment/add');
 
         if ($addCommentBlock instanceof RedirectResponse) {
             return $addCommentBlock;
@@ -93,9 +94,10 @@ class DetailController extends AbstractController
          * @var \Symfony\Component\HttpFoundation\Response $blockResponse
          */
         foreach ($data as $blockName => $blockUrl) {
-            $responseData[$blockName] = $this->renderAction($subRequest, $blockUrl);
+            $responseData[$blockName] = $this->handleSubRequest($subRequest, $blockUrl);
         }
 
         return $responseData;
     }
+
 }

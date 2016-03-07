@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreCheckAdapterMock;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Payolution\PayolutionConstants;
 
@@ -70,7 +71,7 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
 
         $billingAddressTransfer = new AddressTransfer();
         $billingAddressTransfer
-            ->setIso2Code('de')
+            ->setIso2Code('DE')
             ->setEmail('john@doe.com')
             ->setFirstName('John')
             ->setLastName('Doe')
@@ -81,7 +82,7 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
 
         $shippingAddressTransfer = new AddressTransfer();
         $shippingAddressTransfer
-            ->setIso2Code('de')
+            ->setIso2Code('DE')
             ->setEmail('john@doe.com')
             ->setFirstName('John')
             ->setLastName('Doe')
@@ -96,7 +97,7 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
             ->setSalutation('Mr')
             ->setEmail('john@doe.com')
             ->setCity('Berlin')
-            ->setIso2Code('de')
+            ->setIso2Code('DE')
             ->setAddress1('Straße des 17. Juni')
             ->setAddress2('135')
             ->setZipCode('10623');

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Stock\Business\Model;
@@ -37,6 +38,8 @@ interface WriterInterface
      * @param string $sku
      * @param int $decrementBy
      * @param string $stockType
+     *
+     * @return void
      */
     public function decrementStock($sku, $stockType, $decrementBy = 1);
 
@@ -44,6 +47,8 @@ interface WriterInterface
      * @param string $sku
      * @param int $incrementBy
      * @param string $stockType
+     *
+     * @return void
      */
     public function incrementStock($sku, $stockType, $incrementBy = 1);
 

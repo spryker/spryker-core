@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Locale\Persistence;
@@ -15,6 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class LocalePersistenceFactory extends AbstractPersistenceFactory
 {
+
     /**
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
@@ -22,4 +24,5 @@ class LocalePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyLocaleQuery::create();
     }
+
 }

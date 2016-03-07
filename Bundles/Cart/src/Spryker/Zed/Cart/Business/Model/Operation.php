@@ -1,14 +1,16 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cart\Business\Model;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\GroupableContainerTransfer;
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface;
@@ -16,6 +18,7 @@ use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridgeInterface;
 
 class Operation implements OperationInterface
 {
+
     const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
     const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
 

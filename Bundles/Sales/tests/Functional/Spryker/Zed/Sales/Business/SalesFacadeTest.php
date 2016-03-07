@@ -1,18 +1,17 @@
 <?php
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Sales\Business;
 
-
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Sales\Business\SalesFacade;
-
 
 class SalesFacadeTest extends Test
 {
@@ -69,4 +68,5 @@ class SalesFacadeTest extends Test
     {
         return new TestOrderCreator();
     }
+
 }

@@ -1,8 +1,10 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
 interface NavigationCacheInterface
@@ -15,6 +17,8 @@ interface NavigationCacheInterface
 
     /**
      * @param array $navigation
+     *
+     * @return void
      */
     public function setNavigation(array $navigation);
 

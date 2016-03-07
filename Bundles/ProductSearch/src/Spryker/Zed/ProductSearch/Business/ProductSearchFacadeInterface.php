@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductSearch\Business;
@@ -13,6 +14,8 @@ interface ProductSearchFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param array $productsRaw
      * @param array $processedProducts
      *
@@ -21,6 +24,8 @@ interface ProductSearchFacadeInterface
     public function enrichProductsWithSearchAttributes(array $productsRaw, array $processedProducts);
 
     /**
+     * @api
+     *
      * @param array $productsRaw
      * @param array $processedProducts
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -30,6 +35,8 @@ interface ProductSearchFacadeInterface
     public function createSearchProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void

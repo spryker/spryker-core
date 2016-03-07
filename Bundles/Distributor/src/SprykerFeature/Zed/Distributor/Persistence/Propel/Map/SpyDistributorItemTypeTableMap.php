@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Distributor\Persistence\Propel\Map;
 
-use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
 use Propel\Runtime\Connection\ConnectionInterface;
@@ -11,9 +10,9 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Map\TableMapTrait;
+use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery;
-
 
 /**
  * This class defines the structure of the 'spy_distributor_item_type' table.
@@ -28,6 +27,7 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuer
  */
 class SpyDistributorItemTypeTableMap extends TableMap
 {
+
     use InstancePoolTrait;
     use TableMapTrait;
 
@@ -97,13 +97,13 @@ class SpyDistributorItemTypeTableMap extends TableMap
      * first dimension keys are the type constants
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
-    protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('IdDistributorItemType', 'TypeKey', 'LastDistribution', ),
-        self::TYPE_CAMELNAME     => array('idDistributorItemType', 'typeKey', 'lastDistribution', ),
-        self::TYPE_COLNAME       => array(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE, SpyDistributorItemTypeTableMap::COL_TYPE_KEY, SpyDistributorItemTypeTableMap::COL_LAST_DISTRIBUTION, ),
-        self::TYPE_FIELDNAME     => array('id_distributor_item_type', 'type_key', 'last_distribution', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
-    );
+    protected static $fieldNames =  [
+        self::TYPE_PHPNAME       => ['IdDistributorItemType', 'TypeKey', 'LastDistribution', ],
+        self::TYPE_CAMELNAME     => ['idDistributorItemType', 'typeKey', 'lastDistribution', ],
+        self::TYPE_COLNAME       => [SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE, SpyDistributorItemTypeTableMap::COL_TYPE_KEY, SpyDistributorItemTypeTableMap::COL_LAST_DISTRIBUTION, ],
+        self::TYPE_FIELDNAME     => ['id_distributor_item_type', 'type_key', 'last_distribution', ],
+        self::TYPE_NUM           => [0, 1, 2, ]
+    ];
 
     /**
      * holds an array of keys for quick access to the fieldnames array
@@ -111,13 +111,13 @@ class SpyDistributorItemTypeTableMap extends TableMap
      * first dimension keys are the type constants
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
-    protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('IdDistributorItemType' => 0, 'TypeKey' => 1, 'LastDistribution' => 2, ),
-        self::TYPE_CAMELNAME     => array('idDistributorItemType' => 0, 'typeKey' => 1, 'lastDistribution' => 2, ),
-        self::TYPE_COLNAME       => array(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE => 0, SpyDistributorItemTypeTableMap::COL_TYPE_KEY => 1, SpyDistributorItemTypeTableMap::COL_LAST_DISTRIBUTION => 2, ),
-        self::TYPE_FIELDNAME     => array('id_distributor_item_type' => 0, 'type_key' => 1, 'last_distribution' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
-    );
+    protected static $fieldKeys =  [
+        self::TYPE_PHPNAME       => ['IdDistributorItemType' => 0, 'TypeKey' => 1, 'LastDistribution' => 2, ],
+        self::TYPE_CAMELNAME     => ['idDistributorItemType' => 0, 'typeKey' => 1, 'lastDistribution' => 2, ],
+        self::TYPE_COLNAME       => [SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE => 0, SpyDistributorItemTypeTableMap::COL_TYPE_KEY => 1, SpyDistributorItemTypeTableMap::COL_LAST_DISTRIBUTION => 2, ],
+        self::TYPE_FIELDNAME     => ['id_distributor_item_type' => 0, 'type_key' => 1, 'last_distribution' => 2, ],
+        self::TYPE_NUM           => [0, 1, 2, ]
+    ];
 
     /**
      * Initialize the table attributes and columns
@@ -140,30 +140,34 @@ class SpyDistributorItemTypeTableMap extends TableMap
         $this->addPrimaryKey('id_distributor_item_type', 'IdDistributorItemType', 'INTEGER', true, null, null);
         $this->addColumn('type_key', 'TypeKey', 'VARCHAR', true, 255, null);
         $this->addColumn('last_distribution', 'LastDistribution', 'TIMESTAMP', true, null, null);
-    } // initialize()
+    }
+
+ // initialize()
 
     /**
      * Build the RelationMap objects for this table relationships
      */
     public function buildRelations()
     {
-        $this->addRelation('SpyDistributorItem', '\\SprykerFeature\\Zed\\Distributor\\Persistence\\Propel\\SpyDistributorItem', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':fk_item_type',
-    1 => ':id_distributor_item_type',
-  ),
-), null, null, 'SpyDistributorItems', false);
-    } // buildRelations()
+        $this->addRelation('SpyDistributorItem', '\\SprykerFeature\\Zed\\Distributor\\Persistence\\Propel\\SpyDistributorItem', RelationMap::ONE_TO_MANY,  [
+        0 =>
+         [
+        0 => ':fk_item_type',
+        1 => ':id_distributor_item_type',
+         ],
+        ], null, null, 'SpyDistributorItems', false);
+    }
+
+ // buildRelations()
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
      *
-     * For tables with a single-column primary key, that simple pkey value will be returned.  For tables with
+     * For tables with a single-column primary key, that simple pkey value will be returned. For tables with
      * a multi-column primary key, a serialize()d version of the primary key will be returned.
      *
-     * @param array  $row       resultset row.
-     * @param int    $offset    The 0-based offset for reading from the resultset row.
+     * @param array $row resultset row.
+     * @param int $offset The 0-based offset for reading from the resultset row.
      * @param string $indexType One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                           TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM
      *
@@ -176,16 +180,16 @@ class SpyDistributorItemTypeTableMap extends TableMap
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('IdDistributorItemType', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string)$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('IdDistributorItemType', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
      * Retrieves the primary key from the DB resultset row
-     * For tables with a single-column primary key, that simple pkey value will be returned.  For tables with
+     * For tables with a single-column primary key, that simple pkey value will be returned. For tables with
      * a multi-column primary key, an array of the primary key columns will be returned.
      *
-     * @param array  $row       resultset row.
-     * @param int    $offset    The 0-based offset for reading from the resultset row.
+     * @param array $row resultset row.
+     * @param int $offset The 0-based offset for reading from the resultset row.
      * @param string $indexType One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                           TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM
      *
@@ -193,11 +197,9 @@ class SpyDistributorItemTypeTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (int) $row[
-            $indexType == TableMap::TYPE_NUM
+        return (int)$row[$indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('IdDistributorItemType', TableMap::TYPE_PHPNAME, $indexType)
-        ];
+                : self::translateFieldName('IdDistributorItemType', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -219,15 +221,15 @@ class SpyDistributorItemTypeTableMap extends TableMap
     /**
      * Populates an object of the default type or an object that inherit from the default.
      *
-     * @param array  $row       row returned by DataFetcher->fetch().
-     * @param int    $offset    The 0-based offset for reading from the resultset row.
+     * @param array $row row returned by DataFetcher->fetch().
+     * @param int $offset The 0-based offset for reading from the resultset row.
      * @param string $indexType The index type of $row. Mostly DataFetcher->getIndexType().
                                  One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                           TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *
      * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (SpyDistributorItemType object, last column rank)
+     * @return array (SpyDistributorItemType object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
@@ -248,7 +250,7 @@ class SpyDistributorItemTypeTableMap extends TableMap
             SpyDistributorItemTypeTableMap::addInstanceToPool($obj, $key);
         }
 
-        return array($obj, $col);
+        return [$obj, $col];
     }
 
     /**
@@ -262,7 +264,7 @@ class SpyDistributorItemTypeTableMap extends TableMap
      */
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
-        $results = array();
+        $results = [];
 
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
@@ -288,6 +290,7 @@ class SpyDistributorItemTypeTableMap extends TableMap
 
         return $results;
     }
+
     /**
      * Add all the columns needed to create a new object.
      *
@@ -296,7 +299,7 @@ class SpyDistributorItemTypeTableMap extends TableMap
      * on demand.
      *
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria object containing the columns to add.
-     * @param string   $alias    optional table alias
+     * @param string $alias optional table alias
      * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
@@ -339,16 +342,16 @@ class SpyDistributorItemTypeTableMap extends TableMap
     /**
      * Performs a DELETE on the database, given a SpyDistributorItemType or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or SpyDistributorItemType object or primary key or array of primary keys
+     * @param mixed $values Criteria or SpyDistributorItemType object or primary key or array of primary keys
      *              which is used to create the DELETE statement
-     * @param  \Propel\Runtime\Connection\ConnectionInterface $con the connection to use
-     * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con the connection to use
+     * @return int The number of affected rows (if supported by underlying database driver). This includes CASCADE-related rows
      *                         if supported by native driver or if emulated using Propel.
      * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
-     public static function doDelete($values, ConnectionInterface $con = null)
-     {
+    public static function doDelete($values, ConnectionInterface $con = null)
+    {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(SpyDistributorItemTypeTableMap::DATABASE_NAME);
         }
@@ -361,7 +364,7 @@ class SpyDistributorItemTypeTableMap extends TableMap
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(SpyDistributorItemTypeTableMap::DATABASE_NAME);
-            $criteria->add(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE, (array) $values, Criteria::IN);
+            $criteria->add(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE, (array)$values, Criteria::IN);
         }
 
         $query = SpyDistributorItemTypeQuery::create()->mergeWith($criteria);
@@ -369,7 +372,7 @@ class SpyDistributorItemTypeTableMap extends TableMap
         if ($values instanceof Criteria) {
             SpyDistributorItemTypeTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
-            foreach ((array) $values as $singleval) {
+            foreach ((array)$values as $singleval) {
                 SpyDistributorItemTypeTableMap::removeInstanceFromPool($singleval);
             }
         }
@@ -391,9 +394,9 @@ class SpyDistributorItemTypeTableMap extends TableMap
     /**
      * Performs an INSERT on the database, given a SpyDistributorItemType or Criteria object.
      *
-     * @param mixed               $criteria Criteria or SpyDistributorItemType object containing data that is used to create the INSERT statement.
+     * @param mixed $criteria Criteria or SpyDistributorItemType object containing data that is used to create the INSERT statement.
      * @param \Propel\Runtime\Connection\ConnectionInterface $con the ConnectionInterface connection to use
-     * @return mixed           The new primary key.
+     * @return mixed The new primary key.
      * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
@@ -409,10 +412,9 @@ class SpyDistributorItemTypeTableMap extends TableMap
             $criteria = $criteria->buildCriteria(); // build Criteria from SpyDistributorItemType object
         }
 
-        if ($criteria->containsKey(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE) && $criteria->keyContainsValue(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE) ) {
+        if ($criteria->containsKey(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE) && $criteria->keyContainsValue(SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE)) {
             throw new PropelException('Cannot insert a value for auto-increment primary key ('.SpyDistributorItemTypeTableMap::COL_ID_DISTRIBUTOR_ITEM_TYPE.')');
         }
-
 
         // Set the correct dbName
         $query = SpyDistributorItemTypeQuery::create()->mergeWith($criteria);

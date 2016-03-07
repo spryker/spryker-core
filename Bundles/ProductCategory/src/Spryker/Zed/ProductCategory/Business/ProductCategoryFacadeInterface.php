@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Business;
@@ -15,6 +16,8 @@ interface ProductCategoryFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -29,6 +32,8 @@ interface ProductCategoryFacadeInterface
     public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -38,6 +43,8 @@ interface ProductCategoryFacadeInterface
     public function hasProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
@@ -45,6 +52,8 @@ interface ProductCategoryFacadeInterface
     public function getCategoriesByProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productIdsToAssign
      *
@@ -55,6 +64,8 @@ interface ProductCategoryFacadeInterface
     public function createProductCategoryMappings($idCategory, array $productIdsToAssign);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productIdsToUnAssign
      *
@@ -63,6 +74,8 @@ interface ProductCategoryFacadeInterface
     public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productOrderList
      *
@@ -73,6 +86,8 @@ interface ProductCategoryFacadeInterface
     public function updateProductMappingsOrder($idCategory, array $productOrderList);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param array $productPreConfig
      *
@@ -81,6 +96,8 @@ interface ProductCategoryFacadeInterface
     public function updateProductCategoryPreConfig($idCategory, array $productPreConfig);
 
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -89,6 +106,8 @@ interface ProductCategoryFacadeInterface
     public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -98,6 +117,8 @@ interface ProductCategoryFacadeInterface
     public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -107,6 +128,8 @@ interface ProductCategoryFacadeInterface
     public function addCategory(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer);
 
     /**
+     * @api
+     *
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren

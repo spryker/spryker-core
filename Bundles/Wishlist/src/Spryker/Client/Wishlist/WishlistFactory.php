@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Wishlist;
 
+use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Wishlist\Session\WishlistSession;
 use Spryker\Client\Wishlist\Storage\WishlistStorage;
 use Spryker\Client\Wishlist\Zed\WishlistStub;
-use Spryker\Client\Wishlist\Session\WishlistSession;
-use Spryker\Client\Kernel\AbstractFactory;
 
 class WishlistFactory extends AbstractFactory
 {

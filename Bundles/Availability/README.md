@@ -1,6 +1,11 @@
-# Zed Package
+# Availability Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/availability
+```
+
+## Documentation
+
+[Availability Documentation](https://spryker.github.io/availability/index.html)

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Communication\Controller;
@@ -10,7 +11,7 @@ use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -52,7 +53,7 @@ class PoolController extends AbstractController
                 DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
             ]);
 
-            return $this->redirectResponse($url->__toString());
+            return $this->redirectResponse($url->build());
         }
 
         return [
@@ -67,7 +68,7 @@ class PoolController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idPool = $request->query->getInt(DiscountConstants::PARAM_ID_POOL);
+        $idPool = $this->castId($request->query->get(DiscountConstants::PARAM_ID_POOL));
 
         $dataProvider = $this->getFactory()->createVoucherCodesFormDataProvider();
         $form = $this
@@ -88,7 +89,7 @@ class PoolController extends AbstractController
                 DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
             ]);
 
-            return $this->redirectResponse($url->__toString());
+            return $this->redirectResponse($url->build());
         }
 
         return [
@@ -103,7 +104,7 @@ class PoolController extends AbstractController
      */
     public function editCategoryAction(Request $request)
     {
-        $idPoolCategory = $request->query->get('id', 0);
+        $idPoolCategory = $this->castId($request->query->get('id', 0));
 
         return $this->createCategoryAction($idPoolCategory);
     }
@@ -163,7 +164,7 @@ class PoolController extends AbstractController
      */
     public function categorySuggestAction(Request $request)
     {
-        $term = $request->get(self::TERM);
+        $term = $request->get(self::TERM); // TODO FW Validation needed
 
         $categories = $this->getQueryContainer()
             ->queryDiscountVoucherPoolCategory()

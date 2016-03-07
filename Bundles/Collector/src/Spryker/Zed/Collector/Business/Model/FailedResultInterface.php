@@ -1,11 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business\Model;
 
+/**
+ * @deprecated Must be refactored into a Transfer object instead.
+ */
 interface FailedResultInterface
 {
 
@@ -16,6 +20,8 @@ interface FailedResultInterface
 
     /**
      * @param int $itemId
+     *
+     * @return void
      */
     public function setFirstId($itemId);
 
@@ -26,6 +32,8 @@ interface FailedResultInterface
 
     /**
      * @param string $itemType
+     *
+     * @return void
      */
     public function setItemType($itemType);
 
@@ -36,6 +44,8 @@ interface FailedResultInterface
 
     /**
      * @param string $reason
+     *
+     * @return void
      */
     public function setReason($reason);
 
@@ -46,11 +56,15 @@ interface FailedResultInterface
 
     /**
      * @param int $lastId
+     *
+     * @return void
      */
     public function setLastId($lastId);
 
     /**
      * @param int $count
+     *
+     * @return void
      */
     public function setFailedCount($count);
 

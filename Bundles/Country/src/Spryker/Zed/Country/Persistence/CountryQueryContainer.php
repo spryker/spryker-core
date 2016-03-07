@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Country\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Country\Persistence\CountryPersistenceFactory getFactory()
@@ -17,6 +18,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
     public function queryCountries()
@@ -25,6 +28,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     }
 
     /**
+     * @api
+     *
      * @param string $iso2Code
      *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
@@ -39,6 +44,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
      */
     public function queryRegions()
@@ -47,6 +54,8 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
     }
 
     /**
+     * @api
+     *
      * @param string $isoCode
      *
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery

@@ -1,26 +1,30 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\AddressTransfer;
-use Propel\Runtime\Propel;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Propel\Runtime\Propel;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
 class OrderSaver implements OrderSaverInterface
 {
+
+
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
@@ -239,6 +243,7 @@ class OrderSaver implements OrderSaverInterface
             $saveOrderTransfer->addOrderItem($itemTransfer);
         }
     }
+
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -326,4 +331,5 @@ class OrderSaver implements OrderSaverInterface
         $quoteTransfer->requireItems()
             ->requireTotals();
     }
+
 }

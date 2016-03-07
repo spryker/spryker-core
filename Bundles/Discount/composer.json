@@ -11,18 +11,19 @@
     }
   },
   "require": {
-    "spryker/application": "^1.0.0",
-    "spryker/calculation": "^1.0.0",
-    "spryker/cart": "^1.0.0",
-    "spryker/gui": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/library": "^1.0.0",
-    "spryker/messenger": "^1.0.0",
-    "spryker/propel": "^1.0.0",
-    "spryker/sales": "^1.0.0",
-    "spryker/transfer": "^1.0.0",
-    "spryker/symfony": "^1.0.0",
-    "spryker/zend": "^1.0.0"
+    "spryker/application": "^0.20.0",
+    "spryker/calculation": "^0.20.0",
+    "spryker/cart": "^0.20.0",
+    "spryker/gui": "^0.20.0",
+    "spryker/kernel": "^0.20.0",
+    "spryker/library": "^0.20.0",
+    "spryker/messenger": "^0.20.0",
+    "spryker/propel": "^0.20.0",
+    "spryker/sales": "^0.20.0",
+    "spryker/transfer": "^0.20.0",
+    "spryker/symfony": "^0.20.0",
+    "spryker/zend": "^0.20.0",
+    "spryker/url": "^0.20.0"
   },
   "description": "discount bundle",
   "license": "proprietary",
@@ -30,7 +31,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "0.20.x-dev"
     }
   }
 }

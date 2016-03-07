@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\Storage\Adapter\Solr;
@@ -29,7 +30,7 @@ abstract class Solr implements AdapterInterface
 
     /**
      * @param array $config
-     * @param null $endpoint
+     * @param string|null $endpoint
      * @param bool $debug
      */
     public function __construct(array $config, $endpoint = null, $debug = false)

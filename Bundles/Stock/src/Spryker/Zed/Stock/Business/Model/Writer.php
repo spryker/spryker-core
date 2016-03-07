@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
-use Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException;
-use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException;
+use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 class Writer implements WriterInterface
 {

@@ -1,7 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set page_title = 'Edit Group' %}
-
 {% block head_title page_title %}
 {% block section_title page_title %}
 
@@ -38,3 +37,7 @@
 
 {% endblock %}
 
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-acl-main.js"></script>
+{% endblock %}

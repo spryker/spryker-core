@@ -1,18 +1,22 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface ProductQueryContainerInterface
+interface ProductQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $skus
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -21,6 +25,8 @@ interface ProductQueryContainerInterface
     public function getProductWithAttributeQuery($skus, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param string $concreteSku
      * @param int $idLocale
      *
@@ -29,6 +35,8 @@ interface ProductQueryContainerInterface
     public function queryProductWithAttributesAndProductAbstract($concreteSku, $idLocale);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
@@ -36,6 +44,8 @@ interface ProductQueryContainerInterface
     public function queryTaxSetForProductAbstract($idProductAbstract);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
@@ -43,6 +53,8 @@ interface ProductQueryContainerInterface
     public function queryProductConcreteBySku($sku);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -50,6 +62,8 @@ interface ProductQueryContainerInterface
     public function queryProductAbstractBySku($sku);
 
     /**
+     * @api
+     *
      * @param string $attributeName
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
@@ -57,6 +71,8 @@ interface ProductQueryContainerInterface
     public function queryAttributeByName($attributeName);
 
     /**
+     * @api
+     *
      * @param string $attributeType
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery
@@ -64,6 +80,8 @@ interface ProductQueryContainerInterface
     public function queryAttributeTypeByName($attributeType);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $fkCurrentLocale
      *
@@ -72,6 +90,8 @@ interface ProductQueryContainerInterface
     public function queryProductAbstractAttributeCollection($idProductAbstract, $fkCurrentLocale);
 
     /**
+     * @api
+     *
      * @param int $idProductConcrete
      * @param int $fkCurrentLocale
      *
@@ -80,6 +100,8 @@ interface ProductQueryContainerInterface
     public function queryProductConcreteAttributeCollection($idProductConcrete, $fkCurrentLocale);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
      * @return $this
@@ -87,6 +109,8 @@ interface ProductQueryContainerInterface
     public function joinProductConcreteCollection(ModelCriteria $expandableQuery);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *

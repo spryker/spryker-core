@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\Silex\Routing;
@@ -58,7 +59,7 @@ class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatche
     }
 
     /**
-     * @see RedirectableUrlMatcherInterface::match()
+     * @see \Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface::match()
      */
     public function redirect($path, $route, $scheme = null)
     {

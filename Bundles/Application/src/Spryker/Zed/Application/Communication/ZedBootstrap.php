@@ -1,51 +1,75 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication;
 
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\AfterBootExtension;
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension;
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Communication\Application;
-use Spryker\Shared\Application\Communication\Bootstrap;
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\RouterExtension;
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\ServiceProviderExtension;
-use Spryker\Zed\Application\Communication\Bootstrap\Extension\TwigExtension;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Library\DataDirectory;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
 
-class ZedBootstrap extends Bootstrap
+class ZedBootstrap
 {
+
+    use BundleDependencyProviderResolverAwareTrait;
+
+    /**
+     * @var \Spryker\Shared\Application\Communication\Application
+     */
+    protected $application;
 
     public function __construct()
     {
-        parent::__construct($this->getBaseApplication());
+        $this->application = $this->getBaseApplication();
+    }
 
-        $this->addBeforeBootExtension(
-            $this->getBeforeBootExtension()
-        );
+    /**
+     * @return \Spryker\Shared\Application\Communication\Application
+     */
+    public function boot()
+    {
+        $this->application['debug'] = Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
+        $this->application['locale'] = Store::getInstance()->getCurrentLocale();
 
-        $this->addAfterBootExtension(
-            $this->getAfterBootExtension()
-        );
+        if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {
+            $this->application['profiler.cache_dir'] = DataDirectory::getLocalStoreSpecificPath('cache/profiler');
+        }
 
-        $this->addServiceProviderExtension(
-            $this->getServiceProviderExtension()
-        );
+        $this->optimizeApp();
 
-        $this->addRouterExtension(
-            $this->getRouterExtension()
-        );
+        $this->registerServiceProvider();
 
-        $this->addTwigExtension(
-            $this->getTwigExtension()
-        );
+        $this->addVariablesToTwig();
 
-        $this->addGlobalTemplateVariableExtension(
-            $this->getGlobalTemplateVariablesExtension()
-        );
+        return $this->application;
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerServiceProvider()
+    {
+        foreach ($this->getServiceProvider() as $provider) {
+            $this->application->register($provider);
+        }
+    }
+
+    /**
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getServiceProvider()
+    {
+        return [];
     }
 
     /**
@@ -73,51 +97,47 @@ class ZedBootstrap extends Bootstrap
     }
 
     /**
-     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension
+     * @return void
      */
-    protected function getBeforeBootExtension()
+    protected function optimizeApp()
     {
-        return new BeforeBootExtension();
+        $application = $this->application;
+        $application['resolver'] = $this->application->share(function () use ($application) {
+            return new ZedFragmentControllerResolver($application, $application['logger']);
+        });
     }
 
     /**
-     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\AfterBootExtension
+     * @return void
      */
-    protected function getAfterBootExtension()
+    protected function addVariablesToTwig()
     {
-        return new AfterBootExtension();
+        $application = $this->application;
+        $application['twig.global.variables'] = $application->share(
+            $application->extend('twig.global.variables', function (array $variables) use ($application) {
+                $variables += [
+                    'environment' => APPLICATION_ENV,
+                    'store' => Store::getInstance()->getStoreName(),
+                    'title' => Config::get(ApplicationConstants::PROJECT_NAMESPACE) . ' | Zed | ' . ucfirst(APPLICATION_ENV),
+                    'currentController' => get_class($this),
+                ];
+
+                return $variables;
+            })
+        );
     }
 
     /**
-     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\ServiceProviderExtension
+     * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
      */
-    protected function getServiceProviderExtension()
+    protected function provideExternalDependencies(AbstractBundleDependencyProvider $dependencyProvider, Container $container)
     {
-        return new ServiceProviderExtension();
-    }
-
-    /**
-     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\RouterExtension
-     */
-    protected function getRouterExtension()
-    {
-        return new RouterExtension();
-    }
-
-    /**
-     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\TwigExtension
-     */
-    protected function getTwigExtension()
-    {
-        return new TwigExtension();
-    }
-
-    /**
-     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension
-     */
-    protected function getGlobalTemplateVariablesExtension()
-    {
-        return new GlobalTemplateVariablesExtension();
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyProvider->provideCommunicationLayerDependencies($container);
+        $dependencyProvider->providePersistenceLayerDependencies($container);
     }
 
 }

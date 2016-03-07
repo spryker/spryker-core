@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\SequenceNumber\Business\Model;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumber;
+use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException;
 use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
-use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumber;
-use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 
 class SequenceNumber implements SequenceNumberInterface
 {
@@ -93,9 +94,6 @@ class SequenceNumber implements SequenceNumberInterface
             ->findOneByName($this->sequenceNumberSettings->getName());
 
         $offset = $this->sequenceNumberSettings->getOffset();
-        if (!$offset) {
-            $offset = $this->sequenceNumberSettings->getMinimumNumber();
-        }
 
         if ($sequence === null) {
             $sequence = new SpySequenceNumber();

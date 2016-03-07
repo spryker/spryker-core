@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace ClientUnit\Spryker\Client\Cart;
@@ -198,7 +199,10 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     ) {
         $factoryMock = $this->getMock(
             'Spryker\Client\Kernel\AbstractFactory',
-            ['createSession', 'createZedStub'], [], '', false
+            ['createSession', 'createZedStub'],
+            [],
+            '',
+            false
         );
 
         if ($cartSession !== null) {
@@ -224,7 +228,11 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     {
         $cartClientMock = $this->getMock(
             'Spryker\Client\Cart\CartClient',
-            ['getFactory'], [], '', false);
+            ['getFactory'],
+            [],
+            '',
+            false
+        );
 
         $cartClientMock->expects($this->any())
             ->method('getFactory')

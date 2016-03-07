@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Catalog\Model\Builder;
 
 use Elastica\Filter\BoolAnd;
 use Elastica\Filter\Nested;
+use Elastica\Filter\Range;
 use Elastica\Filter\Term;
 use Elastica\Filter\Terms;
-use Elastica\Filter\Range;
 
 /**
  * Class FilterBuilder

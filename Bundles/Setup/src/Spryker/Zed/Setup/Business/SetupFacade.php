@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Setup\Business;
@@ -16,6 +17,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param array $roles
      *
      * @return mixed
@@ -26,6 +29,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function enableJenkins()
@@ -34,6 +39,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function disableJenkins()
@@ -42,6 +49,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function removeGeneratedDirectory()
@@ -50,6 +59,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
@@ -57,10 +68,12 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     public function getRepeatData(Request $request)
     {
         return $this->getFactory()->getTransferObjectRepeater()
-            ->getRepeatData($request->query->get('mvc', null));
+            ->getRepeatData($request->query->get('mvc', null)); // TODO FW Validation
     }
 
     /**
+     * @api
+     *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()

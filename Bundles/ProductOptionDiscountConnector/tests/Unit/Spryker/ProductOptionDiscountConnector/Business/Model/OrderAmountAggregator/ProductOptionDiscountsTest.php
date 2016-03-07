@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
@@ -9,10 +11,10 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
+use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts;
 
 class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,8 +28,8 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
         $orderTransfer = $this->createOrderTransfer();
         $productOptionAggregator->aggregate($orderTransfer);
 
-        $productoOptionTransfer = $orderTransfer->getItems()[0]->getProductOptions()[0];
-        $this->assertEquals(100, $productoOptionTransfer->getCalculatedDiscounts()[0]->getSumGrossAmount());
+        $productOptionTransfer = $orderTransfer->getItems()[0]->getProductOptions()[0];
+        $this->assertEquals(100, $productOptionTransfer->getCalculatedDiscounts()[0]->getSumGrossAmount());
     }
 
     /**
@@ -55,7 +57,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
 
         $salesDiscountQueryMock->expects($this->once())
             ->method('filterByFkSalesOrder')
-            ->with($this->isType('integer'))
+            //->with($this->isType('integer'))
             ->willReturn($objectColletion);
 
         $discountQueryContainerMock->expects($this->once())

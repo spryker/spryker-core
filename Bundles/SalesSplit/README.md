@@ -1,5 +1,11 @@
-# Zed Package
+# AvailabilityCheckoutConnector Bundle
 
-## 1.0.0
+## Installation
 
-- Spryker init
+```
+composer require spryker/availability-checkout-connector
+```
+
+## Documentation
+
+[AvailabilityCheckoutConnector Documentation](https://spryker.github.io/availability-checkout-connector/index.html)

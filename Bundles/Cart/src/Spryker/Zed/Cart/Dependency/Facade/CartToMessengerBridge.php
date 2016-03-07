@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cart\Dependency\Facade;
@@ -9,6 +11,8 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 class CartToMessengerBridge implements CartToMessengerBridgeInterface
 {
+
+
     /**
      * @var \Spryker\Zed\Messenger\Business\MessengerFacade
      */
@@ -51,6 +55,5 @@ class CartToMessengerBridge implements CartToMessengerBridgeInterface
     {
         $this->messengerFacade->addErrorMessage($messageTransfer);
     }
-
 
 }
