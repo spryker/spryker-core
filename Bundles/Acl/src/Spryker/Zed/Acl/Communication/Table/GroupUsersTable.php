@@ -108,13 +108,6 @@ class GroupUsersTable extends AbstractTable
             'id-user' => $user->getIdUser(),
             'id-group' => $this->idGroup
         ]);
-
-
-//        return $this->generateRemoveButton('#', 'Remove', [
-//            'id' => sprintf('row-%d-%d', $user->getIdUser(), $this->idGroup),
-//            'data-options' => sprintf('{"idUser": %d, "idGroup": %d}', $user->getIdUser(), $this->idGroup),
-//            'class' => 'remove-user-from-group',
-//        ]);
     }
 
 }

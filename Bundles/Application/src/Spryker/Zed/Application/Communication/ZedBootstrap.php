@@ -32,8 +32,6 @@ class ZedBootstrap
     public function __construct()
     {
         $this->application = $this->getBaseApplication();
-        Request::enableHttpMethodParameterOverride();
-
     }
 
     /**
@@ -49,7 +47,7 @@ class ZedBootstrap
         }
 
         $this->optimizeApp();
-
+        $this->enableHttpMethodParameterOverride();
         $this->registerServiceProvider();
 
         $this->addVariablesToTwig();
@@ -108,6 +106,17 @@ class ZedBootstrap
         $application['resolver'] = $this->application->share(function () use ($application) {
             return new ZedFragmentControllerResolver($application, $application['logger']);
         });
+    }
+
+    /**
+     * Allow overriding http method. Needed to use the "_method" parameter in forms.
+     * This should not be changeable by projects
+     *
+     * @return void
+     */
+    private function enableHttpMethodParameterOverride()
+    {
+        Request::enableHttpMethodParameterOverride();
     }
 
     /**
