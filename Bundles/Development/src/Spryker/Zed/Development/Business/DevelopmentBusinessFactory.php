@@ -314,13 +314,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param string $showEngineBundle
      * @param string|bool $bundleToView
      *
      * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilder
      */
-    public function createSimpleDependencyGraphBuilder($bundleToView)
+    public function createSimpleDependencyGraphBuilder($showEngineBundle, $bundleToView)
     {
-        $dependencyTreeFilter = $this->createSimpleGraphDependencyTreeFilter($bundleToView);
+        $dependencyTreeFilter = $this->createSimpleGraphDependencyTreeFilter($showEngineBundle, $bundleToView);
         $dependencyTreeReader = $this->createDependencyTreeReader();
 
         $dependencyGraphBuilder = new DependencyGraphBuilder(
@@ -340,19 +341,24 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param bool $showEngineBundle
      * @param string|bool $bundleToView
      *
      * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter
      */
-    protected function createSimpleGraphDependencyTreeFilter($bundleToView)
+    protected function createSimpleGraphDependencyTreeFilter($showEngineBundle, $bundleToView)
     {
         $treeFilter = $this->createDependencyTreeFilter();
         $treeFilter
-            ->addFilter($this->createDependencyTreeForeignEngineBundleFilter())
-            ->addFilter($this->createDependencyTreeEngineBundleFilter())
             ->addFilter($this->createDependencyTreeInvalidForeignBundleFilter())
             ->addFilter($this->createDependencyTreeExternalDependencyFilter())
             ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'));
+
+
+        if (!$showEngineBundle) {
+            $treeFilter->addFilter($this->createDependencyTreeForeignEngineBundleFilter());
+            $treeFilter->addFilter($this->createDependencyTreeEngineBundleFilter());
+        }
 
         if (is_string($bundleToView)) {
             $treeFilter->addFilter($this->createDependencyTreeBundleToViewFilter($bundleToView));

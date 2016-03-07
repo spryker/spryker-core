@@ -35,7 +35,7 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     {
         foreach ($dependencyTree as $dependency) {
             $this->graph->addNode($dependency[DependencyTree::META_BUNDLE], $this->getNodeAttributes($dependency));
-            $this->graph->addNode($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->getNodeAttributes($dependency));
+            $this->graph->addNode($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->getForeignNodeAttributes($dependency));
         }
 
         foreach ($dependencyTree as $dependency) {
@@ -54,7 +54,25 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
-            $attributes['fontcolor'] = 'red';
+            $attributes['fontcolor'] = 'grey';
+            $attributes['label'] = $dependency[DependencyTree::META_BUNDLE] . '<br/><font point-size="8">(engine)</font>';
+
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param array $dependency
+     *
+     * @return array
+     */
+    private function getForeignNodeAttributes(array $dependency)
+    {
+        $attributes = [];
+        if ($dependency[DependencyTree::META_FOREIGN_BUNDLE_IS_ENGINE]) {
+            $attributes['fontcolor'] = 'grey';
+            $attributes['label'] = $dependency[DependencyTree::META_FOREIGN_BUNDLE] . '<br/><font point-size="8">(engine)</font>';
         }
 
         return $attributes;

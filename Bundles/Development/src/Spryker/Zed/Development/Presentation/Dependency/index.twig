@@ -9,7 +9,7 @@
                 <ul>
                     {% for bundle in bundles %}
                         <li>
-                            {{ bundle }} (<a href="/development/dependency/incoming?bundle={{ bundle }}">in</a>/<a href="/development/dependency/outgoing?bundle={{ bundle }}">out</a>/<a href="/development/dependency/simple?bundle={{ bundle }}">simple</a>/<a href="/development/dependency/dependency-tree-graph?bundle={{ bundle }}">detailed</a>/<a href="/development/dependency/adjacency-matrix?bundle={{ bundle }}">adjacency</a>)
+                            {{ bundle }} (<a href="/development/dependency/incoming?bundle={{ bundle }}">in</a>/<a href="/development/dependency/outgoing?bundle={{ bundle }}">out</a>/<a href="/development/dependency/simple?show-engine-bundle=1&bundle={{ bundle }}">simple</a>/<a href="/development/dependency/dependency-tree-graph?bundle={{ bundle }}">detailed</a>/<a href="/development/dependency/adjacency-matrix?bundle={{ bundle }}">adjacency</a>)
                         </li>
                     {% endfor %}
                 </ul>
