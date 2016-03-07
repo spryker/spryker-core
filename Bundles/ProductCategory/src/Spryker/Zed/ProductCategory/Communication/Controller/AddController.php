@@ -30,7 +30,10 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idParentNode = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_PARENT_NODE));
+        $idParentNode = $request->get(ProductCategoryConstants::PARAM_ID_PARENT_NODE);
+        if (!empty($idParentNode)) {
+            $idParentNode = $this->castId($idParentNode);
+        }
 
         $dataProvider = $this->getFactory()->createCategoryFormAddDataProvider();
         $form = $this
