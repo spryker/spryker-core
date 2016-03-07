@@ -103,11 +103,11 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * @param string $type
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
-    public function exportByType($type, LocaleTransfer $locale, OutputInterface $output = null)
+    public function exportByType($type, LocaleTransfer $locale, OutputInterface $output)
     {
         $result = clone $this->batchResultPrototype;
         $result->setProcessedLocale($locale);
