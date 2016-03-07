@@ -6,14 +6,18 @@
         <settings>
             <number_of_shards>1</number_of_shards>
             <number_of_replicas>1</number_of_replicas>
+            <analysis>
+                <analyzer name="my_analyzer">
+                    <type>standard</type>
+                    <stopwords>_german_</stopwords>
+                    <filter>standard</filter>
+                    <filter>lowercase</filter>
+                </analyzer>
+            </analysis>
         </settings>
-        <mapping_types>
-            <mapping_type name="page1">
-                <mapping/>
-            </mapping_type>
-            <mapping_type name="page2">
-                <mapping/>
-            </mapping_type>
-        </mapping_types>
+        <mapping name="page1">
+            <property name="foo" analyzer="my_analyzer"/>
+        </mapping>
+        <mapping name="page2"/>
     </index>
 </indexes>

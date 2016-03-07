@@ -13,7 +13,6 @@ use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\XmlIndexDefinitionLoader;
 use Spryker\Zed\Search\Business\Model\Search;
-use Spryker\Zed\Search\Business\Model\SearchInstaller;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
@@ -25,24 +24,14 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return \Spryker\Zed\Search\Business\Model\SearchInstaller
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    public function createSearchInstaller(MessengerInterface $messenger)
-    {
-        return new SearchInstaller(
-            $this->getInstallers(),
-            $messenger
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller::__construct
-     */
-    public function createElasticsearchIndexInstaller()
+    public function createElasticsearchIndexInstaller(MessengerInterface $messenger)
     {
         return new IndexInstaller(
             $this->createXmlIndexDefinitionLoader(),
-            $this->getElasticsearchClient()
+            $this->getElasticsearchClient(),
+            $messenger
         );
     }
 
@@ -54,14 +43,6 @@ class SearchBusinessFactory extends AbstractBusinessFactory
         return new Search(
             $this->getProvidedDependency(SearchDependencyProvider::CLIENT_SEARCH)
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
-     */
-    public function getInstallers()
-    {
-        return $this->getProvidedDependency(SearchDependencyProvider::INSTALLERS);
     }
 
     /**

@@ -7,10 +7,6 @@
             <number_of_shards>1</number_of_shards>
             <number_of_replicas>1</number_of_replicas>
         </settings>
-        <mapping_types>
-            <mapping_type name="page">
-                <mapping/>
-            </mapping_type>
-        </mapping_types>
+        <mapping name="page"/>
     </index>
 </indexes>

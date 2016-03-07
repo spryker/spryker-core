@@ -7,18 +7,20 @@
 
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
-use Spryker\Zed\Search\Business\Exception\InvalidMappingPropertyFormatException;
-use Spryker\Zed\Search\Business\Exception\InvalidMappingTypeFormatException;
+use Spryker\Zed\Search\Business\Exception\MissingNameAttributeException;
 
 class IndexDefinition
 {
     const NAME = 'name';
     const SETTINGS = 'settings';
-    const MAPPING_TYPES = 'mapping_types';
-    const MAPPING_TYPE = 'mapping_type';
     const MAPPING = 'mapping';
     const PROPERTY = 'property';
     const PROPERTIES = 'properties';
+    const ANALYSIS = 'analysis';
+    const ANALYZER = 'analyzer';
+    const CHAR_FILTER = 'char_filter';
+    const FILTER = 'filter';
+    const TOKENIZER = 'tokenizer';
 
     /**
      * @var array
@@ -28,7 +30,12 @@ class IndexDefinition
     /**
      * @var array
      */
-    protected $mappingTypes = [];
+    protected $settings = [];
+
+    /**
+     * @var array
+     */
+    protected $mappings = [];
 
     /**
      * @param array $definitionData
@@ -37,7 +44,7 @@ class IndexDefinition
     {
         $this->definition = $definitionData;
 
-        $this->processMappingTypes();
+        $this->processDefinition();
     }
 
     /**
@@ -53,38 +60,87 @@ class IndexDefinition
      */
     public function getSettings()
     {
-        return $this->definition[self::SETTINGS];
+        return $this->settings;
     }
 
     /**
      * @return array
      */
-    public function getMappingTypes()
+    public function getMappings()
     {
-        return $this->mappingTypes;
+        return $this->mappings;
     }
 
     /**
      * @return void
      */
-    protected function processMappingTypes()
+    protected function processDefinition()
     {
-        if (!isset($this->definition[self::MAPPING_TYPES][self::MAPPING_TYPE])) {
+        $this->processSettings();
+        $this->processMappingDefinitions();
+    }
+
+    /**
+     * @return void
+     */
+    protected function processSettings()
+    {
+        if (!isset($this->definition[self::SETTINGS])) {
             return;
         }
 
-        $mappingTypeStack = $this->definition[self::MAPPING_TYPES][self::MAPPING_TYPE];
+        $this->settings = $this->definition[self::SETTINGS];
 
-        if ($this->isAssociativeArray($mappingTypeStack)) {
-            $this->mappingTypes = $this->normalizeMappingType($mappingTypeStack);
+        if (isset($this->settings[self::ANALYSIS])) {
+            foreach ($this->settings[self::ANALYSIS] as $settingKey => $settingValue) {
+                if ($this->isAssociativeArray($settingValue)) {
+                    $this->settings[self::ANALYSIS][$settingKey] = $this->normalizeSetting([$settingValue]);
+                } else {
+                    $this->settings[self::ANALYSIS][$settingKey] = $this->normalizeSetting($settingValue);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param array $settings
+     *
+     * @return array
+     */
+    protected function normalizeSetting(array $settings)
+    {
+        $normalizedSetting = [];
+
+        foreach ($settings as $setting) {
+            $this->assertNameExists($setting);
+
+            $settingName = $setting[self::NAME];
+            unset($setting[self::NAME]);
+            $normalizedSetting[$settingName] = $setting;
+        }
+
+        return $normalizedSetting;
+    }
+
+    /**
+     * @return void
+     */
+    protected function processMappingDefinitions()
+    {
+        if (!isset($this->definition[self::MAPPING])) {
             return;
         }
 
-        foreach ($mappingTypeStack as $i => $mappingType) {
-            $mappingTypeStack[$i] = $this->normalizeMappingType($mappingType);
+        $mappingStack = $this->definition[self::MAPPING];
+
+        if ($this->isAssociativeArray($mappingStack)) {
+            $this->addMapping($mappingStack);
+            return;
         }
 
-        $this->mappingTypes = $mappingTypeStack;
+        foreach ($mappingStack as $mapping) {
+            $this->addMapping($mapping);
+        }
     }
 
     /**
@@ -98,23 +154,24 @@ class IndexDefinition
     }
 
     /**
-     * @param array $mappingType
+     * @param array $mapping
      *
      * @return array
      */
-    protected function normalizeMappingType(array $mappingType)
+    protected function addMapping(array $mapping)
     {
-        $this->assertMappingType($mappingType);
+        $this->assertNameExists($mapping);
 
-        if (isset($mappingType[self::MAPPING][self::PROPERTY])) {
-            if ($this->isAssociativeArray($mappingType[self::MAPPING][self::PROPERTY])) {
-                $mappingType[self::MAPPING] = $this->normalizeMappingTypeProperties([$mappingType[self::MAPPING][self::PROPERTY]]);
+        $normalizedMapping = [];
+        if (isset($mapping[self::PROPERTY])) {
+            if ($this->isAssociativeArray($mapping[self::PROPERTY])) {
+                $normalizedMapping = $this->normalizeMappingProperties([$mapping[self::PROPERTY]]);
             } else {
-                $mappingType[self::MAPPING] = $this->normalizeMappingTypeProperties($mappingType[self::MAPPING][self::PROPERTY]);
+                $normalizedMapping = $this->normalizeMappingProperties($mapping[self::PROPERTY]);
             }
         }
 
-        return $mappingType;
+        $this->mappings[$mapping[self::NAME]] = $normalizedMapping;
     }
 
     /**
@@ -122,23 +179,23 @@ class IndexDefinition
      *
      * @return array
      */
-    protected function normalizeMappingTypeProperties(array $properties)
+    protected function normalizeMappingProperties(array $properties)
     {
         $normalizedProperties = [];
 
         foreach ($properties as $property) {
-            $this->assertProperty($property);
+            $this->assertNameExists($property);
 
             $propertyName = $property[self::NAME];
             unset($property[self::NAME]);
 
-            if (isset($property[self::PROPERTIES])) {
+            if (isset($property[self::PROPERTIES][self::PROPERTY])) {
                 if ($this->isAssociativeArray($property[self::PROPERTIES][self::PROPERTY])) {
-                    $property[self::PROPERTIES] = $this->normalizeMappingTypeProperties([$property[self::PROPERTIES][self::PROPERTY]]);
+                    $property[self::PROPERTIES] = $this->normalizeMappingProperties([$property[self::PROPERTIES][self::PROPERTY]]);
                     continue;
                 }
 
-                $property[self::PROPERTIES] = $this->normalizeMappingTypeProperties($property[self::PROPERTIES][self::PROPERTY]);
+                $property[self::PROPERTIES] = $this->normalizeMappingProperties($property[self::PROPERTIES][self::PROPERTY]);
             }
 
             $normalizedProperties[$propertyName] = $property;
@@ -148,40 +205,20 @@ class IndexDefinition
     }
 
     /**
-     * @param array $mappingType
+     * @param array $data
      *
-     * @throws \Spryker\Zed\Search\Business\Exception\InvalidMappingTypeFormatException
-     *
-     * @return void
-     */
-    protected function assertMappingType(array $mappingType)
-    {
-        $hasName = isset($mappingType[self::NAME]);
-        $hasMapping = isset($mappingType[self::MAPPING]);
-
-        if (!$hasName || !$hasMapping) {
-            throw new InvalidMappingTypeFormatException(sprintf(
-                'Mapping type format is wrong in: %s. Expected "name", "mapping".',
-                print_r($mappingType, true)
-            ));
-        }
-    }
-
-    /**
-     * @param array $property
-     *
-     * @throws \Spryker\Zed\Search\Business\Exception\InvalidMappingPropertyFormatException
+     * @throws \Spryker\Zed\Search\Business\Exception\MissingNameAttributeException
      *
      * @return void
      */
-    protected function assertProperty(array $property)
+    protected function assertNameExists(array $data)
     {
-        $hasName = isset($property[self::NAME]);
+        $hasName = isset($data[self::NAME]);
 
         if (!$hasName) {
-            throw new InvalidMappingPropertyFormatException(sprintf(
-                'Mapping property format is wrong in: %s. Expected "name".',
-                print_r($property, true)
+            throw new MissingNameAttributeException(sprintf(
+                'Missing "name" attribute from %s',
+                print_r($data, true)
             ));
         }
     }

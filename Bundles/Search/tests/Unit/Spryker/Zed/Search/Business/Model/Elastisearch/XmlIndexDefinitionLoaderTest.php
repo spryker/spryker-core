@@ -41,6 +41,18 @@ class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
         $expectedSettings = [
             'number_of_shards' => '1',
             'number_of_replicas' => '1',
+            'analysis' => [
+                'analyzer' => [
+                    'my_analyzer' => [
+                        'type' => 'standard',
+                        'stopwords' => '_german_',
+                        'filter' => [
+                            'standard',
+                            'lowercase',
+                        ]
+                    ],
+                ]
+            ],
         ];
 
         $definitions = $xmlIndexDefinitionLoader->loadIndexDefinitions();
@@ -51,21 +63,22 @@ class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testSingleIndexDefinitionMappingTypes()
+    public function testSingleIndexDefinitionMappings()
     {
         $xmlIndexDefinitionLoader = new XmlIndexDefinitionLoader([__DIR__ . '/Fixtures/SingleIndex']);
 
-        $expectedMappingTypes = [[
-            'name' => 'page1',
-            'mapping' => [],
-        ],[
-            'name' => 'page2',
-            'mapping' => [],
-        ],];
+        $expectedMappings = [
+            'page1' => [
+                'foo' => [
+                    'analyzer' => 'my_analyzer',
+                ]
+            ],
+            'page2' => [],
+        ];
 
         $definitions = $xmlIndexDefinitionLoader->loadIndexDefinitions();
 
-        $this->assertEquals($expectedMappingTypes, $definitions[0]->getMappingTypes());
+        $this->assertEquals($expectedMappings, $definitions[0]->getMappings());
     }
 
     /**

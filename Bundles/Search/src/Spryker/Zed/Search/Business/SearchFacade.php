@@ -25,7 +25,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      */
     public function install(MessengerInterface $messenger)
     {
-        $this->getFactory()->createElasticsearchIndexInstaller()->install();
+        $this->getFactory()->createElasticsearchIndexInstaller($messenger)->install();
     }
 
     /**

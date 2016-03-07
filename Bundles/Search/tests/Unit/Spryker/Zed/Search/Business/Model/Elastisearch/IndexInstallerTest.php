@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch;
 
 use Elastica\Client;
 use Elastica\Index;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
@@ -52,7 +53,8 @@ class IndexInstallerTest extends \PHPUnit_Framework_TestCase
 
         $installer = new IndexInstaller(
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
-            $this->createElasticaClientMock($indexMock)
+            $this->createElasticaClientMock($indexMock),
+            $this->createMessengerMock()
         );
 
         $installer->install();
@@ -80,7 +82,8 @@ class IndexInstallerTest extends \PHPUnit_Framework_TestCase
 
         $installer = new IndexInstaller(
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
-            $this->createElasticaClientMock($indexMock)
+            $this->createElasticaClientMock($indexMock),
+            $this->createMessengerMock()
         );
 
         $installer->install();
@@ -122,6 +125,18 @@ class IndexInstallerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($indexMock);
 
         return $elasticaClientMock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockBuilder|\Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     */
+    protected function createMessengerMock()
+    {
+        $messengerMock = $this->getMockBuilder(MessengerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $messengerMock;
     }
 
 }

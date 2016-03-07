@@ -8,9 +8,13 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 use Elastica\Client;
+use Elastica\Index;
+use Elastica\Type;
 use Elastica\Type\Mapping;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 
-class IndexInstaller
+class IndexInstaller implements SearchInstallerInterface
 {
 
     /**
@@ -24,13 +28,20 @@ class IndexInstaller
     protected $elasticaClient;
 
     /**
+     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     */
+    protected $messenger;
+
+    /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinitionLoaderInterface $indexDefinitionLoader
      * @param \Elastica\Client $elasticaClient
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      */
-    public function __construct(IndexDefinitionLoaderInterface $indexDefinitionLoader, Client $elasticaClient)
+    public function __construct(IndexDefinitionLoaderInterface $indexDefinitionLoader, Client $elasticaClient, MessengerInterface $messenger)
     {
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->elasticaClient = $elasticaClient;
+        $this->messenger = $messenger;
     }
 
     /**
@@ -39,24 +50,59 @@ class IndexInstaller
     public function install()
     {
         $indexDefinitions = $this->indexDefinitionLoader->loadIndexDefinitions();
+
         foreach ($indexDefinitions as $indexDefinition) {
-            $index = $this->elasticaClient->getIndex($indexDefinition->getIndexName());
-            if (!$index->exists()) {
-                $index->create($indexDefinition->getSettings());
-            }
-
-            foreach ($indexDefinition->getMappingTypes() as $mappingType) {
-                $type = $index->getType($mappingType[IndexDefinition::NAME]);
-
-                if ($type->exists()) {
-                    continue;
-                }
-
-                $mapping = new Mapping($type);
-                $mapping->setProperties($mappingType[IndexDefinition::MAPPING]);
-                $mapping->send();
-            }
+            $this->createIndex($indexDefinition);
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition $indexDefinition
+     *
+     * @return void
+     */
+    protected function createIndex(IndexDefinition $indexDefinition)
+    {
+        $index = $this->elasticaClient->getIndex($indexDefinition->getIndexName());
+
+        if (!$index->exists()) {
+            $this->messenger->info(sprintf(
+                'Creating elasticsearch index: "%s"',
+                $indexDefinition->getIndexName()
+            ));
+
+            $settings = $indexDefinition->getSettings();
+            $index->create($settings);
+        }
+
+        foreach ($indexDefinition->getMappings() as $mappingName => $mappingData) {
+            $this->createMapping($index, $mappingName, $mappingData);
+        }
+    }
+
+    /**
+     * @param \Elastica\Index $index
+     * @param string $mappingName
+     * @param array $mappingData
+     *
+     * @return void
+     */
+    protected function createMapping(Index $index, $mappingName, array $mappingData)
+    {
+        $type = $index->getType($mappingName);
+        if ($type->exists()) {
+            return;
+        }
+
+        $this->messenger->info(sprintf(
+            'Creating mapping "%s" for index: "%s"',
+            $mappingName,
+            $index->getName()
+        ));
+
+        $mapping = new Mapping($type);
+        $mapping->setProperties($mappingData);
+        $mapping->send();
     }
 
 }

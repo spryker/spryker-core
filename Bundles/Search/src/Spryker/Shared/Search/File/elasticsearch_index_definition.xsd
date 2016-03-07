@@ -11,7 +11,7 @@
     <xs:complexType name="Index">
         <xs:sequence>
             <xs:element type="IndexSettings" name="settings" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="MappingTypes" name="mapping_types" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="Mapping" name="mapping" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
     </xs:complexType>
@@ -26,33 +26,9 @@
 
     <xs:complexType name="Analysis">
         <xs:sequence>
-            <xs:element type="Analyzers" name="analyzers" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="CharFilters" name="char_filters" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="Tokenizers" name="tokenizers" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="Filters" name="filters" minOccurs="0" maxOccurs="1"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="Analyzers">
-        <xs:sequence>
             <xs:element type="AnalysisSetting" name="analyzer" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CharFilters">
-        <xs:sequence>
             <xs:element type="AnalysisSetting" name="char_filter" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="Tokenizers">
-        <xs:sequence>
             <xs:element type="AnalysisSetting" name="tokenizer" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="Filters">
-        <xs:sequence>
             <xs:element type="AnalysisSetting" name="filter" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -64,23 +40,11 @@
         <xs:attribute type="xs:string" name="name" use="required"/>
     </xs:complexType>
 
-    <xs:complexType name="MappingTypes">
-        <xs:sequence>
-            <xs:element type="MappingType" name="mapping_type" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="MappingType">
-        <xs:sequence>
-            <xs:element type="Mapping" name="mapping" minOccurs="1" maxOccurs="1"/>
-        </xs:sequence>
-        <xs:attribute type="xs:string" name="name" use="required"/>
-    </xs:complexType>
-
     <xs:complexType name="Mapping">
         <xs:sequence>
             <xs:element type="Property" name="property" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="Property">
@@ -91,6 +55,7 @@
         <xs:attribute type="PropertyAttribute" name="type" use="optional" default="string"/>
         <xs:attribute type="xs:boolean" name="include_in_all" use="optional" default="true"/>
         <xs:attribute type="IndexAttribute" name="index" use="optional" default="analyzed"/>
+        <xs:attribute type="xs:string" name="analyzer" use="optional"/>
         <xs:anyAttribute processContents="skip"/>
     </xs:complexType>
 

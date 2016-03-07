@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Search\Business\Exception;
 
-class InvalidMappingPropertyFormatException extends \Exception
+class MissingNameAttributeException extends \Exception
 {
 
 }

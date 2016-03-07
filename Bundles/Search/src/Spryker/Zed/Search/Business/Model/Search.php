@@ -10,7 +10,7 @@ namespace Spryker\Zed\Search\Business\Model;
 use Elastica\Exception\ResponseException;
 use Spryker\Client\Search\SearchClient;
 
-// TODO: refactor me
+// TODO: #1041 - This class needs to be reviewed and refactored
 class Search
 {
 

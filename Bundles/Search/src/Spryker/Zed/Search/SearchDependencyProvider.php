@@ -16,7 +16,6 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
 
     const CLIENT_SEARCH = 'search client';
     const FACADE_COLLECTOR = 'collector facade';
-    const INSTALLERS = 'installers';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,10 +25,6 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $this->addSearchClient($container);
-
-        $container[self::INSTALLERS] = function ($container) {
-            return $this->getInstallers($container);
-        };
 
         return $container;
     }
@@ -69,16 +64,6 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::FACADE_COLLECTOR] = function (Container $container) {
             return new SearchToCollectorBridge($container->getLocator()->collector()->facade());
         };
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
-     */
-    protected function getInstallers(Container $container)
-    {
-        return [];
     }
 
 }

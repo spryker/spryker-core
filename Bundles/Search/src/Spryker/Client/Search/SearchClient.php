@@ -20,9 +20,9 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     /**
      * @api
      *
-     * @return \Elastica\Index
+     * @deprecated This method will be removed, because it exposes a third party vendor.
      *
-     * @deprecated This method will be removed.
+     * @return \Elastica\Index
      */
     public function getIndexClient()
     {
