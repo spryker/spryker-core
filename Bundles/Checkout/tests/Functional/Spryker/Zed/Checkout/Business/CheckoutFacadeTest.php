@@ -30,6 +30,7 @@ use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreCo
 use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
 use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
 use Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin;
 use Spryker\Zed\Kernel\Container;

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Invoice;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
