@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesSplit\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesSplit\Business\Model\Calculator;
-use Spryker\Zed\SalesSplit\Business\Model\OrderOrderItemSplitSplit;
+use Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
 use Spryker\Zed\SalesSplit\SalesSplitDependencyProvider;
 
@@ -24,7 +24,7 @@ class SalesSplitBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderItemSplitter()
     {
-        return new OrderOrderItemSplitSplit(
+        return new OrderItemSplit(
             $this->createSplitValidator(),
             $this->getSalesQueryContainer(),
             $this->createCalculator()

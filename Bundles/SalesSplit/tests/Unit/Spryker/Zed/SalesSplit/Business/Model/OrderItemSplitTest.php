@@ -12,7 +12,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface;
-use Spryker\Zed\SalesSplit\Business\Model\OrderOrderItemSplitSplit;
+use Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
@@ -57,7 +57,7 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
         $createdCopy = $spySalesOrderItem->getCreatedCopy();
         $this->assertEquals(1, $createdCopy->getQuantity());
         $this->assertEquals(4, $spySalesOrderItem->getQuantity());
-        $this->assertEquals(OrderOrderItemSplitSplit::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
+        $this->assertEquals(OrderItemSplit::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
 
         $oldSalesOrderItemArray = $spySalesOrderItem->toArray();
         $copyofItemSalesOrderItemArray = $createdCopy->toArray();
@@ -90,7 +90,7 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\SalesSplit\Business\Model\OrderOrderItemSplitSplit
+     * @return \Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit
      */
     protected function createOrderItemSplitter(OrderItemSpy $orderItem, $quantityForOld)
     {
@@ -120,7 +120,7 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
             ->method('calculateQuantityAmountLeft')
             ->will($this->returnValue($quantityForOld));
 
-        $itemSplit = new OrderOrderItemSplitSplit($validatorMock, $salesQueryContainerMock, $calculatorMock);
+        $itemSplit = new OrderItemSplit($validatorMock, $salesQueryContainerMock, $calculatorMock);
         $itemSplit->setDatabaseConnection($databaseConnectionMock);
 
         return $itemSplit;

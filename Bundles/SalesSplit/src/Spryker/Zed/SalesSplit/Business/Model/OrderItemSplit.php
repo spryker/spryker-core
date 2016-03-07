@@ -16,7 +16,7 @@ use Spryker\Zed\SalesSplit\Business\Model\Validation\Messages;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-class OrderOrderItemSplitSplit implements OrderItemSplitInterface
+class OrderItemSplit implements OrderItemSplitInterface
 {
 
     const SPLIT_MARKER = 'split#';

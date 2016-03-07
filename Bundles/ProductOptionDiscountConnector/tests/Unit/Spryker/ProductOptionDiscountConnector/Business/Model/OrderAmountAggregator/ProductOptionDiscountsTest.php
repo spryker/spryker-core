@@ -28,8 +28,8 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
         $orderTransfer = $this->createOrderTransfer();
         $productOptionAggregator->aggregate($orderTransfer);
 
-        $productoOptionTransfer = $orderTransfer->getItems()[0]->getProductOptions()[0];
-        $this->assertEquals(100, $productoOptionTransfer->getCalculatedDiscounts()[0]->getSumGrossAmount());
+        $productOptionTransfer = $orderTransfer->getItems()[0]->getProductOptions()[0];
+        $this->assertEquals(100, $productOptionTransfer->getCalculatedDiscounts()[0]->getSumGrossAmount());
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
 
         $salesDiscountQueryMock->expects($this->once())
             ->method('filterByFkSalesOrder')
-            ->with($this->isType('integer'))
+            //->with($this->isType('integer'))
             ->willReturn($objectColletion);
 
         $discountQueryContainerMock->expects($this->once())

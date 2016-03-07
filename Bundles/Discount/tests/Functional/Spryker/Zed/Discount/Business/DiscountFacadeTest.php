@@ -410,12 +410,10 @@ class DiscountFacadeTest extends Test
             $expense->setUnitGrossPrice(self::EXPENSE_GROSS_PRICE);
             $quoteTransfer->addExpense($expense);
 
-            $itemCollection = new OrderItemsTransfer();
             $item = new ItemTransfer();
             $item->setUnitGrossPrice(self::ITEM_GROSS_PRICE);
 
-            $itemCollection->addOrderItem($item);
-            $quoteTransfer->setItems($itemCollection);
+            $quoteTransfer->addItem($item);
 
             $result = $this->discountFacade->getDiscountableOrderExpenses($quoteTransfer, new DiscountCollectorTransfer());
             $this->assertEquals(1, count($result));
