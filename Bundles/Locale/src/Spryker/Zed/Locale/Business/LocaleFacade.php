@@ -50,6 +50,22 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     /**
      * @api
      *
+     * @param $localeCode
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleByCode($localeCode)
+    {
+        $localeManager = $this->getFactory()->createLocaleManager();
+
+        return $localeManager->getLocaleByCode($localeCode);
+    }
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentLocaleName()
@@ -64,14 +80,9 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      */
     public function getAvailableLocales()
     {
-        $availableLocales = Store::getInstance()->getLocales();
-        $locales = [];
-        foreach ($availableLocales as $localeName) {
-            $localeInfo = $this->getLocale($localeName);
-            $locales[$localeInfo->getIdLocale()] = $localeInfo->getLocaleName();
-        }
+        $localeManager = $this->getFactory()->createLocaleManager();
 
-        return $locales;
+        return $localeManager->getAvailableLocales();
     }
 
     /**
@@ -125,6 +136,18 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     public function install(MessengerInterface $messenger)
     {
         $this->getFactory()->createInstaller($messenger)->install();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    public function getLocaleCollection()
+    {
+        $localeManager = $this->getFactory()->createLocaleManager();
+
+        return $localeManager->getLocaleCollection();
     }
 
 }
