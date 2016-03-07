@@ -1,4 +1,4 @@
-{% extends '@Gui/Layout/layout.twig' %}
+{% extends '@Sales/Layout/layout.twig' %}
 
 {% block section_title %}
     {{ 'Order ID:' | trans }} {{ order.idSalesOrder }} ({{ order.createdAt | date('Y-m-d G:i:s', false) }})
