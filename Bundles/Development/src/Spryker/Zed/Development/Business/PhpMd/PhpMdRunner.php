@@ -13,7 +13,12 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class PhpMdRunner
 {
 
+    const CODE_SUCCESS = 0;
+
     const BUNDLE_ALL = 'all';
+
+    const OPTION_DRY_RUN = 'dry-run';
+    const OPTION_FORMAT = 'format';
 
     /**
      * @var string
@@ -26,23 +31,31 @@ class PhpMdRunner
     protected $pathToBundles;
 
     /**
+     * @var string
+     */
+    protected $architectureStandard;
+
+    /**
      * @param string $applicationRoot
      * @param string $pathToBundles
+     * @param string $architectureStandard
      */
-    public function __construct($applicationRoot, $pathToBundles)
+    public function __construct($applicationRoot, $pathToBundles, $architectureStandard)
     {
         $this->applicationRoot = $applicationRoot;
         $this->pathToBundles = $pathToBundles;
+        $this->architectureStandard = $architectureStandard;
     }
 
     /**
      * @param string|null $bundle
+     * @param array $options
      *
      * @throws \ErrorException
      *
      * @return int Exit code
      */
-    public function run($bundle)
+    public function run($bundle, array $options = [])
     {
         $path = $this->resolvePath($bundle);
 
@@ -55,7 +68,12 @@ class PhpMdRunner
             throw new \ErrorException($message);
         }
 
-        return $this->runPhpMdCommand($path);
+        $defaults = [
+            'ignore' => $bundle ? '' : 'vendor/'
+        ];
+        $options += $defaults;
+
+        return $this->runPhpMdCommand($path, $options);
     }
 
     /**
@@ -102,16 +120,32 @@ class PhpMdRunner
 
     /**
      * @param string $path
+     * @param array $options
      *
      * @return int Exit code
      */
-    protected function runPhpMdCommand($path)
+    protected function runPhpMdCommand($path, array $options)
     {
         $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
 
-        $config = __DIR__ . '/ruleset.xml';
-        $command = 'vendor/bin/phpmd ' . $pathToFiles . ' xml ' . $config;
-        echo $command . PHP_EOL;
+        $format = 'text';
+        if ($options[self::OPTION_FORMAT]) {
+            $format = $options[self::OPTION_FORMAT];
+        }
+
+        $config = $this->architectureStandard;
+
+        if ($options['ignore']) {
+            $config .= ' --exclude=' . $options['ignore'];
+        }
+
+        $command = 'vendor/bin/phpmd ' . $pathToFiles . ' ' . $format .' ' . $config;
+        if (!empty($options[self::OPTION_DRY_RUN])) {
+            echo $command;
+
+            return self::CODE_SUCCESS;
+        }
+
         $process = new Process($command, $this->applicationRoot, null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;

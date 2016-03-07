@@ -67,12 +67,9 @@ class TransitionLog implements TransitionLogInterface
         }
     }
 
-    /***
-     * @param SpySalesOrderItem[] $salesOrderItems
-     *
-     * @return void
-     */
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
+     *
      * @return void
      */
     public function init(array $salesOrderItems)

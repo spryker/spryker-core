@@ -96,7 +96,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new PhpMdRunner(
             $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory()
+            $this->getConfig()->getBundleDirectory(),
+            $this->getConfig()->getArchitectureStandard()
         );
     }
 

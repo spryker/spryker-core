@@ -12,6 +12,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 
 class MethodForm extends AbstractType
 {
@@ -57,13 +59,25 @@ class MethodForm extends AbstractType
                 'label' => 'Carrier',
                 'placeholder' => 'Select one',
                 'choices' => $options[self::OPTION_CARRIER_CHOICES],
+                'constraints' => [
+                    new NotBlank(),
+                    new Required(),
+                ],
             ])
             ->add(self::FIELD_NAME_FIELD, 'text', [
                 'label' => 'Name',
+                'constraints' => [
+                    new NotBlank(),
+                    new Required(),
+                ],
             ])
             ->add(self::FIELD_NAME_GLOSSARY_FIELD, new AutosuggestType(), [
                 'label' => 'Name glossary key',
                 'url' => '/glossary/ajax/keys',
+                'constraints' => [
+                    new NotBlank(),
+                    new Required(),
+                ],
             ])
             ->add(self::FIELD_DESCRIPTION_GLOSSARY_FIELD, new AutosuggestType(), [
                 'label' => 'Description glossary key',

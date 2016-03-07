@@ -13,6 +13,9 @@ use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 class Process implements ProcessInterface
 {
 
+    /**
+     * @var string
+     */
     protected $name;
 
     /**
@@ -120,7 +123,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      *
      * @return void
      */
@@ -130,7 +133,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -373,7 +376,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param mixed $file
+     * @param string $file
      *
      * @return void
      */
@@ -391,7 +394,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFile()
     {

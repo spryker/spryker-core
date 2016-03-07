@@ -21,6 +21,8 @@ class CodePhpMessDetectorConsole extends Console
     const COMMAND_NAME = 'code:phpmd';
     const OPTION_BUNDLE = 'bundle';
     const OPTION_BUNDLE_ALL = 'all';
+    const OPTION_DRY_RUN = 'dry-run';
+    const OPTION_FORMAT = 'format';
 
     /**
      * @return void
@@ -35,6 +37,8 @@ class CodePhpMessDetectorConsole extends Console
             ->setDescription('Run PHPMD for project or core');
 
         $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run PHPMD for (or "all")');
+        $this->addOption(self::OPTION_FORMAT, 'f', InputOption::VALUE_OPTIONAL, 'Output format [text, xml, html]');
+        $this->addOption(self::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
     }
 
     /**
@@ -58,7 +62,7 @@ class CodePhpMessDetectorConsole extends Console
         }
         $this->info($message);
 
-        return $this->getFacade()->runPhpMd($bundle);
+        return $this->getFacade()->runPhpMd($bundle, $this->input->getOptions());
     }
 
 }

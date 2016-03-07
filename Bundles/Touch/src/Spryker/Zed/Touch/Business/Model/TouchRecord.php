@@ -114,7 +114,7 @@ class TouchRecord implements TouchRecordInterface
 
     /**
      * @param string $itemType
-     * @param string $idItem
+     * @param int $idItem
      *
      * @return void
      */
@@ -136,8 +136,8 @@ class TouchRecord implements TouchRecordInterface
     /**
      * @param string $itemType
      * @param string $itemEvent
-     * @param string $idItem
-     * @param string $type;
+     * @param int $idItem
+     * @param string|null $type
      *
      * @return void
      */

@@ -58,8 +58,8 @@ class CustomerForm extends AbstractType
     }
 
     /**
-     * @param array $choices
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
      *
      * @return $this
      */

@@ -364,6 +364,7 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
      * @param string $bundle
      * @param string $controller
      * @param string $action
+     * @param int $type
      *
      * @return bool
      */

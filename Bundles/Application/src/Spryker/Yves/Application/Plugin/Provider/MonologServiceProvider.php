@@ -22,6 +22,8 @@ class MonologServiceProvider implements ServiceProviderInterface
 {
 
     /**
+     * @param \Silex\Application $app
+     *
      * @return void
      */
     public function register(Application $app)
@@ -64,8 +66,9 @@ class MonologServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param \Silex\Application $app
      * @codeCoverageIgnore
+     *
+     * @param \Silex\Application $app
      *
      * @return void
      */
