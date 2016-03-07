@@ -61,7 +61,7 @@ abstract class AbstractCollector
     abstract protected function collectResourceType();
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Model\CountableIteratorInterface
+     * @return \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface
      */
     abstract protected function generateBatchIterator();
 
