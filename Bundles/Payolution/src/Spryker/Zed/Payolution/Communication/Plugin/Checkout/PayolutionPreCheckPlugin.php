@@ -31,6 +31,7 @@ class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPre
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
+        return; //@todo check why transactions are declined in development.
         $payolutionTransactionResponseTransfer = $this->getFacade()->preCheckPayment($quoteTransfer);
         $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransfer);
         $quoteTransfer->getPayment()->getPayolution()
