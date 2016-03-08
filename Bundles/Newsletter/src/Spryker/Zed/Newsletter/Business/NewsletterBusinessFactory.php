@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Newsletter\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Newsletter\Business\Internal\NewsletterTypeInstaller;
 use Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandler;
 use Spryker\Zed\Newsletter\Business\Subscription\SingleOptInHandler;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGenerator;
@@ -92,6 +93,18 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     protected function createSubscriberKeyGenerator()
     {
         return new SubscriberKeyGenerator();
+    }
+
+
+    /**
+     * @return \Spryker\Zed\Newsletter\Business\Internal\NewsletterTypeInstaller
+     */
+    public function createNewsletterTypeInstaller()
+    {
+        return new NewsletterTypeInstaller(
+            $this->getQueryContainer(),
+            $this->getConfig()->getNewsletterTypes()
+        );
     }
 
 }
