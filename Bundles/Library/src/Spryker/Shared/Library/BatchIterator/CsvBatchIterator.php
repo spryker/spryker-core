@@ -18,7 +18,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     protected $csvReader;
 
     /**
-     * @var
+     * @var string
      */
     protected $csvFilename;
 
