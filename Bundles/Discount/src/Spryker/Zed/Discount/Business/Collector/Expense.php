@@ -15,6 +15,7 @@ class Expense implements CollectorInterface
 
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */

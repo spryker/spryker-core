@@ -13,6 +13,8 @@ interface WishlistStorageInterface
 {
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlist
+     *
      * @return mixed
      */
     public function expandProductDetails(WishlistTransfer $wishlist);

@@ -4,8 +4,8 @@
         <h3>{{ "Outgoing dependencies of the" | trans }} {{ bundle }} {{ "bundle" | trans }}</h3>
         <table class="table table-striped spy-grid">
             <tr class="text-left">
-                <th>Dependency</th>
-                <th>Count</th>
+                <th>{{ 'Dependency' | trans }}</th>
+                <th>{{ 'Count' | trans }}</th>
             </tr>
             {% for count, dependency in dependencies %}
                 <tr>

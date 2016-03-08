@@ -107,7 +107,7 @@ class CategoryFormAdd extends AbstractType
                 'choices' => $choices,
                 'constraints' => [
                     new NotBlank(),
-                ],
+                ]
             ]);
 
         return $this;

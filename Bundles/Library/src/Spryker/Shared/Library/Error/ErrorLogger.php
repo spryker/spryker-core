@@ -35,9 +35,9 @@ class ErrorLogger
 
     /**
      * @param \Exception $exception
-     * @param bool $ignoreInternalExceptions
      * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
      * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
+     * @param bool $ignoreInternalExceptions
      *
      * @return void
      */

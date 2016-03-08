@@ -84,6 +84,10 @@ class Setup
     }
 
     /**
+     * @param string $str
+     * @param string $background
+     * @param string $color
+     *
      * @return void
      */
     public static function renderAndExit($str, $background = 'black', $color = 'white')

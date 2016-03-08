@@ -25,8 +25,8 @@ class TaxChangeTouchPlugin implements TaxChangePluginInterface
     private $queryContainer;
 
     /**
-     * @var \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface
-     * @var \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
+     * @param \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface $productFacade
+     * @param \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface $queryContainer
      */
     public function __construct(
         TaxProductConnectorToProductInterface $productFacade,

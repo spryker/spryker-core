@@ -88,7 +88,7 @@ class ProductTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $product) {
             $checkbox_html = sprintf(
-                '<input id="all_products_checkbox_%d" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
+                "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='{\"id\": %d, \"sku\": \"%s\", \"name\": \"%s\"}'>",
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 $product[SpyProductAbstractTableMap::COL_SKU],

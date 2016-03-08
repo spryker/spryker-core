@@ -150,8 +150,8 @@ class Writer implements WriterInterface
 
     /**
      * @param string $sku
-     * @param int $decrementBy
      * @param string $stockType
+     * @param int $decrementBy
      *
      * @return void
      */
@@ -172,8 +172,8 @@ class Writer implements WriterInterface
 
     /**
      * @param string $sku
-     * @param int $incrementBy
      * @param string $stockType
+     * @param int $incrementBy
      *
      * @return void
      */
