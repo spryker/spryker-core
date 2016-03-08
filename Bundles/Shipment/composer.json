@@ -11,15 +11,15 @@
     }
   },
   "require": {
-    "spryker/application": "^0.20.0",
-    "spryker/gui": "^0.20.0",
-    "spryker/kernel": "^0.20.0",
-    "spryker/library": "^0.20.0",
-    "spryker/session": "^0.20.0",
-    "spryker/tax": "^0.20.0",
-    "spryker/zed-request": "^0.20.0",
-    "spryker/symfony": "^0.20.0",
-    "spryker/url": "^0.20.0"
+    "spryker/application": "^1.0.0-RC1",
+    "spryker/gui": "^1.0.0-RC1",
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/library": "^1.0.0-RC1",
+    "spryker/session": "^1.0.0-RC1",
+    "spryker/tax": "^1.0.0-RC1",
+    "spryker/zed-request": "^1.0.0-RC1",
+    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/url": "^1.0.0-RC1"
   },
   "description": "shipment bundle",
   "license": "proprietary",
@@ -27,7 +27,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

@@ -13,8 +13,8 @@
     }
   },
   "require": {
-    "spryker/kernel": "^0.20.0",
-    "spryker/library": "^0.20.0"
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/library": "^1.0.0-RC1"
   },
   "description": "config bundle",
   "license": "proprietary",
@@ -22,7 +22,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

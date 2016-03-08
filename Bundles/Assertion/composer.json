@@ -7,8 +7,8 @@
     }
   },
   "require": {
-    "spryker/kernel": "^0.20.0",
-    "spryker/silex": "^0.20.0"
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/silex": "^1.0.0-RC1"
   },
   "description": "assertion bundle",
   "license": "proprietary",
@@ -16,7 +16,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

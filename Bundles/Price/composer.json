@@ -11,15 +11,16 @@
     }
   },
   "require": {
-    "spryker/application": "^0.20.0",
-    "spryker/installer": "^0.20.0",
-    "spryker/kernel": "^0.20.0",
-    "spryker/library": "^0.20.0",
-    "spryker/messenger": "^0.20.0",
-    "spryker/product": "^0.20.0",
-    "spryker/touch": "^0.20.0",
-    "spryker/twig": "^0.20.0",
-    "spryker/config": "^0.20.0"
+    "spryker/application": "^1.0.0-RC1",
+    "spryker/installer": "^1.0.0-RC1",
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/library": "^1.0.0-RC1",
+    "spryker/messenger": "^1.0.0-RC1",
+    "spryker/product": "^1.0.0-RC1",
+    "spryker/touch": "^1.0.0-RC1",
+    "spryker/twig": "^1.0.0-RC1",
+    "spryker/config": "^1.0.0-RC1",
+    "spryker/silex": "^1.0.0-RC1"
   },
   "description": "price bundle",
   "license": "proprietary",
@@ -27,7 +28,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }
