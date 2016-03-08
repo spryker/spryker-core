@@ -399,7 +399,7 @@ class CheckoutFacadeTest extends Test
         $salesOrderSaverPlugin = new SalesOrderSaverPlugin();
 
         $salesConfigMock = $this->getMock(SalesConfig::class, ['determineProcessForOrderItem']);
-        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('NoPayment01');
+        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('Nopayment01');
 
         $salesBusinessFactoryMock = $this->getMock(SalesBusinessFactory::class, ['getConfig']);
         $salesBusinessFactoryMock->method('getConfig')->willReturn($salesConfigMock);
