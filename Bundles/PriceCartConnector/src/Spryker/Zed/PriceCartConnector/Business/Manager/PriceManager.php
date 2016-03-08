@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\PriceCartConnector\Business\Manager;
 
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
-use Spryker\Zed\Price\Business\PriceFacade;
 
 class PriceManager implements PriceManagerInterface
 {
@@ -36,20 +35,20 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function addGrossPriceToItems(ChangeTransfer $change)
+    public function addGrossPriceToItems(CartChangeTransfer $change)
     {
         foreach ($change->getItems() as $cartItem) {
             if (!$this->priceFacade->hasValidPrice($cartItem->getSku(), $this->grossPriceType)) {
                 throw new PriceMissingException(sprintf('Cart item %s can not be priced', $cartItem->getSku()));
             }
 
-            $cartItem->setGrossPrice($this->priceFacade->getPriceBySku($cartItem->getSku(), $this->grossPriceType));
+            $cartItem->setUnitGrossPrice($this->priceFacade->getPriceBySku($cartItem->getSku(), $this->grossPriceType));
         }
 
         return $change;

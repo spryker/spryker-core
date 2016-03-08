@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Customer\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -337,6 +339,34 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
         return $this->getFactory()
             ->createCustomer()
             ->tryAuthorizeCustomerByEmailAndPassword($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function saveCustomerForOrder(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer  $checkoutResponseTransfer
+    ) {
+        $this->getFactory()->createCustomerOrderSaver()->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function checkOrderPreSaveConditions(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer  $checkoutResponseTransfer
+    ) {
+        $this->getFactory()
+            ->createPreConditionChecker()
+            ->checkPreConditions($quoteTransfer, $checkoutResponseTransfer);
     }
 
 }

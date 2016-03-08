@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -219,6 +220,29 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     public function deleteTaxSet($id)
     {
         $this->getFactory()->createWriterModel()->deleteTaxSet($id);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateTaxTotals(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createTaxCalculator()->recalculate($quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
+    {
+        return $this->getFactory()->createPriceCalculationHelper()->getTaxValueFromPrice($grossPrice, $taxRate);
     }
 
 }

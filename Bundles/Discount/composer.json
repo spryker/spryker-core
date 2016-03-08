@@ -23,7 +23,9 @@
     "spryker/transfer": "^1.0.0-RC1",
     "spryker/symfony": "^1.0.0-RC1",
     "spryker/zend": "^1.0.0-RC1",
-    "spryker/url": "^1.0.0-RC1"
+    "spryker/url": "^1.0.0-RC1",
+    "spryker/config": "^1.0.0-RC1",
+    "spryker/tax": "^1.0.0-RC1"
   },
   "description": "discount bundle",
   "license": "proprietary",

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Communication\Controller;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -43,12 +44,32 @@ class TriggerController extends AbstractController
         $idOrder = $this->castId($request->query->get('id-sales-order'));
         $event = $request->query->get('event'); // TODO FW Validation
         $redirect = $request->query->get('redirect', '/'); // TODO FW Validation
+        $itemsList = $request->query->get('items');
 
-        $orderItems = $this->getQueryContainer()->querySalesOrderItemsByIdOrder($idOrder)->find();
+        $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
 
         $this->getFacade()->triggerEvent($event, $orderItems, []);
 
         return $this->redirectResponse($redirect);
+    }
+
+    /**
+     * @param int $idOrder
+     * @param array|null $itemsList
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getOrderItemsToTriggerAction($idOrder, $itemsList = null)
+    {
+        $query = $this->getQueryContainer()->querySalesOrderItemsByIdOrder($idOrder);
+
+        if (is_array($itemsList) && count($itemsList) > 0) {
+            $query->filterByIdSalesOrderItem($itemsList, Criteria::IN);
+        }
+
+        $orderItems = $query->find();
+
+        return $orderItems;
     }
 
 }

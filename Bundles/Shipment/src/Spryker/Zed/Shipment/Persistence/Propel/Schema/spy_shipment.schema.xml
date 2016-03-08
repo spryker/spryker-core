@@ -3,7 +3,6 @@
 
     <table name="spy_shipment_carrier" phpName="SpyShipmentCarrier" identifierQuoting="true">
         <column name="id_shipment_carrier" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="glossary_key_name" size="255" type="VARCHAR"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
 
@@ -17,15 +16,12 @@
         <column name="id_shipment_method" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shipment_carrier" type="INTEGER" required="true"/>
         <column name="fk_tax_set" type="INTEGER" required="false"/>
-        <column name="glossary_key_name" size="255" type="VARCHAR"/>
-        <column name="glossary_key_description" size="255" type="VARCHAR"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
-        <column name="price" type="INTEGER" required="false"/>
+        <column name="default_price" type="INTEGER" required="false"/>
         <column name="availability_plugin" size="255" type="VARCHAR"/>
-        <column name="price_calculation_plugin" size="255" type="VARCHAR"/>
+        <column name="price_plugin" size="255" type="VARCHAR"/>
         <column name="delivery_time_plugin" size="255" type="VARCHAR"/>
-        <column name="tax_calculation_plugin" size="255" type="VARCHAR"/>
 
         <foreign-key name="spy_shipment_method-fk_shipment_carrier" foreignTable="spy_shipment_carrier" phpName="ShipmentCarrier" refPhpName="ShipmentMethods">
             <reference local="fk_shipment_carrier" foreign="id_shipment_carrier"/>

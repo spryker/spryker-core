@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Shipment\Communication\Plugin;
 
-use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ShipmentMethodAvailabilityPluginInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isAvailable(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability);
+    public function isAvailable(QuoteTransfer $quoteTransfer);
 
 }

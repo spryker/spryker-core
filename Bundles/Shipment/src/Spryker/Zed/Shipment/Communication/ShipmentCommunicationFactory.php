@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
-use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -32,41 +31,40 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $formData
-     * @param array $options
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCarrierForm(array $formData = [], array $options = [])
+    public function createCarrierForm()
     {
-        $formType = new CarrierForm();
+        $carrierQuery = $this->getQueryContainer()->queryCarriers();
 
-        return $this->getFormFactory()->create($formType, $formData, $options);
+        $form = new CarrierForm($carrierQuery);
+
+        return $this->createForm($form);
     }
 
     /**
-     * @param array $formData
-     * @param array $options
+     * @param int|null $idMethod
+     *
+     * @throws \ErrorException
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createMethodForm(array $formData = [], array $options = [])
+    public function createMethodForm($idMethod = null)
     {
-        $form = new MethodForm();
+        $methodQuery = $this->getQueryContainer()->queryMethods();
+        $carrierQuery = $this->getQueryContainer()->queryCarriers();
 
-        return $this->getFormFactory()->create($form, $formData, $options);
-    }
+        $taxSetQuery = $this->getTaxQueryContainer()->queryAllTaxSets();
 
-    /**
-     * @return \Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider
-     */
-    public function createMethodFormDataProvider()
-    {
-        return new MethodFormDataProvider(
-            $this->getQueryContainer(),
-            $this->getTaxQueryContainer(),
-            $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
+        $form = new MethodForm(
+            $methodQuery,
+            $carrierQuery,
+            $taxSetQuery,
+            $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS),
+            $idMethod
         );
+
+        return $this->createForm($form);
     }
 
     /**

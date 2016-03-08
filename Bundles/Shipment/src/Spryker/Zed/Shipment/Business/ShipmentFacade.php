@@ -7,15 +7,16 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
-use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentBusinessFactory getFactory()
  */
-class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
+class ShipmentFacade extends AbstractFacade
 {
 
     /**
@@ -23,12 +24,11 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
+     * @return int
      */
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer)
     {
-        $carrierModel = $this->getFactory()
-            ->createCarrier();
+        $carrierModel = $this->getFactory()->createCarrier();
 
         return $carrierModel->create($carrierTransfer);
     }
@@ -38,12 +38,11 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
+     * @return int
      */
     public function createMethod(ShipmentMethodTransfer $methodTransfer)
     {
-        $methodModel = $this->getFactory()
-            ->createMethod();
+        $methodModel = $this->getFactory()->createMethod();
 
         return $methodModel->create($methodTransfer);
     }
@@ -51,16 +50,15 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
-        $methodModel = $this->getFactory()
-            ->createMethod();
+        $methodModel = $this->getFactory()->createMethod();
 
-        return $methodModel->getAvailableMethods($shipmentMethodAvailabilityTransfer);
+        return $methodModel->getAvailableMethods($quoteTransfer);
     }
 
     /**
@@ -72,8 +70,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function getShipmentMethodTransferById($idMethod)
     {
-        $methodModel = $this->getFactory()
-            ->createMethod();
+        $methodModel = $this->getFactory()->createMethod();
 
         return $methodModel->getShipmentMethodTransferById($idMethod);
     }
@@ -87,8 +84,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function hasMethod($idMethod)
     {
-        $methodModel = $this->getFactory()
-            ->createMethod();
+        $methodModel = $this->getFactory()->createMethod();
 
         return $methodModel->hasMethod($idMethod);
     }
@@ -102,8 +98,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function deleteMethod($idMethod)
     {
-        $methodModel = $this->getFactory()
-            ->createMethod();
+        $methodModel = $this->getFactory()->createMethod();
 
         return $methodModel->deleteMethod($idMethod);
     }
@@ -113,14 +108,26 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
+     * @return int
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
-        $methodModel = $this->getFactory()
-            ->createMethod();
+        $methodModel = $this->getFactory()->createMethod();
 
         return $methodModel->updateMethod($methodTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        $this->getFactory()->createShipmentOrderSaver()->saveShipmentForOrder($quoteTransfer, $checkoutResponse);
     }
 
 }

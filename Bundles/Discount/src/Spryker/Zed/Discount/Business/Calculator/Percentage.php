@@ -31,7 +31,7 @@ class Percentage implements CalculatorInterface
         }
 
         foreach ($discountableObjects as $discountableObject) {
-            $itemTotalAmount = $discountableObject->getGrossPrice() * $discountableObject->getQuantity();
+            $itemTotalAmount = $discountableObject->getUnitGrossPrice() * $discountableObject->getQuantity();
             $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $percentage);
         }
 

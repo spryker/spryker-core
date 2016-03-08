@@ -8,12 +8,13 @@
 namespace Functional\Spryker\Zed\Checkout\Business;
 
 use Codeception\TestCase\Test;
-use Functional\Spryker\Zed\Checkout\Dependency\MockOmsOrderHydrator;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
@@ -24,11 +25,23 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Shared\Oms\OmsConstants;
+use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
 use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
+use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
+use Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Sales\Business\SalesBusinessFactory;
+use Spryker\Zed\Sales\Business\SalesFacade;
+use Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
+use Spryker\Zed\Sales\SalesConfig;
+use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @group Spryker
@@ -65,15 +78,14 @@ class CheckoutFacadeTest extends Test
      */
     public function testRegistrationIsTriggeredOnNewNonGuestCustomer()
     {
-        $this->markTestSkipped();
-        $checkoutRequest = $this->getBaseCheckoutTransfer();
+        $quoteTransfer = $this->getBaseQuoteTransfer();
 
-        $result = $this->checkoutFacade->requestCheckout($checkoutRequest);
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
         $this->assertEquals(0, count($result->getErrors()));
 
-        $customerQuery = SpyCustomerQuery::create()->filterByEmail($checkoutRequest->getEmail());
+        $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
         $this->assertEquals(1, $customerQuery->count());
     }
 
@@ -85,15 +97,15 @@ class CheckoutFacadeTest extends Test
      */
     public function testRegistrationDoesNotCreateACustomerIfGuest()
     {
-        $checkoutRequest = $this->getBaseCheckoutTransfer();
-        $checkoutRequest->setIsGuest(true);
+        $quoteTransfer = $this->getBaseQuoteTransfer();
+        $quoteTransfer->getCustomer()->setIsGuest(true);
 
-        $result = $this->checkoutFacade->requestCheckout($checkoutRequest);
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
         $this->assertEquals(0, count($result->getErrors()));
 
-        $customerQuery = SpyCustomerQuery::create()->filterByEmail($checkoutRequest->getEmail());
+        $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
         $this->assertEquals(0, $customerQuery->count());
     }
 
@@ -102,7 +114,6 @@ class CheckoutFacadeTest extends Test
      */
     public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
     {
-        $this->markTestSkipped();
         $customer = new SpyCustomer();
         $customer
             ->setCustomerReference('TestCustomer1')
@@ -112,9 +123,9 @@ class CheckoutFacadeTest extends Test
             ->setPassword('MyPass')
             ->save();
 
-        $checkoutRequest = $this->getBaseCheckoutTransfer();
+        $quoteTransfer = $this->getBaseQuoteTransfer();
 
-        $result = $this->checkoutFacade->requestCheckout($checkoutRequest);
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 
         $this->assertFalse($result->getIsSuccess());
         $this->assertEquals(1, count($result->getErrors()));
@@ -126,10 +137,9 @@ class CheckoutFacadeTest extends Test
      */
     public function testCheckoutCreatesOrderItems()
     {
-        $this->markTestSkipped();
-        $checkoutRequest = $this->getBaseCheckoutTransfer();
+        $quoteTransfer = $this->getBaseQuoteTransfer();
 
-        $result = $this->checkoutFacade->requestCheckout($checkoutRequest);
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
         $this->assertEquals(0, count($result->getErrors()));
@@ -148,8 +158,7 @@ class CheckoutFacadeTest extends Test
      */
     public function testCheckoutResponseContainsErrorIfStockNotSufficient()
     {
-        $this->markTestSkipped();
-        $checkoutRequest = $this->getBaseCheckoutTransfer();
+        $quoteTransfer = $this->getBaseQuoteTransfer();
         $productAbstract1 = new SpyProductAbstract();
         $productAbstract1
             ->setSku('AOSB1339')
@@ -176,12 +185,12 @@ class CheckoutFacadeTest extends Test
         $item
             ->setSku('OSB1339')
             ->setQuantity(2)
-            ->setPriceToPay(1000)
-            ->setGrossPrice(3000);
+            ->setUnitGrossPrice(3000)
+            ->setSumGrossPrice(6000);
 
-        $checkoutRequest->getCart()->addItem($item);
+        $quoteTransfer->addItem($item);
 
-        $result = $this->checkoutFacade->requestCheckout($checkoutRequest);
+        $result = $this->checkoutFacade->placeOrder($quoteTransfer);
 
         $this->assertFalse($result->getIsSuccess());
         $this->assertEquals(1, count($result->getErrors()));
@@ -193,10 +202,9 @@ class CheckoutFacadeTest extends Test
      */
     public function testCheckoutTriggersStateMachine()
     {
-        $this->markTestSkipped();
-        $checkoutRequest = $this->getBaseCheckoutTransfer();
+        $quoteTransfer = $this->getBaseQuoteTransfer();
 
-        $this->checkoutFacade->requestCheckout($checkoutRequest);
+        $this->checkoutFacade->placeOrder($quoteTransfer);
 
         $orderItem1Query = SpySalesOrderItemQuery::create()
             ->filterBySku('OSB1337');
@@ -210,15 +218,17 @@ class CheckoutFacadeTest extends Test
         $this->assertNotNull($orderItem1);
         $this->assertNotNull($orderItem2);
 
-        $this->assertNotEquals('new', $orderItem1->getState()->getName());
+        $this->assertNotEquals(OmsConstants::INITIAL_STATUS, $orderItem1->getState()->getName());
         $this->assertEquals('waiting for payment', $orderItem2->getState()->getName());
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CheckoutRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getBaseCheckoutTransfer()
+    protected function getBaseQuoteTransfer()
     {
+        $quoteTransfer = new QuoteTransfer();
+
         $country = new SpyCountry();
         $country
             ->setIso2Code('xi')
@@ -268,31 +278,25 @@ class CheckoutFacadeTest extends Test
         $item1
             ->setSku('OSB1337')
             ->setQuantity(1)
-            ->setPriceToPay(1000)
-            ->setGrossPrice(3000)
-            ->setName('Product1')
-            ->setTaxSet(new TaxSetTransfer());
+            ->setUnitGrossPrice(3000)
+            ->setName('Product1');
 
         $item2 = new ItemTransfer();
         $item2
             ->setSku('OSB1338')
             ->setQuantity(1)
-            ->setPriceToPay(2000)
-            ->setGrossPrice(4000)
-            ->setName('Product2')
-            ->setTaxSet(new TaxSetTransfer());
+            ->setUnitGrossPrice(4000)
+            ->setName('Product2');
 
-        $cart = new CartTransfer();
-        $cart->addItem($item1);
-        $cart->addItem($item2);
+        $quoteTransfer->addItem($item1);
+        $quoteTransfer->addItem($item2);
 
         $totals = new TotalsTransfer();
         $totals
             ->setGrandTotal(1000)
-            ->setGrandTotalWithDiscounts(800)
             ->setSubtotal(500);
 
-        $cart->setTotals($totals);
+        $quoteTransfer->setTotals($totals);
 
         $billingAddress = new AddressTransfer();
         $shippingAddress = new AddressTransfer();
@@ -316,17 +320,27 @@ class CheckoutFacadeTest extends Test
             ->setZipCode('12346')
             ->setCity('Entenhausen2');
 
-        $checkoutRequest = new CheckoutRequestTransfer();
-        $checkoutRequest
-            ->setIsGuest(false)
-            ->setEmail('max@mustermann.de')
-            ->setIdUser(null)
-            ->setCart($cart)
-            ->setBillingAddress($billingAddress)
-            ->setShippingAddress($shippingAddress)
-            ->setPaymentMethod('creditcard');
+        $quoteTransfer->setBillingAddress($billingAddress);
+        $quoteTransfer->setShippingAddress($shippingAddress);
 
-        return $checkoutRequest;
+        $customerTransfer = new CustomerTransfer();
+
+        $customerTransfer
+            ->setIsGuest(false)
+            ->setEmail('max@mustermann.de');
+
+        $quoteTransfer->setCustomer($customerTransfer);
+
+        $shipment = new ShipmentTransfer();
+        $shipment->setMethod(new ShipmentMethodTransfer());
+
+        $quoteTransfer->setShipment($shipment);
+
+        $paymentTransfer = new PaymentTransfer();
+        $paymentTransfer->setPaymentSelection('no_payment');
+        $quoteTransfer->setPayment($paymentTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
@@ -337,21 +351,20 @@ class CheckoutFacadeTest extends Test
         $container = new Container();
 
         $container[CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
-            return [];
-        };
-
-        $container[CheckoutDependencyProvider::CHECKOUT_ORDER_HYDRATORS] = function (Container $container) {
             return [
-                new MockOmsOrderHydrator(),
+                new CustomerPreConditionCheckerPlugin(),
+                new ProductsAvailableCheckoutPreConditionPlugin(),
             ];
         };
 
-        $container[CheckoutDependencyProvider::CHECKOUT_PRE_HYDRATOR] = function (Container $container) {
-            return [];
-        };
-
         $container[CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
-            return [];
+
+            $salesOrderSaverPlugin = $this->createOrderSaverPlugin();
+
+            return [
+                $salesOrderSaverPlugin,
+                new OrderCustomerSavePlugin(),
+            ];
         };
 
         $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) {
@@ -376,6 +389,40 @@ class CheckoutFacadeTest extends Test
         $factory->setContainer($container);
 
         return $factory;
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin
+     */
+    protected function createOrderSaverPlugin()
+    {
+        $salesOrderSaverPlugin = new SalesOrderSaverPlugin();
+
+        $salesConfigMock = $this->getMock(SalesConfig::class, ['determineProcessForOrderItem']);
+        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('Nopayment01');
+
+        $salesBusinessFactoryMock = $this->getMock(SalesBusinessFactory::class, ['getConfig']);
+        $salesBusinessFactoryMock->method('getConfig')->willReturn($salesConfigMock);
+
+        $container = new Container();
+        $container[SalesDependencyProvider::FACADE_COUNTRY] = function (Container $container) {
+              return new SalesToCountryBridge($container->getLocator()->country()->facade());
+        };
+        $container[SalesDependencyProvider::FACADE_OMS] = function (Container $container) {
+            return new SalesToOmsBridge($container->getLocator()->oms()->facade());
+        };
+        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
+            return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
+        };
+
+        $salesBusinessFactoryMock->setContainer($container);
+
+        $salesFacade = new SalesFacade();
+        $salesFacade->setFactory($salesBusinessFactoryMock);
+
+        $salesOrderSaverPlugin->setFacade($salesFacade);
+
+        return $salesOrderSaverPlugin;
     }
 
 }

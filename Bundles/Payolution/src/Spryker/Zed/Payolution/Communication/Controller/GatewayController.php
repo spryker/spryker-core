@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Payolution\Communication\Controller;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -17,13 +17,13 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPaymentsAction(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function calculateInstallmentPaymentsAction(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->calculateInstallmentPayments($checkoutRequestTransfer);
+        return $this->getFacade()->calculateInstallmentPayments($quoteTransfer);
     }
 
 }

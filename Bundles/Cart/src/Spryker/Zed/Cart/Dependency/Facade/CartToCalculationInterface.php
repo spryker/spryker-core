@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Cart\Dependency\Facade;
 
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartToCalculationInterface
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculate(CalculableInterface $calculableContainer);
+    public function recalculate(QuoteTransfer $quoteTransfer);
 
 }

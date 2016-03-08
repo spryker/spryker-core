@@ -59,6 +59,16 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @param int $idOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsByIdSalesOrder($idOrder)
+    {
+        return $this->getSalesQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder);
+    }
+
+    /**
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order

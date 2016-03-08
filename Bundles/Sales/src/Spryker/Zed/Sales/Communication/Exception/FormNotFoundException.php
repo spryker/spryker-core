@@ -7,6 +7,6 @@
 
 namespace Spryker\Zed\Sales\Communication\Exception;
 
-class FormNotFoundException extends \Exception
+class FormNotFoundException extends \Exception // TODO FW Not used? Please remove
 {
 }

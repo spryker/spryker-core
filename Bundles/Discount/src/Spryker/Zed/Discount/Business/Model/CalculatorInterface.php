@@ -7,25 +7,22 @@
 
 namespace Spryker\Zed\Discount\Business\Model;
 
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
-use Spryker\Zed\Discount\DiscountConfigInterface;
 
 interface CalculatorInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountCollection
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
-     * @param \Spryker\Zed\Discount\DiscountConfigInterface $config
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
      *
-     * @return array
+     * @return mixed
      */
     public function calculate(
         array $discountCollection,
-        CalculableInterface $container,
-        DiscountConfigInterface $config,
+        QuoteTransfer $quoteTransfer,
         DistributorInterface $discountDistributor
     );
 

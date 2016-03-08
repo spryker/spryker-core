@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DiscountCalculationToDiscountInterface
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return mixed
      */
-    public function calculateDiscounts(CalculableInterface $calculableContainer);
+    public function calculateDiscounts(QuoteTransfer $quoteTransfer);
 
 }

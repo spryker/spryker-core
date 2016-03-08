@@ -18,6 +18,8 @@ class SalesClient extends AbstractClient implements SalesClientInterface
 {
 
     /**
+     * Returns the sales orders for the given customer and filters
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
@@ -32,6 +34,8 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     }
 
     /**
+     * Returns details for the given order id
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

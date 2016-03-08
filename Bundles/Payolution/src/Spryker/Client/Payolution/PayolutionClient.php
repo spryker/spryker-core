@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Payolution;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -20,16 +20,16 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function calculateInstallmentPayments(QuoteTransfer $quoteTransfer)
     {
         return $this
             ->getFactory()
             ->createPayolutionStub()
-            ->calculateInstallmentPayments($checkoutRequestTransfer);
+            ->calculateInstallmentPayments($quoteTransfer);
     }
 
     /**

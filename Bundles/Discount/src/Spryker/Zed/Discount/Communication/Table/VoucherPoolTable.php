@@ -15,7 +15,6 @@ use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -41,18 +40,18 @@ class VoucherPoolTable extends AbstractTable
     protected $poolQuery;
 
     /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
+     * @var array
      */
-    protected $discountConfig;
+    private $calculatorPlugins;
 
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery $discountVoucherPool
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
-    public function __construct(SpyDiscountVoucherPoolQuery $discountVoucherPool, DiscountConfig $discountConfig)
+    public function __construct(SpyDiscountVoucherPoolQuery $discountVoucherPool, array $calculatorPlugins)
     {
         $this->poolQuery = $discountVoucherPool;
-        $this->discountConfig = $discountConfig;
+        $this->calculatorPlugins = $calculatorPlugins;
     }
 
     /**
@@ -168,7 +167,7 @@ class VoucherPoolTable extends AbstractTable
      */
     protected function getDiscountVoucherPoolDisplayName(SpyDiscountVoucherPool $discountVoucherPoolEntity)
     {
-        $availableCalculatorPlugins = $this->discountConfig->getAvailableCalculatorPlugins();
+        $availableCalculatorPlugins = $this->calculatorPlugins;
         $displayName = null;
 
         $discounts = [];

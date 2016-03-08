@@ -16,7 +16,8 @@
     "spryker/product": "^1.0.0-RC1",
     "spryker/propel": "^1.0.0-RC1",
     "spryker/tax": "^1.0.0-RC1",
-    "spryker/touch": "^1.0.0-RC1"
+    "spryker/touch": "^1.0.0-RC1",
+    "spryker/sales": "^1.0.0-RC1"
   },
   "description": "product option bundle",
   "license": "proprietary",

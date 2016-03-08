@@ -14,25 +14,26 @@ use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
  */
-class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
+class PayoneFacade extends AbstractFacade
 {
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function saveOrder(OrderTransfer $orderTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->createOrderManager()->saveOrder($orderTransfer);
+        $this->getFactory()->createOrderManager()->saveOrder($quoteTransfer);
     }
 
     /**
@@ -155,7 +156,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      */
     public function isPreauthorizationApproved(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createApiLogFinder()->isPreAuthorizationApproved($orderTransfer);
+        return $this->getFactory()->createApiLogFinder()->isPreauthorizationApproved($orderTransfer);
     }
 
     /**
@@ -167,7 +168,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      */
     public function isPreauthorizationRedirect(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createApiLogFinder()->isPreAuthorizationRedirect($orderTransfer);
+        return $this->getFactory()->createApiLogFinder()->isPreauthorizationRedirect($orderTransfer);
     }
 
     /**
@@ -374,16 +375,16 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         return $this->getFactory()
             ->createPaymentManager()
-            ->postSaveHook($orderTransfer, $checkoutResponse);
+            ->postSaveHook($quoteTransfer, $checkoutResponse);
     }
 
     /**

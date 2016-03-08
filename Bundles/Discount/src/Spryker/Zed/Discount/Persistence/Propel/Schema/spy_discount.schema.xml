@@ -99,4 +99,5 @@
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_discount_voucher_pool_category_pk_seq"/>
     </table>
+
 </database>

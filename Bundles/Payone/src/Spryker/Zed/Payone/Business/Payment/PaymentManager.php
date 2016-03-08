@@ -17,9 +17,9 @@ use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 use Spryker\Shared\Payone\PayoneApiConstants;
@@ -570,14 +570,14 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $apiLogsQuery = $this->queryContainer->getLastApiLogsByOrderId($orderTransfer->getIdSalesOrder());
+        $apiLogsQuery = $this->queryContainer->getLastApiLogsByOrderId($quoteTransfer->getIdSalesOrder());
         $apiLog = $apiLogsQuery->findOne();
 
         if ($apiLog) {

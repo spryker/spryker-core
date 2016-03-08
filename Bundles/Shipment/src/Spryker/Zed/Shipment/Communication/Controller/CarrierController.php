@@ -26,9 +26,8 @@ class CarrierController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $form = $this->getFactory()
-            ->createCarrierForm()
-            ->handleRequest($request);
+        $form = $this->getFactory()->createCarrierForm();
+        $form->handleRequest();
 
         if ($form->isValid()) {
             $data = $form->getData();

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Business\Distributor;
 
+use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 
 class Distributor implements DistributorInterface
@@ -42,17 +43,20 @@ class Distributor implements DistributorInterface
             $totalDiscountAmount = $totalGrossAmount;
         }
 
+        $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);
+
         foreach ($discountableObjects as $discountableItemTransfer) {
-            $singleItemGrossAmountShare = $discountableItemTransfer->getGrossPrice()  / $totalGrossAmount;
+            $singleItemGrossAmountShare = $discountableItemTransfer->getUnitGrossPrice()  / $totalGrossAmount;
 
             $itemDiscountAmount = ($totalDiscountAmount * $singleItemGrossAmountShare) + $this->roundingError;
             $itemDiscountAmountRounded = round($itemDiscountAmount, 2);
             $this->roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 
-            $distributedDiscountTransfer = clone $discountTransfer;
-            $distributedDiscountTransfer->setAmount($itemDiscountAmountRounded);
+            $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
+            $distributedDiscountTransfer->setUnitGrossAmount($itemDiscountAmountRounded);
+            $distributedDiscountTransfer->setQuantity($discountableItemTransfer->getQuantity());
 
-            $discountableItemTransfer->getDiscounts()->append($distributedDiscountTransfer);
+            $discountableItemTransfer->getCalculatedDiscounts()->append($distributedDiscountTransfer);
         }
     }
 
@@ -65,7 +69,7 @@ class Distributor implements DistributorInterface
     {
         $totalGrossAmount = 0;
         foreach ($discountableObjects as $discountableItemTransfer) {
-            $totalGrossAmount += $discountableItemTransfer->getGrossPrice() *
+            $totalGrossAmount += $discountableItemTransfer->getUnitGrossPrice() *
                 $this->getDiscountableItemQuantity($discountableItemTransfer);
         }
 
@@ -85,6 +89,19 @@ class Distributor implements DistributorInterface
         }
 
         return $quantity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
+     */
+    protected function createBaseCalculatedDiscountTransfer(DiscountTransfer $discountTransfer)
+    {
+        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
+        $calculatedDiscountTransfer->fromArray($discountTransfer->toArray(), true);
+
+        return $calculatedDiscountTransfer;
     }
 
 }

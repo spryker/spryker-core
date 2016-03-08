@@ -54,7 +54,6 @@ class CartRuleFormDataProvider
                     'value' => '',
                 ],
             ],
-//            'group' => [],
         ];
     }
 

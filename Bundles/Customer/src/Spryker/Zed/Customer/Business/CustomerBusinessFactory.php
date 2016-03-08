@@ -9,6 +9,8 @@ namespace Spryker\Zed\Customer\Business;
 
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
+use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver;
+use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -90,6 +92,22 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     protected function getSequenceNumberFacade()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_SEQUENCE_NUMBER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Model\CustomerOrderSaver
+     */
+    public function createCustomerOrderSaver()
+    {
+        return new CustomerOrderSaver($this->createCustomer(), $this->createAddress());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Model\PreConditionChecker
+     */
+    public function createPreConditionChecker()
+    {
+        return new PreConditionChecker($this->createCustomer());
     }
 
 }

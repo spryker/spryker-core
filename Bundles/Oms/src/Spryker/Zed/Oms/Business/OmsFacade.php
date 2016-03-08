@@ -405,4 +405,28 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         return $this->getFactory()->createUtilOrderItemMatrix()->getMatrix();
     }
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     */
+    public function getManualEventsByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()
+            ->createOrderStateMachineFinder()
+            ->getManualEventsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()
+            ->createOrderStateMachineFinder()
+            ->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+    }
+
 }

@@ -12,6 +12,8 @@ use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery;
+use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -258,6 +260,22 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryDiscountCollectorBysByIdPool(SpyDiscountVoucherPool $pool)
     {
         return $this->queryDecisionRules($pool->getVirtualColumn(self::ALIAS_COL_ID_DISCOUNT));
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
+     */
+    public function querySalesDisount()
+    {
+        return new SpySalesDiscountQuery();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery
+     */
+    public function querySalesDisountCode()
+    {
+        return new SpySalesDiscountCodeQuery();
     }
 
 }

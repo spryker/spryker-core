@@ -54,7 +54,7 @@ class IndexController extends AbstractController
     {
         $idOrder = $this->castId($request->query->get('id-sales-order'));
 
-        $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idOrder);
+        $orderTransfer = $this->getFactory()->getSalesAggregatorFacade()->getOrderTotalsByIdSalesOrder($idOrder);
 
         $orderItems = $this->getFacade()->getRefundableItems($idOrder);
 

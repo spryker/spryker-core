@@ -8,13 +8,15 @@
 namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Sales\Business\Model\CommentManager;
-use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
-use Spryker\Zed\Sales\Business\Model\OrderManager;
-use Spryker\Zed\Sales\Business\Model\OrderReferenceGenerator;
-use Spryker\Zed\Sales\Business\Model\Split\Calculator;
-use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
-use Spryker\Zed\Sales\Business\Model\Split\Validation\Validator;
+use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
+use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
+use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Order\OrderAddressUpdater;
+use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
+use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
+use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
+use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
+use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -25,66 +27,76 @@ class SalesBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return \Spryker\Zed\Sales\Business\Model\OrderManager
+     * @return \Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReaderInterface
      */
-    public function createOrderManager()
+    public function createCustomerOrderReader()
     {
-        return new OrderManager(
+        return new CustomerOrderReader(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY),
-            $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS),
-            $this->createReferenceGenerator()
+            $this->getSalesAggregator(),
+            $this->createOrderHydrator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\CommentManager
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderSaverInterface
      */
-    public function createCommentsManager()
+    public function createOrderSaver()
     {
-        return new CommentManager(
-            $this->getQueryContainer()
+        return new OrderSaver(
+            $this->getCountryFacade(),
+            $this->getOmsFacade(),
+            $this->createReferenceGenerator(),
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\OrderDetailsManager
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderUpdaterInterface
      */
-    public function createOrderDetailsManager()
+    public function createOrderUpdater()
     {
-        return new OrderDetailsManager(
+        return new OrderUpdater($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderReaderInterface
+     */
+    public function createOrderReader()
+    {
+        return new OrderReader($this->getQueryContainer(), $this->getSalesAggregator());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReaderInterface
+     */
+    public function createOrderCommentReader()
+    {
+        return new OrderCommentReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaverInterface
+     */
+    public function createOrderCommentSaver()
+    {
+        return new OrderCommentSaver($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
+     */
+    public function createOrderHydrator()
+    {
+        return new OrderHydrator(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS),
-            $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_PAYMENT_LOGS)
+            $this->getOmsFacade(),
+            $this->getSalesAggregator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Split\ItemInterface
-     */
-    public function createOrderItemSplitter()
-    {
-        return new OrderItem(
-            $this->createSplitValidator(),
-            $this->getQueryContainer(),
-            $this->createCalculator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface
-     */
-    protected function createSplitValidator()
-    {
-        $validator = new Validator();
-
-        return $validator;
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface
      */
     public function createReferenceGenerator()
     {
@@ -97,6 +109,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderAddressUpdaterInterface
+     */
+    public function createOrderAddressUpdater()
+    {
+        return new OrderAddressUpdater($this->getQueryContainer());
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface
      */
     protected function getSequenceNumberFacade()
@@ -105,33 +125,27 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Split\Calculator
-     */
-    protected function createCalculator()
-    {
-        $calculator = new Calculator();
-
-        return $calculator;
-    }
-
-    /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
-    public function getFacadeOms()
+    public function getOmsFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS);
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToRefundInterface
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
-    public function getFacadeRefund()
+    protected function getCountryFacade()
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_REFUND);
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface
+     */
+    public function getSalesAggregator()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SALES_AGGREGATOR);
     }
 
 }

@@ -13,13 +13,13 @@ use Spryker\Zed\Kernel\Container;
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
-    const PRICE_CALCULATION_PLUGINS = 'PRICE_CALCULATION_PLUGINS';
-    const TAX_CALCULATION_PLUGINS = 'TAX_CALCULATION_PLUGINS';
-    const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
     const PLUGINS = 'PLUGINS';
+    const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
+    const PRICE_PLUGINS = 'PRICE_PLUGINS';
+    const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
 
     const QUERY_CONTAINER_TAX = 'QUERY_CONTAINER_TAX';
+    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,7 +32,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
             return [
                 self::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins($container),
-                self::PRICE_CALCULATION_PLUGINS => $this->getPriceCalculationPlugins($container),
+                self::PRICE_PLUGINS => $this->getPricePlugins($container),
                 self::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins($container),
             ];
         };
@@ -55,10 +55,13 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
             return [
                 self::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins($container),
-                self::PRICE_CALCULATION_PLUGINS => $this->getPriceCalculationPlugins($container),
+                self::PRICE_PLUGINS => $this->getPricePlugins($container),
                 self::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins($container),
-                self::TAX_CALCULATION_PLUGINS => $this->getTaxCalculationPlugins($container),
             ];
+        };
+
+        $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return $container->getLocator()->sales()->queryContainer();
         };
 
         parent::provideBusinessLayerDependencies($container);
@@ -81,7 +84,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return array
      */
-    protected function getPriceCalculationPlugins(Container $container)
+    protected function getPricePlugins(Container $container)
     {
         return [];
     }
@@ -92,16 +95,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      * @return array
      */
     protected function getDeliveryTimePlugins(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return array
-     */
-    protected function getTaxCalculationPlugins(Container $container)
     {
         return [];
     }

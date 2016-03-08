@@ -28,10 +28,28 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
+        $orderTransfer = $this->getOrderTransfer($orderEntity);
         $paymentEntity = $this->getPaymentEntity($orderEntity);
-        $this->getFacade()->refundPayment($paymentEntity->getIdPaymentPayolution());
+
+        $this->getFacade()->refundPayment(
+            $orderTransfer,
+            $paymentEntity->getIdPaymentPayolution()
+        );
 
         return [];
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getOrderTransfer(SpySalesOrder $orderEntity)
+    {
+        return $this
+            ->getFactory()
+            ->getSalesAggregator()
+            ->getOrderTotalsByIdSalesOrder($orderEntity->getIdSalesOrder());
     }
 
     /**

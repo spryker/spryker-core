@@ -7,43 +7,46 @@
 
 namespace Spryker\Zed\Payolution\Business;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionBusinessFactory getFactory()
  */
-class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterface
+class PayolutionFacade extends AbstractFacade
 {
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function saveOrderPayment(OrderTransfer $orderTransfer)
+    public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFactory()
-            ->createOrderSaver()
-            ->saveOrderPayment($orderTransfer);
+        $this
+             ->getFactory()
+             ->createOrderSaver()
+             ->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function preCheckPayment(QuoteTransfer $quoteTransfer)
     {
         $payolutionResponseTransfer = $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->preCheckPayment($checkoutRequestTransfer);
+            ->preCheckPayment($quoteTransfer);
 
         return $payolutionResponseTransfer;
     }
@@ -51,91 +54,96 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function preAuthorizePayment($idPayment)
+    public function preAuthorizePayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->preAuthorizePayment($idPayment);
+            ->preAuthorizePayment($orderTransfer, $idPayment);
     }
 
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function reAuthorizePayment($idPayment)
+    public function reAuthorizePayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->reAuthorizePayment($idPayment);
+            ->reAuthorizePayment($orderTransfer, $idPayment);
     }
 
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function revertPayment($idPayment)
+    public function revertPayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->revertPayment($idPayment);
+            ->revertPayment($orderTransfer, $idPayment);
     }
 
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function capturePayment($idPayment)
+    public function capturePayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->capturePayment($idPayment);
+            ->capturePayment($orderTransfer, $idPayment);
     }
 
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function refundPayment($idPayment)
+    public function refundPayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->refundPayment($idPayment);
+            ->refundPayment($orderTransfer, $idPayment);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function calculateInstallmentPayments(QuoteTransfer $quoteTransfer)
     {
         $payolutionResponseTransfer = $this
             ->getFactory()
             ->createPaymentCalculationHandler()
-            ->calculateInstallmentPayments($checkoutRequestTransfer);
+            ->calculateInstallmentPayments($quoteTransfer);
 
         return $payolutionResponseTransfer;
     }

@@ -8,24 +8,22 @@
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class Item implements CollectorInterface
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return array
      */
-    public function collect(
-        CalculableInterface $container,
-        DiscountCollectorTransfer $discountCollectorTransfer
-    ) {
+    public function collect(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer)
+    {
         $discountableItems = [];
 
-        foreach ($container->getCalculableObject()->getItems() as $item) {
+        foreach ($quoteTransfer->getItems() as $item) {
             $discountableItems[] = $item;
         }
 

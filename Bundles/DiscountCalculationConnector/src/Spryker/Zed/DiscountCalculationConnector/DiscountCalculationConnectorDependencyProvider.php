@@ -15,22 +15,7 @@ use Spryker\Zed\Kernel\Container;
 class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_CALCULATOR = 'calculator facade';
     const FACADE_DISCOUNT = 'discount facade';
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideBusinessLayerDependencies(Container $container)
-    {
-        $container[self::FACADE_CALCULATOR] = function (Container $container) {
-            return new DiscountCalculationToCalculationBridge($container->getLocator()->calculation()->facade());
-        };
-
-        return $container;
-    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

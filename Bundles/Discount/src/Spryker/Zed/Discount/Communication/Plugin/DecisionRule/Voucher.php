@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use Spryker\Zed\Kernel\Business\ModelResult;
 
@@ -20,45 +20,35 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
 
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
-    public function check(DiscountTransfer $discountTransfer, CalculableInterface $container)
+    public function check(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
     {
         $voucherCodeValidationResults = new ModelResult();
 
-        if (!$this->isVoucherCodesProvided($container)) {
+        if (!$this->isVoucherCodesProvided($quoteTransfer)) {
             $voucherCodeValidationResults->setSuccess(false);
 
             return $voucherCodeValidationResults;
         }
 
-        $validationErrors = [];
-        $validVoucherCodes = [];
-        foreach ($discountTransfer->getUsedCodes() as $voucherCode) {
-            $voucherValidation = $this->getFacade()->isVoucherUsable($voucherCode);
+        $voucherValidation = $this->getFacade()->isVoucherUsable($discountTransfer->getVoucherCode());
 
-            if ($voucherValidation->isSuccess()) {
-                $validVoucherCodes[] = $voucherCode;
-            }
-            $validationErrors = array_merge($validationErrors, $voucherValidation->getErrors());
-        }
-
-        $discountTransfer->setUsedCodes($validVoucherCodes);
-        $voucherCodeValidationResults->addErrors($validationErrors);
+        $voucherCodeValidationResults->addErrors($voucherValidation->getErrors());
 
         return $voucherCodeValidationResults;
     }
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isVoucherCodesProvided(CalculableInterface $container)
+    protected function isVoucherCodesProvided(QuoteTransfer $quoteTransfer)
     {
-        if (count($container->getCalculableObject()->getCouponCodes()) < 1) {
+        if (count($quoteTransfer->getVoucherDiscounts()) < 1) {
             return false;
         }
 
