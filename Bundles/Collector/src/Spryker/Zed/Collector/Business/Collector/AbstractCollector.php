@@ -11,12 +11,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
+use Spryker\Shared\Gui\ProgressBar\ProgressBarBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
-use Spryker\Zed\Collector\Business\Model\ProgressBarBuilder;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -61,7 +61,7 @@ abstract class AbstractCollector
     abstract protected function collectResourceType();
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Model\CountableIteratorInterface
+     * @return \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface
      */
     abstract protected function generateBatchIterator();
 
@@ -583,7 +583,7 @@ abstract class AbstractCollector
         $builder = new ProgressBarBuilder($output, 1, $this->collectResourceType());
         $progressBar = $builder->build();
 
-        $progressBar->setFormat(" * %collectorType%\x0D ");
+        $progressBar->setFormat(" * %barTitle%\x0D ");
         $progressBar->start();
         $progressBar->advance();
         $progressBar->finish();

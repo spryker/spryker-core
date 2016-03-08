@@ -18,4 +18,12 @@ interface ProductSearchToTouchInterface
      */
     public function touchActive($itemType, $itemId);
 
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchInActive($itemType, $itemId);
+
 }

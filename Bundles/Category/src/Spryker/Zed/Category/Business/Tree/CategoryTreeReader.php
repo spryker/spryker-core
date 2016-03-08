@@ -14,7 +14,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
@@ -29,7 +29,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     const IS_IN_MENU = 'is_in_menu';
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -39,10 +39,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     protected $treeFormatter;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter $treeFormatter
      */
-    public function __construct(CategoryQueryContainer $queryContainer, CategoryTreeFormatter $treeFormatter)
+    public function __construct(CategoryQueryContainerInterface $queryContainer, CategoryTreeFormatter $treeFormatter)
     {
         $this->queryContainer = $queryContainer;
         $this->treeFormatter = $treeFormatter;

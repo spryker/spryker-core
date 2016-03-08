@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Persistence;
+namespace Spryker\Zed\Propel\Business\Model;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
 
 class PropelBatchIterator implements CountableIteratorInterface
 {
@@ -27,11 +26,6 @@ class PropelBatchIterator implements CountableIteratorInterface
      * @var \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected $query;
-
-    /**
-     * @var int
-     */
-    protected $currentKey = 0;
 
     /**
      * @var bool
@@ -54,6 +48,18 @@ class PropelBatchIterator implements CountableIteratorInterface
     }
 
     /**
+     * @return void
+     */
+    protected function loadData()
+    {
+        $this->query->setOffset($this->offset);
+        $this->query->setLimit($this->chunkSize);
+
+        $this->currentDataSet = $this->query->find();
+        $this->isValid = $this->currentDataSet->count() > 0;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function current()
@@ -68,11 +74,7 @@ class PropelBatchIterator implements CountableIteratorInterface
      */
     public function next()
     {
-        $this->query->setOffset($this->offset);
-        $this->query->setLimit($this->chunkSize);
-        $this->currentDataSet = $this->query->find();
-        $this->currentKey++;
-        $this->isValid = (bool)$this->currentDataSet;
+        $this->loadData();
         $this->offset += $this->chunkSize;
     }
 
@@ -81,7 +83,7 @@ class PropelBatchIterator implements CountableIteratorInterface
      */
     public function key()
     {
-        return $this->currentKey;
+        return $this->offset;
     }
 
     /**
@@ -99,9 +101,8 @@ class PropelBatchIterator implements CountableIteratorInterface
      */
     public function rewind()
     {
-        $this->currentKey = 0;
         $this->offset = 0;
-        $this->next();
+        $this->loadData();
     }
 
     /**
@@ -110,6 +111,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     public function count()
     {
         $this->query->setLimit(-1);
+        $this->query->setOffset(-1);
 
         return $this->query->count();
     }

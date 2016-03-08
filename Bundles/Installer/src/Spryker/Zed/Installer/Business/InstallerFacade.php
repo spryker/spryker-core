@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Installer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Installer\Business\InstallerBusinessFactory getFactory()
@@ -18,21 +19,11 @@ class InstallerFacade extends AbstractFacade implements InstallerFacadeInterface
     /**
      * @api
      *
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
      */
-    public function getInstallers()
+    public function getInstallerPlugins()
     {
-        return $this->getFactory()->getInstallers();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
-     */
-    public function getDemoDataInstallers()
-    {
-        return $this->getFactory()->getDemoDataInstallers();
+        return $this->getFactory()->getInstallerPlugins();
     }
 
     /**

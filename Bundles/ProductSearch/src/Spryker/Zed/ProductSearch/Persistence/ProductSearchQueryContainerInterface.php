@@ -51,4 +51,12 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
      */
     public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale);
 
+    /**
+     * @param int $idProduct
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
+     */
+    public function queryByProductAndLocale($idProduct, $idLocale);
+
 }

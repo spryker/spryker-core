@@ -35,6 +35,17 @@ interface LocaleFacadeInterface
     /**
      * @api
      *
+     * @param string $localeCode
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleByCode($localeCode);
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentLocaleName();
@@ -81,5 +92,12 @@ interface LocaleFacadeInterface
      * @return void
      */
     public function install(MessengerInterface $messenger);
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    public function getLocaleCollection();
 
 }

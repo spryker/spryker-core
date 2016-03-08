@@ -67,7 +67,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
         $locale = $this->Store->getCurrentLocale();
         $this->assertSame('de_DE', $locale);
 
-        $newLocale = 'fr_FR';
+        $newLocale = 'en_US';
         $this->Store->setCurrentLocale($newLocale);
 
         $locale = $this->Store->getCurrentLocale();

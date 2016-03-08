@@ -187,6 +187,20 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryById($idCategory);
 
     /**
+     * @param int $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    public function queryCategoryByKey($categoryKey);
+
+    /**
+     * @param string $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryMainCategoryNodeByCategoryKey($categoryKey);
+
+    /**
      * @api
      *
      * @param int $idNode

@@ -414,11 +414,11 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $query->filterByFkCategoryNodeDescendant($idChildNode)
             ->innerJoinNode()
             ->useNodeQuery()
-            ->innerJoinCategory()
-            ->useCategoryQuery()
-            ->innerJoinAttribute()
-                ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $idLocale)
-            ->endUse()
+                ->innerJoinCategory()
+                ->useCategoryQuery()
+                    ->innerJoinAttribute()
+                    ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $idLocale)
+                ->endUse()
             ->endUse()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
             ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
@@ -531,6 +531,30 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function queryCategoryById($idCategory)
     {
         return $this->getFactory()->createCategoryQuery()->filterByIdCategory($idCategory);
+    }
+
+    /**
+     * @param int $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    public function queryCategoryByKey($categoryKey)
+    {
+        return $this->getFactory()->createCategoryQuery()->filterByCategoryKey($categoryKey);
+    }
+
+    /**
+     * @param string $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryMainCategoryNodeByCategoryKey($categoryKey)
+    {
+        return $this->getFactory()->createCategoryNodeQuery()
+            ->filterByIsMain(true)
+            ->useCategoryQuery()
+                ->filterByCategoryKey($categoryKey)
+            ->endUse();
     }
 
     /**

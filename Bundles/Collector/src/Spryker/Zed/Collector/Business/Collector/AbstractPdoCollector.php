@@ -10,10 +10,10 @@ namespace Spryker\Zed\Collector\Business\Collector;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Shared\Library\BatchIterator\PdoBatchIterator;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery;
-use Spryker\Zed\Collector\Persistence\PdoBatchIterator;
 
 abstract class AbstractPdoCollector extends AbstractCollector
 {
@@ -54,11 +54,11 @@ abstract class AbstractPdoCollector extends AbstractCollector
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Model\CountableIteratorInterface
+     * @return \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface
      */
     protected function generateBatchIterator()
     {
-        return new PdoBatchIterator($this->criteriaBuilder, $this->touchQueryContainer, $this->collectResourceType(), $this->chunkSize);
+        return new PdoBatchIterator($this->criteriaBuilder, $this->touchQueryContainer, $this->chunkSize);
     }
 
     /**

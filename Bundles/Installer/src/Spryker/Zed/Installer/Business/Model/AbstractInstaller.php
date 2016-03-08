@@ -9,6 +9,7 @@ namespace Spryker\Zed\Installer\Business\Model;
 
 use Psr\Log\AbstractLogger;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractInstaller extends AbstractLogger implements MessengerInterface
 {
@@ -17,6 +18,11 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
      * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
     protected $messenger;
+
+    /**
+     * @return void
+     */
+    abstract public function install();
 
     /**
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
@@ -29,11 +35,6 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
 
         return $this;
     }
-
-    /**
-     * @return void
-     */
-    abstract public function install();
 
     /**
      * Logs with an arbitrary level.
