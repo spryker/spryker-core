@@ -239,4 +239,5 @@ class Writer implements WriterInterface
 
         return $stockProduct->getPrimaryKey();
     }
+
 }

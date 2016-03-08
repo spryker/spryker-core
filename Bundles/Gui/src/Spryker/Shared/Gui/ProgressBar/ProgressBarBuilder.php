@@ -12,9 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProgressBarBuilder
 {
+
     /**
-      * @var \Symfony\Component\Console\Output\OutputInterface
-      */
+     * @var \Symfony\Component\Console\Output\OutputInterface
+     */
     protected $output;
 
     /**

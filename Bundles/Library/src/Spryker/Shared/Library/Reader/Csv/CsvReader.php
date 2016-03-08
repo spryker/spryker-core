@@ -100,14 +100,14 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
-     * @param $columns
-     * @param $data
-     * @param $filename
-     * @param $lineNumber
+     * @param array $columns
+     * @param string $data
+     * @param string $filename
+     * @param int $lineNumber
      *
      * @return array
      */
-    protected function composeAndValidateLine($columns, $data, $filename, $lineNumber)
+    protected function composeAndValidateLine(array $columns, array $data, $filename, $lineNumber)
     {
         $data = array_values($data);
         $columns = array_values($columns);
@@ -247,6 +247,5 @@ class CsvReader implements CsvReaderInterface
 
         return $data;
     }
-
 
 }

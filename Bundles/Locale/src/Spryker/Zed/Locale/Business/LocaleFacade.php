@@ -50,7 +50,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     /**
      * @api
      *
-     * @param $localeCode
+     * @param string $localeCode
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *

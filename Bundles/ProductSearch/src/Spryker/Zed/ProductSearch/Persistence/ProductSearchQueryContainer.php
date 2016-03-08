@@ -123,4 +123,5 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
 
         return $productSearchQuery;
     }
+
 }

@@ -58,4 +58,5 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
      */
     public function queryByProductAndLocale($idProduct, $idLocale);
+
 }
