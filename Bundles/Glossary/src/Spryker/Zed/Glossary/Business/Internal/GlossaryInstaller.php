@@ -98,8 +98,7 @@ class GlossaryInstaller extends AbstractInstaller
                 if (!$this->translationManager->hasTranslation($keyName, $locale)) {
                     $this->translationManager->createAndTouchTranslation($keyName, $locale, $text, true);
                     $results[$keyName]['translation'][$localeName]['created'] = true;
-                }
-                elseif ($this->translationManager->getTranslationByKeyName($keyName, $locale)->getValue() !== $text) {
+                } elseif ($this->translationManager->getTranslationByKeyName($keyName, $locale)->getValue() !== $text) {
                     $this->translationManager->updateAndTouchTranslation($keyName, $locale, $text, true);
                     $results[$keyName]['translation'][$localeName]['updated'] = true;
                 }

@@ -11,5 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 abstract class InstallerConfig extends AbstractBundleConfig
 {
-
 }

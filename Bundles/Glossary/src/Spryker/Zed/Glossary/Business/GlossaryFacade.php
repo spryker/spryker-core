@@ -365,5 +365,4 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
         $this->getFactory()->createInstaller($messenger)->install();
     }
 
-
 }

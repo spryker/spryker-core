@@ -24,4 +24,5 @@ class GlossaryConfig extends AbstractBundleConfig
             $this->getConfig()->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/Spryker/*/*/Resources/glossary.yml'
         );
     }
+
 }
