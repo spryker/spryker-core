@@ -20,6 +20,7 @@ use Spryker\Zed\ProductSearch\Business\Operation\CopyToField;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField;
 use Spryker\Zed\ProductSearch\Business\Operation\DefaultOperation;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
+use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchMarker;
 use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
 use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
@@ -191,6 +192,18 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     protected function createCopyToMultiField()
     {
         return new CopyToMultiField();
+    }
+
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Processor\ProductSearchMarkerInterface
+     */
+    public function createProductSearchMarker()
+    {
+        return new ProductSearchMarker(
+            $this->getTouchFacade(),
+            $this->getQueryContainer()
+        );
     }
 
 }

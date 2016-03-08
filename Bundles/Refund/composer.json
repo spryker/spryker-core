@@ -11,18 +11,18 @@
     }
   },
   "require": {
-    "spryker/application": "^0.20.0",
-    "spryker/gui": "^0.20.0",
-    "spryker/kernel": "^0.20.0",
-    "spryker/library": "^0.20.0",
-    "spryker/oms": "^0.20.0",
-    "spryker/payone": "^0.20.0",
-    "spryker/sales": "^0.20.0",
-    "spryker/sales-aggregator": "^0.20.0",
-    "spryker/sales-split": "^0.20.0",
-    "spryker/url": "^0.20.0",
-    "spryker/propel": "^0.20.0",
-    "spryker/symfony": "^0.20.0"
+    "spryker/application": "^1.0.0-RC1",
+    "spryker/gui": "^1.0.0-RC1",
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/library": "^1.0.0-RC1",
+    "spryker/oms": "^1.0.0-RC1",
+    "spryker/payone": "^1.0.0-RC1",
+    "spryker/sales": "^1.0.0-RC1",
+    "spryker/sales-aggregator": "^1.0.0-RC1",
+    "spryker/sales-split": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC1",
+    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/url": "^1.0.0-RC1"
   },
   "description": "refund bundle",
   "license": "proprietary",
@@ -30,7 +30,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

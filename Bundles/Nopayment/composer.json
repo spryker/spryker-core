@@ -11,9 +11,9 @@
     }
   },
   "require": {
-    "spryker/kernel": "^0.20.0",
-    "spryker/oms": "^0.20.0",
-    "spryker/sales": "^0.20.0"
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/oms": "^1.0.0-RC1",
+    "spryker/sales": "^1.0.0-RC1"
   },
   "description": "nopayment bundle",
   "license": "proprietary",
@@ -21,7 +21,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

@@ -15,8 +15,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_GLOSSARY = 'facade_glossary';
-    const INSTALLERS = 'installer plugins';
-    const INSTALLERS_DEMO_DATA = 'demo data installer plugins';
+    const INSTALLER_PLUGINS = 'installer plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,11 +30,8 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
             return new InstallerToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
-        $container[self::INSTALLERS] = function (Container $container) {
-            return $this->getInstallers();
-        };
-        $container[self::INSTALLERS_DEMO_DATA] = function (Container $container) {
-            return $this->getDemoDataInstallers();
+        $container[self::INSTALLER_PLUGINS] = function (Container $container) {
+            return $this->getInstallerPlugins();
         };
 
         return $container;
@@ -44,19 +40,9 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Overwrite on project level.
      *
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
      */
-    public function getInstallers()
-    {
-        return [];
-    }
-
-    /**
-     * Overwrite on project level.
-     *
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
-     */
-    public function getDemoDataInstallers()
+    public function getInstallerPlugins()
     {
         return [];
     }

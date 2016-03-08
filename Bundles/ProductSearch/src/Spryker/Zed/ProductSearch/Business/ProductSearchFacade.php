@@ -49,6 +49,32 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
+     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param int $idProduct
+     *
+     * @return void
+     */
+    public function activateProductSearch($idProduct, array $localeCollection)
+    {
+        $this->getFactory()
+            ->createProductSearchMarker()
+            ->activateProductSearch($idProduct, $localeCollection);
+    }
+
+    /**
+     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param int $idProduct
+     *
+     * @return void
+     */
+    public function deactivateProductSearch($idProduct, array $localeCollection)
+    {
+        $this->getFactory()
+            ->createProductSearchMarker()
+            ->deactivateProductSearch($idProduct, $localeCollection);
+    }
+
+    /**
      * @api
      *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger

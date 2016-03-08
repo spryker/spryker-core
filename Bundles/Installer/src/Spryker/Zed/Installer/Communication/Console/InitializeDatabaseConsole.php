@@ -19,8 +19,6 @@ class InitializeDatabaseConsole extends Console
 
     const COMMAND_NAME = 'setup:init-db';
     const DESCRIPTION = 'Fill the database with required data';
-    const EXIT_CODE_ERROR = 1;
-    const EXIT_CODE_SUCCESS = 0;
 
     /**
      * @return void
@@ -39,22 +37,46 @@ class InitializeDatabaseConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $installerPlugins = $this->getFacade()->getInstallers();
+        $installerPlugins = $this->getInstallerPlugins();
 
         $messenger = $this->getMessenger();
 
         try {
-            foreach ($installerPlugins as $installer) {
-                $installer->setMessenger($messenger);
-                $installer->install();
+            foreach ($installerPlugins as $plugin) {
+                $name = $this->getPluginNameFromClass(get_class($plugin));
+
+                $output->writeln('Installing DB data for ' . $name);
+
+                $plugin->setMessenger($messenger);
+                $plugin->notice('Running ' . get_class($plugin));
+                $plugin->install();
             }
         } catch (\Exception $e) {
             $this->error($e->getMessage());
 
-            return self::EXIT_CODE_ERROR;
+            return self::CODE_ERROR;
         }
 
-        return self::EXIT_CODE_SUCCESS;
+        return self::CODE_SUCCESS;
+    }
+
+    /**
+     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
+     */
+    protected function getInstallerPlugins()
+    {
+        return $this->getFacade()->getInstallerPlugins();
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return mixed
+     */
+    protected function getPluginNameFromClass($className)
+    {
+        $pattern = '#^(.+)\\\(.+)\\\(.+)\\\(.+)\\\(.*)$#i';
+        return preg_replace($pattern, '${2}', $className);
     }
 
 }

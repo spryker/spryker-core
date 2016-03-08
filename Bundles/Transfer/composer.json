@@ -12,16 +12,16 @@
   },
   "require": {
     "twig/twig": "~1.0",
-    "spryker/console": "^0.20.0",
-    "spryker/kernel": "^0.20.0",
-    "spryker/messenger": "^0.20.0",
-    "spryker/log": "^0.20.0",
-    "spryker/symfony": "^0.20.0",
-    "spryker/twig": "^0.20.0",
-    "spryker/zend": "^0.20.0",
-    "spryker/application": "^0.20.0",
-    "spryker/config": "^0.20.0",
-    "spryker/library": "^0.20.0"
+    "spryker/console": "^1.0.0-RC1",
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/messenger": "^1.0.0-RC1",
+    "spryker/log": "^1.0.0-RC1",
+    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/twig": "^1.0.0-RC1",
+    "spryker/zend": "^1.0.0-RC1",
+    "spryker/application": "^1.0.0-RC1",
+    "spryker/config": "^1.0.0-RC1",
+    "spryker/library": "^1.0.0-RC1"
   },
   "description": "transfer bundle",
   "license": "proprietary",
@@ -29,7 +29,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

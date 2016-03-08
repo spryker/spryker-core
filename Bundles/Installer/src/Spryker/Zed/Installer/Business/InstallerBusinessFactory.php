@@ -10,6 +10,7 @@ namespace Spryker\Zed\Installer\Business;
 use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
 use Spryker\Zed\Installer\InstallerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Installer\InstallerConfig getConfig()
@@ -18,19 +19,11 @@ class InstallerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
      */
-    public function getInstallers()
+    public function getInstallerPlugins()
     {
-        return $this->getProvidedDependency(InstallerDependencyProvider::INSTALLERS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
-     */
-    public function getDemoDataInstallers()
-    {
-        return $this->getProvidedDependency(InstallerDependencyProvider::INSTALLERS_DEMO_DATA);
+        return $this->getProvidedDependency(InstallerDependencyProvider::INSTALLER_PLUGINS);
     }
 
     /**

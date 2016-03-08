@@ -10,28 +10,28 @@
     }
   },
   "require": {
-    "spryker/acl": "^0.20.0",
-    "spryker/assertion": "^0.20.0",
-    "spryker/auth": "^0.20.0",
-    "spryker/console": "^0.20.0",
-    "spryker/gui": "^0.20.0",
-    "spryker/kernel": "^0.20.0",
-    "spryker/library": "^0.20.0",
-    "spryker/messenger": "^0.20.0",
-    "spryker/new-relic": "^0.20.0",
-    "spryker/price": "^0.20.0",
-    "spryker/propel": "^0.20.0",
-    "spryker/session": "^0.20.0",
-    "spryker/user": "^0.20.0",
-    "spryker/zed-request": "^0.20.0",
-    "spryker/log": "^0.20.0",
-    "spryker/monolog": "^0.20.0",
-    "spryker/silex": "^0.20.0",
-    "spryker/symfony": "^0.20.0",
-    "spryker/twig": "^0.20.0",
-    "spryker/zend": "^0.20.0",
-    "spryker/config": "^0.20.0",
-    "spryker/url": "^0.20.0"
+    "spryker/acl": "1.0.0-RC1",
+    "spryker/assertion": "^1.0.0-RC1",
+    "spryker/auth": "1.0.0-RC1",
+    "spryker/console": "^1.0.0-RC1",
+    "spryker/gui": "^1.0.0-RC1",
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/library": "^1.0.0-RC1",
+    "spryker/messenger": "^1.0.0-RC1",
+    "spryker/new-relic": "^1.0.0-RC1",
+    "spryker/price": "1.0.0-RC1",
+    "spryker/propel": "1.0.0-RC1",
+    "spryker/session": "1.0.0-RC1",
+    "spryker/user": "1.0.0-RC1",
+    "spryker/zed-request": "^1.0.0-RC1",
+    "spryker/log": "^1.0.0-RC1",
+    "spryker/monolog": "^1.0.0-RC1",
+    "spryker/silex": "^1.0.0-RC1",
+    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/twig": "^1.0.0-RC1",
+    "spryker/zend": "^1.0.0-RC1",
+    "spryker/config": "^1.0.0-RC1",
+    "spryker/url": "^1.0.0-RC1"
   },
   "description": "application bundle",
   "license": "proprietary",
@@ -39,7 +39,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

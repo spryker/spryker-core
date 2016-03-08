@@ -11,13 +11,13 @@
     }
   },
   "require": {
-    "spryker/application": "^0.20.0",
-    "spryker/kernel": "^0.20.0",
-    "spryker/product": "^0.20.0",
-    "spryker/touch": "^0.20.0",
-    "spryker/guzzle": "^0.20.0",
-    "spryker/propel": "^0.20.0",
-    "spryker/symfony": "^0.20.0"
+    "spryker/application": "^1.0.0-RC1",
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/product": "^1.0.0-RC1",
+    "spryker/touch": "^1.0.0-RC1",
+    "spryker/guzzle": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC1",
+    "spryker/symfony": "^1.0.0-RC1"
   },
   "description": "stock bundle",
   "license": "proprietary",
@@ -25,7 +25,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

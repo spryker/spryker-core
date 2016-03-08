@@ -8,9 +8,9 @@
   },
   "require": {
     "psr/log": "~1.0.0",
-    "spryker/monolog": "^0.20.0",
-    "spryker/config": "^0.20.0",
-    "spryker/silex": "^0.20.0"
+    "spryker/monolog": "^1.0.0-RC1",
+    "spryker/config": "^1.0.0-RC1",
+    "spryker/silex": "^1.0.0-RC1"
   },
   "description": "log bundle",
   "license": "proprietary",
@@ -18,7 +18,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }
