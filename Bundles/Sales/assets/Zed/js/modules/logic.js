@@ -71,7 +71,6 @@ $(document).ready(function() {
     $('.more-history').click(function(e){
         e.preventDefault();
         var theID = $(this).data('id');
-        console.log('asd');
 
         $('#history_details_' + theID).toggle();
     });
