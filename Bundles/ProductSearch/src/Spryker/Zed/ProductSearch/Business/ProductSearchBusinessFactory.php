@@ -8,11 +8,8 @@
 namespace Spryker\Zed\ProductSearch\Business;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
-use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
 use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;
 use Spryker\Zed\ProductSearch\Business\Operation\AddToResult;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;
@@ -56,33 +53,6 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return \Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch
-     */
-    public function createInstaller(MessengerInterface $messenger)
-    {
-        $collectorFacade = $this->getCollectorFacade();
-
-        $installer = new InstallProductSearch(
-            StorageInstanceBuilder::getElasticsearchInstance(),
-            $collectorFacade->getSearchIndexName(),
-            $collectorFacade->getSearchDocumentType()
-        );
-        $installer->setMessenger($messenger);
-
-        return $installer;
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorInterface
-     */
-    protected function getCollectorFacade()
-    {
-        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_COLLECTOR);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface
      */
     protected function createDefaultOperation()
@@ -116,6 +86,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * TODO: move this to project level if possible
      * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface
      */
     protected function getLocaleFacade()
@@ -124,6 +95,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * TODO: move this to project level if possible
      * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface
      */
     protected function getTouchFacade()

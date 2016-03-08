@@ -31,4 +31,12 @@ class SearchConfig extends AbstractBundleConfig
         ];
     }
 
+    /**
+     * @return string
+     */
+    public function getClassTargetDirectory()
+    {
+        return APPLICATION_SOURCE_DIR . '/Generated/Shared/Search/';
+    }
+
 }

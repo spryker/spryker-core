@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch;
+namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch\Definition;
 
 use Spryker\Zed\Search\Business\Exception\MissingNameAttributeException;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition;
 
 /**
  * @group Search
@@ -78,10 +78,10 @@ class IndexDefinitionTest extends \PHPUnit_Framework_TestCase
             IndexDefinition::MAPPING => [
                 [
                     IndexDefinition::NAME => 'type1',
-                    IndexDefinition::MAPPING => [],
+                    IndexDefinition::PROPERTY => [],
                 ],[
                     IndexDefinition::NAME => 'type2',
-                    IndexDefinition::MAPPING => [],
+                    IndexDefinition::PROPERTY => [],
                 ],
             ],
         ]);

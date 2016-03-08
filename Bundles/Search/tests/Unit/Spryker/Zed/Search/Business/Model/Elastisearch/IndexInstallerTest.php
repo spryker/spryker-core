@@ -10,8 +10,8 @@ namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch;
 use Elastica\Client;
 use Elastica\Index;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinitionLoaderInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 
 /**
@@ -90,9 +90,9 @@ class IndexInstallerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition[] $indexDefinitions
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition[] $indexDefinitions
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinitionLoaderInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
     protected function createIndexDefinitionLoaderMock(array $indexDefinitions)
     {

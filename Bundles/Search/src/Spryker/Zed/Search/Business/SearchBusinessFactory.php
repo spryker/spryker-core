@@ -10,9 +10,13 @@ namespace Spryker\Zed\Search\Business;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\XmlIndexDefinitionLoader;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\XmlIndexDefinitionLoader;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexMapInstaller;
 use Spryker\Zed\Search\Business\Model\Search;
+use Spryker\Zed\Search\Business\Model\SearchInstaller;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
@@ -26,13 +30,9 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    public function createElasticsearchIndexInstaller(MessengerInterface $messenger)
+    public function createSearchInstaller(MessengerInterface $messenger)
     {
-        return new IndexInstaller(
-            $this->createXmlIndexDefinitionLoader(),
-            $this->getElasticsearchClient(),
-            $messenger
-        );
+        return new SearchInstaller($this->getSearchInstallerStack($messenger));
     }
 
     /**
@@ -46,20 +46,78 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\XmlIndexDefinitionLoader
+     */
+    protected function createXmlIndexDefinitionLoader()
+    {
+        return new XmlIndexDefinitionLoader($this->getConfig()->getXmlIndexDefinitionDirectories());
+    }
+
+    /**
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     *
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
+     */
+    protected function getSearchInstallerStack(MessengerInterface $messenger)
+    {
+        return [
+            $this->createElasticsearchIndexInstaller($messenger),
+            $this->createIndexMapInstaller($messenger),
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     *
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+     */
+    protected function createElasticsearchIndexInstaller(MessengerInterface $messenger)
+    {
+        return new IndexInstaller(
+            $this->createXmlIndexDefinitionLoader(),
+            $this->getElasticsearchClient(),
+            $messenger
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     *
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+     */
+    protected function createIndexMapInstaller(MessengerInterface $messenger)
+    {
+        return new IndexMapInstaller(
+            $this->createXmlIndexDefinitionLoader(),
+            $this->createElasticsearchIndexMapCleaner(),
+            $this->createElasticsearchIndexMapGenerator(),
+            $messenger
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator
+     */
+    protected function createElasticsearchIndexMapGenerator()
+    {
+        return new IndexMapGenerator($this->getConfig()->getClassTargetDirectory());
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner
+     */
+    protected function createElasticsearchIndexMapCleaner()
+    {
+        return new IndexMapCleaner($this->getConfig()->getClassTargetDirectory());
+    }
+
+    /**
      * @return \Elastica\Client
      */
     protected function getElasticsearchClient()
     {
         // FIXME
         return StorageInstanceBuilder::getElasticsearchInstance();
-    }
-
-    /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\XmlIndexDefinitionLoader
-     */
-    protected function createXmlIndexDefinitionLoader()
-    {
-        return new XmlIndexDefinitionLoader($this->getConfig()->getXmlIndexDefinitionDirectories());
     }
 
 }

@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Generator;
+
+use Symfony\Component\Filesystem\Filesystem;
+
+class IndexMapCleaner
+{
+
+    /**
+     * @var string
+     */
+    private $directory;
+
+    /**
+     * @param string $directory
+     */
+    public function __construct($directory)
+    {
+        $this->directory = $directory;
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanDirectory()
+    {
+        $fileSystem = new Filesystem();
+        $fileSystem->remove($this->directory);
+    }
+
+}

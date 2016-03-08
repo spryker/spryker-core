@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
+namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 interface IndexDefinitionLoaderInterface
 {
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition[]
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition[]
      */
     public function loadIndexDefinitions();
 

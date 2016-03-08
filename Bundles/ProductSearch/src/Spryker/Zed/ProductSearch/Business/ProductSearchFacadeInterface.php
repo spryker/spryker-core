@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductSearch\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 interface ProductSearchFacadeInterface
 {
@@ -37,15 +36,7 @@ interface ProductSearchFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return void
-     */
-    public function install(MessengerInterface $messenger);
-
-    /**
-     * @api
-     *
+     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param int $idProduct
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      *

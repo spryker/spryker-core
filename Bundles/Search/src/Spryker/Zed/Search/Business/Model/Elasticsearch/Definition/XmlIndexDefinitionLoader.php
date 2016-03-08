@@ -5,12 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
+namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 use Symfony\Component\Finder\Finder;
-use Zend\Config\Config;
 use Zend\Config\Factory;
-use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class XmlIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 {
@@ -30,7 +28,7 @@ class XmlIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition[]
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition[]
      */
     public function loadIndexDefinitions()
     {
@@ -59,7 +57,7 @@ class XmlIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     /**
      * @param array $definitionConfig
      *
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition[]
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition[]
      */
     protected function createIndexDefinitions(array $definitionConfig)
     {
@@ -79,7 +77,7 @@ class XmlIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     /**
      * @param array $definitionData
      *
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition
      */
     protected function createIndexDefinition(array $definitionData)
     {

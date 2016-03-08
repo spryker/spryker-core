@@ -12,13 +12,15 @@ use Elastica\Index;
 use Elastica\Type;
 use Elastica\Type\Mapping;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 
 class IndexInstaller implements SearchInstallerInterface
 {
 
     /**
-     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinitionLoaderInterface
+     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
     protected $indexDefinitionLoader;
 
@@ -33,7 +35,7 @@ class IndexInstaller implements SearchInstallerInterface
     protected $messenger;
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinitionLoaderInterface $indexDefinitionLoader
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface $indexDefinitionLoader
      * @param \Elastica\Client $elasticaClient
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      */
@@ -57,7 +59,7 @@ class IndexInstaller implements SearchInstallerInterface
     }
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition $indexDefinition
      *
      * @return void
      */

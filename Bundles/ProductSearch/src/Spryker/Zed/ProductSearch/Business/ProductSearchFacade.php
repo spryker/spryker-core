@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearch\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchBusinessFactory getFactory()
@@ -51,6 +50,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     /**
      * @api
      *
+     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param int $idProduct
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      *
@@ -76,18 +76,6 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
         $this->getFactory()
             ->createProductSearchMarker()
             ->deactivateProductSearch($idProduct, $localeCollection);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return void
-     */
-    public function install(MessengerInterface $messenger)
-    {
-        $this->getFactory()->createInstaller($messenger)->install();
     }
 
 }

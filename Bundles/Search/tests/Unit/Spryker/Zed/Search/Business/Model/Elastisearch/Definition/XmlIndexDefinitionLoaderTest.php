@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch;
+namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch\Definition;
 
-use Spryker\Zed\Search\Business\Model\Elasticsearch\XmlIndexDefinitionLoader;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\XmlIndexDefinitionLoader;
 use Symfony\Component\Finder\Finder;
 
 /**
