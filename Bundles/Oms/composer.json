@@ -21,7 +21,7 @@
     "spryker/propel": "^1.0.0-RC1",
     "spryker/symfony": "^1.0.0-RC1",
     "spryker/country": "^1.0.0-RC1",
-    "spryker/customer": "1.0.0-rc.1"
+    "spryker/customer": "1.0.0-RC1"
   },
   "description": "oms bundle",
   "license": "proprietary",
