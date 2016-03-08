@@ -1,11 +1,11 @@
-# CalculationCheckoutConnector Bundle
+# SalesAggregator Bundle
 
 ## Installation
 
 ```
-composer require spryker/calculation-checkout-connector
+composer require spryker/sales-aggregator
 ```
 
 ## Documentation
 
-[CalculationCheckoutConnector Documentation](https://spryker.github.io/calculation-checkout-connector/index.html)
+[CalculationCheckoutConnector Documentation](https://spryker.github.io/sales-aggregator/index.html)
