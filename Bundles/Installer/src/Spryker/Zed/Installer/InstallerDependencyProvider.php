@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\Installer;
 
-use Spryker\Zed\Installer\Dependency\Facade\InstallerToGlossaryBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_GLOSSARY = 'facade_glossary';
     const INSTALLER_PLUGINS = 'installer plugins';
 
     /**
@@ -25,10 +23,6 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = parent::provideBusinessLayerDependencies($container);
-
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new InstallerToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
 
         $container[self::INSTALLER_PLUGINS] = function (Container $container) {
             return $this->getInstallerPlugins();

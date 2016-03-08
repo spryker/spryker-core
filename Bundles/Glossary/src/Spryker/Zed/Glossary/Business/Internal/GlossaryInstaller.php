@@ -5,19 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Installer\Business\Model;
+namespace Spryker\Zed\Glossary\Business\Internal;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Installer\Dependency\Facade\InstallerToGlossaryInterface;
+use Spryker\Zed\Glossary\Business\Key\KeyManagerInterface;
+use Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Symfony\Component\Yaml\Yaml;
 
 class GlossaryInstaller extends AbstractInstaller
 {
 
     /**
-     * @var \Spryker\Zed\Installer\Dependency\Facade\InstallerToGlossaryInterface
+     * @var \Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface
      */
-    protected $glossaryFacade;
+    protected $translationManager;
+
+    /**
+     * @var \Spryker\Zed\Glossary\Business\Key\KeyManagerInterface
+     */
+    protected $keyManager;
 
     /**
      * @var array
@@ -25,19 +32,18 @@ class GlossaryInstaller extends AbstractInstaller
     protected $paths;
 
     /**
-     * @var \Symfony\Component\Yaml\Yaml
-     */
-    protected $yamlParser;
-
-    /**
-     * @param \Spryker\Zed\Installer\Dependency\Facade\InstallerToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface $translationManager
+     * @param \Spryker\Zed\Glossary\Business\Key\KeyManagerInterface $keyManager
      * @param array $paths
      */
-    public function __construct(InstallerToGlossaryInterface $glossaryFacade, array $paths = [])
-    {
-        $this->glossaryFacade = $glossaryFacade;
+    public function __construct(
+        TranslationManagerInterface $translationManager,
+        KeyManagerInterface $keyManager,
+        array $paths = []
+    ) {
+        $this->translationManager = $translationManager;
+        $this->keyManager = $keyManager;
         $this->paths = $paths;
-        $this->yamlParser = new Yaml();
     }
 
     /**
@@ -63,7 +69,8 @@ class GlossaryInstaller extends AbstractInstaller
      */
     protected function parseYamlFile($filePath)
     {
-        return $this->yamlParser->parse(file_get_contents($filePath));
+        $yamlParser = new Yaml();
+        return $yamlParser->parse(file_get_contents($filePath));
     }
 
     /**
@@ -74,10 +81,10 @@ class GlossaryInstaller extends AbstractInstaller
     protected function installKeysAndTranslations(array $translations)
     {
         $results = [];
-        foreach ($translations['keys'] as $keyName => $data) {
+        foreach ($translations as $keyName => $data) {
             $results[$keyName]['created'] = false;
-            if (!$this->glossaryFacade->hasKey($keyName)) {
-                $this->glossaryFacade->createKey($keyName);
+            if (!$this->keyManager->hasKey($keyName)) {
+                $this->keyManager->createKey($keyName);
                 $results[$keyName]['created'] = true;
             }
 
@@ -88,11 +95,12 @@ class GlossaryInstaller extends AbstractInstaller
                 $results[$keyName]['translation'][$localeName]['created'] = false;
                 $results[$keyName]['translation'][$localeName]['updated'] = false;
 
-                if (!$this->glossaryFacade->hasTranslation($keyName, $locale)) {
-                    $this->glossaryFacade->createAndTouchTranslation($keyName, $locale, $text, true);
+                if (!$this->translationManager->hasTranslation($keyName, $locale)) {
+                    $this->translationManager->createAndTouchTranslation($keyName, $locale, $text, true);
                     $results[$keyName]['translation'][$localeName]['created'] = true;
-                } elseif ($this->glossaryFacade->getTranslation($keyName, $locale)->getValue() !== $text) {
-                    $this->glossaryFacade->updateAndTouchTranslation($keyName, $locale, $text, true);
+                }
+                elseif ($this->translationManager->getTranslationByKeyName($keyName, $locale)->getValue() !== $text) {
+                    $this->translationManager->updateAndTouchTranslation($keyName, $locale, $text, true);
                     $results[$keyName]['translation'][$localeName]['updated'] = true;
                 }
             }

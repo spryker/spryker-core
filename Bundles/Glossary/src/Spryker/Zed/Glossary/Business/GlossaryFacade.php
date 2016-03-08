@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryBusinessFactory getFactory()
@@ -351,5 +352,18 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
 
         return $keyManager->getOrCreateKey($keyName);
     }
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     *
+     * @return void
+     */
+    public function install(MessengerInterface $messenger = null)
+    {
+        $this->getFactory()->createInstaller($messenger)->install();
+    }
+
 
 }
