@@ -11,9 +11,9 @@
     }
   },
   "require": {
-    "spryker/console": "^0.20.0",
-    "spryker/kernel": "^0.20.0",
-    "spryker/symfony": "^0.20.0"
+    "spryker/console": "^1.0.0-RC1",
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/symfony": "^1.0.0-RC1"
   },
   "description": "cache bundle",
   "license": "proprietary",
@@ -21,7 +21,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

@@ -11,13 +11,13 @@
     }
   },
   "require": {
-    "spryker/kernel": "^0.20.0",
-    "spryker/library": "^0.20.0",
-    "spryker/messenger": "^0.20.0",
-    "spryker/new-relic": "^0.20.0",
-    "spryker/propel": "^0.20.0",
-    "spryker/silex": "^0.20.0",
-    "spryker/symfony": "^0.20.0"
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/library": "^1.0.0-RC1",
+    "spryker/messenger": "^1.0.0-RC1",
+    "spryker/new-relic": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC1",
+    "spryker/silex": "^1.0.0-RC1",
+    "spryker/symfony": "^1.0.0-RC1"
   },
   "bin": {
     "0": "bin/console"
@@ -28,7 +28,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

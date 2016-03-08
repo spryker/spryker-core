@@ -11,17 +11,17 @@
     }
   },
   "require": {
-    "spryker/application": "^0.20.0",
-    "spryker/gui": "^0.20.0",
-    "spryker/installer": "^0.20.0",
-    "spryker/kernel": "^0.20.0",
-    "spryker/library": "^0.20.0",
-    "spryker/user": "^0.20.0",
-    "spryker/propel": "^0.20.0",
-    "spryker/silex": "^0.20.0",
-    "spryker/symfony": "^0.20.0",
-    "spryker/config": "^0.20.0",
-    "spryker/url": "^0.20.0"
+    "spryker/application": "^1.0.0-RC1",
+    "spryker/gui": "^1.0.0-RC1",
+    "spryker/installer": "^1.0.0-RC1",
+    "spryker/kernel": "^1.0.0-RC1",
+    "spryker/library": "^1.0.0-RC1",
+    "spryker/user": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC1",
+    "spryker/silex": "^1.0.0-RC1",
+    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/config": "^1.0.0-RC1",
+    "spryker/url": "^1.0.0-RC1"
   },
   "description": "acl bundle",
   "license": "proprietary",
@@ -29,7 +29,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.20.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }
