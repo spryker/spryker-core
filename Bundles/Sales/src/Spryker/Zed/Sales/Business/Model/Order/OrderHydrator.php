@@ -185,9 +185,12 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
         $shipmentMethodEntity = $orderEntity->getShipmentMethod();
-        $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
-        $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier()->getName());
-        $orderTransfer->setShipmentMethod($shipmentMethodTransfer);
+        if (!empty($shipmentMethodEntity)) {
+            $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
+            $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier()->getName());
+
+            $orderTransfer->setShipmentMethod($shipmentMethodTransfer);
+        }
     }
 
     /**

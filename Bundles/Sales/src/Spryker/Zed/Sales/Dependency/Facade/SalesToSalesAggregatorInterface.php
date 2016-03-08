@@ -27,7 +27,6 @@ interface SalesToSalesAggregatorInterface
     public function getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem);
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
