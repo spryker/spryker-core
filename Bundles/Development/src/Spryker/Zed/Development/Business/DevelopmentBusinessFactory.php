@@ -354,7 +354,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             ->addFilter($this->createDependencyTreeExternalDependencyFilter())
             ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'));
 
-
         if (!$showEngineBundle) {
             $treeFilter->addFilter($this->createDependencyTreeForeignEngineBundleFilter());
             $treeFilter->addFilter($this->createDependencyTreeEngineBundleFilter());
