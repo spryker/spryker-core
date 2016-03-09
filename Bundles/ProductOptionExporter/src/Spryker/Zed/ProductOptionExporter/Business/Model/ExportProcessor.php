@@ -233,6 +233,8 @@ class ExportProcessor implements ExportProcessorInterface
             $valueIds[$index] = (int)$valueId;
         }
 
+        sort($valueIds);
+
         $constraints[$operator] = $valueIds;
     }
 
