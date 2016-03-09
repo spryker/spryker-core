@@ -20,8 +20,8 @@
     "spryker/sales": "^1.0.0-RC2",
     "spryker/sales-aggregator": "^1.0.0-RC2",
     "spryker/sales-split": "^1.0.0-RC2",
-    "spryker/propel": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2",
     "spryker/url": "^1.0.0-RC2"
   },
   "description": "refund bundle",

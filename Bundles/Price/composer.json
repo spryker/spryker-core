@@ -18,9 +18,9 @@
     "spryker/messenger": "^1.0.0-RC2",
     "spryker/product": "^1.0.0-RC2",
     "spryker/touch": "^1.0.0-RC2",
-    "spryker/twig": "^1.0.0-RC1",
+    "spryker/twig": "^1.0.0-RC2",
     "spryker/config": "^1.0.0-RC2",
-    "spryker/silex": "^1.0.0-RC1"
+    "spryker/silex": "^1.0.0-RC2"
   },
   "description": "price bundle",
   "license": "proprietary",

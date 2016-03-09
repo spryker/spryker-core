@@ -14,8 +14,8 @@
     "spryker/application": "^1.0.0-RC2",
     "spryker/kernel": "^1.0.0-RC2",
     "spryker/sales": "^1.0.0-RC2",
-    "spryker/propel": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1"
+    "spryker/propel": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2"
   },
   "description": "sales split bundle",
   "license": "proprietary",

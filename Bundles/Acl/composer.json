@@ -17,9 +17,9 @@
     "spryker/kernel": "^1.0.0-RC2",
     "spryker/library": "^1.0.0-RC2",
     "spryker/user": "^1.0.0-RC2",
-    "spryker/propel": "^1.0.0-RC1",
-    "spryker/silex": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC2",
+    "spryker/silex": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2",
     "spryker/config": "^1.0.0-RC2",
     "spryker/url": "^1.0.0-RC2"
   },

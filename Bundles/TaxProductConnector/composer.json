@@ -11,7 +11,7 @@
   "require": {
     "spryker/kernel": "^1.0.0-RC2",
     "spryker/product": "^1.0.0-RC2",
-    "spryker/propel": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC2",
     "spryker/tax": "^1.0.0-RC2",
     "spryker/touch": "^1.0.0-RC2"
   },

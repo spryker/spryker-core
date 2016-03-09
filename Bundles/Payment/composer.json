@@ -12,8 +12,8 @@
   },
   "require": {
     "spryker/kernel": "^1.0.0-RC2",
-    "spryker/sales": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/sales": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2",
     "spryker/application": "^1.0.0-RC2"
   },
   "description": "payment bundle",

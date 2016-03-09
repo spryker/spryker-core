@@ -17,10 +17,10 @@
     "spryker/kernel": "^1.0.0-RC2",
     "spryker/locale": "^1.0.0-RC2",
     "spryker/price": "^1.0.0-RC2",
-    "spryker/transfer": "^1.0.0-RC1",
+    "spryker/transfer": "^1.0.0-RC2",
     "spryker/zed-request": "^1.0.0-RC2",
-    "spryker/log": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/log": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2",
     "spryker/product": "^1.0.0-RC2",
     "spryker/messenger": "^1.0.0-RC2"
   },

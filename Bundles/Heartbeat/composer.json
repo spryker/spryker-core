@@ -9,10 +9,10 @@
   "require": {
     "spryker/application": "^1.0.0-RC2",
     "spryker/kernel": "^1.0.0-RC2",
-    "spryker/elastica": "^1.0.0-RC1",
-    "spryker/propel": "^1.0.0-RC1",
-    "spryker/redis": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/elastica": "^1.0.0-RC2",
+    "spryker/propel": "^1.0.0-RC2",
+    "spryker/redis": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2",
     "spryker/config": "^1.0.0-RC2"
   },
   "description": "heartbeat bundle",

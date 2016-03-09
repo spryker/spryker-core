@@ -17,7 +17,7 @@
     "spryker/kernel": "^1.0.0-RC2",
     "spryker/library": "^1.0.0-RC2",
     "spryker/transfer": "^1.0.0-RC2",
-    "spryker/guzzle": "^1.0.0-RC1",
+    "spryker/guzzle": "^1.0.0-RC2",
     "spryker/config": "^1.0.0-RC2"
   },
   "description": "zed request bundle",

@@ -19,13 +19,13 @@
     "spryker/session": "^1.0.0-RC2",
     "spryker/transfer": "^1.0.0-RC2",
     "spryker/zed-request": "^1.0.0-RC2",
-    "spryker/propel": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1",
-    "spryker/assertion": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2",
+    "spryker/assertion": "^1.0.0-RC2",
     "spryker/checkout": "^1.0.0-RC2"
   },
   "require-dev": {
-    "spryker/testify": "^1.0.0-RC1"
+    "spryker/testify": "^1.0.0-RC2"
   },
   "description": "customer bundle",
   "license": "proprietary",

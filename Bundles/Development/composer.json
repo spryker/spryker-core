@@ -14,8 +14,8 @@
     "spryker/console": "^1.0.0-RC2",
     "spryker/graph": "^1.0.0-RC2",
     "spryker/kernel": "^1.0.0-RC2",
-    "spryker/symfony": "^1.0.0-RC1",
-    "spryker/zend": "^1.0.0-RC1"
+    "spryker/symfony": "^1.0.0-RC2",
+    "spryker/zend": "^1.0.0-RC2"
   },
   "description": "development bundle",
   "license": "proprietary",

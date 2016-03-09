@@ -20,7 +20,7 @@
     "spryker/propel": "^1.0.0-RC2",
     "spryker/search": "^1.0.0-RC2",
     "spryker/transfer": "^1.0.0-RC2",
-    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/symfony": "^1.0.0-RC2",
     "spryker/config": "^1.0.0-RC2"
   },
   "description": "setup bundle",

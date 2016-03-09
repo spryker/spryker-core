@@ -13,12 +13,12 @@
   },
   "require": {
     "spryker/application": "^1.0.0-RC2",
-    "spryker/gui": "^1.0.0-RC1",
+    "spryker/gui": "^1.0.0-RC2",
     "spryker/kernel": "^1.0.0-RC2",
     "spryker/session": "^1.0.0-RC2",
     "spryker/user": "^1.0.0-RC2",
-    "spryker/silex": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/silex": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2",
     "spryker/config": "^1.0.0-RC2"
   },
   "description": "auth bundle",

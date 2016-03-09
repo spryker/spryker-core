@@ -13,7 +13,7 @@
   "require": {
     "spryker/kernel": "^1.0.0-RC2",
     "spryker/locale": "^1.0.0-RC2",
-    "spryker/propel": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC2",
     "spryker/touch": "^1.0.0-RC2",
     "spryker/application": "^1.0.0-RC2",
     "spryker/library": "^1.0.0-RC2"

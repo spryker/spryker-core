@@ -16,9 +16,9 @@
     "spryker/console": "^1.0.0-RC2",
     "spryker/kernel": "^1.0.0-RC2",
     "spryker/library": "^1.0.0-RC2",
-    "spryker/monolog": "^1.0.0-RC1",
-    "spryker/silex": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/monolog": "^1.0.0-RC2",
+    "spryker/silex": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2",
     "spryker/config": "^1.0.0-RC2"
   },
   "description": "propel bundle",

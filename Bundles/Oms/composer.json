@@ -18,10 +18,10 @@
     "spryker/library": "^1.0.0-RC2",
     "spryker/sales": "^1.0.0-RC2",
     "spryker/graph": "^1.0.0-RC2",
-    "spryker/propel": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2",
     "spryker/country": "^1.0.0-RC2",
-    "spryker/customer": "^1.0.0-RC1"
+    "spryker/customer": "^1.0.0-RC2"
   },
   "description": "oms bundle",
   "license": "proprietary",

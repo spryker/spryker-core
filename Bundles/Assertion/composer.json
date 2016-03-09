@@ -8,7 +8,7 @@
   },
   "require": {
     "spryker/kernel": "^1.0.0-RC2",
-    "spryker/silex": "^1.0.0-RC1"
+    "spryker/silex": "^1.0.0-RC2"
   },
   "description": "assertion bundle",
   "license": "proprietary",

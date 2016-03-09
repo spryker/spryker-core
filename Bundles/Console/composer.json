@@ -16,8 +16,8 @@
     "spryker/messenger": "^1.0.0-RC2",
     "spryker/new-relic": "^1.0.0-RC2",
     "spryker/propel": "^1.0.0-RC2",
-    "spryker/silex": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1"
+    "spryker/silex": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2"
   },
   "bin": {
     "0": "bin/console"

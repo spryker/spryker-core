@@ -20,9 +20,9 @@
     "spryker/messenger": "^1.0.0-RC2",
     "spryker/product": "^1.0.0-RC2",
     "spryker/touch": "^1.0.0-RC2",
-    "spryker/elastica": "^1.0.0-RC1",
-    "spryker/propel": "^1.0.0-RC1",
-    "spryker/symfony": "^1.0.0-RC1"
+    "spryker/elastica": "^1.0.0-RC2",
+    "spryker/propel": "^1.0.0-RC2",
+    "spryker/symfony": "^1.0.0-RC2"
   },
   "description": "product search bundle",
   "license": "proprietary",
