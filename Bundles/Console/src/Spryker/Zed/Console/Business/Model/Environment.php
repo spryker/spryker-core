@@ -17,9 +17,6 @@ class Environment
      */
     public static function initialize()
     {
-        defined('APPLICATION_ROOT_DIR')
-            || define('APPLICATION_ROOT_DIR', realpath(__DIR__ . '/../../../../../../../../../../..'));
-
         defined('APPLICATION_SOURCE_DIR')
             || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . '/src');
 
