@@ -29,7 +29,7 @@ class DetailController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $request->get(SalesConfig::PARAM_IS_SALES_ORDER); // TODO FW Use $this->castId(SalesConfig::PARAM_IS_SALES_ORDER) See #1409
+        $idSalesOrder = $this->castId($request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER));
 
         $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
 

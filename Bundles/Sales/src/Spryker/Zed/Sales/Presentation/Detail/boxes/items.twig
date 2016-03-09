@@ -73,7 +73,7 @@
                     <td>
                         {% if eventsGroupedByItem[orderItem.IdSalesOrderItem] | length > 0 %}
                             {% for event in eventsGroupedByItem[orderItem.IdSalesOrderItem] %}
-                                <a class="btn btn-primary btn-sm trigger-order-single-event" data-id-item="{{ orderItem.idSalesOrderItem }}" data-id-sales-order="{{ orderItem.idSalesOrderItem }}" data-event="{{ event }}" href="#">{{ event }}</a>
+                                <a class="btn btn-primary btn-sm trigger-order-single-event" data-id-item="{{ orderItem.idSalesOrderItem }}" data-id-sales-order="{{ orderItem.fkSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
                             {% endfor %}
                         {% else -%}
                             -

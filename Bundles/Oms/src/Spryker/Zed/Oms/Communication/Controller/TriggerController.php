@@ -25,7 +25,7 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
-        $idOrderItem = $this->castId($request->query->get('id-sales-order-item'));
+        $idOrderItem = $this->castId($request->query->getInt('id-sales-order-item'));
         $event = $request->query->get('event'); // TODO FW Validation
         $redirect = $request->query->get('redirect', '/'); // TODO FW Validation
 
@@ -41,7 +41,7 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderAction(Request $request)
     {
-        $idOrder = $this->castId($request->query->get('id-sales-order'));
+        $idOrder = $this->castId($request->query->getInt('id-sales-order'));
         $event = $request->query->get('event'); // TODO FW Validation
         $redirect = $request->query->get('redirect', '/'); // TODO FW Validation
         $itemsList = $request->query->get('items');

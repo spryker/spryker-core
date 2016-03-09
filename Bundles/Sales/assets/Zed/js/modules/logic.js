@@ -33,6 +33,21 @@ function createTriggerUrl(idOrder, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
+function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
+    var url = '/oms/trigger/trigger-event-for-order-items';
+    var parameters = {
+        event: eventName,
+        'id-sales-order-item': idOrderItem,
+        redirect: '/sales/detail?id-sales-order=' + idOrder
+    };
+
+    parameters.items = getSelectedItems();
+
+    var finalUrl = url + '?' + $.param(parameters);
+
+    return decodeURIComponent(finalUrl);
+}
+
 $(document).ready(function() {
     $('.trigger-order-single-event').click(function(e){
         e.preventDefault();
@@ -41,7 +56,7 @@ $(document).ready(function() {
         var eventName = $(this).data('event');
         var idOrderItem = $(this).data('id-item');
 
-        window.location = createTriggerUrl(idOrder, eventName, idOrderItem);
+        window.location = createTriggerItemUrl(idOrder, idOrderItem, eventName);
     });
 
     $('.trigger-order-event').click(function(e){
