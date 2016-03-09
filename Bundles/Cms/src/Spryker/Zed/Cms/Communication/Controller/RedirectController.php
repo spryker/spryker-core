@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
@@ -160,7 +159,7 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @param SpyUrlRedirect $redirect
+     * @param \Orm\Zed\Url\Persistence\SpyUrlRedirect $redirect
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
