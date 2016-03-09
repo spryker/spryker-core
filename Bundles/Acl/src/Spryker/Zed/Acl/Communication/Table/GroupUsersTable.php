@@ -25,7 +25,7 @@ class GroupUsersTable extends AbstractTable
     const COL_EMAIL = 'email';
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
-    const ACTION = 'Action';
+    const ACTIONS = 'Actions';
 
     /**
      * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
@@ -63,7 +63,7 @@ class GroupUsersTable extends AbstractTable
             self::COL_FIRST_NAME => 'First Name',
             self::COL_LAST_NAME => 'Last Name',
             self::COL_EMAIL => 'Email',
-            self::ACTION => self::ACTION,
+            self::ACTIONS => self::ACTIONS,
         ]);
 
         $config->addRawColumn(self::COL_OPTIONS);
@@ -90,7 +90,7 @@ class GroupUsersTable extends AbstractTable
                 self::COL_FIRST_NAME => $user->getFirstName(),
                 self::COL_LAST_NAME => $user->getLastName(),
                 self::COL_EMAIL => $user->getUsername(),
-                self::ACTION => $this->getRemoveUrl($user),
+                self::ACTIONS => $this->getRemoveUrl($user),
             ];
         }
 
