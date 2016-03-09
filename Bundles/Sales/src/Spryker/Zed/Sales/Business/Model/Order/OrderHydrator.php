@@ -133,6 +133,7 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->fromArray($orderItemEntity->toArray(), true);
+        $itemTransfer->setProcess($orderItemEntity->getProcess()->getName());
         $itemTransfer->setUnitGrossPrice($orderItemEntity->getGrossPrice());
         $this->addStateHistory($orderItemEntity, $itemTransfer);
 
