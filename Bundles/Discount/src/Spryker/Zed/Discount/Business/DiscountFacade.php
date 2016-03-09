@@ -134,7 +134,7 @@ class DiscountFacade extends AbstractFacade
      *
      * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return $this
+     * @return \Generated\Shared\Transfer\VoucherPoolTransfer
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
     {
