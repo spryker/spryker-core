@@ -3,7 +3,7 @@
     {% block widget_content %}
         <div class="row">
             <div class="col-xs-12 col-md-4">
-                <p><b>{{ 'Order ID' | trans }}:</b> {{ order.idSalesOrder }}</p>
+                <p><b>{{ 'Order ID' | trans }}:</b> {{ order.orderReference }}</p>
                 <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | date('Y-m-d G:i:s') }}</p>
                 <p><b>{{ 'Grand total' | trans }}:</b> {{ order.totals.grandTotal | currency }}</p>
                 <p><b>{{ 'Discount' | trans }}:</b> {{ order.totals.discountTotal | currency }}</p>
@@ -17,7 +17,7 @@
                       <span class="label label-info">{{ state }}</span>
                     {% endfor %}
                 </p>
-                <p><b>{{ 'Other order' | trans }}:</b> ({{ order.totalOrderCount }})</p>
+                <p><b>{{ 'Other order count' | trans }}:</b> ({{ order.totalOrderCount }})</p>
             </div>
             <div class="col-xs-12 col-md-4">
                 {{ render(controller('/sales/comment/list', {'request': app.request})) }}

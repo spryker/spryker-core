@@ -91,9 +91,8 @@ class OrderHydrator implements OrderHydratorInterface
         $this->hydrateShippingAddressToOrderTransfer($orderEntity, $orderTransfer);
         $this->hydrateShipmentMethodToOrderTransfer($orderEntity, $orderTransfer);
         $this->hydrateExpensesToOrderTransfer($orderEntity, $orderTransfer);
-        $orderTransfer->setTotalOrderCount(
-            $this->getTotalCustomerOrderCount($orderTransfer->getFkCustomer())
-        );
+
+        $orderTransfer->setTotalOrderCount($this->getTotalCustomerOrderCount($orderTransfer->getFkCustomer()));
 
         return $orderTransfer;
     }
