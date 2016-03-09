@@ -101,7 +101,7 @@ class CsvReader implements CsvReaderInterface
 
     /**
      * @param array $columns
-     * @param string $data
+     * @param array $data
      * @param string $filename
      * @param int $lineNumber
      *
@@ -237,9 +237,14 @@ class CsvReader implements CsvReaderInterface
 
         $csvFile->rewind();
         while (!$csvFile->eof()) {
+            $line = $csvFile->fgetcsv();
+            if (!$line) {
+                break;
+            }
+
             $data[] = $this->composeAndValidateLine(
                 $csvMeta->getColumns(),
-                $csvFile->fgetcsv(),
+                $line,
                 $csvFile->getRealPath(),
                 $currentLine++
             );

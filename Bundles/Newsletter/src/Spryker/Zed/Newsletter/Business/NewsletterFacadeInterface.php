@@ -67,4 +67,11 @@ interface NewsletterFacadeInterface
      */
     public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber);
 
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function install();
+
 }

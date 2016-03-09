@@ -48,8 +48,7 @@ class InitializeDatabaseConsole extends Console
                 $output->writeln('Installing DB data for ' . $name);
 
                 $plugin->setMessenger($messenger);
-                $plugin->notice('Running ' . get_class($plugin));
-                $plugin->install();
+                $plugin->run();
             }
         } catch (\Exception $e) {
             $this->error($e->getMessage());

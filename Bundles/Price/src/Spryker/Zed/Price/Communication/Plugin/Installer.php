@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Price\Communication\Plugin;
 
+use Spryker\Zed\Installer\Business\Model\InstallerPluginInterface;
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 /**
@@ -19,7 +20,7 @@ class Installer extends AbstractInstallerPlugin
     /**
      * @return void
      */
-    public function install()
+    protected function install()
     {
         $this->getFacade()->install($this->messenger);
     }

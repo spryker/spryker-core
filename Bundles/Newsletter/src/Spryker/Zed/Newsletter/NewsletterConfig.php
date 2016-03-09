@@ -72,4 +72,12 @@ class NewsletterConfig extends AbstractBundleConfig
         return $this->get(NewsletterConstants::MERGE_LANGUAGE_HANDLEBARS);
     }
 
+    /**
+     * @return array
+     */
+    public function getNewsletterTypes()
+    {
+        return [];
+    }
+
 }

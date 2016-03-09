@@ -17,11 +17,4 @@ interface InstallerFacadeInterface
      */
     public function getInstallerPlugins();
 
-    /**
-     * @api
-     *
-     * @return \Spryker\Zed\Installer\Business\Model\GlossaryInstaller
-     */
-    public function getGlossaryInstaller();
-
 }

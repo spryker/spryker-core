@@ -49,6 +49,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
+     * @api
+     *
      * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param int $idProduct
      *
@@ -62,6 +64,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
+     * @api
+     *
      * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param int $idProduct
      *

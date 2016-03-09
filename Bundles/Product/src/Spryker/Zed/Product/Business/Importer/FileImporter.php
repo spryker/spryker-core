@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\Product\Business\Importer;
 
+use Spryker\Shared\Library\BatchIterator\CsvBatchIterator;
 use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
-use Spryker\Zed\Product\Business\Importer\Reader\File;
 use Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface;
-use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Product\Business\Model\ProductBatchResultInterface;
 use Spryker\Zed\Product\Business\Validator\DataValidatorInterface;
 
@@ -21,11 +20,6 @@ class FileImporter implements FileImporterInterface
      * @var \Spryker\Zed\Product\Business\Validator\DataValidatorInterface
      */
     protected $importProductValidator;
-
-    /**
-     * @var File\IteratorReaderInterface
-     */
-    protected $fileReader;
 
     /**
      * @var \Spryker\Zed\Product\Business\Builder\ProductBuilderInterface
@@ -51,20 +45,17 @@ class FileImporter implements FileImporterInterface
 
     /**
      * @param \Spryker\Zed\Product\Business\Validator\DataValidatorInterface $importProductValidator
-     * @param File\IteratorReaderInterface $reader
      * @param \Spryker\Zed\Product\Business\Builder\ProductBuilderInterface $productBuilder
      * @param \Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface $writer
      * @param \Spryker\Zed\Product\Business\Model\ProductBatchResultInterface $productBatchResult
      */
     public function __construct(
         DataValidatorInterface $importProductValidator,
-        File\IteratorReaderInterface $reader,
         ProductBuilderInterface $productBuilder,
         ProductWriterInterface $writer,
         ProductBatchResultInterface $productBatchResult
     ) {
         $this->importProductValidator = $importProductValidator;
-        $this->fileReader = $reader;
         $this->productBuilder = $productBuilder;
         $this->productWriter = $writer;
         $this->productBatchResult = $productBatchResult;
@@ -77,32 +68,30 @@ class FileImporter implements FileImporterInterface
      */
     public function importFile(\SplFileInfo $file)
     {
-        $rows = $this->fileReader->getIteratorFromFile($file);
-        $fieldKeys = $rows->current();
+        $totalCount = 0;
+        $batchIterator = new CsvBatchIterator($file->getRealPath(), 10);
 
-        while (!$rows->eof()) {
-            $line = $rows->key();
-            if ($line > 0) {
-                $row = array_combine($fieldKeys, $rows->current());
-                $preProcessedProduct = $this->preProcess($row);
+        foreach ($batchIterator as $batchCollection) {
+            foreach ($batchCollection as $productDataToImport) {
+                $preProcessedProduct = $this->preProcess($productDataToImport);
 
                 if (empty($preProcessedProduct)) {
-                    $this->logInvalidProduct($line);
+                    $this->logInvalidProduct($productDataToImport);
                     continue; //skip invalid products
                 }
 
                 $product = $this->process($preProcessedProduct);
                 $result = $this->afterProcess($product);
+                $totalCount++;
 
                 if (!$result) {
-                    $this->logNotImportableProduct($line);
+                    $this->logNotImportableProduct($productDataToImport);
                 }
             }
-            $rows->next();
         }
 
         $result = clone $this->productBatchResult;
-        $result->setTotalCount($rows->key() - 1);
+        $result->setTotalCount($totalCount);
         $result->setFailedCount(count($this->invalidProducts));
 
         return $result;
@@ -116,7 +105,7 @@ class FileImporter implements FileImporterInterface
     protected function preProcess(array $data)
     {
         if (!$this->importProductValidator->isValid($data)) {
-            return;
+            return [];
         }
 
         return $data;

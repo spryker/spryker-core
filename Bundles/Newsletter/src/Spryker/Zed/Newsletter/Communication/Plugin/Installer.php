@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Locale\Communication\Plugin;
+namespace Spryker\Zed\Newsletter\Communication\Plugin;
 
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 /**
- * @method \Spryker\Zed\Locale\Communication\LocaleCommunicationFactory getFactory()
- * @method \Spryker\Zed\Locale\Business\LocaleFacade getFacade()
+ * @method \Spryker\Zed\Newsletter\Business\NewsletterFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin
 {
@@ -21,7 +20,7 @@ class Installer extends AbstractInstallerPlugin
      */
     protected function install()
     {
-        $this->getFacade()->install($this->messenger);
+        $this->getFacade()->install();
     }
 
 }

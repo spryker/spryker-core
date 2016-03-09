@@ -44,6 +44,8 @@ interface ProductSearchFacadeInterface
     public function install(MessengerInterface $messenger);
 
     /**
+     * @api
+     *
      * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param int $idProduct
      *
@@ -52,6 +54,8 @@ interface ProductSearchFacadeInterface
     public function activateProductSearch($idProduct, array $localeCollection);
 
     /**
+     * @api
+     *
      * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param int $idProduct
      *

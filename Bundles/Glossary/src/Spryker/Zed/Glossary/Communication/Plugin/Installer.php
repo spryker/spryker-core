@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Locale\Communication\Plugin;
+namespace Spryker\Zed\Glossary\Communication\Plugin;
 
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 /**
- * @method \Spryker\Zed\Locale\Communication\LocaleCommunicationFactory getFactory()
- * @method \Spryker\Zed\Locale\Business\LocaleFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin
 {
