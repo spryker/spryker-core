@@ -93,13 +93,13 @@ class CmsPageTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
-            Url::generate('/cms/glossary/', [
+            Url::generate('/cms/glossary', [
                 self::REQUEST_ID_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
             'Edit Placeholders'
         );
         $buttons[] = $this->generateEditButton(
-            Url::generate('/cms/page/edit/', [
+            Url::generate('/cms/page/edit', [
                 self::REQUEST_ID_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
             'Edit Page'

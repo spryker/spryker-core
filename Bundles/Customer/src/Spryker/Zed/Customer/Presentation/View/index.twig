@@ -6,7 +6,7 @@
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/customer/', 'List Customers' | trans) }}
+    {{ backActionButton('/customer', 'List Customers' | trans) }}
     {{ editActionButton('/customer/edit?id-customer=' ~ idCustomer, 'Edit Customer' | trans) }}
     {{ viewActionButton('/customer/address/?id-customer=' ~ idCustomer, 'Manage Addresses') }}
 {% endblock %}

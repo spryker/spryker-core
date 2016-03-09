@@ -17,7 +17,7 @@ class Payments extends AbstractTable
 {
 
     const FIELD_VIEW = 'FIELD_VIEW';
-    const URL_PAYOLUTION_DETAILS = '/payolution/details/';
+    const URL_PAYOLUTION_DETAILS = '/payolution/details';
     const PARAM_ID_PAYMENT = 'id-payment';
 
     /**

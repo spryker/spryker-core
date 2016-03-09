@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
@@ -17,11 +18,12 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
  */
 class RedirectController extends AbstractController
 {
 
-    const REDIRECT_ADDRESS = '/cms/redirect/';
+    const REDIRECT_ADDRESS = '/cms/redirect';
     const REQUEST_ID_URL = 'id-url';
     const REQUEST_ID_URL_REDIRECT = 'id-url-redirect';
 
@@ -140,10 +142,10 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $url
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $url
      * @param array $data
      *
-     * @return $this
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     private function createUrlTransfer($url, $data)
     {
@@ -158,7 +160,7 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     * @param SpyUrlRedirect $redirect
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer

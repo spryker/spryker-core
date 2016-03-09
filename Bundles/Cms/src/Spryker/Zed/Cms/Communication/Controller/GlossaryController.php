@@ -32,7 +32,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GlossaryController extends AbstractController
 {
 
-    const REDIRECT_ADDRESS = '/cms/glossary/';
+    const REDIRECT_ADDRESS = '/cms/glossary';
     const SEARCH_LIMIT = 10;
     const ID_FORM = 'id-form';
     const TYPE = 'type';

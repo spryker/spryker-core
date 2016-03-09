@@ -44,7 +44,7 @@ class AddController extends AbstractController
 
             $this->addSuccessMessage('Saved entry to glossary.');
 
-            return $this->redirectResponse('/glossary/');
+            return $this->redirectResponse('/glossary');
         }
 
         return $this->viewResponse([
