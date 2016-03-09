@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\DashToCamelCase;
 
