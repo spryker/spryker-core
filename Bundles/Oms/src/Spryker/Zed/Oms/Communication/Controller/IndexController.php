@@ -59,7 +59,7 @@ class IndexController extends AbstractController
         }
 
         if ($reload) {
-            return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontSize);
+            return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontSize.'&state='.$highlightState);
         }
 
         $response = $this->getFacade()->drawProcess($processName, $highlightState, $format, $fontSize);

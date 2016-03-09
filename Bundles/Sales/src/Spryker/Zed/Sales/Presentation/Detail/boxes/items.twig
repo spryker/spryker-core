@@ -35,6 +35,7 @@
                 <th>{{ 'Tax %' | trans }}</th>
                 <th>{{ 'Discount amount' | trans }}</th>
                 <th>{{ 'Item total' | trans }}</th>
+                <th>{{ 'Process' | trans }}</th>
                 <th>{{ 'Status' | trans }}</th>
                 <th>{{ 'Trigger event' | trans }}</th>
             </tr>
@@ -55,6 +56,7 @@
                     <td>{{ orderItem.taxRate|default(0) }} %</td>
                     <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | currency }} </td>
                     <td>{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | currency }} </td>
+                    <td><a href="/oms/index/draw?process={{ orderItem.process }}">{{ orderItem.process }}</a></td>
                     <td>
                         {% for stateHistory in orderItem.stateHistory | slice(0, 3) %}
                             <div>{{ stateHistory.state }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
