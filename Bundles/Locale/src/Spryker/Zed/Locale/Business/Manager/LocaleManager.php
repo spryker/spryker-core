@@ -154,14 +154,15 @@ class LocaleManager
      */
     public function getLocaleCollection()
     {
-        $locales = $this->getAvailableLocales();
+        $availableLocales = Store::getInstance()->getLocales();
 
         $transferCollection = [];
-        foreach ($locales as $localeCode) {
-            $transferCollection[$localeCode] = $this->getLocale($localeCode);
+        foreach ($availableLocales as $localeName) {
+            $localeInfo = $this->getLocale($localeName);
+            $transferCollection[$localeInfo->getLocaleName()] = $localeInfo;
         }
 
-        $this->localeTransferCollection = $transferCollection;
+        return $transferCollection;
     }
 
     /**
