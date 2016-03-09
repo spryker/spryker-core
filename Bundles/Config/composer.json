@@ -13,8 +13,8 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0-RC1",
-    "spryker/library": "^1.0.0-RC1"
+    "spryker/kernel": "^1.0.0-RC2",
+    "spryker/library": "^1.0.0-RC2"
   },
   "description": "config bundle",
   "license": "proprietary",
