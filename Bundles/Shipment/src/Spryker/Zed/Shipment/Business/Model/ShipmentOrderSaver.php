@@ -84,6 +84,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     protected function addExpensesToOrder(
         QuoteTransfer $quoteTransfer,
