@@ -19,13 +19,12 @@ use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
  */
-class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
+class DiscountFacade extends AbstractFacade
 {
 
     /**

@@ -12,7 +12,6 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
@@ -29,7 +28,7 @@ class DetailController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $this->castId($request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER));
+        $idSalesOrder = $this->castId($request->query->get(SalesConfig::PARAM_ID_SALES_ORDER));
 
         $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
 
@@ -63,9 +62,12 @@ class DetailController extends AbstractController
         if ($addCommentBlock instanceof RedirectResponse) {
             return $addCommentBlock;
         }
-        $request->request->set('orderTransfer', $orderTransfer);
 
-        $blockData = $this->renderMultipleActions($request, $this->getFactory()->getSalesDetailExternalBlocksUrls());
+        $blockData = $this->renderMultipleActions(
+            $request,
+            $this->getFactory()->getSalesDetailExternalBlocksUrls(),
+            $orderTransfer
+        );
 
         if ($blockData instanceof RedirectResponse) {
             return $blockData;
@@ -80,13 +82,15 @@ class DetailController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $data
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array
      */
-    protected function renderMultipleActions(Request $request, array $data)
+    protected function renderMultipleActions(Request $request, array $data, OrderTransfer $orderTransfer)
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
+        $subRequest->request->set('orderTransfer', $orderTransfer);
 
         $responseData = [];
         /**

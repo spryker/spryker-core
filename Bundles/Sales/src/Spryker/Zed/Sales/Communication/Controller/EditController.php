@@ -40,7 +40,7 @@ class EditController extends AbstractController
             $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
             $this->getFacade()->updateOrder($orderTransfer, $idSalesOrder);
 
-            return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idSalesOrder));
+            return $this->redirectResponse(sprintf('/sales/detail/?id-sales-order=%d', $idSalesOrder));
         }
 
         return $this->viewResponse([
@@ -69,10 +69,11 @@ class EditController extends AbstractController
 
         if ($form->isValid()) {
             $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);
+            $addressTransfer->setIdSalesOrderAddress($idOrderAddress);
             $this->getFacade()
                 ->updateOrderAddress($addressTransfer, $idOrderAddress);
 
-            return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
+            return $this->redirectResponse(sprintf('/sales/detail/?id-sales-order=%d', $idOrder));
         }
 
         return $this->viewResponse([

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Order;
+namespace Spryker\Zed\Sales\Business\Model\Address;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
@@ -43,7 +43,7 @@ class OrderAddressUpdater implements OrderAddressUpdaterInterface
             return false;
         }
 
-        $this->hydrateAddressTransferFromEntity($addressTransfer, $addressEntity);
+        $this->hydrateAddressEntityFromTransfer($addressTransfer, $addressEntity);
 
         $addressEntity->save();
 
@@ -56,11 +56,11 @@ class OrderAddressUpdater implements OrderAddressUpdaterInterface
      *
      * @return void
      */
-    protected function hydrateAddressTransferFromEntity(
+    protected function hydrateAddressEntityFromTransfer(
         AddressTransfer $addressTransfer,
         SpySalesOrderAddress $addressEntity
     ) {
-        $addressTransfer->fromArray($addressEntity->toArray(), true);
+        $addressEntity->fromArray($addressTransfer->modifiedToArray());
     }
 
 }

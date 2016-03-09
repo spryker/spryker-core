@@ -3,7 +3,7 @@
 {% set widget_title = 'Address details' %}
 
 {% block action %}
-    {{ viewActionButton('/sales/details/?id-sales-order=' ~ idOrder, 'View Order' | trans) }}
+    {{ viewActionButton('/sales/detail/?id-sales-order=' ~ idOrder, 'View Order' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@
 
             {{ form_start(form) }}
                 {{ form_widget(form) }}
-    
+
                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}
 

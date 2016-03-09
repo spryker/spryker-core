@@ -8,27 +8,32 @@
 namespace Spryker\Zed\Discount\Business;
 
 use Generated\Shared\Transfer\CartRuleTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
-interface DiscountFacadeINterface
+/**
+ * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
+ */
+interface DiscountFacadeInterface
 {
 
     /**
      * @api
      *
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
-    public function calculateDiscounts(CalculableInterface $container);
+    public function calculateDiscounts(QuoteTransfer $quoteTransfer);
 
     /**
      * @api
@@ -42,12 +47,12 @@ interface DiscountFacadeINterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule $decisionRule
      *
      * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
-    public function isMinimumCartSubtotalReached(CalculableInterface $container, DecisionRule $decisionRule);
+    public function isMinimumCartSubtotalReached(QuoteTransfer $quoteTransfer, DecisionRule $decisionRule);
 
     /**
      * @api
@@ -102,7 +107,7 @@ interface DiscountFacadeINterface
      *
      * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return \Generated\Shared\Transfer\VoucherPoolTransfer
+     * @return $this
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer);
 
@@ -258,52 +263,42 @@ interface DiscountFacadeINterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return array
      */
-    public function getDiscountableItems(CalculableInterface $container, DiscountCollectorTransfer $discountCollectorTransfer);
+    public function getDiscountableItems(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer);
 
     /**
      * @api
      *
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    public function getDiscountableItemExpenses(CalculableInterface $container, DiscountCollectorTransfer $discountCollectorTransfer);
+    public function getDiscountableOrderExpenses(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer);
 
     /**
      * @api
      *
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    public function getDiscountableOrderExpenses(CalculableInterface $container, DiscountCollectorTransfer $discountCollectorTransfer);
+    public function getDiscountableItemProductOptions(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer);
 
     /**
      * @api
      *
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    public function getDiscountableItemProductOptions(CalculableInterface $container, DiscountCollectorTransfer $discountCollectorTransfer);
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
-     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
-     */
-    public function getDiscountableItemsFromCollectorAggregate(CalculableInterface $container, DiscountCollectorTransfer $discountCollectorTransfer);
+    public function getDiscountableItemsFromCollectorAggregate(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer);
 
     /**
      * @api
@@ -336,5 +331,69 @@ interface DiscountFacadeINterface
      * @return bool
      */
     public function useVoucherCodes(array $codes);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function saveOrderDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderTotalDiscountAmount(OrderTransfer $orderTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderCalculatedDiscounts(OrderTransfer $orderTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateItemDiscounts(OrderTransfer $orderTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateGrandTotalWithDiscounts(OrderTransfer $orderTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderExpenseTaxWithDiscounts(OrderTransfer $orderTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderExpensesWithDiscounts(OrderTransfer $orderTransfer);
 
 }
