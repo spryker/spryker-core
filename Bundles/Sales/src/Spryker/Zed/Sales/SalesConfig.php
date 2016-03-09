@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Sales\SalesConstants;
@@ -15,63 +17,12 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesConfig extends AbstractBundleConfig
 {
 
-    /**
-     * @return string
-     */
-    public function getInvoiceIncrementPrefix()
-    {
-        return '3';
-    }
+    const PARAM_IS_SALES_ORDER = 'id-sales-order';
+    const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
     /**
-     * @return string
-     */
-    public function getInvoiceIncrementDivider()
-    {
-        return '-';
-    }
-
-    /**
-     * total count of digits in invoiceNumber including prefix (max 20)
+     * Separator for the sequence number
      *
-     * @return int
-     */
-    public function getInvoiceIncrementDigits()
-    {
-        return 16;
-    }
-
-    /**
-     * minimum incrementation of invoice number
-     *
-     * @return int
-     */
-    public function getInvoiceIncrementMin()
-    {
-        return 1;
-    }
-
-    /**
-     * maximum incrementation of invoice number
-     *
-     * @return int
-     */
-    public function getInvoiceIncrementMax()
-    {
-        return 5;
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function getStateMachineTriggerQueueProcessMessageAmount()
-    {
-        return 50;
-    }
-
-    /**
      * @return string
      */
     public function getUniqueIdentifierSeparator()
@@ -80,18 +31,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * OR-condition
+     * Defines the prefix for the sequence number which is the public id of an order.
      *
-     * @return array
-     */
-    public function getMarkAsTestConditions()
-    {
-        return [
-            'last_name' => 'Tester',
-        ];
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     public function getOrderReferenceDefaults()
@@ -107,6 +48,53 @@ class SalesConfig extends AbstractBundleConfig
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 
         return $sequenceNumberSettingsTransfer;
+    }
+
+    /**
+     * Defines logic to determine if order is placed for testing purposes. When order is persisted, is_test flag is set.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isTestOrder(QuoteTransfer $quoteTransfer)
+    {
+        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
+        if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * This method determines state machine process from the given quote transfer and order item.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    public function determineProcessForOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
+    {
+        throw new \BadMethodCallException('You need to provide at least one state machine process for given method!');
+    }
+
+    /**
+     * This method provides list of urls to render blocks inside order detail page.
+     * Url defines path to external bundle controller. For example: /discount/sales/list would call discount bundle, sales controller, list action.
+     * Action should return return array or redirect response.
+     *
+     * example:
+     * [
+     *    'discount' => '/discount/sales/index',
+     * ]
+     *
+     * @return array
+     */
+    public function getSalesDetailExternalBlocksUrls()
+    {
+        return [];
     }
 
 }

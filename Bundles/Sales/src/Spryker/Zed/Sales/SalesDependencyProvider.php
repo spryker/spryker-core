@@ -11,19 +11,19 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 
 class SalesDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_COUNTRY = 'FACADE_COUNTRY';
     const FACADE_OMS = 'FACADE_OMS';
-    const FACADE_REFUND = 'FACADE_REFUND';
     const FACADE_LOCALE = 'LOCALE_FACADE';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
-
-    const PLUGINS_PAYMENT_LOGS = 'PLUGINS_PAYMENT_LOGS';
+    const FACADE_USER = 'FACADE_USER';
+    const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -44,12 +44,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             return new SalesToOmsBridge($container->getLocator()->oms()->facade());
         };
 
-        $container[self::FACADE_REFUND] = function (Container $container) {
-            return new SalesToRefundBridge($container->getLocator()->refund()->facade());
-        };
-
-        $container[self::PLUGINS_PAYMENT_LOGS] = function (Container $container) {
-            return $this->getPaymentLogPlugins($container);
+        $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
+            return new SalesToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
 
         return $container;
@@ -66,17 +62,15 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             return new SalesToOmsBridge($container->getLocator()->oms()->facade());
         };
 
-        return $container;
-    }
+        $container[self::FACADE_USER] = function (Container $container) {
+            return new SalesToUserBridge($container->getLocator()->user()->facade());
+        };
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return array
-     */
-    protected function getPaymentLogPlugins(Container $container)
-    {
-        return [];
+        $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
+            return new SalesToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
+        };
+
+        return $container;
     }
 
 }

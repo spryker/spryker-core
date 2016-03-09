@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface SalesQueryContainerInterface extends QueryContainerInterface
@@ -16,11 +18,11 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idOrder
+     * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function querySalesOrderById($idOrder);
+    public function querySalesOrderById($idSalesOrder);
 
     /**
      * @api
@@ -32,7 +34,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idOrder
+     * @var int
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -41,7 +43,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idOrder
+     * @var int
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -73,11 +75,11 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idOrderAddress
+     * @param int $idSalesOrderAddress
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
      */
-    public function querySalesOrderAddressById($idOrderAddress);
+    public function querySalesOrderAddressById($idSalesOrderAddress);
 
     /**
      * @api
@@ -92,11 +94,38 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idOrder
-     * @param int $idCustomer
+     * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function querySalesOrderDetails($idOrder, $idCustomer);
+    public function querySalesOrderDetails($idSalesOrder);
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
+     */
+    public function queryCommentsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @api
+     *
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function queryCustomerOrders($idCustomer, FilterTransfer $filterTransfer = null);
+
+    /**
+     * @api
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
+     *
+     * @return void
+     */
+    public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems);
 
 }

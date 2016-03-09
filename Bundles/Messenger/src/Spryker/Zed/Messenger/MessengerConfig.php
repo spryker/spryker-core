@@ -36,7 +36,6 @@ class MessengerConfig extends AbstractBundleConfig
         if (PHP_SAPI === 'cli') {
             return MessengerConstants::IN_MEMORY_TRAY;
         }
-
         return self::$messageTray;
     }
 

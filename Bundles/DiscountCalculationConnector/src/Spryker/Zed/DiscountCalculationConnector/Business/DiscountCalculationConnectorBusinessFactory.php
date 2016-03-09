@@ -8,9 +8,10 @@
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
-use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
-use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator;
+use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -28,17 +29,11 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator
      */
-    public function createGrandTotalWithDiscountsTotalsCalculator()
+    public function createGrandTotalWithDiscountsCalculator()
     {
-        $calculationFacade = $this->getCalculationFacade();
-        $discountTotalsCalculator = $this->createDiscountTotalsCalculator();
-
-        return new GrandTotalWithDiscountsTotalsCalculator(
-            $calculationFacade,
-            $discountTotalsCalculator
-        );
+        return new GrandTotalWithDiscountsCalculator();
     }
 
     /**
@@ -50,11 +45,11 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator
      */
-    public function getCalculationFacade()
+    public function createSumGrossCalculatedDiscountAmountCalculator()
     {
-        return $this->getProvidedDependency(DiscountCalculationConnectorDependencyProvider::FACADE_CALCULATOR);
+        return new SumGrossCalculatedDiscountAmountCalculator();
     }
 
 }

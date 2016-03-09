@@ -111,7 +111,6 @@ class MethodFormDataProvider
         return $options;
     }
 
-
     /**
      * @return array
      */

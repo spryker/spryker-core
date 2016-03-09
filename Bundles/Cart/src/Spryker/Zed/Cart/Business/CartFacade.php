@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Cart\Business;
 
-use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Zed\Cart\Business\Model\CalculableContainer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,118 +17,46 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
 {
 
     /**
+     * Adds item(s) to the quote. Each item gets additonal informations (e.g. price).
+     *
+     * Specification:
+     * - For each new item run the item expander plugins (requires a SKU for each new item)
+     * - Add new item(s) to quote (Requires a quantity > 0 for each new item)
+     * - Group items in quote (-> ItemGrouper)
+     * - Recalculate quote (-> Calculation)
+     * - Add success message to messenger (-> Messenger)
+     * - Return updated quote
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addToCart(ChangeTransfer $cartChange)
+    public function add(CartChangeTransfer $cartChangeTransfer)
     {
-        $addOperator = $this->getFactory()->createAddOperator();
-
-        return $addOperator->executeOperation($cartChange);
+        return $this->getFactory()->createCartOperation()->add($cartChangeTransfer);
     }
 
     /**
+     * Remove item(s) from the quote.
+     *
+     * Specification:
+     * - For each new item run the item expander plugins (requires a SKU for each new item)
+     * - Decreases the given quantity for the given item(s) from the quote
+     * - Recalculate quote (-> Calculation)
+     * - Add success message to messenger (-> Messenger)
+     * - Return updated quote
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseQuantity(ChangeTransfer $cartChange)
+    public function remove(CartChangeTransfer $cartChangeTransfer)
     {
-        $increaseOperator = $this->getFactory()->createIncreaseOperator();
-
-        return $increaseOperator->executeOperation($cartChange);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function removeFromCart(ChangeTransfer $cartChange)
-    {
-        $removeOperator = $this->getFactory()->createRemoveOperator();
-
-        return $removeOperator->executeOperation($cartChange);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function decreaseQuantity(ChangeTransfer $cartChange)
-    {
-        $decreaseOperator = $this->getFactory()->createDecreaseOperator();
-
-        return $decreaseOperator->executeOperation($cartChange);
-    }
-
-    /**
-     * @api
-     *
-     * @todo call calculator client from cart client.
-     *
-     * @param \Generated\Shared\Transfer\CartTransfer $cart
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function recalculate(CartTransfer $cart)
-    {
-        $calculator = $this->getFactory()->getCartCalculator();
-        $calculableContainer = $calculator->recalculate(new CalculableContainer($cart));
-
-        return $calculableContainer->getCalculableObject();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function addCouponCode(ChangeTransfer $cartChange)
-    {
-        $addCouponCodeOperator = $this->getFactory()->createCouponCodeAddOperator();
-
-        return $addCouponCodeOperator->executeOperation($cartChange);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function removeCouponCode(ChangeTransfer $cartChange)
-    {
-        $removeCouponCodeOperator = $this->getFactory()->createCouponCodeRemoveOperator();
-
-        return $removeCouponCodeOperator->executeOperation($cartChange);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function clearCouponCodes(ChangeTransfer $cartChange)
-    {
-        $clearCouponCodesOperator = $this->getFactory()->createCouponCodeClearOperator();
-
-        return $clearCouponCodesOperator->executeOperation($cartChange);
+        return $this->getFactory()->createCartOperation()->remove($cartChangeTransfer);
     }
 
 }

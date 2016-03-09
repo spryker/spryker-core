@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Cart;
 
-use Spryker\Client\Cart\Session\CartSession;
+use Spryker\Client\Cart\Session\QuoteSession;
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -19,7 +19,7 @@ class CartFactory extends AbstractFactory
      */
     public function createSession()
     {
-        return new CartSession($this->createSessionClient());
+        return new QuoteSession($this->createSessionClient());
     }
 
     /**

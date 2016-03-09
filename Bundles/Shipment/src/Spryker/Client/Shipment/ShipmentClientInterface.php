@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Shipment;
 
-use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ShipmentClientInterface
 {
@@ -15,10 +15,10 @@ interface ShipmentClientInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability);
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 
 }

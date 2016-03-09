@@ -56,7 +56,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
      *
      * @return void
      */
@@ -70,7 +70,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
      *
      * @return void
      */

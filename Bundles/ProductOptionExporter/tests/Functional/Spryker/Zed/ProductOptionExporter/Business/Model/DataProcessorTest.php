@@ -81,7 +81,7 @@ class DataProcessorTest extends Test
         $option = $product['options'][0];
         $this->assertEquals('Color', $option['label']);
         $this->assertFalse($option['isOptional']);
-        $this->assertEquals('15.0', $option['taxRate']);
+        $this->assertEquals('15', $option['taxRate']);
         $this->assertEquals($ids['idUsageSize'], $option['excludes'][0]);
 
         $this->assertCount(4, $option['values']);

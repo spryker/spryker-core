@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
+use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -43,6 +44,14 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     protected function getOmsFacade()
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition
+     */
+    public function createProductsAvailablePreCondition()
+    {
+        return new ProductsAvailableCheckoutPreCondition($this->createSellableModel());
     }
 
 }

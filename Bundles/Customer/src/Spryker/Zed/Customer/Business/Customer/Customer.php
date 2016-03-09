@@ -481,15 +481,17 @@ class Customer
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $addressEntity
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function entityToTransfer(SpyCustomerAddress $customer)
+    protected function entityToTransfer(SpyCustomerAddress $addressEntity)
     {
-        $entity = new AddressTransfer();
+        $addressTransfer = new AddressTransfer();
+        $addressTransfer->fromArray($addressEntity->toArray(), true);
+        $addressTransfer->setIso2Code($addressEntity->getCountry()->getIso2Code());
 
-        return $entity->fromArray($customer->toArray(), true);
+        return $addressTransfer;
     }
 
     /**

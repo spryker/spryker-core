@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\ProductOptionCartConnector\Business\Model;
 
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
@@ -92,11 +92,11 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     protected function createCartChangeTransfer(array $cartItems)
     {
-        $changeTransfer = new ChangeTransfer();
+        $changeTransfer = new CartChangeTransfer();
 
         foreach ($cartItems as $cartItem => $options) {
             $cartItem = new ItemTransfer();

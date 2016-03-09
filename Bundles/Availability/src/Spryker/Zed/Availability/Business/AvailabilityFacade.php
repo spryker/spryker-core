@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Availability\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -38,6 +40,21 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     public function calculateStockForProduct($sku)
     {
         return $this->getFactory()->createSellableModel()->calculateStockForProduct($sku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function checkoutAvailabilityPrecondition(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+        $this->getFactory()
+            ->createProductsAvailablePreCondition()
+            ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
     }
 
 }

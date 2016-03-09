@@ -16,20 +16,8 @@ use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValuePriceTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTranslationTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueUsageConstraintTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueUsageTableMap;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValueQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusionQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslationQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraintQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
-use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**

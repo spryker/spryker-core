@@ -22,8 +22,8 @@
         <property name="idSalesOrderItem" type="int" />
         <property name="name" type="string" />
         <property name="sku" type="string" />
-        <property name="grossPrice" type="int" />
-        <property name="totalPrice" type="int" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
         <property name="quantity" type="int" />
     </transfer>
 

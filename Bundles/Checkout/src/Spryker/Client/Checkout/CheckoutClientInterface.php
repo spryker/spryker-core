@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Checkout;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutClientInterface
 {
@@ -15,10 +15,10 @@ interface CheckoutClientInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $requestInterface
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(CheckoutRequestTransfer $requestInterface);
+    public function placeOrder(QuoteTransfer $quoteTransfer);
 
 }

@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\ProductCartConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -90,7 +90,7 @@ class ProductCartPluginTest extends Test
             ->setSku(self::SKU_PRODUCT_CONCRETE)
             ->save();
 
-        $changeTransfer = new ChangeTransfer();
+        $changeTransfer = new CartChangeTransfer();
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku(self::SKU_PRODUCT_CONCRETE);
         $changeTransfer->addItem($itemTransfer);
@@ -103,9 +103,7 @@ class ProductCartPluginTest extends Test
         $this->assertEquals(self::SKU_PRODUCT_CONCRETE, $expandedItemTransfer->getSku());
         $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
         $this->assertEquals($productConcreteEntity->getIdProduct(), $expandedItemTransfer->getId());
-        $expandedTSetTransfer = $expandedItemTransfer->getTaxSet();
-        $this->assertNotNull($expandedTSetTransfer);
-        $this->assertEquals(self::TAX_SET_NAME, $expandedTSetTransfer->getName());
+        $this->assertNotNull($expandedItemTransfer->getTaxRate());
     }
 
 }

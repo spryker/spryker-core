@@ -85,4 +85,18 @@ interface FinderInterface
      */
     public function getStateDisplayName(SpySalesOrderItem $orderItem);
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     */
+    public function getManualEventsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+
 }

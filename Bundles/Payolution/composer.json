@@ -25,7 +25,8 @@
     "spryker/country": "^1.0.0-RC1",
     "spryker/customer": "^1.0.0-RC1",
     "spryker/sales": "^1.0.0-RC1",
-    "spryker/url": "^1.0.0-RC1"
+    "spryker/url": "^1.0.0-RC1",
+    "spryker/sales-aggregator": "^1.0.0-RC1"
   },
   "description": "payolution bundle",
   "license": "proprietary",

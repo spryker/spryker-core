@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\Discount\Business;
 
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Fixed;
 use Spryker\Zed\Discount\Business\Calculator\Percentage;
 use Spryker\Zed\Discount\Business\Collector\Aggregate;
 use Spryker\Zed\Discount\Business\Collector\Expense;
 use Spryker\Zed\Discount\Business\Collector\Item;
-use Spryker\Zed\Discount\Business\Collector\ItemExpense;
 use Spryker\Zed\Discount\Business\Collector\ItemProductOption;
 use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use Spryker\Zed\Discount\Business\DecisionRule\Voucher;
@@ -23,6 +22,13 @@ use Spryker\Zed\Discount\Business\Model\CartRule;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
 use Spryker\Zed\Discount\Business\Model\DecisionRuleEngine;
 use Spryker\Zed\Discount\Business\Model\Discount;
+use Spryker\Zed\Discount\Business\Model\DiscountOrderSaver;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpensesWithDiscounts;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts;
 use Spryker\Zed\Discount\Business\Model\VoucherCode;
 use Spryker\Zed\Discount\Business\Model\VoucherEngine;
 use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
@@ -46,7 +52,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Discount\Business\DecisionRule\Voucher
      */
-    public function createDecisionRuleVoucher()
+    public function getDecisionRuleVoucher()
     {
         return new Voucher($this->getQueryContainer());
     }
@@ -54,26 +60,26 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal
      */
-    public function createDecisionRuleMinimumCartSubtotal()
+    public function getDecisionRuleMinimumCartSubtotal()
     {
         return new MinimumCartSubtotal();
     }
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Zed\Discount\Business\Model\Discount
      */
-    public function createDiscount(CalculableInterface $container)
+    public function createDiscount(QuoteTransfer $quoteTransfer)
     {
         return new Discount(
-            $container,
+            $quoteTransfer,
             $this->getQueryContainer(),
             $this->createDecisionRuleEngine(),
-            $this->getConfig(),
             $this->createCalculator(),
             $this->createDistributor(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getDecisionRulePlugins()
         );
     }
 
@@ -97,22 +103,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createDiscountCollectorWriter()
     {
         return new DiscountCollectorWriter($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Model\CalculatorInterface[]
-     */
-    public function getAvailableCalculatorPlugins()
-    {
-        return $this->getConfig()->getAvailableCalculatorPlugins();
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
-     */
-    public function getAvailableCollectorPlugins()
-    {
-        return $this->getConfig()->getAvailableCollectorPlugins();
     }
 
     /**
@@ -219,7 +209,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCalculator()
     {
-        return new Calculator($this->createCollectorResolver(), $this->getMessengerFacade());
+        return new Calculator(
+            $this->createCollectorResolver(),
+            $this->getMessengerFacade(),
+            $this->getCalculatorPlugins()
+        );
     }
 
     /**
@@ -252,14 +246,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Collector\ItemExpense
-     */
-    public function createItemExpenseCollector()
-    {
-        return new ItemExpense();
-    }
-
-    /**
      * @return \Spryker\Zed\Discount\Business\Collector\Expense
      */
     public function createOrderExpenseCollector()
@@ -281,11 +267,10 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createAggregateCollector()
     {
         return new Aggregate([
-            $this->createItemCollector(),
-            $this->createItemProductOptionCollector(),
-            $this->createItemExpenseCollector(),
-            $this->createOrderExpenseCollector(),
-        ]);
+                $this->createItemCollector(),
+                $this->createItemProductOptionCollector(),
+                $this->createOrderExpenseCollector(),
+            ]);
     }
 
     /**
@@ -301,11 +286,46 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createCollectorResolver()
     {
-        return new CollectorResolver($this->getConfig());
+        return new CollectorResolver($this->getCollectorPlugins());
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     */
+    public function getDecisionRulePlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Model\DiscountSaverInterface
+     */
+    public function createDiscountSaver()
+    {
+        return new DiscountOrderSaver(
+            $this->getQueryContainer(),
+            $this->createVoucherCode()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     */
+    public function getCalculatorPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
+     */
+    public function getCollectorPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::COLLECTOR_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     protected function getMessengerFacade()
     {
@@ -329,21 +349,51 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return string
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount
      */
-    public function getDecisionRulePluginNames()
+    public function createOrderDiscountTotalAmount()
     {
-        return $this->getConfig()->getDecisionRulePluginNames();
+        return new DiscountTotalAmount();
     }
 
     /**
-     * @param string $pluginName
-     *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts
      */
-    public function getCalculatorPluginByName($pluginName)
+    public function createItemTotalOrderAggregator()
     {
-        return $this->getConfig()->getCalculatorPluginByName($pluginName);
+        return new ItemDiscounts($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts
+     */
+    public function createSalesOrderTotalsAggregator()
+    {
+        return new OrderDiscounts();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts
+     */
+    public function createSalesOrderGrandTotalAggregator()
+    {
+        return new GrandTotalWithDiscounts();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts
+     */
+    public function createOrderExpenseTaxWithDiscountsAggregator()
+    {
+        return new OrderExpenseTaxWithDiscounts($this->getProvidedDependency(DiscountDependencyProvider::FACADE_TAX));
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpensesWithDiscounts
+     */
+    public function createOrderExpenseWithDiscountsAggregator()
+    {
+        return new OrderExpensesWithDiscounts($this->getQueryContainer());
     }
 
 }

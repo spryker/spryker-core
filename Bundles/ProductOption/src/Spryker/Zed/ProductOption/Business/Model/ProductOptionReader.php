@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductOption\Business\Model;
 
 use Generated\Shared\Transfer\ProductOptionsNameValueTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionTypeTranslationTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTranslationTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
@@ -87,15 +85,16 @@ class ProductOptionReader implements ProductOptionReaderInterface
 
         $price = $result[self::COL_PRICE];
         if ($price === null) {
-            $productOptionTransfer->setGrossPrice(0);
+            $productOptionTransfer->setUnitGrossPrice(0);
         } else {
-            $productOptionTransfer->setGrossPrice((int)$price);
+            $productOptionTransfer->setUnitGrossPrice((int)$price);
         }
 
         $taxSetEntity = $this->queryContainer->queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage)
             ->findOne();
+
         if ($taxSetEntity !== null) {
-            $this->addTaxesToProductOptionTransfer($productOptionTransfer, $taxSetEntity);
+            $this->addTaxRate($productOptionTransfer, $taxSetEntity);
         }
 
         return $productOptionTransfer;
@@ -154,22 +153,13 @@ class ProductOptionReader implements ProductOptionReaderInterface
      *
      * @return void
      */
-    private function addTaxesToProductOptionTransfer(ProductOptionTransfer $productOptionTransfer, SpyTaxSet $taxSetEntity)
+    protected function addTaxRate(productOptionTransfer $productOptionTransfer, SpyTaxSet $taxSetEntity)
     {
-        $taxTransfer = new TaxSetTransfer();
-        $taxTransfer->setIdTaxSet($taxSetEntity->getIdTaxSet())
-            ->setName($taxSetEntity->getName());
-
-        foreach ($taxSetEntity->getSpyTaxRates() as $taxRate) {
-            $taxRateTransfer = new TaxRateTransfer();
-            $taxRateTransfer->setIdTaxRate($taxRate->getIdTaxRate())
-                ->setName($taxRate->getName())
-                ->setRate($taxRate->getRate());
-
-            $taxTransfer->addTaxRate($taxRateTransfer);
+        $taxRate = 0;
+        foreach ($taxSetEntity->getSpyTaxRates() as $taxRateEntity) {
+            $taxRate += $taxRateEntity->getRate();
         }
-
-        $productOptionTransfer->setTaxSet($taxTransfer);
+        $productOptionTransfer->setTaxRate($taxRate);
     }
 
     /**

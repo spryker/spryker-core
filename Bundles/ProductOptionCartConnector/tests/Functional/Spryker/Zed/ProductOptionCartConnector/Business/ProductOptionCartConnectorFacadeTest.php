@@ -9,7 +9,7 @@ namespace Functional\Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
@@ -58,7 +58,7 @@ class ProductOptionCartConnectorFacadeTest extends Test
         $itemTransfer = (new ItemTransfer())
             ->addProductOption($productOptionTransfer);
 
-        $changeTransfer = (new ChangeTransfer())
+        $changeTransfer = (new CartChangeTransfer())
             ->addItem($itemTransfer);
 
         $this->facade->expandProductOptions($changeTransfer);
@@ -69,15 +69,9 @@ class ProductOptionCartConnectorFacadeTest extends Test
         $this->assertEquals(self::LOCALE_CODE, $productOptionTransfer->getLocaleCode());
         $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
         $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
-        $this->assertEquals(199, $productOptionTransfer->getGrossPrice());
+        $this->assertEquals(199, $productOptionTransfer->getUnitGrossPrice());
 
-        $taxSetTransfer = $productOptionTransfer->getTaxSet();
-
-        $this->assertEquals('Baz', $taxSetTransfer->getName());
-
-        $taxRateTransfer = $taxSetTransfer->getTaxRates()[0];
-        $this->assertEquals('Foo', $taxRateTransfer->getName());
-        $this->assertEquals('10', $taxRateTransfer->getRate());
+        $this->assertEquals('15', $productOptionTransfer->getTaxRate());
     }
 
 }

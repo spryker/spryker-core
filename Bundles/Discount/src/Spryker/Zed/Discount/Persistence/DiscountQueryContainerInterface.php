@@ -107,4 +107,14 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      */
     public function queryVoucherPoolByVoucherCodes(array $codes);
 
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
+     */
+    public function querySalesDisount();
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery
+     */
+    public function querySalesDisountCode();
+
 }

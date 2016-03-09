@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Payolution\Business\Order;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionOrderItem;
 
@@ -16,19 +17,20 @@ class Saver implements SaverInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function saveOrderPayment(OrderTransfer $orderTransfer)
+    public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $paymentEntity = $this->savePaymentForOrder(
-            $orderTransfer->getPayolutionPayment(),
-            $orderTransfer->getIdSalesOrder()
+            $quoteTransfer->getPayment()->getPayolution(),
+            $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder()
         );
 
         $this->savePaymentForOrderItems(
-            $orderTransfer->getItems(),
+            $checkoutResponseTransfer->getSaveOrder()->getOrderItems(),
             $paymentEntity->getIdPaymentPayolution()
         );
     }
@@ -39,26 +41,26 @@ class Saver implements SaverInterface
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
-    private function savePaymentForOrder(PayolutionPaymentTransfer $paymentTransfer, $idSalesOrder)
+    protected function savePaymentForOrder(PayolutionPaymentTransfer $paymentTransfer, $idSalesOrder)
     {
         $paymentEntity = new SpyPaymentPayolution();
-        $paymentEntity->fromArray($paymentTransfer->toArray());
-
-        // Take over fields from address transfer
         $addressTransfer = $paymentTransfer->getAddress();
-        $paymentEntity->fromArray($addressTransfer->toArray());
-        $paymentEntity->setCountryIso2Code($addressTransfer->getIso2Code());
 
-        // Payolution requires a simple string for the street address
         $formattedStreet = trim(sprintf(
             '%s %s %s',
             $addressTransfer->getAddress1(),
             $addressTransfer->getAddress2(),
             $addressTransfer->getAddress3()
         ));
-        $paymentEntity->setStreet($formattedStreet);
 
-        $paymentEntity->setFkSalesOrder($idSalesOrder);
+        $paymentEntity->fromArray($addressTransfer->toArray());
+        $paymentEntity->fromArray($paymentTransfer->toArray());
+
+        $paymentEntity
+            ->setStreet($formattedStreet)
+            ->setCountryIso2Code($addressTransfer->getIso2Code())
+            ->setFkSalesOrder($idSalesOrder);
+
         $paymentEntity->save();
 
         return $paymentEntity;
@@ -70,9 +72,8 @@ class Saver implements SaverInterface
      *
      * @return void
      */
-    private function savePaymentForOrderItems($orderItemTransfers, $idPayment)
+    protected function savePaymentForOrderItems($orderItemTransfers, $idPayment)
     {
-        /** @var \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer */
         foreach ($orderItemTransfers as $orderItemTransfer) {
             $paymentOrderItemEntity = new SpyPaymentPayolutionOrderItem();
             $paymentOrderItemEntity

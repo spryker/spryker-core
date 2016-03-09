@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
@@ -25,10 +25,8 @@ use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
-use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
-use Spryker\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Kernel\Locator;
 
 /**
  * @group Spryker
@@ -83,7 +81,10 @@ class DiscountFacadeTest extends Test
     protected function setUp()
     {
         parent::setUp();
-        $this->discountFacade = new DiscountFacade();
+
+        $this->locator = Locator::getInstance();
+
+        $this->discountFacade = $this->locator->discount()->facade();
     }
 
     /**
@@ -141,7 +142,7 @@ class DiscountFacadeTest extends Test
      */
     public function testCalculateDiscounts()
     {
-        $order = $this->getOrderWithFixtureData();
+        $order = $this->createQuoteTransfer();
         $this->discountFacade->calculateDiscounts($order);
     }
 
@@ -153,19 +154,21 @@ class DiscountFacadeTest extends Test
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_6);
         $discount = $this->initializeDiscount(
             'TEST-DISCOUNT',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             self::DISCOUNT_AMOUNT_PERCENTAGE_50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM
         );
 
         $discount->setVoucherPool($voucherPool);
         $discount->save();
 
-        $order = $this->getOrderWithFixtureData();
-        $order->getCalculableObject()->setCouponCodes([self::VOUCHER_CODE_TEST_6]);
+        $quoteTransfer = $this->createQuoteTransfer();
+        $voucherDiscountTransfer = new DiscountTransfer();
+        $voucherDiscountTransfer->setVoucherCode(self::VOUCHER_CODE_TEST_6);
+        $quoteTransfer->addVoucherDiscount($voucherDiscountTransfer);
 
-        $result = $this->discountFacade->calculateDiscounts($order);
+        $result = $this->discountFacade->calculateDiscounts($quoteTransfer);
         $this->assertGreaterThan(0, count($result));
     }
 
@@ -176,10 +179,10 @@ class DiscountFacadeTest extends Test
     {
         $discount = $this->initializeDiscount(
             self::DISCOUNT_NAME_MINIMUM_CART_SUBTOTAL,
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             self::DISCOUNT_AMOUNT_PERCENTAGE_50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM
         );
 
         $decisionRule = new SpyDiscountDecisionRule();
@@ -187,22 +190,18 @@ class DiscountFacadeTest extends Test
             ->setName(self::DECISION_RULE_MINIMUM_CART_SUBTOTAL_AMOUNT)
             ->setValue(self::MINIMUM_CART_AMOUNT_1000)
             ->setDiscount($discount)
-            ->setDecisionRulePlugin(DiscountConstants::PLUGIN_DECISION_RULE_VOUCHER)
+            ->setDecisionRulePlugin(DiscountDependencyProvider::PLUGIN_DECISION_RULE_VOUCHER)
             ->save();
 
-        $order = $this->getOrderWithFixtureData();
-        $order->getCalculableObject()->setTotals(new TotalsTransfer());
+        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer->setTotals(new TotalsTransfer());
 
-        $result = $this->discountFacade->isMinimumCartSubtotalReached($order, $decisionRule);
+        $result = $this->discountFacade->isMinimumCartSubtotalReached($quoteTransfer, $decisionRule);
         $this->assertFalse($result->isSuccess());
 
-        $order->getCalculableObject()->getTotals()->setSubtotalWithoutItemExpenses(self::MINIMUM_CART_AMOUNT_1000);
-        $result = $this->discountFacade->isMinimumCartSubtotalReached($order, $decisionRule);
+        $quoteTransfer->getTotals()->setSubtotal(self::MINIMUM_CART_AMOUNT_1000);
+        $result = $this->discountFacade->isMinimumCartSubtotalReached($quoteTransfer, $decisionRule);
         $this->assertTrue($result->isSuccess());
-
-        $order->getCalculableObject()->getTotals()->setSubtotalWithoutItemExpenses(self::MINIMUM_CART_AMOUNT_1000 - 1);
-        $result = $this->discountFacade->isMinimumCartSubtotalReached($order, $decisionRule);
-        $this->assertFalse($result->isSuccess());
     }
 
     /**
@@ -259,9 +258,9 @@ class DiscountFacadeTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals($items[0]->getGrossPrice(), current($items[0]->getDiscounts())->getAmount());
-        $this->assertEquals($items[1]->getGrossPrice(), current($items[1]->getDiscounts())->getAmount());
-        $this->assertEquals($items[2]->getGrossPrice(), current($items[2]->getDiscounts())->getAmount());
+        $this->assertEquals($items[0]->getUnitGrossPrice(), current($items[0]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals($items[1]->getUnitGrossPrice(), current($items[1]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals($items[2]->getUnitGrossPrice(), current($items[2]->getCalculatedDiscounts())->getUnitGrossAmount());
     }
 
     /**
@@ -390,33 +389,13 @@ class DiscountFacadeTest extends Test
      */
     public function testGetDiscountableItems()
     {
-        $order = $this->getOrderWithFixtureData();
+        $quoteTransfer = $this->createQuoteTransfer();
 
         $item = new ItemTransfer();
-        $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-        $order->getCalculableObject()->addItem($item);
+        $item->setUnitGrossPrice(self::ITEM_GROSS_PRICE);
+        $quoteTransfer->addItem($item);
 
-        $result = $this->discountFacade->getDiscountableItems($order, new DiscountCollectorTransfer());
-        $this->assertEquals(1, count($result));
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetDiscountableItemExpenses()
-    {
-        $order = $this->getOrderWithFixtureData();
-
-        $item = new ItemTransfer();
-        $item->setGrossPrice(self::ITEM_GROSS_PRICE);
-
-        $expense = new ExpenseTransfer();
-        $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
-
-        $item->addExpense($expense);
-        $order->getCalculableObject()->addItem($item);
-
-        $result = $this->discountFacade->getDiscountableItemExpenses($order, new DiscountCollectorTransfer());
+        $result = $this->discountFacade->getDiscountableItems($quoteTransfer, new DiscountCollectorTransfer());
         $this->assertEquals(1, count($result));
     }
 
@@ -425,23 +404,19 @@ class DiscountFacadeTest extends Test
      */
     public function testGetDiscountableOrderExpenses()
     {
-        $order = $this->getOrderWithFixtureData();
+            $quoteTransfer = $this->createQuoteTransfer();
 
-        $expense = new ExpenseTransfer();
-        $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
-        $order->getCalculableObject()->addExpense($expense);
+            $expense = new ExpenseTransfer();
+            $expense->setUnitGrossPrice(self::EXPENSE_GROSS_PRICE);
+            $quoteTransfer->addExpense($expense);
 
-        $item = new ItemTransfer();
-        $item->setGrossPrice(self::ITEM_GROSS_PRICE);
+            $item = new ItemTransfer();
+            $item->setUnitGrossPrice(self::ITEM_GROSS_PRICE);
 
-        $expense = new ExpenseTransfer();
-        $expense->setGrossPrice(self::EXPENSE_GROSS_PRICE);
+            $quoteTransfer->addItem($item);
 
-        $item->addExpense($expense);
-        $order->getCalculableObject()->addItem($item);
-
-        $result = $this->discountFacade->getDiscountableOrderExpenses($order, new DiscountCollectorTransfer());
-        $this->assertEquals(1, count($result));
+            $result = $this->discountFacade->getDiscountableOrderExpenses($quoteTransfer, new DiscountCollectorTransfer());
+            $this->assertEquals(1, count($result));
     }
 
     /**
@@ -560,13 +535,14 @@ class DiscountFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getOrderWithFixtureData()
+    protected function createQuoteTransfer()
     {
-        $order = new OrderTransfer();
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setTotals(new TotalsTransfer());
 
-        return new CalculableContainer($order);
+        return $quoteTransfer;
     }
 
     /**
@@ -580,12 +556,20 @@ class DiscountFacadeTest extends Test
 
         foreach ($grossPrices as $grossPrice) {
             $item = new ItemTransfer();
-            $item->setGrossPrice($grossPrice);
+            $item->setUnitGrossPrice($grossPrice);
             $item->setQuantity(1);
             $items[] = $item;
         }
 
         return $items;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\AbstractLocatorLocator|\Generated\Zed\Ide\AutoCompletion
+     */
+    protected function getLocator()
+    {
+        return Locator::getInstance();
     }
 
 }

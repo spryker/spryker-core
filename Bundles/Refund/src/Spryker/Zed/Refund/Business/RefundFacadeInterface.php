@@ -34,15 +34,6 @@ interface RefundFacadeInterface
     /**
      * @api
      *
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderByIdSalesOrder($idSalesOrder);
-
-    /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return \Generated\Shared\Transfer\RefundTransfer

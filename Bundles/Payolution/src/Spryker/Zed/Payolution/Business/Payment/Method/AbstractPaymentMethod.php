@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Spryker\Shared\Library\Currency\CurrencyManager;
@@ -82,7 +83,7 @@ abstract class AbstractPaymentMethod
             ApiConstants::SECURITY_SENDER => $this->getConfig()->getTransactionSecuritySender(),
             ApiConstants::USER_LOGIN => $this->getConfig()->getTransactionUserLogin(),
             ApiConstants::USER_PWD => $this->getConfig()->getTransactionUserPassword(),
-            ApiConstants::PRESENTATION_AMOUNT => $this->convertCentsToDecimal($grandTotal),
+            ApiConstants::PRESENTATION_AMOUNT => $this->getCurrencyManager()->convertCentToDecimal($grandTotal),
             ApiConstants::PRESENTATION_USAGE => $idOrder,
             ApiConstants::PRESENTATION_CURRENCY => $currency,
             ApiConstants::IDENTIFICATION_TRANSACTIONID => $idOrder,
@@ -96,6 +97,7 @@ abstract class AbstractPaymentMethod
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $paymentCode
      * @param string $uniqueId
@@ -103,16 +105,15 @@ abstract class AbstractPaymentMethod
      * @return array
      */
     protected function getBaseTransactionRequestForPayment(
+        OrderTransfer $orderTransfer,
         SpyPaymentPayolution $paymentEntity,
         $paymentCode,
         $uniqueId
     ) {
-        $orderEntity = $paymentEntity->getSpySalesOrder();
-
         $requestData = $this->getBaseTransactionRequest(
-            $orderEntity->getGrandTotal(),
+            $orderTransfer->getTotals()->getGrandTotal(),
             $paymentEntity->getCurrencyIso3Code(),
-            $orderEntity->getIdSalesOrder()
+            $orderTransfer->getIdSalesOrder()
         );
 
         $this->addRequestData(
@@ -172,13 +173,13 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @param int $amount
+     * @return \Spryker\Shared\Library\Currency\CurrencyManager
      *
-     * @return float
+     * @todo: use currency/money bundle #989
      */
-    protected function convertCentsToDecimal($amount)
+    protected function getCurrencyManager()
     {
-        return CurrencyManager::getInstance()->convertCentToDecimal($amount);
+        return CurrencyManager::getInstance();
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Business\DecisionRule;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Kernel\Business\ModelResult;
@@ -15,17 +16,16 @@ class MinimumCartSubtotal
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $order
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule $decisionRule
      *
      * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
-    public function isMinimumCartSubtotalReached(CalculableInterface $order, SpyDiscountDecisionRule $decisionRule)
+    public function isMinimumCartSubtotalReached(QuoteTransfer $quoteTransfer, SpyDiscountDecisionRule $decisionRule)
     {
         $result = new ModelResult();
 
-        $totalsTransfer = $order->getCalculableObject()->getTotals();
-        if ($totalsTransfer && $totalsTransfer->getSubtotalWithoutItemExpenses() >= $decisionRule->getValue()) {
+        if ($quoteTransfer->getTotals()->getSubtotal() >= $decisionRule->getValue()) {
             return $result;
         }
 

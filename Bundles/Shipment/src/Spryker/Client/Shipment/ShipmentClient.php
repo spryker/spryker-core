@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Shipment;
 
-use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -19,15 +19,13 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability)
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()
-            ->createZedStub()
-            ->getAvailableMethods($shipmentMethodAvailability);
+        return $this->getFactory()->createZedStub()->getAvailableMethods($quoteTransfer);
     }
 
 }

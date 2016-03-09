@@ -19,7 +19,9 @@
     "spryker/tax": "^1.0.0-RC1",
     "spryker/zed-request": "^1.0.0-RC1",
     "spryker/symfony": "^1.0.0-RC1",
-    "spryker/url": "^1.0.0-RC1"
+    "spryker/url": "^1.0.0-RC1",
+    "spryker/sales": "^1.0.0-RC1",
+    "spryker/propel": "^1.0.0-RC1"
   },
   "description": "shipment bundle",
   "license": "proprietary",

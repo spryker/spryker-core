@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Installment;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
@@ -48,11 +49,11 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function buildCalculationRequest(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function buildCalculationRequest(QuoteTransfer $quoteTransfer)
     {
         return [
             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_REQUEST_ELEMENT,
@@ -90,9 +91,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_PRESENTATION_ELEMENT,
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_CURRENCY_ELEMENT,
-                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $checkoutRequestTransfer
-                                ->getPayolutionPayment()
-                                ->getCurrencyIso3Code(),
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->getCurrencyManager()->getDefaultCurrency()->getIsoCode(),
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_USAGE_ELEMENT,
@@ -100,12 +99,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_AMOUNT_ELEMENT,
-                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->convertCentsToDecimal(
-                                $checkoutRequestTransfer
-                                        ->getCart()
-                                        ->getTotals()
-                                        ->getGrandTotal()
-                            ),
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->getCurrencyManager()->convertCentToDecimal($quoteTransfer->getTotals()->getGrandTotal()),
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_VAT_ELEMENT,
@@ -120,10 +114,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES => [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_TARGET_COUNTRY,
                         ],
-                        ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $checkoutRequestTransfer
-                            ->getPayolutionPayment()
-                            ->getAddress()
-                            ->getIso2Code(),
+                        ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $quoteTransfer->getBillingAddress()->getIso2Code(),
                     ],
                 ],
 
@@ -132,17 +123,17 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function buildPreCheckRequest(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function buildPreCheckRequest(QuoteTransfer $quoteTransfer)
     {
-        $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
+        $payolutionTransfer = $quoteTransfer->getPayment()->getPayolution();
         $addressTransfer = $payolutionTransfer->getAddress();
 
         $requestData = $this->getBaseTransactionRequest(
-            $checkoutRequestTransfer->getCart()->getTotals()->getGrandTotal(),
+            $quoteTransfer->getTotals()->getGrandTotal(),
             $payolutionTransfer->getCurrencyIso3Code(),
             $isSalesOrder = null
         );
@@ -160,14 +151,14 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::ADDRESS_ZIP => $addressTransfer->getZipCode(),
                 ApiConstants::ADDRESS_CITY => $addressTransfer->getCity(),
                 ApiConstants::ADDRESS_COUNTRY => $addressTransfer->getIso2Code(),
-                ApiConstants::CONTACT_EMAIL => $addressTransfer->getEmail(),
+                ApiConstants::CONTACT_EMAIL => $payolutionTransfer->getEmail(),
                 ApiConstants::CONTACT_PHONE => $addressTransfer->getPhone(),
                 ApiConstants::CONTACT_MOBILE => $addressTransfer->getCellPhone(),
                 ApiConstants::CONTACT_IP => $payolutionTransfer->getClientIp(),
                 ApiConstants::CRITERION_PRE_CHECK => 'TRUE',
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $payolutionTransfer->getLanguageIso2Code(),
                 ApiConstants::CRITERION_CALCULATION_ID => $payolutionTransfer->getInstallmentCalculationId(),
-                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->convertCentsToDecimal($payolutionTransfer->getInstallmentAmount()),
+                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->getCurrencyManager()->convertCentToDecimal($payolutionTransfer->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $payolutionTransfer->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $payolutionTransfer->getBankAccountHolder(),
                 ApiConstants::CRITERION_ACCOUNT_BIC => $payolutionTransfer->getBankAccountBic(),
@@ -180,13 +171,15 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      *
      * @return array
      */
-    public function buildPreAuthorizationRequest(SpyPaymentPayolution $paymentEntity)
+    public function buildPreAuthorizationRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity)
     {
         $requestData = $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
             null
@@ -211,7 +204,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::CRITERION_PRE_CHECK_ID => $paymentEntity->getPreCheckId(),
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
                 ApiConstants::CRITERION_CALCULATION_ID => $paymentEntity->getInstallmentCalculationId(),
-                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->convertCentsToDecimal($paymentEntity->getInstallmentAmount()),
+                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->getCurrencyManager()->convertCentToDecimal($paymentEntity->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $paymentEntity->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $paymentEntity->getBankAccountHolder(),
                 ApiConstants::CRITERION_ACCOUNT_BIC => $paymentEntity->getBankAccountBic(),
@@ -224,14 +217,19 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildReAuthorizationRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildReAuthorizationRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
             $uniqueId
@@ -239,14 +237,19 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildRevertRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildRevertRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
             $uniqueId
@@ -254,14 +257,19 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildCaptureRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildCaptureRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
             $uniqueId
@@ -269,14 +277,19 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildRefundRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildRefundRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
             $uniqueId

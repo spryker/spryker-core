@@ -70,4 +70,12 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_GLOSSARY);
     }
 
+    /**
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToSalesAggregatorInterface
+     */
+    public function getSalesAggregator()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_SALES_AGGREGATOR);
+    }
+
 }

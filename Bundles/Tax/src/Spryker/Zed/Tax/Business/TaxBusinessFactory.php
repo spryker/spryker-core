@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Tax\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
+use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
 use Spryker\Zed\Tax\Business\Model\TaxWriter;
 
@@ -45,6 +47,22 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     public function getTaxChangePlugins()
     {
         return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
+     */
+    public function createTaxCalculator()
+    {
+        return new TaxCalculation($this->createPriceCalculationHelper());
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
+     */
+    public function createPriceCalculationHelper()
+    {
+        return new PriceCalculationHelper();
     }
 
 }

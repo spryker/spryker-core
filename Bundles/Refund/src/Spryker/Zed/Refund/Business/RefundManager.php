@@ -29,8 +29,10 @@ class RefundManager
      * @param \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface $refundQueryContainer
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
-    public function __construct(RefundQueryContainerInterface $refundQueryContainer, SalesQueryContainerInterface $salesQueryContainer)
-    {
+    public function __construct(
+        RefundQueryContainerInterface $refundQueryContainer,
+        SalesQueryContainerInterface $salesQueryContainer
+    ) {
         $this->refundQueryContainer = $refundQueryContainer;
         $this->salesQueryContainer = $salesQueryContainer;
     }

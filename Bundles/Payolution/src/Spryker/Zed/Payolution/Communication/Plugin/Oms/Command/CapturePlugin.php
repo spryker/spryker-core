@@ -28,10 +28,28 @@ class CapturePlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
+        $orderTransfer = $this->getOrderTransfer($orderEntity);
         $paymentEntity = $this->getPaymentEntity($orderEntity);
-        $this->getFacade()->capturePayment($paymentEntity->getIdPaymentPayolution());
+
+        $this->getFacade()->capturePayment(
+            $orderTransfer,
+            $paymentEntity->getIdPaymentPayolution()
+        );
 
         return [];
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getOrderTransfer(SpySalesOrder $orderEntity)
+    {
+        return $this
+            ->getFactory()
+            ->getSalesAggregator()
+            ->getOrderTotalsByIdSalesOrder($orderEntity->getIdSalesOrder());
     }
 
     /**

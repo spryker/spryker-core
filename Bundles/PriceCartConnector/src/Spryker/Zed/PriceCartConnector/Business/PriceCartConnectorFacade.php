@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceCartConnector\Business;
 
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,12 +19,12 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
-     * @param string|null $grossPriceType
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param null $grossPriceType
      *
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addGrossPriceToItems(ChangeTransfer $change, $grossPriceType = null)
+    public function addGrossPriceToItems(CartChangeTransfer $change, $grossPriceType = null)
     {
         return $this->getFactory()->createPriceManager($grossPriceType)->addGrossPriceToItems($change);
     }

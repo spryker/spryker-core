@@ -26,16 +26,11 @@ interface SalesToOmsInterface
     public function getProcessEntity($processName);
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return string
      */
-    public function selectProcess(OrderTransfer $transferOrder);
-
-    /**
-     * @return array
-     */
-    public function getOrderItemMatrix();
+    public function selectProcess(OrderTransfer $orderTransfer);
 
     /**
      * @param int $idOrderItem
@@ -51,5 +46,19 @@ interface SalesToOmsInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array|string[]
+     */
+    public function getManualEventsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
 }

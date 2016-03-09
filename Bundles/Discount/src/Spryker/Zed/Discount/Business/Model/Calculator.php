@@ -9,10 +9,10 @@ namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
-use Spryker\Zed\Discount\DiscountConfigInterface;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
 
 class Calculator implements CalculatorInterface
 {
@@ -34,6 +34,11 @@ class Calculator implements CalculatorInterface
     protected $collectorResolver;
 
     /**
+     * @var array
+     */
+    protected $calculatorPlugins;
+
+    /**
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected $messengerFacade;
@@ -41,30 +46,32 @@ class Calculator implements CalculatorInterface
     /**
      * @param \Spryker\Zed\Discount\Business\Model\CollectorResolver $collectorResolver
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
     public function __construct(
         CollectorResolver $collectorResolver,
-        DiscountToMessengerInterface  $messengerFacade
+        DiscountToMessengerInterface  $messengerFacade,
+        array $calculatorPlugins
     ) {
+
         $this->collectorResolver = $collectorResolver;
+        $this->calculatorPlugins = $calculatorPlugins;
         $this->messengerFacade = $messengerFacade;
     }
 
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountCollection
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
-     * @param \Spryker\Zed\Discount\DiscountConfigInterface $config
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
      *
      * @return array
      */
     public function calculate(
         array $discountCollection,
-        CalculableInterface $container,
-        DiscountConfigInterface $config,
+        QuoteTransfer $quoteTransfer,
         DistributorInterface $discountDistributor
     ) {
-        $calculatedDiscounts = $this->calculateDiscountAmount($discountCollection, $container, $config);
+        $calculatedDiscounts = $this->calculateDiscountAmount($discountCollection, $quoteTransfer);
         $calculatedDiscounts = $this->filterOutNonPrivilegedDiscounts($calculatedDiscounts);
         $this->distributeDiscountAmount($discountDistributor, $calculatedDiscounts);
 
@@ -73,25 +80,23 @@ class Calculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountCollection
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
-     * @param \Spryker\Zed\Discount\DiscountConfigInterface $config
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
     protected function calculateDiscountAmount(
         array $discountCollection,
-        CalculableInterface $container,
-        DiscountConfigInterface $config
+        QuoteTransfer $quoteTransfer
     ) {
         $calculatedDiscounts = [];
         foreach ($discountCollection as $discountTransfer) {
-            $discountableObjects = $this->collectorResolver->collectItems($container, $discountTransfer);
+            $discountableObjects = $this->collectorResolver->collectItems($quoteTransfer, $discountTransfer);
 
             if (count($discountableObjects) === 0) {
                 continue;
             }
 
-            $calculatorPlugin = $config->getCalculatorPluginByName($discountTransfer->getCalculatorPlugin());
+            $calculatorPlugin = $this->calculatorPlugins[$discountTransfer->getCalculatorPlugin()];
             $discountAmount = $calculatorPlugin->calculate($discountableObjects, $discountTransfer->getAmount());
             $discountTransfer->setAmount($discountAmount);
 

@@ -138,4 +138,11 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      */
     public function querySalesOrderItemStatesByName(array $orderItemStates);
 
+    /**
+     * @param int $idOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsByIdSalesOrder($idOrder);
+
 }

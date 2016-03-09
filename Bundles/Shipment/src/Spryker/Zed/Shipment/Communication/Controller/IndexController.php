@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
- * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
  */
 class IndexController extends AbstractController
 {
@@ -22,8 +21,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getFactory()
-            ->createMethodTable();
+        $table = $this->getFactory()->createMethodTable();
 
         return $this->viewResponse(['methodTable' => $table->render()]);
     }
@@ -33,8 +31,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getFactory()
-            ->createMethodTable();
+        $table = $this->getFactory()->createMethodTable();
 
         return $this->jsonResponse($table->fetchData());
     }

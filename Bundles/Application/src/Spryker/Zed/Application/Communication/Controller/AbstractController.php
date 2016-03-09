@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractController
@@ -368,6 +369,30 @@ abstract class AbstractController
     protected function getAssertion()
     {
         return $this->getApplication()['assertion'];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $blockUrl
+     *
+     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleSubRequest(Request $request, $blockUrl)
+    {
+        $blockResponse = $this->getSubrequestHandler()->handleSubRequest($request, $blockUrl);
+        if ($blockResponse instanceof RedirectResponse) {
+            return $blockResponse;
+        }
+
+        return $blockResponse->getContent();
+    }
+
+    /**
+     * @return \Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface
+     */
+    protected function getSubrequestHandler()
+    {
+        return $this->getApplication()['sub_request'];
     }
 
 }
