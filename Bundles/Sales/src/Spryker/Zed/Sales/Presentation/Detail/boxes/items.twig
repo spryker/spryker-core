@@ -38,6 +38,7 @@
                 <th>{{ 'Process' | trans }}</th>
                 <th>{{ 'Status' | trans }}</th>
                 <th>{{ 'Trigger event' | trans }}</th>
+                <th>{{ "Process" | trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -80,6 +81,11 @@
                         {% else -%}
                             -
                         {%- endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url('/oms/index/draw-item', {id: orderItem.IdSalesOrderItem}) }}" target="_blank">
+                            {{ 'show' | trans }}
+                        </a>
                     </td>
                 </tr>
                 {% if orderItemSplitFormCollection is defined %}
