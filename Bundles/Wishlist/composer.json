@@ -6,12 +6,12 @@
     }
   },
   "require": {
-    "spryker/customer": "^1.0.0-RC1",
-    "spryker/kernel": "^1.0.0-RC1",
-    "spryker/product": "^1.0.0-RC1",
-    "spryker/session": "^1.0.0-RC1",
-    "spryker/storage": "^1.0.0-RC1",
-    "spryker/zed-request": "^1.0.0-RC1",
+    "spryker/customer": "^1.0.0-RC2",
+    "spryker/kernel": "^1.0.0-RC2",
+    "spryker/product": "^1.0.0-RC2",
+    "spryker/session": "^1.0.0-RC2",
+    "spryker/storage": "^1.0.0-RC2",
+    "spryker/zed-request": "^1.0.0-RC2",
     "spryker/propel": "^1.0.0-RC1",
     "spryker/symfony": "^1.0.0-RC1"
   },

@@ -11,8 +11,8 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0-RC1",
-    "spryker/mail": "^1.0.0-RC1"
+    "spryker/kernel": "^1.0.0-RC2",
+    "spryker/mail": "^1.0.0-RC2"
   },
   "description": "auth mail connector bundle",
   "license": "proprietary",

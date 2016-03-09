@@ -11,13 +11,13 @@
     }
   },
   "require": {
-    "spryker/console": "^1.0.0-RC1",
-    "spryker/glossary": "^1.0.0-RC1",
-    "spryker/kernel": "^1.0.0-RC1",
-    "spryker/messenger": "^1.0.0-RC1",
+    "spryker/console": "^1.0.0-RC2",
+    "spryker/glossary": "^1.0.0-RC2",
+    "spryker/kernel": "^1.0.0-RC2",
+    "spryker/messenger": "^1.0.0-RC2",
     "spryker/log": "^1.0.0-RC1",
     "spryker/symfony": "^1.0.0-RC1",
-    "spryker/application": "^1.0.0-RC1"
+    "spryker/application": "^1.0.0-RC2"
   },
   "description": "installer bundle",
   "license": "proprietary",

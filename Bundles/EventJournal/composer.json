@@ -11,11 +11,11 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0-RC1",
-    "spryker/library": "^1.0.0-RC1",
-    "spryker/new-relic": "^1.0.0-RC1",
+    "spryker/kernel": "^1.0.0-RC2",
+    "spryker/library": "^1.0.0-RC2",
+    "spryker/new-relic": "^1.0.0-RC2",
     "spryker/symfony": "^1.0.0-RC1",
-    "spryker/config": "^1.0.0-RC1"
+    "spryker/config": "^1.0.0-RC2"
   },
   "description": "event journal bundle",
   "license": "proprietary",

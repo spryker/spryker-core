@@ -11,14 +11,14 @@
     }
   },
   "require": {
-    "spryker/application": "^1.0.0-RC1",
-    "spryker/auth": "^1.0.0-RC1",
-    "spryker/event-journal": "^1.0.0-RC1",
-    "spryker/kernel": "^1.0.0-RC1",
-    "spryker/library": "^1.0.0-RC1",
-    "spryker/transfer": "^1.0.0-RC1",
+    "spryker/application": "^1.0.0-RC2",
+    "spryker/auth": "^1.0.0-RC2",
+    "spryker/event-journal": "^1.0.0-RC2",
+    "spryker/kernel": "^1.0.0-RC2",
+    "spryker/library": "^1.0.0-RC2",
+    "spryker/transfer": "^1.0.0-RC2",
     "spryker/guzzle": "^1.0.0-RC1",
-    "spryker/config": "^1.0.0-RC1"
+    "spryker/config": "^1.0.0-RC2"
   },
   "description": "zed request bundle",
   "license": "proprietary",

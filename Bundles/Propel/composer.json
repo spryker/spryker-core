@@ -12,14 +12,14 @@
   },
   "require": {
     "propel/propel": "~2.0@dev",
-    "spryker/application": "^1.0.0-RC1",
-    "spryker/console": "^1.0.0-RC1",
-    "spryker/kernel": "^1.0.0-RC1",
-    "spryker/library": "^1.0.0-RC1",
+    "spryker/application": "^1.0.0-RC2",
+    "spryker/console": "^1.0.0-RC2",
+    "spryker/kernel": "^1.0.0-RC2",
+    "spryker/library": "^1.0.0-RC2",
     "spryker/monolog": "^1.0.0-RC1",
     "spryker/silex": "^1.0.0-RC1",
     "spryker/symfony": "^1.0.0-RC1",
-    "spryker/config": "^1.0.0-RC1"
+    "spryker/config": "^1.0.0-RC2"
   },
   "description": "propel bundle",
   "license": "proprietary",

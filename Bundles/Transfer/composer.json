@@ -12,16 +12,16 @@
   },
   "require": {
     "twig/twig": "~1.0",
-    "spryker/console": "^1.0.0-RC1",
-    "spryker/kernel": "^1.0.0-RC1",
-    "spryker/messenger": "^1.0.0-RC1",
+    "spryker/console": "^1.0.0-RC2",
+    "spryker/kernel": "^1.0.0-RC2",
+    "spryker/messenger": "^1.0.0-RC2",
     "spryker/log": "^1.0.0-RC1",
     "spryker/symfony": "^1.0.0-RC1",
     "spryker/twig": "^1.0.0-RC1",
     "spryker/zend": "^1.0.0-RC1",
-    "spryker/application": "^1.0.0-RC1",
-    "spryker/config": "^1.0.0-RC1",
-    "spryker/library": "^1.0.0-RC1"
+    "spryker/application": "^1.0.0-RC2",
+    "spryker/config": "^1.0.0-RC2",
+    "spryker/library": "^1.0.0-RC2"
   },
   "description": "transfer bundle",
   "license": "proprietary",
