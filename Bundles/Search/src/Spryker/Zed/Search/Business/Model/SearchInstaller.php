@@ -37,9 +37,9 @@ class SearchInstaller implements SearchInstallerInterface
      */
     public function install()
     {
-        foreach ($this->installer as $installer) {
-            $installer->setMessenger($this->messenger);
-            $installer->install();
+        foreach ($this->installer as $installerPlugin) {
+            $installerPlugin->setMessenger($this->messenger);
+            $installerPlugin->run();
         }
     }
 

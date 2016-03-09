@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Installer\Business\Model;
 
-interface InstallerInterface
+interface InstallerPluginInterface
 {
 
     /**
      * @return void
      */
-    public function install();
+    public function run();
 
 }

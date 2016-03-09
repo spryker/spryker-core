@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Installer\Communication\Plugin;
 
+use Spryker\Zed\Installer\Business\Model\InstallerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
@@ -14,7 +15,7 @@ use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
  * @method \Spryker\Zed\Installer\Business\InstallerFacade getFacade()
  * @method \Spryker\Zed\Installer\Communication\InstallerCommunicationFactory getFactory()
  */
-abstract class AbstractInstallerPlugin extends AbstractPlugin
+abstract class AbstractInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
 
     /**
@@ -37,6 +38,20 @@ abstract class AbstractInstallerPlugin extends AbstractPlugin
     /**
      * @return void
      */
-    abstract public function install();
+    abstract protected function install();
+
+    /**
+     * @return void
+     */
+    public function run()
+    {
+        if (!($this->messenger instanceof MessengerInterface)) {
+            //TODO add logging
+            return;
+        }
+
+        $this->messenger->debug('Running installer plugin: ' . get_class($this));
+        $this->install();
+    }
 
 }
