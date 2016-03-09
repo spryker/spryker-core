@@ -54,9 +54,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
                 [
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/',
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/',
-
-                    $this->getConfig()->getBundlesDirectory() . '/%1$s/src/Spryker/Zed/%1$s/Presentation/',
-                    $this->getConfig()->getBundlesDirectory() . '/%1$s/src/Spryker/Zed/%1$s/Presentation/',
+                    $this->getConfig()->getBundlesDirectory() . '/%2$s/src/Spryker/Zed/%1$s/Presentation/',
                 ]
             );
         });

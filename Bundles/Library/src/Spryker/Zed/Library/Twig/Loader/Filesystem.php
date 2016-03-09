@@ -67,8 +67,13 @@ class Filesystem extends \Twig_Loader_Filesystem
     protected function getPathsForBundle($bundle)
     {
         $paths = [];
+        $filter = new CamelCaseToDash();
         foreach ($this->paths as $path) {
-            $path = sprintf($path, $bundle);
+            $formattedBundleName = $bundle;
+            if (strpos($path, 'vendor/spryker/spryker/Bundles') === false && strpos($path, 'vendor/spryker/') > 0) {
+                $formattedBundleName = strtolower($filter->filter($bundle));
+            }
+            $path = sprintf($path, $bundle, $formattedBundleName);
             if (strpos($path, '*') !== false) {
                 $path = glob($path);
                 if (count($path) > 0) {
