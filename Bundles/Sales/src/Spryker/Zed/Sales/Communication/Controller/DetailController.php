@@ -28,7 +28,7 @@ class DetailController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $this->castId($request->query->get(SalesConfig::PARAM_ID_SALES_ORDER));
+        $idSalesOrder = $this->castId($request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER));
 
         $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
 
@@ -36,7 +36,7 @@ class DetailController extends AbstractController
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
 
-        $blockResponseData =  $this->renderSalesDetailBlocks($request, $orderTransfer);
+        $blockResponseData = $this->renderSalesDetailBlocks($request, $orderTransfer);
         if ($blockResponseData instanceof RedirectResponse) {
             return $blockResponseData;
         }

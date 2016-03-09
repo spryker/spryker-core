@@ -81,8 +81,9 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     protected function addExpensesToOrder(
         QuoteTransfer $quoteTransfer,

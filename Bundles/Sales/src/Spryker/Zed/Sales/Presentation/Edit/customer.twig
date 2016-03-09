@@ -1,7 +1,7 @@
 {% extends '@Sales/Layout/layout.twig' %}
 
 {% block action %}
-    {{ viewActionButton('/sales/detail/?id-sales-order=' ~ idOrder, 'View Order' | trans) }}
+    {{ viewActionButton('/sales/detail/?id-sales-order=' ~ idSalesOrder, 'View Order' | trans) }}
 {% endblock %}
 
 {% block content %}
