@@ -12,7 +12,6 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
@@ -37,7 +36,7 @@ class DetailController extends AbstractController
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
 
-        $blockResponseData =  $this->renderSalesDetailBlocks($request, $orderTransfer);
+        $blockResponseData = $this->renderSalesDetailBlocks($request, $orderTransfer);
         if ($blockResponseData instanceof RedirectResponse) {
             return $blockResponseData;
         }
@@ -63,9 +62,12 @@ class DetailController extends AbstractController
         if ($addCommentBlock instanceof RedirectResponse) {
             return $addCommentBlock;
         }
-        $request->request->set('orderTransfer', $orderTransfer);
 
-        $blockData = $this->renderMultipleActions($request, $this->getFactory()->getSalesDetailExternalBlocksUrls());
+        $blockData = $this->renderMultipleActions(
+            $request,
+            $this->getFactory()->getSalesDetailExternalBlocksUrls(),
+            $orderTransfer
+        );
 
         if ($blockData instanceof RedirectResponse) {
             return $blockData;
@@ -80,13 +82,15 @@ class DetailController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $data
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array
      */
-    protected function renderMultipleActions(Request $request, array $data)
+    protected function renderMultipleActions(Request $request, array $data, OrderTransfer $orderTransfer)
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
+        $subRequest->request->set('orderTransfer', $orderTransfer);
 
         $responseData = [];
         /**

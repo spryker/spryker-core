@@ -41,7 +41,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver
+     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaverInterface
      */
     public function createProductOptionOrderSaver()
     {
@@ -62,24 +62,6 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createSubtotalWithProductOption()
     {
         return new SubtotalWithProductOptions();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionTax
-     */
-    public function createItemProductOptionTaxAggregator()
-    {
-        return new ItemProductOptionTax($this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_TAX));
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\OrderTaxAmountWithProductOptions
-     */
-    public function createOrderTaxAmountAggregator()
-    {
-        return new OrderTaxAmountWithProductOptions(
-            $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_TAX)
-        );
     }
 
     /**

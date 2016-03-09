@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 
-class ProductOptionOrderSaver
+class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
 {
 
     /**

@@ -47,7 +47,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $salesOrderEntity = $this->getSalesOrderByIdSalesOrder($checkoutResponse->getSaveOrder()->getIdSalesOrder());
 
         $this->addShippingDetailsToOrder($quoteTransfer, $salesOrderEntity);
-        $this->addExpensesToOrder($quoteTransfer, $salesOrderEntity);
+        $this->addExpensesToOrder($quoteTransfer, $salesOrderEntity, $checkoutResponse);
 
         $salesOrderEntity->save();
         Propel::getConnection()->commit();
@@ -81,18 +81,25 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
-    protected function addExpensesToOrder(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
-    {
+    protected function addExpensesToOrder(
+        QuoteTransfer $quoteTransfer,
+        SpySalesOrder $salesOrderEntity,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if (ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
                 $salesOrderExpenseEntity = new SpySalesExpense();
                 $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $expenseTransfer);
                 $salesOrderExpenseEntity->save();
 
-                $expenseTransfer->setIdSalesExpense($salesOrderExpenseEntity->getIdSalesExpense());
+                $this->setCheckoutResponseExpenses($checkoutResponseTransfer, $expenseTransfer, $salesOrderExpenseEntity);
 
                 $salesOrderEntity->addExpense($salesOrderExpenseEntity);
             }
@@ -120,6 +127,23 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     protected function getSalesOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->queryContainer->querySalesOrderById($idSalesOrder)->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpense $salesOrderExpenseEntity
+     *
+     * @return void
+     */
+    protected function setCheckoutResponseExpenses(
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        ExpenseTransfer $expenseTransfer,
+        SpySalesExpense $salesOrderExpenseEntity
+    ) {
+        $orderExpense = clone $expenseTransfer;
+        $orderExpense->setIdSalesExpense($salesOrderExpenseEntity->getIdSalesExpense());
+        $checkoutResponseTransfer->getSaveOrder()->addOrderExpense($orderExpense);
     }
 
 }

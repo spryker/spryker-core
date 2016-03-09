@@ -67,4 +67,8 @@
         <property name="shipment" type="Shipment"/>
     </transfer>
 
+    <transfer name="SaveOrder">
+        <property name="orderExpenses" type="Expense[]" singular="orderExpense"/>
+    </transfer>
+
 </transfers>

@@ -300,24 +300,4 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
         $this->getFactory()->createSubtotalWithProductOption()->aggregate($orderTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateItemProductOptionTaxAmount(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createItemProductOptionTaxAggregator()->aggregate($orderTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createOrderTaxAmountAggregator()->aggregate($orderTransfer);
-    }
-
 }
