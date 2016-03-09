@@ -131,10 +131,10 @@ class MethodForm extends AbstractType
         $resolver->setRequired(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_TAX_PLUGIN_CHOICE_LIST);
 
-        $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST, ChoiceList::class);
-        $resolver->setAllowedTypes(self::OPTION_PRICE_CALCULATION_PLUGIN_CHOICE_LIST, ChoiceList::class);
-        $resolver->setAllowedTypes(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST, ChoiceList::class);
-        $resolver->setAllowedTypes(self::OPTION_TAX_PLUGIN_CHOICE_LIST, ChoiceList::class);
+        $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST);
+        $resolver->setAllowedTypes(self::OPTION_PRICE_CALCULATION_PLUGIN_CHOICE_LIST);
+        $resolver->setAllowedTypes(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST);
+        $resolver->setAllowedTypes(self::OPTION_TAX_PLUGIN_CHOICE_LIST);
     }
 
 }

@@ -39,7 +39,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 
         $form = new CarrierForm($carrierQuery);
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($form);
     }
 
     /**
@@ -64,7 +64,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
             $idMethod
         );
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($form);
     }
 
     /**

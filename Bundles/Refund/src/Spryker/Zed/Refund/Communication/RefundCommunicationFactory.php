@@ -35,7 +35,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
 
         $form = new RefundForm($facadeRefund, $orderTransfer, $paymentDataPlugin);
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($form);
     }
 
     /**
