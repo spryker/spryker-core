@@ -21,7 +21,7 @@ class GlossaryConfig extends AbstractBundleConfig
     public function getGlossaryFilePaths()
     {
         return glob(
-            $this->getConfig()->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/Spryker/*/*/Resources/glossary.yml'
+            $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/Spryker/*/*/Resources/glossary.yml'
         );
     }
 
