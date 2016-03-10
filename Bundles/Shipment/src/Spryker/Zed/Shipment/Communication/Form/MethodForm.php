@@ -49,14 +49,14 @@ class MethodForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addCarrierField($builder, $options);
-        $this->addNameField($builder);
-        $this->addDefaultPriceField($builder);
-        $this->addAvailabilityPluginField($builder, $options);
-        $this->addPricePluginField($builder, $options);
-        $this->addDeliveryTimePluginField($builder, $options);
-        $this->addIsActiveField($builder);
-        $this->addIdField($builder);
+        $this->addCarrierField($builder, $options)
+            ->addNameField($builder)
+            ->addDefaultPriceField($builder)
+            ->addAvailabilityPluginField($builder, $options)
+            ->addPricePluginField($builder, $options)
+            ->addDeliveryTimePluginField($builder, $options)
+            ->addIsActiveField($builder)
+            ->addIdField($builder);
     }
 
     /**
@@ -82,8 +82,7 @@ class MethodForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
-     *
-     * @return void
+     * @return $this
      */
     protected function addCarrierField(FormBuilderInterface $builder, array $options)
     {
@@ -96,12 +95,13 @@ class MethodForm extends AbstractType
                 new Required(),
             ],
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
+     * @return $this
      */
     protected function addDefaultPriceField(FormBuilderInterface $builder)
     {
@@ -117,12 +117,13 @@ class MethodForm extends AbstractType
                 return CurrencyManager::getInstance()->convertDecimalToCent($submittedPrice);
             }
         ));
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
+     * @return $this
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
@@ -133,13 +134,14 @@ class MethodForm extends AbstractType
                 new Required(),
             ],
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
-     *
-     * @return void
+     * @return $this
      */
     protected function addAvailabilityPluginField(FormBuilderInterface $builder, array $options)
     {
@@ -148,13 +150,14 @@ class MethodForm extends AbstractType
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
-     *
-     * @return void
+     * @return $this
      */
     protected function addPricePluginField(FormBuilderInterface $builder, array $options)
     {
@@ -163,13 +166,14 @@ class MethodForm extends AbstractType
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
-     *
-     * @return void
+     * @return $this
      */
     protected function addDeliveryTimePluginField(FormBuilderInterface $builder, array $options)
     {
@@ -178,26 +182,30 @@ class MethodForm extends AbstractType
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
+     * @return $this
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_IS_ACTIVE, 'checkbox');
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
+     * @return $this
      */
     protected function addIdField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ID_FIELD, 'hidden');
+
+        return $this;
     }
 
 }
