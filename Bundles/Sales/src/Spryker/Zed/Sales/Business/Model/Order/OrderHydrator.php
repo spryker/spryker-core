@@ -220,7 +220,6 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $stateTransfer = new ItemStateTransfer();
         $stateTransfer->fromArray($orderItemEntity->getState()->toArray(), true);
-        $stateTransfer->setState($orderItemEntity->getState()->getName());
         $stateTransfer->setIdSalesOrder($orderItemEntity->getIdSalesOrderItem());
 
         $lastStateHistory = $orderItemEntity->getState()->getStateHistories()->getLast();
@@ -241,7 +240,7 @@ class OrderHydrator implements OrderHydratorInterface
         foreach ($orderItemEntity->getStateHistories() as $stateHistoryEntity) {
             $itemStateTransfer = new ItemStateTransfer();
             $itemStateTransfer->fromArray($stateHistoryEntity->toArray(), true);
-            $itemStateTransfer->setState($stateHistoryEntity->getState()->getName());
+            $itemStateTransfer->setName($stateHistoryEntity->getState()->getName());
             $itemStateTransfer->setIdSalesOrder($orderItemEntity->getFkSalesOrder());
             $itemTransfer->addStateHistory($itemStateTransfer);
         }

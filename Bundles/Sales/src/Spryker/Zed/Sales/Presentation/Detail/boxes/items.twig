@@ -57,17 +57,21 @@
                     <td>{{ orderItem.taxRate|default(0) }} %</td>
                     <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | currency }} </td>
                     <td>{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | currency }} </td>
-                    <td><a href="/oms/index/draw?process={{ orderItem.process }}&state={{ orderItem.state.state }}">{{ orderItem.process }}</a></td>
-                    <td>{{ orderItem.state.state }}</td>
+                    <td>
+                        <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}">
+                            {{ orderItem.process }}
+                        </a>
+                    </td>
+                    <td>{{ orderItem.state.name }}</td>
                     <td>
                         {% for stateHistory in orderItem.stateHistory | slice(0, 3) %}
-                            <div>{{ stateHistory.state }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
+                            <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
                         {% endfor %}
 
                         {% if orderItem.stateHistory | length > 3 %}
                             <div id="history_details_{{ orderItem.IdSalesOrderItem }}" style="display: none">
                                 {% for stateHistory in orderItem.stateHistory | slice(3) %}
-                                    <div>{{ stateHistory.state }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
+                                    <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
                                 {% endfor %}
                             </div>
 
