@@ -49,12 +49,6 @@ class EditController extends AbstractController
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
 
-//            if ($this->getFacade()->hasUserByUsername($formData[UserForm::FIELD_USERNAME])) {
-//                $this->addErrorMessage(sprintf('A user with username "%s" already exists!', $formData[UserForm::FIELD_USERNAME]));
-//
-//                return $this->viewResponse($viewData);
-//            }
-
             $userTransfer = $this->getFacade()->addUser(
                 $formData[UserForm::FIELD_FIRST_NAME],
                 $formData[UserForm::FIELD_LAST_NAME],
