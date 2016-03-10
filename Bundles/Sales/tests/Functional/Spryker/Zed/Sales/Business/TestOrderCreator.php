@@ -7,8 +7,8 @@
 
 namespace Functional\Spryker\Zed\Sales\Business;
 
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
@@ -23,7 +23,132 @@ class TestOrderCreator
      */
     public function create()
     {
-        //Data like shipment or state machine is not important in this test so take any first row.
+        $salesOrderAddressEntity = $this->createSalesOrderAddress();
+        $omsStateEntity = $this->createOmsState();
+        $omsProcessEntity = $this->createOmsProcess();
+        $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity);
+        $this->createSalesExpense($salesOrderEntity);
+
+        $this->createOrderItem(
+            $omsStateEntity,
+            $salesOrderEntity,
+            $omsProcessEntity,
+            $quantity = 2,
+            $unitGrosPrice = 500,
+            $taxRate = 19
+        );
+
+        $this->createOrderItem(
+            $omsStateEntity,
+            $salesOrderEntity,
+            $omsProcessEntity,
+            $quantity = 1,
+            $unitGrosPrice = 800,
+            $taxRate = 19
+        );
+
+        return $salesOrderEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $omsStateEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param int $quantity
+     * @param int $grossPrice
+     * @param int $taxRate
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
+    protected function createOrderItem(
+        SpyOmsOrderItemState $omsStateEntity,
+        SpySalesOrder $salesOrderEntity,
+        SpyOmsOrderProcess $omsOrderProcessEntity,
+        $quantity,
+        $grossPrice,
+        $taxRate
+    ) {
+        $salesOrderItem = new SpySalesOrderItem();
+        $salesOrderItem->setGrossPrice($grossPrice);
+        $salesOrderItem->setQuantity($quantity);
+        $salesOrderItem->setSku('123');
+        $salesOrderItem->setName('test1');
+        $salesOrderItem->setTaxRate($taxRate);
+        $salesOrderItem->setFkOmsOrderItemState($omsStateEntity->getIdOmsOrderItemState());
+        $salesOrderItem->setProcess($omsOrderProcessEntity);
+        $salesOrderItem->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
+        $salesOrderItem->save();
+
+        return $salesOrderItem;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function createSpySalesOrderEntity(SpySalesOrderAddress $salesOrderAddressEntity)
+    {
+        $shipmentMethodEntity = SpyShipmentMethodQuery::create()->findOne();
+
+        $salesOrderEntity = new SpySalesOrder();
+        $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
+        $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
+        $salesOrderEntity->setShipmentMethod($shipmentMethodEntity);
+        $salesOrderEntity->setOrderReference('123');
+        $salesOrderEntity->save();
+
+        return $salesOrderEntity;
+    }
+
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
+     */
+    protected function createOmsState()
+    {
+        $omsStateEntity = new SpyOmsOrderItemState();
+        $omsStateEntity->setName('test');
+        $omsStateEntity->save();
+
+        return $omsStateEntity;
+    }
+
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
+     */
+    protected function createOmsProcess()
+    {
+        $omsProcessEntity = new SpyOmsOrderProcess();
+        $omsProcessEntity->setName('test');
+        $omsProcessEntity->save();
+
+        return $omsProcessEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return void
+     */
+    protected function createSalesExpense(SpySalesOrder $salesOrderEntity)
+    {
+        $salesExpenseEntity = new SpySalesExpense();
+        $salesExpenseEntity->setName('shiping test');
+        $salesExpenseEntity->setTaxRate(19);
+        $salesExpenseEntity->setGrossPrice(100);
+        $salesExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
+        $salesExpenseEntity->save();
+    }
+
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
+     */
+    protected function createSalesOrderAddress()
+    {
         $salesOrderAddressEntity = new SpySalesOrderAddress();
         $salesOrderAddressEntity->setAddress1(1);
         $salesOrderAddressEntity->setAddress2(2);
@@ -42,73 +167,7 @@ class TestOrderCreator
         $salesOrderAddressEntity->setZipCode(10405);
         $salesOrderAddressEntity->save();
 
-        $shipmentMethodEntity = SpyShipmentMethodQuery::create()->findOne();
-
-        $omsStateEntity = new SpyOmsOrderItemState();
-        $omsStateEntity->setName('test');
-        $omsStateEntity->save();
-
-        $salesOrderEntity = new SpySalesOrder();
-        $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
-        $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
-        $salesOrderEntity->setShipmentMethod($shipmentMethodEntity);
-        $salesOrderEntity->setOrderReference('123');
-        $salesOrderEntity->save();
-
-        $this->createOrderItem(
-            $omsStateEntity,
-            $salesOrderEntity,
-            $quantity = 2,
-            $unitGrosPrice = 500,
-            $taxRate = 19
-        );
-
-        $this->createOrderItem(
-            $omsStateEntity,
-            $salesOrderEntity,
-            $quantity = 1,
-            $unitGrosPrice = 800,
-            $taxRate = 19
-        );
-
-        $salesExpenseEntity = new SpySalesExpense();
-        $salesExpenseEntity->setName('shiping test');
-        $salesExpenseEntity->setTaxRate(19);
-        $salesExpenseEntity->setGrossPrice(100);
-        $salesExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
-        $salesExpenseEntity->save();
-
-        return $salesOrderEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $omsState
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrder
-     * @param int $quantity
-     * @param int $grossPrice
-     * @param int $taxRate
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    protected function createOrderItem(
-        SpyOmsOrderItemState $omsState,
-        SpySalesOrder $salesOrder,
-        $quantity,
-        $grossPrice,
-        $taxRate
-    ) {
-        $salesOrderItem = new SpySalesOrderItem();
-        $salesOrderItem->setGrossPrice($grossPrice);
-        $salesOrderItem->setQuantity($quantity);
-        $salesOrderItem->setSku('123');
-        $salesOrderItem->setName('test1');
-        $salesOrderItem->setTaxRate($taxRate);
-        $salesOrderItem->setFkOmsOrderItemState($omsState->getIdOmsOrderItemState());
-        $salesOrderItem->setFkSalesOrder($salesOrder->getIdSalesOrder());
-        $salesOrderItem->save();
-
-        return $salesOrderItem;
+        return $salesOrderAddressEntity;
     }
 
 }
