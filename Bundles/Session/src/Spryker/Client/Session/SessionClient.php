@@ -61,10 +61,12 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *
      * @param string $name
      * @param mixed $value
+     *
+     * @return void
      */
     public function set($name, $value)
     {
-        return $this->getContainer()->set($name, $value);
+        $this->getContainer()->set($name, $value);
     }
 
     /**
@@ -113,10 +115,12 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * @api
      *
      * @param string $id
+     *
+     * @return void
      */
     public function setId($id)
     {
-        return $this->getContainer()->setId($id);
+        $this->getContainer()->setId($id);
     }
 
     /**
@@ -137,10 +141,12 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * @api
      *
      * @param string $name
+     *
+     * @return void
      */
     public function setName($name)
     {
-        return $this->getContainer()->setName($name);
+        $this->getContainer()->setName($name);
     }
 
     /**
@@ -230,10 +236,12 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * @api
      *
      * @param array $attributes Attributes
+     *
+     * @return void
      */
     public function replace(array $attributes)
     {
-        return $this->getContainer()->replace($attributes);
+        $this->getContainer()->replace($attributes);
     }
 
     /**
@@ -266,10 +274,12 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Session\SessionBagInterface $bag
+     *
+     * @return void
      */
     public function registerBag(SessionBagInterface $bag)
     {
-        return $this->getContainer()->registerBag($bag);
+        $this->getContainer()->registerBag($bag);
     }
 
     /**

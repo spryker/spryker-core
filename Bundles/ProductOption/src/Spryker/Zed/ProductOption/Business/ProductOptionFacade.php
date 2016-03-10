@@ -118,10 +118,12 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
+     *
+     * @return void
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB)
     {
-        return $this->getFactory()->createDataImportWriterModel()->importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
+        $this->getFactory()->createDataImportWriterModel()->importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
     }
 
     /**
@@ -135,10 +137,12 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
+     *
+     * @return void
      */
     public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator)
     {
-        return $this->getFactory()->createDataImportWriterModel()->importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
+        $this->getFactory()->createDataImportWriterModel()->importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
     }
 
     /**

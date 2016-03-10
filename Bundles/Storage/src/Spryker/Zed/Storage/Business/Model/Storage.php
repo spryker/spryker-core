@@ -36,7 +36,7 @@ class Storage
     }
 
     /**
-     * return int
+     * @return int
      */
     public function getTotalCount()
     {
