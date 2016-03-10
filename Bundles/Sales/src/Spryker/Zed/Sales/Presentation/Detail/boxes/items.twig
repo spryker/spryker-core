@@ -38,7 +38,6 @@
                 <th>{{ 'Process' | trans }}</th>
                 <th>{{ 'Status' | trans }}</th>
                 <th>{{ 'Trigger event' | trans }}</th>
-                <th>{{ "Process" | trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -57,7 +56,7 @@
                     <td>{{ orderItem.taxRate|default(0) }} %</td>
                     <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | currency }} </td>
                     <td>{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | currency }} </td>
-                    <td><a href="/oms/index/draw?process={{ orderItem.process }}">{{ orderItem.process }}</a></td>
+                    <td><a href="/oms/index/draw?process={{ orderItem.process }}&state={{ orderItem.stateHistory[0].state }}">{{ orderItem.process }}</a></td>
                     <td>
                         {% for stateHistory in orderItem.stateHistory | slice(0, 3) %}
                             <div>{{ stateHistory.state }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
@@ -81,11 +80,6 @@
                         {% else -%}
                             -
                         {%- endif %}
-                    </td>
-                    <td>
-                        <a href="{{ url('/oms/index/draw-item', {id: orderItem.IdSalesOrderItem}) }}" target="_blank">
-                            {{ 'show' | trans }}
-                        </a>
                     </td>
                 </tr>
                 {% if orderItemSplitFormCollection is defined %}
