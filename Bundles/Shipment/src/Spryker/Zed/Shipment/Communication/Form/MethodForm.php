@@ -49,52 +49,14 @@ class MethodForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(self::FIELD_CARRIER_FIELD, 'choice', [
-                'label' => 'Carrier',
-                'placeholder' => 'Select one',
-                'choices' => $options[self::OPTION_CARRIER_CHOICES],
-                'constraints' => [
-                    new NotBlank(),
-                    new Required(),
-                ],
-            ])
-            ->add(self::FIELD_NAME_FIELD, 'text', [
-                'label' => 'Name',
-                'constraints' => [
-                    new NotBlank(),
-                    new Required(),
-                ],
-            ])
-            ->add(self::FIELD_DEFAULT_PRICE, 'money', [
-                'label' => 'Default price',
-            ])
-            ->add(self::FIELD_AVAILABILITY_PLUGIN_FIELD, 'choice', [
-                'label' => 'Availability Plugin',
-                'placeholder' => 'Select one',
-                'choice_list' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
-            ])
-            ->add(self::FIELD_PRICE_PLUGIN_FIELD, 'choice', [
-                'label' => 'Price Plugin',
-                'placeholder' => 'Select one',
-                'choice_list' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
-            ])
-            ->add(self::FIELD_DELIVERY_TIME_PLUGIN_FIELD, 'choice', [
-                'label' => 'Delivery Time Plugin',
-                'placeholder' => 'Select one',
-                'choice_list' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
-            ])
-            ->add('isActive', 'checkbox')
-            ->add(self::FIELD_ID_FIELD, 'hidden');
-
-        $builder->get(self::FIELD_DEFAULT_PRICE)->addModelTransformer(new CallbackTransformer(
-            function($originalPrice){
-                return CurrencyManager::getInstance()->convertCentToDecimal($originalPrice);
-            },
-            function($submittedPrice){
-                return CurrencyManager::getInstance()->convertDecimalToCent($submittedPrice);
-            }
-        ));
+        $this->addCarrierField($builder, $options);
+        $this->addNameField($builder);
+        $this->addDefaultPriceField($builder);
+        $this->addAvailabilityPluginField($builder, $options);
+        $this->addPricePluginField($builder, $options);
+        $this->addDeliveryTimePluginField($builder, $options);
+        $this->addIsActiveField($builder);
+        $this->addIdField($builder);
     }
 
     /**
@@ -115,6 +77,111 @@ class MethodForm extends AbstractType
         $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST, ChoiceList::class);
         $resolver->setAllowedTypes(self::OPTION_PRICE_PLUGIN_CHOICE_LIST, ChoiceList::class);
         $resolver->setAllowedTypes(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST, ChoiceList::class);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    protected function addCarrierField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_CARRIER_FIELD, 'choice', [
+            'label' => 'Carrier',
+            'placeholder' => 'Select one',
+            'choices' => $options[self::OPTION_CARRIER_CHOICES],
+            'constraints' => [
+                new NotBlank(),
+                new Required(),
+            ],
+        ]);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addDefaultPriceField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_DEFAULT_PRICE, 'money', [
+            'label' => 'Default price',
+        ]);
+
+        $builder->get(self::FIELD_DEFAULT_PRICE)->addModelTransformer(new CallbackTransformer(
+            function($originalPrice){
+                return CurrencyManager::getInstance()->convertCentToDecimal($originalPrice);
+            },
+            function($submittedPrice){
+                return CurrencyManager::getInstance()->convertDecimalToCent($submittedPrice);
+            }
+        ));
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_NAME_FIELD, 'text', [
+            'label' => 'Name',
+            'constraints' => [
+                new NotBlank(),
+                new Required(),
+            ],
+        ]);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    protected function addAvailabilityPluginField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_AVAILABILITY_PLUGIN_FIELD, 'choice', [
+            'label' => 'Availability Plugin',
+            'placeholder' => 'Select one',
+            'choice_list' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
+        ]);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    protected function addPricePluginField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_PRICE_PLUGIN_FIELD, 'choice', [
+            'label' => 'Price Plugin',
+            'placeholder' => 'Select one',
+            'choice_list' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
+        ]);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    protected function addDeliveryTimePluginField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_DELIVERY_TIME_PLUGIN_FIELD, 'choice', [
+            'label' => 'Delivery Time Plugin',
+            'placeholder' => 'Select one',
+            'choice_list' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
+        ]);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox');
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addIdField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_FIELD, 'hidden');
     }
 
 }
