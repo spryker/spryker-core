@@ -62,7 +62,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $xmlFolder
+     * @param string|null $xmlFolder
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */

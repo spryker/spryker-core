@@ -251,7 +251,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param string $priceType
+     * @param string|null $priceType
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */

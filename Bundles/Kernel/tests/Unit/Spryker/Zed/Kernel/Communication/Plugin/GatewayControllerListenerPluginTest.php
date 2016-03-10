@@ -206,7 +206,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $action
-     * @param \Spryker\Shared\Transfer\TransferInterface $transfer
+     * @param \Spryker\Shared\Transfer\TransferInterface|null $transfer
      *
      * @return callable
      */

@@ -15,7 +15,7 @@ interface ApplicationFacadeInterface
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return \Spryker\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep[]
      */
@@ -24,7 +24,7 @@ interface ApplicationFacadeInterface
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -33,7 +33,7 @@ interface ApplicationFacadeInterface
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -42,7 +42,7 @@ interface ApplicationFacadeInterface
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -51,7 +51,7 @@ interface ApplicationFacadeInterface
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -60,7 +60,7 @@ interface ApplicationFacadeInterface
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -69,7 +69,7 @@ interface ApplicationFacadeInterface
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -78,7 +78,7 @@ interface ApplicationFacadeInterface
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */

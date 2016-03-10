@@ -23,7 +23,7 @@ class DataDirectory
     /**
      * This directory is local host only and not store specific
      *
-     * @param string $relativePath relative path in data directory
+     * @param string|null $relativePath relative path in data directory
      *
      * @return mixed
      */
@@ -39,7 +39,7 @@ class DataDirectory
     /**
      * This directory is local host only but store specific
      *
-     * @param string $relativePath relative path in data directory
+     * @param string|null $relativePath relative path in data directory
      *
      * @return mixed
      */
@@ -54,7 +54,7 @@ class DataDirectory
     /**
      * This directory is shared between hosts (NFS) but not store specific
      *
-     * @param string $relativePath relative path in data directory
+     * @param string|null $relativePath relative path in data directory
      *
      * @return mixed
      */
@@ -74,7 +74,7 @@ class DataDirectory
     /**
      * This directory is shared between hosts (NFS) and is store specific
      *
-     * @param string $relativePath relative path in data directory
+     * @param string|null $relativePath relative path in data directory
      *
      * @return mixed
      */
