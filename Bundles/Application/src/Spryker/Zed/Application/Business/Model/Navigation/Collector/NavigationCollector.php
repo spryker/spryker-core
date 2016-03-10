@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Application\Business\Model\Navigation\Collector;
 
 use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface;
+use Zend\Config\Config;
 use Zend\Config\Factory;
 
 class NavigationCollector implements NavigationCollectorInterface
@@ -40,7 +41,12 @@ class NavigationCollector implements NavigationCollectorInterface
      */
     public function getNavigation()
     {
-        $navigationDefinition = Factory::fromFile($this->rootNavigationFile, true);
+        try {
+            $navigationDefinition = Factory::fromFile($this->rootNavigationFile, true);
+        } catch (\Exception $e) {
+            $navigationDefinition = new Config([]);
+        }
+
         foreach ($this->navigationSchemaFinder->getSchemaFiles() as $moduleNavigationFile) {
             if (!file_exists($moduleNavigationFile->getPathname())) {
                 throw new \ErrorException('Navigation-File does not exist: ' . $moduleNavigationFile);

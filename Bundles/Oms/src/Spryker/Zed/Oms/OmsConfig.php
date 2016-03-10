@@ -44,16 +44,6 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return string|null
-     */
-    public function selectProcess(OrderTransfer $orderTransfer)
-    {
-        return null;
-    }
-
-    /**
      * @return string[]
      */
     public function getStateBlacklist()
