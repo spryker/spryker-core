@@ -20,7 +20,7 @@ class RefundTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
-    const URL_REFUND_DETAILS = '/refund/details/';
+    const URL_REFUND_DETAILS = '/refund/details';
     const PARAM_ID_REFUND = 'id-refund';
 
     /**

@@ -21,8 +21,8 @@ class CmsBlockTable extends AbstractTable
     const ACTIONS = 'Actions';
     const REQUEST_ID_BLOCK = 'id-block';
     const REQUEST_ID_PAGE = 'id-page';
-    const PARAM_CMS_GLOSSARY = '/cms/glossary/';
-    const PARAM_CMS_BLOCK_EDIT = '/cms/block/edit/';
+    const PARAM_CMS_GLOSSARY = '/cms/glossary';
+    const PARAM_CMS_BLOCK_EDIT = '/cms/block/edit';
 
     /**
      * @var \Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery

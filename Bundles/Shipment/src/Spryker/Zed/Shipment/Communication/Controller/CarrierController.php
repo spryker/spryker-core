@@ -36,7 +36,7 @@ class CarrierController extends AbstractController
             $this->getFacade()
                 ->createCarrier($carrierTransfer);
 
-            return $this->redirectResponse('/shipment/');
+            return $this->redirectResponse('/shipment');
         }
 
         return $this->viewResponse([

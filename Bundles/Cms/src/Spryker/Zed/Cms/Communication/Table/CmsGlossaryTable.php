@@ -22,8 +22,8 @@ class CmsGlossaryTable extends AbstractTable
 
     const ACTIONS = 'Actions';
     const REQUEST_ID_MAPPING = 'id-mapping';
-    const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit/';
-    const URL_CMS_GLOSSARY_DELETE = '/cms/glossary/delete/';
+    const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit';
+    const URL_CMS_GLOSSARY_DELETE = '/cms/glossary/delete';
 
     /**
      * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery

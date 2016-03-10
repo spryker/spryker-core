@@ -21,7 +21,7 @@ class TranslationTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
-    const URL_GLOSSARY_EDIT = '/glossary/edit/';
+    const URL_GLOSSARY_EDIT = '/glossary/edit';
 
     /**
      * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery

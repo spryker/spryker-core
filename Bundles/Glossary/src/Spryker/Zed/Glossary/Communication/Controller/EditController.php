@@ -56,7 +56,7 @@ class EditController extends AbstractController
                 $this->addErrorMessage('Translations could not be saved');
             }
 
-            return $this->redirectResponse('/glossary/');
+            return $this->redirectResponse('/glossary');
         }
 
         return $this->viewResponse([

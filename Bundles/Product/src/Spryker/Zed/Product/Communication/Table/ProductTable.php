@@ -20,7 +20,7 @@ class ProductTable extends AbstractTable
 {
 
     const OPTIONS = 'Options';
-    const URL_PRODUCT_INDEX_VIEW = '/product/index/view/';
+    const URL_PRODUCT_INDEX_VIEW = '/product/index/view';
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
