@@ -191,12 +191,4 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new OrderItemMatrix($this->getQueryContainer(), $this->getConfig());
     }
 
-    /**
-     * @return \Spryker\Zed\Oms\Business\Process\ProcessSelector
-     */
-    public function createProcessSelector()
-    {
-        return new ProcessSelector($this->getConfig());
-    }
-
 }

@@ -16,7 +16,6 @@
     "spryker/kernel": "^1.0.0-RC2",
     "spryker/library": "^1.0.0-RC2",
     "spryker/session": "^1.0.0-RC2",
-    "spryker/tax": "^1.0.0-RC2",
     "spryker/zed-request": "^1.0.0-RC2",
     "spryker/symfony": "^1.0.0-RC2",
     "spryker/url": "^1.0.0-RC2",

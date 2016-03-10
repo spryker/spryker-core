@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <product>
+        <label>Products</label>
+        <title>Products</title>
+        <uri>/product</uri>
+        <icon>fa-database</icon>
         <pages>
             <product>
                 <label>Product List</label>

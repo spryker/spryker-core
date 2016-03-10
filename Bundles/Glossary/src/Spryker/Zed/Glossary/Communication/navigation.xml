@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <content>
-        <bundle>glossary</bundle>
-        <controller>glossary</controller>
-        <action>keys</action>
-    </content>
+    <glossary>
+        <label>Glossary</label>
+        <title>Glossary</title>
+        <uri>/glossary</uri>
+        <icon>fa-globe</icon>
+    </glossary>
 </config>

@@ -75,6 +75,8 @@ class FacetConfig
 
     /**
      * @param string $internalName
+     *
+     * @return string|null
      */
     public function getSortNameFromInternalName($internalName)
     {

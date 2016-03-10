@@ -46,8 +46,8 @@ interface ProductSearchFacadeInterface
     /**
      * @api
      *
-     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param int $idProduct
+     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      *
      * @return void
      */
@@ -56,8 +56,8 @@ interface ProductSearchFacadeInterface
     /**
      * @api
      *
-     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param int $idProduct
+     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      *
      * @return void
      */

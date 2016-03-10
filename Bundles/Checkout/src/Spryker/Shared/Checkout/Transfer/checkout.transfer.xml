@@ -11,7 +11,6 @@
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="billingAddresses" type="Address[]" singular="billingAddress" />
         <property name="shippingAddresses" type="Address[]" singular="shippingAddress" />
-        <property name="process" type="string" />
     </transfer>
 
     <transfer name="CheckoutError">

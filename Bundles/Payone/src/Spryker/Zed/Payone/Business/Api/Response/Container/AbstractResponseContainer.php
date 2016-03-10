@@ -240,6 +240,7 @@ abstract class AbstractResponseContainer
     }
 
     /**
+     * @return string
      */
     public function getRawResponse()
     {
