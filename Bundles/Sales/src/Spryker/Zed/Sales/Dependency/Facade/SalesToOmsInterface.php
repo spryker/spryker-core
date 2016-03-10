@@ -26,13 +26,6 @@ interface SalesToOmsInterface
     public function getProcessEntity($processName);
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return string
-     */
-    public function selectProcess(OrderTransfer $orderTransfer);
-
-    /**
      * @param int $idOrderItem
      *
      * @return string[]

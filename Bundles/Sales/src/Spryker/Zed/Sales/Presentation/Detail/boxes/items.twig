@@ -57,7 +57,7 @@
                     <td>{{ orderItem.taxRate|default(0) }} %</td>
                     <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | currency }} </td>
                     <td>{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | currency }} </td>
-                    <td><a href="/oms/index/draw?process={{ orderItem.process }}">{{ orderItem.process }}</a></td>
+                    <td><a href="/oms/index/draw?process={{ orderItem.process }}&state={{ orderItem.state.state }}">{{ orderItem.process }}</a></td>
                     <td>{{ orderItem.state.state }}</td>
                     <td>
                         {% for stateHistory in orderItem.stateHistory | slice(0, 3) %}

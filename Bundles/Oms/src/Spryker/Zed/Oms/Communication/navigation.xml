@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <development>
+    <maintenance>
         <pages>
             <statemachine-index>
                 <label>OMS</label>
@@ -10,5 +10,5 @@
                 <action>index</action>
             </statemachine-index>
         </pages>
-    </development>
+    </maintenance>
 </config>

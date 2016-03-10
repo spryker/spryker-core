@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <shipment>
+        <label>Shipment</label>
+        <title>Shipment</title>
+        <uri>/shipment</uri>
+        <icon>fa-truck</icon>
+    </shipment>
+</config>

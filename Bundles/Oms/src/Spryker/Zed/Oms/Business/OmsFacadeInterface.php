@@ -205,15 +205,6 @@ interface OmsFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
-     *
-     * @return string
-     */
-    public function selectProcess(OrderTransfer $transferOrder);
-
-    /**
-     * @api
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return string
