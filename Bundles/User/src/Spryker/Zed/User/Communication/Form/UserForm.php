@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\User\Communication\Form;
 
+use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\User\Business\UserFacadeInterface;
+use Spryker\Zed\User\Communication\Form\Constraints\UsernameUnique;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -25,6 +28,26 @@ class UserForm extends AbstractType
     const FIELD_LAST_NAME = 'last_name';
     const FIELD_PASSWORD = 'password';
     const FIELD_STATUS = 'status';
+
+    /**
+     * @var \Spryker\Zed\User\Business\UserFacadeInterface
+     */
+    protected $userFacade;
+
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @param \Spryker\Zed\User\Business\UserFacadeInterface $userFacade
+     * @param string $username
+     */
+    public function __construct(UserFacadeInterface $userFacade, $username)
+    {
+        $this->userFacade = $userFacade;
+        $this->username = $username;
+    }
 
     /**
      * @return string
@@ -75,6 +98,10 @@ class UserForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Email(),
+                    new UsernameUnique([
+                        'facadeUser' => $this->userFacade,
+                        'username' => $this->username,
+                    ]),
                 ],
             ]);
 
