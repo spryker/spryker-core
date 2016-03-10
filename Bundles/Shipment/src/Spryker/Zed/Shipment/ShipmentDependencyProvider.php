@@ -28,7 +28,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::PLUGINS] = function (Container $container) {
-
             return [
                 self::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins($container),
                 self::PRICE_PLUGINS => $this->getPricePlugins($container),
@@ -47,7 +46,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::PLUGINS] = function (Container $container) {
-
             return [
                 self::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins($container),
                 self::PRICE_PLUGINS => $this->getPricePlugins($container),
@@ -58,8 +56,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
         };
-
-        parent::provideBusinessLayerDependencies($container);
 
         return $container;
     }
