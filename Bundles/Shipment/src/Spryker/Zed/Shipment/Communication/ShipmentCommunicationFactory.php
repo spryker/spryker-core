@@ -43,6 +43,10 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create($form);
     }
 
+    /**
+     * @return \Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
     public function createMethodFormDataProvider()
     {
         return new MethodFormDataProvider(
