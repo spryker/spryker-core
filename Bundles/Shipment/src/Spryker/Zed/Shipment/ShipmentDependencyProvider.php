@@ -18,7 +18,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     const PRICE_PLUGINS = 'PRICE_PLUGINS';
     const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
 
-    const QUERY_CONTAINER_TAX = 'QUERY_CONTAINER_TAX';
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
     /**
@@ -35,10 +34,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
                 self::PRICE_PLUGINS => $this->getPricePlugins($container),
                 self::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins($container),
             ];
-        };
-
-        $container[static::QUERY_CONTAINER_TAX] = function (Container $container) {
-            return $container->getLocator()->tax()->queryContainer();
         };
 
         return $container;

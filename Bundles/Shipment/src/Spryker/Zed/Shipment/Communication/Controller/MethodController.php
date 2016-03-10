@@ -28,8 +28,11 @@ class MethodController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $form = $this->getFactory()->createMethodForm();
-        $form->handleRequest();
+        $dataProvider = $this->getFactory()->createMethodFormDataProvider();
+
+        $form = $this->getFactory()
+            ->createMethodForm($dataProvider->getData(), $dataProvider->getOptions())
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -58,9 +61,11 @@ class MethodController extends AbstractController
         $idMethod = $this->castId($request->query->get(self::ID_METHOD_PARAMETER));
 
         if ($this->getFacade()->hasMethod($idMethod)) {
+            $dataProvider = $this->getFactory()->createMethodFormDataProvider();
+
             $form = $this->getFactory()
-                ->createMethodForm($idMethod);
-            $form->handleRequest($request);
+                ->createMethodForm($dataProvider->getData($idMethod), $dataProvider->getOptions())
+                ->handleRequest($request);
 
             if ($form->isValid()) {
                 $data = $form->getData();

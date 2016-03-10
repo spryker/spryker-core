@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
+use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -42,37 +43,25 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create($form);
     }
 
-    /**
-     * @param int|null $idMethod
-     *
-     * @throws \ErrorException
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createMethodForm($idMethod = null)
+    public function createMethodFormDataProvider()
     {
-        $methodQuery = $this->getQueryContainer()->queryMethods();
-        $carrierQuery = $this->getQueryContainer()->queryCarriers();
-
-        $taxSetQuery = $this->getTaxQueryContainer()->queryAllTaxSets();
-
-        $form = new MethodForm(
-            $methodQuery,
-            $carrierQuery,
-            $taxSetQuery,
-            $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS),
-            $idMethod
+        return new MethodFormDataProvider(
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
         );
-
-        return $this->getFormFactory()->create($form);
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
+     * @param array $data
+     * @param array $options
+     * @return \Symfony\Component\Form\FormInterface
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    protected function getTaxQueryContainer()
+    public function createMethodForm(array $data, array $options = [])
     {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_TAX);
+        $form = new MethodForm();
+
+        return $this->getFormFactory()->create($form, $data, $options);
     }
 
 }
