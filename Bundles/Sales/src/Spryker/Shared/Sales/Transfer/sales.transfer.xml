@@ -102,7 +102,7 @@
         <property name="quantity" type="int" />
         <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
         <property name="variety" type="string" />
-        <property name="status" type="OrderItemState[]" />
+        <property name="state" type="ItemState" />
         <property name="refundableAmount" type="int"/>
         <property name="canceledAmount" type="int"/>
         <property name="stateHistory" type="ItemState[]" />
@@ -125,12 +125,6 @@
     <transfer name="OrderItemsAndExpenses">
         <property name="orderItems" type="Item[]" singular="orderItem" />
         <property name="expenses" type="Expense[]" singular="expense" />
-    </transfer>
-
-    <transfer name="OrderItemState">
-        <property name="idOmsOrderItemState" type="int" />
-        <property name="name" type="string" />
-        <property name="description" type="string" />
     </transfer>
 
     <transfer name="StatemachineTrigger">

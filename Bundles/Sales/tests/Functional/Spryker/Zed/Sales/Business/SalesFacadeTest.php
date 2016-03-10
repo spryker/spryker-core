@@ -31,6 +31,15 @@ class SalesFacadeTest extends Test
         $this->assertInstanceOf(OrderTransfer::class, $orderTransfer);
         $this->assertInstanceOf(TotalsTransfer::class, $orderTransfer->getTotals());
         $this->assertCount(2, $orderTransfer->getItems());
+
+        $itemTransfer = $orderTransfer->getItems()[0];
+        $this->assertEquals(TestOrderCreator::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getState());
+        $this->assertEquals(TestOrderCreator::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
+
+        $itemTransfer = $orderTransfer->getItems()[1];
+        $this->assertEquals(TestOrderCreator::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getState());
+        $this->assertEquals(TestOrderCreator::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
+
         $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getBillingAddress());
         $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getShippingAddress());
         $this->assertCount(1, $orderTransfer->getExpenses());

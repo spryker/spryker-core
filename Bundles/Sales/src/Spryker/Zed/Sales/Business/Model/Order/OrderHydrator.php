@@ -135,7 +135,8 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->fromArray($orderItemEntity->toArray(), true);
         $itemTransfer->setProcess($orderItemEntity->getProcess()->getName());
         $itemTransfer->setUnitGrossPrice($orderItemEntity->getGrossPrice());
-        $this->addStateHistory($orderItemEntity, $itemTransfer);
+        $this->hydrateStateHistory($orderItemEntity, $itemTransfer);
+        $this->hydrateCurrentSalesOrderItemState($orderItemEntity, $itemTransfer);
 
         foreach ($orderItemEntity->getOptions() as $orderItemOptionEntity) {
             $productOptionsTransfer = new ProductOptionTransfer();
@@ -210,6 +211,43 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function hydrateCurrentSalesOrderItemState(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer)
+    {
+        $stateTransfer = new ItemStateTransfer();
+        $stateTransfer->fromArray($orderItemEntity->getState()->toArray(), true);
+        $stateTransfer->setState($orderItemEntity->getState()->getName());
+        $stateTransfer->setIdSalesOrder($orderItemEntity->getIdSalesOrderItem());
+
+        $lastStateHistory = $orderItemEntity->getState()->getStateHistories()->getLast();
+        $stateTransfer->setCreatedAt($lastStateHistory->getCreatedAt());
+
+        $itemTransfer->setState($stateTransfer);
+    }
+
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function hydrateStateHistory(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer)
+    {
+        foreach ($orderItemEntity->getStateHistories() as $stateHistoryEntity) {
+            $itemStateTransfer = new ItemStateTransfer();
+            $itemStateTransfer->fromArray($stateHistoryEntity->toArray(), true);
+            $itemStateTransfer->setState($stateHistoryEntity->getState()->getName());
+            $itemStateTransfer->setIdSalesOrder($orderItemEntity->getFkSalesOrder());
+            $itemTransfer->addStateHistory($itemStateTransfer);
+        }
+    }
+
+    /**
      * @param int $idCustomer
      *
      * @return int
@@ -221,23 +259,6 @@ class OrderHydrator implements OrderHydratorInterface
             ->findByFkCustomer($idCustomer)->count();
 
         return $totalOrderCount;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function addStateHistory(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer)
-    {
-        foreach ($orderItemEntity->getStateHistories() as $stateHistoryEntity) {
-            $itemStateTransfer = new ItemStateTransfer();
-            $itemStateTransfer->fromArray($stateHistoryEntity->toArray(), true);
-            $itemStateTransfer->setState($stateHistoryEntity->getState()->getName());
-            $itemStateTransfer->setIdSalesOrder($orderItemEntity->getFkSalesOrder());
-            $itemTransfer->addStateHistory($itemStateTransfer);
-        }
     }
 
 }
