@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Sales\Business\SalesFacade;
 
+/**
+ * @group SalesFacade
+ */
 class SalesFacadeTest extends Test
 {
 
