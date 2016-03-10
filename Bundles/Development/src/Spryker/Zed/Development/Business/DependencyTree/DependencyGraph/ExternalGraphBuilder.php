@@ -13,6 +13,9 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 class ExternalGraphBuilder implements GraphBuilderInterface
 {
 
+    const FONT_COLOR = 'fontcolor';
+    const LABEL = 'label';
+
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
      */
@@ -60,7 +63,7 @@ class ExternalGraphBuilder implements GraphBuilderInterface
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
-            $attributes['fontcolor'] = 'red';
+            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
         }
 
         return $attributes;
@@ -75,11 +78,11 @@ class ExternalGraphBuilder implements GraphBuilderInterface
     {
         $label = '"' . $dependency[DependencyTree::META_COMPOSER_NAME] . '": "' . $dependency[DependencyTree::META_COMPOSER_VERSION] . '"';
         $attributes = [
-            'label' => $label
+            self::LABEL => $label
         ];
 
         if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
-            $attributes['fontcolor'] = 'red';
+            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
         }
 
         return $attributes;
@@ -94,7 +97,7 @@ class ExternalGraphBuilder implements GraphBuilderInterface
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_FOREIGN_BUNDLE_IS_ENGINE]) {
-            $attributes['fontcolor'] = 'red';
+            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
         }
 
         return $attributes;
