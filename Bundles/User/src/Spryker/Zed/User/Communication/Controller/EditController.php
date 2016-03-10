@@ -42,36 +42,40 @@ class EditController extends AbstractController
             )
             ->handleRequest($request);
 
+        $viewData = [
+            'userForm' => $userForm->createView()
+        ];
+
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
 
             if ($this->getFacade()->hasUserByUsername($formData[UserForm::FIELD_USERNAME])) {
                 $this->addErrorMessage(sprintf('A user with username "%s" already exists!', $formData[UserForm::FIELD_USERNAME]));
-            } else {
-                $userTransfer = $this->getFacade()->addUser(
-                    $formData[UserForm::FIELD_FIRST_NAME],
-                    $formData[UserForm::FIELD_LAST_NAME],
-                    $formData[UserForm::FIELD_USERNAME],
-                    $formData[UserForm::FIELD_PASSWORD]
+
+                return $this->viewResponse($viewData);
+            }
+
+            $userTransfer = $this->getFacade()->addUser(
+                $formData[UserForm::FIELD_FIRST_NAME],
+                $formData[UserForm::FIELD_LAST_NAME],
+                $formData[UserForm::FIELD_USERNAME],
+                $formData[UserForm::FIELD_PASSWORD]
+            );
+
+            if ($userTransfer->getIdUser()) {
+                $this->addAclGroups($formData, $userTransfer);
+
+                $this->addSuccessMessage(
+                    sprintf('User with id "%d" created', $userTransfer->getIdUser())
                 );
 
-                if ($userTransfer->getIdUser()) {
-                    $this->addAclGroups($formData, $userTransfer);
-
-                    $this->addSuccessMessage(
-                        sprintf('User with id "%d" created', $userTransfer->getIdUser())
-                    );
-
-                    return $this->redirectResponse(self::USER_LISTING_URL);
-                } else {
-                    $this->addErrorMessage('Failed to create new user!');
-                }
+                return $this->redirectResponse(self::USER_LISTING_URL);
             }
+
+            $this->addErrorMessage('Failed to create new user!');
         }
 
-        return $this->viewResponse([
-            'userForm' => $userForm->createView(),
-        ]);
+        return $this->viewResponse($viewData);
     }
 
     /**
