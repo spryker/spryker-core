@@ -229,7 +229,10 @@ class CategoryTreeWriter
     {
         $navigationItems = $this->touchFacade->getItemsByType(CategoryConstants::RESOURCE_TYPE_NAVIGATION);
 
-        $itemIds = array_keys($navigationItems);
+        $itemIds = [];
+        foreach ($navigationItems as $touchTransfer) {
+            $itemIds[] = $touchTransfer->getItemId();
+        }
 
         $this->touchFacade->bulkTouchActive(CategoryConstants::RESOURCE_TYPE_NAVIGATION, $itemIds);
     }
