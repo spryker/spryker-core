@@ -19,7 +19,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     protected $yamlReader;
 
     /**
-     * @var
+     * @var string
      */
     protected $yamlFilename;
 

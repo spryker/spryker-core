@@ -18,7 +18,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     protected $xmlReader;
 
     /**
-     * @var
+     * @var string
      */
     protected $xmlFilename;
 
