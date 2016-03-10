@@ -5,7 +5,7 @@
 
     <transfer name="ItemState">
         <property name="idSalesOrder" type="int"/>
-        <property name="state" type="string" />
+        <property name="name" type="string" />
         <property name="createdAt" type="string" />
     </transfer>
 

@@ -18,6 +18,9 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 class TestOrderCreator
 {
 
+    const DEFAULT_OMS_PROCESS_NAME = 'test';
+    const DEFAULT_ITEM_STATE = 'test';
+
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
@@ -109,7 +112,7 @@ class TestOrderCreator
     protected function createOmsState()
     {
         $omsStateEntity = new SpyOmsOrderItemState();
-        $omsStateEntity->setName('test');
+        $omsStateEntity->setName(self::DEFAULT_ITEM_STATE);
         $omsStateEntity->save();
 
         return $omsStateEntity;
@@ -122,7 +125,7 @@ class TestOrderCreator
     protected function createOmsProcess()
     {
         $omsProcessEntity = new SpyOmsOrderProcess();
-        $omsProcessEntity->setName('test');
+        $omsProcessEntity->setName(self::DEFAULT_OMS_PROCESS_NAME);
         $omsProcessEntity->save();
 
         return $omsProcessEntity;
