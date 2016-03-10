@@ -95,7 +95,7 @@ class Finder implements FinderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @return array|\Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     protected function getManualEventsByOrderItemEntity(SpySalesOrderItem $orderItem)
     {
