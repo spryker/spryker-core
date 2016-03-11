@@ -134,7 +134,7 @@ class Discount
         foreach ($discounts as $discount) {
             /** @var \Generated\Shared\Transfer\DiscountTransfer $discountTransferCopy */
             $discountTransferCopy = $discount[Calculator::KEY_DISCOUNT_TRANSFER];
-            if (!empty($discountTransferCopy->getVoucherCode())) {
+            if ($discountTransferCopy->getVoucherCode()) {
                 $quoteTransfer->addVoucherDiscount($discountTransferCopy);
             } else {
                 $quoteTransfer->addCartRuleDiscount($discountTransferCopy);
