@@ -25,7 +25,7 @@ class Rule implements RuleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Acl\Business\Model\Group
+     * @var \Spryker\Zed\Acl\Business\Model\GroupInterface
      */
     protected $group;
 
@@ -35,7 +35,7 @@ class Rule implements RuleInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacade
+     * @var \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
     protected $facadeUser;
 

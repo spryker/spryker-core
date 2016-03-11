@@ -48,7 +48,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @return void
      */
-    public function checkoutAvailabilityPrecondition(
+    public function checkoutAvailabilityPreCondition(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {

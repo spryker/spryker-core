@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Checkout\CheckoutConstants;
 
-class CheckoutGrandTotalPrecondition implements CheckoutGrandTotalPreconditionInterface
+class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionInterface
 {
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\Model\StackExecutor
+     * @var \Spryker\Zed\Calculation\Business\Model\StackExecutorInterface
      */
     protected $stackExecutor;
 

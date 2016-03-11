@@ -13,7 +13,7 @@ class StackExecutor implements StackExecutorInterface
 {
 
     /**
-     * @var array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @var \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
     protected $calculatorStack;
 

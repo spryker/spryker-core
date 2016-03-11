@@ -27,7 +27,7 @@ class OrderTotalsAggregator
     protected $salesQueryContainer;
 
     /**
-     * @var array|\Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
+     * @var \Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
      */
     protected $itemAmountAggregators;
 

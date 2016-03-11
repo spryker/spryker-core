@@ -148,7 +148,7 @@ class CalculationFacade extends AbstractFacade
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $this->getFactory()
-            ->createCheckoutGrandTotalPrecondition()
+            ->createCheckoutGrandTotalPreCondition()
             ->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
     }
 
