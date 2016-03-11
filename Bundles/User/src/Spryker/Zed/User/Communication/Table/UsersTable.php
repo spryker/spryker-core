@@ -8,6 +8,7 @@
 namespace Spryker\Zed\User\Communication\Table;
 
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+use Spryker\Shared\Library\DateFormatter;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -29,11 +30,18 @@ class UsersTable extends AbstractTable
     protected $userQueryContainer;
 
     /**
-     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $userQueryContainer
+     * @var \Spryker\Shared\Library\DateFormatter
      */
-    public function __construct(UserQueryContainer $userQueryContainer)
+    protected $dateFormatter;
+
+    /**
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $userQueryContainer
+     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
+     */
+    public function __construct(UserQueryContainer $userQueryContainer, DateFormatter $dateFormatter)
     {
         $this->userQueryContainer = $userQueryContainer;
+        $this->dateFormatter = $dateFormatter;
     }
 
     /**
@@ -85,7 +93,7 @@ class UsersTable extends AbstractTable
                 SpyUserTableMap::COL_USERNAME => $item[SpyUserTableMap::COL_USERNAME],
                 SpyUserTableMap::COL_FIRST_NAME => $item[SpyUserTableMap::COL_FIRST_NAME],
                 SpyUserTableMap::COL_LAST_NAME => $item[SpyUserTableMap::COL_LAST_NAME],
-                SpyUserTableMap::COL_LAST_LOGIN => $item[SpyUserTableMap::COL_LAST_LOGIN],
+                SpyUserTableMap::COL_LAST_LOGIN => $this->dateFormatter->dateTime($item[SpyUserTableMap::COL_LAST_LOGIN]),
                 SpyUserTableMap::COL_STATUS => $this->createStatusLabel($item),
                 self::ACTION => implode(' ', $this->createActionButtons($item)),
             ];

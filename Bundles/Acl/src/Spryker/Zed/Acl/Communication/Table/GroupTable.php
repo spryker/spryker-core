@@ -9,6 +9,7 @@ namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;
 use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
+use Spryker\Shared\Library\DateFormatter;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -26,11 +27,18 @@ class GroupTable extends AbstractTable
     protected $aclGroupQuery;
 
     /**
-     * @param \Orm\Zed\Acl\Persistence\SpyAclGroupQuery $aclGroupQuery
+     * @var \Spryker\Shared\Library\DateFormatter
      */
-    public function __construct(SpyAclGroupQuery $aclGroupQuery)
+    protected $dateFormatter;
+
+    /**
+     * @param \Orm\Zed\Acl\Persistence\SpyAclGroupQuery $aclGroupQuery
+     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
+     */
+    public function __construct(SpyAclGroupQuery $aclGroupQuery, DateFormatter $dateFormatter)
     {
         $this->aclGroupQuery = $aclGroupQuery;
+        $this->dateFormatter = $dateFormatter;
     }
 
     /**
@@ -74,7 +82,7 @@ class GroupTable extends AbstractTable
         foreach ($groupCollection as $group) {
             $groups[] = [
                 SpyAclGroupTableMap::COL_NAME => $group[SpyAclGroupTableMap::COL_NAME],
-                SpyAclGroupTableMap::COL_CREATED_AT => $group[SpyAclGroupTableMap::COL_CREATED_AT],
+                SpyAclGroupTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($group[SpyAclGroupTableMap::COL_CREATED_AT]),
                 self::ROLES => $this->createRoleUrl($group),
                 self::EDIT => $this->createEditUrl($group),
             ];

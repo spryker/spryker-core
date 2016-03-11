@@ -13,6 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Library\DateFormatter;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -45,18 +46,26 @@ class OrdersTable extends AbstractTable
     protected $salesAggregatorFacade;
 
     /**
+     * @var \Spryker\Shared\Library\DateFormatter
+     */
+    protected $dateFormatter;
+
+    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderQuery
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $orderItemQuery
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
+     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
      */
     public function __construct(
         SpySalesOrderQuery $orderQuery,
         SpySalesOrderItemQuery $orderItemQuery,
-        SalesToSalesAggregatorInterface $salesAggregatorFacade
+        SalesToSalesAggregatorInterface $salesAggregatorFacade,
+        DateFormatter $dateFormatter
     ) {
         $this->orderQuery = $orderQuery;
         $this->orderItemQuery = $orderItemQuery;
         $this->salesAggregatorFacade = $salesAggregatorFacade;
+        $this->dateFormatter = $dateFormatter;
     }
 
     /**
@@ -120,7 +129,7 @@ class OrdersTable extends AbstractTable
         foreach ($queryResults as $item) {
             $results[] = [
                 SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
-                SpySalesOrderTableMap::COL_CREATED_AT => $item[SpySalesOrderTableMap::COL_CREATED_AT],
+                SpySalesOrderTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
                 SpySalesOrderTableMap::COL_FK_CUSTOMER => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
                 SpySalesOrderTableMap::COL_EMAIL => $item[SpySalesOrderTableMap::COL_EMAIL],
                 SpySalesOrderTableMap::COL_FIRST_NAME => $item[SpySalesOrderTableMap::COL_FIRST_NAME],

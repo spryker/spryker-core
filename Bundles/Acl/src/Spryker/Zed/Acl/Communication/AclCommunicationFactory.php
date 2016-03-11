@@ -43,7 +43,8 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     public function createGroupTable()
     {
         return new GroupTable(
-            $this->getQueryContainer()->queryGroup()
+            $this->getQueryContainer()->queryGroup(),
+            $this->getProvidedDependency(AclDependencyProvider::SERVICE_DATE_FORMATTER)
         );
     }
 
@@ -106,7 +107,10 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createRoleTable()
     {
-        return new RoleTable($this->getQueryContainer());
+        return new RoleTable(
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(AclDependencyProvider::SERVICE_DATE_FORMATTER)
+        );
     }
 
     /**

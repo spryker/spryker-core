@@ -95,7 +95,8 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
         return new OrdersTable(
             $orderQuery,
             $orderItemQuery,
-            $this->getSalesAggregator()
+            $this->getSalesAggregator(),
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER)
         );
     }
 

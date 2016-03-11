@@ -43,7 +43,8 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     public function createUserTable()
     {
         return new UsersTable(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(UserDependencyProvider::SERVICE_DATE_FORMATTER)
         );
     }
 
