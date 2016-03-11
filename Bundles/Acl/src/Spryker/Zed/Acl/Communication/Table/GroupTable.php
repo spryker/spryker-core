@@ -9,7 +9,7 @@ namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;
 use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
-use Spryker\Shared\Library\DateFormatter;
+use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -27,15 +27,15 @@ class GroupTable extends AbstractTable
     protected $aclGroupQuery;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
     protected $dateFormatter;
 
     /**
      * @param \Orm\Zed\Acl\Persistence\SpyAclGroupQuery $aclGroupQuery
-     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(SpyAclGroupQuery $aclGroupQuery, DateFormatter $dateFormatter)
+    public function __construct(SpyAclGroupQuery $aclGroupQuery, DateFormatterInterface $dateFormatter)
     {
         $this->aclGroupQuery = $aclGroupQuery;
         $this->dateFormatter = $dateFormatter;

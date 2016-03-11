@@ -9,7 +9,7 @@ namespace Spryker\Shared\Library;
 
 use Spryker\Shared\Library\Exception\UnsupportedDateFormatException;
 
-class DateFormatter
+class DateFormatter implements DateFormatterInterface
 {
 
     const DATE_FORMAT_SHORT = 'short';

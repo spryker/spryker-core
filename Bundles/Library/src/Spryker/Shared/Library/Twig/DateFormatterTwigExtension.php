@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Library\Twig;
 
-use Spryker\Shared\Library\DateFormatter;
+use Spryker\Shared\Library\DateFormatterInterface;
 
 class DateFormatterTwigExtension extends \Twig_Extension
 {
@@ -20,14 +20,14 @@ class DateFormatterTwigExtension extends \Twig_Extension
     ];
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
     private $dateFormatter;
 
     /**
-     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(DateFormatter $dateFormatter)
+    public function __construct(DateFormatterInterface $dateFormatter)
     {
         $this->dateFormatter = $dateFormatter;
     }

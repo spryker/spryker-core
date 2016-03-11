@@ -12,8 +12,6 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Library\Context;
 use Spryker\Shared\Library\DateFormatter;
 use Spryker\Shared\Library\Twig\DateFormatterTwigExtension;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

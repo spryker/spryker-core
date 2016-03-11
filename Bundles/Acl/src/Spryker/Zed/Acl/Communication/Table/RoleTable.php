@@ -9,7 +9,7 @@ namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
 use Spryker\Shared\Acl\AclConstants;
-use Spryker\Shared\Library\DateFormatter;
+use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -29,15 +29,15 @@ class RoleTable extends AbstractTable
     protected $aclQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
     protected $dateFormatter;
 
     /**
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
-     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(AclQueryContainer $aclQueryContainer, DateFormatter $dateFormatter)
+    public function __construct(AclQueryContainer $aclQueryContainer, DateFormatterInterface $dateFormatter)
     {
         $this->aclQueryContainer = $aclQueryContainer;
         $this->dateFormatter = $dateFormatter;

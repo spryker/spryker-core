@@ -8,7 +8,7 @@
 namespace Spryker\Zed\User\Communication\Table;
 
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Shared\Library\DateFormatter;
+use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -30,15 +30,15 @@ class UsersTable extends AbstractTable
     protected $userQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
     protected $dateFormatter;
 
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainer $userQueryContainer
-     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(UserQueryContainer $userQueryContainer, DateFormatter $dateFormatter)
+    public function __construct(UserQueryContainer $userQueryContainer, DateFormatterInterface $dateFormatter)
     {
         $this->userQueryContainer = $userQueryContainer;
         $this->dateFormatter = $dateFormatter;

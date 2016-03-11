@@ -11,7 +11,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\Library\DateFormatter;
+use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -36,15 +36,15 @@ class CustomerTable extends AbstractTable
     protected $customerQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
     protected $dateFormatter;
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $customerQueryContainer
-     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(CustomerQueryContainer $customerQueryContainer, DateFormatter $dateFormatter)
+    public function __construct(CustomerQueryContainer $customerQueryContainer, DateFormatterInterface $dateFormatter)
     {
         $this->customerQueryContainer = $customerQueryContainer;
         $this->dateFormatter = $dateFormatter;

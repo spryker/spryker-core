@@ -13,7 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Shared\Library\DateFormatter;
+use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -46,7 +46,7 @@ class OrdersTable extends AbstractTable
     protected $salesAggregatorFacade;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
     protected $dateFormatter;
 
@@ -54,13 +54,13 @@ class OrdersTable extends AbstractTable
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderQuery
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $orderItemQuery
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
-     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
     public function __construct(
         SpySalesOrderQuery $orderQuery,
         SpySalesOrderItemQuery $orderItemQuery,
         SalesToSalesAggregatorInterface $salesAggregatorFacade,
-        DateFormatter $dateFormatter
+        DateFormatterInterface $dateFormatter
     ) {
         $this->orderQuery = $orderQuery;
         $this->orderItemQuery = $orderItemQuery;

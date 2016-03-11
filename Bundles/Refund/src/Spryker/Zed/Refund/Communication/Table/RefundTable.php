@@ -10,7 +10,7 @@ namespace Spryker\Zed\Refund\Communication\Table;
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Shared\Library\DateFormatter;
+use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -29,16 +29,16 @@ class RefundTable extends AbstractTable
     protected $refundFacade;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
     protected $dateFormatter;
 
     /**
      * @param \Orm\Zed\Refund\Persistence\SpyRefundQuery $refundQuery
      * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
-     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(SpyRefundQuery $refundQuery, RefundFacade $refundFacade, DateFormatter $dateFormatter)
+    public function __construct(SpyRefundQuery $refundQuery, RefundFacade $refundFacade, DateFormatterInterface $dateFormatter)
     {
         $this->refundQuery = $refundQuery;
         $this->refundFacade = $refundFacade;

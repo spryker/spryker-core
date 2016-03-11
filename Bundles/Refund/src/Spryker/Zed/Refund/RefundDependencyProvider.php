@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Refund;
 
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsBridge;
@@ -24,6 +25,7 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_PAYONE = 'payone facade';
     const FACADE_SALES_AGGREGATOR  = 'FACADE_SALES_AGGREGATOR';
     const FACADE_SALES_SPLIT = 'FACADE_SALES_SPLIT';
+    const SERVICE_DATE_FORMATTER = 'date formatter service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -72,6 +74,10 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
             return new RefundToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
+        };
+
+        $container[self::SERVICE_DATE_FORMATTER] = function () {
+            return (new Pimple())->getApplication()['dateFormatter'];
         };
 
         return $container;
