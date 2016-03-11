@@ -18,8 +18,6 @@ class CategoryToLocaleBridge implements CategoryToLocaleInterface
     protected $localeFacade;
 
     /**
-     * CategoryToLocaleBridge constructor.
-     *
      * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
     public function __construct(LocaleFacadeInterface $localeFacade)
