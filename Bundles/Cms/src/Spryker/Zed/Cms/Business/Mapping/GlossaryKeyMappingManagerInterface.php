@@ -49,7 +49,7 @@ interface GlossaryKeyMappingManagerInterface
      * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $placeholder
      * @param string $value
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      * @param bool $autoGlossaryKeyIncrement
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer

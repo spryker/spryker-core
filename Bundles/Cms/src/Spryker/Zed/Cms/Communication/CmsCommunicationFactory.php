@@ -68,8 +68,8 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idPage
      * @param int $fkLocale
-     * @param array $placeholders
-     * @param array $searchArray
+     * @param array|null $placeholders
+     * @param array|null $searchArray
      *
      * @return \Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable
      */

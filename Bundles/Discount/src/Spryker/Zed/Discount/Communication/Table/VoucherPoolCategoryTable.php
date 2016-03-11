@@ -43,6 +43,10 @@ class VoucherPoolCategoryTable extends AbstractTable
             'options' => 'Options',
         ]);
 
+        $config->setSearchable([
+            SpyDiscountVoucherPoolCategoryTableMap::COL_NAME,
+        ]);
+
         $config->setUrl('categories-table');
 
         return $config;

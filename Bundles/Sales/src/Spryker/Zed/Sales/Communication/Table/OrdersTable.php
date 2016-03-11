@@ -75,6 +75,15 @@ class OrdersTable extends AbstractTable
             self::GRAND_TOTAL => 'GrandTotal',
             self::URL => 'Url',
         ]);
+
+        $config->setSearchable([
+            SpySalesOrderTableMap::COL_ID_SALES_ORDER,
+            SpySalesOrderTableMap::COL_CREATED_AT,
+            SpySalesOrderTableMap::COL_FK_CUSTOMER,
+            SpySalesOrderTableMap::COL_EMAIL,
+            SpySalesOrderTableMap::COL_FIRST_NAME,
+        ]);
+
         $config->setSortable([
             SpySalesOrderTableMap::COL_CREATED_AT,
         ]);

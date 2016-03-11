@@ -140,13 +140,14 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
+     * @param bool $showEngineBundle
      * @param string|bool $bundleToView
      *
      * @return bool
      */
-    public function drawSimpleDependencyTreeGraph($bundleToView)
+    public function drawSimpleDependencyTreeGraph($showEngineBundle, $bundleToView)
     {
-        return $this->getFactory()->createSimpleDependencyGraphBuilder($bundleToView)->build();
+        return $this->getFactory()->createSimpleDependencyGraphBuilder($showEngineBundle, $bundleToView)->build();
     }
 
     /**

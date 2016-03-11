@@ -106,7 +106,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer|null $customer
      *
      * @return string
      */

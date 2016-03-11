@@ -17,7 +17,7 @@ interface LocalInterface
 
     /**
      * @param string $type
-     * @param array $options
+     * @param array|null $options
      *
      * @return \Solarium\Core\Query\Query
      */

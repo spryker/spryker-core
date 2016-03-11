@@ -317,7 +317,7 @@ interface DiscountFacadeInterface
     /**
      * @api
      *
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */
@@ -326,7 +326,7 @@ interface DiscountFacadeInterface
     /**
      * @api
      *
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */

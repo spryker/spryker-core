@@ -89,7 +89,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @param string $sku
-     * @param string $groupKey
+     * @param string|null $groupKey
      *
      * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
      *
@@ -104,7 +104,7 @@ class CartClient extends AbstractClient implements CartClientInterface
 
     /**
      * @param string $sku
-     * @param string $groupKey
+     * @param string|null $groupKey
      *
      * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
      *
@@ -133,7 +133,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @param string $sku
-     * @param string $groupKey
+     * @param string|null $groupKey
      * @param int $quantity
      *
      * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
@@ -167,7 +167,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @param string $sku
-     * @param string $groupKey
+     * @param string|null $groupKey
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -187,7 +187,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @param string $sku
-     * @param string $groupKey
+     * @param string|null $groupKey
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

@@ -83,7 +83,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @api
      *
-     * @param array|string[] $couponCodes
+     * @param string[] $couponCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */

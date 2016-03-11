@@ -27,4 +27,9 @@ interface CategoryToLocaleInterface
      */
     public function getAvailableLocales();
 
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    public function getLocaleCollection();
+
 }

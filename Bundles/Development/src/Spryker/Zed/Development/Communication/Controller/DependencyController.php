@@ -94,7 +94,8 @@ class DependencyController extends AbstractController
     {
         $callback = function () use ($request) {
             $bundleToView = $request->query->get('bundle', false); // TODO FW Validation
-            echo $this->getFacade()->drawSimpleDependencyTreeGraph($bundleToView);
+            $showEngineBundle = $request->query->getBoolean('show-engine-bundle', true);
+            echo $this->getFacade()->drawSimpleDependencyTreeGraph($showEngineBundle, $bundleToView);
         };
 
         return $this->streamedResponse($callback);

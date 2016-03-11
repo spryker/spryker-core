@@ -142,7 +142,7 @@ class Discount
     }
 
     /**
-     * @param array|string[] $couponCodes
+     * @param string[] $couponCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
@@ -217,7 +217,7 @@ class Discount
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     protected function getVoucherCodes()
     {
@@ -259,7 +259,7 @@ class Discount
     }
 
     /**
-     * @param array|string[] $errors
+     * @param string[] $errors
      *
      * @return void
      */

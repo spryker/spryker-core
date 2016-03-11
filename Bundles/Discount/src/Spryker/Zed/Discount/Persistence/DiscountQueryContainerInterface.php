@@ -92,7 +92,7 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param array|string[] $couponCodes
+     * @param string[] $couponCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */

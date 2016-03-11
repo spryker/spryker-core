@@ -72,6 +72,11 @@ class VoucherPoolTable extends AbstractTable
             self::COL_OPTIONS => 'Options',
         ]);
 
+        $config->setSearchable([
+            SpyDiscountVoucherPoolTableMap::COL_CREATED_AT,
+            SpyDiscountVoucherPoolTableMap::COL_NAME,
+        ]);
+
         return $config;
     }
 

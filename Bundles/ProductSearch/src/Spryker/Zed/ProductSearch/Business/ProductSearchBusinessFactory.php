@@ -150,7 +150,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array|\Spryker\Zed\ProductSearch\Business\Operation\OperationInterface[]
+     * @return \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface[]
      */
     protected function getPossibleOperations()
     {

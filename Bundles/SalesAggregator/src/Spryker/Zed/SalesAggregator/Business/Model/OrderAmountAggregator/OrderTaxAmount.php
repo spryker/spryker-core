@@ -72,7 +72,7 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ExpenseTransfer[] $taxableItems
      *
-     * @return array|int[]
+     * @return int[]
      */
     protected function getEfectiveTaxRatesFromTaxableItems(\ArrayObject $taxableItems)
     {
