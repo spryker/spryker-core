@@ -12,8 +12,6 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Library\Context;
 use Spryker\Shared\Library\DateFormatter;
 use Spryker\Shared\Library\Twig\DateFormatterTwigExtension;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -30,9 +28,15 @@ class DateFormatterServiceProvider extends AbstractPlugin implements ServiceProv
      */
     public function register(Application $app)
     {
+        $dateFormatter = new DateFormatter(Context::getInstance(Context::CONTEXT_ZED));
+
+        $app['dateFormatter'] = $app->share(function () use ($dateFormatter) {
+            return $dateFormatter;
+        });
+
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) {
-                $twig->addExtension(new DateFormatterTwigExtension(new DateFormatter(Context::getInstance())));
+            $app->extend('twig', function (\Twig_Environment $twig) use ($dateFormatter) {
+                $twig->addExtension(new DateFormatterTwigExtension($dateFormatter));
 
                 return $twig;
             })

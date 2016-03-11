@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales;
 
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
@@ -24,6 +25,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
     const FACADE_USER = 'FACADE_USER';
     const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
+    const SERVICE_DATE_FORMATTER = 'date formatter service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -68,6 +70,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
             return new SalesToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
+        };
+
+        $container[self::SERVICE_DATE_FORMATTER] = function () {
+            return (new Pimple())->getApplication()['dateFormatter'];
         };
 
         return $container;

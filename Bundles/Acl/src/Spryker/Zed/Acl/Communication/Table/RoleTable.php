@@ -9,6 +9,7 @@ namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
 use Spryker\Shared\Acl\AclConstants;
+use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -28,11 +29,18 @@ class RoleTable extends AbstractTable
     protected $aclQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
-    public function __construct(AclQueryContainer $aclQueryContainer)
+    protected $dateFormatter;
+
+    /**
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     */
+    public function __construct(AclQueryContainer $aclQueryContainer, DateFormatterInterface $dateFormatter)
     {
         $this->aclQueryContainer = $aclQueryContainer;
+        $this->dateFormatter = $dateFormatter;
     }
 
     /**
@@ -73,7 +81,7 @@ class RoleTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $rule) {
             $results[] = [
-                SpyAclRoleTableMap::COL_CREATED_AT => $rule[SpyAclRoleTableMap::COL_CREATED_AT],
+                SpyAclRoleTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($rule[SpyAclRoleTableMap::COL_CREATED_AT]),
                 SpyAclRoleTableMap::COL_NAME => $rule[SpyAclRoleTableMap::COL_NAME],
                 self::ACTION => implode(' ', $this->createTableActions($rule)),
             ];

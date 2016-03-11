@@ -30,7 +30,10 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerTable()
     {
-        return new CustomerTable($this->getQueryContainer());
+        return new CustomerTable(
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_DATE_FORMATTER)
+        );
     }
 
     /**
