@@ -23,12 +23,12 @@ class DiscountOrderSaver implements DiscountSaverInterface
     protected $discountQueryContainer;
 
     /**
-     * @var array|string[]
+     * @var string[]
      */
     protected $voucherCodesUsed = [];
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Model\VoucherCode
+     * @var \Spryker\Zed\Discount\Business\Model\VoucherCodeInterface
      */
     protected $voucherCode;
 

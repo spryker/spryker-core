@@ -15,7 +15,7 @@ class Paid
 {
 
     /**
-     * @var \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainer
+     * @var \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface
      */
     protected $queryContainer;
 

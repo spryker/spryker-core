@@ -16,7 +16,7 @@ class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionIn
 {
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\Model\StackExecutor
+     * @var \Spryker\Zed\Calculation\Business\Model\StackExecutorInterface
      */
     protected $stackExecutor;
 
