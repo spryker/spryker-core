@@ -51,7 +51,7 @@
                     </td>
                     <td>{{ orderItem.Sku }}</td>
                     <td>{{ orderItem.unitGrossPriceWithProductOptions | currency }}</td>
-                    <td><a href="javascript:void(0);" onclick="{{ "$('#split_form_row_" ~ orderItem.IdSalesOrderItem ~ "').toggle();" }}">{{ orderItem.quantity }}</a></td>
+                    <td><a href="#" class="item-split" data-id="{{ orderItem.idSalesOrderItem }}">{{ orderItem.quantity }}</a></td>
                     <td>{{ orderItem.sumGrossPriceWithProductOptions | currency }}</td>
                     <td>{{ orderItem.sumTaxAmountWithProductOptionAndDiscountAmounts | currency }}</td>
                     <td>{{ orderItem.taxRate|default(0) }} %</td>

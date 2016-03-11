@@ -90,6 +90,13 @@ $(document).ready(function() {
         $('#history_details_' + theID).toggle();
     });
 
+    $('.item-split').click(function(e){
+        e.preventDefault();
+        var theID = $(this).data('id');
+
+        $('#split_form_row_' + theID).toggle();
+    });
+
     $('#check-all-orders').click(function(){
         if ($(this).prop('checked') === true) {
             var checked = true;
