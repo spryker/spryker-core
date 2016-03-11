@@ -48,7 +48,7 @@ class Voucher
     }
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher|null $discountVoucherEntity
      *
      * @return \Spryker\Zed\Kernel\Business\ModelResult
      */

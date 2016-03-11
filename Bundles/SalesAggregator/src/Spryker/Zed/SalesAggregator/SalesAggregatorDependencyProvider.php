@@ -66,7 +66,7 @@ class SalesAggregatorDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return array|\Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
+     * @return \Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
      */
     protected function getItemAmountAggregationPlugins(Container $container)
     {
@@ -82,7 +82,7 @@ class SalesAggregatorDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return array|\Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
+     * @return \Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
      */
     protected function getOrderAmountAggregationPlugins(Container $container)
     {

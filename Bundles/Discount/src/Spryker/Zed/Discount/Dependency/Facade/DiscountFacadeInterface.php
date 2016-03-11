@@ -201,7 +201,7 @@ interface DiscountFacadeInterface
     public function releaseUsedVoucherCodes(array $codes);
 
     /**
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */

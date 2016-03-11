@@ -30,7 +30,7 @@ class CodeExists extends Constraint
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
-     * @param string $voucherName
+     * @param string|null $voucherName
      * @param mixed $options
      */
     public function __construct(

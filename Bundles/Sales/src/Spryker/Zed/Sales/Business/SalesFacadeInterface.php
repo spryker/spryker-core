@@ -39,7 +39,7 @@ interface SalesFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getDistinctOrderStates($idSalesOrder);
 

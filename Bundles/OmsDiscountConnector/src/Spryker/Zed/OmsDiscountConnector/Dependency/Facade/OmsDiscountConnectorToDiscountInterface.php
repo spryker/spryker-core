@@ -11,7 +11,7 @@ interface OmsDiscountConnectorToDiscountInterface
 {
 
     /**
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */
