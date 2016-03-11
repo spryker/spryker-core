@@ -81,7 +81,7 @@ class DateFormatter
      *
      * @throws \Spryker\Shared\Library\Exception\UnsupportedDateFormatException
      *
-     * @return string
+     * @return string|null
      */
     protected function formatDate($date, $dateFormat, \DateTimeZone $timezone = null)
     {

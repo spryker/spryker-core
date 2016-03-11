@@ -32,7 +32,7 @@ class DateFormatterServiceProvider extends AbstractPlugin implements ServiceProv
     {
         $dateFormatter = new DateFormatter(Context::getInstance(Context::CONTEXT_ZED));
 
-        $app['dateFormatter'] = $app->share(function() use ($dateFormatter) {
+        $app['dateFormatter'] = $app->share(function () use ($dateFormatter) {
             return $dateFormatter;
         });
 
