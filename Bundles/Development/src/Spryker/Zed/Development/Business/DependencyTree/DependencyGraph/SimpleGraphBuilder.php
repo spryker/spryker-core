@@ -13,6 +13,9 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 class SimpleGraphBuilder implements GraphBuilderInterface
 {
 
+    const FONT_COLOR = 'fontcolor';
+    const LABEL = 'label';
+
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
      */
@@ -35,7 +38,7 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     {
         foreach ($dependencyTree as $dependency) {
             $this->graph->addNode($dependency[DependencyTree::META_BUNDLE], $this->getNodeAttributes($dependency));
-            $this->graph->addNode($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->getNodeAttributes($dependency));
+            $this->graph->addNode($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->getForeignNodeAttributes($dependency));
         }
 
         foreach ($dependencyTree as $dependency) {
@@ -54,7 +57,25 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
-            $attributes['fontcolor'] = 'red';
+            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
+            $attributes[self::LABEL] = $dependency[DependencyTree::META_BUNDLE] . self::ENGINE_BUNDLE_INFO_TEXT;
+
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param array $dependency
+     *
+     * @return array
+     */
+    private function getForeignNodeAttributes(array $dependency)
+    {
+        $attributes = [];
+        if ($dependency[DependencyTree::META_FOREIGN_BUNDLE_IS_ENGINE]) {
+            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
+            $attributes[self::LABEL] = $dependency[DependencyTree::META_FOREIGN_BUNDLE] . self::ENGINE_BUNDLE_INFO_TEXT;
         }
 
         return $attributes;
@@ -69,7 +90,7 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_FOREIGN_BUNDLE_IS_ENGINE]) {
-            $attributes['fontcolor'] = 'red';
+            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
         }
 
         return $attributes;
