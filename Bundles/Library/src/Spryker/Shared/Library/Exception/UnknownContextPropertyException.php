@@ -9,5 +9,4 @@ namespace Spryker\Shared\Library\Exception;
 
 class UnknownContextPropertyException extends \Exception
 {
-
 }
