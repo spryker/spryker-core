@@ -55,8 +55,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserForm(array $data = [], array $options = [])
     {
-        $username = (!empty($data['username'])) ? $data['username'] : '';
-        $formType = new UserForm($this->getFacade(), $username);
+        $formType = new UserForm($this->getFacade());
 
         return $this->getFormFactory()->create($formType, $data, $options);
     }
@@ -69,7 +68,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUpdateUserForm(array $data = [], array $options = [])
     {
-        $formType = new UserUpdateForm($this->getFacade(), $data['username']);
+        $formType = new UserUpdateForm($this->getFacade());
 
         return $this->getFormFactory()->create($formType, $data, $options);
     }

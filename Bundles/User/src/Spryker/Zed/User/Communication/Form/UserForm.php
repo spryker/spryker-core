@@ -7,20 +7,23 @@
 
 namespace Spryker\Zed\User\Communication\Form;
 
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\User\Business\UserFacadeInterface;
-use Spryker\Zed\User\Communication\Form\Constraints\UsernameUnique;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class UserForm extends AbstractType
 {
 
     const OPTION_GROUP_CHOICES = 'group_choices';
+    const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
 
     const FIELD_USERNAME = 'username';
     const FIELD_GROUP = 'group';
@@ -35,18 +38,11 @@ class UserForm extends AbstractType
     protected $userFacade;
 
     /**
-     * @var string
-     */
-    protected $username;
-
-    /**
      * @param \Spryker\Zed\User\Business\UserFacadeInterface $userFacade
-     * @param string $username
      */
-    public function __construct(UserFacadeInterface $userFacade, $username)
+    public function __construct(UserFacadeInterface $userFacade)
     {
         $this->userFacade = $userFacade;
-        $this->username = $username;
     }
 
     /**
@@ -67,6 +63,21 @@ class UserForm extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::OPTION_GROUP_CHOICES);
+
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                $defaultData = $form->getConfig()->getData();
+                $submittedData = $form->getData();
+
+                if (array_key_exists(self::FIELD_USERNAME, $defaultData) === false ||
+                    $defaultData[self::FIELD_USERNAME] !== $submittedData[self::FIELD_USERNAME]
+                ) {
+                    return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_USERNAME_CHECK];
+                }
+
+                return [Constraint::DEFAULT_GROUP];
+            },
+        ]);
     }
 
     /**
@@ -98,10 +109,7 @@ class UserForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Email(),
-                    new UsernameUnique([
-                        'facadeUser' => $this->userFacade,
-                        'username' => $this->username,
-                    ]),
+                    $this->createUniqueEmailConstraint(),
                 ],
             ]);
 
@@ -188,6 +196,25 @@ class UserForm extends AbstractType
             ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createUniqueEmailConstraint()
+    {
+        return new Callback([
+            'methods' => [
+                function ($email, ExecutionContextInterface $contextInterface) {
+                    if ($this->userFacade->hasUserByUsername($email)) {
+                        $contextInterface->addViolation('User with email "{{ username }}" already exists.', [
+                            '{{ username }}' => $email,
+                        ]);
+                    }
+                },
+            ],
+            'groups' => [self::GROUP_UNIQUE_USERNAME_CHECK],
+        ]);
     }
 
 }
