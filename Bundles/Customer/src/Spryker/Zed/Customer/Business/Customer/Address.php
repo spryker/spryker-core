@@ -18,32 +18,32 @@ use Spryker\Zed\Customer\Business\Exception\CountryNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class Address
 {
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
      * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface
      */
-    private $countryFacade;
+    protected $countryFacade;
 
     /**
      * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */
-    private $localeFacade;
+    protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
      */
-    public function __construct(QueryContainerInterface $queryContainer, CustomerToCountryInterface $countryFacade, CustomerToLocaleInterface $localeFacade)
+    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerToCountryInterface $countryFacade, CustomerToLocaleInterface $localeFacade)
     {
         $this->queryContainer = $queryContainer;
         $this->countryFacade = $countryFacade;

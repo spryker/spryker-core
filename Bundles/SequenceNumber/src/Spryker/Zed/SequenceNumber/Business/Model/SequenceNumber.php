@@ -18,13 +18,19 @@ use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface
 class SequenceNumber implements SequenceNumberInterface
 {
 
-    /** @var \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator */
+    /**
+     * @var \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface
+     */
     protected $randomNumberGenerator;
 
-    /** @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer */
+    /**
+     * @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     */
     protected $sequenceNumberSettings;
 
-    /** @var \Propel\Runtime\Connection\ConnectionInterface */
+    /**
+     * @var \Propel\Runtime\Connection\ConnectionInterface
+     */
     protected $connection;
 
     /**
