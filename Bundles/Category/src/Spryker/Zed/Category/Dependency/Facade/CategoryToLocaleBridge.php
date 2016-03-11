@@ -22,7 +22,7 @@ class CategoryToLocaleBridge implements CategoryToLocaleInterface
      *
      * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
-    public function __construct($localeFacade)
+    public function __construct(LocaleFacade $localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }
@@ -53,4 +53,11 @@ class CategoryToLocaleBridge implements CategoryToLocaleInterface
         return $this->localeFacade->getAvailableLocales();
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    public function getLocaleCollection()
+    {
+        return $this->localeFacade->getLocaleCollection();
+    }
 }
