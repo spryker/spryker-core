@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -28,6 +29,7 @@ class CmsRedirectForm extends AbstractType
     const FIELD_STATUS = 'status';
 
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+    const MAX_NUMBER_CHARACTERS_REDIRECT_URL = 255;
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
@@ -136,7 +138,17 @@ class CmsRedirectForm extends AbstractType
      */
     protected function addStatusField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_STATUS, 'text');
+        $builder->add(
+            self::FIELD_STATUS,
+            'text',
+            [
+                'label' => 'Redirect status code',
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                    $this->createRedirectStatusCodeConstraint()
+                ]
+            ]
+        );
 
         return $this;
     }
@@ -168,10 +180,45 @@ class CmsRedirectForm extends AbstractType
     protected function getMandatoryConstraints()
     {
         return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 255]),
+            $this->createRequiredConstraint(),
+            $this->createNotBlankConstraint(),
+            $this->createLengthConstraint(self::MAX_NUMBER_CHARACTERS_REDIRECT_URL),
         ];
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint()
+    {
+        return new NotBlank();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createRedirectStatusCodeConstraint()
+    {
+        return new Regex([
+            'pattern' => '/^\d{3}$/',
+            'message' => 'This field should contain exactly 3 digits.'
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Required
+     */
+    protected function createRequiredConstraint()
+    {
+        return new Required();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Length
+     */
+    protected function createLengthConstraint($max)
+    {
+        return new Length(['max' => $max]);
     }
 
 }
