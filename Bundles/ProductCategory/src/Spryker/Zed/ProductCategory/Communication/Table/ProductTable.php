@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductCategory\Communication\Table;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Spryker\Shared\Library\Json;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -87,12 +88,16 @@ class ProductTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $product) {
+            $info = [
+                'id' => $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
+                'sku' => $product[SpyProductAbstractTableMap::COL_SKU],
+                'name' => urlencode($product['name']),
+            ];
+
             $checkbox_html = sprintf(
-                "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='{\"id\": %d, \"sku\": \"%s\", \"name\": \"%s\"}'>",
+                "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='%s'>",
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
-                $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
-                $product[SpyProductAbstractTableMap::COL_SKU],
-                urlencode($product['name'])
+                Json::encode($info)
             );
 
             $results[] = [
