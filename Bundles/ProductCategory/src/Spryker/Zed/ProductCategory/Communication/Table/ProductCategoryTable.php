@@ -142,7 +142,8 @@ class ProductCategoryTable extends AbstractTable
     protected function getCheckboxHtml(array $productCategory)
     {
         return sprintf(
-            '<input id="product_category_checkbox_%d" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
+            "<input id='product_category_checkbox_%d' class='product_category_checkbox' type='checkbox' checked='checked' 
+            data-info='{\"id\": \"%s\", \"sku\": \"%s\", \"name\": \"%s\"}'>",
             $productCategory['id_product_abstract'],
             $productCategory['id_product_abstract'],
             $productCategory['sku'],
@@ -158,7 +159,8 @@ class ProductCategoryTable extends AbstractTable
     protected function getOrderHtml(array $productCategory)
     {
         return sprintf(
-            '<input type="text" value="%d" id="product_category_order_%d" size="4" onchange="updateProductOrder(this, %d)" />',
+            "<input type='text' value='%d' id='product_category_order_%d' class='product_category_order' size='4'
+            data-info='{\"id\": \"%s\"}'>",
             $productCategory['product_order'],
             $productCategory['id_product_abstract'],
             $productCategory['id_product_abstract']
