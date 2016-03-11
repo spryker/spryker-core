@@ -14,7 +14,7 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 /**
  * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
  */
-class CheckoutGrandTotalPrecondition implements CheckoutPreConditionInterface
+class CheckoutGrandTotalPreCondition implements CheckoutPreConditionInterface
 {
 
     /**

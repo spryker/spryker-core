@@ -26,7 +26,7 @@ class ProductsAvailableCheckoutPreConditionPlugin extends AbstractPlugin impleme
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->checkoutAvailabilityPrecondition($quoteTransfer, $checkoutResponseTransfer);
+        $this->getFacade()->checkoutAvailabilityPreCondition($quoteTransfer, $checkoutResponseTransfer);
     }
 
 }

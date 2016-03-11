@@ -10,7 +10,7 @@ namespace Spryker\Zed\Calculation\Business\Model;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutGrandTotalPreconditionInterface
+interface CheckoutGrandTotalPreConditionInterface
 {
 
     /**
