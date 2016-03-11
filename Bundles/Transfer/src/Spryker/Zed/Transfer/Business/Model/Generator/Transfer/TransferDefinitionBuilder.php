@@ -8,33 +8,33 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
 use Spryker\Zed\Transfer\Business\Model\Generator\AbstractDefinitionBuilder;
+use Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface;
-use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 
 class TransferDefinitionBuilder extends AbstractDefinitionBuilder
 {
 
     /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface
      */
     private $loader;
 
     /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface
      */
     private $merger;
 
     /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinitionInterface
      */
     private $classDefinition;
 
     /**
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader $loader
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface $loader
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface $merger
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition $classDefinition
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinitionInterface $classDefinition
      */
-    public function __construct(TransferDefinitionLoader $loader, MergerInterface $merger, ClassDefinition $classDefinition)
+    public function __construct(LoaderInterface $loader, MergerInterface $merger, ClassDefinitionInterface $classDefinition)
     {
         $this->loader = $loader;
         $this->merger = $merger;
@@ -42,7 +42,7 @@ class TransferDefinitionBuilder extends AbstractDefinitionBuilder
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition[]
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinitionInterface[]
      */
     public function getDefinitions()
     {

@@ -29,7 +29,7 @@ class Discount
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Model\DecisionRuleEngine
+     * @var \Spryker\Zed\Discount\Business\Model\DecisionRuleInterface
      */
     protected $decisionRule;
 
@@ -132,6 +132,7 @@ class Discount
         $quoteTransfer->setCartRuleDiscounts(new \ArrayObject());
 
         foreach ($discounts as $discount) {
+            /** @var \Generated\Shared\Transfer\DiscountTransfer $discountTransferCopy */
             $discountTransferCopy = $discount[Calculator::KEY_DISCOUNT_TRANSFER];
             if (!empty($discountTransferCopy->getVoucherCode())) {
                 $quoteTransfer->addVoucherDiscount($discountTransferCopy);
