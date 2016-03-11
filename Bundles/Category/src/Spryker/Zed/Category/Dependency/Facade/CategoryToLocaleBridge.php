@@ -60,4 +60,5 @@ class CategoryToLocaleBridge implements CategoryToLocaleInterface
     {
         return $this->localeFacade->getLocaleCollection();
     }
+
 }
