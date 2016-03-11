@@ -23,6 +23,7 @@ class ExternalDependency extends AbstractDependencyFinder
     public function addDependencies(SplFileInfo $fileInfo)
     {
         $content = $fileInfo->getContents();
+        $_SERVER['argv'] = [];
         $file = new \PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], new \PHP_CodeSniffer());
         $file->start($content);
         $tokens = $file->getTokens();
@@ -72,6 +73,8 @@ class ExternalDependency extends AbstractDependencyFinder
 
             $this->addDependency($fileInfo, 'external', $dependencyInformation);
         }
+
+        $this->cleanAutoloader();
     }
 
     /**
@@ -87,6 +90,25 @@ class ExternalDependency extends AbstractDependencyFinder
         }
 
         return $className;
+    }
+
+    /**
+     * @return void
+     */
+    private function cleanAutoloader()
+    {
+        $autoloadFunctions = spl_autoload_functions();
+        $codeSnifferAutoloadFunction = false;
+
+        foreach ($autoloadFunctions as $key => $autoloadFunction) {
+            if ($autoloadFunction[0] === 'PHP_CodeSniffer') {
+                $codeSnifferAutoloadFunction = $autoloadFunction;
+            }
+        }
+
+        if ($codeSnifferAutoloadFunction) {
+            spl_autoload_unregister($codeSnifferAutoloadFunction);
+        }
     }
 
 }
