@@ -29,7 +29,7 @@ class CmsRedirectForm extends AbstractType
     const FIELD_STATUS = 'status';
 
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
-    const MAX_NUMBER_CHARACTERS_REDIRECT_URL = 255;
+    const MAX_COUNT_CHARACTERS_REDIRECT_URL = 255;
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
@@ -182,7 +182,7 @@ class CmsRedirectForm extends AbstractType
         return [
             $this->createRequiredConstraint(),
             $this->createNotBlankConstraint(),
-            $this->createLengthConstraint(self::MAX_NUMBER_CHARACTERS_REDIRECT_URL),
+            $this->createLengthConstraint(self::MAX_COUNT_CHARACTERS_REDIRECT_URL),
         ];
     }
 
