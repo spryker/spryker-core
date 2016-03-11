@@ -13,6 +13,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
