@@ -365,4 +365,16 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
         $this->getFactory()->createInstaller($messenger)->install();
     }
 
+    /**
+     * @param string $keyFragment
+     *
+     * @return array
+     */
+    public function getKeySuggestions($keyFragment)
+    {
+        return $this->getFactory()
+            ->createKeyManager()
+            ->getKeySuggestions($keyFragment);
+    }
+
 }
