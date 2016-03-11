@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DependencyTreeBuilderConsole extends Console
 {
 
-    const COMMAND_NAME = 'code:dependency-tree';
+    const COMMAND_NAME = 'dev:dependency-tree:build';
 
     const OPTION_APPLICATION = 'application';
     const OPTION_BUNDLE = 'bundle';

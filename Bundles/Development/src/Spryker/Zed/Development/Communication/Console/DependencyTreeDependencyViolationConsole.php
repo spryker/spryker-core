@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DependencyTreeDependencyViolationConsole extends Console
 {
 
-    const COMMAND_NAME = 'code:dependency-violation-finder';
+    const COMMAND_NAME = 'dev:dependency-violation:find';
 
     /**
      * @return void
