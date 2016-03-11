@@ -182,7 +182,7 @@ class KeyManager implements KeyManagerInterface
         return $this
             ->queryContainer
             ->queryActiveKeysByName('%' . $keyFragment . '%')
-            ->select([SpyGlossaryKeyTableMap::COL_KEY,])
+            ->select([SpyGlossaryKeyTableMap::COL_KEY])
             ->find()
             ->toArray();
     }
