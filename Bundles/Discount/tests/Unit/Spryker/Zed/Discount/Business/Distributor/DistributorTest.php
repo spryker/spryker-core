@@ -46,7 +46,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return array|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function createDiscountableObjects($items = [])
     {

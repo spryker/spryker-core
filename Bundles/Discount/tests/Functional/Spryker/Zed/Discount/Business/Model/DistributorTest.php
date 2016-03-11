@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Discount\Business;
+namespace Functional\Spryker\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountTransfer;
