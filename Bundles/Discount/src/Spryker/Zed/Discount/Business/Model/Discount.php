@@ -122,7 +122,7 @@ class Discount
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
+     * @param array $discounts
      *
      * @return void
      */
