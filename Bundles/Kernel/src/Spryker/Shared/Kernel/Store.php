@@ -9,6 +9,8 @@ namespace Spryker\Shared\Kernel;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
+use Spryker\Shared\Library\Context;
+use Spryker\Shared\Library\Exception\UnknownContextPropertyException;
 
 class Store
 {
@@ -275,11 +277,17 @@ class Store
     }
 
     /**
+     * @param string|null $context
+     *
      * @return string
      */
-    public function getTimezone()
+    public function getTimezone($context = null)
     {
-        return Config::get(KernelConstants::PROJECT_TIMEZONE);
+        try {
+            return Context::getInstance($context)->get('timezone');
+        } catch (UnknownContextPropertyException $e) {
+            return Config::get(KernelConstants::PROJECT_TIMEZONE);
+        }
     }
 
     /**
