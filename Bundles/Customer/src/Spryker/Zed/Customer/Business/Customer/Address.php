@@ -18,7 +18,7 @@ use Spryker\Zed\Customer\Business\Exception\CountryNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 
 class Address
 {
@@ -39,11 +39,11 @@ class Address
     private $localeFacade;
 
     /**
-     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $queryContainer
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
      */
-    public function __construct(QueryContainerInterface $queryContainer, CustomerToCountryInterface $countryFacade, CustomerToLocaleInterface $localeFacade)
+    public function __construct(CustomerQueryContainer $queryContainer, CustomerToCountryInterface $countryFacade, CustomerToLocaleInterface $localeFacade)
     {
         $this->queryContainer = $queryContainer;
         $this->countryFacade = $countryFacade;
