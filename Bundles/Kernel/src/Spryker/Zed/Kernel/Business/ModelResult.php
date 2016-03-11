@@ -10,6 +10,9 @@ namespace Spryker\Zed\Kernel\Business;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Shared\Transfer\TransferInterface;
 
+/**
+ * //TODO: Move this class away from Kernel bundle.
+ */
 class ModelResult
 {
 
