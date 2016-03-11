@@ -14,7 +14,7 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
+use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class Writer implements WriterInterface
 {
@@ -24,7 +24,7 @@ class Writer implements WriterInterface
     const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**
-     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -39,12 +39,12 @@ class Writer implements WriterInterface
     protected $touchFacade;
 
     /**
-     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainer $queryContainer
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $readerInterface
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
      */
     public function __construct(
-        StockQueryContainer $queryContainer,
+        StockQueryContainerInterface $queryContainer,
         ReaderInterface $readerInterface,
         StockToTouchInterface $touchFacade
     ) {
