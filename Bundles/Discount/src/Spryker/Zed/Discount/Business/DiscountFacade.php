@@ -437,7 +437,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @api
      *
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */
@@ -449,7 +449,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @api
      *
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */

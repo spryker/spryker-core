@@ -40,7 +40,7 @@ class DiscountVoucherCodesTable extends AbstractTable
      * @param \Generated\Shared\Transfer\DataTablesTransfer $dataTablesTransfer
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
      * @param int $idPool
-     * @param int $batchValue
+     * @param int|null $batchValue
      */
     public function __construct(DataTablesTransfer $dataTablesTransfer, DiscountQueryContainer $discountQueryContainer, $idPool, $batchValue = null)
     {

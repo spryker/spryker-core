@@ -157,7 +157,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *
      * @api
      *
-     * @param int $lifetime Sets the cookie lifetime for the session cookie. A null value
+     * @param int|null $lifetime Sets the cookie lifetime for the session cookie. A null value
      *   will leave the system settings unchanged, 0 sets the cookie
      *   to expire with browser session. Time is in seconds, and is
      *   not a Unix timestamp.
@@ -176,7 +176,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      * @api
      *
      * @param bool $destroy Whether to delete the old session or leave it to garbage collection.
-     * @param int $lifetime Sets the cookie lifetime for the session cookie. A null value
+     * @param int|null $lifetime Sets the cookie lifetime for the session cookie. A null value
      *   will leave the system settings unchanged, 0 sets the cookie
      *   to expire with browser session. Time is in seconds, and is
      *   not a Unix timestamp.

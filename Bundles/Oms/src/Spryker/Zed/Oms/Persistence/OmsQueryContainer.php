@@ -205,7 +205,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @api
      *
-     * @param array|string[] $activeProcesses
+     * @param string[] $activeProcesses
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
      */

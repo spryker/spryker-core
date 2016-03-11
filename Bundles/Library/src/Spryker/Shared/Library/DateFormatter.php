@@ -32,7 +32,7 @@ class DateFormatter
 
     /**
      * @param string $date
-     * @param \DateTimeZone $timezone
+     * @param \DateTimeZone|null $timezone
      *
      * @return string
      */
@@ -43,7 +43,7 @@ class DateFormatter
 
     /**
      * @param string $date
-     * @param \DateTimeZone $timezone
+     * @param \DateTimeZone|null $timezone
      *
      * @return string
      */
@@ -54,7 +54,7 @@ class DateFormatter
 
     /**
      * @param string $date
-     * @param \DateTimeZone $timezone
+     * @param \DateTimeZone|null $timezone
      *
      * @return string
      */
@@ -65,7 +65,7 @@ class DateFormatter
 
     /**
      * @param string $date
-     * @param \DateTimeZone $timezone
+     * @param \DateTimeZone|null $timezone
      *
      * @return string
      */
@@ -77,7 +77,7 @@ class DateFormatter
     /**
      * @param \DateTime|string $date
      * @param string $dateFormat
-     * @param \DateTimeZone $timezone
+     * @param \DateTimeZone|null $timezone
      *
      * @throws \Spryker\Shared\Library\Exception\UnsupportedDateFormatException
      *

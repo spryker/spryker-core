@@ -43,7 +43,7 @@ interface SalesToOmsInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 

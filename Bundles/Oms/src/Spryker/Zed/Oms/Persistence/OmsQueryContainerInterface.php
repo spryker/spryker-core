@@ -104,7 +104,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param array|string[] $activeProcesses
+     * @param string[] $activeProcesses
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
      */

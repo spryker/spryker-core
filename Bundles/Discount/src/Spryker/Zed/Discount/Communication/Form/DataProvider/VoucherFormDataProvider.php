@@ -33,7 +33,7 @@ class VoucherFormDataProvider
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
-     * @param array|\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
     public function __construct(DiscountQueryContainer $discountQueryContainer, array $calculatorPlugins)
     {

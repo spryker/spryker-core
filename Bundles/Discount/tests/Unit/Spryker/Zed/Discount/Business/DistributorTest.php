@@ -193,7 +193,7 @@ class DistributorTest extends Test
     /**
      * @param array $grossPrices
      *
-     * @return array|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getItems(array $grossPrices)
     {

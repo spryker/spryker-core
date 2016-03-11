@@ -356,7 +356,7 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
      *
      * @return void
      */

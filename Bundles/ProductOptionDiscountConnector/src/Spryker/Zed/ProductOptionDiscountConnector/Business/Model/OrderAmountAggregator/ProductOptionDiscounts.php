@@ -238,7 +238,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array|int[]
+     * @return int[]
      */
     protected function getSaleOrderItemIds(OrderTransfer $orderTransfer)
     {
@@ -253,7 +253,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount[]|\Propel\Runtime\Collection\ObjectCollection|array
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getSalesOrderDiscounts(OrderTransfer $orderTransfer)
     {
