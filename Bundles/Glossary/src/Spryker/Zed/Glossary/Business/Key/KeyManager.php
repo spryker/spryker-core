@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Glossary\Business\Key;
 
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
 use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
@@ -169,6 +170,21 @@ class KeyManager implements KeyManagerInterface
         }
 
         return $this->createKey($keyName);
+    }
+
+    /**
+     * @param string $keyFragment
+     *
+     * @return array
+     */
+    public function getKeySuggestions($keyFragment)
+    {
+        return $this
+            ->queryContainer
+            ->queryActiveKeysByName('%' . $keyFragment . '%')
+            ->select([SpyGlossaryKeyTableMap::COL_KEY,])
+            ->find()
+            ->toArray();
     }
 
 }

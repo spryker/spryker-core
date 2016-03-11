@@ -258,4 +258,11 @@ interface GlossaryFacadeInterface
      */
     public function install(MessengerInterface $messenger = null);
 
+    /**
+     * @param string $keyFragment
+     *
+     * @return array
+     */
+    public function getKeySuggestions($keyFragment);
+
 }
