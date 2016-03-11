@@ -59,7 +59,7 @@ class AdjacencyMatrixBuilder
         foreach ($dependencyTree as $dependency) {
             $bundle = $dependency[DependencyTree::META_BUNDLE];
             $foreignBundle = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
-            if ($bundle === 'external' || $foreignBundle === 'external') {
+            if ($bundle === 'external' || $foreignBundle === 'external' || $bundle === 'Business') {
                 continue;
             }
             $info = $this->matrix[$bundle][$foreignBundle];

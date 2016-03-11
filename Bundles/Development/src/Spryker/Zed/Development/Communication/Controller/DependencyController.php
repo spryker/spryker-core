@@ -73,7 +73,7 @@ class DependencyController extends AbstractController
      */
     public function dependencyTreeGraphAction(Request $request)
     {
-        if (!$request->query->getBoolean(self::QUERY_KEY_BUNDLE, false)) {
+        if (!$request->query->has(self::QUERY_KEY_BUNDLE)) {
             $this->addErrorMessage('You must specify a bundle for which the graph should be build');
 
             return $this->redirectResponse('/development/dependency');
