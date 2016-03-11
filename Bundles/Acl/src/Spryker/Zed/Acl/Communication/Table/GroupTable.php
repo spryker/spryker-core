@@ -48,6 +48,10 @@ class GroupTable extends AbstractTable
             self::EDIT => self::EDIT,
         ]);
 
+        $config->setSearchable([
+            SpyAclGroupTableMap::COL_NAME,
+        ]);
+
         return $config;
     }
 
