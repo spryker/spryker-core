@@ -49,7 +49,6 @@ class Helper
         $filter = new CamelCaseToSeparatorFilter('-');
 
         $bundle = str_replace(Store::getInstance()->getStoreName(), '', $bundle);
-        $bundle = $filter->filter($bundle);
         $controller = $filter->filter(str_replace('Controller', '', $controllerName));
         $action = $filter->filter(str_replace('Action', '', $actionName));
 
