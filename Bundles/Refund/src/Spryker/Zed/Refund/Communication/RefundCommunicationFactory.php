@@ -25,15 +25,15 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Spryker\Zed\Refund\Business\RefundFacade $facadeRefund
+     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createRefundForm(OrderTransfer $orderTransfer, RefundFacade $facadeRefund)
+    public function createRefundForm(OrderTransfer $orderTransfer, RefundFacade $refundFacade)
     {
         $paymentDataPlugin = $this->getConfig()->getPaymentDataPlugin();
 
-        $form = new RefundForm($facadeRefund, $orderTransfer, $paymentDataPlugin);
+        $form = new RefundForm($refundFacade, $orderTransfer, $paymentDataPlugin);
 
         return $this->getFormFactory()->create($form);
     }

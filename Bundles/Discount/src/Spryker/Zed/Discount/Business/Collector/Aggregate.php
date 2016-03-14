@@ -9,6 +9,7 @@ namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 class Aggregate implements CollectorInterface
 {
@@ -30,7 +31,7 @@ class Aggregate implements CollectorInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return \Spryker\Zed\Discount\Business\Model\DiscountableInterface[]
      */
     public function collect(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer)
     {

@@ -68,12 +68,12 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idPage
      * @param int $fkLocale
-     * @param array|null $placeholders
-     * @param array|null $searchArray
+     * @param array $placeholders
+     * @param array $searchArray
      *
      * @return \Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable
      */
-    public function createCmsGlossaryTable($idPage, $fkLocale, array $placeholders = null, array $searchArray = null)
+    public function createCmsGlossaryTable($idPage, $fkLocale, array $placeholders = [], array $searchArray = [])
     {
         $glossaryQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale);

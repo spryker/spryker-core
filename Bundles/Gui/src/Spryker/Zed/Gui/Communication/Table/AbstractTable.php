@@ -9,6 +9,7 @@ namespace Spryker\Zed\Gui\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Application\ApplicationConstants;
@@ -397,7 +398,7 @@ abstract class AbstractTable
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param bool $returnRawResults
      *
-     * @return array
+     * @return array|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config, $returnRawResults = false)
     {

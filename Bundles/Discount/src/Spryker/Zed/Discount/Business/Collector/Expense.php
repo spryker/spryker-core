@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class Expense implements CollectorInterface
@@ -17,7 +18,7 @@ class Expense implements CollectorInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return \Generated\Shared\Transfer\ExpenseTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer)
     {

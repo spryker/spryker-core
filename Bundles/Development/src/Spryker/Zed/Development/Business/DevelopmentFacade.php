@@ -153,7 +153,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param string|bool $bundleToView
+     * @param string $bundleToView
      *
      * @return bool
      */

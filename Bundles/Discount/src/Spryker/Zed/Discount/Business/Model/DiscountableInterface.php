@@ -13,19 +13,12 @@ interface DiscountableInterface
     /**
      * @return float
      */
-    public function getGrossPrice();
+    public function getUnitGrossPrice();
 
     /**
      * @return \ArrayObject
      */
-    public function getDiscounts();
-
-    /**
-     * @param \ArrayObject $discountCollection
-     *
-     * @return $this
-     */
-    public function setDiscounts(\ArrayObject $discountCollection);
+    public function getCalculatedDiscounts();
 
     /**
      * @return int

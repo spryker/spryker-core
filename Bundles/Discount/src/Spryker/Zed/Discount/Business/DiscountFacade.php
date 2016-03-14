@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
+use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -372,7 +373,7 @@ class DiscountFacade extends AbstractFacade
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return \Spryker\Zed\Discount\Business\Model\DiscountableInterface[]
      */
     public function getDiscountableOrderExpenses(
         QuoteTransfer $quoteTransfer,

@@ -18,6 +18,11 @@ class CategoryAttributeTable extends AbstractTable
     const TABLE_IDENTIFIER = 'category_attribute_table';
 
     /**
+     * @var \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    protected $categoryAttributeQuery;
+
+    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery $categoryAttributeQuery
      */
     public function __construct(SpyCategoryAttributeQuery $categoryAttributeQuery)

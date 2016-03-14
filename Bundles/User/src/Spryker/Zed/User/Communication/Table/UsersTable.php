@@ -12,7 +12,7 @@ use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 
 class UsersTable extends AbstractTable
 {
@@ -25,7 +25,7 @@ class UsersTable extends AbstractTable
     const PARAM_ID_USER = 'id-user';
 
     /**
-     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected $userQueryContainer;
 
@@ -35,10 +35,10 @@ class UsersTable extends AbstractTable
     protected $dateFormatter;
 
     /**
-     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $userQueryContainer
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $userQueryContainer
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(UserQueryContainer $userQueryContainer, DateFormatterInterface $dateFormatter)
+    public function __construct(UserQueryContainerInterface $userQueryContainer, DateFormatterInterface $dateFormatter)
     {
         $this->userQueryContainer = $userQueryContainer;
         $this->dateFormatter = $dateFormatter;

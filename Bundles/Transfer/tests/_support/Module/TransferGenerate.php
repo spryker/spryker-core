@@ -38,12 +38,12 @@ class TransferGenerate extends Module
      */
     private function generateTransferObjects()
     {
-        $facade = $this->getFacade();
+        $transferFacade = $this->getFacade();
 
         $this->copyFromTestBundle();
 
-        $facade->deleteGeneratedTransferObjects();
-        $facade->generateTransferObjects(new NullLogger());
+        $transferFacade->deleteGeneratedTransferObjects();
+        $transferFacade->generateTransferObjects(new NullLogger());
     }
 
     /**

@@ -17,7 +17,7 @@ use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
  * Class VoucherEngine
@@ -39,7 +39,7 @@ class VoucherEngine
     protected $settings;
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -55,13 +55,13 @@ class VoucherEngine
 
     /**
      * @param \Spryker\Zed\Discount\DiscountConfigInterface $settings
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         DiscountConfigInterface $settings,
-        DiscountQueryContainer $queryContainer,
+        DiscountQueryContainerInterface $queryContainer,
         DiscountToMessengerInterface $messengerFacade,
         ConnectionInterface $connection
     ) {

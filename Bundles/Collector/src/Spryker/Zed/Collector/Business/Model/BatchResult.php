@@ -56,9 +56,9 @@ class BatchResult implements BatchResultInterface
     protected $isFailed = false;
 
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\LocaleTransfer|null
      */
-    protected $processedLocale = '';
+    protected $processedLocale = null;
 
     /**
      * @return int
@@ -170,7 +170,7 @@ class BatchResult implements BatchResultInterface
     }
 
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
      */
     public function getProcessedLocale()
     {

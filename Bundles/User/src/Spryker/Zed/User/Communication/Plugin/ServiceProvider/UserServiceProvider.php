@@ -25,14 +25,14 @@ class UserServiceProvider extends AbstractPlugin implements ServiceProviderInter
     /**
      * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
-    protected $facadeUser;
+    protected $userFacade;
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      */
     public function __construct(Container $container)
     {
-        $this->facadeUser = $container->getLocator()->user()->facade();
+        $this->userFacade = $container->getLocator()->user()->facade();
     }
 
     /**
@@ -58,8 +58,8 @@ class UserServiceProvider extends AbstractPlugin implements ServiceProviderInter
     {
         $username = '';
 
-        if ($this->facadeUser->hasCurrentUser()) {
-            $user = $this->facadeUser->getCurrentUser();
+        if ($this->userFacade->hasCurrentUser()) {
+            $user = $this->userFacade->getCurrentUser();
             $username = sprintf('%s %s', $user->getFirstName(), $user->getLastName());
         }
 

@@ -18,7 +18,7 @@ class InMemory implements StorageInterface
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacade
      */
-    protected $facadeProduct;
+    protected $productFacade;
 
     /**
      * @var \Generated\Shared\Transfer\WishlistTransfer
@@ -27,12 +27,12 @@ class InMemory implements StorageInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param \Spryker\Zed\Product\Business\ProductFacade $facadeProduct
+     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
      */
-    public function __construct(WishlistTransfer $wishlistTransfer, ProductFacade $facadeProduct)
+    public function __construct(WishlistTransfer $wishlistTransfer, ProductFacade $productFacade)
     {
         $this->wishlistTransfer = $wishlistTransfer;
-        $this->facadeProduct = $facadeProduct;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -49,7 +49,7 @@ class InMemory implements StorageInterface
                 $existingItem = $this->wishlistTransfer->getItems()[$key];
                 $existingItem->setQuantity($wishlistItem->getQuantity() + $existingItem->getQuantity());
             } else {
-                $productConcrete = $this->facadeProduct->getProductConcrete($wishlistItem->getSku());
+                $productConcrete = $this->productFacade->getProductConcrete($wishlistItem->getSku());
                 $wishlistItem->setIdProductAbstract($productConcrete->getIdProductAbstract());
                 $this->wishlistTransfer->addItem($wishlistItem);
             }
