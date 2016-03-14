@@ -18,6 +18,11 @@ class UrlTable extends AbstractTable
     const TABLE_IDENTIFIER = 'url_table';
 
     /**
+     * @var \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected $urlQuery;
+
+    /**
      * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
      */
     public function __construct(SpyUrlQuery $urlQuery)

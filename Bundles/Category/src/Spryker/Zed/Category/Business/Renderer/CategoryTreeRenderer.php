@@ -29,7 +29,7 @@ class CategoryTreeRenderer
     protected $queryContainer;
 
     /**
-     * @var int
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
 

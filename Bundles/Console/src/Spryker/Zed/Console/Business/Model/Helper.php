@@ -146,7 +146,7 @@ trait Helper
      * it will throw a RuntimeException.
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output An Output instance
-     * @param string|array $question The question to ask
+     * @param string $question The question to ask
      * @param bool $default The default answer if the user enters nothing
      *
      * @throws \RuntimeException

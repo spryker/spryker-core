@@ -16,6 +16,7 @@ use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class Discount
 {
@@ -75,7 +76,7 @@ class Discount
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Business\Model\DecisionRuleInterface $decisionRule
      * @param \Spryker\Zed\Discount\Business\Model\CalculatorInterface $calculator
      * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
@@ -84,7 +85,7 @@ class Discount
      */
     public function __construct(
         QuoteTransfer $quoteTransfer,
-        DiscountQueryContainer $queryContainer,
+        DiscountQueryContainerInterface $queryContainer,
         DecisionRuleInterface $decisionRule,
         CalculatorInterface $calculator,
         DistributorInterface $distributor,

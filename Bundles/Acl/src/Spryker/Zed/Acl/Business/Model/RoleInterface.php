@@ -48,7 +48,7 @@ interface RoleInterface
     /**
      * @param int $idUser
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getUserRoles($idUser);
 
@@ -57,7 +57,7 @@ interface RoleInterface
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getGroupRoles($idGroup);
 

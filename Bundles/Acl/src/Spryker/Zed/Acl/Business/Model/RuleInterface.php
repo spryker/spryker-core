@@ -63,6 +63,17 @@ interface RuleInterface
     );
 
     /**
+     * @param int $idAclRole
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
+     * @param int $type
+     *
+     * @return bool
+     */
+    public function existsRoleRule($idAclRole, $bundle, $controller, $action, $type);
+
+    /**
      * @param int $idGroup
      *
      * @return \Generated\Shared\Transfer\RuleTransfer

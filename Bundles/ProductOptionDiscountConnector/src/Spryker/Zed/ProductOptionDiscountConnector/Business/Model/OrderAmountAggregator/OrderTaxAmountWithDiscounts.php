@@ -47,8 +47,8 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
      */
     protected function getOrderEffectiveTaxRate(OrderTransfer $orderTransfer)
     {
-        $itemEffectiveRates = $this->getEfectiveTaxRatesFromTaxableItems($orderTransfer->getItems());
-        $expenseEffectiveRates = $this->getEfectiveTaxRatesFromTaxableItems($orderTransfer->getExpenses());
+        $itemEffectiveRates = $this->getEffectiveTaxRatesFromTaxableItems($orderTransfer->getItems());
+        $expenseEffectiveRates = $this->getEffectiveTaxRatesFromTaxableItems($orderTransfer->getExpenses());
         $productOptionEffectiveRates = $this->getProductOptionEffectiveRates($orderTransfer->getItems());
 
         $taxRates = array_merge($itemEffectiveRates, $expenseEffectiveRates, $productOptionEffectiveRates);
@@ -68,7 +68,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
      *
      * @return int[]
      */
-    protected function getEfectiveTaxRatesFromTaxableItems(\ArrayObject $taxableItems)
+    protected function getEffectiveTaxRatesFromTaxableItems(\ArrayObject $taxableItems)
     {
         $taxRates = [];
         foreach ($taxableItems as $item) {
@@ -89,7 +89,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
     {
         $productOptionRates = [];
         foreach ($items as $itemTransfer) {
-            $rates = $this->getEfectiveTaxRatesFromTaxableItems($itemTransfer->getProductOptions());
+            $rates = $this->getEffectiveTaxRatesFromTaxableItems($itemTransfer->getProductOptions());
             $productOptionRates = array_merge($productOptionRates, $rates);
         }
 

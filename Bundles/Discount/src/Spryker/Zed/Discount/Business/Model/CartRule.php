@@ -17,7 +17,7 @@ use Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
 use Spryker\Zed\Discount\Communication\Form\CartRuleForm;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class CartRule implements CartRuleInterface
 {
@@ -27,7 +27,7 @@ class CartRule implements CartRuleInterface
     const COLLECTOR_ITERATOR = 'collector_';
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -62,14 +62,14 @@ class CartRule implements CartRuleInterface
     protected $discountCollectorWriter;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter $discountDecisionRuleWriter
      * @param \Spryker\Zed\Discount\Business\Writer\DiscountWriter $discountWriter
      * @param \Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter $discountCollectorWriter
      */
     public function __construct(
-        DiscountQueryContainer $queryContainer,
+        DiscountQueryContainerInterface $queryContainer,
         Store $store,
         DiscountDecisionRuleWriter $discountDecisionRuleWriter,
         DiscountWriter $discountWriter,

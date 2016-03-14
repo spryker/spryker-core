@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -69,7 +70,7 @@ class DependencyController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function dependencyTreeGraphAction(Request $request)
     {

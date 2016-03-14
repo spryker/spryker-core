@@ -95,7 +95,7 @@ interface BatchResultInterface
     public function setIsFailed($failed = true);
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
      */
     public function getProcessedLocale();
 
