@@ -65,7 +65,6 @@ class ErrorRenderer
         } else {
             $uri = 'n/a';
         }
-        $uri = urlencode($uri);
 
         $message = get_class($e) . ' - ' . $e->getMessage();
         $errorString = PHP_EOL . APPLICATION . ' Exception: ' . $message . PHP_EOL;
