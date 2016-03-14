@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 use Orm\Zed\Auth\Persistence\SpyResetPassword;
 use Spryker\Zed\Auth\AuthConfig;
+use Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface;
-use Spryker\Zed\User\Business\UserFacadeInterface;
 
 class PasswordReset
 {
@@ -42,12 +42,12 @@ class PasswordReset
 
     /**
      * @param \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface $authQueryContainer
-     * @param \Spryker\Zed\User\Business\UserFacadeInterface $userFacade
+     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface $userFacade
      * @param \Spryker\Zed\Auth\AuthConfig $authConfig
      */
     public function __construct(
         AuthQueryContainerInterface $authQueryContainer,
-        UserFacadeInterface $userFacade,
+        AuthToUserInterface $userFacade,
         AuthConfig $authConfig
     ) {
         $this->authQueryContainer = $authQueryContainer;

@@ -46,7 +46,7 @@ class AuthBusinessFactory extends AbstractBusinessFactory
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
+     * @return \Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface
      */
     protected function getUserFacade()
     {
