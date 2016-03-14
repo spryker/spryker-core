@@ -13,7 +13,6 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -57,6 +56,8 @@ class PageController extends AbstractController
      */
     public function addAction(Request $request)
     {
+        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
+
         $dataProvider = $this->getFactory()->createCmsPageFormDataProvider();
         $form = $this
             ->getFactory()
@@ -65,8 +66,6 @@ class PageController extends AbstractController
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
-
-        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -93,7 +92,6 @@ class PageController extends AbstractController
     public function editAction(Request $request)
     {
         $idPage = $this->castId($request->query->get(CmsPageTable::REQUEST_ID_PAGE));
-
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $dataProvider = $this->getFactory()->createCmsPageFormDataProvider();
