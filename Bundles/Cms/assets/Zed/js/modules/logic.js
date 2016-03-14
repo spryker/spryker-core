@@ -71,9 +71,11 @@ var ajaxifySubmmit = function(formId) {
 
         return false;
     });
-}
+};
 
-function showAutoComplete(formId, type) {
+function showAutoComplete(formId, searchType) {
+    var searchTypeGlossaryKey = 2;
+    var searchTypeFullText = 3;
     var listElement = '<div id="foundKeyListContainer" class="key-container"><select id="foundKeyList" size="10" class="key-list"></select></div>'
     $('.keyListCanvas').empty();
     $('.keyListCanvas').append(listElement);
@@ -88,10 +90,10 @@ function showAutoComplete(formId, type) {
 
     var ajaxUrl = '';
 
-    if (type == 2) {
-        ajaxUrl = 'search/?key=';
-    } else if(type == 3) {
-        ajaxUrl = 'search/?value=';
+    if (searchType == searchTypeGlossaryKey) {
+        ajaxUrl = 'glossary/search/?key=';
+    } else if(searchType == searchTypeFullText) {
+        ajaxUrl = 'glossary/search/?value=';
     }
 
     keyList.find('option').remove();
@@ -179,7 +181,7 @@ var addKeySearchEvent = function(formId) {
             keyList.val(0).change();
         }
     });
-}
+};
 
 function showBlockAutoComplete(elementId, type) {
     var listElement = '<div id="foundItemListContainer" class="key-container"><select id="foundItemList" size="10" class="key-list"></select></div>'
@@ -235,7 +237,7 @@ function showBlockAutoComplete(elementId, type) {
                 elementInput.focus();
                 return false;
             });
-        },
+        }
     });
 }
 
@@ -280,7 +282,7 @@ var addAutoCompleteSearchEvent = function(elementId) {
             $('#cms_block_selectValue').removeAttr('disabled');
         }
     });
-}
+};
 
 var delay = (function(){
     var timer = 0;
