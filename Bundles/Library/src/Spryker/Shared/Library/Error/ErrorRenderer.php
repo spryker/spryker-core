@@ -9,6 +9,7 @@ namespace Spryker\Shared\Library\Error;
 
 use Spryker\Shared\Library\Application\Version;
 use Spryker\Shared\Library\Exception\AbstractErrorRendererException;
+use Spryker\Zed\Library\Sanitize\Html;
 
 class ErrorRenderer
 {
@@ -23,7 +24,6 @@ class ErrorRenderer
     protected static function renderForWeb(\Exception $e)
     {
         $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'n/a';
-        $uri = urlencode($uri);
 
         $errorString = '<div style="font-family: courier; font-size: 14px">';
         $message = get_class($e) . ' - ' . $e->getMessage();
@@ -31,7 +31,7 @@ class ErrorRenderer
 
         $errorString .= 'in ' . $e->getFile() . ' (' . $e->getLine() . ')';
         $errorString .= '<br/><br/>';
-        $errorString .= '<b>Url:</b> ' . $uri;
+        $errorString .= '<b>Url:</b> ' . Html::escape($uri);
         $errorString .= '<br/><br/>';
         $errorString .= '<b>Trace:</b>';
         $errorString .= '<br/>';
