@@ -5,8 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model;
+namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-interface CountableIteratorInterface extends \Iterator, \Countable
+interface LoaderInterface
 {
+
+    /**
+     * @return array
+     */
+    public function getDefinitions();
+
 }

@@ -63,4 +63,11 @@ interface KeyManagerInterface
      */
     public function getOrCreateKey($keyName);
 
+    /**
+     * @param string $keyFragment
+     *
+     * @return array
+     */
+    public function getKeySuggestions($keyFragment);
+
 }

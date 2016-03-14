@@ -104,7 +104,7 @@ abstract class AbstractRuleForm extends AbstractType
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     protected function getCollectorLogicalOperators()
     {

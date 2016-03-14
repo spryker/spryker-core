@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 class BlockController extends AbstractController
 {
 
-    const REDIRECT_ADDRESS = '/cms/glossary/';
+    const REDIRECT_ADDRESS = '/cms/glossary';
     const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
@@ -77,6 +77,7 @@ class BlockController extends AbstractController
             $blockTransfer = $this->createBlockTransfer($data);
 
             $this->getFacade()->savePageBlockAndTouch($pageTransfer, $blockTransfer);
+            //FIXME: Use proper URL class
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);

@@ -27,7 +27,7 @@ class CmsRedirectFormDataProvider
     }
 
     /**
-     * @param int $idUrl
+     * @param int|null $idUrl
      *
      * @return array
      */

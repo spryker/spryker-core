@@ -25,7 +25,7 @@ interface ReaderInterface
     /**
      * @param string $sku
      *
-     * @return array
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
     public function getStocksProduct($sku);
 

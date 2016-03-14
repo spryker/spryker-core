@@ -205,15 +205,6 @@ interface OmsFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
-     *
-     * @return string
-     */
-    public function selectProcess(OrderTransfer $transferOrder);
-
-    /**
-     * @api
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return string
@@ -265,7 +256,7 @@ interface OmsFacadeInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 

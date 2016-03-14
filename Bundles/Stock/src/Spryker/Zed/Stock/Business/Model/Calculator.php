@@ -11,7 +11,7 @@ class Calculator implements CalculatorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Stock\Business\Model\Reader
+     * @var \Spryker\Zed\Stock\Business\Model\ReaderInterface
      */
     protected $readerInterface;
 

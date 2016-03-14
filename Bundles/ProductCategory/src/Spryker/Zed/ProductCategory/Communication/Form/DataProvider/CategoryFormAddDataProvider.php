@@ -16,7 +16,7 @@ class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
 
     /**
      * @param int $idParentNode
-     * @param int $idCategory
+     * @param int|null $idCategory
      *
      * @return array
      */

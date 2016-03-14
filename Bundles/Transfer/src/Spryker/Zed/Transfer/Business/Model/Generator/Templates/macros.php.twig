@@ -52,7 +52,7 @@
 {% endif %}
      * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}
      *
-     * @return self
+     * @return $this
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
@@ -87,7 +87,7 @@
 {% endif %}
      * @param {{ method.var }} ${{ method.property }}
      *
-     * @return self
+     * @return $this
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
@@ -107,7 +107,7 @@
 {% endif %}
      * @throws RequiredTransferPropertyException
      *
-     * @return self
+     * @return $this
      */
     public function {{ method.name }}()
     {

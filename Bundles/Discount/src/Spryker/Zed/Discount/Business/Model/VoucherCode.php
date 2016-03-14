@@ -27,7 +27,7 @@ class VoucherCode implements VoucherCodeInterface
     }
 
     /**
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */
@@ -52,7 +52,7 @@ class VoucherCode implements VoucherCodeInterface
     }
 
     /**
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */

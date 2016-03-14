@@ -75,20 +75,4 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
         return (new Pimple())->getApplication()[self::FORM_FACTORY];
     }
 
-    /**
-     * @deprecated Use $this->getFormFactory()->create() instead.
-     *
-     * @param \Symfony\Component\Form\FormTypeInterface $formTypeInterface
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function createForm(FormTypeInterface $formTypeInterface, array $options = [])
-    {
-        $form = $this->getFormFactory()
-            ->create($formTypeInterface, $formTypeInterface->populateFormFields(), $options);
-
-        return $form;
-    }
-
 }

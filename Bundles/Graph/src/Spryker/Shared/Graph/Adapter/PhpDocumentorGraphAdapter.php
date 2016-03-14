@@ -133,7 +133,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 
     /**
      * @param string $type
-     * @param string $fileName
+     * @param string|null $fileName
      *
      * @throws \phpDocumentor\GraphViz\Exception
      *

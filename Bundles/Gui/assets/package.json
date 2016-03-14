@@ -18,9 +18,10 @@
     "jquery": "~2.2.0",
     "jquery-ui": "~1.10.5",
     "metismenu": "~2.2.0",
-    "nestable": "github:ilmente/Nestable#v1.1.0",
+    "nestable": "github:ilmente/Nestable#v1.1.1",
     "pace": "github:hubspot/pace#v1.0.2",
     "select2": "github:select2/select2",
-    "summernote": "^0.8.1"
+    "summernote": "~0.8.1",
+    "sweetalert": "~1.1.3"
   }
 }

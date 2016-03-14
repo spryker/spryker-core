@@ -20,12 +20,14 @@ use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\RuleConditionTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
+use Generated\Shared\Transfer\VoucherPoolTransfer;
+use Generated\Shared\Transfer\VoucherTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
  */
-class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
+class DiscountFacade extends AbstractFacade
 {
 
     /**
@@ -140,7 +142,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return $this
+     * @return \Generated\Shared\Transfer\VoucherPoolTransfer
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
     {
@@ -443,7 +445,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     /**
      * @api
      *
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */
@@ -455,7 +457,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     /**
      * @api
      *
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */

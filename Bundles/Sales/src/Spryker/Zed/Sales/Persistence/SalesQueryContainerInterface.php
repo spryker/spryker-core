@@ -113,7 +113,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */

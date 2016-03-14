@@ -62,7 +62,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $xmlFolder
+     * @param string|null $xmlFolder
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */
@@ -189,14 +189,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createUtilOrderItemMatrix()
     {
         return new OrderItemMatrix($this->getQueryContainer(), $this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Business\Process\ProcessSelector
-     */
-    public function createProcessSelector()
-    {
-        return new ProcessSelector($this->getConfig());
     }
 
 }

@@ -16,7 +16,7 @@ class OrderCommentReader implements OrderCommentReaderInterface
 {
 
     /**
-     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainer
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $queryContainer;
 

@@ -12,7 +12,6 @@ use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
 use Spryker\Zed\Product\Business\Importer\FileImporter;
-use Spryker\Zed\Product\Business\Importer\Reader\File\CsvReader;
 use Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter;
 use Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator;
 use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductAbstractWriter;
@@ -60,7 +59,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         $importer = new FileImporter(
             $this->createImportProductValidator(),
-            $this->createCSVReader(),
             $this->createImportProductBuilder(),
             $this->createProductWriter(),
             $this->createProductBatchResult()
@@ -75,14 +73,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function createImportProductValidator()
     {
         return new ImportProductValidator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Reader\File\IteratorReaderInterface
-     */
-    protected function createCSVReader()
-    {
-        return new CsvReader();
     }
 
     /**

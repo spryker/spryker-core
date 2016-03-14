@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Glossary\Business\Translation;
 
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 
@@ -155,5 +156,14 @@ interface TranslationManagerInterface
      * @return void
      */
     public function touchCurrentTranslationForKeyId($idKey);
+
+    /**
+     * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     *
+     * @return bool
+     */
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer);
 
 }

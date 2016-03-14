@@ -10,6 +10,9 @@ namespace Spryker\Zed\Kernel\Business;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Shared\Transfer\TransferInterface;
 
+/**
+ * //TODO: Move this class away from Kernel bundle.
+ */
 class ModelResult
 {
 
@@ -39,8 +42,6 @@ class ModelResult
     protected $success = true;
 
     /**
-     * @deprecated
-     *
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null $entity
      */
     public function __construct(ActiveRecordInterface $entity = null)
@@ -49,8 +50,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return bool
      */
     public function isSuccess()
@@ -59,8 +58,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return array
      */
     public function getErrors()
@@ -101,8 +98,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return bool
      */
     public function hasTransfer()
@@ -111,8 +106,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return bool
      */
     public function hasEntity()
@@ -121,8 +114,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
     public function getEntity()
@@ -145,8 +136,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @param array $entityModifiedColumns
      *
      * @return void
@@ -157,8 +146,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return array
      */
     public function getEntityModifiedColumns()
@@ -167,8 +154,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @param string $error
      *
      * @return $this
@@ -182,8 +167,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @param array $errors
      *
      * @return void

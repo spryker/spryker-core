@@ -16,15 +16,16 @@ use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
-
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
  */
 interface DiscountFacadeInterface
 {
+
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
@@ -93,7 +94,7 @@ interface DiscountFacadeInterface
      *
      * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return self
+     * @return $this
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer);
 
@@ -247,6 +248,8 @@ interface DiscountFacadeInterface
     public function getCalculatorPluginByName($pluginName);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
@@ -255,6 +258,8 @@ interface DiscountFacadeInterface
     public function getDiscountableItems(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
@@ -263,6 +268,8 @@ interface DiscountFacadeInterface
     public function getDiscountableOrderExpenses(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
@@ -271,6 +278,8 @@ interface DiscountFacadeInterface
     public function getDiscountableItemProductOptions(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
@@ -295,7 +304,7 @@ interface DiscountFacadeInterface
     /**
      * @api
      *
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */
@@ -304,13 +313,15 @@ interface DiscountFacadeInterface
     /**
      * @api
      *
-     * @param array|string[] $codes
+     * @param string[] $codes
      *
      * @return bool
      */
     public function useVoucherCodes(array $codes);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -319,6 +330,8 @@ interface DiscountFacadeInterface
     public function saveOrderDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -326,6 +339,8 @@ interface DiscountFacadeInterface
     public function aggregateOrderTotalDiscountAmount(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -333,6 +348,8 @@ interface DiscountFacadeInterface
     public function aggregateOrderCalculatedDiscounts(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -340,6 +357,8 @@ interface DiscountFacadeInterface
     public function aggregateItemDiscounts(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -347,6 +366,8 @@ interface DiscountFacadeInterface
     public function aggregateGrandTotalWithDiscounts(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -354,9 +375,12 @@ interface DiscountFacadeInterface
     public function aggregateOrderExpenseTaxWithDiscounts(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
     public function aggregateOrderExpensesWithDiscounts(OrderTransfer $orderTransfer);
+
 }

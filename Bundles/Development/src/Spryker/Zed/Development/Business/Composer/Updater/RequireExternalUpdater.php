@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\DashToCamelCase;
 
@@ -66,7 +64,7 @@ class RequireExternalUpdater implements UpdaterInterface
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
 
-            $composerJson[self::KEY_REQUIRE][$dependentBundle] = self::RELEASE_OPERATOR . '1.0.0-RC1';
+            $composerJson[self::KEY_REQUIRE][$dependentBundle] = self::RELEASE_OPERATOR . '1.0.0-RC2';
         }
 
         return $composerJson;

@@ -113,4 +113,16 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
             ->assignCustomerToExistingSubscriber($newsletterSubscriber);
     }
 
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function install()
+    {
+        $this->getFactory()
+            ->createNewsletterTypeInstaller()
+            ->install();
+    }
+
 }

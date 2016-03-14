@@ -336,7 +336,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      *
      * @param int $idUrlRedirect
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
     public function queryRedirectById($idUrlRedirect)
     {

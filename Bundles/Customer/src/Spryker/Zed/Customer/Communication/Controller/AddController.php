@@ -41,7 +41,7 @@ class AddController extends AbstractController
 
             $this->getFacade()->registerCustomer($customerTransfer);
 
-            return $this->redirectResponse('/customer/');
+            return $this->redirectResponse('/customer');
         }
 
         return $this->viewResponse([

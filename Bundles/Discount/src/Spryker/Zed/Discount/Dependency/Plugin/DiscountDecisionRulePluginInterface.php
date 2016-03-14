@@ -18,4 +18,5 @@ interface DiscountDecisionRulePluginInterface
      * @return bool
      */
     public function isSatisfiedBy(RuleConditionTransfer $ruleConditionTransfer);
+
 }

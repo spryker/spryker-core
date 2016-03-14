@@ -117,7 +117,7 @@ class Catalog implements CatalogInterface
     /**
      * @param array $product
      *
-     * @return array|\array[]
+     * @return array[]
      */
     public function getSubProducts(array $product)
     {

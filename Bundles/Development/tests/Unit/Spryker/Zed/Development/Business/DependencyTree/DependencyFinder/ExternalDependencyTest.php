@@ -42,8 +42,6 @@ class ExternalDependencyTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddDependency()
     {
-        $this->markTestSkipped('PHP_CodeSniffer_File is adding codeception autoloader for what ever reason');
-
         $testFile = $this->getTestFile();
         $dependencyFinder = new ExternalDependency();
         $dependencyTree = new DependencyTree(new FileInfoExtractor(), []);

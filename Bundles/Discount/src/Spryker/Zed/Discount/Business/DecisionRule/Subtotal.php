@@ -1,13 +1,15 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Business\DecisionRule;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\QueryString\RuleInterface;
 use Spryker\Zed\Discount\Business\QueryString\AbstractComparableRule;
+use Spryker\Zed\Discount\Business\QueryString\RuleInterface;
 
 class Subtotal extends AbstractComparableRule implements RuleInterface
 {
@@ -19,8 +21,8 @@ class Subtotal extends AbstractComparableRule implements RuleInterface
      */
     protected function compareWith(QuoteTransfer $quoteTransfer)
     {
-       $this->assertSubtotalRequirements($quoteTransfer);
-       return (float) $quoteTransfer->getTotals()->getSubtotal();
+        $this->assertSubtotalRequirements($quoteTransfer);
+        return (float)$quoteTransfer->getTotals()->getSubtotal();
     }
 
     /**
@@ -33,4 +35,5 @@ class Subtotal extends AbstractComparableRule implements RuleInterface
         $quoteTransfer->requireTotals();
         $quoteTransfer->getTotals()->requireSubtotal();
     }
+
 }

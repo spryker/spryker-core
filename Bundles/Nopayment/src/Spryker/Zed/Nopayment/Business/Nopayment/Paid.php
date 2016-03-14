@@ -9,17 +9,20 @@ namespace Spryker\Zed\Nopayment\Business\Nopayment;
 
 use Orm\Zed\Nopayment\Persistence\SpyNopaymentPaid;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface;
 
 class Paid
 {
 
     /**
-     * @var \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainer
+     * @var \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface
      */
     protected $queryContainer;
 
-    public function __construct(QueryContainerInterface $queryContainer)
+    /**
+     * @param \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface $queryContainer
+     */
+    public function __construct(NopaymentQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }

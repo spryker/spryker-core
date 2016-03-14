@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <sales>
+        <label>Sales</label>
+        <title>Sales</title>
+        <uri>/sales</uri>
+        <icon>fa-shopping-cart</icon>
         <pages>
             <order-list>
                 <label>Orders</label>

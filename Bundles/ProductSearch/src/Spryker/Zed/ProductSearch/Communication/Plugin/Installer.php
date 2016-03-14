@@ -19,7 +19,7 @@ class Installer extends AbstractInstallerPlugin
     /**
      * @return void
      */
-    public function install()
+    protected function install()
     {
         $this->getFacade()->install($this->messenger);
     }

@@ -9,6 +9,7 @@ namespace Spryker\Shared\Kernel;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
+use Spryker\Shared\Library\Context;
 
 class Store
 {
@@ -275,11 +276,19 @@ class Store
     }
 
     /**
+     * @param string|\Spryker\Shared\Library\Context|null $context
+     *
      * @return string
      */
-    public function getTimezone()
+    public function getTimezone($context = null)
     {
-        return Config::get(KernelConstants::PROJECT_TIMEZONE);
+        $contextInstance = Context::getInstance($context);
+
+        if ($contextInstance->has('timezone')) {
+            return $contextInstance->get('timezone');
+        } else {
+            return Config::get(KernelConstants::PROJECT_TIMEZONE);
+        }
     }
 
     /**

@@ -54,7 +54,7 @@ class TransferServer
     }
 
     /**
-     * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater $repeater
+     * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater|null $repeater
      *
      * @return $this
      */

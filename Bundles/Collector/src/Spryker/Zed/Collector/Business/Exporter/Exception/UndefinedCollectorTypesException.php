@@ -10,6 +10,9 @@ namespace Spryker\Zed\Collector\Business\Exporter\Exception;
 class UndefinedCollectorTypesException extends \RuntimeException
 {
 
+    /**
+     * @var string
+     */
     protected $message = 'Undefined collector types';
 
 }

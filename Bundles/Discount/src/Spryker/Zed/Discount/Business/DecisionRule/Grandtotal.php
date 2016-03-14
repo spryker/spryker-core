@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Business\DecisionRule;
@@ -11,6 +13,7 @@ use Spryker\Zed\Discount\Business\QueryString\RuleInterface;
 
 class Grandtotal extends AbstractComparableRule implements RuleInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -32,4 +35,5 @@ class Grandtotal extends AbstractComparableRule implements RuleInterface
         $quoteTransfer->requireTotals();
         $quoteTransfer->getTotals()->requireGrandTotal();
     }
+
 }

@@ -35,7 +35,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
 
         $form = new RefundForm($facadeRefund, $orderTransfer, $paymentDataPlugin);
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($form);
     }
 
     /**
@@ -50,7 +50,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
         return new RefundTable(
             $refundQuery,
             $refundFacade,
-            $this->createDateFormatter()
+            $this->getProvidedDependency(RefundDependencyProvider::SERVICE_DATE_FORMATTER)
         );
     }
 
@@ -60,18 +60,6 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesQueryContainer()
     {
         return $this->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_SALES);
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return \Spryker\Shared\Library\DateFormatter
-     */
-    protected function createDateFormatter()
-    {
-        $dateFormatter = new DateFormatter(Context::getInstance());
-
-        return $dateFormatter;
     }
 
     /**

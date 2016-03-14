@@ -60,8 +60,8 @@ class ZedClient
 
     /**
      * @param string $baseUrl
-     * @param string $username
-     * @param string $password
+     * @param string|null $username
+     * @param string|null $password
      */
     public function __construct($baseUrl, $username = null, $password = null)
     {

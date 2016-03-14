@@ -26,15 +26,4 @@ class InstallerBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(InstallerDependencyProvider::INSTALLER_PLUGINS);
     }
 
-    /**
-     * @return \Spryker\Zed\Installer\Business\Model\GlossaryInstaller
-     */
-    public function createGlossaryInstaller()
-    {
-        return new GlossaryInstaller(
-            $this->getProvidedDependency(InstallerDependencyProvider::FACADE_GLOSSARY),
-            $this->getConfig()->getGlossaryFilePaths()
-        );
-    }
-
 }

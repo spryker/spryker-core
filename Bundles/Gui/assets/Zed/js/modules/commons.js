@@ -21,6 +21,7 @@ require('nestable');
 require('select2');
 require('codemirror');
 require('summernote');
+require('sweetalert');
 
 // inspinia
 require('../../../Inspinia/inspinia');

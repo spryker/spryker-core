@@ -17,11 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
  */
 class RedirectController extends AbstractController
 {
 
-    const REDIRECT_ADDRESS = '/cms/redirect/';
+    const REDIRECT_ADDRESS = '/cms/redirect';
     const REQUEST_ID_URL = 'id-url';
     const REQUEST_ID_URL_REDIRECT = 'id-url-redirect';
 
@@ -140,10 +141,10 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $url
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $url
      * @param array $data
      *
-     * @return $this
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     private function createUrlTransfer($url, $data)
     {
@@ -158,7 +159,7 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     * @param \Orm\Zed\Url\Persistence\SpyUrlRedirect $redirect
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer

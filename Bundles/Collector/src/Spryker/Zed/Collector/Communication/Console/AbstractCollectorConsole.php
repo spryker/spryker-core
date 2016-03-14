@@ -13,7 +13,7 @@ abstract class AbstractCollectorConsole extends Console
 {
 
     /**
-     * @param array|\Spryker\Zed\Collector\Business\Model\BatchResultInterface[] $resultData
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface[] $resultData
      *
      * @return string
      *
@@ -51,7 +51,7 @@ abstract class AbstractCollectorConsole extends Console
     }
 
     /**
-     * @param array|\Spryker\Zed\Collector\Business\Model\BatchResultInterface[] $results
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface[] $results
      *
      * @return string
      */

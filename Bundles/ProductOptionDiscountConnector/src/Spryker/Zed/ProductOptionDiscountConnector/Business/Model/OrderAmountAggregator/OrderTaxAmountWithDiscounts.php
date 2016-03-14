@@ -66,13 +66,13 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ExpenseTransfer[]|\Generated\Shared\Transfer\ProductOptionTransfer[] $taxableItems
      *
-     * @return array|int[]
+     * @return int[]
      */
     protected function getEfectiveTaxRatesFromTaxableItems(\ArrayObject $taxableItems)
     {
         $taxRates = [];
         foreach ($taxableItems as $item) {
-            if (!empty($item->getTaxRate())) {
+            if ($item->getTaxRate()) {
                 $taxRates[] = $item->getTaxRate();
             }
         }
@@ -83,7 +83,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
-     * @return array|int[]
+     * @return int[]
      */
     protected function getProductOptionEffectiveRates(\ArrayObject $items)
     {

@@ -11,7 +11,7 @@ use Symfony\Component\Finder\Finder;
 use Zend\Config\Factory;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-class TransferDefinitionLoader
+class TransferDefinitionLoader implements LoaderInterface
 {
 
     const KEY_BUNDLE = 'bundle';

@@ -53,7 +53,7 @@ class Locator implements LocatorLocatorInterface
 
     /**
      * @param string $bundle
-     * @param array $arguments
+     * @param array|null $arguments
      *
      * @return \Spryker\Shared\Kernel\BundleProxy
      */

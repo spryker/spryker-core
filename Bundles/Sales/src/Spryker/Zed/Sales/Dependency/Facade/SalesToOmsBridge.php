@@ -48,16 +48,6 @@ class SalesToOmsBridge implements SalesToOmsInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
-     *
-     * @return string
-     */
-    public function selectProcess(OrderTransfer $transferOrder)
-    {
-        return $this->omsFacade->selectProcess($transferOrder);
-    }
-
-    /**
      * @return array
      */
     public function getOrderItemMatrix()
@@ -89,7 +79,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {

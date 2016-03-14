@@ -59,6 +59,11 @@ class DiscountsTable extends AbstractTable
             self::COL_OPTIONS => self::COL_OPTIONS,
         ]);
 
+        $config->setSearchable([
+            SpyDiscountTableMap::COL_DISPLAY_NAME,
+            SpyDiscountTableMap::COL_DESCRIPTION,
+        ]);
+
         return $config;
     }
 

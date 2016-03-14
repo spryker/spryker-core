@@ -19,7 +19,7 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return \Spryker\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep[]
      */
@@ -31,7 +31,7 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -43,7 +43,7 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -67,7 +67,7 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -79,7 +79,7 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -91,7 +91,7 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */
@@ -103,7 +103,7 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
     /**
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return void
      */

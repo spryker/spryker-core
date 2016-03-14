@@ -54,7 +54,7 @@ class TaxCalculation implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|int[]
+     * @return int[]
      */
     protected function aggregateItemTaxes(QuoteTransfer $quoteTransfer)
     {
@@ -72,7 +72,7 @@ class TaxCalculation implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|int[]
+     * @return int[]
      */
     protected function aggregateExpenseTaxes(QuoteTransfer $quoteTransfer)
     {
@@ -90,7 +90,7 @@ class TaxCalculation implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return array|int[]
+     * @return int[]
      */
     protected function aggregateProductOptionTaxes(ItemTransfer $itemTransfer)
     {
@@ -106,7 +106,7 @@ class TaxCalculation implements CalculatorInterface
     }
 
     /**
-     * @param array|int[] $taxRates
+     * @param int[] $taxRates
      *
      * @return float
      */
@@ -169,7 +169,7 @@ class TaxCalculation implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|int[]
+     * @return int[]
      */
     protected function getTaxesFromCurrentQuoteTransfer(QuoteTransfer $quoteTransfer)
     {

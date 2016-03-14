@@ -19,7 +19,7 @@ class Dummy implements DummyInterface
 {
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\Builder
+     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */
     protected $builder;
 

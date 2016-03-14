@@ -13,7 +13,7 @@ interface DataImportWriterInterface
     /**
      * @param string $importKeyProductOptionType
      * @param array $localizedNames
-     * @param string $importKeyTaxSet
+     * @param string|null $importKeyTaxSet
      *
      * @return int
      */
@@ -23,7 +23,7 @@ interface DataImportWriterInterface
      * @param string $importKeyProductOptionValue
      * @param string $importKeyProductOptionType
      * @param array $localizedNames
-     * @param float $price
+     * @param float|null $price
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      *
@@ -35,7 +35,7 @@ interface DataImportWriterInterface
      * @param string $sku
      * @param string $importKeyProductOptionType
      * @param bool $isOptional
-     * @param int $sequence
+     * @param int|null $sequence
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      *
@@ -46,7 +46,7 @@ interface DataImportWriterInterface
     /**
      * @param int $idProductOptionTypeUsage
      * @param string $importKeyProductOptionValue
-     * @param int $sequence
+     * @param int|null $sequence
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
@@ -85,7 +85,7 @@ interface DataImportWriterInterface
      * @param string $sku
      * @param array $importKeysProductOptionValues
      * @param bool $isDefault
-     * @param int $sequence
+     * @param int|null $sequence
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException

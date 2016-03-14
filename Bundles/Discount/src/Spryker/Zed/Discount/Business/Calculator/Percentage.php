@@ -83,5 +83,4 @@ class Percentage implements CalculatorInterface
         return $quantity;
     }
 
-
 }

@@ -3,6 +3,8 @@
     <discount>
         <label>Discount</label>
         <title>Discount</title>
+        <uri>#</uri>
+        <icon>fa-credit-card</icon>
         <bundle>discount</bundle>
         <pages>
             <pool>

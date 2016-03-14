@@ -101,7 +101,7 @@ class SalesFacade extends AbstractFacade
      *
      * @param int $idSalesOrder
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getDistinctOrderStates($idSalesOrder)
     {

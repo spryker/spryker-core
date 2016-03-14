@@ -5,14 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Installer\Communication\Plugin;
+namespace Spryker\Shared\Library\Exception;
 
-interface InstallerInterface
+class UnknownContextPropertyException extends \Exception
 {
-
-    /**
-     * @return mixed
-     */
-    public function install();
-
 }

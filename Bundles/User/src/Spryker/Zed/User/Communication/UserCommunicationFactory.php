@@ -43,7 +43,8 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     public function createUserTable()
     {
         return new UsersTable(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(UserDependencyProvider::SERVICE_DATE_FORMATTER)
         );
     }
 
@@ -55,7 +56,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserForm(array $data = [], array $options = [])
     {
-        $formType = new UserForm();
+        $formType = new UserForm($this->getFacade());
 
         return $this->getFormFactory()->create($formType, $data, $options);
     }
@@ -68,7 +69,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUpdateUserForm(array $data = [], array $options = [])
     {
-        $formType = new UserUpdateForm();
+        $formType = new UserUpdateForm($this->getFacade());
 
         return $this->getFormFactory()->create($formType, $data, $options);
     }

@@ -264,7 +264,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
      *
      * @return void
      */

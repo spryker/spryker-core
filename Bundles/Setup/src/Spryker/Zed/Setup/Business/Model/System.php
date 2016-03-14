@@ -11,7 +11,7 @@ class System
 {
 
     /**
-     * @param string $what
+     * @param string|null $what
      *
      * @return string
      */

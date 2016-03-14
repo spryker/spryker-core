@@ -52,6 +52,25 @@ $(document).ready(function() {
         spyAj.setUrl('/discount/voucher/status').changeActiveStatus(elementId);
     });
 
+    $('.table-dependency tr').hover(
+        function(){
+            $(this).addClass('warning');
+        },
+        function(){
+            $(this).removeClass('warning');
+        }
+    );
+    $('.table-dependency .btn-xs').hover(
+        function(){
+            $(this).removeClass('btn-default');
+            $(this).addClass('btn-primary');
+        },
+        function(){
+            $(this).addClass('btn-default');
+            $(this).removeClass('btn-primary');
+        }
+    );
+
     $('.dropdown-toggle').dropdown();
     $('.spryker-form-select2combobox').select2();
 });

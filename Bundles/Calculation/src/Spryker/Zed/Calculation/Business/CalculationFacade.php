@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  * @method \Spryker\Zed\Calculation\Business\CalculationBusinessFactory getFactory()
  * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
-class CalculationFacade extends AbstractFacade implements CalculationFacadeInterface
+class CalculationFacade extends AbstractFacade
 {
 
     /**
@@ -148,7 +148,7 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $this->getFactory()
-            ->createCheckoutGrandTotalPrecondition()
+            ->createCheckoutGrandTotalPreCondition()
             ->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
     }
 

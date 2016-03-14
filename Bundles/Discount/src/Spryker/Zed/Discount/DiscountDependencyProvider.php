@@ -162,4 +162,5 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             self::PLUGIN_DECISION_RULE_GRANDTOTAL => new GrandtotalDecisionRulePlugin(),
         ];
     }
+
 }

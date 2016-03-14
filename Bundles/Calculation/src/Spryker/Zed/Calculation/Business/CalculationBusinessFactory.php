@@ -14,7 +14,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator
 use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
-use Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPrecondition;
+use Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPreCondition;
 use Spryker\Zed\Calculation\Business\Model\StackExecutor;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -98,11 +98,11 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPreconditionInterface
+     * @return \Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPreConditionInterface
      */
-    public function createCheckoutGrandTotalPrecondition()
+    public function createCheckoutGrandTotalPreCondition()
     {
-        return new CheckoutGrandTotalPrecondition($this->createStackExecutor());
+        return new CheckoutGrandTotalPreCondition($this->createStackExecutor());
     }
 
 }

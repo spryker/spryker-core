@@ -13,7 +13,6 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\User\Communication\Form\UserForm;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -43,8 +42,13 @@ class EditController extends AbstractController
             )
             ->handleRequest($request);
 
+        $viewData = [
+            'userForm' => $userForm->createView()
+        ];
+
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
+
             $userTransfer = $this->getFacade()->addUser(
                 $formData[UserForm::FIELD_FIRST_NAME],
                 $formData[UserForm::FIELD_LAST_NAME],
@@ -60,14 +64,12 @@ class EditController extends AbstractController
                 );
 
                 return $this->redirectResponse(self::USER_LISTING_URL);
-            } else {
-                $this->addErrorMessage('Failed to create new user!');
             }
+
+            $this->addErrorMessage('Failed to create new user!');
         }
 
-        return $this->viewResponse([
-            'userForm' => $userForm->createView(),
-        ]);
+        return $this->viewResponse($viewData);
     }
 
     /**

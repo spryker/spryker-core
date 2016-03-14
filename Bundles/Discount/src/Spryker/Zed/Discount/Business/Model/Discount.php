@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\Parser;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 class Discount
 {
@@ -67,7 +67,7 @@ class Discount
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
+     * @param array $discounts
      *
      * @return void
      */
@@ -77,17 +77,18 @@ class Discount
         $quoteTransfer->setCartRuleDiscounts(new \ArrayObject());
 
         foreach ($discounts as $discount) {
-            $discountTransfer = $discount[Calculator::KEY_DISCOUNT_TRANSFER];
-            if (!empty($discountTransfer->getVoucherCode())) {
-                $quoteTransfer->addVoucherDiscount($discountTransfer);
+            /** @var \Generated\Shared\Transfer\DiscountTransfer $discountTransferCopy */
+            $discountTransferCopy = $discount[Calculator::KEY_DISCOUNT_TRANSFER];
+            if ($discountTransferCopy->getVoucherCode()) {
+                $quoteTransfer->addVoucherDiscount($discountTransferCopy);
             } else {
-                $quoteTransfer->addCartRuleDiscount($discountTransfer);
+                $quoteTransfer->addCartRuleDiscount($discountTransferCopy);
             }
         }
     }
 
     /**
-     * @param array|string[] $couponCodes
+     * @param string[] $couponCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
@@ -167,4 +168,5 @@ class Discount
 
         return $discountTransfer;
     }
+
 }
