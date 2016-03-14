@@ -254,6 +254,8 @@ interface OmsFacadeInterface
     public function getOrderItemMatrix();
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return string[]

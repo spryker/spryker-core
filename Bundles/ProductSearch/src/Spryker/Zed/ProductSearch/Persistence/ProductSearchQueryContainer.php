@@ -109,6 +109,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      * @param int $idLocale
      *

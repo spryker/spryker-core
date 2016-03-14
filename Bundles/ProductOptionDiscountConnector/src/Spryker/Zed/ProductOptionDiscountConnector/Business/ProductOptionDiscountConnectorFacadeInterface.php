@@ -16,6 +16,8 @@ interface ProductOptionDiscountConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -23,6 +25,8 @@ interface ProductOptionDiscountConnectorFacadeInterface
     public function aggregateOrderCalculatedDiscounts(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -30,6 +34,8 @@ interface ProductOptionDiscountConnectorFacadeInterface
     public function aggregateOrderTotalDiscountAmount(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -37,6 +43,8 @@ interface ProductOptionDiscountConnectorFacadeInterface
     public function aggregateItemWithProductOptionsDiscounts(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -44,6 +52,8 @@ interface ProductOptionDiscountConnectorFacadeInterface
     public function aggregateItemWithProductOptionsAndDiscountsTaxAmount(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void

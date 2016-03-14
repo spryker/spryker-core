@@ -11,6 +11,8 @@ interface AssertionFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param mixed $value
      * @param string|null $message
      *
@@ -21,6 +23,8 @@ interface AssertionFacadeInterface
     public function assertNumeric($value, $message = null);
 
     /**
+     * @api
+     *
      * @param mixed $value
      * @param string|null $message
      *
@@ -31,6 +35,8 @@ interface AssertionFacadeInterface
     public function assertNumericNotZero($value, $message = null);
 
     /**
+     * @api
+     *
      * @param mixed $value
      * @param string|null $message
      *
@@ -41,6 +47,8 @@ interface AssertionFacadeInterface
     public function assertString($value, $message = null);
 
     /**
+     * @api
+     *
      * @param mixed $value
      * @param string|null $message
      *
@@ -51,6 +59,8 @@ interface AssertionFacadeInterface
     public function assertAlpha($value, $message = null);
 
     /**
+     * @api
+     *
      * @param mixed $value
      * @param string|null $message
      *

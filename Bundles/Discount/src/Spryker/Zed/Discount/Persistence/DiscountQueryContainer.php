@@ -263,6 +263,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
      */
     public function querySalesDisount()
@@ -271,6 +273,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery
      */
     public function querySalesDisountCode()

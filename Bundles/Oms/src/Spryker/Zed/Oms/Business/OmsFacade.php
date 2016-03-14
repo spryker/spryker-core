@@ -392,6 +392,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
@@ -404,6 +406,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return array

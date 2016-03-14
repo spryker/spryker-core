@@ -16,6 +16,8 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param mixed $value
      * @param string|null $message
      *
@@ -29,6 +31,8 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param mixed $value
      * @param string|null $message
      *
@@ -42,6 +46,8 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param mixed $value
      * @param string|null $message
      *
@@ -55,6 +61,8 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param mixed $value
      * @param string|null $message
      *
@@ -68,6 +76,8 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param mixed $value
      * @param string|null $message
      *

@@ -17,6 +17,8 @@ interface SalesAggregatorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTransfer
@@ -24,6 +26,8 @@ interface SalesAggregatorFacadeInterface
     public function saveComment(CommentTransfer $commentTransfer);
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return array
@@ -31,6 +35,8 @@ interface SalesAggregatorFacadeInterface
     public function getArrayWithManualEvents($idOrder);
 
     /**
+     * @api
+     *
      * @deprecated
      *
      * @param int $idOrderItem
@@ -40,6 +46,8 @@ interface SalesAggregatorFacadeInterface
     public function getOrderItemManualEvents($idOrderItem);
 
     /**
+     * @api
+     *
      * @param int $idSalesAggregatorOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -47,6 +55,8 @@ interface SalesAggregatorFacadeInterface
     public function getOrderByIdSalesAggregatorOrder($idSalesAggregatorOrder);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -54,6 +64,8 @@ interface SalesAggregatorFacadeInterface
     public function saveOrder(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param int $idSalesAggregatorOrderItem
      * @param int $quantity
      *
@@ -62,6 +74,8 @@ interface SalesAggregatorFacadeInterface
     public function splitSalesAggregatorOrderItem($idSalesAggregatorOrderItem, $quantity);
 
     /**
+     * @api
+     *
      * @param int $idRefund
      * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
      *
@@ -70,6 +84,8 @@ interface SalesAggregatorFacadeInterface
     public function updateOrderItemsAndExpensesAfterRefund($idRefund, OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idOrder
      *
@@ -78,6 +94,8 @@ interface SalesAggregatorFacadeInterface
     public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
@@ -86,6 +104,8 @@ interface SalesAggregatorFacadeInterface
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
 
     /**
+     * @api
+     *
      * @param string $idOrder
      *
      * @return array
@@ -93,6 +113,8 @@ interface SalesAggregatorFacadeInterface
     public function getPaymentLogs($idOrder);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
@@ -100,6 +122,8 @@ interface SalesAggregatorFacadeInterface
     public function getOrders(OrderListTransfer $orderListTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -107,6 +131,8 @@ interface SalesAggregatorFacadeInterface
     public function getOrderDetails(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
      * @param int $idSalesAggregatorOrder
      *
      * @return \Generated\Shared\Transfer\RefundTransfer[]

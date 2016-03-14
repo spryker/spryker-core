@@ -31,6 +31,8 @@ class SalesSplitFacade extends AbstractFacade
      * - Decrement the quantity of the original given order item (including all options)
      * - Return $response->getSuccess() === true
      *
+     * @api
+     *
      * @param int $idSalesOrderItem
      * @param int $quantity
      *

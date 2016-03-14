@@ -43,6 +43,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
