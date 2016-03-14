@@ -49,7 +49,6 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
         return [
             //Remove calculated values, start with clean state.
             new RemoveTotalsCalculatorPlugin(),
-            new RemoveAllExpensesCalculatorPlugin(),
             new RemoveAllCalculatedDiscountsCalculatorPlugin(),
 
             //Item calculators
