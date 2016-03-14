@@ -34,10 +34,10 @@ class CustomerFacadeTest extends Test
      */
     private function getFacade(TransferInterface $transfer = null, $hasEmail = true)
     {
-        $facade = new CustomerFacade();
-        $facade->setFactory($this->getFactory($transfer, $hasEmail));
+        $customerFacade = new CustomerFacade();
+        $customerFacade->setFactory($this->getFactory($transfer, $hasEmail));
 
-        return $facade;
+        return $customerFacade;
     }
 
     /**

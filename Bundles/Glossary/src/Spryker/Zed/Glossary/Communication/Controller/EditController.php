@@ -48,9 +48,9 @@ class EditController extends AbstractController
             $keyTranslationTransfer = new KeyTranslationTransfer();
             $keyTranslationTransfer->fromArray($data, true);
 
-            $facade = $this->getFacade();
+            $glossaryFacade = $this->getFacade();
 
-            if ($facade->saveGlossaryKeyTranslations($keyTranslationTransfer)) {
+            if ($glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer)) {
                 $this->addSuccessMessage('Saved entry to glossary.');
             } else {
                 $this->addErrorMessage('Translations could not be saved');

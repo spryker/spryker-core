@@ -94,7 +94,7 @@ class GlossaryFacadeTest extends Test
      */
     public function testAddTranslation()
     {
-        $facade = $this->getGlossaryFacade();
+        $glossaryFacade = $this->getGlossaryFacade();
 
         $formData = [
             self::GLOSSARY_KEY => 'form.button.save',
@@ -105,7 +105,7 @@ class GlossaryFacadeTest extends Test
 
         $translationTransfer = (new KeyTranslationTransfer())->fromArray($formData);
 
-        $action = $facade->saveGlossaryKeyTranslations($translationTransfer);
+        $action = $glossaryFacade->saveGlossaryKeyTranslations($translationTransfer);
 
         $this->assertTrue($action);
     }
@@ -115,7 +115,7 @@ class GlossaryFacadeTest extends Test
      */
     public function testUpdateTranslation()
     {
-        $facade = $this->getGlossaryFacade();
+        $glossaryFacade = $this->getGlossaryFacade();
         $localesIds = array_keys($this->locales);
 
         $locale = $this->buildLocaleTransferObject($localesIds);
@@ -129,9 +129,9 @@ class GlossaryFacadeTest extends Test
 
         $translationTransfer = (new KeyTranslationTransfer())->fromArray($formData);
 
-        $facade->saveGlossaryKeyTranslations($translationTransfer);
+        $glossaryFacade->saveGlossaryKeyTranslations($translationTransfer);
 
-        $translatedKey = $facade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
+        $translatedKey = $glossaryFacade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
 
         $changedLocales = [];
         foreach ($this->locales as $localeId => $localeName) {
@@ -140,8 +140,8 @@ class GlossaryFacadeTest extends Test
 
         $translationTransfer->setLocales($changedLocales);
 
-        $facade->saveGlossaryKeyTranslations($translationTransfer);
-        $translatedKeyChanged = $facade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
+        $glossaryFacade->saveGlossaryKeyTranslations($translationTransfer);
+        $translatedKeyChanged = $glossaryFacade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
 
         $this->assertNotSame($translatedKey->getValue(), $translatedKeyChanged->getValue());
     }

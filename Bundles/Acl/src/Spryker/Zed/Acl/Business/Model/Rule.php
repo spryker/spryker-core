@@ -37,7 +37,7 @@ class Rule implements RuleInterface
     /**
      * @var \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
-    protected $facadeUser;
+    protected $userFacade;
 
     /**
      * @var \Spryker\Zed\Acl\Business\Model\RuleValidator
@@ -47,27 +47,27 @@ class Rule implements RuleInterface
     /**
      * @var \Spryker\Zed\Acl\AclConfig
      */
-    protected $settings;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
      * @param \Spryker\Zed\Acl\Business\Model\RuleValidator $rulesValidator
-     * @param \Spryker\Zed\Acl\AclConfig $settings
+     * @param \Spryker\Zed\Acl\AclConfig $config
      */
     public function __construct(
         GroupInterface $group,
         AclQueryContainer $queryContainer,
         AclToUserInterface $facadeUser,
         RuleValidator $rulesValidator,
-        AclConfig $settings
+        AclConfig $config
     ) {
         $this->group = $group;
         $this->queryContainer = $queryContainer;
-        $this->facadeUser = $facadeUser;
+        $this->userFacade = $facadeUser;
         $this->rulesValidator = $rulesValidator;
-        $this->settings = $settings;
+        $this->config = $config;
     }
 
     /**
@@ -249,7 +249,7 @@ class Rule implements RuleInterface
      */
     public function isIgnorable($bundle, $controller, $action)
     {
-        $ignoredRules = $this->settings->getRules();
+        $ignoredRules = $this->config->getRules();
 
         foreach ($ignoredRules as $arrayRule) {
             $ruleTransfer = new RuleTransfer();
@@ -273,7 +273,7 @@ class Rule implements RuleInterface
      */
     public function registerSystemUserRules(UserTransfer $userTransfer)
     {
-        $credentials = $this->settings->getCredentials();
+        $credentials = $this->config->getCredentials();
 
         $credential = array_filter($credentials, function ($username) use ($userTransfer) {
             return $username === $userTransfer->getUsername();
@@ -284,7 +284,7 @@ class Rule implements RuleInterface
         }
 
         foreach ($credential[$userTransfer->getUsername()]['rules'] as $rule) {
-            $this->settings->setRules($rule['bundle'], $rule['controller'], $rule['action'], $rule['type']);
+            $this->config->setRules($rule['bundle'], $rule['controller'], $rule['action'], $rule['type']);
         }
     }
 
@@ -298,7 +298,7 @@ class Rule implements RuleInterface
      */
     public function isAllowed(UserTransfer $userTransfer, $bundle, $controller, $action)
     {
-        if ($this->facadeUser->isSystemUser($userTransfer)) {
+        if ($this->userFacade->isSystemUser($userTransfer)) {
             $this->registerSystemUserRules($userTransfer);
         }
 
@@ -336,7 +336,7 @@ class Rule implements RuleInterface
      */
     protected function provideUserRuleWhitelist()
     {
-        $ruleWhitelist = $this->settings->getUserRuleWhitelist();
+        $ruleWhitelist = $this->config->getUserRuleWhitelist();
 
         foreach ($ruleWhitelist as $rule) {
             $rulesTransfer = new RuleTransfer();

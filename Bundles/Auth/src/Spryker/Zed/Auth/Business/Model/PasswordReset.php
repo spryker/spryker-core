@@ -33,7 +33,7 @@ class PasswordReset
     /**
      * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
-    protected $facadeUser;
+    protected $userFacade;
 
     /**
      * @var \Spryker\Zed\Auth\AuthConfig
@@ -51,7 +51,7 @@ class PasswordReset
         AuthConfig $authConfig
     ) {
         $this->authQueryContainer = $authQueryContainer;
-        $this->facadeUser = $userFacade;
+        $this->userFacade = $userFacade;
         $this->authConfig = $authConfig;
     }
 
@@ -62,7 +62,7 @@ class PasswordReset
      */
     public function requestToken($email)
     {
-        $userTransfer = $this->facadeUser->getUserByUsername($email);
+        $userTransfer = $this->userFacade->getUserByUsername($email);
 
         if (empty($userTransfer)) {
             return false;
@@ -111,9 +111,9 @@ class PasswordReset
             return false;
         }
 
-        $userTransfer = $this->facadeUser->getUserById($resetPasswordEntity->getFkUser());
+        $userTransfer = $this->userFacade->getUserById($resetPasswordEntity->getFkUser());
         $userTransfer->setPassword($newPassword);
-        $this->facadeUser->updateUser($userTransfer);
+        $this->userFacade->updateUser($userTransfer);
 
         $resetPasswordEntity->setStatus(SpyResetPasswordTableMap::COL_STATUS_USED);
         $affectedRows = $resetPasswordEntity->save();

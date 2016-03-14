@@ -35,7 +35,7 @@ class Installer implements InstallerInterface
     /**
      * @var \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
-    protected $facadeUser;
+    protected $userFacade;
 
     /**
      * @var \Spryker\Zed\Acl\AclConfig
@@ -46,21 +46,21 @@ class Installer implements InstallerInterface
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Business\Model\RoleInterface $role
      * @param \Spryker\Zed\Acl\Business\Model\RuleInterface $rule
-     * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
-     * @param \Spryker\Zed\Acl\AclConfig $settings
+     * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $userFacade
+     * @param \Spryker\Zed\Acl\AclConfig $config
      */
     public function __construct(
         GroupInterface $group,
         RoleInterface $role,
         RuleInterface $rule,
-        AclToUserInterface $facadeUser,
-        AclConfig $settings
+        AclToUserInterface $userFacade,
+        AclConfig $config
     ) {
         $this->group = $group;
         $this->role = $role;
         $this->rule = $rule;
-        $this->facadeUser = $facadeUser;
-        $this->config = $settings;
+        $this->userFacade = $userFacade;
+        $this->config = $config;
     }
 
     /**
@@ -164,7 +164,7 @@ class Installer implements InstallerInterface
                 throw new GroupNotFoundException();
             }
 
-            $user = $this->facadeUser->getUserByUsername($username);
+            $user = $this->userFacade->getUserByUsername($username);
             if (!$user) {
                 throw new UserNotFoundException();
             }
