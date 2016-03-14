@@ -342,6 +342,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -355,6 +357,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

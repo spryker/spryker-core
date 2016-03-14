@@ -59,6 +59,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery

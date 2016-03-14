@@ -52,6 +52,8 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale);
 
     /**
+     * @api
+     *
      * @param int $idProduct
      * @param int $idLocale
      *

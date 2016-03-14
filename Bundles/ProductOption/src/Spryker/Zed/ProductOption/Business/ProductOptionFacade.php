@@ -274,6 +274,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -285,6 +287,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -295,6 +299,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void

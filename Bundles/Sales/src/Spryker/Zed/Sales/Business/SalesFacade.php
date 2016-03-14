@@ -44,6 +44,8 @@ class SalesFacade extends AbstractFacade
      *  - Returns a list of of orders for the given customer id and (optional) filters.
      *  - Aggregates order totals calls -> SalesAggregator
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param int $idCustomer
      *
@@ -62,6 +64,8 @@ class SalesFacade extends AbstractFacade
      * - Set "is test" flag
      * - update checkout response with saved order data
      * - set initial state for state machine
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer

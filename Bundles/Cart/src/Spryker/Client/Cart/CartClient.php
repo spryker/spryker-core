@@ -34,6 +34,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * Resets all data which is stored in the quote
      *
+     * @api
+     *
      * @return void
      */
     public function clearQuote()
