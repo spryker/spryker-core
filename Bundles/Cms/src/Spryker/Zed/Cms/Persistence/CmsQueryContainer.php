@@ -14,6 +14,7 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Cms\CmsConstants;
@@ -429,6 +430,29 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->filterByIsActive(true)
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+    }
+
+    /**
+     * @param string $key
+     * @param int $localeId
+     *
+     * @return mixed
+     */
+    public function queryKeyWithTranslationByKeyAndLocale($key, $localeId)
+    {
+        /*
+        SELECT sgk.key, sgt.value
+        FROM spy_glossary_key AS sgk
+        LEFT JOIN spy_glossary_translation AS sgt ON (sgt.fk_glossary_key = sgk.id_glossary_key AND sgt.fk_locale = 46)
+        WHERE sgk.key LIKE 'page.home.featured.top-left.left.name%'
+        */
+        $query = $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY)
+            ->queryByKey($key)
+            ->useSpyGlossaryTranslationQuery(null, Criteria::LEFT_JOIN)
+                ->filterByFkLocale($localeId)
+            ->endUse();
+
+        return $query;
     }
 
     /**
