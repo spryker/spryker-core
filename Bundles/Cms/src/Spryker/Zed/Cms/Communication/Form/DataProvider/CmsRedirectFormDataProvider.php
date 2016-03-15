@@ -37,6 +37,7 @@ class CmsRedirectFormDataProvider
             return [];
         }
 
+        /** @var \Orm\Zed\Url\Persistence\Base\SpyUrl|\Orm\Zed\Url\Persistence\Base\SpyUrlRedirect $urlEntity */
         $urlEntity = $this
             ->cmsQueryContainer
             ->queryUrlByIdWithRedirect($idUrl)
