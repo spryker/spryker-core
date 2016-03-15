@@ -33,6 +33,12 @@ class Store
      */
     protected $allStoreNames;
 
+
+    /**
+     * @var array
+     */
+    protected $allStores;
+
     /**
      * List of locales
      *
@@ -71,7 +77,6 @@ class Store
      * @var string
      */
     protected $currencyIsoCode;
-
     /**
      * @var array
      */
@@ -159,6 +164,7 @@ class Store
 
         $this->storeName = $currentStoreName;
         $this->allStoreNames = array_keys($stores);
+        $this->allStores = $stores;
 
         if (APPLICATION === self::APPLICATION_ZED) {
             $this->setCurrentLocale(current($this->locales));
@@ -237,6 +243,20 @@ class Store
     public function getLocales()
     {
         return $this->locales;
+    }
+
+    /**
+     * @param $storeName
+     *
+     * @return []
+     */
+    public function getLocalesPerStore($storeName)
+    {
+        if (!array_key_exists($storeName, $this->allStoreNames)) {
+            return [];
+        }
+
+        return $this->allStores[$storeName]['locales'];
     }
 
     /**

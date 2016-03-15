@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Shared\Library\BatchIterator\PropelBatchIterator;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
-use Spryker\Zed\Collector\Persistence\Exporter\AbstractPropelCollectorQuery;
+use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 abstract class AbstractPropelCollector extends AbstractCollector
 {
 
     /**
-     * @var \Spryker\Zed\Collector\Persistence\Exporter\AbstractPropelCollectorQuery
+     * @var \Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery
      */
     protected $queryBuilder;
 

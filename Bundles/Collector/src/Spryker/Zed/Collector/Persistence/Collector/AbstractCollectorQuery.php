@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Persistence\Exporter;
+namespace Spryker\Zed\Collector\Persistence\Collector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;

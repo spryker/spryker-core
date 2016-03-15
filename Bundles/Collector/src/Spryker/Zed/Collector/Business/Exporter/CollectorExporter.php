@@ -105,18 +105,24 @@ class CollectorExporter
      */
     public function exportStorage(OutputInterface $output)
     {
-        $locales = Store::getInstance()->getLocales();
+        $storeCollection = Store::getInstance()->getAllowedStores();
 
         $results = [];
 
-        $types = array_keys($this->exporter->getCollectorPlugins());
-        $availableTypes = $this->getAvailableCollectorTypes();
+        foreach ($storeCollection as $storeName) {
+            $output->writeln('');
+            $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
+            $output->writeln(sprintf(
+                '<fg=yellow>Exporting Store:</fg=yellow> <fg=white>%s</fg=white>',
+                $storeName
+            ));
+            $output->writeln('');
 
-        sprintf('<fg=yellow>%d out of %d collectors available:</fg=yellow>', count($types), count($availableTypes));
-
-        foreach ($locales as $locale) {
-            $localeTransfer = $this->localeFacade->getLocale($locale);
-            $results[$locale] = $this->exportStorageByLocale($localeTransfer, $output);
+            $localeCollection = Store::getInstance()->getLocalesPerStore($storeName);
+            foreach ($localeCollection as $locale => $localeCode) {
+                $localeTransfer = $this->localeFacade->getLocale($localeCode);
+                $results[$storeName . '@' . $localeCode] = $this->exportStorageByLocale($localeTransfer, $output);
+            }
         }
 
         return $results;

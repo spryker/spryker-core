@@ -30,12 +30,12 @@ abstract class AbstractCollectorConsole extends Console
         ksort($resultData);
         foreach ($resultData as $type => $result) {
             $summary .= sprintf(
-                '<fg=green>%s</fg=green><fg=yellow> </fg=yellow><fg=yellow></fg=yellow>' . PHP_EOL .
-                '<fg=white>Total: %d</fg=white>' . PHP_EOL .
-                '<fg=white>Processed: %d</fg=white>' . PHP_EOL .
-                '<fg=white>Succeeded: %s</fg=white>' . PHP_EOL .
-                '<fg=white>Deleted: %s</fg=white>' . PHP_EOL .
-                '<fg=white>Failed: %s </fg=white>' . PHP_EOL,
+                ' <fg=green>%s</fg=green><fg=yellow> </fg=yellow><fg=yellow></fg=yellow>' . PHP_EOL .
+                ' <fg=white>Total: %d</fg=white>' . PHP_EOL .
+                ' <fg=white>Processed: %d</fg=white>' . PHP_EOL .
+                ' <fg=white>Succeeded: %s</fg=white>' . PHP_EOL .
+                ' <fg=white>Deleted: %s</fg=white>' . PHP_EOL .
+                ' <fg=white>Failed: %s </fg=white>' . PHP_EOL,
                 mb_strtoupper($type),
                 $result->getTotalCount(),
                 $result->getProcessedCount(),
@@ -60,9 +60,10 @@ abstract class AbstractCollectorConsole extends Console
         $summary = '';
         foreach ($results as $localeName => $summaryData) {
             $summary .= PHP_EOL;
-            $summary .= sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>', $localeName);
+            $summary .= '<fg=yellow>----------------------------------------</fg=yellow>';
             $summary .= PHP_EOL;
-            $summary .= '<fg=yellow>-------------</fg=yellow>';
+            $summary .= sprintf('<fg=yellow>Summary:</fg=yellow> <fg=white>%s</fg=white>', $localeName);
+            $summary .= PHP_EOL;
             $summary .= $this->buildSummary($summaryData);
         }
 

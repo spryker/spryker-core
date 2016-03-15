@@ -18,7 +18,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
-use Spryker\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery;
+use Spryker\Zed\Collector\Persistence\Collector\AbstractCollectorQuery;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -38,7 +38,7 @@ abstract class AbstractCollector
     protected $touchQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery
+     * @var \Spryker\Zed\Collector\Persistence\Collector\AbstractCollectorQuery
      */
     protected $queryBuilder;
 
@@ -84,7 +84,7 @@ abstract class AbstractCollector
     }
 
     /**
-     * @param \Spryker\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery $queryBuilder
+     * @param \Spryker\Zed\Collector\Persistence\Collector\AbstractCollectorQuery $queryBuilder
      *
      * @return void
      */

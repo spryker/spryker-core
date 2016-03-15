@@ -13,13 +13,13 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Shared\Library\BatchIterator\PdoBatchIterator;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\CollectorConfig;
-use Spryker\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery;
+use Spryker\Zed\Collector\Persistence\Collector\AbstractPdoCollectorQuery;
 
 abstract class AbstractPdoCollector extends AbstractCollector
 {
 
     /**
-     * @var \Spryker\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery
+     * @var \Spryker\Zed\Collector\Persistence\Collector\AbstractPdoCollectorQuery
      */
     protected $queryBuilder;
 
