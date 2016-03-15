@@ -14,7 +14,7 @@ use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class ProductCategoryPathQueryExpander
 {
@@ -25,16 +25,16 @@ class ProductCategoryPathQueryExpander
     protected $locale;
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $categoryQueryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      */
     public function __construct(
-        CategoryQueryContainer $categoryQueryContainer,
+        CategoryQueryContainerInterface $categoryQueryContainer,
         LocaleTransfer $locale
     ) {
         $this->locale = $locale;

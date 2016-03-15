@@ -17,7 +17,7 @@ use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Library\Copy;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
@@ -30,7 +30,7 @@ class Rule implements RuleInterface
     protected $group;
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -40,7 +40,7 @@ class Rule implements RuleInterface
     protected $userFacade;
 
     /**
-     * @var \Spryker\Zed\Acl\Business\Model\RuleValidator
+     * @var \Spryker\Zed\Acl\Business\Model\RuleValidatorInterface
      */
     protected $rulesValidator;
 
@@ -51,16 +51,16 @@ class Rule implements RuleInterface
 
     /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
-     * @param \Spryker\Zed\Acl\Business\Model\RuleValidator $rulesValidator
+     * @param \Spryker\Zed\Acl\Business\Model\RuleValidatorInterface $rulesValidator
      * @param \Spryker\Zed\Acl\AclConfig $config
      */
     public function __construct(
         GroupInterface $group,
-        AclQueryContainer $queryContainer,
+        AclQueryContainerInterface $queryContainer,
         AclToUserInterface $facadeUser,
-        RuleValidator $rulesValidator,
+        RuleValidatorInterface $rulesValidator,
         AclConfig $config
     ) {
         $this->group = $group;
@@ -316,14 +316,14 @@ class Rule implements RuleInterface
         foreach ($groups->getGroups() as $group) {
             $rulesTransfer = $this->getRulesForGroupId($group->getIdAclGroup());
 
-            if (empty($rulesTransfer->getRules())) {
+            if (!$rulesTransfer->getRules()) {
                 continue;
             }
 
             $this->rulesValidator->setRules($rulesTransfer);
-            $isAccesible = $this->rulesValidator->isAccessible($bundle, $controller, $action);
+            $isAccessible = $this->rulesValidator->isAccessible($bundle, $controller, $action);
 
-            if ($isAccesible) {
+            if ($isAccessible) {
                 return true;
             }
         }

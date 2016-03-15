@@ -73,4 +73,11 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      */
     public function queryTouchDeleteOnlyByItemType($itemType);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryExportTypes();
+
 }

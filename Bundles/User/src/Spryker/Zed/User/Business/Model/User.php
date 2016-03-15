@@ -15,7 +15,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Library\Copy;
 use Spryker\Zed\User\Business\Exception\UsernameExistsException;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -25,7 +25,7 @@ class User implements UserInterface
     const USER_BUNDLE_SESSION_KEY = 'user';
 
     /**
-     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -40,12 +40,12 @@ class User implements UserInterface
     protected $settings;
 
     /**
-     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $queryContainer
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Zed\User\UserConfig $settings
      */
     public function __construct(
-        UserQueryContainer $queryContainer,
+        UserQueryContainerInterface $queryContainer,
         SessionInterface $session,
         UserConfig $settings
     ) {

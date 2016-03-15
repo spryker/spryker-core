@@ -15,7 +15,6 @@ use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class Discount

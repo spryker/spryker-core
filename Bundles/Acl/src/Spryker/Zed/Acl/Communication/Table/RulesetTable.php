@@ -9,7 +9,7 @@ namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
 use Spryker\Shared\Url\Url;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -22,7 +22,7 @@ class RulesetTable extends AbstractTable
     const EMPTY_HEADER_NAME = 'empty';
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $aclQueryContainer;
 
@@ -32,10 +32,10 @@ class RulesetTable extends AbstractTable
     protected $idRole;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $aclQueryContainer
      * @param int $idRole
      */
-    public function __construct(AclQueryContainer $aclQueryContainer, $idRole)
+    public function __construct(AclQueryContainerInterface $aclQueryContainer, $idRole)
     {
         $this->aclQueryContainer = $aclQueryContainer;
         $this->idRole = $idRole;

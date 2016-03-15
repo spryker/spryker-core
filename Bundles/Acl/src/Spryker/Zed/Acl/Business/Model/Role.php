@@ -15,13 +15,13 @@ use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 
 class Role implements RoleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -32,9 +32,9 @@ class Role implements RoleInterface
 
     /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      */
-    public function __construct(GroupInterface $group, AclQueryContainer $queryContainer)
+    public function __construct(GroupInterface $group, AclQueryContainerInterface $queryContainer)
     {
         $this->group = $group;
         $this->queryContainer = $queryContainer;

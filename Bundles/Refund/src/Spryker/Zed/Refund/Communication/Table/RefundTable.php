@@ -14,7 +14,7 @@ use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Refund\Business\RefundFacade;
+use Spryker\Zed\Refund\Business\RefundFacadeInterface;
 
 class RefundTable extends AbstractTable
 {
@@ -24,7 +24,7 @@ class RefundTable extends AbstractTable
     const PARAM_ID_REFUND = 'id-refund';
 
     /**
-     * @var \Spryker\Zed\Refund\Business\RefundFacade
+     * @var \Spryker\Zed\Refund\Business\RefundFacadeInterface
      */
     protected $refundFacade;
 
@@ -35,10 +35,10 @@ class RefundTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Refund\Persistence\SpyRefundQuery $refundQuery
-     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
+     * @param \Spryker\Zed\Refund\Business\RefundFacadeInterface $refundFacade
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(SpyRefundQuery $refundQuery, RefundFacade $refundFacade, DateFormatterInterface $dateFormatter)
+    public function __construct(SpyRefundQuery $refundQuery, RefundFacadeInterface $refundFacade, DateFormatterInterface $dateFormatter)
     {
         $this->refundQuery = $refundQuery;
         $this->refundFacade = $refundFacade;

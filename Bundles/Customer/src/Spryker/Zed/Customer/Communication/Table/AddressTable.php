@@ -9,7 +9,7 @@ namespace Spryker\Zed\Customer\Communication\Table;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -24,7 +24,7 @@ class AddressTable extends AbstractTable
     const COL_COMPANY = 'Company';
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     protected $customerQueryContainer;
 
@@ -34,10 +34,10 @@ class AddressTable extends AbstractTable
     protected $idCustomer;
 
     /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
      * @param int $idCustomer
      */
-    public function __construct(CustomerQueryContainer $customerQueryContainer, $idCustomer)
+    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, $idCustomer)
     {
         $this->customerQueryContainer = $customerQueryContainer;
         $this->idCustomer = $idCustomer;

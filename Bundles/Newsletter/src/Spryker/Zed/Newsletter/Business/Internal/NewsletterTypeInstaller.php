@@ -9,13 +9,13 @@ namespace Spryker\Zed\Newsletter\Business\Internal;
 
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
-use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 class NewsletterTypeInstaller extends AbstractInstaller
 {
 
     /**
-     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer
+     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -25,10 +25,10 @@ class NewsletterTypeInstaller extends AbstractInstaller
     protected $newsletterTypeCollection;
 
     /**
-     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface $queryContainer
      * @param array $newsletterTypeCollection
      */
-    public function __construct(NewsletterQueryContainer $queryContainer, array $newsletterTypeCollection)
+    public function __construct(NewsletterQueryContainerInterface $queryContainer, array $newsletterTypeCollection)
     {
         $this->queryContainer = $queryContainer;
         $this->newsletterTypeCollection = $newsletterTypeCollection;

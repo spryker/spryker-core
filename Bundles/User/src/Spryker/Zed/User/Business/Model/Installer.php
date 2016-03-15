@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\User\Business\Model;
 
-use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
 
 class Installer implements InstallerInterface
 {
 
     /**
-     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -29,12 +29,12 @@ class Installer implements InstallerInterface
     protected $settings;
 
     /**
-     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $queryContainer
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\User\Business\Model\UserInterface $user
      * @param \Spryker\Zed\User\UserConfig $settings
      */
     public function __construct(
-        UserQueryContainer $queryContainer,
+        UserQueryContainerInterface $queryContainer,
         UserInterface $user,
         UserConfig $settings
     ) {
