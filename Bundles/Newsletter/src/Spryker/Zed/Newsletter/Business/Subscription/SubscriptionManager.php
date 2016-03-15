@@ -11,20 +11,20 @@ use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscription;
 use Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterTypeException;
-use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 class SubscriptionManager implements SubscriptionManagerInterface
 {
 
     /**
-     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer
+     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface $queryContainer
      */
-    public function __construct(NewsletterQueryContainer $queryContainer)
+    public function __construct(NewsletterQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
 use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
-use Spryker\Zed\Price\Persistence\PriceQueryContainer;
+use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 use Spryker\Zed\Price\PriceConfig;
 
 class Writer implements WriterInterface
@@ -21,7 +21,7 @@ class Writer implements WriterInterface
     const ENTITY_NOT_FOUND = 'entity not found';
 
     /**
-     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainer
+     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -38,24 +38,24 @@ class Writer implements WriterInterface
     /**
      * @var \Spryker\Zed\Price\PriceConfig
      */
-    protected $priceSettings;
+    protected $priceConfig;
 
     /**
-     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainer $queryContainer
+     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Price\Business\Model\ReaderInterface $reader
      * @param \Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Price\PriceConfig $priceSettings
+     * @param \Spryker\Zed\Price\PriceConfig $priceConfig
      */
     public function __construct(
-        PriceQueryContainer $queryContainer,
+        PriceQueryContainerInterface $queryContainer,
         ReaderInterface $reader,
         PriceToTouchInterface $touchFacade,
-        PriceConfig $priceSettings
+        PriceConfig $priceConfig
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;
         $this->touchFacade = $touchFacade;
-        $this->priceSettings = $priceSettings;
+        $this->priceConfig = $priceConfig;
     }
 
     /**
@@ -206,7 +206,7 @@ class Writer implements WriterInterface
     protected function setPriceType(PriceProductTransfer $transferPriceProduct)
     {
         if ($transferPriceProduct->getPriceTypeName() === null) {
-            $transferPriceProduct->setPriceTypeName($this->priceSettings->getPriceTypeDefaultName());
+            $transferPriceProduct->setPriceTypeName($this->priceConfig->getPriceTypeDefaultName());
         }
 
         return $transferPriceProduct;

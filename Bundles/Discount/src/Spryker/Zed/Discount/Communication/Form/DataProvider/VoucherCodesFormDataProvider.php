@@ -10,20 +10,20 @@ namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Spryker\Zed\Discount\Communication\Form\CartRuleForm;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class VoucherCodesFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
-    public function __construct(DiscountQueryContainer $discountQueryContainer)
+    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {
         $this->discountQueryContainer = $discountQueryContainer;
     }

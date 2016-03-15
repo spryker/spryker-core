@@ -8,20 +8,20 @@
 namespace Spryker\Zed\Acl\Communication\Form\DataProvider;
 
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 
 class AclGroupFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      */
-    public function __construct(AclQueryContainer $queryContainer)
+    public function __construct(AclQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }

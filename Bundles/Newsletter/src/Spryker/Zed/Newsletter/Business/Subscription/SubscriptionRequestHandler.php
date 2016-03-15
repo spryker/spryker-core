@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Spryker\Shared\Newsletter\Messages\Messages;
 use Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException;
-use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 class SubscriptionRequestHandler
 {
@@ -30,7 +30,7 @@ class SubscriptionRequestHandler
     protected $subscriberManager;
 
     /**
-     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer
+     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -42,12 +42,12 @@ class SubscriptionRequestHandler
     /**
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface $subscriptionManager
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface $subscriberManager
-     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface $queryContainer
      */
     public function __construct(
         SubscriptionManagerInterface $subscriptionManager,
         SubscriberManagerInterface $subscriberManager,
-        NewsletterQueryContainer $queryContainer
+        NewsletterQueryContainerInterface $queryContainer
     ) {
         $this->subscriptionManager = $subscriptionManager;
         $this->subscriberManager = $subscriberManager;

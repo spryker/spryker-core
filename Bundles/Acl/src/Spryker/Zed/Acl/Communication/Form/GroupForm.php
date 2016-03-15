@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,14 +29,14 @@ class GroupForm extends AbstractType
     const GROUP_UNIQUE_GROUP_CHECK = 'unique_group_check';
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      */
-    public function __construct(AclQueryContainer $queryContainer)
+    public function __construct(AclQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }

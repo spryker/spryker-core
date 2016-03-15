@@ -40,6 +40,42 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idUrl
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlByIdWithRedirect($idUrl);
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryPageWithTemplatesAndUrlByIdPage($idCmsPage);
+
+    /**
+     * @api
+     *
+     * @param int $idMapping
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
+     */
+    public function queryGlossaryKeyMappingWithKeyById($idMapping);
+
+    /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
+     */
+    public function queryPageWithTemplatesAndBlocksById($idCmsBlock);
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPages();

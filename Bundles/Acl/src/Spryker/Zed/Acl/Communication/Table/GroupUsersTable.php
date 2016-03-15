@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\User\Persistence\SpyUser;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -28,7 +28,7 @@ class GroupUsersTable extends AbstractTable
     const COL_OPTIONS = 'Options';
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $aclQueryContainer;
 
@@ -38,10 +38,10 @@ class GroupUsersTable extends AbstractTable
     protected $idGroup;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $aclQueryContainer
      * @param int $idAclGroup
      */
-    public function __construct(AclQueryContainer $aclQueryContainer, $idAclGroup)
+    public function __construct(AclQueryContainerInterface $aclQueryContainer, $idAclGroup)
     {
         $this->aclQueryContainer = $aclQueryContainer;
         $this->idGroup = $idAclGroup;

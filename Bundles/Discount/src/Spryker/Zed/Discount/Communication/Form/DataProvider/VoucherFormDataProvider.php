@@ -11,20 +11,15 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class VoucherFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
-     */
-    protected $discountConfig;
 
     /**
      * @var array
@@ -32,10 +27,10 @@ class VoucherFormDataProvider
     private $calculatorPlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
-    public function __construct(DiscountQueryContainer $discountQueryContainer, array $calculatorPlugins)
+    public function __construct(DiscountQueryContainerInterface $discountQueryContainer, array $calculatorPlugins)
     {
         $this->discountQueryContainer = $discountQueryContainer;
         $this->calculatorPlugins = $calculatorPlugins;

@@ -14,7 +14,7 @@ use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Exporter\Exception\UndefinedCollectorTypesException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Intl\Locale;
 
@@ -22,7 +22,7 @@ class CollectorExporter
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
 
@@ -42,13 +42,13 @@ class CollectorExporter
     protected $availableCollectorTypes;
 
     /**
-     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $touchQueryContainer
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
      * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
      * @param array $availableCollectorTypes
      */
     public function __construct(
-        TouchQueryContainer $touchQueryContainer,
+        TouchQueryContainerInterface $touchQueryContainer,
         CollectorToLocaleInterface $localeFacade,
         ExporterInterface $exporter,
         array $availableCollectorTypes

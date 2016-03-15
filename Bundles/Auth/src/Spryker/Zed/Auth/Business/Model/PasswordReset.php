@@ -31,7 +31,7 @@ class PasswordReset
     protected $userPasswordResetNotificationSender;
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacadeInterface
+     * @var \Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface
      */
     protected $userFacade;
 

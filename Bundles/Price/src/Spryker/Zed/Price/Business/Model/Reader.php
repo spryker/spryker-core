@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Price\Business\Model;
 
 use Orm\Zed\Price\Persistence\SpyPriceType;
+use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
+use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
+use Spryker\Zed\Price\PriceConfig;
 
 class Reader implements ReaderInterface
 {
@@ -17,7 +20,7 @@ class Reader implements ReaderInterface
     const SKU_UNKNOWN = 'sku unknown';
 
     /**
-     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainer
+     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -29,7 +32,7 @@ class Reader implements ReaderInterface
     /**
      * @var \Spryker\Zed\Price\PriceConfig
      */
-    protected $priceSettings;
+    protected $priceConfig;
 
     /**
      * @var array
@@ -37,18 +40,18 @@ class Reader implements ReaderInterface
     protected $priceTypeEntityByNameCache = [];
 
     /**
-     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainer $queryContainer
+     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface $productFacade
-     * @param \Spryker\Zed\Price\PriceConfig $priceSettings
+     * @param \Spryker\Zed\Price\PriceConfig $priceConfig
      */
     public function __construct(
-        $queryContainer,
-        $productFacade,
-        $priceSettings
+        PriceQueryContainerInterface $queryContainer,
+        PriceToProductInterface $productFacade,
+        PriceConfig $priceConfig
     ) {
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
-        $this->priceSettings = $priceSettings;
+        $this->priceConfig = $priceConfig;
     }
 
     /**
@@ -258,7 +261,7 @@ class Reader implements ReaderInterface
     protected function handleDefaultPriceType($priceType = null)
     {
         if ($priceType === null) {
-            $priceType = $this->priceSettings->getPriceTypeDefaultName();
+            $priceType = $this->priceConfig->getPriceTypeDefaultName();
         }
 
         return $priceType;

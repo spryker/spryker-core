@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Auth\Dependency\Facade;
 
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\User\Business\UserFacade;
 
 class AuthToUserBridge implements AuthToUserInterface
 {

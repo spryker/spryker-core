@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Library\SystemUnderTest;
 
-use Propel\Runtime\Propel;
 // This is the only place where Project namespace is allowed
 // @todo this has to be refactored with the new test concept
+use Propel\Runtime\Propel;
 use Pyz\Yves\Application\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
 use ReflectionObject;

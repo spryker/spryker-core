@@ -19,21 +19,21 @@ use Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
 use Spryker\Zed\Acl\Business\Exception\GroupNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Library\Copy;
 
 class Group implements GroupInterface
 {
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      */
-    public function __construct(AclQueryContainer $queryContainer)
+    public function __construct(AclQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }
@@ -228,7 +228,7 @@ class Group implements GroupInterface
     public function addUser($idGroup, $idUser)
     {
         if ($this->hasUser($idGroup, $idUser)) {
-            return;
+            return 0;
         }
 
         $entity = new SpyAclUserHasGroup();
@@ -274,7 +274,10 @@ class Group implements GroupInterface
 
         foreach ($results as $result) {
             $transfer = new GroupTransfer();
-            $collection->addGroup(Copy::entityToTransfer($transfer, $result));
+
+            /** @var \Generated\Shared\Transfer\GroupTransfer $group */
+            $group = Copy::entityToTransfer($transfer, $result);
+            $collection->addGroup($group);
         }
 
         return $collection;

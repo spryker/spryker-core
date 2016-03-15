@@ -16,7 +16,7 @@ use Spryker\Zed\Collector\Business\Model\FailedResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractExporter implements ExporterInterface
@@ -58,7 +58,7 @@ abstract class AbstractExporter implements ExporterInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $queryContainer
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
      * @param \Spryker\Zed\Collector\Business\Exporter\MarkerInterface $marker
      * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failedResultPrototype
@@ -66,7 +66,7 @@ abstract class AbstractExporter implements ExporterInterface
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      */
     public function __construct(
-        TouchQueryContainer $queryContainer,
+        TouchQueryContainerInterface $queryContainer,
         WriterInterface $writer,
         MarkerInterface $marker,
         FailedResultInterface $failedResultPrototype,
