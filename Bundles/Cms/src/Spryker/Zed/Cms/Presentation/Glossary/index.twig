@@ -14,6 +14,24 @@
             {% endif %}
             {{ title }}
         </h4>
+
+<style>
+{# todo move this to scss file #}
+select.key-list {
+    border: 1px solid #999;
+}
+select.key-list option {
+    height: 20px;
+    line-height: 20px;
+    display: block;
+    padding-top: 3px;
+}
+select.key-list option:hover {
+    background: #dfdfdf;
+    line-height: 20px;
+}
+</style>
+
         {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping' } %}
 
 
@@ -45,9 +63,14 @@
                                 </div>
                             </div>
                             <div class="col-sm-12" class="translation">
+                                {{ form_label(form.locale) }}
+                                {{ form_widget(form.locale) }}
+                                {{ form_errors(form.locale) }}
+                            </div>
+                            <div class="col-sm-12" class="translation">
                                 {{ form_label(form.translation) }}
                                 {{ form_errors(form.translation) }}
-                                {{ form_widget(form.translation, {'attr' : { 'rows' : 5 }}) }}
+                                {{ form_widget(form.translation, { 'attr': { 'id': 'asd' } }) }}
                             </div>
                             <div class="col-sm-1 small-padding">
                                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />

@@ -89,8 +89,9 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageForm(array $formData = [], array $formOptions = [])
     {
+        $availableLocales = $this->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)->getAvailableLocales();
         $urlFacade = $this->getUrlFacade();
-        $cmsPageForm = new CmsPageForm($urlFacade);
+        $cmsPageForm = new CmsPageForm($urlFacade, $availableLocales);
 
         return $this->getFormFactory()->create($cmsPageForm, $formData, $formOptions);
     }

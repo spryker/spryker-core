@@ -31,6 +31,7 @@ class CmsPageForm extends AbstractType
 
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+    const FIELD_LOCALE = 'fk_locale';
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
@@ -38,11 +39,17 @@ class CmsPageForm extends AbstractType
     protected $urlFacade;
 
     /**
+     * @var array
+     */
+    protected $availableLocales = [];
+
+    /**
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
      */
-    public function __construct(CmsToUrlInterface $urlFacade)
+    public function __construct(CmsToUrlInterface $urlFacade, array $availableLocales)
     {
         $this->urlFacade = $urlFacade;
+        $this->availableLocales = $availableLocales;
     }
 
     /**
@@ -91,6 +98,7 @@ class CmsPageForm extends AbstractType
             ->addCurrentTemplateField($builder, $options[self::OPTION_TEMPLATE_CHOICES])
             ->addFkTemplateField($builder)
             ->addUrlField($builder)
+            ->addLocaleField($builder)
             ->addIsActiveField($builder);
     }
 
@@ -156,6 +164,18 @@ class CmsPageForm extends AbstractType
         $builder->add(self::FIELD_URL, 'text', [
             'label' => 'URL',
             'constraints' => $this->getUrlConstraints(),
+        ]);
+
+        return $this;
+    }
+
+    protected function addLocaleField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_LOCALE, 'choice', [
+            'choices' => [
+                46 => 'DE',
+//                'en_US' => 'EN',
+            ],
         ]);
 
         return $this;
