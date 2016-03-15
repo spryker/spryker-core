@@ -33,7 +33,6 @@ class Store
      */
     protected $allStoreNames;
 
-
     /**
      * @var array
      */
@@ -77,6 +76,7 @@ class Store
      * @var string
      */
     protected $currencyIsoCode;
+
     /**
      * @var array
      */
@@ -246,9 +246,9 @@ class Store
     }
 
     /**
-     * @param $storeName
+     * @param string $storeName
      *
-     * @return []
+     * @return array
      */
     public function getLocalesPerStore($storeName)
     {
