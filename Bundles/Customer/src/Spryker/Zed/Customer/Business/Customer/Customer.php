@@ -359,15 +359,18 @@ class Customer
      */
     public function update(CustomerTransfer $customerTransfer)
     {
-        $customerTransfer = $this->encryptPassword($customerTransfer);
+        if (!empty($customerTransfer->getNewPassword())) {
+            $customerResponseTransfer = $this->updatePassword(clone $customerTransfer);
+            if ($customerResponseTransfer->getIsSuccess() === false) {
+                return $customerResponseTransfer;
+            }
+        }
 
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
 
         if (!$this->isEmailAvailableForCustomer($customerEntity)) {
-            $customerResponseTransfer = $this->createCustomerEmailAlreadyUsedResponse();
-
-            return $customerResponseTransfer;
+            return $this->createCustomerEmailAlreadyUsedResponse();
         }
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
