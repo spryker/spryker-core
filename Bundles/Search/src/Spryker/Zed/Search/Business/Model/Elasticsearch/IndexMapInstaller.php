@@ -47,8 +47,8 @@ class IndexMapInstaller implements SearchInstallerInterface
         IndexMapCleaner $indexMapCleaner,
         IndexMapGenerator $indexMapGenerator,
         MessengerInterface $messenger
-    )
-    {
+    ) {
+
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->indexMapCleaner = $indexMapCleaner;
         $this->indexMapGenerator = $indexMapGenerator;

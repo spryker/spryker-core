@@ -17,6 +17,11 @@
         </settings>
         <mapping name="page1">
             <property name="foo" analyzer="my_analyzer"/>
+            <property name="bar">
+                <properties>
+                    <property name="baz"/>
+                </properties>
+            </property>
         </mapping>
         <mapping name="page2"/>
     </index>

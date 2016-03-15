@@ -49,9 +49,9 @@ class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
                         'filter' => [
                             'standard',
                             'lowercase',
-                        ]
+                        ],
                     ],
-                ]
+                ],
             ],
         ];
 
@@ -71,7 +71,12 @@ class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
             'page1' => [
                 'foo' => [
                     'analyzer' => 'my_analyzer',
-                ]
+                ],
+                'bar' => [
+                    'properties' => [
+                        'baz' => [],
+                    ],
+                ],
             ],
             'page2' => [],
         ];

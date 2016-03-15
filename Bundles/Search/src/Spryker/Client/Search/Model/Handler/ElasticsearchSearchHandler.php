@@ -21,7 +21,7 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
     protected $searchableInterface;
 
     /**
-     * @param SearchableInterface $searchableInterface
+     * @param \Elastica\SearchableInterface $searchableInterface
      */
     public function __construct(SearchableInterface $searchableInterface)
     {

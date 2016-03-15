@@ -9,5 +9,4 @@ namespace Spryker\Zed\Search\Business\Exception;
 
 class MissingNameAttributeException extends \Exception
 {
-
 }

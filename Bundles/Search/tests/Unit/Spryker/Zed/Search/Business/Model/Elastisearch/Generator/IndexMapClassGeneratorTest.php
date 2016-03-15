@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Zed\Search\Business\Model\Generator;
 
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 
 /**
  * @group Search
@@ -18,6 +18,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
  */
 class IndexMapClassGeneratorTest extends \PHPUnit_Framework_TestCase
 {
+
     const TARGET_DIRECTORY = __DIR__ . '/Generated/';
     const FIXTURES_DIRECTORY = __DIR__ . '/Fixtures/';
 

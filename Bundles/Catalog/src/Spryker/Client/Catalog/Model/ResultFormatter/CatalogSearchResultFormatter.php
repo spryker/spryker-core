@@ -21,7 +21,7 @@ class CatalogSearchResultFormatter extends AbstractElasticsearchResultFormatter
     protected $catalogModel;
 
     /**
-     * @param CatalogInterface $catalogModel
+     * @param \Spryker\Client\Catalog\Model\CatalogInterface $catalogModel
      */
     public function __construct(CatalogInterface $catalogModel)
     {

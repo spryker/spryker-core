@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Processor;
 
+use Generated\Shared\Search\Catalog\PageIndexMap;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
@@ -63,29 +64,29 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
         $productUrls = explode(',', $productData['product_urls']);
 
         return [
-            'search-result-data' => [
+            PageIndexMap::SEARCH_RESULT_DATA => [
                 'id_product_abstract' => $productData['id_product_abstract'],
                 'abstract_sku' => $productData['abstract_sku'],
                 'abstract_name' => $productData['abstract_name'],
                 'url' => $productUrls[0],
             ],
-            'full-text-boosted' => [
+            PageIndexMap::FULL_TEXT_BOOSTED => [
                 $productData['abstract_name'],
             ],
-            'full-text' => [
+            PageIndexMap::FULL_TEXT => [
                 $productData['abstract_name'],
             ],
-            'suggestion-terms' => [
+            PageIndexMap::SUGGESTION_TERMS => [
                 $productData['abstract_name'],
             ],
-            'completion-terms' => [
+            PageIndexMap::COMPLETION_TERMS => [
                 $productData['abstract_name'],
             ],
-            'string-sort' => [
+            PageIndexMap::STRING_SORT => [
                 'name' => $productData['abstract_name'],
             ],
-            'store' => $this->storeName,
-            'locale' => $locale->getLocaleName(),
+            PageIndexMap::STORE => $this->storeName,
+            PageIndexMap::LOCALE => $locale->getLocaleName(),
         ];
     }
 

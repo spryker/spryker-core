@@ -11,6 +11,7 @@ use Spryker\Zed\Search\Business\Exception\MissingNameAttributeException;
 
 class IndexDefinition
 {
+
     const NAME = 'name';
     const SETTINGS = 'settings';
     const MAPPING = 'mapping';
@@ -192,10 +193,9 @@ class IndexDefinition
             if (isset($property[self::PROPERTIES][self::PROPERTY])) {
                 if ($this->isAssociativeArray($property[self::PROPERTIES][self::PROPERTY])) {
                     $property[self::PROPERTIES] = $this->normalizeMappingProperties([$property[self::PROPERTIES][self::PROPERTY]]);
-                    continue;
+                } else {
+                    $property[self::PROPERTIES] = $this->normalizeMappingProperties($property[self::PROPERTIES][self::PROPERTY]);
                 }
-
-                $property[self::PROPERTIES] = $this->normalizeMappingProperties($property[self::PROPERTIES][self::PROPERTY]);
             }
 
             $normalizedProperties[$propertyName] = $property;

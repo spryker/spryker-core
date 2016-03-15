@@ -38,7 +38,8 @@ class FacetFilteredQuery extends AbstractQueryDecorator
      * @param \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface $nestedFilterBuilder
      * @param array $parameters
      */
-    public function __construct(QueryInterface $searchQuery, FacetConfig $facetConfig, NestedFilterBuilderInterface $nestedFilterBuilder, array $parameters) {
+    public function __construct(QueryInterface $searchQuery, FacetConfig $facetConfig, NestedFilterBuilderInterface $nestedFilterBuilder, array $parameters)
+    {
         parent::__construct($searchQuery);
 
         $this->facetConfig = $facetConfig;
