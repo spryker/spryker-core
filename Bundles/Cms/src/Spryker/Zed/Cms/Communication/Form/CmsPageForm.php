@@ -169,13 +169,15 @@ class CmsPageForm extends AbstractType
         return $this;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return $this
+     */
     protected function addLocaleField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_LOCALE, 'choice', [
-            'choices' => [
-                46 => 'DE',
-//                'en_US' => 'EN',
-            ],
+            'choices' => $this->availableLocales,
         ]);
 
         return $this;
