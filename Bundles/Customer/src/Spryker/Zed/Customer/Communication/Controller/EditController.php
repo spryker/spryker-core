@@ -44,12 +44,12 @@ class EditController extends AbstractController
             $this->getFacade()->updateCustomer($customerTransfer);
 
             $defaultBilling = $customerTransfer->getBillingAddress() ?: null;
-            if ($defaultBilling) {
+            if (!$defaultBilling) {
                 $this->updateBillingAddress($idCustomer, $defaultBilling);
             }
 
             $defaultShipping = $customerTransfer->getShippingAddress() ?: null;
-            if ($defaultShipping) {
+            if (!$defaultShipping) {
                 $this->updateShippingAddress($idCustomer, $defaultShipping);
             }
 
