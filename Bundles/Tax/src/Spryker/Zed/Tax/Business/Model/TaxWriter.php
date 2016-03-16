@@ -276,7 +276,7 @@ class TaxWriter implements TaxWriterInterface
      */
     private function findOrCreateTaxRateEntity(TaxRateTransfer $taxRateTransfer)
     {
-        if (!empty($taxRateTransfer->getIdTaxRate())) {
+        if ($taxRateTransfer->getIdTaxRate()) {
             $taxRateEntity = $this->queryContainer->queryTaxRate($taxRateTransfer->getIdTaxRate())->findOne();
             if (!$taxRateEntity) {
                 throw new ResourceNotFoundException();

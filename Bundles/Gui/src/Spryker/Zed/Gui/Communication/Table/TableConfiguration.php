@@ -136,7 +136,7 @@ class TableConfiguration
      */
     public function setFooterFromHeader()
     {
-        if (empty($this->getHeader()) === true) {
+        if (!$this->getHeader()) {
             return $this;
         }
 

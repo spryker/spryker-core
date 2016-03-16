@@ -53,7 +53,7 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      */
     protected function filter(array $array)
     {
-        if (empty($this->filters)) {
+        if (!$this->filters) {
             return $array;
         }
 
