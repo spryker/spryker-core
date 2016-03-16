@@ -20,7 +20,7 @@ use Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxBridge;
 class SalesAggregatorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_TAX  = 'FACADE_TAX';
+    const FACADE_TAX = 'FACADE_TAX';
     const QUERY_CONTAINER_SALES = 'SALES_QUERY_CONTAINER';
 
     const PLUGINS_ORDER_AMOUNT_AGGREGATION = 'PLUGINS_ORDER_AMOUNT_AGGREGATION';
