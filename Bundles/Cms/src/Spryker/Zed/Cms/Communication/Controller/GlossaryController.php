@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -151,8 +152,8 @@ class GlossaryController extends AbstractController
      */
     public function searchAction(Request $request)
     {
-        $value = filter_var($request->query->get('value'), FILTER_SANITIZE_STRING);
-        $key = filter_var($request->query->get('key'), FILTER_SANITIZE_STRING);
+        $value = $request->query->get('value');
+        $key = $request->query->get('key');
         $localeId = $this->castId($request->query->get('localeId'));
 
         $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key, $localeId);
@@ -173,7 +174,7 @@ class GlossaryController extends AbstractController
      * @param string $key
      * @param int $localeId
      *
-     * @return array
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[]|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]
      */
     protected function searchGlossaryKeysAndTranslations($value, $key, $localeId)
     {
