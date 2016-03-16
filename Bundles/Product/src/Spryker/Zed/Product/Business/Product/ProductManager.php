@@ -464,18 +464,14 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
     {
-        $url = $this->createProductUrlByIdProduct($idProductAbstract, $url, $locale);
-        $this->urlFacade->touchUrlActive($url->getIdUrl());
+        $urlTransfer = $this->createProductUrlByIdProduct($idProductAbstract, $url, $locale);
+        $this->urlFacade->touchUrlActive($urlTransfer->getIdUrl());
 
-        return $url;
+        return $urlTransfer;
     }
 
     /**
