@@ -9,7 +9,7 @@ namespace Spryker\Zed\Application\Business\Model\ApplicationCheckStep;
 
 use Symfony\Component\Process\Process;
 
-class InstallDemoData extends AbstractApplicationCheckStep
+class InstallTestData extends AbstractApplicationCheckStep
 {
 
     /**
@@ -17,7 +17,7 @@ class InstallDemoData extends AbstractApplicationCheckStep
      */
     public function run()
     {
-        $command = 'vendor/bin/console setup:install-demo-data';
+        $command = 'vendor/bin/console setup:install-test-data';
 
         $this->info('Run ' . $command);
 

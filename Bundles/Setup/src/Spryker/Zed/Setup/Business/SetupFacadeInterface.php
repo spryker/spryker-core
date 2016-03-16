@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Setup\Business;
 
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 interface SetupFacadeInterface
@@ -57,5 +58,14 @@ interface SetupFacadeInterface
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands();
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
+     *
+     * @return void
+     */
+    public function installTestData(MessengerInterface $messenger);
 
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Setup\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -79,6 +80,18 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     public function getConsoleCommands()
     {
         return $this->getFactory()->getConsoleCommands();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
+     *
+     * @return void
+     */
+    public function installTestData(MessengerInterface $messenger)
+    {
+        $this->getFactory()->createTestDataInstaller($messenger)->install();
     }
 
 }
