@@ -30,7 +30,7 @@ class Validator implements ValidatorInterface
         $this->isDiscounted($salesOrderItem);
         $this->isDiscountedOption($salesOrderItem);
 
-        return empty($this->messages);
+        return $this->messages === [];
     }
 
     /**

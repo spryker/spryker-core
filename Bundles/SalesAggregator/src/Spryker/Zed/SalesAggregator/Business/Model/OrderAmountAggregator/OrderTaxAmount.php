@@ -78,7 +78,7 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
     {
         $taxRates = [];
         foreach ($taxableItems as $item) {
-            if (!empty($item->getTaxRate())) {
+            if ($item->getTaxRate()) {
                 $taxRates[] = $item->getTaxRate();
             }
         }

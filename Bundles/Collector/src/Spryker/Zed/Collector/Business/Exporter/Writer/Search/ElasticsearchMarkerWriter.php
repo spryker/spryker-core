@@ -69,7 +69,7 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function __destruct()
     {
-        if (empty($this->metaData) === false) {
+        if (!empty($this->metaData)) {
             $mapping = new Mapping($this->index->getType($this->type));
             $mapping->setMeta($this->metaData)->send();
         }

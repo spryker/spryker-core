@@ -141,7 +141,7 @@ class InMemory implements StorageInterface
         $wishlistItem = $this->wishlistTransfer->getItems();
         $wishlistIndex = [];
         foreach ($wishlistItem as $key => $cartItem) {
-            if (!empty($cartItem->getGroupKey())) {
+            if ($cartItem->getGroupKey()) {
                 $wishlistIndex[$cartItem->getGroupKey()] = $key;
             }
         }

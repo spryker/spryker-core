@@ -200,13 +200,13 @@ class ZedClient
             }
             $request->addMetaTransfer($name, $metaTransfer);
         }
-        if (!empty($this->username)) {
+        if ($this->username) {
             $request->setUsername($this->username);
         }
-        if (!empty($this->password)) {
+        if ($this->password) {
             $request->setPassword($this->password);
         }
-        if (!empty($transferObject)) {
+        if ($transferObject) {
             $request->setTransfer($transferObject);
         }
 

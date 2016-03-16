@@ -44,7 +44,7 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
     protected function addExpenseTaxes(OrderTransfer $orderTransfer)
     {
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            if (empty($expenseTransfer->getTaxRate())) {
+            if (!$expenseTransfer->getTaxRate()) {
                 continue;
             }
 

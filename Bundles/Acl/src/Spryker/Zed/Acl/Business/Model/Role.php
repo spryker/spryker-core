@@ -68,7 +68,7 @@ class Role implements RoleInterface
     public function save(RoleTransfer $roleTransfer)
     {
         $aclRoleEntity = new SpyAclRole();
-        if (!empty($roleTransfer->getIdAclRole())) {
+        if ($roleTransfer->getIdAclRole()) {
             $aclRoleEntity = $this->queryContainer->queryRoleById($roleTransfer->getIdAclRole())->findOne();
             if ($aclRoleEntity->getName() === AclConstants::ROOT_ROLE) {
                 throw new RootNodeModificationException('Could not modify root role node!');

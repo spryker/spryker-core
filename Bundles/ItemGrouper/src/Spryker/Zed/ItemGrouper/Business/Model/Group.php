@@ -66,7 +66,7 @@ class Group
      */
     protected function fillIndex($item)
     {
-        $groupKey = !empty($item->getGroupKey()) ? $item->getGroupKey() : count($this->groupedItems) + 1;
+        $groupKey = $item->getGroupKey() ?: count($this->groupedItems) + 1;
 
         if (!isset($this->groupedItems[$groupKey])) {
             $this->setQuantity($item);
