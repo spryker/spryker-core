@@ -56,7 +56,7 @@ class GlossaryController extends AbstractController
 
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
         $cmsPage = $this->findCmsPageById($idPage);
-        $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
 
         if ($block === null) {
             $title = $cmsPage->getUrl();
