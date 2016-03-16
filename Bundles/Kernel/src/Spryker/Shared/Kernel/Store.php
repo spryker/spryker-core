@@ -252,7 +252,7 @@ class Store
      */
     public function getLocalesPerStore($storeName)
     {
-        if (!array_key_exists($storeName, $this->allStoreNames)) {
+        if (!array_key_exists($storeName, $this->allStores)) {
             return [];
         }
 
