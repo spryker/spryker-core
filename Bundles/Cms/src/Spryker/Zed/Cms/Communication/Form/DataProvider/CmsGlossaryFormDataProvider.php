@@ -30,14 +30,16 @@ class CmsGlossaryFormDataProvider
      * @param int $idPage
      * @param int|null $idMapping
      * @param string|null $placeholder
+     * @param int|null $fkLocale
      *
      * @return array
      */
-    public function getData($idPage, $idMapping = null, $placeholder = null)
+    public function getData($idPage, $idMapping = null, $placeholder = null, $fkLocale = null)
     {
         $formItems = [
             CmsGlossaryForm::FIELD_FK_PAGE => $idPage,
             CmsGlossaryForm::FIELD_ID_KEY_MAPPING => $idMapping,
+            CmsGlossaryForm::FIELD_FK_LOCALE => $fkLocale,
         ];
 
         if ($placeholder !== null) {

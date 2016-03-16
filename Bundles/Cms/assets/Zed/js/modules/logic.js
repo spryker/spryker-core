@@ -86,7 +86,7 @@ function showAutoComplete(formId, searchType) {
     var form = $('.form_class_' + formId);
 
     var keyInput = form.find('#cms_glossary_glossary_key');
-    var keyTranslation = form.find('#form_translation');
+    var keyTranslation = form.find('#cms_glossary_translation');
 
     var ajaxUrl = '';
 

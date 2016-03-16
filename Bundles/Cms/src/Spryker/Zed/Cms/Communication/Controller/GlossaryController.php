@@ -52,10 +52,19 @@ class GlossaryController extends AbstractController
         $idPage = $this->castId($request->get(CmsPageTable::REQUEST_ID_PAGE));
         $idForm = (int)$request->get(self::ID_FORM);
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
+        $fkLocale = null;
 
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
         $cmsPage = $this->findCmsPageById($idPage);
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+
+        $url = $this->getQueryContainer()
+            ->queryUrlById($cmsPage->getIdCmsPage())
+            ->findOne();
+
+        if ($url) {
+            $fkLocale = $url->getFkLocale();
+        }
 
         if ($block === null) {
             $title = $cmsPage->getUrl();
@@ -71,7 +80,7 @@ class GlossaryController extends AbstractController
         $formViews = [];
 
         foreach ($placeholders as $place) {
-            $form = $this->createPlaceholderForm($request, $glossaryMappingArray, $place, $idPage);
+            $form = $this->createPlaceholderForm($request, $glossaryMappingArray, $place, $idPage, $fkLocale);
             $forms[] = $form;
             $formViews[] = $form->createView();
         }
@@ -176,7 +185,7 @@ class GlossaryController extends AbstractController
             return $searchedItems;
         } elseif ($key !== null) {
             $searchedItems = $this->getQueryContainer()
-                ->queryKeyWithTranslationByKey($key)
+                ->queryKeyWithTranslationByKeyAndLocale($key, 46)
                 ->limit(self::SEARCH_LIMIT)
                 ->find();
         }
@@ -291,10 +300,11 @@ class GlossaryController extends AbstractController
      * @param array $glossaryMappingArray
      * @param string $placeholder
      * @param int $idPage
+     * @param int $fkLocale
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage)
+    protected function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage, $fkLocale)
     {
         $idMapping = null;
         if (isset($glossaryMappingArray[$placeholder])) {
@@ -305,7 +315,7 @@ class GlossaryController extends AbstractController
         $form = $this->getFactory()
             ->createCmsGlossaryForm(
                 $this->getFacade(),
-                $dataProvider->getData($idPage, $idMapping, $placeholder)
+                $dataProvider->getData($idPage, $idMapping, $placeholder, $fkLocale)
             )
             ->handleRequest($request);
 
