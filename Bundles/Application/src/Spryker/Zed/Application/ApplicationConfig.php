@@ -58,11 +58,11 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
+     * @return bool
      */
     public function isNavigationCacheEnabled()
     {
-        return $this->get(ApplicationConstants::NAVIGATION_CACHE_ENABLED);
+        return $this->get(ApplicationConstants::NAVIGATION_CACHE_ENABLED, true);
     }
 
     /**

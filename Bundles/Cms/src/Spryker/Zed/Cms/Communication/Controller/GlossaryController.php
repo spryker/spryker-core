@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -56,7 +57,7 @@ class GlossaryController extends AbstractController
 
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
         $cmsPage = $this->findCmsPageById($idPage);
-        $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
 
         if ($block === null) {
             $title = $cmsPage->getUrl();
@@ -208,24 +209,6 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
-     */
-    protected function getLocaleFacade()
-    {
-        return $this->getFactory()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
-     */
-    protected function getGlossaryFacade()
-    {
-        return $this->getFactory()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
-    }
-
-    /**
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -234,7 +217,7 @@ class GlossaryController extends AbstractController
     protected function saveGlossaryKeyPageMapping(array $data, LocaleTransfer $localeTransfer)
     {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer($data, $localeTransfer);
-        $this->getGlossaryFacade()
+        $this->getFactory()->getGlossaryFacade()
             ->saveGlossaryKeyTranslations($keyTranslationTransfer);
         $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
         $this->getFacade()
@@ -267,8 +250,11 @@ class GlossaryController extends AbstractController
         $glossaryQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $localeTransfer->getIdLocale());
         $glossaryMappingArray = [];
-        foreach ($glossaryQuery->find()
-                     ->getData() as $keyMapping) {
+
+        /** @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[] $keyMappings */
+        $keyMappings = $glossaryQuery->find()
+            ->getData();
+        foreach ($keyMappings as $keyMapping) {
             $glossaryMappingArray[$keyMapping->getPlaceholder()] = $keyMapping->getIdCmsGlossaryKeyMapping();
         }
 

@@ -36,7 +36,7 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\CollectorFacade
+     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToCollectorInterface
      */
     public function getCollectorFacade()
     {

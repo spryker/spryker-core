@@ -39,6 +39,7 @@ use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
 use Spryker\Zed\Discount\Business\Writer\VoucherCodesWriter;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -325,7 +326,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected function getMessengerFacade()
     {

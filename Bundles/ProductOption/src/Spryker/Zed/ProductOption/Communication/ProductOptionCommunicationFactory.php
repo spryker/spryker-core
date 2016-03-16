@@ -16,13 +16,4 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
  */
 class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
-
-    /**
-     * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacade
-     */
-    public function getInstallerFacade()
-    {
-        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT);
-    }
-
 }

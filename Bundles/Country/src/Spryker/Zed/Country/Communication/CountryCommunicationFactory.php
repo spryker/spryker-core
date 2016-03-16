@@ -29,7 +29,7 @@ class CountryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\User\Persistence\UserQueryContainer
+     * @return \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected function getUserQueryContainer()
     {

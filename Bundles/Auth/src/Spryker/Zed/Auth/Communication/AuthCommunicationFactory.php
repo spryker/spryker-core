@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Auth\Communication;
 
+use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\Auth\AuthDependencyProvider;
 use Spryker\Zed\Auth\Communication\Form\LoginForm;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
@@ -51,7 +52,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\User\Business\UserFacade
+     * @return \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
     public function getUserFacade()
     {
