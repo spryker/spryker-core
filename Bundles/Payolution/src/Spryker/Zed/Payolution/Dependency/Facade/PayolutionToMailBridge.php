@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Payolution\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
-use Spryker\Zed\Mail\Business\MailFacade;
 
 class PayolutionToMailBridge implements PayolutionToMailInterface
 {

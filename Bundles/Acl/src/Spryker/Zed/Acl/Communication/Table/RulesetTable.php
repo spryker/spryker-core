@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
-use Spryker\Shared\Url\Url;
 use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;

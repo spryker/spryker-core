@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oms;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 

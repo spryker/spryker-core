@@ -13,7 +13,6 @@ use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 {

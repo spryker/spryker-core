@@ -14,7 +14,6 @@ use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
-use Spryker\Zed\Url\Business\UrlFacade;
 
 class ProductTable extends AbstractTable
 {

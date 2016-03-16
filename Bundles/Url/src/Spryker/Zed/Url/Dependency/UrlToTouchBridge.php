@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Url\Dependency;
 
-use Spryker\Zed\Touch\Business\TouchFacade;
-
 class UrlToTouchBridge implements UrlToTouchInterface
 {
 

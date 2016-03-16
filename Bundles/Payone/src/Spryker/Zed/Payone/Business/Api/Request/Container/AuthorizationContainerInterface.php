@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Payone\Business\Api\Request\Container;
 
-use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;

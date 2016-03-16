@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-use Spryker\Zed\Oms\Business\OmsFacade;
-
 class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
 {
 

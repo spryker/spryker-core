@@ -8,7 +8,6 @@
 namespace Spryker\Client\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Shared\ZedRequest\Client\Message;
 
 abstract class AbstractClient
 {

@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Container;
-use Symfony\Component\Form\FormTypeInterface;
 
 abstract class AbstractCommunicationFactory extends AbstractFactory
 {

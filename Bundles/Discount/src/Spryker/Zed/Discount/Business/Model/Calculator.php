@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\Discount\Business\Model;
 
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
 
 class Calculator implements CalculatorInterface
 {

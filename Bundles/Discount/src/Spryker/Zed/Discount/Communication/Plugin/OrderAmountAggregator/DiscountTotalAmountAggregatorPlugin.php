@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Discount\Communication\Plugin\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 

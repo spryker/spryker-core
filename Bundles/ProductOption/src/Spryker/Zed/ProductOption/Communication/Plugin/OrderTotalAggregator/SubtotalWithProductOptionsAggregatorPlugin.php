@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductOption\Communication\Plugin\OrderTotalAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory;
 use Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
 /**

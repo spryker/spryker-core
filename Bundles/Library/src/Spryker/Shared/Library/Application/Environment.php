@@ -12,7 +12,6 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Error\ErrorHandler;
 use Spryker\Shared\Library\LibraryConstants;
-use Spryker\Shared\Library\TestAutoloader;
 
 class Environment
 {

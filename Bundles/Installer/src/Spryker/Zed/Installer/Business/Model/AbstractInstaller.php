@@ -9,7 +9,6 @@ namespace Spryker\Zed\Installer\Business\Model;
 
 use Psr\Log\AbstractLogger;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractInstaller extends AbstractLogger implements MessengerInterface
 {

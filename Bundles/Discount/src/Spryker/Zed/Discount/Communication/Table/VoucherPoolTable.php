@@ -14,7 +14,6 @@ use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Url\Url;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 

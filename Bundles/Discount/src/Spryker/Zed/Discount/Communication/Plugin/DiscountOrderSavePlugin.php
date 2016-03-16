@@ -10,7 +10,6 @@ namespace Spryker\Zed\Discount\Communication\Plugin;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

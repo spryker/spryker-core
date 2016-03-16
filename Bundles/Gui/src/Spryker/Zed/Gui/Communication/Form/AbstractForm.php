@@ -10,7 +10,6 @@ namespace Spryker\Zed\Gui\Communication\Form;
 use Spryker\Shared\Gui\Form\AbstractForm as SharedAbstractForm;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @deprecated Use \Symfony\Component\Form\AbstractType instead.

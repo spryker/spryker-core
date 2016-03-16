@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
-use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
 /**

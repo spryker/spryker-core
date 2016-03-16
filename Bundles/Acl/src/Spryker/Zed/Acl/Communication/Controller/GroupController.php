@@ -13,7 +13,6 @@ use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
