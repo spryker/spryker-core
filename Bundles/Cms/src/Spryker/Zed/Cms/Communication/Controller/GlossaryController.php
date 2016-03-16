@@ -151,10 +151,11 @@ class GlossaryController extends AbstractController
      */
     public function searchAction(Request $request)
     {
-        $value = $request->get('value'); // TODO FW Validation
-        $key = $request->get('key'); // TODO FW Validation
+        $value = filter_var($request->query->get('value'), FILTER_SANITIZE_STRING);
+        $key = filter_var($request->query->get('key'), FILTER_SANITIZE_STRING);
+        $localeId = $this->castId($request->query->get('localeId'));
 
-        $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key);
+        $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key, $localeId);
 
         $result = [];
         foreach ($searchedItems as $trans) {
@@ -170,10 +171,11 @@ class GlossaryController extends AbstractController
     /**
      * @param string $value
      * @param string $key
+     * @param int $localeId
      *
      * @return array
      */
-    protected function searchGlossaryKeysAndTranslations($value, $key)
+    protected function searchGlossaryKeysAndTranslations($value, $key, $localeId)
     {
         $searchedItems = [];
         if ($value !== null) {
@@ -185,7 +187,7 @@ class GlossaryController extends AbstractController
             return $searchedItems;
         } elseif ($key !== null) {
             $searchedItems = $this->getQueryContainer()
-                ->queryKeyWithTranslationByKeyAndLocale($key, 46)
+                ->queryKeyWithTranslationByKeyAndLocale($key, $localeId)
                 ->limit(self::SEARCH_LIMIT)
                 ->find();
         }
