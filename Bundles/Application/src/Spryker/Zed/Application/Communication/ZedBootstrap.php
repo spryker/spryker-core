@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
+use Symfony\Component\HttpFoundation\Request;
 
 class ZedBootstrap
 {
@@ -46,7 +47,7 @@ class ZedBootstrap
         }
 
         $this->optimizeApp();
-
+        $this->enableHttpMethodParameterOverride();
         $this->registerServiceProvider();
 
         $this->addVariablesToTwig();
@@ -105,6 +106,17 @@ class ZedBootstrap
         $application['resolver'] = $this->application->share(function () use ($application) {
             return new ZedFragmentControllerResolver($application, $application['logger']);
         });
+    }
+
+    /**
+     * Allow overriding http method. Needed to use the "_method" parameter in forms.
+     * This should not be changeable by projects
+     *
+     * @return void
+     */
+    private function enableHttpMethodParameterOverride()
+    {
+        Request::enableHttpMethodParameterOverride();
     }
 
     /**

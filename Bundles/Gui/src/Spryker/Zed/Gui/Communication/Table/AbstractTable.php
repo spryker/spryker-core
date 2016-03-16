@@ -14,6 +14,7 @@ use Propel\Runtime\Propel;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Library\Sanitize\Html;
 
@@ -636,12 +637,29 @@ abstract class AbstractTable
      */
     protected function generateRemoveButton($url, $title, array $options = [])
     {
-        $defaultOptions = [
-            'class' => 'btn-danger',
-            'icon' => 'fa-trash',
+        $formFactory = $this->getFormFactory();
+
+        $deleteForm = new DeleteForm();
+
+        $options = [
+            'fields' => $options,
+            'action' => $url
         ];
 
-        return $this->generateButton($url, $title, $defaultOptions, $options);
+        $form = $formFactory->create($deleteForm, [], $options);
+
+        $options['form'] = $form->createView();
+        $options['title'] = $title;
+
+        return $this->getTwig()->render('delete-form.twig', $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormFactoryInterface
+     */
+    protected function getFormFactory()
+    {
+        return (new Pimple())->getApplication()['form.factory'];
     }
 
     /**

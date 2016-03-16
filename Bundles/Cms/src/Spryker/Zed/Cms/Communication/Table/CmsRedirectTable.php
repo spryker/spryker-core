@@ -107,7 +107,9 @@ class CmsRedirectTable extends AbstractTable
     private function buildLinks(SpyUrl $urlEntity)
     {
         $buttons[] = $this->generateEditButton(sprintf('/cms/redirect/edit?%s=%s', RedirectController::REQUEST_ID_URL, $urlEntity->getIdUrl()), 'Edit');
-        $buttons[] = $this->generateRemoveButton(sprintf('/cms/redirect/delete?%s=%s', RedirectController::REQUEST_ID_URL_REDIRECT, $urlEntity->getSpyUrlRedirect()->getIdUrlRedirect()), 'Delete');
+        $buttons[] = $this->generateRemoveButton('/cms/redirect/delete', 'Delete', [
+            RedirectController::REQUEST_ID_URL_REDIRECT => $urlEntity->getSpyUrlRedirect()->getIdUrlRedirect(),
+        ]);
 
         return implode(' ', $buttons);
     }

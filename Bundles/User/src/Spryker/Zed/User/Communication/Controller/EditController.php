@@ -14,6 +14,7 @@ use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\User\Business\UserFacade getFacade()
@@ -176,7 +177,11 @@ class EditController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $idUser = $this->castId($request->request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');

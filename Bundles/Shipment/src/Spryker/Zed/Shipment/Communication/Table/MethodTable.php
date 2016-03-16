@@ -193,12 +193,9 @@ class MethodTable extends AbstractTable
             'Edit'
         );
 
-        $urls[] = $this->generateRemoveButton(
-            Url::generate('/shipment/method/delete', [
-                self::ID_METHOD_PARAMETER => $idShipmentMethod,
-            ]),
-            'Delete'
-        );
+        $urls[] = $this->generateRemoveButton('/shipment/method/delete', 'Delete', [
+            self::ID_METHOD_PARAMETER => $idShipmentMethod,
+        ]);
 
         return $urls;
     }

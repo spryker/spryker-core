@@ -13,6 +13,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
@@ -180,7 +181,12 @@ class RedirectController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idUrlRedirect = $this->castId($request->query->get(self::REQUEST_ID_URL_REDIRECT));
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $idUrlRedirect = $this->castId($request->request->get(self::REQUEST_ID_URL_REDIRECT));
+
         if ($idUrlRedirect === 0) {
             $this->addErrorMessage('Id redirect url not set');
 
