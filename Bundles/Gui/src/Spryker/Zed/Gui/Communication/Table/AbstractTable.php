@@ -567,7 +567,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param bool $filtered
+     * @param int $filtered
      *
      * @return void
      */
