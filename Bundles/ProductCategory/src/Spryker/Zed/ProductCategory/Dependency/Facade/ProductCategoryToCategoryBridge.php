@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Spryker\Zed\Category\Business\CategoryFacade;
 
 class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterface
 {

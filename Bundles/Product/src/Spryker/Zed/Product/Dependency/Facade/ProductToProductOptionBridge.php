@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
-use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
-
 class ProductToProductOptionBridge implements ProductToProductOptionInterface
 {
 

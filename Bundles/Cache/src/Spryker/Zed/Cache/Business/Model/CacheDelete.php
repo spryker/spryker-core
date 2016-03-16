@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cache\Business\Model;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Cache\CacheConfig;
 use Symfony\Component\Filesystem\Filesystem;
 

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Elastica\Client;
 use Elastica\Document;
-use Elastica\Index;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class ElasticsearchWriter implements WriterInterface

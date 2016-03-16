@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 
-use Spryker\Zed\Price\Business\PriceFacade;
-
 class PriceCartToPriceBridge implements PriceCartToPriceInterface
 {
 

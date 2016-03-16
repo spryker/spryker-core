@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Customer\Dependency\Facade;
 
-use Spryker\Zed\Country\Business\CountryFacade;
-
 class CustomerToCountryBridge implements CustomerToCountryInterface
 {
 

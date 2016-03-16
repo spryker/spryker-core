@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form\DataProvider;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
 class MethodFormDataProvider

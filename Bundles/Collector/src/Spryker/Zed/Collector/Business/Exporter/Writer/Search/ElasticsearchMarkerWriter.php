@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Elastica\Client;
-use Elastica\Index;
 use Elastica\Type\Mapping;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 

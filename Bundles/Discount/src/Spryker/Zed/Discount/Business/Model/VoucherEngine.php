@@ -18,7 +18,6 @@ use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use Spryker\Zed\Library\Generator\StringGenerator;
 
 /**
  * Class VoucherEngine

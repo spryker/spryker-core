@@ -17,8 +17,6 @@ use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormDele
 use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormEditDataProvider;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**

@@ -10,10 +10,8 @@ namespace Spryker\Zed\Cms\Communication\Controller;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

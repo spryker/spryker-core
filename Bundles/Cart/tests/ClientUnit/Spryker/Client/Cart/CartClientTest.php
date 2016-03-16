@@ -9,7 +9,6 @@ namespace ClientUnit\Spryker\Client\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClient;
 use Spryker\Client\Cart\Session\QuoteSessionInterface;
 use Spryker\Client\Cart\Zed\CartStubInterface;
 

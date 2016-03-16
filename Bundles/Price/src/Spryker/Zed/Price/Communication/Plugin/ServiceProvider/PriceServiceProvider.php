@@ -10,9 +10,7 @@ namespace Spryker\Zed\Price\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Price\Communication\Plugin\Twig\PriceTwigExtensions;
-use Spryker\Zed\Price\Communication\PriceCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()

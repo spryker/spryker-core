@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Checkout\Dependency\Facade;
 
-use Spryker\Zed\Oms\Business\OmsFacade;
-
 class CheckoutToOmsBridge implements CheckoutToOmsInterface
 {
 

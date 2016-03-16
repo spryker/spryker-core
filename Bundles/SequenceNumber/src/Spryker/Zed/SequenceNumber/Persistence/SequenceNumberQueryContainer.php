@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SequenceNumber\Persistence;
 
-use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**

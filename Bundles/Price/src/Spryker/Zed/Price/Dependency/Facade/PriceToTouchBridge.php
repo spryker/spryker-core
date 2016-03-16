@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Price\Dependency\Facade;
 
-use Spryker\Zed\Touch\Business\TouchFacade;
-
 class PriceToTouchBridge implements PriceToTouchInterface
 {
 

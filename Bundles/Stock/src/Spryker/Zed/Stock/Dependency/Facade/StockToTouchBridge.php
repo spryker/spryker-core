@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Stock\Dependency\Facade;
 
-use Spryker\Zed\Touch\Business\TouchFacade;
-
 class StockToTouchBridge implements StockToTouchInterface
 {
 

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Search\Dependency\Facade;
 
-use Spryker\Zed\Collector\Business\CollectorFacade;
-
 class SearchToCollectorBridge implements SearchToCollectorInterface
 {
 

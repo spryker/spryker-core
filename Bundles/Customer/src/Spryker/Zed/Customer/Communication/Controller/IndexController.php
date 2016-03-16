@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()

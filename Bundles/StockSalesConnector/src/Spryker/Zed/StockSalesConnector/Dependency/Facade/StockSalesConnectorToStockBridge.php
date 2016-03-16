@@ -8,7 +8,6 @@
 namespace Spryker\Zed\StockSalesConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\StockProductTransfer;
-use Spryker\Zed\Stock\Business\StockFacade;
 
 class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInterface
 {

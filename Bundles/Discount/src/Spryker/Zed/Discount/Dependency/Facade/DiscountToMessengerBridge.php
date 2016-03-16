@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Discount\Dependency\Facade;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
 
 class DiscountToMessengerBridge implements DiscountToMessengerInterface
 {

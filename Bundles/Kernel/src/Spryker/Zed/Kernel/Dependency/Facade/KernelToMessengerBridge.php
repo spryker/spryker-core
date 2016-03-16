@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Kernel\Dependency\Facade;
 
-use Spryker\Zed\Messenger\Business\MessengerFacade;
-
 class KernelToMessengerBridge implements KernelToMessengerInterface
 {
 

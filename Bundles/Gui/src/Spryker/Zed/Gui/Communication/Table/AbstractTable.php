@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Gui\Communication\Table;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Application\ApplicationConstants;

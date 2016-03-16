@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Price\Communication\Plugin;
 
-use Spryker\Zed\Installer\Business\Model\InstallerPluginInterface;
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 /**
