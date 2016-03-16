@@ -59,7 +59,7 @@ class ConvertConfigConsole extends Console
             . 'propel.json';
 
         if (!is_dir(dirname($fileName))) {
-            mkdir(dirname($fileName), 0777, true);
+            mkdir(dirname($fileName), 0775, true);
         }
 
         file_put_contents($fileName, $json);

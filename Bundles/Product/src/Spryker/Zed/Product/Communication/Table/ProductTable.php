@@ -74,6 +74,8 @@ class ProductTable extends AbstractTable
             self::OPTIONS => self::OPTIONS,
         ]);
 
+        $config->addRawColumn(self::OPTIONS);
+
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             SpyProductAbstractTableMap::COL_SKU,

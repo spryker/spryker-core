@@ -73,6 +73,8 @@ class TranslationTable extends AbstractTable
 
         $config->setHeader($headers);
 
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setUrl('table');
 
         $config->setSortable([

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oms\Communication\Table;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Oms\Business\Exception\TransitionLogException;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class TransitionLogTable extends AbstractTable
@@ -54,6 +55,10 @@ class TransitionLogTable extends AbstractTable
         $createdAtColumnIndex = array_search(SpyOmsTransitionLogTableMap::COL_CREATED_AT, array_keys($config->getHeader()));
         if ($createdAtColumnIndex === false) {
             throw new \UnexpectedValueException('Not a valid column index');
+        }
+
+        if (!$createdAtColumnIndex) {
+            throw new TransitionLogException('Could not find "createdAd" column index');
         }
 
         $config->setDefaultSortColumnIndex($createdAtColumnIndex);

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
@@ -92,7 +91,7 @@ class DiscountFacadeTest extends Test
      */
     public function testIsVoucherUsable()
     {
-        $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_1);
+        $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_1);
         $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_1);
         $this->assertTrue($result->isSuccess());
     }
@@ -102,7 +101,7 @@ class DiscountFacadeTest extends Test
      */
     public function testIsVoucherUsableForInactivePool()
     {
-        $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_2, true, false);
+        $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_2, true, false);
         $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_2);
         $this->assertFalse($result->isSuccess());
     }
@@ -112,7 +111,7 @@ class DiscountFacadeTest extends Test
      */
     public function testIsVoucherUsableForInactiveVoucher()
     {
-        $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_3, false, true);
+        $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_3, false, true);
         $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_3);
         $this->assertFalse($result->isSuccess());
     }
@@ -122,7 +121,7 @@ class DiscountFacadeTest extends Test
      */
     public function testIsVoucherUsableForInactiveVoucherAndInactivePool()
     {
-        $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_4, false, false);
+        $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_4, false, false);
         $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_4);
         $this->assertFalse($result->isSuccess());
     }
@@ -132,7 +131,7 @@ class DiscountFacadeTest extends Test
      */
     public function testIsVoucherUsableForNonExistingVoucher()
     {
-        $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_5, true, true, false);
+        $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_5, true, true, false);
         $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_5);
         $this->assertFalse($result->isSuccess());
     }
@@ -404,19 +403,19 @@ class DiscountFacadeTest extends Test
      */
     public function testGetDiscountableOrderExpenses()
     {
-            $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer = $this->createQuoteTransfer();
 
-            $expense = new ExpenseTransfer();
-            $expense->setUnitGrossPrice(self::EXPENSE_GROSS_PRICE);
-            $quoteTransfer->addExpense($expense);
+        $expense = new ExpenseTransfer();
+        $expense->setUnitGrossPrice(self::EXPENSE_GROSS_PRICE);
+        $quoteTransfer->addExpense($expense);
 
-            $item = new ItemTransfer();
-            $item->setUnitGrossPrice(self::ITEM_GROSS_PRICE);
+        $item = new ItemTransfer();
+        $item->setUnitGrossPrice(self::ITEM_GROSS_PRICE);
 
-            $quoteTransfer->addItem($item);
+        $quoteTransfer->addItem($item);
 
-            $result = $this->discountFacade->getDiscountableOrderExpenses($quoteTransfer, new DiscountCollectorTransfer());
-            $this->assertEquals(1, count($result));
+        $result = $this->discountFacade->getDiscountableOrderExpenses($quoteTransfer, new DiscountCollectorTransfer());
+        $this->assertEquals(1, count($result));
     }
 
     /**
@@ -505,6 +504,8 @@ class DiscountFacadeTest extends Test
      * @param bool $voucherIsActive
      * @param bool $voucherPoolIsActive
      * @param bool $createVoucher
+     * @param int $maxNumberOfUses
+     * @param int $numberOfUses
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
@@ -562,14 +563,6 @@ class DiscountFacadeTest extends Test
         }
 
         return $items;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\AbstractLocatorLocator|\Generated\Zed\Ide\AutoCompletion
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
     }
 
 }

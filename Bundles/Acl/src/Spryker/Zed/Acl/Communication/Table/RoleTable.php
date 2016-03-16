@@ -56,6 +56,8 @@ class RoleTable extends AbstractTable
             self::ACTION => self::ACTION,
         ]);
 
+        $config->addRawColumn(self::ACTION);
+
         $config->setSortable([
             SpyAclRoleTableMap::COL_CREATED_AT,
             SpyAclRoleTableMap::COL_NAME,

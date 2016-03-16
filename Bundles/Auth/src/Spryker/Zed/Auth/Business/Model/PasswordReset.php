@@ -14,6 +14,7 @@ use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface;
+use Spryker\Zed\Library\Generator\StringGenerator;
 
 class PasswordReset
 {
@@ -155,19 +156,11 @@ class PasswordReset
      */
     protected function generateToken()
     {
-        $function = 'openssl_random_pseudo_bytes';
-        if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
-            $function = 'random_bytes';
-        }
+        $generator = new StringGenerator();
 
-        $length = self::LENGTH / 2;
-        $token = bin2hex(call_user_func($function, (int)$length));
-
-        if (strlen($token) !== self::LENGTH) {
-            $token = str_pad($token, self::LENGTH, '0');
-        }
-
-        return $token;
+        return $generator
+            ->setLength(self::LENGTH)
+            ->generateRandomString();
     }
 
     /**

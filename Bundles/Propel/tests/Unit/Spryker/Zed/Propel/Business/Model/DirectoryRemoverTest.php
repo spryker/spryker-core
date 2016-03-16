@@ -32,7 +32,7 @@ class DirectoryRemoverTest extends \PHPUnit_Framework_TestCase
     {
         $this->fixtureDirectory = __DIR__ . '/TempFixtures';
         $directory = $this->fixtureDirectory . DIRECTORY_SEPARATOR . 'Foo';
-        mkdir($directory, 0777, true);
+        mkdir($directory, 0775, true);
         $filename = $directory . DIRECTORY_SEPARATOR . 'bar';
         touch($filename);
 

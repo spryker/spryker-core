@@ -64,7 +64,7 @@ class PropelInstall extends Module
             . 'propel.json';
 
         if (!is_dir(dirname($fileName))) {
-            mkdir(dirname($fileName), 0777, true);
+            mkdir(dirname($fileName), 0775, true);
         }
 
         file_put_contents($fileName, $json);
@@ -136,7 +136,7 @@ class PropelInstall extends Module
         $pathForSchemas = APPLICATION_ROOT_DIR . '/src/Spryker/Zed/Testify/Persistence/Propel/Schema';
 
         if (!is_dir($pathForSchemas)) {
-            mkdir($pathForSchemas, 0777, true);
+            mkdir($pathForSchemas, 0775, true);
         }
 
         return $pathForSchemas;

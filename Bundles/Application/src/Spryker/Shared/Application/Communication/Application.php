@@ -21,7 +21,6 @@ class Application extends \Silex\Application
     use TwigTrait;
     use UrlGeneratorTrait;
 
-    const COOKIES = 'cookies';
     const REQUEST = 'request';
     const ROUTERS = 'routers';
     const REQUEST_STACK = 'request_stack';
@@ -66,14 +65,6 @@ class Application extends \Silex\Application
     public function buildForm(AbstractForm $form, array $options = [])
     {
         return $this['form.factory']->create($form, $form->populateFormFields(), $options);
-    }
-
-    /**
-     * @return \ArrayObject
-     */
-    public function getCookieBag()
-    {
-        return $this[self::COOKIES];
     }
 
     /**

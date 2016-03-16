@@ -52,6 +52,9 @@ class CmsBlockTable extends AbstractTable
             SpyCmsBlockTableMap::COL_VALUE => 'Value',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
         ]);
