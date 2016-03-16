@@ -491,7 +491,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainer
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected function getCategoryQueryContainer()
     {

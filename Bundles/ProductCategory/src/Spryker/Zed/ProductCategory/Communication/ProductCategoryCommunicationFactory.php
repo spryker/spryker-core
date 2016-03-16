@@ -17,6 +17,8 @@ use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormDele
 use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormEditDataProvider;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
@@ -38,7 +40,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @throws \ErrorException
      *
-     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductBridge
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     public function getProductFacade()
     {
@@ -48,7 +50,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @throws \ErrorException
      *
-     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     public function getCategoryFacade()
     {
@@ -56,11 +58,9 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * TODO: https://spryker.atlassian.net/browse/CD-540
-     *
      * @throws \ErrorException
      *
-     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsBridge
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface
      */
     public function getCmsFacade()
     {

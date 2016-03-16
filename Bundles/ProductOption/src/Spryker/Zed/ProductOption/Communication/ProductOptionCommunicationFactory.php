@@ -18,9 +18,9 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacade
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface
      */
-    public function getInstallerFacade()
+    public function getProductFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT);
     }

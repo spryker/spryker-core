@@ -14,7 +14,7 @@ class StockSalesConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface
+     * @return \Spryker\Zed\StockSalesConnector\Dependency\Facade\StockSalesConnectorToStockInterface
      */
     public function getStockFacade()
     {

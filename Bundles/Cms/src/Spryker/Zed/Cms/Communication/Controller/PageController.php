@@ -13,11 +13,13 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
  */
 class PageController extends AbstractController
 {
@@ -115,7 +117,7 @@ class PageController extends AbstractController
             }
 
             $urlTransfer = $this->createUrlTransfer($data['id_url'], $pageTransfer, $data);
-            $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
+            $this->getFactory()->getUrlFacade()->saveUrlAndTouch($urlTransfer);
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
@@ -129,20 +131,11 @@ class PageController extends AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\UrlFacade
-     */
-    private function getUrlFacade()
-    {
-        return $this->getFactory()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
-    }
-
-    /**
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    private function createPageTransfer($data)
+    protected function createPageTransfer($data)
     {
         $pageTransfer = new PageTransfer();
         $pageTransfer->fromArray($data, true);
@@ -157,7 +150,7 @@ class PageController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    private function createUrlTransfer($idUrl, $pageTransfer, array $data)
+    protected function createUrlTransfer($idUrl, $pageTransfer, array $data)
     {
         $url = $this->getQueryContainer()
             ->queryUrlById($idUrl)

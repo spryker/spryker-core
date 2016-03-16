@@ -187,4 +187,20 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
     }
 
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
+     */
+    public function getUrlFacade()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     */
+    public function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
+    }
+
 }
