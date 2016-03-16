@@ -17,6 +17,12 @@ var itemList = null;
 var itemContainer = null;
 var successResponseCount = 0;
 
+function formatString(string, dictionary) {
+    return string.replace(/{(\d+)}/g, function(match, index){
+        return dictionary[index];
+    });
+}
+
 function postForm( $form, id, successCallback ){
 
     var values = {};
@@ -87,21 +93,26 @@ function showAutoComplete(formId, searchType) {
 
     var keyInput = form.find('#cms_glossary_glossary_key');
     var keyTranslation = form.find('#cms_glossary_translation');
+    var keyFkLocale = form.find('#cms_glossary_fk_locale');
 
     var ajaxUrl = '';
 
     if (searchType == searchTypeGlossaryKey) {
-        ajaxUrl = 'glossary/search/?key=';
+        //ajaxUrl = 'glossary/search/?key=';
+        ajaxUrl = formatString('glossary/search?key={0}&localeId={1}', [keyInput.val(), keyFkLocale.val()]);
     } else if(searchType == searchTypeFullText) {
-        ajaxUrl = 'glossary/search/?value=';
+        //ajaxUrl = 'glossary/search/?value=';
+        ajaxUrl = formatString('glossary/search?value={0}&localeId={1}', [keyInput.val(), keyFkLocale].val());
     }
 
     keyList.find('option').remove();
     $('.loading-' + formId).show();
 
+
+
     xhr = $.ajax({
         type        : 'GET',
-        url         : ajaxUrl + keyInput.val(),
+        url         : ajaxUrl,
         success     : function(data) {
             $('.loading-' + formId).hide();
 
