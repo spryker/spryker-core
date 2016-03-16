@@ -29,10 +29,6 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
-            return new ProductOptionToProductBridge($container->getLocator()->product()->facade());
-        };
-
         $container[self::FACADE_LOCALE] = function (Container $container) {
             return new ProductOptionToLocaleBridge($container->getLocator()->locale()->facade());
         };
