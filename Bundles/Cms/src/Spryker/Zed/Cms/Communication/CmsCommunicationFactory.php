@@ -89,7 +89,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageForm(array $formData = [], array $formOptions = [])
     {
-        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+        $urlFacade = $this->getUrlFacade();
         $cmsPageForm = new CmsPageForm($urlFacade);
 
         return $this->getFormFactory()->create($cmsPageForm, $formData, $formOptions);
@@ -132,7 +132,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsRedirectForm(array $formData = [], array $formOptions = [])
     {
-        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+        $urlFacade = $this->getUrlFacade();
         $cmsRedirectFormType = new CmsRedirectForm($urlFacade);
 
         return $this->getFormFactory()->create($cmsRedirectFormType, $formData, $formOptions);
