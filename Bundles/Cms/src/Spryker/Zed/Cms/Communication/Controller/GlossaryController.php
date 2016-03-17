@@ -92,7 +92,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param SpyCmsPage $cmsPage
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsPage $cmsPage
      *
      * @return int|null
      */

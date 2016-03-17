@@ -422,7 +422,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param string $key
      * @param int $localeId
      *
-     * @return SpyGlossaryKeyQuery|SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryKeyWithTranslationByKeyAndLocale($key, $localeId)
     {

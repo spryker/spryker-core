@@ -59,8 +59,7 @@ class PageController extends AbstractController
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $dataProvider = $this->getFactory()->createCmsPageFormDataProvider();
-        $form = $this
-            ->getFactory()
+        $form = $this->getFactory()
             ->createCmsPageForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
