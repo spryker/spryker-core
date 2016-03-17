@@ -101,7 +101,7 @@ class Auth implements AuthInterface
      */
     public function generateToken(UserTransfer $user)
     {
-        return md5(sprintf('%s%s', $user->getPassword(), $user->getIdUser()));
+        return hash('sha256', sprintf('%s%s', $user->getPassword(), $user->getIdUser()));
     }
 
     /**

@@ -53,7 +53,7 @@ abstract class AbstractExporter implements ExporterInterface
     protected $marker;
 
     /**
-     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $queryContainer;
 

@@ -64,6 +64,8 @@ class DiscountsTable extends AbstractTable
             SpyDiscountTableMap::COL_DESCRIPTION,
         ]);
 
+        $config->addRawColumn(self::COL_OPTIONS);
+
         return $config;
     }
 

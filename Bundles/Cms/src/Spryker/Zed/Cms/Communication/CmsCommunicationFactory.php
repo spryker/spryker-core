@@ -89,7 +89,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageForm(array $formData = [], array $formOptions = [])
     {
-        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+        $urlFacade = $this->getUrlFacade();
         $cmsPageForm = new CmsPageForm($urlFacade);
 
         return $this->getFormFactory()->create($cmsPageForm, $formData, $formOptions);
@@ -100,7 +100,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageFormDataProvider()
     {
-        return new CmsPageFormDataProvider($this->getQueryContainer());
+        return new CmsPageFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
     }
 
     /**
@@ -132,7 +132,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsRedirectForm(array $formData = [], array $formOptions = [])
     {
-        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+        $urlFacade = $this->getUrlFacade();
         $cmsRedirectFormType = new CmsRedirectForm($urlFacade);
 
         return $this->getFormFactory()->create($cmsRedirectFormType, $formData, $formOptions);
@@ -185,6 +185,22 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
+     */
+    public function getUrlFacade()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     */
+    public function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }
 
 }

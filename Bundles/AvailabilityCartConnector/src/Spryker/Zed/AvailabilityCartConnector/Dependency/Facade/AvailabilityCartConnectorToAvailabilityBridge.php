@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
-use Spryker\Zed\Availability\Business\AvailabilityFacade;
-
 class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartConnectorToAvailabilityInterface
 {
 

@@ -7,17 +7,15 @@
 
 namespace Spryker\Zed\Gui\Communication\Table;
 
-use Generated\Shared\Transfer\DataTablesTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Gui\Communication\Form\DeleteForm;
+use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Library\Sanitize\Html;
-use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
 {
@@ -195,6 +193,8 @@ abstract class AbstractTable
         $tableData = [];
 
         $headers = $this->config->getHeader();
+        $safeColumns = $this->config->getRawColumns();
+
         $isArray = is_array($headers);
         foreach ($data as $row) {
             if ($isArray) {
@@ -203,10 +203,33 @@ abstract class AbstractTable
                 $row = $this->reOrderByHeaders($headers, $row);
             }
 
+            $row = $this->escapeColumns($row, $safeColumns);
+
             $tableData[] = array_values($row);
         }
 
         $this->setData($tableData);
+    }
+
+    /**
+     * @param array $row
+     * @param array $safeColumns
+     *
+     * @return mixed
+     */
+    protected function escapeColumns(array $row, array $safeColumns)
+    {
+        $callback = function (&$value, $key) use ($safeColumns) {
+            if (!in_array($key, $safeColumns)) {
+                $value = twig_escape_filter(new \Twig_Environment(), $value);
+            }
+
+            return $value;
+        };
+
+        array_walk($row, $callback);
+
+        return $row;
     }
 
     /**
@@ -271,7 +294,8 @@ abstract class AbstractTable
      */
     protected function generateTableIdentifier($prefix = 'table-')
     {
-        $this->tableIdentifier = uniqid($prefix);
+        $generator = new StringGenerator();
+        $this->tableIdentifier = $prefix . $generator->generateRandomString();
 
         return $this;
     }
@@ -407,7 +431,7 @@ abstract class AbstractTable
         $offset = $this->getOffset();
         $order = $this->getOrders($config);
         // @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
-        if (!empty($config->getHeader())) {
+        if ($config->getHeader()) {
             $columns = array_keys($config->getHeader());
         } else {
             $columns = array_keys($query->getTableMap()->getColumns());
@@ -543,7 +567,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param bool $filtered
+     * @param int $filtered
      *
      * @return void
      */
@@ -612,16 +636,33 @@ abstract class AbstractTable
      */
     protected function generateRemoveButton($url, $title, array $options = [])
     {
-        $defaultOptions = [
-            'class' => 'btn-danger',
-            'icon' => 'fa-trash',
+        $formFactory = $this->getFormFactory();
+
+        $deleteForm = new DeleteForm();
+
+        $options = [
+            'fields' => $options,
+            'action' => $url
         ];
 
-        return $this->generateButton($url, $title, $defaultOptions, $options);
+        $form = $formFactory->create($deleteForm, [], $options);
+
+        $options['form'] = $form->createView();
+        $options['title'] = $title;
+
+        return $this->getTwig()->render('delete-form.twig', $options);
     }
 
     /**
-     * @param string|\Spryker\Zed\Application\Business\Url\Url $url
+     * @return \Symfony\Component\Form\FormFactoryInterface
+     */
+    protected function getFormFactory()
+    {
+        return (new Pimple())->getApplication()['form.factory'];
+    }
+
+    /**
+     * @param string|\Spryker\Shared\Url\Url $url
      * @param string $title
      * @param array $defaultOptions
      * @param array $customOptions

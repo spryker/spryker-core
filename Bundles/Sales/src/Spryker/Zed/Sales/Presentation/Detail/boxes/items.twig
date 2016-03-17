@@ -65,13 +65,13 @@
                     <td>{{ orderItem.state.name }}</td>
                     <td>
                         {% for stateHistory in orderItem.stateHistory | slice(0, 3) %}
-                            <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
+                            <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
                         {% endfor %}
 
                         {% if orderItem.stateHistory | length > 3 %}
                             <div id="history_details_{{ orderItem.IdSalesOrderItem }}" style="display: none">
                                 {% for stateHistory in orderItem.stateHistory | slice(3) %}
-                                    <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
+                                    <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
                                 {% endfor %}
                             </div>
 

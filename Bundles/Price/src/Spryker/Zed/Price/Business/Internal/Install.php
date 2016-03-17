@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Price\Business\Internal;
 
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
-use Spryker\Zed\Price\Business\Model\Writer;
 use Spryker\Zed\Price\Business\Model\WriterInterface;
 use Spryker\Zed\Price\PriceConfig;
 

@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Refund\Communication;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Shared\Library\Context;
-use Spryker\Shared\Library\DateFormatter;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Refund\Business\RefundFacade;
 use Spryker\Zed\Refund\Communication\Form\RefundForm;
@@ -55,7 +53,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainer
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     public function getSalesQueryContainer()
     {
@@ -63,9 +61,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return \Spryker\Zed\Payone\Business\PayoneFacade
+     * @return \Spryker\Zed\Payone\Business\PayoneFacadeInterface
      */
     public function getPayoneFacade()
     {

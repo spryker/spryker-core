@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Storage\Redis;
 
-use Predis\Client;
 use Predis\ClientInterface;
 
 class Service implements ServiceInterface

@@ -63,7 +63,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainer
+     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected function getTouchQueryContainer()
     {

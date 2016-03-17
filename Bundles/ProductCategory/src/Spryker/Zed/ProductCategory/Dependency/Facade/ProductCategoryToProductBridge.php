@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
-use Spryker\Zed\Product\Business\ProductFacade;
-
 class ProductCategoryToProductBridge implements ProductCategoryToProductInterface
 {
 

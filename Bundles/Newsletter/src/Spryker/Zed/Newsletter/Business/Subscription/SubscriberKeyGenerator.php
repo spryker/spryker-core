@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Newsletter\Business\Subscription;
 
+use Spryker\Zed\Library\Generator\StringGenerator;
+
 class SubscriberKeyGenerator implements SubscriberKeyGeneratorInterface
 {
 
@@ -15,7 +17,9 @@ class SubscriberKeyGenerator implements SubscriberKeyGeneratorInterface
      */
     public function generateKey()
     {
-        return uniqid();
+        $generator = new StringGenerator();
+
+        return $generator->generateRandomString();
     }
 
 }

@@ -48,6 +48,8 @@ class Payments extends AbstractTable
             self::FIELD_VIEW => 'View',
         ]);
 
+        $config->addRawColumn(self::FIELD_VIEW);
+
         $config->setSortable([
             SpyPaymentPayolutionTableMap::COL_CREATED_AT,
         ]);

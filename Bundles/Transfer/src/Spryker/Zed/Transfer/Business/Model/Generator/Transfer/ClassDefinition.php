@@ -493,11 +493,11 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param string $property
+     * @param array $property
      *
      * @return void
      */
-    private function buildSetMethod($property)
+    private function buildSetMethod(array $property)
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'set' . ucfirst($propertyName);
@@ -517,11 +517,11 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param string $property
+     * @param array $property
      *
      * @return void
      */
-    private function buildAddMethod($property)
+    private function buildAddMethod(array $property)
     {
         $parent = $this->getPropertyName($property);
         $propertyConstant = $this->getPropertyConstantName($property);

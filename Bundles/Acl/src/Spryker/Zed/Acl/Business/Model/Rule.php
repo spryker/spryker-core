@@ -307,7 +307,7 @@ class Rule implements RuleInterface
         }
 
         $groups = $this->group->getUserGroups($userTransfer->getIdUser());
-        if (empty($groups->getGroups())) {
+        if (!$groups->getGroups()) {
             return false;
         }
 

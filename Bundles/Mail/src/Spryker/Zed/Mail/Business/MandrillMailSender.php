@@ -210,7 +210,7 @@ class MandrillMailSender implements MailSenderInterface
 
         /** @var \Generated\Shared\Transfer\MailRecipientTransfer $recipient */
         foreach ($recipients as $recipient) {
-            if (empty($recipient->getMergeVars())) {
+            if (!$recipient->getMergeVars()) {
                 continue;
             }
 
@@ -233,7 +233,7 @@ class MandrillMailSender implements MailSenderInterface
         $result = [];
         /** @var \Generated\Shared\Transfer\MailRecipientTransfer $individualData */
         foreach ($recipientMetadata as $individualData) {
-            if (empty($individualData->getMetadata())) {
+            if (!$individualData->getMetadata()) {
                 continue;
             }
 

@@ -88,7 +88,7 @@ class PriceBusinessFactory extends AbstractBusinessFactory
      */
     protected function getTouchFacade()
     {
-        if (empty($this->touchFacade)) {
+        if ($this->touchFacade === null) {
             $this->touchFacade = $this->getProvidedDependency(PriceDependencyProvider::FACADE_TOUCH);
         }
 

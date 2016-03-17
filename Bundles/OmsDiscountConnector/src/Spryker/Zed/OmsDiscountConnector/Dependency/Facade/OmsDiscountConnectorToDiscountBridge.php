@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\OmsDiscountConnector\Dependency\Facade;
 
-use Spryker\Zed\Discount\Business\DiscountFacade;
-
 class OmsDiscountConnectorToDiscountBridge implements OmsDiscountConnectorToDiscountInterface
 {
 

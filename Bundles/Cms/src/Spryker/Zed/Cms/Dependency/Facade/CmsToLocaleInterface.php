@@ -15,4 +15,9 @@ interface CmsToLocaleInterface
      */
     public function getCurrentLocale();
 
+    /**
+     * @return array
+     */
+    public function getAvailableLocales();
+
 }

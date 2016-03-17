@@ -51,7 +51,7 @@ class ConfigInit extends Module
         $configDirectories = $this->getSourceDirectories();
         $configDirectory = $this->getTargetDirectory();
         if (!is_dir($configDirectory)) {
-            mkdir($configDirectory, 0777, true);
+            mkdir($configDirectory, 0775, true);
         }
 
         $finder = new Finder();

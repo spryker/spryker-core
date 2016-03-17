@@ -12,10 +12,6 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
-use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
-use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
-use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
-use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
@@ -422,17 +418,21 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @api
      *
      * @param string $key
+     * @param int $localeId
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
-    public function queryKeyWithTranslationByKey($key)
+    public function queryKeyWithTranslationByKeyAndLocale($key, $localeId)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY)
+        $query = $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY)
             ->queryByKey($key)
-            ->rightJoinSpyGlossaryTranslation()
-            ->filterByIsActive(true)
+            ->useSpyGlossaryTranslationQuery(null, Criteria::LEFT_JOIN)
+                ->filterByFkLocale($localeId)
+            ->endUse()
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+
+        return $query;
     }
 
     /**
@@ -491,7 +491,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainer
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected function getCategoryQueryContainer()
     {

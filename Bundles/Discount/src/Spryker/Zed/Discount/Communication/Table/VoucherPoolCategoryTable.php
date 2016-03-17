@@ -17,6 +17,7 @@ class VoucherPoolCategoryTable extends AbstractTable
 {
 
     const URL_DISCOUNT_POOL_EDIT_CATEGORY = '/discount/pool/edit-category';
+    const OPTIONS = 'options';
 
     /**
      * @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery
@@ -40,8 +41,10 @@ class VoucherPoolCategoryTable extends AbstractTable
     {
         $config->setHeader([
             SpyDiscountVoucherPoolCategoryTableMap::COL_NAME => 'Name',
-            'options' => 'Options',
+            self::OPTIONS => 'Options',
         ]);
+
+        $config->addRawColumn(self::OPTIONS);
 
         $config->setSearchable([
             SpyDiscountVoucherPoolCategoryTableMap::COL_NAME,
@@ -66,7 +69,7 @@ class VoucherPoolCategoryTable extends AbstractTable
         foreach ($queryResults as $item) {
             $results[] = [
                 SpyDiscountVoucherPoolCategoryTableMap::COL_NAME => $item[SpyDiscountVoucherPoolCategoryTableMap::COL_NAME],
-                'options' => implode(' ', $this->getOptionsUrls($item)),
+                self::OPTIONS => implode(' ', $this->getOptionsUrls($item)),
             ];
         }
 

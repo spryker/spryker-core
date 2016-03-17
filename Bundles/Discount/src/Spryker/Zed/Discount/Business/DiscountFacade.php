@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

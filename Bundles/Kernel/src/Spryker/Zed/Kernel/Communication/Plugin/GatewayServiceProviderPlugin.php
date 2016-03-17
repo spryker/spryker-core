@@ -12,7 +12,6 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;
 

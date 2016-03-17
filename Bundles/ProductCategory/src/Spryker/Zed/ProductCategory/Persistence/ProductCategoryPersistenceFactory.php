@@ -36,7 +36,7 @@ class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainer
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected function getCategoryQueryContainer()
     {

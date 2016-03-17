@@ -3,7 +3,8 @@
   "description": "Spryker Framework",
   "license": "proprietary",
   "require":{
-    "phpdocumentor/graphviz": "dev-master#a906a90"
+    "phpdocumentor/graphviz": "dev-master#a906a90",
+    "paragonie/random_compat": "~1.2.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"

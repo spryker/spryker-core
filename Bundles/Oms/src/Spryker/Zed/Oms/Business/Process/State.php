@@ -70,7 +70,7 @@ class State implements StateInterface
      */
     public function hasIncomingTransitions()
     {
-        return !empty($this->incomingTransitions);
+        return (bool)$this->incomingTransitions;
     }
 
     /**
@@ -96,7 +96,7 @@ class State implements StateInterface
      */
     public function hasOutgoingTransitions()
     {
-        return !empty($this->outgoingTransitions);
+        return (bool)$this->outgoingTransitions;
     }
 
     /**

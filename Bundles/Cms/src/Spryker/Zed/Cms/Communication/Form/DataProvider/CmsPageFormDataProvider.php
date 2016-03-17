@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cms\Communication\Form\DataProvider;
 
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageFormDataProvider
@@ -30,11 +31,18 @@ class CmsPageFormDataProvider
     protected $cmsQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer)
+    protected $cmsToLocaleInterface;
+
+    /**
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface $cmsToLocaleInterface
+     */
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToLocaleInterface $cmsToLocaleInterface)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
+        $this->cmsToLocaleInterface = $cmsToLocaleInterface;
     }
 
     /**
@@ -70,7 +78,16 @@ class CmsPageFormDataProvider
     {
         return [
             CmsPageForm::OPTION_TEMPLATE_CHOICES => $this->getTemplateList(),
+            CmsPageForm::OPTION_LOCALES_CHOICES => $this->getAvailableLocales(),
         ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAvailableLocales()
+    {
+        return $this->cmsToLocaleInterface->getAvailableLocales();
     }
 
     /**

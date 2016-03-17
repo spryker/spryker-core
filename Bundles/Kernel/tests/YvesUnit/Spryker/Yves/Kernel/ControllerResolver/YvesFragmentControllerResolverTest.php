@@ -7,7 +7,6 @@
 
 namespace YvesUnit\Spryker\Zed\Kernel\ControllerResolver;
 
-use Silex\Application;
 use Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
 

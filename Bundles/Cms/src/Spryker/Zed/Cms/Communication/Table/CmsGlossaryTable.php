@@ -73,6 +73,9 @@ class CmsGlossaryTable extends AbstractTable
             CmsQueryContainer::TRANS => 'Glossary Value',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
         ]);
@@ -140,13 +143,10 @@ class CmsGlossaryTable extends AbstractTable
             ]),
             'Edit'
         );
-        $buttons[] = $this->generateRemoveButton(
-            Url::generate(self::URL_CMS_GLOSSARY_DELETE, [
-                CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
-                self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
-            ]),
-            'Delete'
-        );
+        $buttons[] = $this->generateRemoveButton(self::URL_CMS_GLOSSARY_DELETE, 'Delete', [
+            CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
+            self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
+        ]);
 
         return $buttons;
     }

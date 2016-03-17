@@ -75,8 +75,6 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorInterface
      */
     protected function getCollectorFacade()

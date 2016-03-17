@@ -11,9 +11,6 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\User\Business\UserFacade;
-use Spryker\Zed\User\Business\UserFacadeInterface;
-use Spryker\Zed\User\Communication\UserCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\User\Business\UserFacade getFacade()

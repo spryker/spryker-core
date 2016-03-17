@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\Installer\Business;
 
-use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
 use Spryker\Zed\Installer\InstallerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Installer\InstallerConfig getConfig()

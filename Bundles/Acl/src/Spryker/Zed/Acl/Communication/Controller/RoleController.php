@@ -15,6 +15,7 @@ use Spryker\Zed\Acl\Communication\Form\RoleForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
@@ -133,7 +134,12 @@ class RoleController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idRole = $this->castId($request->get(self::PARAM_ID_ROLE));
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $idRole = $this->castId($request->request->get(self::PARAM_ID_ROLE));
+
         if (empty($idRole)) {
             $this->addErrorMessage('Missing role id!');
 

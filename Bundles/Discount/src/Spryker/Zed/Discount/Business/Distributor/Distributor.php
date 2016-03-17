@@ -82,7 +82,7 @@ class Distributor implements DistributorInterface
     protected function getDiscountableItemQuantity($discountableItemTransfer)
     {
         $quantity = 1;
-        if (!empty($discountableItemTransfer->getQuantity())) {
+        if ($discountableItemTransfer->getQuantity()) {
             $quantity = $discountableItemTransfer->getQuantity();
         }
 

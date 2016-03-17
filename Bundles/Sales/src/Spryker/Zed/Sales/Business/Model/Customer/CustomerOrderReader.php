@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Business\Model\Customer;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Sales\Business\Exception\OrderNotFoundException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;

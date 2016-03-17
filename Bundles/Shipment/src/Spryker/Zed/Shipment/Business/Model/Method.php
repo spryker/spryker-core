@@ -241,7 +241,7 @@ class Method
      */
     protected function getEffectiveTaxRate(SpyShipmentMethod $shipmentMethodEntity)
     {
-        if (empty($shipmentMethodEntity->getTaxSet())) {
+        if (!$shipmentMethodEntity->getTaxSet()) {
             return 0;
         }
 

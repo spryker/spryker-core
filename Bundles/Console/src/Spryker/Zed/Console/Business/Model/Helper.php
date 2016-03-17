@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Console\Business\Model;
 
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 
 trait Helper

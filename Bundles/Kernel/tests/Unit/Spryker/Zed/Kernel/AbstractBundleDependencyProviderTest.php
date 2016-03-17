@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Zed\Kernel;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 /**

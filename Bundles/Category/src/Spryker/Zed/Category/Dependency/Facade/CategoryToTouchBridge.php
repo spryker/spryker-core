@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Category\Dependency\Facade;
 
-use Spryker\Zed\Touch\Business\TouchFacade;
-
 class CategoryToTouchBridge implements CategoryToTouchInterface
 {
 

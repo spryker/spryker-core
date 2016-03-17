@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business\Model;
 
+use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Propel\Business\Exception\SchemaMergeException;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -226,7 +227,8 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         }
 
         if (empty($elementName) || is_array($elementName)) {
-            $elementName = uniqid('anonymous_');
+            $generator = new StringGenerator();
+            $elementName = 'anonymous_' . $generator->generateRandomString();
         }
 
         return $elementName;

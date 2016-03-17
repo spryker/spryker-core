@@ -211,7 +211,7 @@ class Process implements ProcessInterface
      */
     public function hasStates()
     {
-        return !empty($this->states);
+        return (bool)$this->states;
     }
 
     /**
@@ -247,7 +247,7 @@ class Process implements ProcessInterface
      */
     public function hasTransitions()
     {
-        return !empty($this->transitions);
+        return (bool)$this->transitions;
     }
 
     /**

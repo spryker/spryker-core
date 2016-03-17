@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Shared\Graph;
 
-use phpDocumentor\GraphViz\Graph;
 use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
 
 /**

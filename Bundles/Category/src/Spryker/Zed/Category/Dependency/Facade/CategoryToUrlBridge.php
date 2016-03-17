@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Url\Business\UrlFacade;
 
 class CategoryToUrlBridge implements CategoryToUrlInterface
 {

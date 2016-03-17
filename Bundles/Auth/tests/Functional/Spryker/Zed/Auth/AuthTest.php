@@ -79,7 +79,7 @@ class AuthTest extends Test
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $token = $this->authFacade->getUserToken($userDto);
-        $fakeToken = md5(sprintf('%s%s', $userDto->getPassword(), $userDto->getIdUser()));
+        $fakeToken = hash('sha256', sprintf('%s%s', $userDto->getPassword(), $userDto->getIdUser()));
 
         $this->assertEquals($fakeToken, $token);
 

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Glossary\Dependency\Facade;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
 
 class GlossaryToMessengerBridge implements GlossaryToMessengerInterface
 {

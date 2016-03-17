@@ -9,7 +9,6 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Silex\Application;
 use Silex\Controller;
-use Silex\ControllerCollection;
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;

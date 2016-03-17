@@ -25,7 +25,6 @@ use Spryker\Zed\Payone\Business\Payment\MethodMapper\Prepayment;
 use Spryker\Zed\Payone\Business\Payment\PaymentManager;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
 use Spryker\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
-use Spryker\Zed\Payone\PayoneConfig;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
 
 /**

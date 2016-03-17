@@ -60,7 +60,7 @@ class TaxCalculation implements CalculatorInterface
     {
         $taxRates = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!empty($itemTransfer->getTaxRate())) {
+            if ($itemTransfer->getTaxRate()) {
                 $taxRates[] = $itemTransfer->getTaxRate();
             }
             $taxRates = array_merge($taxRates, $this->aggregateProductOptionTaxes($itemTransfer));
@@ -78,7 +78,7 @@ class TaxCalculation implements CalculatorInterface
     {
         $taxRates = [];
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if (empty($expenseTransfer->getTaxRate())) {
+            if (!$expenseTransfer->getTaxRate()) {
                 continue;
             }
             $taxRates[] = $expenseTransfer->getTaxRate();
@@ -96,7 +96,7 @@ class TaxCalculation implements CalculatorInterface
     {
         $taxRates = [];
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            if (empty($productOptionTransfer->getTaxRate())) {
+            if (!$productOptionTransfer->getTaxRate()) {
                 continue;
             }
             $taxRates[] = $productOptionTransfer->getTaxRate();

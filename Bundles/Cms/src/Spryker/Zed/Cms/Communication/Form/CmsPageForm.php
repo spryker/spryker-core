@@ -30,7 +30,9 @@ class CmsPageForm extends AbstractType
     const FIELD_ID_URL = 'id_url';
 
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
+    const OPTION_LOCALES_CHOICES = 'locale_choices';
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+    const FIELD_LOCALE = 'fk_locale';
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
@@ -63,6 +65,7 @@ class CmsPageForm extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::OPTION_TEMPLATE_CHOICES);
+        $resolver->setRequired(self::OPTION_LOCALES_CHOICES);
 
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -91,6 +94,7 @@ class CmsPageForm extends AbstractType
             ->addCurrentTemplateField($builder, $options[self::OPTION_TEMPLATE_CHOICES])
             ->addFkTemplateField($builder)
             ->addUrlField($builder)
+            ->addLocaleField($builder, $options[self::OPTION_LOCALES_CHOICES])
             ->addIsActiveField($builder);
     }
 
@@ -156,6 +160,20 @@ class CmsPageForm extends AbstractType
         $builder->add(self::FIELD_URL, 'text', [
             'label' => 'URL',
             'constraints' => $this->getUrlConstraints(),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLocaleField(FormBuilderInterface $builder, array $availableLocales)
+    {
+        $builder->add(self::FIELD_LOCALE, 'choice', [
+            'choices' => $availableLocales,
         ]);
 
         return $this;

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOption\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -16,13 +15,4 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
  */
 class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
-
-    /**
-     * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacade
-     */
-    public function getInstallerFacade()
-    {
-        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT);
-    }
-
 }

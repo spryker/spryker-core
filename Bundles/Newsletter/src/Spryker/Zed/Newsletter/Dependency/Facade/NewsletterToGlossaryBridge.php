@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Newsletter\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
 
 class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
 {

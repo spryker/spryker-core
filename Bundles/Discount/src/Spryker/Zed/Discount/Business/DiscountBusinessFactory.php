@@ -325,7 +325,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected function getMessengerFacade()
     {

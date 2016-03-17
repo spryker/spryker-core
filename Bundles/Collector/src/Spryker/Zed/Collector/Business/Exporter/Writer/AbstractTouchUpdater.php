@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 
-use Orm\Zed\Touch\Persistence\SpyTouchSearch;
-use Orm\Zed\Touch\Persistence\SpyTouchStorage;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\CollectorConfig;

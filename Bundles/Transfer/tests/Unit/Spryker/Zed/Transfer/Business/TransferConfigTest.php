@@ -51,7 +51,7 @@ class TransferConfigTest extends \PHPUnit_Framework_TestCase
     public function testGetSourceDirectoriesShouldReturnArrayWithTwoEntriesIfProjectAndVendorTransferExist()
     {
         $directory = APPLICATION_SOURCE_DIR . '/Foo/Shared/Bar/Transfer/';
-        mkdir($directory, 0777, true);
+        mkdir($directory, 0775, true);
 
         $this->assertTrue(is_array($this->getConfig()->getSourceDirectories()));
         $this->assertCount(2, $this->getConfig()->getSourceDirectories());

@@ -60,6 +60,8 @@ class UsersTable extends AbstractTable
             self::ACTION => self::ACTION,
         ]);
 
+        $config->setRawColumns([SpyUserTableMap::COL_STATUS, self::ACTION]);
+
         $config->setSortable([
             SpyUserTableMap::COL_USERNAME,
             SpyUserTableMap::COL_FIRST_NAME,
@@ -117,13 +119,12 @@ class UsersTable extends AbstractTable
             ]),
             'Edit'
         );
+
         $urls[] = $this->createStatusButton($user);
-        $urls[] = $this->generateRemoveButton(
-            Url::generate(self::DELETE_USER_URL, [
-                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
-            ]),
-            'Delete'
-        );
+
+        $urls[] = $this->generateRemoveButton(self::DELETE_USER_URL, 'Delete', [
+            self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+        ]);
 
         return $urls;
     }

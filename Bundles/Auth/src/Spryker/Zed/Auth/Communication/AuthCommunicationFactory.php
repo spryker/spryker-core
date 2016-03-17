@@ -51,7 +51,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\User\Business\UserFacade
+     * @return \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
     public function getUserFacade()
     {

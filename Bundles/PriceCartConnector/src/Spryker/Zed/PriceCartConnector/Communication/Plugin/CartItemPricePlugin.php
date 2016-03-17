@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceCartConnector\Communication\Plugin;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceCartConnector\Communication\PriceCartConnectorCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade getFacade()
