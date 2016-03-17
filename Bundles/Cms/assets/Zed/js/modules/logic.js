@@ -17,16 +17,16 @@ var itemList = null;
 var itemContainer = null;
 var successResponseCount = 0;
 
-function formatString(string, dictionary) {
-    return string.replace(/{(\d+)}/g, function(match, index){
-        return dictionary[index];
+String.prototype.formatString = function(){
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, index){
+        return args[index];
     });
-}
+};
 
 function postForm( $form, id, successCallback ){
-
     var values = {};
-    $.each( $form.serializeArray(), function(i, field) {
+    $.each($form.serializeArray(), function(i, field) {
         values[field.name] = field.value;
     });
 
@@ -38,10 +38,10 @@ function postForm( $form, id, successCallback ){
     }
 
     $.ajax({
-        type        : $form.attr( 'method' ),
-        url         : '?id-page=' + $('#idPage').val() +'&id-form=' + id,
-        data        : values,
-        success     : function(data) {
+        type: $form.attr( 'method' ),
+        url: '?id-page={0}&id-form={1}'.formatString($('#idPage').val(), id),
+        data: values,
+        success: function(data) {
             successCallback(data);
         }
     });
@@ -95,25 +95,23 @@ function showAutoComplete(formId, searchType) {
     var keyTranslation = form.find('#cms_glossary_translation');
     var keyFkLocale = form.find('#cms_glossary_fk_locale');
 
-    var ajaxUrl = '';
+    var ajaxUrl = 'glossary/search?{0}={1}&localeId={2}';
 
     if (searchType == searchTypeGlossaryKey) {
-        //ajaxUrl = 'glossary/search/?key=';
-        ajaxUrl = formatString('glossary/search?key={0}&localeId={1}', [keyInput.val(), keyFkLocale.val()]);
+        ajaxUrl = ajaxUrl.formatString('key', keyInput.val(), keyFkLocale.val());
     } else if(searchType == searchTypeFullText) {
-        //ajaxUrl = 'glossary/search/?value=';
-        ajaxUrl = formatString('glossary/search?value={0}&localeId={1}', [keyInput.val(), keyFkLocale].val());
+        ajaxUrl = ajaxUrl.formatString('value', keyInput.val(), keyFkLocale.val());
+    } else {
+        ajaxUrl = '';
     }
 
     keyList.find('option').remove();
     $('.loading-' + formId).show();
 
-
-
     xhr = $.ajax({
-        type        : 'GET',
-        url         : ajaxUrl,
-        success     : function(data) {
+        type: 'GET',
+        url: ajaxUrl,
+        success: function(data) {
             $('.loading-' + formId).hide();
 
             $.each(data, function (i, item) {
@@ -148,7 +146,7 @@ function showAutoComplete(formId, searchType) {
                 keyInput.focus();
                 return false;
             });
-        },
+        }
     });
 }
 
@@ -205,7 +203,7 @@ function showBlockAutoComplete(elementId, type) {
     var elementInput = $(elementId);
 
     var blockValue = $('#cms_block_value');
-    var ajaxUrl = type == 'category' ? '/cms/block/search-category?term=' : '/cms/block/search-product?term=';
+    var ajaxUrl = (type == 'category') ? '/cms/block/search-category?term={0}' : '/cms/block/search-product?term={0}';
 
     itemList.find('option').remove();
 
@@ -214,15 +212,15 @@ function showBlockAutoComplete(elementId, type) {
     loadingBlock.show();
 
     xhr = $.ajax({
-        type        : 'GET',
-        url         : ajaxUrl + elementInput.val(),
-        success     : function(data) {
+        type: 'GET',
+        url: ajaxUrl.formatString(elementInput.val()),
+        success: function(data) {
             $('.block-loading').hide();
 
             $.each(data, function (i, item) {
                 itemList.append($('<option>', {
                     value: i,
-                    text : item.name + '  ->  ' + item.url,
+                    text: '{0} -> {1}'.formatString(item.name, item.url)
                 }));
 
                 itemContainer.css({ top: elementInput.offset().top - 108 });
