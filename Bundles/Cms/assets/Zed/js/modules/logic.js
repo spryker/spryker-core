@@ -82,7 +82,7 @@ var ajaxifySubmmit = function(formId) {
 function showAutoComplete(formId, searchType) {
     var searchTypeGlossaryKey = 2;
     var searchTypeFullText = 3;
-    var listElement = '<div id="foundKeyListContainer" class="key-container"><select id="foundKeyList" size="10" class="key-list"></select></div>'
+    var listElement = '<div id="foundKeyListContainer" class="key-container"><select id="foundKeyList" size="10" class="key-list"></select></div>';
     $('.keyListCanvas').empty();
     $('.keyListCanvas').append(listElement);
 
@@ -128,8 +128,25 @@ function showAutoComplete(formId, searchType) {
 
             keyList.css({ height :  data.length * 17 });
             keyList.on('change', function() {
-                keyTranslation.val(data[this.value].value);
+                var keyContent = data[this.value].value;
+                keyTranslation.val(keyContent);
+
                 keyInput.val(data[this.value].key);
+                $(keyInput.closest('.row').find('#cms_glossary_translation')).summernote('destroy');
+                $(keyInput.closest('.row').find('#cms_glossary_translation')).summernote({
+                    maxHeight: 600,
+                    inputText: keyContent,
+                    focus: true,
+                    toolbar: [
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+                        ['misc', ['undo', 'redo']]
+                    ]
+                });
             });
 
             keyList.on('keydown', function(e) {
