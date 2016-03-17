@@ -100,9 +100,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageFormDataProvider()
     {
-        $availableLocales = $this->getLocaleFacade()->getAvailableLocales();
-
-        return new CmsPageFormDataProvider($this->getQueryContainer(), $availableLocales);
+        return new CmsPageFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
     }
 
     /**

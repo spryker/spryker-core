@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
