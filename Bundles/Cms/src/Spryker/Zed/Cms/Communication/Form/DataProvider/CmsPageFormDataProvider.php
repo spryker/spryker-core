@@ -30,11 +30,17 @@ class CmsPageFormDataProvider
     protected $cmsQueryContainer;
 
     /**
+     * @var array
+     */
+    protected $availableLocales = [];
+
+    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, array $availableLocales)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
+        $this->availableLocales = $availableLocales;
     }
 
     /**
@@ -70,6 +76,7 @@ class CmsPageFormDataProvider
     {
         return [
             CmsPageForm::OPTION_TEMPLATE_CHOICES => $this->getTemplateList(),
+            CmsPageForm::OPTION_LOCALES_CHOICES => $this->availableLocales,
         ];
     }
 

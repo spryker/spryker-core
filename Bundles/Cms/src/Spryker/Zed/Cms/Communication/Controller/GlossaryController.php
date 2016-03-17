@@ -53,19 +53,12 @@ class GlossaryController extends AbstractController
         $idPage = $this->castId($request->get(CmsPageTable::REQUEST_ID_PAGE));
         $idForm = (int)$request->get(self::ID_FORM);
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
-        $fkLocale = null;
 
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
         $cmsPage = $this->findCmsPageById($idPage);
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
 
-        $url = $this->getQueryContainer()
-            ->queryUrlById($cmsPage->getIdCmsPage())
-            ->findOne();
-
-        if ($url) {
-            $fkLocale = $url->getFkLocale();
-        }
+        $fkLocale = $this->getLocaleByCmsPage($cmsPage);
 
         if ($block === null) {
             $title = $cmsPage->getUrl();
@@ -96,6 +89,25 @@ class GlossaryController extends AbstractController
             'type' => $type,
             'forms' => $formViews,
         ];
+    }
+
+    /**
+     * @param SpyCmsPage $cmsPage
+     *
+     * @return int|null
+     */
+    public function getLocaleByCmsPage(SpyCmsPage $cmsPage)
+    {
+        $fkLocale = null;
+        $url = $this->getQueryContainer()
+            ->queryUrlById($cmsPage->getIdCmsPage())
+            ->findOne();
+
+        if ($url) {
+            $fkLocale = $url->getFkLocale();
+        }
+
+        return $fkLocale;
     }
 
     /**

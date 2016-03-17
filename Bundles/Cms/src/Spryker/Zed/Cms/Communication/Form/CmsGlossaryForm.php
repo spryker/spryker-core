@@ -211,7 +211,6 @@ class CmsGlossaryForm extends AbstractType
             ],
             'attr' => [
                 'class' => 'html-editor',
-                'rows' => 10,
             ],
         ]);
 

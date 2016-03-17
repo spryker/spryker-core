@@ -89,9 +89,8 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageForm(array $formData = [], array $formOptions = [])
     {
-        $availableLocales = $this->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)->getAvailableLocales();
         $urlFacade = $this->getUrlFacade();
-        $cmsPageForm = new CmsPageForm($urlFacade, $availableLocales);
+        $cmsPageForm = new CmsPageForm($urlFacade);
 
         return $this->getFormFactory()->create($cmsPageForm, $formData, $formOptions);
     }
@@ -101,7 +100,9 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageFormDataProvider()
     {
-        return new CmsPageFormDataProvider($this->getQueryContainer());
+        $availableLocales = $this->getLocaleFacade()->getAvailableLocales();
+
+        return new CmsPageFormDataProvider($this->getQueryContainer(), $availableLocales);
     }
 
     /**
