@@ -191,7 +191,7 @@ class CmsGlossaryForm extends AbstractType
      */
     public function addLocaleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_LOCALE, 'text');
+        $builder->add(self::FIELD_FK_LOCALE, 'hidden');
 
         return $this;
     }
