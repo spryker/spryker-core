@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-xs-12 col-md-4">
                 <p><b>{{ 'Order ID' | trans }}:</b> {{ order.orderReference }}</p>
-                <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | date('Y-m-d G:i:s') }}</p>
+                <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | formatDateTime }}</p>
                 <p><b>{{ 'Grand total' | trans }}:</b> {{ order.totals.grandTotal | currency }}</p>
                 <p><b>{{ 'Discount' | trans }}:</b> {{ order.totals.discountTotal | currency }}</p>
                 <p><b>{{ 'Item Quantity' | trans }}:</b> {{ order.items|length }}</p>
