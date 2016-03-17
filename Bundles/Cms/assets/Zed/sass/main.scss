@@ -49,3 +49,19 @@
         max-height: 240px;
     }
 }
+
+select.key-list {
+    border: 1px solid #999;
+
+    option {
+        height: 20px;
+        line-height: 20px;
+        display: block;
+        padding-top: 3px;
+
+        &:hover {
+            background: #dfdfdf;
+            line-height: 20px;
+        }
+    }
+}
