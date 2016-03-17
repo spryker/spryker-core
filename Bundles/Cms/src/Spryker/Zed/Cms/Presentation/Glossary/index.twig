@@ -14,7 +14,6 @@
             {% endif %}
             {{ title }}
         </h4>
-
         {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping' } %}
 
 
@@ -48,7 +47,7 @@
                             <div class="col-sm-12" class="translation">
                                 {{ form_label(form.translation) }}
                                 {{ form_errors(form.translation) }}
-                                {{ form_widget(form.translation, { 'attr': { 'id': 'asd' } }) }}
+                                {{ form_widget(form.translation, {'attr': {'rows': 5}}) }}
                             </div>
                             <div class="col-sm-1 small-padding">
                                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
