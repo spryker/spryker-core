@@ -57,6 +57,8 @@ class GlossaryController extends AbstractController
         $cmsPage = $this->findCmsPageById($idPage);
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
 
+        $fkLocale = $this->getLocaleByCmsPage($cmsPage);
+
         if ($block === null) {
             $title = $cmsPage->getUrl();
         } else {
@@ -71,7 +73,7 @@ class GlossaryController extends AbstractController
         $formViews = [];
 
         foreach ($placeholders as $place) {
-            $form = $this->createPlaceholderForm($request, $glossaryMappingArray, $place, $idPage);
+            $form = $this->createPlaceholderForm($request, $glossaryMappingArray, $place, $idPage, $fkLocale);
             $forms[] = $form;
             $formViews[] = $form->createView();
         }
@@ -86,6 +88,25 @@ class GlossaryController extends AbstractController
             'type' => $type,
             'forms' => $formViews,
         ];
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsPage $cmsPage
+     *
+     * @return int|null
+     */
+    public function getLocaleByCmsPage(SpyCmsPage $cmsPage)
+    {
+        $fkLocale = null;
+        $url = $this->getQueryContainer()
+            ->queryUrlById($cmsPage->getIdCmsPage())
+            ->findOne();
+
+        if ($url) {
+            $fkLocale = $url->getFkLocale();
+        }
+
+        return $fkLocale;
     }
 
     /**
@@ -142,10 +163,11 @@ class GlossaryController extends AbstractController
      */
     public function searchAction(Request $request)
     {
-        $value = $request->get('value'); // TODO FW Validation
-        $key = $request->get('key'); // TODO FW Validation
+        $value = $request->query->get('value');
+        $key = $request->query->get('key');
+        $localeId = $this->castId($request->query->get('localeId'));
 
-        $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key);
+        $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key, $localeId);
 
         $result = [];
         foreach ($searchedItems as $trans) {
@@ -161,10 +183,11 @@ class GlossaryController extends AbstractController
     /**
      * @param string $value
      * @param string $key
+     * @param int $localeId
      *
-     * @return array
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[]|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]
      */
-    protected function searchGlossaryKeysAndTranslations($value, $key)
+    protected function searchGlossaryKeysAndTranslations($value, $key, $localeId)
     {
         $searchedItems = [];
         if ($value !== null) {
@@ -176,7 +199,7 @@ class GlossaryController extends AbstractController
             return $searchedItems;
         } elseif ($key !== null) {
             $searchedItems = $this->getQueryContainer()
-                ->queryKeyWithTranslationByKey($key)
+                ->queryKeyWithTranslationByKeyAndLocale($key, $localeId)
                 ->limit(self::SEARCH_LIMIT)
                 ->find();
         }
@@ -291,10 +314,11 @@ class GlossaryController extends AbstractController
      * @param array $glossaryMappingArray
      * @param string $placeholder
      * @param int $idPage
+     * @param int $fkLocale
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage)
+    protected function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage, $fkLocale)
     {
         $idMapping = null;
         if (isset($glossaryMappingArray[$placeholder])) {
@@ -305,7 +329,7 @@ class GlossaryController extends AbstractController
         $form = $this->getFactory()
             ->createCmsGlossaryForm(
                 $this->getFacade(),
-                $dataProvider->getData($idPage, $idMapping, $placeholder)
+                $dataProvider->getData($idPage, $idMapping, $placeholder, $fkLocale)
             )
             ->handleRequest($request);
 
