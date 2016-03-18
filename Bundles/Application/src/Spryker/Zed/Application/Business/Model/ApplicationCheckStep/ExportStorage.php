@@ -9,7 +9,7 @@ namespace Spryker\Zed\Application\Business\Model\ApplicationCheckStep;
 
 use Symfony\Component\Process\Process;
 
-class ExportKeyValue extends AbstractApplicationCheckStep
+class ExportStorage extends AbstractApplicationCheckStep
 {
 
     /**

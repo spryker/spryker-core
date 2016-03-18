@@ -12,7 +12,7 @@ use Spryker\Zed\Application\ApplicationDependencyProvider;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory;
-use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportKeyValue;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportStorage;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallTestData;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall;
@@ -130,11 +130,11 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Psr\Log\LoggerInterface|null $logger
      *
-     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportKeyValue
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportStorage
      */
     public function createCheckStepExportKeyValue(LoggerInterface $logger = null)
     {
-        $checkStep = new ExportKeyValue();
+        $checkStep = new ExportStorage();
         if ($logger !== null) {
             $checkStep->setLogger($logger);
         }
