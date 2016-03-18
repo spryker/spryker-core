@@ -17,7 +17,7 @@ class InstallTestData extends AbstractApplicationCheckStep
      */
     public function run()
     {
-        $command = 'vendor/bin/console setup:install-test-data';
+        $command = 'vendor/bin/console import:demo-data'; //TODO this will become setup:install-test-data as soon as the fixture data is ready
 
         $this->info('Run ' . $command);
 
