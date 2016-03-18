@@ -97,6 +97,8 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_CREATED_AT,
         ]);
 
+        $config->addRawColumn(self::URL);
+
         $this->persistFilters($config);
 
         return $config;
