@@ -97,6 +97,8 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_CREATED_AT,
         ]);
 
+        $config->addRawColumn(self::URL);
+
         $this->persistFilters($config);
 
         return $config;
@@ -124,6 +126,8 @@ class OrdersTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->buildQuery();
+        $query->orderByIdSalesOrder(Criteria::DESC);
+
         $queryResults = $this->runQuery($query, $config);
         $results = [];
         foreach ($queryResults as $item) {
