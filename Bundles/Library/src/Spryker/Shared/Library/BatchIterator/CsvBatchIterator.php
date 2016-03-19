@@ -76,7 +76,7 @@ class CsvBatchIterator implements CountableIteratorInterface
             $this->batchData[] = $this->getCsvReader()->read();
             $this->offset++;
 
-            if (count($this->batchData) >= $batchSize) {
+            if ($this->offset >= $batchSize) {
                 break;
             }
         }
