@@ -46,8 +46,13 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
             $this->createCheckStepDeleteGeneratedDirectory($logger),
             $this->createCheckStepSetupInstall($logger),
             $this->createCheckStepCodeCeption($logger),
+
+            $this->createCheckStepDeleteGeneratedDirectory($logger),
+            $this->createCheckStepDeleteDatabase($logger),
+            $this->createCheckStepSetupInstall($logger),
             $this->createCheckStepInstallTestData($logger),
-            $this->createCheckStepExportKeyValue($logger),
+
+            $this->createCheckStepStorageValue($logger),
             $this->createCheckStepExportSearch($logger),
         ];
     }
@@ -132,7 +137,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportStorage
      */
-    public function createCheckStepExportKeyValue(LoggerInterface $logger = null)
+    public function createCheckStepStorageValue(LoggerInterface $logger = null)
     {
         $checkStep = new ExportStorage();
         if ($logger !== null) {

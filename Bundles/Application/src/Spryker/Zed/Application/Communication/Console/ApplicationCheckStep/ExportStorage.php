@@ -10,7 +10,7 @@ namespace Spryker\Zed\Application\Communication\Console\ApplicationCheckStep;
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
  */
-class ExportKeyValue extends AbstractApplicationCheckStep
+class ExportStorage extends AbstractApplicationCheckStep
 {
 
     /**
@@ -18,7 +18,7 @@ class ExportKeyValue extends AbstractApplicationCheckStep
      */
     public function run()
     {
-        $this->getFacade()->runCheckStepExportKeyValue($this->logger);
+        $this->getFacade()->runCheckStepExportStorage($this->logger);
     }
 
 }

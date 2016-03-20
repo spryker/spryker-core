@@ -55,7 +55,7 @@ interface ApplicationFacadeInterface
      *
      * @return void
      */
-    public function runCheckStepExportKeyValue(LoggerInterface $logger = null);
+    public function runCheckStepExportStorage(LoggerInterface $logger = null);
 
     /**
      * @api

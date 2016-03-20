@@ -71,9 +71,9 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
      *
      * @return void
      */
-    public function runCheckStepExportKeyValue(LoggerInterface $logger = null)
+    public function runCheckStepExportStorage(LoggerInterface $logger = null)
     {
-        $this->getFactory()->createCheckStepExportKeyValue($logger)->run();
+        $this->getFactory()->createCheckStepStorageValue($logger)->run();
     }
 
     /**
