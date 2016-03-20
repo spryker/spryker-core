@@ -18,7 +18,6 @@ class CriteriaBuilderFactoryWorker extends EveronCriteriaBuilderFactoryWorker im
     public function buildCriteriaBuilder($namespace = 'Everon\Component\CriteriaBuilder')
     {
         $CriteriaBuilder = new CriteriaBuilder();
-
         $this->getFactory()->injectDependencies(CriteriaBuilder::class, $CriteriaBuilder);
 
         return $CriteriaBuilder;
