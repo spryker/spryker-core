@@ -8,14 +8,14 @@
 namespace Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorker as EveronCriteriaBuilderFactoryWorker;
-use Everon\Component\Factory\Exception\UnableToInstantiateException;
 
 class CriteriaBuilderFactoryWorker extends EveronCriteriaBuilderFactoryWorker implements CriteriaBuilderFactoryWorkerInterface
 {
+
     /**
      * @inheritdoc
      */
-    public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder')
+    public function buildCriteriaBuilder($namespace = 'Everon\Component\CriteriaBuilder')
     {
         $CriteriaBuilder = new CriteriaBuilder();
 
@@ -23,4 +23,5 @@ class CriteriaBuilderFactoryWorker extends EveronCriteriaBuilderFactoryWorker im
 
         return $CriteriaBuilder;
     }
+
 }
