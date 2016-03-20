@@ -1,5 +1,10 @@
 {
   "name": "spryker/sql-criteria-builder",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
   "require": {
     "everon/collection": "~1.0.2",
     "everon/criteria-builder": "~1.0.2",
