@@ -25,7 +25,7 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
      */
     public function getCheckSteps(LoggerInterface $logger = null)
     {
-        return $this->getFactory()->createCheckSteps($logger);
+        return $this->getFactory()->getCheckSteps($logger);
     }
 
     /**

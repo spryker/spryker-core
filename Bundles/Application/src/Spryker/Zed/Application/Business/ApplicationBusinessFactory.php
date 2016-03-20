@@ -39,7 +39,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep[]
      */
-    public function createCheckSteps(LoggerInterface $logger = null)
+    public function getCheckSteps(LoggerInterface $logger = null)
     {
         return [
             $this->createCheckStepDeleteDatabase($logger),
