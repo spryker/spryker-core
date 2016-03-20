@@ -9,6 +9,6 @@ namespace Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilder as EveronCriteriaBuilder;
 
-class CriteriaBuilder extends EveronCriteriaBuilder
+class CriteriaBuilder extends EveronCriteriaBuilder implements CriteriaBuilderInterface
 {
 }
