@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\Collector\Persistence\Collector;
 
-use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
+use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 
 abstract class AbstractPdoCollectorQuery extends AbstractCollectorQuery
 {
 
     /**
-     * @var \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
+     * @var \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
 
     /**
-     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
+     * @return \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface
      */
     public function getCriteriaBuilder()
     {
@@ -26,7 +26,7 @@ abstract class AbstractPdoCollectorQuery extends AbstractCollectorQuery
     }
 
     /**
-     * @param \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
+     * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      *
      * @return $this
      */

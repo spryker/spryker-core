@@ -11,5 +11,4 @@ use Everon\Component\Collection\CollectionInterface as EveronCollectionInterface
 
 interface CollectionInterface extends EveronCollectionInterface
 {
-
 }

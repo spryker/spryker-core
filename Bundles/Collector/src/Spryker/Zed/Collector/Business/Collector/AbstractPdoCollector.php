@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Collector\Business\Collector;
 
-use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Shared\Library\BatchIterator\PdoBatchIterator;
+use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPdoCollectorQuery;
@@ -24,12 +24,12 @@ abstract class AbstractPdoCollector extends AbstractCollector
     protected $queryBuilder;
 
     /**
-     * @var \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
+     * @var \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
 
     /**
-     * @param \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
+     * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      *
      * @return void
      */
