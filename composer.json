@@ -408,6 +408,7 @@
       "Unit\\Spryker\\Shared\\ShipmentCheckoutConnector\\": "Bundles/ShipmentCheckoutConnector/tests",
       "Spryker\\Zed\\ShipmentCheckoutConnector\\": "Bundles/ShipmentCheckoutConnector/src",
       "Unit\\Spryker\\Zed\\ShipmentCheckoutConnector\\": "Bundles/ShipmentCheckoutConnector/tests",
+      "Spryker\\Shared\\SqlCriteriaBuilder\\": "Bundles/SqlCriteriaBuilder/src",
       "Spryker\\Shared\\Stock\\": "Bundles/Stock/src",
       "Unit\\Spryker\\Shared\\Stock\\": "Bundles/Stock/tests",
       "Functional\\Spryker\\Shared\\Stock\\": "Bundles/Stock/tests",
