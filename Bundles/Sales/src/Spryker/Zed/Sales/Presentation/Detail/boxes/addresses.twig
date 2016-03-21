@@ -1,11 +1,11 @@
-{% macro address(order, addr, messageIfEmpty) %}
+{% macro address(order, addr, panelTitle, messageIfEmpty) %}
 
     {% if addr is not defined %}
         {{ messageIfEmpty | trans }}
     {% else %}
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Billing Address</h3>
+                <h3 class="panel-title">{{ panelTitle | trans }}</h3>
             </div>
             <div class="panel-body">
                 <a href="{{ url('/sales/edit/address', {'id-sales-order': order.idSalesOrder, 'id-address': addr.idSalesOrderAddress}) }}" class="btn btn-sm btn-warning">
@@ -30,10 +30,10 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                {{ show.address(order, order.billingAddress, 'Billing address not provided') }}
+                {{ show.address(order, order.billingAddress, 'Billing address', 'Billing address not provided') }}
             </div>
             <div class="col-xs-12 col-sm-6">
-                {{ show.address(order, order.shippingAddress, 'Shipping address not provided') }}
+                {{ show.address(order, order.shippingAddress, 'Shipping address', 'Shipping address not provided') }}
             </div>
         </div>
 

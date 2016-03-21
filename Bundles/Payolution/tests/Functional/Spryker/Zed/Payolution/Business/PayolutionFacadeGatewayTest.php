@@ -212,7 +212,7 @@ class PayolutionFacadeGatewayTest extends Test
         $responseTransfer = $facade->reAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
 
-        /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
         $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
         $reAuthorizationRequestLogEntity = $this
             ->paymentEntity
@@ -251,7 +251,7 @@ class PayolutionFacadeGatewayTest extends Test
         $responseTransfer = $facade->revertPayment($this->paymentEntity->getIdPaymentPayolution());
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
 
-        /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
         $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
         $revertRequestLogEntity = $this->paymentEntity->getSpyPaymentPayolutionTransactionRequestLogs()->getLast();
 
@@ -277,13 +277,13 @@ class PayolutionFacadeGatewayTest extends Test
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
         $facade->capturePayment($this->paymentEntity->getIdPaymentPayolution());
 
-        /* @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
         $captureStatusLogEntity = $this->paymentEntity->getSpyPaymentPayolutionTransactionStatusLogs()->getLast();
 
         $responseTransfer = $facade->refundPayment($this->paymentEntity->getIdPaymentPayolution());
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
 
-        /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
         $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
         $refundRequestLogEntity = $this->paymentEntity->getSpyPaymentPayolutionTransactionRequestLogs()->getLast();
 

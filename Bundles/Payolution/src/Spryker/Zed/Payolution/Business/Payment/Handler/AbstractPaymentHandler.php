@@ -60,7 +60,7 @@ abstract class AbstractPaymentHandler
     }
 
     /**
-     * @param \Spryker\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface | InstallmentInterface $mapper
+     * @param \Spryker\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface|\Spryker\Zed\Payolution\Business\Payment\Method\Installment\InstallmentInterface $mapper
      *
      * @return void
      */
@@ -74,7 +74,7 @@ abstract class AbstractPaymentHandler
      *
      * @throws \Spryker\Zed\Payolution\Business\Exception\NoMethodMapperException
      *
-     * @return \Spryker\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface | InstallmentInterface
+     * @return \Spryker\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface|\Spryker\Zed\Payolution\Business\Payment\Method\Installment\InstallmentInterface
      */
     protected function getMethodMapper($accountBrand)
     {
@@ -106,9 +106,9 @@ abstract class AbstractPaymentHandler
     }
 
     /**
-     * @param array | string $requestData
+     * @param array|string $requestData
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer | PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer|\Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     abstract protected function sendRequest($requestData);
 

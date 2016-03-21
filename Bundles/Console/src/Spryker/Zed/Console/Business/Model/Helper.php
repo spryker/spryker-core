@@ -178,7 +178,7 @@ trait Helper
      */
     public function ask($question, $default = null)
     {
-        /* @var DialogHelper $dialog */
+        /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
         $dialog = $this->getHelperSet()->get('dialog');
 
         return $dialog->ask($this->output, $question, $default);
@@ -193,7 +193,7 @@ trait Helper
      */
     public function select($question, array $options, $default)
     {
-        /* @var DialogHelper $dialog */
+        /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
         $dialog = $this->getHelperSet()->get('dialog');
         $selected = $dialog->select(
             $this->output,

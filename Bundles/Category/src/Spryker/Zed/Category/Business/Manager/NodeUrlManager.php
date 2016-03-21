@@ -101,7 +101,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
     {
         $children = $this->categoryTreeReader->getPathChildren($categoryNodeTransfer->getIdCategoryNode());
         foreach ($children as $child) {
-            /* @var SpyCategoryClosureTable $child */
+            /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $child */
             $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $localeTransfer);
             if (!$urlTransfer) {
                 continue;
@@ -163,7 +163,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $parentList = $this->categoryTreeReader->getPathParents($idChild, $localeTransfer->getIdLocale());
         $pathTokens = [];
         foreach ($parentList as $parent) {
-            /* @var SpyCategoryClosureTable $parent */
+            /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $parent */
             $pathTokens[] = $parent->toArray();
         }
 
