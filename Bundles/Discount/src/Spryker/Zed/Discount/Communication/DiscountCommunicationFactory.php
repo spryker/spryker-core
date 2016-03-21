@@ -107,7 +107,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      * @param array $formData
      * @param array $formOptions
      *
-     * @return \Symfony\Component\Form\FormTypeInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCartRuleForm(array $formData = [], array $formOptions = [])
     {
@@ -132,13 +132,21 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Discount\Communication\Form\CollectorPluginForm
      */
-    public function createCollectorPluginForm()
+    public function createCollectorPluginFormType()
     {
-        $collectorPluginForm = new CollectorPluginForm(
+        return new CollectorPluginForm(
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
             $this->getDecisionRulePlugins()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCollectorPluginForm()
+    {
+        $collectorPluginForm = $this->createCollectorPluginFormType();
 
         return $this->getFormFactory()->create($collectorPluginForm);
     }
@@ -153,6 +161,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     {
         $voucherCodesForm = new VoucherCodesForm(
             $this->createDecisionRulesFormTransformer(),
+            $this,
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
             $this->getDecisionRulePlugins()
@@ -191,15 +200,23 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm
      */
-    public function createDecisionRuleForm()
+    public function createDecisionRuleFormType()
     {
-        $decisionRulesForm = new DecisionRuleForm(
+        return new DecisionRuleForm(
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
             $this->getDecisionRulePlugins()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDecisionRuleForm()
+    {
+        $decisionRulesForm = $this->createDecisionRuleFormType();
 
         return $this->getFormFactory()->create($decisionRulesForm);
     }

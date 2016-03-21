@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,43 +31,33 @@ class VoucherCodesForm extends AbstractRuleForm
     const FIELD_COLLECTOR_LOGICAL_OPERATOR = 'collector_logical_operator';
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
-     */
-    protected $calculatorPlugins;
-
-    /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
-     */
-    protected $collectorPlugins;
-
-    /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
-     */
-    protected $decisionRulePlugins;
-
-    /**
      * @var \Symfony\Component\Form\DataTransformerInterface
      */
     protected $decisionRulesFormTransformer;
 
     /**
+     * @var \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory
+     */
+    protected $discountCommunicationFactory;
+
+    /**
      * @param \Symfony\Component\Form\DataTransformerInterface $decisionRulesFormTransformer
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     * @param \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory $discountCommunicationFactory
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $availableCalculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $availableCollectorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $availableDecisionRulePlugins
      */
     public function __construct(
         DataTransformerInterface $decisionRulesFormTransformer,
-        array $calculatorPlugins,
-        array $collectorPlugins,
-        array $decisionRulePlugins
+        DiscountCommunicationFactory $discountCommunicationFactory,
+        array $availableCalculatorPlugins,
+        array $availableCollectorPlugins,
+        array $availableDecisionRulePlugins
     ) {
-        parent::__construct($calculatorPlugins, $collectorPlugins, $decisionRulePlugins);
+        parent::__construct($availableCalculatorPlugins, $availableCollectorPlugins, $availableDecisionRulePlugins);
 
-        $this->calculatorPlugins = $calculatorPlugins;
-        $this->collectorPlugins = $collectorPlugins;
-        $this->decisionRulePlugins = $decisionRulePlugins;
         $this->decisionRulesFormTransformer = $decisionRulesFormTransformer;
+        $this->discountCommunicationFactory = $discountCommunicationFactory;
     }
 
     /**
@@ -253,11 +244,7 @@ class VoucherCodesForm extends AbstractRuleForm
     protected function addCollectorPluginsField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-            'type' => new CollectorPluginForm(
-                $this->calculatorPlugins,
-                $this->collectorPlugins,
-                $this->decisionRulePlugins
-            ),
+            'type' => $this->discountCommunicationFactory->createCollectorPluginFormType(),
             'label' => null,
             'allow_add' => true,
             'allow_delete' => true,
@@ -275,11 +262,7 @@ class VoucherCodesForm extends AbstractRuleForm
     protected function addDecisionRulesField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_DECISION_RULES, 'collection', [
-            'type' => new DecisionRuleForm(
-                $this->calculatorPlugins,
-                $this->collectorPlugins,
-                $this->decisionRulePlugins
-            ),
+            'type' => $this->discountCommunicationFactory->createDecisionRuleFormType(),
             'label' => null,
             'allow_add' => true,
             'allow_delete' => true,
