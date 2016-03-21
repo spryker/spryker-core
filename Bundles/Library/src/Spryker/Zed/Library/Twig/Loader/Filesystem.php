@@ -121,7 +121,7 @@ class Filesystem extends \Twig_Loader_Filesystem
                 throw new \Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
             }
             $bundle = ucfirst(substr($name, 1, $pos - 1));
-            $templateName = substr($name, $pos + 1);
+            $templateName = ucfirst(substr($name, $pos + 1));
 
             return $this->load($name, $bundle, $templateName);
         }
@@ -133,7 +133,7 @@ class Filesystem extends \Twig_Loader_Filesystem
             throw new \Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
         }
         $bundle = ucfirst(substr($name, 1, $pos));
-        $templateName = substr($name, $pos + 2);
+        $templateName = ucfirst(substr($name, $pos + 2));
 
         return $this->load($name, $bundle, $templateName);
     }
