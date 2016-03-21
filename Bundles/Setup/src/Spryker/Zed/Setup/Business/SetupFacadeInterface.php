@@ -62,7 +62,7 @@ interface SetupFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
      */
