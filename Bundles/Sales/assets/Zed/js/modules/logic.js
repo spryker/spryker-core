@@ -49,31 +49,31 @@ function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
 }
 
 var History = new function(){
-    var getContainer = function(theID){
-        return '#history_details_' + theID;
+    var getContainer = function(idProductItem){
+        return '#history_details_' + idProductItem;
     };
 
-    var getButton = function(theID){
-        return '#history-btn-' + theID;
+    var getButton = function(idProductItem){
+        return '#history-btn-' + idProductItem;
     };
 
-    var show = function(theID){
-        $(getContainer(theID)).removeClass('hidden');
-        $(getButton(theID)).removeClass('is-hidden').addClass('is-shown');
+    var show = function(idProductItem){
+        $(getContainer(idProductItem)).removeClass('hidden');
+        $(getButton(idProductItem)).removeClass('is-hidden').addClass('is-shown');
     };
 
-    var hide = function(theID){
-        $(getContainer(theID)).addClass('hidden');
-        $(getButton(theID)).addClass('is-hidden').removeClass('is-shown');
+    var hide = function(idProductItem){
+        $(getContainer(idProductItem)).addClass('hidden');
+        $(getButton(idProductItem)).addClass('is-hidden').removeClass('is-shown');
     };
 
-    var isHidden = function(theID){
-        return $(getContainer(theID)).hasClass('hidden');
+    var isHidden = function(idProductItem){
+        return $(getContainer(idProductItem)).hasClass('hidden');
     };
 
-    this.toggle = function(theID){
-        if (isHidden(theID)) {
-            show(theID);
+    this.toggle = function(idProductItem){
+        if (isHidden(idProductItem)) {
+            show(idProductItem);
             return;
         }
 
@@ -118,9 +118,9 @@ $(document).ready(function() {
 
     $('.more-history').click(function(e){
         e.preventDefault();
-        var theID = $(this).data('id');
+        var idProductItem = $(this).data('id');
 
-        History.toggle(theID);
+        History.toggle(idProductItem);
     });
 
     $('.item-split').click(function(e){
