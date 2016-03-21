@@ -129,7 +129,7 @@ class Calculator implements CalculatorInterface
     protected function distributeDiscountAmount(DistributorInterface $discountDistributor, array $calculatedDiscounts)
     {
         foreach ($calculatedDiscounts as $calculatedDiscount) {
-            /* @var $discountTransfer DiscountTransfer */
+            /** @var \Generated\Shared\Transfer\DiscountTransfer $discountTransfer */
             $discountTransfer = $calculatedDiscount[self::KEY_DISCOUNT_TRANSFER];
             $discountDistributor->distribute(
                 $calculatedDiscount[self::KEY_DISCOUNTABLE_OBJECTS],

@@ -92,7 +92,7 @@ class VoucherFormDataProvider
             $discountTransfer = new DiscountTransfer();
             $discountTransfer->fromArray($discountEntity->toArray(), true);
 
-            /* @var DiscountCalculatorPluginInterface $calculator */
+            /** @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculator */
             $calculator = $this->calculatorPlugins[$discountEntity->getCalculatorPlugin()];
 
             $discounts[] = $calculator->getFormattedAmount($discountTransfer);
