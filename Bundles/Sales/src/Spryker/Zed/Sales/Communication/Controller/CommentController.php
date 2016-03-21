@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 use Generated\Shared\Transfer\CommentTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -61,11 +61,11 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\Form $form
+     * @param \Symfony\Component\Form\FormInterface $form
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function submitCommentForm(Request $request, Form $form)
+    protected function submitCommentForm(Request $request, FormInterface $form)
     {
         $formData = $form->getData();
         $idSalesOrder = $formData[CommentTransfer::FK_SALES_ORDER];
