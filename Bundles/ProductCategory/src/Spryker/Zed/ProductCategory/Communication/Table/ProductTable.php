@@ -20,6 +20,7 @@ class ProductTable extends AbstractTable
 {
 
     const TABLE_IDENTIFIER = 'product-table';
+    const COL_CHECKBOX = 'checkbox';
 
     /**
      * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
@@ -61,7 +62,7 @@ class ProductTable extends AbstractTable
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => 'ID',
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
-            'checkbox' => 'Selected',
+            self::COL_CHECKBOX => 'Selected',
         ]);
 
         $config->setSearchable([
@@ -69,6 +70,7 @@ class ProductTable extends AbstractTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
 
+        $config->addRawColumn(self::COL_CHECKBOX);
         $config->setPageLength(10);
 
         return $config;
@@ -104,7 +106,7 @@ class ProductTable extends AbstractTable
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 SpyProductAbstractTableMap::COL_SKU => $product[SpyProductAbstractTableMap::COL_SKU],
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $product['name'],
-                'checkbox' => $checkbox_html,
+                self::COL_CHECKBOX => $checkbox_html,
             ];
         }
         unset($queryResults);
