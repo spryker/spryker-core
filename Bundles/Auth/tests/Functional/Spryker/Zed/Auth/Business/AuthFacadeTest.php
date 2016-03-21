@@ -55,10 +55,10 @@ class AuthFacadeTest extends Test
     /**
      * @return void
      */
-    public function testRequestPasswordEmailNotExistingShouldThrowException()
+    public function testRequestPasswordEmailNotExistingShouldReturnFalse()
     {
-        $this->setExpectedException('Spryker\Zed\User\Business\Exception\UserNotFoundException');
-        $this->authFacade->requestPasswordReset('username1@example.com');
+        $result = $this->authFacade->requestPasswordReset('username1@example.com');
+        $this->assertFalse($result);
     }
 
     /**
