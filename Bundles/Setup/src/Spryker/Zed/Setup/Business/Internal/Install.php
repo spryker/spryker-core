@@ -17,7 +17,7 @@ class Install extends AbstractInstaller
      */
     public function install()
     {
-        $this->alert('Installing DEMO DATA');
+        $this->alert('Installing TEST DATA'); //TODO create test data fixture with this installer
     }
 
 }
