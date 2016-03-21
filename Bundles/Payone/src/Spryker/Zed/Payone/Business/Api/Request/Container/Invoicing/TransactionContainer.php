@@ -50,7 +50,7 @@ class TransactionContainer extends AbstractContainer
         $data = parent::toArray();
         $i = 1;
         foreach ($this->items as $item) {
-            /* @var ItemContainer $item */
+            /** @var \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer $item */
             $data = array_merge($data, $item->toArrayByKey($i));
             $i++;
         }

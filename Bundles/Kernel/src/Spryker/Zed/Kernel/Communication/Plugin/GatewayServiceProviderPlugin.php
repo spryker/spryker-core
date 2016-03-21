@@ -43,7 +43,7 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
      */
     public function register(Application $app)
     {
-        /* @var EventDispatcher $dispatcher */
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $dispatcher */
         $dispatcher = $app['dispatcher'];
         $dispatcher->addListener(
             KernelEvents::CONTROLLER,

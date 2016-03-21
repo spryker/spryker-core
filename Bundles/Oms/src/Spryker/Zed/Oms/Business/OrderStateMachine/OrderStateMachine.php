@@ -310,7 +310,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         }
 
         if (count($possibleTransitions) > 0) {
-            /* @var TransitionInterface $selectedTransition */
+            /** @var \Spryker\Zed\Oms\Business\Process\TransitionInterface $selectedTransition */
             $selectedTransition = array_shift($possibleTransitions);
             $targetState = $selectedTransition->getTarget();
         } else {

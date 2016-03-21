@@ -171,7 +171,7 @@ class ZedClient
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
 
-        $rawRequestBody = json_encode($requestTransfer->toArray(false));
+        $rawRequestBody = json_encode($requestTransfer->toArray());
 
         $request->setBody($rawRequestBody, 'application/json');
         //$request->setHeader('Host', System::getHostname());

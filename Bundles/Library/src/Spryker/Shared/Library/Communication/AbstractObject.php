@@ -20,7 +20,7 @@ abstract class AbstractObject implements ObjectInterface
      */
     public function __construct(array $values = null)
     {
-        if (!empty($values)) {
+        if ($values) {
             $this->fromArray($values);
         }
     }
@@ -46,8 +46,8 @@ abstract class AbstractObject implements ObjectInterface
                     }
 
                     if (is_object($subValue) && method_exists($subValue, 'toArray')) {
-                        /* @var ObjectInterface $subValue */
-                        $value[$subKey] = $subValue->toArray(false);
+                        /** @var \Spryker\Shared\Library\Communication\ObjectInterface $subValue */
+                        $value[$subKey] = $subValue->toArray();
                     }
                 }
                 if (empty($value)) {

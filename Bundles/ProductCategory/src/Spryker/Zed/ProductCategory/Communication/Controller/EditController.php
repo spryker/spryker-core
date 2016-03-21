@@ -117,7 +117,7 @@ class EditController extends AddController
      */
     protected function createOrUpdateCategoryNode($existingCategoryNode, NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
     {
-        /* @var SpyCategoryNode $existingCategoryNode */
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNode $existingCategoryNode */
         if ($existingCategoryNode) {
             $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
 
@@ -246,7 +246,7 @@ class EditController extends AddController
 
         $currentCategoryNodeTransfer->setIsMain(true);
 
-        /* @var SpyCategoryNode $currentCategoryNode */
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNode $currentCategoryNode */
         $existingCategoryNode = $this->getFactory()
             ->getCategoryQueryContainer()
             ->queryNodeById($currentCategoryNodeTransfer->getIdCategoryNode())
@@ -367,7 +367,7 @@ class EditController extends AddController
 
         $productDataList = [];
         foreach ($productCategoryList as $productCategory) {
-            /* @var SpyProductCategory $productCategory */
+            /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategory $productCategory */
             $productCategoryData = $productCategory->toArray();
             $productCategoryData['view_node_name'] = 'child';
 
