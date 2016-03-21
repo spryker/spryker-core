@@ -66,7 +66,7 @@ class GroupUsersTable extends AbstractTable
             self::ACTIONS => self::ACTIONS,
         ]);
 
-        $config->addRawColumn(self::COL_OPTIONS);
+        $config->addRawColumn(self::ACTIONS);
 
         return $config;
     }
