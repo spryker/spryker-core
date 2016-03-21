@@ -160,12 +160,12 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createVoucherCodesForm(array $formData = [], array $formOptions = [])
     {
         $voucherCodesForm = new VoucherCodesForm(
-            $this->createDecisionRulesFormTransformer(),
-            $this->createCollectorPluginFormType(),
-            $this->createDecisionRuleFormType(),
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
-            $this->getDecisionRulePlugins()
+            $this->getDecisionRulePlugins(),
+            $this->createDecisionRulesFormTransformer(),
+            $this->createCollectorPluginFormType(),
+            $this->createDecisionRuleFormType()
         );
 
         return $this->getFormFactory()->create($voucherCodesForm, $formData, $formOptions);
