@@ -44,11 +44,19 @@ class StorageInstanceBuilder
         $adapterName = self::SEARCH_ELASTICA_ADAPTER;
 
         if (array_key_exists($adapterName, self::$searchInstances) === false) {
-            self::$searchInstances[$adapterName] = new Client([
-                'protocol' => Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT),
+            $config = [
+                'transport' => Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT),
                 'port' => Config::get(LibraryConstants::ELASTICA_PARAMETER__PORT),
                 'host' => Config::get(LibraryConstants::ELASTICA_PARAMETER__HOST),
-            ]);
+            ];
+
+            if (Config::hasValue(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
+                $config['headers'] = [
+                    'Authorization' => "Basic ".Config::get(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)
+                ];
+            }
+
+            self::$searchInstances[$adapterName] = new Client($config);
         }
 
         return self::$searchInstances[$adapterName];
@@ -113,17 +121,30 @@ class StorageInstanceBuilder
     {
         switch ($kvAdapter) {
             case self::KV_ADAPTER_REDIS:
-                return [
+                $config = [
                     'protocol' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
                     'port' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PORT),
                     'host' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_HOST),
                 ];
+
+                if (Config::hasValue(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
+                    $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
+                }
+                return $config;
             case self::SEARCH_ELASTICA_ADAPTER:
-                return [
-                    'protocol' => Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT),
+                $config = [
+                    'transport' => Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT),
                     'port' => Config::get(LibraryConstants::ELASTICA_PARAMETER__PORT),
                     'host' => Config::get(LibraryConstants::ELASTICA_PARAMETER__HOST),
                 ];
+
+                if (Config::hasValue(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
+                    $config['headers'] = [
+                        'Authorization' => "Basic ".Config::get(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)
+                    ];
+                }
+
+                return $config;
         }
         throw new \ErrorException('Missing implementation for adapter ' . $kvAdapter);
     }
