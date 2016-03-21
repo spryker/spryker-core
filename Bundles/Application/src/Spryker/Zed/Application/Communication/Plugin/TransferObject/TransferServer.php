@@ -142,7 +142,7 @@ class TransferServer
      */
     public function send()
     {
-        $jsonResponse = new JsonResponse($this->response->toArray(false));
+        $jsonResponse = new JsonResponse($this->response->toArray());
         if ($this->repeatIsActive) {
             $jsonResponse->setEncodingOptions(JSON_PRETTY_PRINT);
         }
