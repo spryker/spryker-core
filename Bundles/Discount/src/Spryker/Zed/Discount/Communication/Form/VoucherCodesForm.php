@@ -45,20 +45,20 @@ class VoucherCodesForm extends AbstractRuleForm
     protected $decisionRuleFormType;
 
     /**
-     * @param \Symfony\Component\Form\DataTransformerInterface $decisionRulesFormTransformer
-     * @param \Spryker\Zed\Discount\Communication\Form\CollectorPluginForm $collectorPluginFormType
-     * @param \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm $decisionRuleFormType
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $availableCalculatorPlugins
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $availableCollectorPlugins
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $availableDecisionRulePlugins
+     * @param \Symfony\Component\Form\DataTransformerInterface $decisionRulesFormTransformer
+     * @param \Spryker\Zed\Discount\Communication\Form\CollectorPluginForm $collectorPluginFormType
+     * @param \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm $decisionRuleFormType
      */
     public function __construct(
-        DataTransformerInterface $decisionRulesFormTransformer,
-        CollectorPluginForm $collectorPluginFormType,
-        DecisionRuleForm $decisionRuleFormType,
         array $availableCalculatorPlugins,
         array $availableCollectorPlugins,
-        array $availableDecisionRulePlugins
+        array $availableDecisionRulePlugins,
+        DataTransformerInterface $decisionRulesFormTransformer,
+        CollectorPluginForm $collectorPluginFormType,
+        DecisionRuleForm $decisionRuleFormType
     ) {
         parent::__construct($availableCalculatorPlugins, $availableCollectorPlugins, $availableDecisionRulePlugins);
 
