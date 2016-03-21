@@ -18,7 +18,7 @@ class RulesetTable extends AbstractTable
     const PARAM_ID_RULE = 'id-rule';
     const PARAM_ID_ROLE = 'id-role';
     const REMOVE_ACL_RULESET_URL = '/acl/ruleset/delete';
-    const EMPTY_HEADER_NAME = 'empty';
+    const COL_ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
@@ -52,7 +52,7 @@ class RulesetTable extends AbstractTable
             SpyAclRuleTableMap::COL_CONTROLLER => 'Controller',
             SpyAclRuleTableMap::COL_ACTION => 'Action',
             SpyAclRuleTableMap::COL_TYPE => 'Permission',
-            self::EMPTY_HEADER_NAME => '',
+            self::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSortable([
@@ -67,6 +67,8 @@ class RulesetTable extends AbstractTable
             SpyAclRuleTableMap::COL_CONTROLLER,
             SpyAclRuleTableMap::COL_ACTION,
         ]);
+
+        $config->addRawColumn(self::COL_ACTIONS);
 
         $config->setUrl(sprintf('ruleset-table?id-role=%d', $this->idRole));
 
@@ -90,7 +92,7 @@ class RulesetTable extends AbstractTable
                 SpyAclRuleTableMap::COL_CONTROLLER => $ruleset[SpyAclRuleTableMap::COL_CONTROLLER],
                 SpyAclRuleTableMap::COL_ACTION => $ruleset[SpyAclRuleTableMap::COL_ACTION],
                 SpyAclRuleTableMap::COL_TYPE => $ruleset[SpyAclRuleTableMap::COL_TYPE],
-                self::EMPTY_HEADER_NAME => implode(' ', $this->createTableActions($ruleset)),
+                self::COL_ACTIONS => implode(' ', $this->createTableActions($ruleset)),
             ];
         }
 
