@@ -74,9 +74,7 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface|null
      */
     public function getTransfer()
     {
@@ -84,8 +82,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @param \Spryker\Shared\Transfer\TransferInterface $transfer
      *
      * @return $this
