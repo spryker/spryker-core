@@ -44,6 +44,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
 
     const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
+    const DECISION_CART_RULE_PLUGINS = 'DECISION_CART_RULE_PLUGINS';
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
     const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
 
@@ -100,6 +101,10 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getAvailableDecisionRulePlugins($container);
         };
 
+        $container[self::DECISION_CART_RULE_PLUGINS] = function (Container $container) {
+            return $this->getAvailableDecisionCartRulePlugins($container);
+        };
+
         $container[self::CALCULATOR_PLUGINS] = function (Container $container) {
             return $this->getAvailableCalculatorPlugins($container);
         };
@@ -115,6 +120,17 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
     public function getAvailableDecisionRulePlugins(Container $container)
+    {
+        return [
+            self::PLUGIN_DECISION_RULE_VOUCHER => new Voucher(),
+            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new MinimumCartSubtotal(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     */
+    public function getAvailableDecisionCartRulePlugins(Container $container)
     {
         return [
             self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new MinimumCartSubtotal(),

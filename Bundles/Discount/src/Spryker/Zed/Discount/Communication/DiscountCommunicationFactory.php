@@ -114,7 +114,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         $cartRuleForm = new CartRuleForm(
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
-            $this->getDecisionRulePlugins(),
+            $this->getDecisionCartRulePlugins(),
             $this->createDecisionRulesFormTransformer()
         );
 
@@ -303,6 +303,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function getDecisionRulePlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     */
+    public function getDecisionCartRulePlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::DECISION_CART_RULE_PLUGINS);
     }
 
     /**
