@@ -20,11 +20,6 @@ interface ClassDefinitionInterface extends DefinitionInterface
     /**
      * @return array
      */
-    public function getBundles();
-
-    /**
-     * @return array
-     */
     public function getConstants();
 
     /**

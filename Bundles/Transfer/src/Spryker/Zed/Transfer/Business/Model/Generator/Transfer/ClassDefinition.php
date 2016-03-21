@@ -26,11 +26,6 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @var array
      */
-    private $bundles = [];
-
-    /**
-     * @var array
-     */
     private $constants = [];
 
     /**
@@ -93,26 +88,6 @@ class ClassDefinition implements ClassDefinitionInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $bundle
-     *
-     * @return void
-     */
-    private function addBundle($bundle)
-    {
-        if (!in_array($bundle, $this->bundles)) {
-            $this->bundles[] = $bundle;
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getBundles()
-    {
-        return $this->bundles;
     }
 
     /**
