@@ -48,6 +48,39 @@ function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
+var History = new function(){
+    var getContainer = function(theID){
+        return '#history_details_' + theID;
+    };
+
+    var getButton = function(theID){
+        return '#history-btn-' + theID;
+    };
+
+    var show = function(theID){
+        $(getContainer(theID)).removeClass('hidden');
+        $(getButton(theID)).removeClass('is-hidden').addClass('is-shown');
+    };
+
+    var hide = function(theID){
+        $(getContainer(theID)).addClass('hidden');
+        $(getButton(theID)).addClass('is-hidden').removeClass('is-shown');
+    };
+
+    var isHidden = function(theID){
+        return !!$(getContainer(theID)).hasClass('hidden');
+    };
+
+    this.toggle = function(theID){
+        if (isHidden(theID)) {
+            show(theID);
+            return;
+        }
+
+        hide(theID);
+    };
+};
+
 $(document).ready(function() {
     $('.trigger-order-single-event').click(function(e){
         e.preventDefault();
@@ -87,7 +120,7 @@ $(document).ready(function() {
         e.preventDefault();
         var theID = $(this).data('id');
 
-        $('#history_details_' + theID).toggle();
+        History.toggle(theID);
     });
 
     $('.item-split').click(function(e){
