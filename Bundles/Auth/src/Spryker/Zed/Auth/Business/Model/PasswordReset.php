@@ -15,6 +15,7 @@ use Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface;
 use Spryker\Zed\Library\Generator\StringGenerator;
+use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 class PasswordReset
 {
@@ -60,22 +61,22 @@ class PasswordReset
      * @param string $email
      *
      * @return bool
+     *
+     * @throws \Spryker\Zed\Auth\Business\Exception\EmailNotFoundException
      */
     public function requestToken($email)
     {
-        $userTransfer = $this->userFacade->getUserByUsername($email);
+        try {
+            $userTransfer = $this->userFacade->getUserByUsername($email);
 
-        if (empty($userTransfer)) {
+            $passwordResetToken = $this->generateToken();
+            $result = $this->persistResetPassword($passwordResetToken, $userTransfer);
+            $this->sendResetRequest($email, $passwordResetToken);
+
+            return $result;
+        } catch (UserNotFoundException $exception) {
             return false;
         }
-
-        $passwordResetToken = $this->generateToken();
-
-        $result = $this->persistResetPassword($passwordResetToken, $userTransfer);
-
-        $this->sendResetRequest($email, $passwordResetToken);
-
-        return $result;
     }
 
     /**
