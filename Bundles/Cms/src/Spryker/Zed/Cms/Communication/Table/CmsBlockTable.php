@@ -68,6 +68,8 @@ class CmsBlockTable extends AbstractTable
             SpyCategoryAttributeTableMap::COL_NAME,
         ]);
 
+        $config->addRawColumn(SpyCmsBlockTableMap::COL_VALUE);
+
         return $config;
     }
 

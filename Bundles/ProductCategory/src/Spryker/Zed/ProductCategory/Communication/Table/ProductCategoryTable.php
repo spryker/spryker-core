@@ -72,6 +72,9 @@ class ProductCategoryTable extends AbstractTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
 
+        $config->addRawColumn(SpyProductCategoryTableMap::COL_PRODUCT_ORDER);
+        $config->addRawColumn(self::COL_CHECKBOX);
+
         return $config;
     }
 

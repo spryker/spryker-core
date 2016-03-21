@@ -117,6 +117,8 @@ class MethodTable extends AbstractTable
 
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(SpyShipmentMethodTableMap::COL_IS_ACTIVE);
     }
 
     /**
