@@ -7,7 +7,7 @@
                 <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | formatDateTime }}</p>
                 <p><b>{{ 'Grand total' | trans }}:</b> {{ order.totals.grandTotal | currency }}</p>
                 <p><b>{{ 'Discount' | trans }}:</b> {{ order.totals.discountTotal | currency }}</p>
-                <p><b>{{ 'Item Quantity' | trans }}:</b> {{ order.items|length }}</p>
+                <p><b>{{ 'Unique Product Quantity' | trans }}:</b> {{ order.items|length }}</p>
             </div>
             <div class="col-xs-12 col-md-4">
                 <p><b>{{ 'Customer name' | trans }}:</b> <a href="{{ url('/customer/view', {'id-customer': order.fkCustomer}) }}" target="_blank">{{ order.firstName }} {{ order.lastName }}</a></p>
