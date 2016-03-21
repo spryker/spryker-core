@@ -189,7 +189,7 @@ class DiscountFacadeTest extends Test
             ->setName(self::DECISION_RULE_MINIMUM_CART_SUBTOTAL_AMOUNT)
             ->setValue(self::MINIMUM_CART_AMOUNT_1000)
             ->setDiscount($discount)
-            ->setDecisionRulePlugin(DiscountDependencyProvider::PLUGIN_DECISION_RULE_VOUCHER)
+            ->setDecisionRulePlugin(DiscountDependencyProvider::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL)
             ->save();
 
         $quoteTransfer = $this->createQuoteTransfer();

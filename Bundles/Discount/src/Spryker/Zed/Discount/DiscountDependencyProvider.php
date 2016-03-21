@@ -117,7 +117,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     public function getAvailableDecisionRulePlugins(Container $container)
     {
         return [
-            self::PLUGIN_DECISION_RULE_VOUCHER => new Voucher(),
             self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new MinimumCartSubtotal(),
         ];
     }
