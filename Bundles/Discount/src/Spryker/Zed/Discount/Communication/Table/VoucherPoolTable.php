@@ -181,7 +181,7 @@ class VoucherPoolTable extends AbstractTable
             $discountTransfer = new DiscountTransfer();
             $discountTransfer->fromArray($discountEntity->toArray(), true);
 
-            /* @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculator */
+            /** @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculator */
             $calculator = $availableCalculatorPlugins[$discountEntity->getCalculatorPlugin()];
 
             $discounts[] = $calculator->getFormattedAmount($discountTransfer);
