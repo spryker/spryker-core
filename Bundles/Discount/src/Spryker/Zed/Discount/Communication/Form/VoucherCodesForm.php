@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,20 +35,27 @@ class VoucherCodesForm extends AbstractRuleForm
     protected $decisionRulesFormTransformer;
 
     /**
-     * @var \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory
+     * @var \Spryker\Zed\Discount\Communication\Form\CollectorPluginForm
      */
-    protected $discountCommunicationFactory;
+    protected $collectorPluginFormType;
+
+    /**
+     * @var \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm
+     */
+    protected $decisionRuleFormType;
 
     /**
      * @param \Symfony\Component\Form\DataTransformerInterface $decisionRulesFormTransformer
-     * @param \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory $discountCommunicationFactory
+     * @param \Spryker\Zed\Discount\Communication\Form\CollectorPluginForm $collectorPluginFormType
+     * @param \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm $decisionRuleFormType
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $availableCalculatorPlugins
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $availableCollectorPlugins
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $availableDecisionRulePlugins
      */
     public function __construct(
         DataTransformerInterface $decisionRulesFormTransformer,
-        DiscountCommunicationFactory $discountCommunicationFactory,
+        CollectorPluginForm $collectorPluginFormType,
+        DecisionRuleForm $decisionRuleFormType,
         array $availableCalculatorPlugins,
         array $availableCollectorPlugins,
         array $availableDecisionRulePlugins
@@ -57,7 +63,8 @@ class VoucherCodesForm extends AbstractRuleForm
         parent::__construct($availableCalculatorPlugins, $availableCollectorPlugins, $availableDecisionRulePlugins);
 
         $this->decisionRulesFormTransformer = $decisionRulesFormTransformer;
-        $this->discountCommunicationFactory = $discountCommunicationFactory;
+        $this->collectorPluginFormType = $collectorPluginFormType;
+        $this->decisionRuleFormType = $decisionRuleFormType;
     }
 
     /**
@@ -244,7 +251,7 @@ class VoucherCodesForm extends AbstractRuleForm
     protected function addCollectorPluginsField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-            'type' => $this->discountCommunicationFactory->createCollectorPluginFormType(),
+            'type' => $this->collectorPluginFormType,
             'label' => null,
             'allow_add' => true,
             'allow_delete' => true,
@@ -262,7 +269,7 @@ class VoucherCodesForm extends AbstractRuleForm
     protected function addDecisionRulesField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_DECISION_RULES, 'collection', [
-            'type' => $this->discountCommunicationFactory->createDecisionRuleFormType(),
+            'type' => $this->decisionRuleFormType,
             'label' => null,
             'allow_add' => true,
             'allow_delete' => true,

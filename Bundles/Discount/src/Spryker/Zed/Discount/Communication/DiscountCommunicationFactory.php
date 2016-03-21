@@ -161,7 +161,8 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     {
         $voucherCodesForm = new VoucherCodesForm(
             $this->createDecisionRulesFormTransformer(),
-            $this,
+            $this->createCollectorPluginFormType(),
+            $this->createDecisionRuleFormType(),
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
             $this->getDecisionRulePlugins()
