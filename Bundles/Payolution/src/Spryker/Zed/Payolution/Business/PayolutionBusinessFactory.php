@@ -101,7 +101,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice
+     * @return \Spryker\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface
      */
     protected function createInvoice()
     {
@@ -109,7 +109,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payolution\Business\Payment\Method\Installment\Installment
+     * @return \Spryker\Zed\Payolution\Business\Payment\Method\Installment\InstallmentInterface
      */
     protected function createInstallment()
     {
