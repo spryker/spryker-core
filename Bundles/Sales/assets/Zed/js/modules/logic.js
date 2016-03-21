@@ -49,35 +49,44 @@ function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
 }
 
 var History = new function(){
-    var getContainer = function(idProductItem){
-        return '#history_details_' + idProductItem;
+    var self = this;
+    var idProductItem;
+
+    self.setIdProductItem = function(id){
+        idProductItem = id;
+
+        return self;
     };
 
-    var getButton = function(idProductItem){
-        return '#history-btn-' + idProductItem;
+    var getContainer = function(){
+        return $('#history_details_' + idProductItem);
     };
 
-    var show = function(idProductItem){
-        $(getContainer(idProductItem)).removeClass('hidden');
-        $(getButton(idProductItem)).removeClass('is-hidden').addClass('is-shown');
+    var getButton = function(){
+        return $('#history-btn-' + idProductItem);
     };
 
-    var hide = function(idProductItem){
-        $(getContainer(idProductItem)).addClass('hidden');
-        $(getButton(idProductItem)).addClass('is-hidden').removeClass('is-shown');
+    var show = function(){
+        getContainer().removeClass('hidden');
+        getButton().removeClass('is-hidden').addClass('is-shown');
     };
 
-    var isHidden = function(idProductItem){
-        return $(getContainer(idProductItem)).hasClass('hidden');
+    var hide = function(){
+        getContainer().addClass('hidden');
+        getButton().addClass('is-hidden').removeClass('is-shown');
     };
 
-    this.toggle = function(idProductItem){
-        if (isHidden(idProductItem)) {
-            show(idProductItem);
+    var isHidden = function(){
+        return getContainer().hasClass('hidden');
+    };
+
+    self.toggle = function(){
+        if (isHidden()) {
+            show();
             return;
         }
 
-        hide(theID);
+        hide();
     };
 };
 
@@ -120,7 +129,7 @@ $(document).ready(function() {
         e.preventDefault();
         var idProductItem = $(this).data('id');
 
-        History.toggle(idProductItem);
+        History.setIdProductItem(idProductItem).toggle();
     });
 
     $('.item-split').click(function(e){
