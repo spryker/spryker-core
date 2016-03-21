@@ -68,7 +68,7 @@ var History = new function(){
     };
 
     var isHidden = function(theID){
-        return !!$(getContainer(theID)).hasClass('hidden');
+        return $(getContainer(theID)).hasClass('hidden');
     };
 
     this.toggle = function(theID){
