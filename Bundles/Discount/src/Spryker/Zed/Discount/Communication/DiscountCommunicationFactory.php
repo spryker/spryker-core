@@ -146,9 +146,9 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCollectorPluginForm()
     {
-        $collectorPluginForm = $this->createCollectorPluginFormType();
-
-        return $this->getFormFactory()->create($collectorPluginForm);
+        return $this->getFormFactory()->create(
+            $this->createCollectorPluginFormType()
+        );
     }
 
     /**
@@ -216,9 +216,9 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDecisionRuleForm()
     {
-        $decisionRulesForm = $this->createDecisionRuleFormType();
-
-        return $this->getFormFactory()->create($decisionRulesForm);
+        return $this->getFormFactory()->create(
+            $this->createDecisionRuleFormType()
+        );
     }
 
     /**
