@@ -138,7 +138,7 @@ class CategoryFormEdit extends CategoryFormAdd
     protected function addCategoryIsClickableField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::CATEGORY_IS_CLICKABLE, 'checkbox', [
+            ->add(self::CATEGORY_IS_CLICKABLE, 'hidden', [
                 'label' => 'Clickable',
             ]);
 
