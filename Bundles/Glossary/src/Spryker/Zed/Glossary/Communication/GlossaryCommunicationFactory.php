@@ -45,13 +45,13 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createTranslationTable(array $locales)
     {
-        $translationQuery = $this->getQueryContainer()
-            ->queryTranslations();
+        $glossaryKeyQuery = $this->getQueryContainer()
+            ->queryKeys();
 
         $subQuery = $this->getQueryContainer()
             ->queryTranslations();
 
-        return new TranslationTable($translationQuery, $subQuery, $locales);
+        return new TranslationTable($glossaryKeyQuery, $subQuery, $locales);
     }
 
     /**
