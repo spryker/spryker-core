@@ -10,6 +10,7 @@ var SprykerAjax = require('./legacy/SprykerAjax');
 $(document).ready(function() {
     // editor
     $('.html-editor').summernote({
+        height: 300,
         maxHeight: 600,
         focus: true,
         toolbar: [

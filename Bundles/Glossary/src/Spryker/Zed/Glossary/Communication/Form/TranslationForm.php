@@ -91,7 +91,7 @@ class TranslationForm extends AbstractType
             'constraints' => $this->getFieldDefaultConstraints(),
             'options' => [
                 'attr' => [
-                    'class' => 'html-editor',
+                    'rows' => 10,
                 ],
             ],
         ];

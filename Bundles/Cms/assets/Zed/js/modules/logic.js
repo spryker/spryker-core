@@ -134,6 +134,7 @@ function showAutoComplete(formId, searchType) {
                 keyInput.val(data[this.value].key);
                 $(keyInput.closest('.row').find('#cms_glossary_translation')).summernote('destroy');
                 $(keyInput.closest('.row').find('#cms_glossary_translation')).summernote({
+                    height: 300,
                     maxHeight: 600,
                     inputText: keyContent,
                     focus: true,
