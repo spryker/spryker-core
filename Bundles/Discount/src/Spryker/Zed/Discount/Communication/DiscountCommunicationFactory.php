@@ -117,7 +117,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         $cartRuleForm = new CartRuleForm(
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
-            $this->getCartDecisionRulePlugins(),
+            $this->getDecisionRulePlugins(self::DECISION_RULE_FORM_CART_RULE),
             $this->createDecisionRulesFormTransformer()
         );
 
@@ -209,9 +209,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDecisionRuleFormType($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
     {
-        $decisionRulePlugins = ($mainFormName == self::DECISION_RULE_FORM_CART_RULE)?
-            $this->getCartDecisionRulePlugins():
-            $this->getDecisionRulePlugins();
+        $decisionRulePlugins = $this->getDecisionRulePlugins($mainFormName);
 
         return new DecisionRuleForm(
             $this->getCalculatorPlugins(),
@@ -307,19 +305,16 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param $mainFormName
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
-    public function getDecisionRulePlugins()
+    private function getDecisionRulePlugins($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
     {
-        return $this->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
-    }
+        if ($mainFormName === self::DECISION_RULE_FORM_CART_RULE) {
+            return $this->getProvidedDependency(DiscountDependencyProvider::CART_DECISION_RULE_PLUGINS);
+        }
 
-    /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
-     */
-    public function getCartDecisionRulePlugins()
-    {
-        return $this->getProvidedDependency(DiscountDependencyProvider::CART_DECISION_RULE_PLUGINS);
+        return $this->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
     }
 
     /**
