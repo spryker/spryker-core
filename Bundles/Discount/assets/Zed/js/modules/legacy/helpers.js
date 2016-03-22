@@ -11,7 +11,7 @@ SprykerAjax.loadDecisionRulesOptions = function(element, mainFormName){
     var options = {
         elements: nextElementIndex
     };
-    this.setUrl('/discount/cart-rule/decision-rule/')
+    this.setUrl('/discount/cart-rule/decision-rule?mainFormName='+mainFormName)
         .setDataType('html')
         .ajaxSubmit(options, function(ajaxHtmlResponse, options){
             var html = ajaxHtmlResponse.replace(/decision_rule\[/g, mainFormName + '[decision_rules][rule_' + nextElementIndex + '][');
@@ -38,7 +38,7 @@ SprykerAjax.loadCollectorPlugins = function(element, mainFormName){
 };
 
 module.exports = {
-    loadCartRulesForm: function(element, mainFormName){
+    loadDecisionRuleForm: function(element, mainFormName){
         element.children('i').removeClass('hidden');
         SprykerAjax.loadDecisionRulesOptions(element, mainFormName);
     },
