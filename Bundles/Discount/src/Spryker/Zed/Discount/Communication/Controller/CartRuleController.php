@@ -10,8 +10,8 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
