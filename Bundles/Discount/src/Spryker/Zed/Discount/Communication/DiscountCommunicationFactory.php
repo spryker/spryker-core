@@ -303,7 +303,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param $mainFormName
+     * @param string $mainFormName
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
     protected function getDecisionRulePlugins($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
