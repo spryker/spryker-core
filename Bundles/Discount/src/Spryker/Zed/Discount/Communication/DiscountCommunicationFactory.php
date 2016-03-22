@@ -35,6 +35,9 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
 
+    const DECISION_RULE_FORM_CART_RULE = 'cart_rule';
+    const DECISION_RULE_FORM_VOUCHER_CODES = 'voucher_codes';
+
     /**
      * @param array $formData
      * @param array $formOptions
@@ -201,24 +204,30 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param string $mainFormName
      * @return \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm
      */
-    public function createDecisionRuleFormType()
+    public function createDecisionRuleFormType($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
     {
+        $decisionRulePlugins = ($mainFormName == self::DECISION_RULE_FORM_CART_RULE)?
+            $this->getCartDecisionRulePlugins():
+            $this->getDecisionRulePlugins();
+
         return new DecisionRuleForm(
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
-            $this->getDecisionRulePlugins()
+            $decisionRulePlugins
         );
     }
 
     /**
+     * @param string $mainFormName
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createDecisionRuleForm()
+    public function createDecisionRuleForm($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
     {
         return $this->getFormFactory()->create(
-            $this->createDecisionRuleFormType()
+            $this->createDecisionRuleFormType($mainFormName)
         );
     }
 
