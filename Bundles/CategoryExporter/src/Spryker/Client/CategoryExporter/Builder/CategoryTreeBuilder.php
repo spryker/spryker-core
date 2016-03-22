@@ -56,10 +56,6 @@ class CategoryTreeBuilder
             );
             $parentCategory = $this->kvReader->get($storageKey);
 
-            if (isset($parentCategory[CategoryNodeKeyInterface::CHILDREN][$idCategoryCode])) {
-                $parentCategory[CategoryNodeKeyInterface::CHILDREN][$idCategoryCode] = $categoryNode;
-            }
-
             if (empty($subtree)) {
                 $subtree = $parentCategory;
             }
