@@ -9,7 +9,6 @@
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product data' } %}
-
         {% block widget_content %}
 
             <div class="ibox product-detail">
@@ -42,12 +41,9 @@
             </div>
 
         {% endblock %}
-
     {% endembed %}
 
-
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Concrete Products' } %}
-
         {% block widget_content %}
 
             <div class="row">
@@ -102,7 +98,13 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="product-desc">
+                                        {{ render(controller('/stock/product/stock', {'request': app.request, 'sku': product.sku})) }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -110,7 +112,6 @@
             </div>
 
         {% endblock %}
-
     {% endembed %}
 
 {% endblock %}

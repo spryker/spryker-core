@@ -1,0 +1,11 @@
+<table class="table small m-t-sm">
+    <caption>{{ 'Stock information' | trans }}</caption>
+    <tr>
+        <td>{{ 'On stock:' | trans }}</td>
+        <td>{{ productStock }}</td>
+    </tr>
+    <tr>
+        <td>{{ 'Is never out of stock:' | trans }}</td>
+        <td>{{ isNeverOutOfStock ? 'true'|trans : 'false'|trans }}</td>
+    </tr>
+</table>
