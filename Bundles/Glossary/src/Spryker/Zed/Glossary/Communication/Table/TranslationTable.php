@@ -10,6 +10,7 @@ namespace Spryker\Zed\Glossary\Communication\Table;
 use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Url\Url;
@@ -24,9 +25,9 @@ class TranslationTable extends AbstractTable
     const URL_GLOSSARY_EDIT = '/glossary/edit';
 
     /**
-     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery
+     * @var \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
-    protected $glossaryQuery;
+    protected $glossaryKeyQuery;
 
     /**
      * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery
@@ -39,13 +40,13 @@ class TranslationTable extends AbstractTable
     protected $locales;
 
     /**
-     * @param \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery $glossaryQuery
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery $glossaryKeyQuery
      * @param \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery $subGlossaryKey
      * @param array $locales
      */
-    public function __construct(SpyGlossaryTranslationQuery $glossaryQuery, SpyGlossaryTranslationQuery $subGlossaryKey, array $locales)
+    public function __construct(SpyGlossaryKeyQuery $glossaryKeyQuery, SpyGlossaryTranslationQuery $subGlossaryKey, array $locales)
     {
-        $this->glossaryQuery = $glossaryQuery;
+        $this->glossaryKeyQuery = $glossaryKeyQuery;
         $this->subGlossaryQuery = $subGlossaryKey;
         $this->locales = $locales;
     }
@@ -56,8 +57,8 @@ class TranslationTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $headers = [
-            SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY => '#',
-            $this->buildAlias(SpyGlossaryKeyTableMap::COL_KEY) => 'Name',
+            SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY => '#',
+            SpyGlossaryKeyTableMap::COL_KEY => 'Name',
         ];
 
         foreach ($this->locales as $key => $value) {
@@ -92,7 +93,7 @@ class TranslationTable extends AbstractTable
      *
      * @return array
      */
-    private function getDetails($fkGlossaryKey)
+    protected function getDetails($fkGlossaryKey)
     {
         $keyName = $this->camelize($this->cutTablePrefix(SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY));
         $locales = $this->subGlossaryQuery->filterBy($keyName, $fkGlossaryKey)
@@ -126,17 +127,15 @@ class TranslationTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->glossaryQuery->leftJoinGlossaryKey()
-            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY)
-            ->groupByFkGlossaryKey();
+        $query = $this->glossaryKeyQuery
+            ->leftJoinSpyGlossaryTranslation()
+            ->groupByIdGlossaryKey();
 
         $lines = $this->runQuery($query, $config);
 
         $result = [];
         foreach ($lines as $value) {
-            $fkGlossaryKey = $value[SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY];
-
-            $details = $this->getDetails($fkGlossaryKey);
+            $details = $this->getDetails($value[SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY]);
             $result[] = array_merge($value, $details);
         }
 
@@ -154,21 +153,17 @@ class TranslationTable extends AbstractTable
      *
      * @return array
      */
-    private function buildActionUrls($details)
+    protected function buildActionUrls($details)
     {
         $urls = [];
 
-        if (!empty($details[SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY])) {
-            $idGlossaryKey = $details[SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY];
-            if ($idGlossaryKey !== false) {
-                $urls[] = $this->generateEditButton(
-                    Url::generate(self::URL_GLOSSARY_EDIT, [
-                        EditController::URL_PARAMETER_GLOSSARY_KEY => $idGlossaryKey,
-                    ]),
-                    'Edit'
-                );
-            }
-        }
+        $idGlossaryKey = $details[SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY];
+        $urls[] = $this->generateEditButton(
+            Url::generate(self::URL_GLOSSARY_EDIT, [
+                EditController::URL_PARAMETER_GLOSSARY_KEY => $idGlossaryKey,
+            ]),
+            'Edit'
+        );
 
         return $urls;
     }
