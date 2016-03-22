@@ -222,4 +222,14 @@ interface CategoryFacadeInterface
      */
     public function generatePath(array $pathTokens);
 
+    /**
+     * @api
+     *
+     * @param array $categoryKey
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function getCategoryByKey($categoryKey, $idLocale);
+
 }
