@@ -102,3 +102,7 @@ $chat-box-background-color: #f0f0f0;
   }
 }
 
+.is-hidden .show-less,
+.is-shown .show-more {
+  display: none;
+}
