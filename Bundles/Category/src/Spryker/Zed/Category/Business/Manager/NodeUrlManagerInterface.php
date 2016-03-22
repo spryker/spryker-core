@@ -17,6 +17,8 @@ interface NodeUrlManagerInterface
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
+     *
      * @return void
      */
     public function createUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer);

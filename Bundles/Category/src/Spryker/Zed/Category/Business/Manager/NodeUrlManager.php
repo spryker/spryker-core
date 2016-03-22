@@ -11,9 +11,11 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Shared\Category\CategoryConstants;
+use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 class NodeUrlManager implements NodeUrlManagerInterface
 {
@@ -52,6 +54,8 @@ class NodeUrlManager implements NodeUrlManagerInterface
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
+     *
      * @return void
      */
     public function createUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
@@ -60,7 +64,12 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $categoryUrl = $this->generateUrlFromPathTokens($path);
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        $urlTransfer = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+        try {
+            $urlTransfer = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+        } catch (UrlExistsException $e) {
+            throw new CategoryUrlExistsException($e->getMessage(), $e->getCode(), $e);
+        }
+
         $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
         $this->urlFacade->saveUrlAndTouch($urlTransfer);
     }

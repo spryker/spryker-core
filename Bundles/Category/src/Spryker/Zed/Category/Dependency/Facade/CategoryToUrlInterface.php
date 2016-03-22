@@ -19,8 +19,7 @@ interface CategoryToUrlInterface
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Category\Business\Exception\UrlExistsException
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
