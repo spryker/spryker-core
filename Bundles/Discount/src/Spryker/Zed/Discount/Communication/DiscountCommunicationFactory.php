@@ -209,12 +209,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDecisionRuleFormType($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
     {
-        $decisionRulePlugins = $this->getDecisionRulePlugins($mainFormName);
-
         return new DecisionRuleForm(
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
-            $decisionRulePlugins
+            $this->getDecisionRulePlugins($mainFormName)
         );
     }
 
