@@ -6,8 +6,6 @@
 
 {% block content %}
 
-    {% include '@Sales/Detail/boxes/order-navigation.twig' %}
-
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
     <div id="items">{% include '@Sales/Detail/boxes/items.twig' %}</div>
 
@@ -19,3 +17,7 @@
 
 {% endblock %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-sales-main.css">
+{% endblock %}

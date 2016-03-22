@@ -59,7 +59,7 @@
                     <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | currency }} </td>
                     <td>{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | currency }} </td>
                     <td>
-                        <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}">
+                        <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">
                             {{ orderItem.process }}
                         </a>
                     </td>
@@ -70,13 +70,13 @@
                         {% endfor %}
 
                         {% if orderItem.stateHistory | length > 3 %}
-                            <div id="history_details_{{ orderItem.IdSalesOrderItem }}" style="display: none">
+                            <div id="history_details_{{ orderItem.IdSalesOrderItem }}" class="hidden">
                                 {% for stateHistory in orderItem.stateHistory | slice(3) %}
                                     <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
                                 {% endfor %}
                             </div>
 
-                            <a class="btn btn-sm more-history" data-id="{{ orderItem.IdSalesOrderItem }}">{{ "Show more" | trans }}</a>
+                            <a id="history-btn-{{ orderItem.IdSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}"><span class="show-more">{{ 'Show more' | trans }}</span><span class="show-less">{{ 'Show less' | trans }}</span></a>
                         {% endif %}
                     </td>
                     <td>
