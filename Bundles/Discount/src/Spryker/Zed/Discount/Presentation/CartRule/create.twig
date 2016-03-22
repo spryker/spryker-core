@@ -23,7 +23,7 @@
                     {% for rule in form.collector_plugins %}
                         <div class="col-md-6">
                             <div class="well well-sm">
-                                {{ form_row(rule) }}
+                                {{ form_widget(rule) }}
                             </div>
                         </div>
                     {% endfor %}
@@ -43,7 +43,7 @@
                 {% for rule in form.decision_rules %}
                     <div class="col-md-6">
                         <div class="well well-sm">
-                            {{ form_row(rule) }}
+                            {{ form_widget(rule) }}
                         </div>
                     </div>
                 {% endfor %}
