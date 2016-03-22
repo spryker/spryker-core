@@ -306,7 +306,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      * @param $mainFormName
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
-    private function getDecisionRulePlugins($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
+    protected function getDecisionRulePlugins($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
     {
         if ($mainFormName === self::DECISION_RULE_FORM_CART_RULE) {
             return $this->getProvidedDependency(DiscountDependencyProvider::CART_DECISION_RULE_PLUGINS);
