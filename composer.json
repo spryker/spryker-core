@@ -8,7 +8,7 @@
     "everon/criteria-builder": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-master"
+    "spryker/code-sniffer": "*"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,
