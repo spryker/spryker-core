@@ -119,6 +119,7 @@ abstract class AbstractExporter implements ExporterInterface
         }
 
         $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
+        $this->marker->setLastExportMarkByTypeAndLocale($type, $locale, $this->createTimestamp());
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $locale, $lastRunDatetime);
         $baseQuery->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID);
@@ -131,7 +132,7 @@ abstract class AbstractExporter implements ExporterInterface
         $this->finishExport(
             $result,
             $type,
-            $this->createNewTimestamp()
+            $lastRunDatetime
         );
 
         return $result;
@@ -140,14 +141,18 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param string $type
-     * @param string $timestamp
+     * @param \DateTime $lastRunDatetime
      *
      * @return void
      */
-    protected function finishExport(BatchResultInterface $batchResult, $type, $timestamp)
+    protected function finishExport(BatchResultInterface $batchResult, $type, $lastRunDatetime)
     {
-        if (!$batchResult->isFailed()) {
-            $this->marker->setLastExportMarkByTypeAndLocale($type, $batchResult->getProcessedLocale(), $timestamp);
+        if ($batchResult->isFailed()) {
+            $this->marker->setLastExportMarkByTypeAndLocale(
+                $type,
+                $batchResult->getProcessedLocale(),
+                $this->createTimestamp($lastRunDatetime)
+            );
         }
     }
 
@@ -160,11 +165,15 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
+     * @param \DateTime $dateTime
      * @return string
      */
-    protected function createNewTimestamp()
+    protected function createTimestamp($dateTime = null)
     {
-        return (new \DateTime())->format(
+        if (!$dateTime instanceof \DateTime) {
+            $dateTime = new \DateTime();
+        }
+        return $dateTime->format(
             $this->getTimeFormat()
         );
     }
