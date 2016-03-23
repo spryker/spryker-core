@@ -25,9 +25,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 class VoucherEngine
 {
 
-    const MESSAGE_TYPE_SUCCESS = 'success';
-    const MESSAGE_TYPE_ERROR = 'error';
-
     /**
      * @var int|null
      */
@@ -113,7 +110,7 @@ class VoucherEngine
      */
     protected function acceptVoucherCodesTransation(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
     {
-        if ($voucherCreateInfoInterface->getType() === self::MESSAGE_TYPE_SUCCESS) {
+        if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_SUCCESS) {
             $this->connection->commit();
 
             return $voucherCreateInfoInterface;
@@ -155,21 +152,21 @@ class VoucherEngine
         }
 
         if ($codeCollisions === 0) {
-            $messageCreateInfoTransfer->setType(self::MESSAGE_TYPE_SUCCESS);
+            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_SUCCESS);
             $messageCreateInfoTransfer->setMessage('Voucher codes successfully generated');
 
             return $messageCreateInfoTransfer;
         }
 
         if ($codeCollisions === $voucherTransfer->getQuantity()) {
-            $messageCreateInfoTransfer->setType(self::MESSAGE_TYPE_ERROR);
+            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
             $messageCreateInfoTransfer->setMessage('No available codes to generate');
 
             return $messageCreateInfoTransfer;
         }
 
         if ($codeCollisions === $this->remainingCodesToGenerate) {
-            $messageCreateInfoTransfer->setType(self::MESSAGE_TYPE_ERROR);
+            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
             $messageCreateInfoTransfer->setMessage('No available codes to generate. Select higher code length');
 
             return $messageCreateInfoTransfer;

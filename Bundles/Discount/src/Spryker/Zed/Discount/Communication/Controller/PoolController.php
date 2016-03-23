@@ -47,13 +47,16 @@ class PoolController extends AbstractController
 
             $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($formData, true);
 
-            $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
-
-            $url = Url::generate(DiscountConstants::URL_DISCOUNT_POOL_EDIT, [
-                DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
-            ]);
-
-            return $this->redirectResponse($url->build());
+            try {
+                $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
+                $this->addSuccessMessage('The voucher has been created.');
+                $url = Url::generate(DiscountConstants::URL_DISCOUNT_POOL_EDIT, [
+                    DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
+                ]);
+                return $this->redirectResponse($url->build());
+            } catch (\Exception $exception) {
+                $this->addErrorMessage($exception->getMessage());
+            }
         }
 
         return [
@@ -83,13 +86,19 @@ class PoolController extends AbstractController
             $formData = $form->getData();
 
             $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($formData, true);
-            $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
 
-            $url = Url::generate(DiscountConstants::URL_DISCOUNT_POOL_EDIT, [
-                DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
-            ]);
+            try {
+                $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
 
-            return $this->redirectResponse($url->build());
+                $url = Url::generate(DiscountConstants::URL_DISCOUNT_POOL_EDIT, [
+                    DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
+                ]);
+                $this->addSuccessMessage('The voucher has been saved.');
+                return $this->redirectResponse($url->build());
+            } catch (\Exception $exception) {
+                $this->addErrorMessage($exception->getMessage());
+            }
+
         }
 
         return [

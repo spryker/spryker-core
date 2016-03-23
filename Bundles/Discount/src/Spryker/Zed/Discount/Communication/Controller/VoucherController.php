@@ -9,6 +9,7 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
@@ -27,8 +28,6 @@ class VoucherController extends AbstractController
     const ID_POOL_PARAMETER = 'id-pool';
     const BATCH_PARAMETER = 'batch';
     const GENERATED_ON_PARAMETER = 'generated-on';
-
-    const MESSAGE_TYPE_SUCCESS = 'success';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -127,11 +126,14 @@ class VoucherController extends AbstractController
      */
     protected function addVoucherCreateMessage(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
     {
-        if ($voucherCreateInfoInterface->getType() === self::MESSAGE_TYPE_SUCCESS) {
+        if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_SUCCESS) {
             return $this->addSuccessMessage($voucherCreateInfoInterface->getMessage());
+        } elseif ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_ERROR) {
+            return $this->addErrorMessage($voucherCreateInfoInterface->getMessage());
         }
 
-        return $this->addErrorMessage($voucherCreateInfoInterface->getMessage());
+        // Unknown message type is added as an info message.
+        return $this->addInfoMessage($voucherCreateInfoInterface->getMessage());
     }
 
     /**

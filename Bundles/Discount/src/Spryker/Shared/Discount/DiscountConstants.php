@@ -30,4 +30,11 @@ interface DiscountConstants
     const KEY_VOUCHER_CODE_VOWELS = 'vowels';
     const KEY_VOUCHER_CODE_NUMBERS = 'numbers';
 
+    /**
+     * Types of result type saved in VoucherCreateInfoTransfer.
+     */
+    const
+        MESSAGE_TYPE_SUCCESS = 'success',
+        MESSAGE_TYPE_ERROR = 'error';
+
 }
