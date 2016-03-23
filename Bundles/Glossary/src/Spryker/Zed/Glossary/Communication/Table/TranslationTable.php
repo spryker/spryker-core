@@ -63,6 +63,7 @@ class TranslationTable extends AbstractTable
 
         foreach ($this->locales as $key => $value) {
             $headers[$value] = $value;
+            $config->addRawColumn($value);
         }
 
         $config->setSearchable([
