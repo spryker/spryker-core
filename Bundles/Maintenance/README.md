@@ -8,4 +8,4 @@ composer require spryker/maintenance
 
 ## Documentation
 
-[Maintenance Documentation](https://spryker.github.io/maintenance/index.html)
+[Maintenance Documentation](http://spryker.github.io/core/bundles/maintenance)

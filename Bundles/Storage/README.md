@@ -8,4 +8,4 @@ composer require spryker/storage
 
 ## Documentation
 
-[Storage Documentation](https://spryker.github.io/storage/index.html)
+[Storage Documentation](http://spryker.github.io/core/bundles/storage)

@@ -8,4 +8,4 @@ composer require spryker/sequence-number
 
 ## Documentation
 
-[SequenceNumber Documentation](https://spryker.github.io/sequence-number/index.html)
+[SequenceNumber Documentation](http://spryker.github.io/core/bundles/sequence-number)

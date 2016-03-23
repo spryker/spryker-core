@@ -8,4 +8,4 @@ composer require spryker/silex
 
 ## Documentation
 
-[Silex Documentation](https://spryker.github.io/silex/index.html)
+[Silex Documentation](http://spryker.github.io/core/bundles/silex)

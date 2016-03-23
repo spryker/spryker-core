@@ -8,4 +8,4 @@ composer require spryker/graphviz
 
 ## Documentation
 
-[Graphviz Documentation](https://spryker.github.io/graphviz/index.html)
+[Graphviz Documentation](http://spryker.github.io/core/bundles/graphviz)

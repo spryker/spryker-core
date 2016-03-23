@@ -8,4 +8,4 @@ composer require spryker/payolution
 
 ## Documentation
 
-[Payolution Documentation](https://spryker.github.io/payolution/index.html)
+[Payolution Documentation](http://spryker.github.io/core/bundles/payolution)

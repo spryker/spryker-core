@@ -8,4 +8,4 @@ composer require spryker/transfer
 
 ## Documentation
 
-[Transfer Documentation](https://spryker.github.io/transfer/index.html)
+[Transfer Documentation](http://spryker.github.io/core/bundles/transfer)

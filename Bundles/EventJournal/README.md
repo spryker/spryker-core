@@ -8,4 +8,4 @@ composer require spryker/event-journal
 
 ## Documentation
 
-[EventJournal Documentation](https://spryker.github.io/event-journal/index.html)
+[EventJournal Documentation](http://spryker.github.io/core/bundles/event-journal)

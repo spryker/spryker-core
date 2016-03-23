@@ -8,4 +8,4 @@ composer require spryker/wishlist
 
 ## Documentation
 
-[Wishlist Documentation](https://spryker.github.io/wishlist/index.html)
+[Wishlist Documentation](http://spryker.github.io/core/bundles/wishlist)

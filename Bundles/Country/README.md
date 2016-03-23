@@ -8,4 +8,4 @@ composer require spryker/country
 
 ## Documentation
 
-[Country Documentation](https://spryker.github.io/country/index.html)
+[Country Documentation](http://spryker.github.io/core/bundles/country)

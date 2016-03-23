@@ -8,4 +8,4 @@ composer require spryker/customer
 
 ## Documentation
 
-[Customer Documentation](https://spryker.github.io/customer/index.html)
+[Customer Documentation](http://spryker.github.io/core/bundles/customer)

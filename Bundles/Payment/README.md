@@ -8,4 +8,4 @@ composer require spryker/payment
 
 ## Documentation
 
-[Payolution Documentation](https://spryker.github.io/payment/index.html)
+[Payolution Documentation](http://spryker.github.io/core/bundles/payment)

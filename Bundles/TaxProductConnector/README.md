@@ -8,4 +8,4 @@ composer require spryker/tax-product-connector
 
 ## Documentation
 
-[TaxProductConnector Documentation](https://spryker.github.io/tax-product-connector/index.html)
+[TaxProductConnector Documentation](http://spryker.github.io/core/bundles/tax-product-connector)

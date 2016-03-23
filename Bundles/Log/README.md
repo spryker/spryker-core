@@ -8,4 +8,4 @@ composer require spryker/log
 
 ## Documentation
 
-[Log Documentation](https://spryker.github.io/log/index.html)
+[Log Documentation](http://spryker.github.io/core/bundles/log)
