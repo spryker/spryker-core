@@ -369,7 +369,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      *
      * @param int $idCmsPage
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery|\Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryPageWithTemplatesAndUrlByIdPage($idCmsPage)
     {
@@ -402,7 +402,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      *
      * @param string $value
      *
-     * @return \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationWithKeyByValue($value)
     {

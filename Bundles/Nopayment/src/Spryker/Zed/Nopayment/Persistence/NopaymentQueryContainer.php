@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Nopayment\Persistence;
 
-use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -19,7 +19,7 @@ class NopaymentQueryContainer extends AbstractQueryContainer implements Nopaymen
     /**
      * @api
      *
-     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return \Orm\Zed\Nopayment\Persistence\SpyNopaymentPaidQuery
      */

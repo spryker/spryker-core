@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Cms\Communication\Table;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
@@ -25,12 +25,12 @@ class CmsBlockTable extends AbstractTable
     const PARAM_CMS_BLOCK_EDIT = '/cms/block/edit';
 
     /**
-     * @var \Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     protected $cmsBlockQuery;
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery $cmsBlockQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery $cmsBlockQuery
      */
     public function __construct(SpyCmsBlockQuery $cmsBlockQuery)
     {

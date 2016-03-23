@@ -12,8 +12,9 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
+use Orm\Zed\Cms\Persistence\SpyCmsBlock;
+use Orm\Zed\Cms\Persistence\SpyCmsPage;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -91,7 +92,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsPage $cmsPage
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPage
      *
      * @return int|null
      */
@@ -246,7 +247,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsPage $pageUrl
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageUrl
      *
      * @return array
      */
@@ -366,7 +367,7 @@ class GlossaryController extends AbstractController
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return \Orm\Zed\Cms\Persistence\Base\SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|\Orm\Zed\Url\Persistence\SpyUrl
      */
     protected function findCmsPageById($idPage)
     {
@@ -402,7 +403,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsBlock $blockEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlock $blockEntity
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
