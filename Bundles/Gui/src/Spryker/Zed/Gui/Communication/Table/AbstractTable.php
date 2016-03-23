@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Gui\Communication\Table;
 
+use Generated\Shared\Transfer\DataTablesColumnTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
@@ -478,14 +479,7 @@ abstract class AbstractTable
         if ($this->dataTablesTransfer !== null) {
             $searchColumns = $config->getSearchable();
 
-            foreach ($this->dataTablesTransfer->getColumns() as $column) {
-                $search = $column->getSearch();
-                if (empty($search[self::PARAMETER_VALUE])) {
-                    continue;
-                }
-
-                $this->addQueryCondition($query, $searchColumns, $column);
-            }
+            $this->addFilteringConditions($query, $searchColumns);
         }
 
         $query->offset($offset)
@@ -755,11 +749,11 @@ abstract class AbstractTable
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $searchColumns
-     * @param \ArrayObject $column
+     * @param \Generated\Shared\Transfer\DataTablesColumnTransfer $column
      *
      * @return void
      */
-    protected function addQueryCondition(ModelCriteria $query, array $searchColumns, \ArrayObject $column)
+    protected function addQueryCondition(ModelCriteria $query, array $searchColumns, DataTablesColumnTransfer $column)
     {
         $search = $column->getSearch();
         if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {
@@ -786,6 +780,24 @@ abstract class AbstractTable
             $searchColumns[$column->getData()],
             $value
         ));
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param array $searchColumns
+     *
+     * @return void
+     */
+    protected function addFilteringConditions(ModelCriteria $query, array $searchColumns)
+    {
+        foreach ($this->dataTablesTransfer->getColumns() as $column) {
+            $search = $column->getSearch();
+            if (empty($search[self::PARAMETER_VALUE])) {
+                continue;
+            }
+
+            $this->addQueryCondition($query, $searchColumns, $column);
+        }
     }
 
 }
