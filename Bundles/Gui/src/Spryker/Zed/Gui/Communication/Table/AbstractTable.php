@@ -479,14 +479,7 @@ abstract class AbstractTable
         if ($this->dataTablesTransfer !== null) {
             $searchColumns = $config->getSearchable();
 
-            foreach ($this->dataTablesTransfer->getColumns() as $column) {
-                $search = $column->getSearch();
-                if (empty($search[self::PARAMETER_VALUE])) {
-                    continue;
-                }
-
-                $this->addQueryCondition($query, $searchColumns, $column);
-            }
+            $this->addFilteringConditions($query, $searchColumns);
         }
 
         $query->offset($offset)
@@ -500,6 +493,7 @@ abstract class AbstractTable
 
         return $data->toArray(null, false, TableMap::TYPE_COLNAME);
     }
+
 
     /**
      * @param string $value
@@ -787,6 +781,24 @@ abstract class AbstractTable
             $searchColumns[$column->getData()],
             $value
         ));
+    }
+
+    /**
+     * @param ModelCriteria $query
+     * @param array $searchColumns
+     *
+     * @return void
+     */
+    protected function addFilteringConditions(ModelCriteria $query, array $searchColumns)
+    {
+        foreach ($this->dataTablesTransfer->getColumns() as $column) {
+            $search = $column->getSearch();
+            if (empty($search[self::PARAMETER_VALUE])) {
+                continue;
+            }
+
+            $this->addQueryCondition($query, $searchColumns, $column);
+        }
     }
 
 }
