@@ -165,7 +165,7 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
-     * @param \DateTime $dateTime
+     * @param \DateTime|null $dateTime
      * @return string
      */
     protected function createTimestamp($dateTime = null)
