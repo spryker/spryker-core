@@ -43,7 +43,7 @@ interface RuleInterface
     /**
      * @param int $idRole
      *
-     * @return \Generated\Shared\Transfer\RuleTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function getRoleRules($idRole);
 

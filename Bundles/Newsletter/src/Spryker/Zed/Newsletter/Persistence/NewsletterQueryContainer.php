@@ -21,7 +21,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
      * @param string $email
      * @param string $newsletterTypeName
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionByEmailAndNewsletterTypeName($email, $newsletterTypeName)
     {
@@ -44,7 +44,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
      * @param string $subscriberKey
      * @param string $newsletterTypeName
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionBySubscriberKeyAndNewsletterTypeName($subscriberKey, $newsletterTypeName)
     {
@@ -67,7 +67,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
      * @param int $idCustomer
      * @param string $newsletterTypeName
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionByIdCustomerAndNewsletterTypeName($idCustomer, $newsletterTypeName)
     {
@@ -97,7 +97,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     /**
      * @api
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscription()
     {

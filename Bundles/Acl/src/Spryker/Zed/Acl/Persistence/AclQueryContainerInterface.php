@@ -51,7 +51,7 @@ interface AclQueryContainerInterface
      *
      * @param int $id
      *
-     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
      */
     public function queryRoleById($id);
 
@@ -89,7 +89,7 @@ interface AclQueryContainerInterface
      * @param int $idGroup
      * @param int $idUser
      *
-     * @return \Orm\Zed\Acl\Persistence\Base\SpyAclUserHasGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery
      */
     public function queryUserHasGroupById($idGroup, $idUser);
 

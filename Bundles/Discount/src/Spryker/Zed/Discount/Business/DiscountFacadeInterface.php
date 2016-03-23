@@ -286,7 +286,7 @@ interface DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
      */
     public function getDiscountableItemProductOptions(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer);
 

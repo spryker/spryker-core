@@ -24,7 +24,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
  */
-class DiscountFacade extends AbstractFacade
+class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
 
     /**
@@ -388,7 +388,7 @@ class DiscountFacade extends AbstractFacade
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
      */
     public function getDiscountableItemProductOptions(
         QuoteTransfer $quoteTransfer,
