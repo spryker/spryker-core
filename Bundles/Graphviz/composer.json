@@ -1,7 +1,7 @@
 {
   "name": "spryker/graphviz",
   "require": {
-    "phpdocumentor/graphviz": "dev-master#a906a90"
+    "phpdocumentor/graphviz": "~1.0.4"
   },
   "description": "graphviz bundle",
   "license": "proprietary",
