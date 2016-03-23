@@ -8,4 +8,4 @@ composer require spryker/newsletter
 
 ## Documentation
 
-[Newsletter Documentation](https://spryker.github.io/newsletter/index.html)
+[Newsletter Documentation](http://spryker.github.io/core/bundles/newsletter)

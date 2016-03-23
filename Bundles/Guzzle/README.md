@@ -8,4 +8,4 @@ composer require spryker/guzzle
 
 ## Documentation
 
-[Guzzle Documentation](https://spryker.github.io/guzzle/index.html)
+[Guzzle Documentation](http://spryker.github.io/core/bundles/guzzle)

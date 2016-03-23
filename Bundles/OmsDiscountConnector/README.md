@@ -8,4 +8,4 @@ composer require spryker/oms-discount-connector
 
 ## Documentation
 
-[OmsDiscountConnector Documentation](https://spryker.github.io/oms-discount-connector/index.html)
+[OmsDiscountConnector Documentation](http://spryker.github.io/core/bundles/oms-discount-connector)

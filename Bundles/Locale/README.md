@@ -8,4 +8,4 @@ composer require spryker/locale
 
 ## Documentation
 
-[Locale Documentation](https://spryker.github.io/locale/index.html)
+[Locale Documentation](http://spryker.github.io/core/bundles/locale)

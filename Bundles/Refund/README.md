@@ -8,4 +8,4 @@ composer require spryker/refund
 
 ## Documentation
 
-[Refund Documentation](https://spryker.github.io/refund/index.html)
+[Refund Documentation](http://spryker.github.io/core/bundles/refund)

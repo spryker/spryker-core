@@ -8,4 +8,4 @@ composer require spryker/twig
 
 ## Documentation
 
-[Twig Documentation](https://spryker.github.io/twig/index.html)
+[Twig Documentation](http://spryker.github.io/core/bundles/twig)

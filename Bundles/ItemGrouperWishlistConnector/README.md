@@ -8,4 +8,4 @@ composer require spryker/item-grouper-wishlist-connector
 
 ## Documentation
 
-[ItemGrouperWishlistConnector Documentation](https://spryker.github.io/item-grouper-wishlist-connector/index.html)
+[ItemGrouperWishlistConnector Documentation](http://spryker.github.io/core/bundles/item-grouper-wishlist-connector)

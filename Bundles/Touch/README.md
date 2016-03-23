@@ -8,4 +8,4 @@ composer require spryker/touch
 
 ## Documentation
 
-[Touch Documentation](https://spryker.github.io/touch/index.html)
+[Touch Documentation](http://spryker.github.io/core/bundles/touch)

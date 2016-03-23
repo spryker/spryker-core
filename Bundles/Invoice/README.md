@@ -8,4 +8,4 @@ composer require spryker/invoice
 
 ## Documentation
 
-[Invoice Documentation](https://spryker.github.io/invoice/index.html)
+[Invoice Documentation](http://spryker.github.io/core/bundles/invoice)

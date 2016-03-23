@@ -8,4 +8,4 @@ composer require spryker/testify
 
 ## Documentation
 
-[Testify Documentation](https://spryker.github.io/testify/index.html)
+[Testify Documentation](http://spryker.github.io/core/bundles/testify)

@@ -8,4 +8,4 @@ composer require spryker/tax
 
 ## Documentation
 
-[Tax Documentation](https://spryker.github.io/tax/index.html)
+[Tax Documentation](http://spryker.github.io/core/bundles/tax)

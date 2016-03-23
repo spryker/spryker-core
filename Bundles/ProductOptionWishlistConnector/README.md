@@ -8,4 +8,4 @@ composer require spryker/product-option-wishlist-connector
 
 ## Documentation
 
-[ProductOptionWishlistConnector Documentation](https://spryker.github.io/product-option-wishlist-connector/index.html)
+[ProductOptionWishlistConnector Documentation](http://spryker.github.io/core/bundles/product-option-wishlist-connector)

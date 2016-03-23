@@ -8,4 +8,4 @@ composer require spryker/elastica
 
 ## Documentation
 
-[Elastica Documentation](https://spryker.github.io/elastica/index.html)
+[Elastica Documentation](http://spryker.github.io/core/bundles/elastica)

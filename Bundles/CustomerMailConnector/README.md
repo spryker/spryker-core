@@ -8,4 +8,4 @@ composer require spryker/customer-mail-connector
 
 ## Documentation
 
-[CustomerMailConnector Documentation](https://spryker.github.io/customer-mail-connector/index.html)
+[CustomerMailConnector Documentation](http://spryker.github.io/core/bundles/customer-mail-connector)

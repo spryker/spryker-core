@@ -8,4 +8,4 @@ composer require spryker/auth-mail-connector
 
 ## Documentation
 
-[AuthMailConnector Documentation](https://spryker.github.io/auth-mail-connector/index.html)
+[AuthMailConnector Documentation](http://spryker.github.io/core/bundles/auth-mail-connector)

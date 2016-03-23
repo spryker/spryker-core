@@ -8,4 +8,4 @@ composer require spryker/auth
 
 ## Documentation
 
-[Auth Documentation](https://spryker.github.io/auth/index.html)
+[Auth Documentation](http://spryker.github.io/core/bundles/auth)

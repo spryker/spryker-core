@@ -8,4 +8,4 @@ composer require spryker/oms
 
 ## Documentation
 
-[Oms Documentation](https://spryker.github.io/oms/index.html)
+[Oms Documentation](http://spryker.github.io/core/bundles/oms)
