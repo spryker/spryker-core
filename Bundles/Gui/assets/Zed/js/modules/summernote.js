@@ -10,6 +10,7 @@ module.export = {
     	content = content || '';
 
         return {
+        	height: 300,
             maxHeight: 600,
             inputText: content,
             focus: true,
