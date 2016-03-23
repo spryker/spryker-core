@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Application\Communication\Console;
 
+use Psr\Log\LogLevel;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Zed\Console\Business\Model\Console;

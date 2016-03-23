@@ -14,7 +14,7 @@ use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportStorage;
-use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallTestData;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ImportDemoData;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
@@ -50,7 +50,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
             $this->createCheckStepDeleteGeneratedDirectory($logger),
             $this->createCheckStepDeleteDatabase($logger),
             $this->createCheckStepSetupInstall($logger),
-            $this->createCheckStepInstallTestData($logger),
+            $this->createCheckStepImportDemoData($logger),
 
             $this->createCheckStepStorageValue($logger),
             $this->createCheckStepExportSearch($logger),
@@ -105,11 +105,11 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Psr\Log\LoggerInterface|null $logger
      *
-     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallTestData
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ImportDemoData
      */
-    public function createCheckStepInstallTestData(LoggerInterface $logger = null)
+    public function createCheckStepImportDemoData(LoggerInterface $logger = null)
     {
-        $checkStep = new InstallTestData();
+        $checkStep = new ImportDemoData();
         if ($logger !== null) {
             $checkStep->setLogger($logger);
         }

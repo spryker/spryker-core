@@ -95,9 +95,9 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
      *
      * @return void
      */
-    public function runCheckStepInstallDemoData(LoggerInterface $logger = null)
+    public function runCheckStepImportDemoData(LoggerInterface $logger = null)
     {
-        $this->getFactory()->createCheckStepInstallTestData($logger)->run();
+        $this->getFactory()->createCheckStepImportDemoData($logger)->run();
     }
 
     /**

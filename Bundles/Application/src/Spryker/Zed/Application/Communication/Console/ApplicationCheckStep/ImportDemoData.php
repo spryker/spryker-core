@@ -10,7 +10,7 @@ namespace Spryker\Zed\Application\Communication\Console\ApplicationCheckStep;
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
  */
-class InstallDemoData extends AbstractApplicationCheckStep
+class ImportDemoData extends AbstractApplicationCheckStep
 {
 
     /**
@@ -18,7 +18,7 @@ class InstallDemoData extends AbstractApplicationCheckStep
      */
     public function run()
     {
-        $this->getFacade()->runCheckStepInstallDemoData($this->logger);
+        $this->getFacade()->runCheckStepImportDemoData($this->logger);
     }
 
 }

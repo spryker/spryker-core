@@ -73,7 +73,7 @@ interface ApplicationFacadeInterface
      *
      * @return void
      */
-    public function runCheckStepInstallDemoData(LoggerInterface $logger = null);
+    public function runCheckStepImportDemoData(LoggerInterface $logger = null);
 
     /**
      * @api
