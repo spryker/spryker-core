@@ -747,9 +747,9 @@ abstract class AbstractTable
     }
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $searchColumns
-     * @param DataTablesColumnTransfer $column
+     * @param \Generated\Shared\Transfer\DataTablesColumnTransfer $column
      *
      * @return void
      */
@@ -783,7 +783,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $searchColumns
      *
      * @return void
