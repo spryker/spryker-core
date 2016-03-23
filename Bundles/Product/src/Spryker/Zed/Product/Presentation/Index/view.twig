@@ -101,7 +101,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="product-desc">
-                                        {{ render(controller('/stock/product/stock', {'request': app.request, 'sku': product.sku})) }}
+                                        {{ render(controller('/stock/product/stock', {'sku': product.sku})) }}
                                     </div>
                                 </div>
                             </div>
