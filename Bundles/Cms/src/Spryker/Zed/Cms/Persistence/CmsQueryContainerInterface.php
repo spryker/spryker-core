@@ -51,7 +51,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idCmsPage
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery|\Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryPageWithTemplatesAndUrlByIdPage($idCmsPage);
 

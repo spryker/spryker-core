@@ -7,21 +7,21 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
-use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Communication\Form\CartRuleForm;
 
 class CartRuleFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
     protected $discountFacade;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\Business\DiscountFacadeInterface $discountFacade
      */
-    public function __construct(DiscountFacade $discountFacade)
+    public function __construct(DiscountFacadeInterface $discountFacade)
     {
         $this->discountFacade = $discountFacade;
     }

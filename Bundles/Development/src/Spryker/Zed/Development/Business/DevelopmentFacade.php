@@ -165,7 +165,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @return bool
+     * @return array
      */
     public function getAdjacencyMatrixData()
     {

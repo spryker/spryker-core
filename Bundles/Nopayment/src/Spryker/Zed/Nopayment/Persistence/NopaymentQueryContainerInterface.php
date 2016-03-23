@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Nopayment\Persistence;
 
-use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface NopaymentQueryContainerInterface
 {
@@ -15,7 +15,7 @@ interface NopaymentQueryContainerInterface
     /**
      * @api
      *
-     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return \Orm\Zed\Nopayment\Persistence\SpyNopaymentPaidQuery
      */

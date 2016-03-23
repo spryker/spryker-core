@@ -121,7 +121,7 @@ class Rule implements RuleInterface
     /**
      * @param int $idRole
      *
-     * @return \Generated\Shared\Transfer\RuleTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function getRoleRules($idRole)
     {
@@ -159,7 +159,7 @@ class Rule implements RuleInterface
      * @param string $controller
      * @param string $action
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function findByRoles(
         RolesTransfer $roles,

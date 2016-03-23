@@ -49,7 +49,7 @@ class AdjacencyMatrixBuilder
     }
 
     /**
-     * @return bool
+     * @return array
      */
     public function build()
     {
