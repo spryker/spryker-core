@@ -494,7 +494,6 @@ abstract class AbstractTable
         return $data->toArray(null, false, TableMap::TYPE_COLNAME);
     }
 
-
     /**
      * @param string $value
      *
@@ -748,9 +747,9 @@ abstract class AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param ModelCriteria $query
      * @param array $searchColumns
-     * @param \ArrayObject $column
+     * @param DataTablesColumnTransfer $column
      *
      * @return void
      */
