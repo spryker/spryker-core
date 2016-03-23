@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Gui\Communication\Table;
 
+use Generated\Shared\Transfer\DataTablesColumnTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
@@ -759,7 +760,7 @@ abstract class AbstractTable
      *
      * @return void
      */
-    protected function addQueryCondition(ModelCriteria $query, array $searchColumns, \ArrayObject $column)
+    protected function addQueryCondition(ModelCriteria $query, array $searchColumns, DataTablesColumnTransfer $column)
     {
         $search = $column->getSearch();
         if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {
