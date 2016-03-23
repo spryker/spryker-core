@@ -21,9 +21,9 @@
 
                             <table class="table small m-t-sm">
                             {% for name, productAttribute in attributes.attributes %}
-                                {% if productAttribute is not iterable %}
+                                {% if productAttribute is not iterable and name != 'slug' %}
                                 <tr>
-                                    <td>{{ name }}</td>
+                                    <td>{{ 'product.attribute.'~name | trans }}</td>
                                     <td>{{ productAttribute }}</td>
                                 </tr>
                                 {% endif %}
