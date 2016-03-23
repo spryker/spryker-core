@@ -29,7 +29,7 @@ class ProductConcreteWriter implements ProductConcreteWriterInterface
     protected $attributesStatement;
 
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $localeTransfer;
 
