@@ -67,7 +67,7 @@ class ResetPasswordForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new CurrentPassword([
-                    'facadeUser' => $this->userFacade,
+                    'userFacade' => $this->userFacade,
                 ]),
             ],
         ]);
