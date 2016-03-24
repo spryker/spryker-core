@@ -81,17 +81,13 @@ class PoolController extends AbstractController
 
             $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($formData, true);
 
-            try {
-                $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
+            $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
 
-                $url = Url::generate(DiscountConstants::URL_DISCOUNT_POOL_EDIT, [
-                    DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
-                ]);
-                $this->addSuccessMessage($successMessage);
-                return $this->redirectResponse($url->build());
-            } catch (\Exception $exception) {
-                $this->addErrorMessage($exception->getMessage());
-            }
+            $url = Url::generate(DiscountConstants::URL_DISCOUNT_POOL_EDIT, [
+                DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
+            ]);
+            $this->addSuccessMessage($successMessage);
+            return $this->redirectResponse($url->build());
         }
 
         return [
