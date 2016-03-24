@@ -35,7 +35,7 @@ class PoolController extends AbstractController
     public function createAction(Request $request)
     {
         $form = $this->buildVoucherForm()->handleRequest($request);
-        return $this->processValidVoucherForm($form, 'The voucher has been created.');
+        return $this->processVoucherForm($form, 'The voucher has been created.');
     }
 
     /**
@@ -48,7 +48,7 @@ class PoolController extends AbstractController
         $idPool = $this->castId($request->query->get(DiscountConstants::PARAM_ID_POOL));
         $form = $this->buildVoucherForm($idPool)->handleRequest($request);
 
-        return $this->processValidVoucherForm($form, 'The voucher has been saved.');
+        return $this->processVoucherForm($form, 'The voucher has been saved.');
     }
 
     /**
@@ -74,7 +74,7 @@ class PoolController extends AbstractController
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function processValidVoucherForm(FormInterface $form, $successMessage)
+    protected function processVoucherForm(FormInterface $form, $successMessage)
     {
         if ($form->isValid()) {
             $formData = $form->getData();
