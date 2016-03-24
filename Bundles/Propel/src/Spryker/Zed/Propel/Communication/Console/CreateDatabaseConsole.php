@@ -79,7 +79,7 @@ class CreateDatabaseConsole extends Console
     protected function existsPostgresDatabase()
     {
         $databaseExistsCommand = sprintf(
-            'psql -U %s -lqt | cut -d \| -f 1 | grep -w %s | wc -l',
+            'sudo psql -U %s -lqt | cut -d \| -f 1 | grep -w %s | wc -l',
             'postgres',
             Config::get(PropelConstants::ZED_DB_DATABASE)
         );
