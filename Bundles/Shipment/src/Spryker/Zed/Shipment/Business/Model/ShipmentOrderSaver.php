@@ -20,7 +20,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 {
 
     /**
-     * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $queryContainer;
 
