@@ -21,7 +21,7 @@
 
                             <table class="table small m-t-sm">
                             {% for name, productAttribute in attributes.attributes %}
-                                {% if productAttribute is not iterable and name != 'slug' %}
+                                {% if productAttribute is not iterable %}
                                 <tr>
                                     {#this is correct key, but in Zed trans does not work, so for now I will comment it#}
                                     {#<td>{{ ('product.attribute.'~name) | trans }}</td>#}
