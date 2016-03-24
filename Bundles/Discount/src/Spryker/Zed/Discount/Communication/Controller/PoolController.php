@@ -13,6 +13,7 @@ use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -33,35 +34,8 @@ class PoolController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $dataProvider = $this->getFactory()->createVoucherCodesFormDataProvider();
-        $form = $this
-            ->getFactory()
-            ->createVoucherCodesForm(
-                $dataProvider->getData(),
-                $dataProvider->getOptions()
-            )
-            ->handleRequest($request);
-
-        if ($form->isValid()) {
-            $formData = $form->getData();
-
-            $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($formData, true);
-
-            try {
-                $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
-                $this->addSuccessMessage('The voucher has been created.');
-                $url = Url::generate(DiscountConstants::URL_DISCOUNT_POOL_EDIT, [
-                    DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
-                ]);
-                return $this->redirectResponse($url->build());
-            } catch (\Exception $exception) {
-                $this->addErrorMessage($exception->getMessage());
-            }
-        }
-
-        return [
-            'form' => $form->createView(),
-        ];
+        $form = $this->buildVoucherForm()->handleRequest($request);
+        return $this->processValidVoucherForm($form, 'The voucher has been created.');
     }
 
     /**
@@ -72,16 +46,36 @@ class PoolController extends AbstractController
     public function editAction(Request $request)
     {
         $idPool = $this->castId($request->query->get(DiscountConstants::PARAM_ID_POOL));
+        $form = $this->buildVoucherForm($idPool)->handleRequest($request);
 
+        return $this->processValidVoucherForm($form, 'The voucher has been saved.');
+    }
+
+    /**
+     * @param int|null $idPool
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function buildVoucherForm($idPool = null)
+    {
         $dataProvider = $this->getFactory()->createVoucherCodesFormDataProvider();
         $form = $this
             ->getFactory()
             ->createVoucherCodesForm(
                 $dataProvider->getData($idPool),
                 $dataProvider->getOptions()
-            )
-            ->handleRequest($request);
+            );
+        return $form;
+    }
 
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param string $successMessage
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function processValidVoucherForm(FormInterface $form, $successMessage)
+    {
         if ($form->isValid()) {
             $formData = $form->getData();
 
@@ -93,12 +87,11 @@ class PoolController extends AbstractController
                 $url = Url::generate(DiscountConstants::URL_DISCOUNT_POOL_EDIT, [
                     DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
                 ]);
-                $this->addSuccessMessage('The voucher has been saved.');
+                $this->addSuccessMessage($successMessage);
                 return $this->redirectResponse($url->build());
             } catch (\Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-
         }
 
         return [

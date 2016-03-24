@@ -128,7 +128,8 @@ class VoucherController extends AbstractController
     {
         if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_SUCCESS) {
             return $this->addSuccessMessage($voucherCreateInfoInterface->getMessage());
-        } elseif ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_ERROR) {
+        }
+        if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_ERROR) {
             return $this->addErrorMessage($voucherCreateInfoInterface->getMessage());
         }
 

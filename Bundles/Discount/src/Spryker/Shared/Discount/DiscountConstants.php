@@ -33,8 +33,7 @@ interface DiscountConstants
     /**
      * Types of result type saved in VoucherCreateInfoTransfer.
      */
-    const
-        MESSAGE_TYPE_SUCCESS = 'success',
-        MESSAGE_TYPE_ERROR = 'error';
+    const MESSAGE_TYPE_SUCCESS = 'success';
+    const MESSAGE_TYPE_ERROR = 'error';
 
 }
