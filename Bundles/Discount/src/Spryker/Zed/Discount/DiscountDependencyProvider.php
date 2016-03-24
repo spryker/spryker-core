@@ -93,24 +93,24 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::STORE_CONFIG] = function (Container $container) {
+        $container[self::STORE_CONFIG] = function () {
             return Store::getInstance();
         };
 
-        $container[self::DECISION_RULE_PLUGINS] = function (Container $container) {
-            return $this->getAvailableDecisionRulePlugins($container);
+        $container[self::DECISION_RULE_PLUGINS] = function () {
+            return $this->getAvailableDecisionRulePlugins();
         };
 
-        $container[self::CART_DECISION_RULE_PLUGINS] = function (Container $container) {
-            return $this->getAvailableCartDecisionRulePlugins($container);
+        $container[self::CART_DECISION_RULE_PLUGINS] = function () {
+            return $this->getAvailableCartDecisionRulePlugins();
         };
 
-        $container[self::CALCULATOR_PLUGINS] = function (Container $container) {
-            return $this->getAvailableCalculatorPlugins($container);
+        $container[self::CALCULATOR_PLUGINS] = function () {
+            return $this->getAvailableCalculatorPlugins();
         };
 
-        $container[self::COLLECTOR_PLUGINS] = function (Container $container) {
-            return $this->getAvailableCollectorPlugins($container);
+        $container[self::COLLECTOR_PLUGINS] = function () {
+            return $this->getAvailableCollectorPlugins();
         };
 
         return $container;
@@ -119,7 +119,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
-    public function getAvailableDecisionRulePlugins(Container $container)
+    public function getAvailableDecisionRulePlugins()
     {
         return [
             self::PLUGIN_DECISION_RULE_VOUCHER => new Voucher(),
@@ -130,7 +130,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
-    public function getAvailableCartDecisionRulePlugins(Container $container)
+    public function getAvailableCartDecisionRulePlugins()
     {
         return [
             self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new MinimumCartSubtotal(),
@@ -140,7 +140,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
-    public function getAvailableCalculatorPlugins(Container $container)
+    public function getAvailableCalculatorPlugins()
     {
         return [
             self::PLUGIN_CALCULATOR_PERCENTAGE => new Percentage(),
@@ -151,13 +151,10 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
      */
-    public function getAvailableCollectorPlugins(Container $container)
+    public function getAvailableCollectorPlugins()
     {
         return [
             self::PLUGIN_COLLECTOR_ITEM => new Item(),
-            self::PLUGIN_COLLECTOR_ORDER_EXPENSE => new OrderExpense(),
-            self::PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION => new ItemProductOption(),
-            self::PLUGIN_COLLECTOR_AGGREGATE => new Aggregate(),
         ];
     }
 
