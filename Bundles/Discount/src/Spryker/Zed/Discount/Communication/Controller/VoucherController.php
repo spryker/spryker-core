@@ -120,6 +120,9 @@ class VoucherController extends AbstractController
     }
 
     /**
+     * VoucherCreateInfoTransfer might have different types of a message, success and error messages are mapped respectively
+     * onto respective types of the MessengerFacade, other types of messages are mapped to Info message type.
+     *
      * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoInterface
      *
      * @return $this
@@ -133,7 +136,6 @@ class VoucherController extends AbstractController
             return $this->addErrorMessage($voucherCreateInfoInterface->getMessage());
         }
 
-        // Unknown message type is added as an info message.
         return $this->addInfoMessage($voucherCreateInfoInterface->getMessage());
     }
 
