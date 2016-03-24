@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
@@ -205,6 +206,16 @@ class VoucherCodesForm extends AbstractRuleForm
             'label' => 'Valid From',
         ]);
 
+        $builder->get(self::FIELD_VALID_FROM)->addModelTransformer(new CallbackTransformer(
+            function ($originalValue) {
+                return $originalValue;
+            },
+            function (\DateTime $submittedValue) {
+                $submittedValue->setTime(0, 0, 0);
+                return $submittedValue;
+            }
+        ));
+
         return $this;
     }
 
@@ -218,6 +229,16 @@ class VoucherCodesForm extends AbstractRuleForm
         $builder->add(self::FIELD_VALID_TO, 'date', [
             'label' => 'Valid Until',
         ]);
+
+        $builder->get(self::FIELD_VALID_TO)->addModelTransformer(new CallbackTransformer(
+            function ($originalValue) {
+                return $originalValue;
+            },
+            function (\DateTime $submittedValue) {
+                $submittedValue->setTime(23, 59, 59);
+                return $submittedValue;
+            }
+        ));
 
         return $this;
     }

@@ -78,9 +78,6 @@ class PoolController extends AbstractController
     {
         if ($form->isValid()) {
             $formData = $form->getData();
-            if ($formData['valid_to'] instanceof \DateTime) {
-                $formData['valid_to']->setTime(23, 59, 59);
-            }
 
             $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($formData, true);
 
