@@ -20,7 +20,7 @@
         <property name="sumGrossPrice" type="int" />
         <property name="name" type="string" />
         <property name="taxRate" type="float" />
-        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="quantity" type="int" />
     </transfer>
 
@@ -55,7 +55,7 @@
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
         <property name="taxRate" type="float" />
-        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
     </transfer>
 
 </transfers>

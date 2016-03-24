@@ -9,7 +9,7 @@
     </transfer>
 
     <transfer name="Expense">
-        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
     </transfer>
 
     <transfer name="Order">
@@ -19,7 +19,7 @@
 
     <transfer name="Item">
         <property name="quantity" type="int" />
-        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="unitGrossPriceWithDiscounts" type="int"/>
         <property name="sumGrossPriceWithDiscounts" type="int" />
@@ -31,7 +31,7 @@
 
     <transfer name="ProductOption">
         <property name="taxRate" type="float" />
-        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
     </transfer>
