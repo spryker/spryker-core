@@ -32,7 +32,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
+     * @return array
      */
     public function calculateDiscounts(QuoteTransfer $quoteTransfer)
     {

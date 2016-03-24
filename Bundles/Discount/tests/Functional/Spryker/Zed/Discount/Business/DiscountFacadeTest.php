@@ -142,7 +142,8 @@ class DiscountFacadeTest extends Test
     public function testCalculateDiscounts()
     {
         $order = $this->createQuoteTransfer();
-        $this->discountFacade->calculateDiscounts($order);
+        $result = $this->discountFacade->calculateDiscounts($order);
+        $this->assertSame(['discounts', 'errors'], array_keys($result));
     }
 
     /**
