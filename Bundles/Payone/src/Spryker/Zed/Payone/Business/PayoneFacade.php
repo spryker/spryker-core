@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
  */
-class PayoneFacade extends AbstractFacade
+class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
 {
 
     /**

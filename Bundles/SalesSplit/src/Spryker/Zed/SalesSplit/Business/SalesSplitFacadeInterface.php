@@ -4,17 +4,14 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-
 namespace Spryker\Zed\SalesSplit\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\SalesSplit\Business\SalesSplitBusinessFactory getFactory()
  */
-class SalesSplitFacade extends AbstractFacade implements SalesSplitFacadeInterface
+interface SalesSplitFacadeInterface
 {
-
     /**
      * Splits sales order items which have a quantity > 1 into two parts. One part with the new given quantity and
      * the other part with the rest.
@@ -38,9 +35,5 @@ class SalesSplitFacade extends AbstractFacade implements SalesSplitFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
-    public function splitSalesOrderItem($idSalesOrderItem, $quantity)
-    {
-        return $this->getFactory()->createOrderItemSplitter()->split($idSalesOrderItem, $quantity);
-    }
-
+    public function splitSalesOrderItem($idSalesOrderItem, $quantity);
 }

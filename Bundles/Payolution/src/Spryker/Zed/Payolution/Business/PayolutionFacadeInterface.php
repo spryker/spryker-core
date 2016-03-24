@@ -4,86 +4,95 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-
 namespace Spryker\Zed\Payolution\Business;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
+
+/**
+ * @method \Spryker\Zed\Payolution\Business\PayolutionBusinessFactory getFactory()
+ */
 interface PayolutionFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     */
+    public function preCheckPayment(QuoteTransfer $quoteTransfer);
 
     /**
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function saveOrderPayment(OrderTransfer $orderTransfer);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
-     */
-    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer);
-
-    /**
-     * @api
-     *
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function preAuthorizePayment($idPayment);
+    public function preAuthorizePayment(OrderTransfer $orderTransfer, $idPayment);
 
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function reAuthorizePayment($idPayment);
+    public function reAuthorizePayment(OrderTransfer $orderTransfer, $idPayment);
 
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function revertPayment($idPayment);
+    public function revertPayment(OrderTransfer $orderTransfer, $idPayment);
 
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function capturePayment($idPayment);
+    public function capturePayment(OrderTransfer $orderTransfer, $idPayment);
 
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function refundPayment($idPayment);
+    public function refundPayment(OrderTransfer $orderTransfer, $idPayment);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer);
+    public function calculateInstallmentPayments(QuoteTransfer $quoteTransfer);
 
     /**
      * @api
@@ -129,5 +138,4 @@ interface PayolutionFacadeInterface
      * @return bool
      */
     public function isRefundApproved(OrderTransfer $orderTransfer);
-
 }

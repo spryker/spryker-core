@@ -8,6 +8,6 @@ namespace Unit\Spryker\Zed\Kernel\Business\Fixtures;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-class KernelFacade extends AbstractFacade
+class KernelFacade extends AbstractFacade implements KernelFacadeInterface
 {
 }
