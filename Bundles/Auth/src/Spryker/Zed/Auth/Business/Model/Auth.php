@@ -76,6 +76,11 @@ class Auth implements AuthInterface
         }
 
         $userTransfer = $this->userFacade->getUserByUsername($username);
+        try {
+            $this->userFacade->getActiveUserById($userTransfer->getIdUser());
+        } catch (UserNotFoundException $e) {
+            return false;
+        }
 
         $isValidPassword = $this->userFacade->isValidPassword($password, $userTransfer->getPassword());
         if (!$isValidPassword) {

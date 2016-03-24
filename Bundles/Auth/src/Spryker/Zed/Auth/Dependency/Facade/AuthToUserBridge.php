@@ -119,7 +119,7 @@ class AuthToUserBridge implements AuthToUserInterface
      */
     public function getActiveUserById($idUser)
     {
-        return $this->userFacade->getUserById($idUser);
+        return $this->userFacade->getActiveUserById($idUser);
     }
 
 }
