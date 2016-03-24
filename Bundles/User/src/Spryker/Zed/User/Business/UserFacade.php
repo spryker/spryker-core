@@ -47,6 +47,20 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      *
      * @param string $username
      *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username)
+    {
+        return $this->getFactory()
+            ->createUserModel()
+            ->hasActiveUserByUsername($username);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $username
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username)

@@ -131,8 +131,6 @@ class UserTest extends Test
         $this->assertNotEquals($user->getPassword(), $user2->getPassword());
 
         $this->assertTrue($this->userFacade->isValidPassword($data['password'], $user2->getPassword()));
-
-
     }
 
     /**
@@ -185,7 +183,7 @@ class UserTest extends Test
     }
 
     /**
-     * @retrun void
+     * @return void
      */
     public function testUpdateWithPasswordHashIgnored()
     {

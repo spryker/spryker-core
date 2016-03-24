@@ -197,6 +197,20 @@ class User implements UserInterface
         return $amount > 0;
     }
 
+
+    /**
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username)
+    {
+        $amount = $this->queryContainer->queryUserByUsername($username)
+            ->filterByStatus(SpyUserTableMap::COL_STATUS_ACTIVE)->count();
+
+        return $amount > 0;
+    }
+
     /**
      * @param int $idUser
      *

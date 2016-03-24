@@ -122,4 +122,14 @@ class AuthToUserBridge implements AuthToUserInterface
         return $this->userFacade->getActiveUserById($idUser);
     }
 
+    /**
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username)
+    {
+        return $this->userFacade->hasActiveUserByUsername($username);
+    }
+
 }
