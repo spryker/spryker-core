@@ -178,7 +178,7 @@ class SalesFacadeSaveOrderTest extends Test
         $quoteTransfer->addItem($itemTransfer);
 
         $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentSelection('payolution_invoice');
+        $paymentTransfer->setPaymentSelection('payolutionInvoice'); // FIXME: #1742
 
         $quoteTransfer->setPayment($paymentTransfer);
 
