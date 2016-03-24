@@ -69,8 +69,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
                 '(' . SpyDiscountTableMap::COL_VALID_FROM . ' <= ? AND '
                 . SpyDiscountTableMap::COL_VALID_TO . ' >= ? )',
                 [
-                    $now->format('Y-m-d 00:00:00'),
-                    $now->format('Y-m-d 00:00:00'),
+                    $now->format('Y-m-d H:i:s'),
+                    $now->format('Y-m-d H:i:s'),
                 ]
             )->_or()->where(
                 SpyDiscountTableMap::COL_VALID_FROM . ' IS NULL AND '
