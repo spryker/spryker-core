@@ -5,10 +5,11 @@
 
 'use strict';
 
+var summernote = require('Gui/assets/Zed/js/modules/summernote');
+
 const GLOSSARY_SELECT_MARGIN_TOP = 159;
 const GLOSSARY_SELECT_MARGIN_LEFT = 230;
 const GLOSSARY_SELECT_MARGIN_WIDTH = 25;
-
 
 var xhr = null;
 var keyList = null;
@@ -133,21 +134,7 @@ function showAutoComplete(formId, searchType) {
 
                 keyInput.val(data[this.value].key);
                 $(keyInput.closest('.row').find('#cms_glossary_translation')).summernote('destroy');
-                $(keyInput.closest('.row').find('#cms_glossary_translation')).summernote({
-                    height: 300,
-                    maxHeight: 600,
-                    inputText: keyContent,
-                    focus: true,
-                    toolbar: [
-                        ['style', ['bold', 'italic', 'underline', 'clear']],
-                        ['font', ['strikethrough', 'superscript', 'subscript']],
-                        ['fontsize', ['fontsize']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['insert', ['picture', 'link', 'video', 'table', 'hr']],
-                        ['misc', ['undo', 'redo']]
-                    ]
-                });
+                $(keyInput.closest('.row').find('#cms_glossary_translation')).summernote(summernote.getConfig(keyContent));
             });
 
             keyList.on('keydown', function(e) {
