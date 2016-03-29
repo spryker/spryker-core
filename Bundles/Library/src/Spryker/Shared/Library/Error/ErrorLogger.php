@@ -102,6 +102,8 @@ class ErrorLogger
     ) {
         try {
             $message = ErrorRenderer::renderException($exception);
+            $message = htmlentities($message, ENT_QUOTES);
+            
             Log::log($message, 'exception.log');
         } catch (\Exception $internalException) {
             self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
