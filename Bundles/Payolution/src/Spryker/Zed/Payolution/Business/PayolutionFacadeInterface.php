@@ -10,12 +10,12 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionBusinessFactory getFactory()
  */
 interface PayolutionFacadeInterface
 {
+
     /**
      * @api
      *
@@ -138,4 +138,5 @@ interface PayolutionFacadeInterface
      * @return bool
      */
     public function isRefundApproved(OrderTransfer $orderTransfer);
+
 }

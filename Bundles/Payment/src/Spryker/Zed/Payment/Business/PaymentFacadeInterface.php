@@ -9,12 +9,12 @@ namespace Spryker\Zed\Payment\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-
 /**
  * @method \Spryker\Zed\Payment\Business\PaymentBusinessFactory getFactory()
  */
 interface PaymentFacadeInterface
 {
+
     /**
      * @api
      *
@@ -44,4 +44,5 @@ interface PaymentFacadeInterface
      * @return void
      */
     public function checkoutPostCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
 }
