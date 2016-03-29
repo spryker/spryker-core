@@ -130,7 +130,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param string|bool $bundleToView
      *
-     * @return bool
+     * @return string
      */
     public function drawDetailedDependencyTreeGraph($bundleToView)
     {
@@ -143,7 +143,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @param bool $showEngineBundle
      * @param string|bool $bundleToView
      *
-     * @return bool
+     * @return string
      */
     public function drawSimpleDependencyTreeGraph($showEngineBundle, $bundleToView)
     {
@@ -155,7 +155,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param string $bundleToView
      *
-     * @return bool
+     * @return string
      */
     public function drawExternalDependencyTreeGraph($bundleToView)
     {
