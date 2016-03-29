@@ -184,6 +184,15 @@ class CmsRedirectForm extends AbstractType
             $this->createRequiredConstraint(),
             $this->createNotBlankConstraint(),
             $this->createLengthConstraint(self::MAX_COUNT_CHARACTERS_REDIRECT_URL),
+            new Callback([
+                'methods' => [
+                    function ($url, ExecutionContextInterface $context) {
+                        if ($url[0] !== '/') {
+                            $context->addViolation('Url must start with a slash');
+                        }
+                    },
+                ]
+            ])
         ];
     }
 

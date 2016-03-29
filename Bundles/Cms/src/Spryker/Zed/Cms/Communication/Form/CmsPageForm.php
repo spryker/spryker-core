@@ -91,8 +91,8 @@ class CmsPageForm extends AbstractType
         $this
             ->addIdCmsPageField($builder)
             ->addIdUrlField($builder)
-            ->addCurrentTemplateField($builder, $options[self::OPTION_TEMPLATE_CHOICES])
-            ->addFkTemplateField($builder)
+            ->addCurrentTemplateField($builder)
+            ->addFkTemplateField($builder, $options[self::OPTION_TEMPLATE_CHOICES])
             ->addUrlField($builder)
             ->addLocaleField($builder, $options[self::OPTION_LOCALES_CHOICES])
             ->addIsActiveField($builder);
@@ -115,7 +115,7 @@ class CmsPageForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkTemplateField(FormBuilderInterface $builder)
+    protected function addIdUrlField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ID_URL, 'hidden');
 
@@ -127,7 +127,7 @@ class CmsPageForm extends AbstractType
      *
      * @return $this
      */
-    protected function addUrlField(FormBuilderInterface $builder)
+    protected function addCurrentTemplateField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CURRENT_TEMPLATE, 'hidden');
 
@@ -140,7 +140,7 @@ class CmsPageForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCurrentTemplateField(FormBuilderInterface $builder, array $choices)
+    protected function addFkTemplateField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(self::FIELD_FK_TEMPLATE, 'choice', [
             'label' => 'Template',
@@ -155,7 +155,7 @@ class CmsPageForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdUrlField(FormBuilderInterface $builder)
+    protected function addUrlField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_URL, 'text', [
             'label' => 'URL',
@@ -167,6 +167,7 @@ class CmsPageForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $availableLocales
      *
      * @return $this
      */
@@ -207,6 +208,9 @@ class CmsPageForm extends AbstractType
                     function ($url, ExecutionContextInterface $context) {
                         if ($this->urlFacade->hasUrl($url)) {
                             $context->addViolation('Url is already used');
+                        }
+                        if ($url[0] !== '/') {
+                            $context->addViolation('Url must start with a slash');
                         }
                     },
                 ],
