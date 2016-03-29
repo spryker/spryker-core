@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<database
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="zed"
+    defaultIdMethod="native"
+    defaultPhpNamingMethod="underscore"
+    xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+    namespace="Orm\Zed\Braintree\Persistence"
+    package="src.Orm.Zed.Braintree.Persistence"
+>
+    <table name="spy_payment_braintree" phpName="SpyPaymentBraintree">
+        <column name="id_payment_braintree" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_sales_order" required="true" type="INTEGER"/>
+        <column name="account_brand" required="true" type="VARCHAR"/>
+        <column name="client_ip" required="true" type="VARCHAR"/>
+        <column name="first_name" required="true" type="VARCHAR" size="100"/>
+        <column name="last_name" required="true" type="VARCHAR" size="100"/>
+        <column name="salutation" required="true" type="ENUM" valueSet="Mr, Mrs, Dr"/>
+        <column name="gender" required="true" type="ENUM" valueSet="Male, Female"/>
+        <column name="date_of_birth" type="DATE" default="NULL"/>
+        <column name="country_iso2_code" required="true" type="CHAR" size="2"/>
+        <column name="city" required="true" type="VARCHAR" size="255"/>
+        <column name="street" required="true" type="VARCHAR" size="255"/>
+        <column name="zip_code" required="true" type="VARCHAR" size="15"/>
+        <column name="email" required="true" type="VARCHAR" size="255"/>
+        <column name="phone" type="VARCHAR" size="255"/>
+        <column name="cell_phone" type="VARCHAR" size="255"/>
+        <column name="language_iso2_code" required="true" type="CHAR" size="2"/>
+        <column name="currency_iso3_code" required="true" type="CHAR" size="3"/>
+        <column name="bank_account_holder" type="VARCHAR" size="100"/>
+        <column name="bank_account_bic" type="VARCHAR" size="100"/>
+        <column name="bank_account_iban" type="VARCHAR" size="100"/>
+        <foreign-key name="spy_payment_braintree-fk_sales_order" foreignTable="spy_sales_order" phpName="SpySalesOrder">
+            <reference foreign="id_sales_order" local="fk_sales_order"/>
+        </foreign-key>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_payment_braintree_pk_seq"/>
+    </table>
+
+    <table name="spy_payment_braintree_transaction_request_log">
+        <column
+            name="id_payment_braintree_transaction_request_log"
+            type="INTEGER"
+            primaryKey="true"
+            autoIncrement="true"
+        />
+        <column name="fk_payment_braintree" required="true" type="INTEGER"/>
+        <column name="transaction_id" required="true" type="VARCHAR"/>
+        <column name="reference_id" type="VARCHAR"/>
+        <column name="payment_code" required="true" type="VARCHAR"/>
+        <column name="presentation_amount" required="true"  type="VARCHAR"/>
+        <column name="presentation_currency" required="true"  type="VARCHAR"/>
+        <foreign-key name="spy_braintree_transaction_request_log-fk_payment_braintree" foreignTable="spy_payment_braintree">
+            <reference foreign="id_payment_braintree" local="fk_payment_braintree"/>
+        </foreign-key>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_payment_braintree_transaction_request_log_pk_seq"/>
+    </table>
+
+    <table name="spy_payment_braintree_transaction_status_log">
+        <column
+            name="id_payment_braintree_transaction_status_log"
+            type="INTEGER"
+            primaryKey="true"
+            autoIncrement="true"
+        />
+        <column name="fk_payment_braintree" required="true" type="INTEGER"/>
+        <column name="processing_code" required="false" type="VARCHAR"/>
+        <column name="processing_result" required="false" type="VARCHAR"/>
+        <column name="processing_status" required="false" type="VARCHAR"/>
+        <column name="processing_status_code" required="false" type="INTEGER"/>
+        <column name="processing_reason" required="false" type="VARCHAR"/>
+        <column name="processing_reason_code" required="false" type="INTEGER"/>
+        <column name="processing_return" required="false" type="VARCHAR"/>
+        <column name="processing_return_code" required="false" type="VARCHAR"/>
+        <column name="identification_transactionid" required="false" type="VARCHAR"/>
+        <column name="identification_uniqueid"  required="false" type="VARCHAR"/>
+        <column name="identification_shortid"  required="false" type="VARCHAR"/>
+        <column name="identification_referenceid" type="VARCHAR"/>
+        <column name="processing_connectordetail_connectortxid1" type="VARCHAR"/>
+        <column name="processing_connectordetail_paymentreference" type="VARCHAR"/>
+        <column name="processing_timestamp" required="false" type="VARCHAR"/>
+        <foreign-key name="spy_braintree_transaction_status_log-fk_braintree" foreignTable="spy_payment_braintree">
+            <reference foreign="id_payment_braintree" local="fk_payment_braintree"/>
+        </foreign-key>
+        <foreign-key name="spy_braintree_transaction_status_log-transactionid" foreignTable="spy_payment_braintree_transaction_request_log">
+            <reference
+                    foreign="transaction_id"
+                    local="identification_transactionid"
+            />
+        </foreign-key>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_payment_braintree_transaction_status_log_pk_seq"/>
+    </table>
+
+    <table name="spy_payment_braintree_order_item">
+        <column name="fk_payment_braintree" type="INTEGER" primaryKey="true"/>
+        <column name="fk_sales_order_item" type="INTEGER" primaryKey="true"/>
+        <behavior name="timestampable">
+            <parameter name="disable_updated_at" value="true"/>
+        </behavior>
+        <foreign-key name="spy_braintree_order_item-fk_braintree" foreignTable="spy_payment_braintree">
+            <reference foreign="id_payment_braintree" local="fk_payment_braintree"/>
+        </foreign-key>
+        <foreign-key name="spy_payment_braintree_order_item-fk_sales_order_item" foreignTable="spy_sales_order_item">
+            <reference foreign="id_sales_order_item" local="fk_sales_order_item"/>
+        </foreign-key>
+    </table>
+</database>
