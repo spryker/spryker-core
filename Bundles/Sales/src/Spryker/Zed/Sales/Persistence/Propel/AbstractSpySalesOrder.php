@@ -20,13 +20,4 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrder as BaseSpySalesOrder;
  */
 abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 {
-
-    /**
-     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
-     */
-    public function getSpyPaymentPayolution()
-    {
-        return $this->getSpyPaymentPayolutions()->getFirst();
-    }
-
 }
