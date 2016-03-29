@@ -5,7 +5,7 @@
 
 'use strict';
 
-module.export = {
+module.exports = {
     getConfig: function(content) {
     	content = content || '';
 

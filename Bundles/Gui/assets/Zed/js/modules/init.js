@@ -6,11 +6,12 @@
 'use strict';
 
 var SprykerAjax = require('./legacy/SprykerAjax');
-var summernote = require('./summernote');
+var summernote = require('summernote');
+var editor = require('./editor');
 
 $(document).ready(function() {
     // editor
-    $('.html-editor').summernote(summernote.getConfig());
+    $('.html-editor').summernote(editor.getConfig());
 
     /** Draw data tables */
     $('.gui-table-data').dataTable();
