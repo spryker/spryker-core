@@ -125,7 +125,6 @@ class ErrorHandler
     {
         if ($output) {
             $message = ErrorRenderer::renderException($exception);
-            $message = htmlentities($message, ENT_QUOTES);
 
             echo $message;
         }
