@@ -88,7 +88,7 @@ class User implements UserInterface
      */
     public function encryptPassword($password)
     {
-        return base64_encode(password_hash($password, PASSWORD_BCRYPT));
+        return password_hash($password, PASSWORD_BCRYPT);
     }
 
     /**
@@ -99,7 +99,7 @@ class User implements UserInterface
      */
     public function validatePassword($password, $hash)
     {
-        return password_verify($password, base64_decode($hash));
+        return password_verify($password, $hash);
     }
 
     /**
@@ -193,6 +193,20 @@ class User implements UserInterface
     public function hasUserByUsername($username)
     {
         $amount = $this->queryContainer->queryUserByUsername($username)->count();
+
+        return $amount > 0;
+    }
+
+
+    /**
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username)
+    {
+        $amount = $this->queryContainer->queryUserByUsername($username)
+            ->filterByStatus(SpyUserTableMap::COL_STATUS_ACTIVE)->count();
 
         return $amount > 0;
     }

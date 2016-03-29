@@ -33,6 +33,15 @@ interface UserFacadeInterface
      *
      * @param string $username
      *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username);
+
+    /**
+     * @api
+     *
+     * @param string $username
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username);

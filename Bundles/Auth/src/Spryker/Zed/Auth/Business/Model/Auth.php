@@ -70,7 +70,7 @@ class Auth implements AuthInterface
      */
     public function authenticate($username, $password)
     {
-        $hasUser = $this->userFacade->hasUserByUsername($username);
+        $hasUser = $this->userFacade->hasActiveUserByUsername($username);
         if (!$hasUser) {
             return false;
         }

@@ -81,4 +81,11 @@ interface AuthToUserInterface
      */
     public function getActiveUserById($idUser);
 
+    /**
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username);
+
 }
