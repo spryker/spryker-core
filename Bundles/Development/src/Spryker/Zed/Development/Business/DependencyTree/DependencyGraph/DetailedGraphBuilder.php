@@ -65,7 +65,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     /**
      * @param array $dependencyTree
      *
-     * @return bool
+     * @return string
      */
     public function build(array $dependencyTree)
     {

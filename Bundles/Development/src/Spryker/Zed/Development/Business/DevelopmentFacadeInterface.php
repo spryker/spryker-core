@@ -90,7 +90,7 @@ interface DevelopmentFacadeInterface
      *
      * @param string|bool $bundleToView
      *
-     * @return bool
+     * @return string
      */
     public function drawDetailedDependencyTreeGraph($bundleToView);
 
@@ -100,9 +100,18 @@ interface DevelopmentFacadeInterface
      * @param bool $showEngineBundle
      * @param string|bool $bundleToView
      *
-     * @return bool
+     * @return string
      */
     public function drawSimpleDependencyTreeGraph($showEngineBundle, $bundleToView);
+
+    /**
+     * @api
+     *
+     * @param string $bundleToView
+     *
+     * @return string
+     */
+    public function drawExternalDependencyTreeGraph($bundleToView);
 
     /**
      * @api
