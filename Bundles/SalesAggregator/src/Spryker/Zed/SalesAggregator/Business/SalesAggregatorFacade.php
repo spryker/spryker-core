@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\SalesAggregator\Business\SalesAggregatorBusinessFactory getFactory()
  */
-class SalesAggregatorFacade extends AbstractFacade
+class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFacadeInterface
 {
 
     /**

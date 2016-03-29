@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ItemGrouperWishlistConnector\Business\ItemGrouperWishlistConnectorBusinessFactory getFactory()
  */
-class ItemGrouperWishlistConnectorFacade extends AbstractFacade
+class ItemGrouperWishlistConnectorFacade extends AbstractFacade implements ItemGrouperWishlistConnectorFacadeInterface
 {
 
     /**

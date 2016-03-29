@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionBusinessFactory getFactory()
  */
-class PayolutionFacade extends AbstractFacade
+class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterface, PayolutionFacadeInterface
 {
 
     /**
