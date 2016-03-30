@@ -14,6 +14,7 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Cms\CmsConstants;
@@ -369,19 +370,22 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      *
      * @param int $idCmsPage
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery|\Orm\Zed\Url\Persistence\SpyUrlQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPageWithTemplatesAndUrlByIdPage($idCmsPage)
     {
         return $this->queryPages()
+            ->filterByIdCmsPage($idCmsPage)
             ->leftJoinCmsTemplate()
-            ->leftJoinSpyUrl()
+            ->useSpyUrlQuery()
+                ->leftJoinSpyLocale()
+            ->endUse()
             ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
             ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
             ->withColumn(SpyUrlTableMap::COL_ID_URL, 'idUrl')
+            ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, 'idLocale')
             ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_PATH, self::TEMPLATE_PATH)
-            ->withColumn(CmsPageForm::FIELD_IS_ACTIVE)
-            ->filterByIdCmsPage($idCmsPage);
+        ;
     }
 
     /**
