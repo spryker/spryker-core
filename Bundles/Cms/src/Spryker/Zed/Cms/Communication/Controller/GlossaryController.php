@@ -126,6 +126,7 @@ class GlossaryController extends AbstractController
         $mappingGlossary = $this->getQueryContainer()
             ->queryGlossaryKeyMappingById($idMapping)
             ->findOne();
+
         $pageTransfer = (new PageTransfer())->setIdCmsPage($idPage);
         $this->getFacade()
             ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder());

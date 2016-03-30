@@ -165,7 +165,7 @@ class CmsRedirectForm extends AbstractType
             'methods' => [
                 function ($url, ExecutionContextInterface $context) {
                     if ($this->urlFacade->hasUrl($url)) {
-                        $context->addViolation('Url is already used');
+                        $context->addViolation('URL is already used');
                     }
                 },
             ],
@@ -184,6 +184,15 @@ class CmsRedirectForm extends AbstractType
             $this->createRequiredConstraint(),
             $this->createNotBlankConstraint(),
             $this->createLengthConstraint(self::MAX_COUNT_CHARACTERS_REDIRECT_URL),
+            new Callback([
+                'methods' => [
+                    function ($url, ExecutionContextInterface $context) {
+                        if ($url[0] !== '/') {
+                            $context->addViolation('URL must start with a slash');
+                        }
+                    },
+                ]
+            ])
         ];
     }
 
