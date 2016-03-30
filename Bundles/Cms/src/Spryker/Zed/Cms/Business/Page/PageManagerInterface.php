@@ -60,6 +60,15 @@ interface PageManagerInterface
     public function createPageUrl(PageTransfer $pageTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     *
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function updatePageUrl(PageTransfer $pageTransfer);
+
+    /**
      * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
