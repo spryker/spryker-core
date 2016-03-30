@@ -142,7 +142,7 @@ class PageController extends AbstractController
         $urlTransfer->fromArray($data, true);
 
         $pageTransfer->setUrl($urlTransfer);
-        
+
         return $pageTransfer;
     }
 
