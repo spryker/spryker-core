@@ -10,7 +10,6 @@ namespace Spryker\Zed\Shipment\Communication\Controller;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
@@ -82,26 +81,6 @@ class MethodController extends AbstractController
             return $this->viewResponse([
                 'form' => $form->createView(),
             ]);
-        }
-
-        return $this->redirectResponse('/shipment');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deleteAction(Request $request)
-    {
-        if (!$request->isMethod(Request::METHOD_DELETE)) {
-            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
-        }
-
-        $idMethod = $this->castId($request->request->get(self::ID_METHOD_PARAMETER));
-
-        if ($this->getFacade()->hasMethod($idMethod)) {
-            $this->getFacade()->deleteMethod($idMethod);
         }
 
         return $this->redirectResponse('/shipment');
