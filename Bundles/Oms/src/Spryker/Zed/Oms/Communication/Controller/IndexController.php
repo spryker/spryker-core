@@ -125,7 +125,7 @@ class IndexController extends AbstractController
     {
         $headers = [];
 
-        if (array_key_exists($format, $this->formatContentTypes)) {
+        if (isset($this->formatContentTypes[$format])) {
             $headers['content-type'] = $this->formatContentTypes[$format];
         }
 
