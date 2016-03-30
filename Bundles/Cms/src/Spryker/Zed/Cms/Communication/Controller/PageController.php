@@ -72,7 +72,7 @@ class PageController extends AbstractController
 
             $this->getFacade()
                 ->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::FIELD_URL]);
-            
+
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
