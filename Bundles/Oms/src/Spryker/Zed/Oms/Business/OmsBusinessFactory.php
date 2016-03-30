@@ -46,7 +46,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
      */
-    public function createOrderStateMachineOrderStateMachine(array $logContext = [])
+    public function createOrderStateMachine(array $logContext = [])
     {
         return new OrderStateMachine(
             $this->getQueryContainer(),
@@ -57,6 +57,20 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS)
         );
+    }
+
+    /**
+     * @deprecated Please use createOrderStateMachine() instead
+     *
+     * @param array $logContext
+     *
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
+     */
+    public function createOrderStateMachineOrderStateMachine(array $logContext = [])
+    {
+        trigger_error('Deprecated, please use createOrderStateMachine() instead', E_USER_DEPRECATED);
+
+        return $this->createOrderStateMachine($logContext);
     }
 
     /**
