@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 /**
@@ -23,6 +24,15 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     public function queryVoucher($code);
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
+     */
+    public function queryDiscountCollectorByDiscountId($idDiscount);
 
     /**
      * @api
@@ -57,9 +67,25 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
+     */
+    public function queryDiscountCollector();
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
      */
     public function queryDiscountDecisionRule();
+
+    /**
+     * @api
+     *
+     * @param int $idDiscountCollector
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
+     */
+    public function queryDiscountCollectorById($idDiscountCollector);
 
     /**
      * @api
@@ -115,6 +141,17 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
      */
     public function queryVoucherCodeByIdVoucherCode($idVoucherCode);
+
+    /**
+     * @api
+     *
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $pool
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
+     */
+    public function queryDiscountCollectorBysByIdPool(SpyDiscountVoucherPool $pool);
 
     /**
      * @api

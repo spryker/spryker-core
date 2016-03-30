@@ -35,6 +35,7 @@ class PoolController extends AbstractController
     public function createAction(Request $request)
     {
         $form = $this->buildVoucherForm()->handleRequest($request);
+
         return $this->processVoucherForm($form, 'The voucher has been created.');
     }
 
@@ -87,6 +88,7 @@ class PoolController extends AbstractController
                 DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
             ]);
             $this->addSuccessMessage($successMessage);
+
             return $this->redirectResponse($url->build());
         }
 

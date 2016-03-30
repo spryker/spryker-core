@@ -19,15 +19,16 @@
                 {{ form_row(form.amount) }}
                 {{ form_row(form.calculator_plugin) }}
 
-                <div class="row collection-form" id="collector-container">
-                    {% for rule in form.collector_plugins %}
+                <div class="row collection-form" id="collector-container" data-prototype="&lt;div class=&quot;col-md-6&quot;&gt;&lt;div class=&quot;well well-sm&quot;&gt;{{ form_widget(form.collector_plugins[0].parent.vars.prototype)|e }}&lt;/div&gt;&lt;/div&gt;">
+                    {% for collector in form.collector_plugins %}
                         <div class="col-md-6">
                             <div class="well well-sm">
-                                {{ form_widget(rule) }}
+                                {{ form_widget(collector) }}
                             </div>
                         </div>
                     {% endfor %}
                 </div>
+
                 <div class="clearfix"></div>
                 <div class="load-cart-collector-plugins">
                     <a href="#" id="add-collector-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Collector Plugin' | trans }}</a>
@@ -39,18 +40,19 @@
                 {{ form_row(form.is_privileged) }}
                 {{ form_row(form.is_active) }}
 
-                <div class="row collection-form" id="rules-container">
-                {% for rule in form.decision_rules %}
-                    <div class="col-md-6">
-                        <div class="well well-sm">
-                            {{ form_widget(rule) }}
+                <div class="row collection-form" id="rules-container" data-prototype="&lt;div class=&quot;col-md-6&quot;&gt;&lt;div class=&quot;well well-sm&quot;&gt;{{ form_widget(form.decision_rules[0].parent.vars.prototype)|e }}&lt;/div&gt;&lt;/div&gt;">
+                    {% for rule in form.decision_rules %}
+                        <div class="col-md-6">
+                            <div class="well well-sm">
+                                {{ form_widget(rule) }}
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
                 </div>
+
                 <div class="clearfix"></div>
                 <div class="load-cart-rules">
-                    <a href="#" id="add-rules-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add New Rule' | trans }}</a>
+                    <a href="#" id="add-rules-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Decision Rule' | trans }}</a>
                 </div>
 
                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
