@@ -23,6 +23,14 @@ class IndexController extends AbstractController
     const DEFAULT_FONT_SIZE = '14';
 
     /**
+     * @var array
+     */
+    protected $formatContentTypes = [
+        'jpg' => 'image/jpeg',
+        'svg' => 'image/svg+xml',
+    ];
+
+    /**
      * @return array
      */
     public function indexAction()
@@ -68,7 +76,7 @@ class IndexController extends AbstractController
             echo $response;
         };
 
-        return $this->streamedResponse($callback);
+        return $this->streamedResponse($callback, Response::HTTP_OK, $this->getStreamedResponseHeaders($format));
     }
 
     /**
@@ -106,6 +114,22 @@ class IndexController extends AbstractController
         return $this->viewResponse([
             'processName' => $processName,
         ]);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @return array
+     */
+    protected function getStreamedResponseHeaders($format)
+    {
+        $headers = [];
+
+        if (array_key_exists($format, $this->formatContentTypes)) {
+            $headers['content-type'] = $this->formatContentTypes[$format];
+        }
+
+        return $headers;
     }
 
 }
