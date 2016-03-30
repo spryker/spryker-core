@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\Glossary\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Spryker\Zed\Glossary\Business\GlossaryFacadeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TranslationForm extends AbstractType
 {
@@ -22,7 +26,22 @@ class TranslationForm extends AbstractType
 
     const OPTION_LOCALES = 'locales';
 
+    const GROUP_UNIQUE_GLOSSARY_KEY_CHECK = 'unique_glossary_key_check';
+
     const TYPE_DATA = 'data';
+
+    /**
+     * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
+     */
+    protected $glossaryFacade;
+
+    /**
+     * @param \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface $glossaryFacade
+     */
+    public function __construct(GlossaryFacadeInterface $glossaryFacade)
+    {
+        $this->glossaryFacade = $glossaryFacade;
+    }
 
     /**
      * @return string
@@ -52,10 +71,9 @@ class TranslationForm extends AbstractType
      */
     protected function addGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_GLOSSARY_KEY, new AutosuggestType(), [
+        $builder->add(self::FIELD_GLOSSARY_KEY, 'text', [
             'label' => 'Name',
-            'url' => '/glossary/key/suggest',
-            'constraints' => $this->getFieldDefaultConstraints(),
+            'constraints' => $this->createGlossaryKeyConstraints(),
         ]);
 
         return $this;
@@ -119,6 +137,42 @@ class TranslationForm extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::OPTION_LOCALES);
+
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                $defaultData = (array)$form->getConfig()->getData();
+                $submittedData = $form->getData();
+
+                if (array_key_exists(self::FIELD_GLOSSARY_KEY, $defaultData) === false ||
+                    $defaultData[self::FIELD_GLOSSARY_KEY] !== $submittedData[self::FIELD_GLOSSARY_KEY]
+                ) {
+                    return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_GLOSSARY_KEY_CHECK];
+                }
+
+                return [Constraint::DEFAULT_GROUP];
+            },
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint[]
+     */
+    protected function createGlossaryKeyConstraints()
+    {
+        $constraints = $this->getFieldDefaultConstraints();
+
+        $constraints[] = new Callback([
+            'methods' => [
+                function ($glossaryKey, ExecutionContextInterface $contextInterface) {
+                    if ($this->glossaryFacade->hasKey($glossaryKey)) {
+                        $contextInterface->addViolation('Translation key already exists.');
+                    }
+                },
+            ],
+            'groups' => [self::GROUP_UNIQUE_GLOSSARY_KEY_CHECK],
+        ]);
+
+        return $constraints;
     }
 
 }
