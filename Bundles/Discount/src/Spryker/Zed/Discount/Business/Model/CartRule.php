@@ -12,6 +12,7 @@ use DateTimeZone;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
@@ -25,6 +26,8 @@ class CartRule implements CartRuleInterface
     const CART_RULES_ITERATOR = 'rule_';
     const DATABASE_DATE_FORMAT = 'Y-m-d\TG:i:s\Z';
     const COLLECTOR_ITERATOR = 'collector_';
+    const ID_DISCOUNT_COLLECTOR = 'id_discount_collector';
+    const ID_DISCOUNT_DECISION_RULE = 'id_discount_decision_rule';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -93,18 +96,8 @@ class CartRule implements CartRuleInterface
         $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);
         $discountEntity = $this->saveDiscount($discountTransfer);
 
-        foreach ($formData[CartRuleForm::FIELD_DECISION_RULES] as $cartRules) {
-            $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($cartRules, true);
-            $decisionRuleTransfer->setFkDiscount($discountEntity->getIdDiscount());
-            $decisionRuleTransfer->setName($discountEntity->getDisplayName());
-
-            $this->discountDecisionRuleWriter->saveDiscountDecisionRule($decisionRuleTransfer);
-        }
-
-        foreach ($cartRuleFormTransfer->getCollectorPlugins() as $collectorTransfer) {
-            $collectorTransfer->setFkDiscount($discountEntity->getIdDiscount());
-            $this->discountCollectorWriter->save($collectorTransfer);
-        }
+        $this->saveDecisionRules($cartRuleFormTransfer, $discountEntity);
+        $this->saveCollectorPlugins($cartRuleFormTransfer, $discountEntity);
 
         return $discountTransfer->fromArray($discountEntity->toArray(), true);
     }
@@ -120,12 +113,12 @@ class CartRule implements CartRuleInterface
         $discount = $this->updateDateTimeZoneToStoreDefault($discountEntity->toArray());
 
         foreach ($discountEntity->getDecisionRules() as $key => $decisionRuleEntity) {
-            $discount[CartRuleForm::FIELD_DECISION_RULES][self::CART_RULES_ITERATOR . (+$key)] =
+            $discount[CartRuleForm::FIELD_DECISION_RULES][] =
                 $this->updateDateTimeZoneToStoreDefault($decisionRuleEntity->toArray());
         }
 
         foreach ($discountEntity->getDiscountCollectors() as $key => $collectorEntity) {
-            $discount[CartRuleForm::FIELD_COLLECTOR_PLUGINS][self::COLLECTOR_ITERATOR . (+$key)] =
+            $discount[CartRuleForm::FIELD_COLLECTOR_PLUGINS][] =
                 $this->updateDateTimeZoneToStoreDefault($collectorEntity->toArray());
         }
 
@@ -168,6 +161,93 @@ class CartRule implements CartRuleInterface
         }
 
         return $this->discountWriter->update($discountTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartRuleTransfer $cartRuleFormTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return void
+     */
+    protected function saveDecisionRules(CartRuleTransfer $cartRuleFormTransfer, SpyDiscount $discountEntity)
+    {
+        $this->deleteDecisionRules($cartRuleFormTransfer, $discountEntity);
+
+        foreach ($cartRuleFormTransfer->getDecisionRules() as $cartRules) {
+            $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($cartRules, true);
+            $decisionRuleTransfer->setFkDiscount($discountEntity->getIdDiscount());
+            $decisionRuleTransfer->setName($discountEntity->getDisplayName());
+
+            $this->discountDecisionRuleWriter->saveDiscountDecisionRule($decisionRuleTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartRuleTransfer $cartRuleFormTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return void
+     */
+    protected function deleteDecisionRules(CartRuleTransfer $cartRuleFormTransfer, SpyDiscount $discountEntity)
+    {
+        $formDecisionRules = array_column(
+            $cartRuleFormTransfer->getDecisionRules(),
+            self::ID_DISCOUNT_DECISION_RULE
+        );
+
+        $decisionRulesCollection = $this->queryContainer
+            ->queryDecisionRules($discountEntity->getIdDiscount())
+            ->find();
+
+        foreach ($decisionRulesCollection as $decisionRule) {
+            if (in_array($decisionRule->getIdDiscountDecisionRule(), $formDecisionRules)) {
+                continue;
+            }
+
+            $decisionRule->delete();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartRuleTransfer $cartRuleFormTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return void
+     */
+    protected function saveCollectorPlugins(CartRuleTransfer $cartRuleFormTransfer, SpyDiscount $discountEntity)
+    {
+        $this->deleteCollectorPlugins($cartRuleFormTransfer, $discountEntity);
+        foreach ($cartRuleFormTransfer->getCollectorPlugins() as $collectorTransfer) {
+            $collectorTransfer->setFkDiscount($discountEntity->getIdDiscount());
+            $this->discountCollectorWriter->save($collectorTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartRuleTransfer $cartRuleFormTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return void
+     */
+    protected function deleteCollectorPlugins(CartRuleTransfer $cartRuleFormTransfer, SpyDiscount $discountEntity)
+    {
+        $formCollectorPlugins = [];
+        foreach ($cartRuleFormTransfer->getCollectorPlugins() as $collectorPlugin) {
+            $formCollectorPlugins[] = $collectorPlugin->getIdDiscountCollector();
+        }
+
+        $collectorPluginsCollection = $this->queryContainer
+            ->queryDiscountCollectorByDiscountId($discountEntity->getIdDiscount())
+            ->find();
+
+        foreach ($collectorPluginsCollection as $collectorPlugin) {
+            if (in_array($collectorPlugin->getIdDiscountCollector(), $formCollectorPlugins)) {
+                continue;
+            }
+
+            $collectorPlugin->delete();
+        }
     }
 
 }

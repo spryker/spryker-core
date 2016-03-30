@@ -43,13 +43,13 @@ class CartRuleFormDataProvider
             CartRuleForm::VALID_FROM => new \DateTime('now'),
             CartRuleForm::VALID_TO => new \DateTime('now'),
             CartRuleForm::FIELD_DECISION_RULES => [
-                'rule_1' => [
+                [
                     'value' => '',
                     'rules' => '',
                 ],
             ],
             CartRuleForm::FIELD_COLLECTOR_PLUGINS => [
-                'plugin_1' => [
+                [
                     'collector_plugin' => '',
                     'value' => '',
                 ],

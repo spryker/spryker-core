@@ -225,7 +225,6 @@ class CartRuleForm extends AbstractRuleForm
                 $this->collectorPlugins,
                 $this->decisionRulePlugins
             ),
-            'label' => null,
             'allow_add' => true,
             'allow_delete' => true,
             'allow_extra_fields' => true,
@@ -247,7 +246,6 @@ class CartRuleForm extends AbstractRuleForm
                 $this->collectorPlugins,
                 $this->decisionRulePlugins
             ),
-            'label' => null,
             'allow_add' => true,
             'allow_delete' => true,
             'allow_extra_fields' => true,

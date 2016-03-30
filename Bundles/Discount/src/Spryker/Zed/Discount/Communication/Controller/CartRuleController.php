@@ -10,7 +10,6 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -46,47 +45,6 @@ class CartRuleController extends AbstractController
         return $this->jsonResponse(
             $table->fetchData()
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function decisionRuleAction(Request $request)
-    {
-        $elements = $this->castId($request->request->get(self::PARAM_CURRENT_ELEMENTS_COUNT));
-        $mainFormName = $request->query->get('mainFormName', DiscountCommunicationFactory::DECISION_RULE_FORM_VOUCHER_CODES);
-
-        $form = $this
-            ->getFactory()
-            ->createDecisionRuleForm($mainFormName)
-            ->handleRequest($request);
-
-        return [
-            'form' => $form->createView(),
-            'elementsCount' => $elements,
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function collectorPluginsAction(Request $request)
-    {
-        $elements = $this->castId($request->request->get(self::PARAM_CURRENT_ELEMENTS_COUNT));
-
-        $form = $this
-            ->getFactory()
-            ->createCollectorPluginForm()
-            ->handleRequest($request);
-
-        return [
-            'form' => $form->createView(),
-            'elementsCount' => $elements,
-        ];
     }
 
     /**

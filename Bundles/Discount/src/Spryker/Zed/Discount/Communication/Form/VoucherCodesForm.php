@@ -273,7 +273,6 @@ class VoucherCodesForm extends AbstractRuleForm
     {
         $builder->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
             'type' => $this->collectorPluginFormType,
-            'label' => null,
             'allow_add' => true,
             'allow_delete' => true,
             'allow_extra_fields' => true,
@@ -291,7 +290,6 @@ class VoucherCodesForm extends AbstractRuleForm
     {
         $builder->add(self::FIELD_DECISION_RULES, 'collection', [
             'type' => $this->decisionRuleFormType,
-            'label' => null,
             'allow_add' => true,
             'allow_delete' => true,
             'allow_extra_fields' => true,
