@@ -14,6 +14,8 @@ use Spryker\Zed\Collector\CollectorConfig;
 abstract class AbstractTouchUpdater implements TouchUpdaterInterface
 {
 
+    const FK_TOUCH = 'fk_touch';
+
     /**
      * @var string
      */
@@ -47,7 +49,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
         return sprintf(
             "DELETE FROM %s WHERE %s IN (%s); \n",
             $this->touchKeyTableName,
-            $this->touchKeyIdColumnName,
+            self::FK_TOUCH,
             $sql
         );
     }
@@ -115,7 +117,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
             $idTouch = $touchData[CollectorConfig::COLLECTOR_TOUCH_ID];
 
             if ($idTouch !== null) {
-                $idsToDelete[] = $idTouch;
+                $idsToDelete[$idTouch] = $idTouch;
             }
         }
 

@@ -8,11 +8,7 @@
 namespace Spryker\Zed\Touch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
@@ -150,32 +146,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query = $this->getFactory()->createTouchQuery();
         $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
             ->filterByItemType($itemType)
-            ->leftJoinTouchSearch()
-            ->leftJoinTouchStorage()
-            ->addAnd(SpyTouchSearchTableMap::COL_FK_TOUCH, null, Criteria::ISNULL)
-            ->addAnd(SpyTouchStorageTableMap::COL_FK_TOUCH, null, Criteria::ISNULL);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param string $itemType
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
-     */
-    public function queryTouchDeleteOnlyByItemType($itemType)
-    {
-        $query = $this->getFactory()->createTouchQuery();
-        $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-            ->filterByItemType($itemType)
-            ->leftJoinTouchSearch()
-            ->leftJoinTouchStorage()
-            ->withColumn(SpyTouchSearchTableMap::COL_KEY, CollectorConfig::COLLECTOR_SEARCH_KEY)
-            ->withColumn(SpyTouchStorageTableMap::COL_KEY, CollectorConfig::COLLECTOR_STORAGE_KEY);
+            ->leftJoinTouchSearch('search')
+            ->leftJoinTouchStorage('storage');
 
         return $query;
     }
