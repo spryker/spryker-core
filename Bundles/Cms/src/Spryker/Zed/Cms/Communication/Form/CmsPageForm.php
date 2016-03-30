@@ -32,7 +32,7 @@ class CmsPageForm extends AbstractType
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
     const OPTION_LOCALES_CHOICES = 'locale_choices';
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
-    const FIELD_LOCALE = 'fk_locale';
+    const FIELD_FK_LOCALE = 'fk_locale';
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
@@ -173,7 +173,8 @@ class CmsPageForm extends AbstractType
      */
     protected function addLocaleField(FormBuilderInterface $builder, array $availableLocales)
     {
-        $builder->add(self::FIELD_LOCALE, 'choice', [
+        $builder->add(self::FIELD_FK_LOCALE, 'choice', [
+            'label' => 'Locale',
             'choices' => $availableLocales,
         ]);
 

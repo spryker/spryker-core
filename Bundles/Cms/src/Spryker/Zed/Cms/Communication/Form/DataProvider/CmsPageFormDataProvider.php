@@ -64,10 +64,11 @@ class CmsPageFormDataProvider
         return [
             CmsPageForm::FIELD_ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
             CmsPageForm::FIELD_FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-            CmsPageForm::FIELD_URL => $pageUrlTemplate->getUrl(),
+            CmsPageForm::FIELD_URL => $pageUrlTemplate->getVirtualColumn('url'),
+            CmsPageForm::FIELD_FK_LOCALE => $pageUrlTemplate->getVirtualColumn('idLocale'),
             CmsPageForm::FIELD_CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
             CmsPageForm::FIELD_IS_ACTIVE => $pageUrlTemplate->getIsActive(),
-            CmsPageForm::FIELD_ID_URL => $pageUrlTemplate->getIdUrl(),
+            CmsPageForm::FIELD_ID_URL => $pageUrlTemplate->getVirtualColumn('idUrl'),
         ];
     }
 
