@@ -87,24 +87,4 @@ class MethodController extends AbstractController
         return $this->redirectResponse('/shipment');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deleteAction(Request $request)
-    {
-        if (!$request->isMethod(Request::METHOD_DELETE)) {
-            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
-        }
-
-        $idMethod = $this->castId($request->request->get(self::ID_METHOD_PARAMETER));
-
-        if ($this->getFacade()->hasMethod($idMethod)) {
-            $this->getFacade()->deleteMethod($idMethod);
-        }
-
-        return $this->redirectResponse('/shipment');
-    }
-
 }
