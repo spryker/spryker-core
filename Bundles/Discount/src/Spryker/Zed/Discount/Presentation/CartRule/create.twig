@@ -19,13 +19,15 @@
                 {{ form_row(form.amount) }}
                 {{ form_row(form.calculator_plugin) }}
 
-                <div class="row collection-form" id="collector-container" data-prototype="&lt;div class=&quot;col-md-6&quot;&gt;&lt;div class=&quot;well well-sm&quot;&gt;{{ form_widget(form.collector_plugins[0].parent.vars.prototype)|e }}&lt;/div&gt;&lt;/div&gt;">
+                {% macro prototype(content) %}
+                    <div class="col-md-6">
+                        <div class="well well-sm">{{ content|raw }}</div>
+                    </div>
+                {% endmacro %}
+
+                <div class="row collection-form" id="collector-container" data-prototype="{{ _self.prototype(form_widget(form.collector_plugins[0].parent.vars.prototype))|e }}">
                     {% for collector in form.collector_plugins %}
-                        <div class="col-md-6">
-                            <div class="well well-sm">
-                                {{ form_widget(collector) }}
-                            </div>
-                        </div>
+                        {{ _self.prototype(form_widget(collector)) }}
                     {% endfor %}
                 </div>
 
@@ -40,13 +42,9 @@
                 {{ form_row(form.is_privileged) }}
                 {{ form_row(form.is_active) }}
 
-                <div class="row collection-form" id="rules-container" data-prototype="&lt;div class=&quot;col-md-6&quot;&gt;&lt;div class=&quot;well well-sm&quot;&gt;{{ form_widget(form.decision_rules[0].parent.vars.prototype)|e }}&lt;/div&gt;&lt;/div&gt;">
+                <div class="row collection-form" id="rules-container" data-prototype="{{ _self.prototype(form_widget(form.decision_rules[0].parent.vars.prototype))|e }}">
                     {% for rule in form.decision_rules %}
-                        <div class="col-md-6">
-                            <div class="well well-sm">
-                                {{ form_widget(rule) }}
-                            </div>
-                        </div>
+                        {{ _self.prototype(form_widget(rule)) }}
                     {% endfor %}
                 </div>
 
