@@ -90,7 +90,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPathToBundleConfig()
     {
-        return $this->getBundleDirectory() . '/../bundle_config.json';
+        return dirname(__FILE__) . '/Business/DependencyTree/bundle_config.json';
     }
 
     /**
