@@ -20,7 +20,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
-use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -384,8 +383,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
             ->withColumn(SpyUrlTableMap::COL_ID_URL, 'idUrl')
             ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, 'idLocale')
-            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_PATH, self::TEMPLATE_PATH)
-        ;
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_PATH, self::TEMPLATE_PATH);
     }
 
     /**
