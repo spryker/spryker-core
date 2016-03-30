@@ -207,10 +207,10 @@ class CmsPageForm extends AbstractType
                 'methods' => [
                     function ($url, ExecutionContextInterface $context) {
                         if ($this->urlFacade->hasUrl($url)) {
-                            $context->addViolation('Url is already used');
+                            $context->addViolation('URL is already used');
                         }
                         if ($url[0] !== '/') {
-                            $context->addViolation('Url must start with a slash');
+                            $context->addViolation('URL must start with a slash');
                         }
                     },
                 ],
