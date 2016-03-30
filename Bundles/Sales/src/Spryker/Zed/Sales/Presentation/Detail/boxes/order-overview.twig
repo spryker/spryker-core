@@ -10,7 +10,13 @@
                 <p><b>{{ 'Unique Product Quantity' | trans }}:</b> {{ order.items|length }}</p>
             </div>
             <div class="col-xs-12 col-md-4">
-                <p><b>{{ 'Customer name' | trans }}:</b> <a href="{{ url('/customer/view', {'id-customer': order.fkCustomer}) }}" target="_blank">{{ order.firstName }} {{ order.lastName }}</a></p>
+                <p><b>{{ 'Customer name' | trans }}:</b>
+                    {% if order.fkCustomer %}
+                        <a href="{{ url('/customer/view', {'id-customer': order.fkCustomer}) }}" target="_blank">{{ order.firstName }} {{ order.lastName }}</a>
+                    {% else %}
+                        {{ order.firstName }} {{ order.lastName }}
+                    {% endif %}
+                </p>
                 <p><b>{{ 'Email' | trans }}:</b> {{ order.email }}</p>
                 <p><b>{{ 'Status' | trans }}:</b>
                     {% for state in distinctOrderStates %}
