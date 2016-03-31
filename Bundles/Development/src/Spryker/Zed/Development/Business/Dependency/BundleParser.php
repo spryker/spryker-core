@@ -84,7 +84,7 @@ class BundleParser
      */
     protected function findAllFilesOfBundle($bundle)
     {
-        $finder = new Finder($this->config->getBundleDirectory() . $bundle);
+        $finder = new Finder($this->config->getBundleDirectory(), '*', $bundle);
 
         return $finder->getFiles();
     }
