@@ -258,7 +258,7 @@ abstract class AbstractCollector
             $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
             $collectedDataCount = count($collectedData);
 
-            $touchUpdater->updateMulti($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
+            $touchUpdater->bulkUpdate($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
             $dataWriter->write($collectedData, $this->collectResourceType());
 
             $batchResult->increaseProcessedCount($collectedDataCount);
@@ -309,7 +309,7 @@ abstract class AbstractCollector
     ) {
 
         $deletedCount = $this->delete($itemType, $dataWriter, $touchUpdater, $locale);
-        $batchResult->setDeletedCount($deletedCount);
+        $batchResult->setDeletedCount($batchResult->getDeletedCount() + $deletedCount);
     }
 
     /**
@@ -338,6 +338,8 @@ abstract class AbstractCollector
         try {
             while ($batchCount > 0) {
                 $entityCollection = $this->getTouchCollectionToDelete($offset, $itemType);
+                dump($itemType, $entityCollection);
+
                 $batchCount = count($entityCollection);
 
                 if ($batchCount > 0) {
@@ -351,7 +353,7 @@ abstract class AbstractCollector
                     );
 
                     if (!empty($keysToDelete)) {
-                        $touchUpdater->deleteMulti(
+                        $touchUpdater->bulkDelete(
                             $touchUpdaterSet,
                             $locale->getIdLocale(),
                             $this->touchQueryContainer->getConnection()

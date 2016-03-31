@@ -80,7 +80,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      *
      * @return void
      */
-    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
+    public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
     {
         $updateSql = '';
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
@@ -110,7 +110,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      *
      * @return void
      */
-    public function deleteMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
+    public function bulkDelete(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
     {
         $idsToDelete = '';
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
