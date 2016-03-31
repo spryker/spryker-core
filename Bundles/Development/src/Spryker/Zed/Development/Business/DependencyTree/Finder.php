@@ -56,7 +56,7 @@ class Finder
     /**
      * @throws \Exception
      *
-     * @return \Symfony\Component\Finder\Finder
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function getFiles()
     {
@@ -68,7 +68,7 @@ class Finder
         }
 
         if (count($directories) === 0) {
-            throw new \Exception('Directories can not be resolved with glob. Maybe you have a wrong path pattern applied.');
+            return [];
         }
 
         $finder = new SfFinder();
@@ -112,8 +112,8 @@ class Finder
         }
 
         return [
-            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
+            $this->bundleDirectory . '/src/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
+            $this->bundleDirectory . '/tests/*/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
         ];
     }
 
@@ -123,8 +123,8 @@ class Finder
     private function getYvesDirectories()
     {
         return [
-            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Yves/' . $this->bundle,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Yves/' . $this->bundle,
+            $this->bundleDirectory . '/src/Spryker/Yves/' . $this->bundle,
+            $this->bundleDirectory . '/tests/*/Spryker/Yves/' . $this->bundle,
         ];
     }
 
@@ -134,8 +134,8 @@ class Finder
     private function getClientDirectories()
     {
         return [
-            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Client/' . $this->bundle,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Client/' . $this->bundle,
+            $this->bundleDirectory . '/src/Spryker/Client/' . $this->bundle,
+            $this->bundleDirectory . '/tests/*/Spryker/Client/' . $this->bundle,
         ];
     }
 
@@ -145,8 +145,8 @@ class Finder
     private function getSharedDirectories()
     {
         return [
-            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Shared/' . $this->bundle . '/',
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Shared/' . $this->bundle . '/',
+            $this->bundleDirectory . '/src/Spryker/Shared/' . $this->bundle . '/',
+            $this->bundleDirectory . '/tests/*/Spryker/Shared/' . $this->bundle . '/',
         ];
     }
 

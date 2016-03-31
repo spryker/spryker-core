@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Development\Business\Dependency;
 
+use Spryker\Zed\Development\Business\DependencyTree\Finder;
 use Spryker\Zed\Development\DevelopmentConfig;
-use Symfony\Component\Finder\Finder;
 
 class BundleParser
 {
@@ -84,11 +84,9 @@ class BundleParser
      */
     protected function findAllFilesOfBundle($bundle)
     {
-        $files = (new Finder())
-            ->files()
-            ->in($this->config->getBundleDirectory() . $bundle . '/src/*/Zed/');
+        $finder = new Finder($this->config->getBundleDirectory() . $bundle);
 
-        return $files;
+        return $finder->getFiles();
     }
 
     /**
