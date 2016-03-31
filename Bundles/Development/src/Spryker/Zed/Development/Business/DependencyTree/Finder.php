@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree;
 
-use Symfony\Component\Finder\Finder as SfFinder;
+use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Finder
 {
@@ -71,7 +71,7 @@ class Finder
             return [];
         }
 
-        $finder = new SfFinder();
+        $finder = new SymfonyFinder();
         $finder->files()->in($directories);
 
         if ($this->name !== null) {
