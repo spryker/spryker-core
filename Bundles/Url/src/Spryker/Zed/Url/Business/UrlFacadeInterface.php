@@ -105,6 +105,15 @@ interface UrlFacadeInterface
     /**
      * @api
      *
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
+
+    /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @return void

@@ -63,4 +63,13 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
      */
     public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
 
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeId($idCategoryNode);
+
 }

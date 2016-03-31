@@ -211,7 +211,6 @@ abstract class AbstractCollector
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-
         $this->validateDependencies();
 
         $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
@@ -338,8 +337,6 @@ abstract class AbstractCollector
         try {
             while ($batchCount > 0) {
                 $entityCollection = $this->getTouchCollectionToDelete($offset, $itemType);
-                dump($itemType, $entityCollection);
-
                 $batchCount = count($entityCollection);
 
                 if ($batchCount > 0) {

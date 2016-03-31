@@ -107,6 +107,16 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     }
 
     /**
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
+    {
+        return $this->urlFacade->getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
