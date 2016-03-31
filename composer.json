@@ -452,13 +452,11 @@
       "Transfer\\Module\\": "Bundles/Transfer/tests/_support/Module",
       "Application\\Module\\": "Bundles/Application/tests/_support/Module"
     },
-    "files": ["Bundles/Config/src/Spryker/Shared/Config.php"]
+    "files": [
+      "Bundles/Config/src/Spryker/Shared/Config.php"
+    ]
   },
   "bin": [
     "Bundles/Console/bin/console"
-  ],
-  "scripts": {
-    "post-update-cmd": "SprykerInstaller::postUpdate",
-    "post-install-cmd": "SprykerInstaller::postInstall"
-  }
+  ]
 }
