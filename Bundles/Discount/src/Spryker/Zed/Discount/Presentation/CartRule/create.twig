@@ -1,5 +1,10 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-discount-main.css" />
+{% endblock %}
+
 {% block action %}
     {{ backActionButton('/discount/cart-rule/', 'List Cart Rules' | trans) }}
 {% endblock %}
