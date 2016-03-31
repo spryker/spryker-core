@@ -1,39 +1,30 @@
 /**
- * This file is part of Antelope frontend automation tool
- * (c) Spryker Systems GmbH
- * For full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ * Demoshop theme comfiguration
  */
 
 'use strict';
 
-let path = require('path');
-let R = require('ramda');
-let globby = require('globby');
-let cwd = process.cwd();
+const path = require('path');
+const cwd = process.cwd();
 
-// webpack
-let webpack = require('webpack');
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
+const R = antelope.remote('ramda');
+const webpack = antelope.remote('webpack');
+const ExtractTextPlugin = antelope.remote('extract-text-webpack-plugin');
 
-// anchor
-let anchor = globby.sync([
-    '**/spryker-zed-gui-commons.entry.js'
-], {
-    cwd: cwd,
-    nocase: true
-});
-
-let guiPath = path.join(cwd, anchor[0], '../../../../');
-let bundlesPath = path.join(guiPath, '../');
-let isDebug = process.argv.indexOf('--debug') > -1;
-let isProduction = process.argv.indexOf('--production') > -1;
+let bundlesPath = path.join(__dirname, '../../../');
+let guiPath = path.join(__dirname, '../../');
+let guiFolder = path.basename(guiPath);
 
 let config = {
-    antelope: {},
+    entry: antelope.entryPoints,
     resolve: {
+        root: antelope.paths.root.concat([bundlesPath]),
         alias: {
-            ZedGui: `${path.basename(guiPath)}/assets/Zed/js/modules/commons`
+            ZedGui: `${guiFolder}/assets/Zed/js/modules/commons`
         }
+    },
+    resolveLoader: {
+        root: antelope.paths.loaders
     },
     output: {
         path: path.join(cwd, './public/Zed'),
@@ -54,6 +45,9 @@ let config = {
             loader: 'file?name=/assets/img/[name].[ext]'
         }]
     },
+    sassLoader: {
+        includePaths: antelope.paths.loaders
+    },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin('spryker-zed-gui-commons', 'assets/js/spryker-zed-gui-commons.js'),
         new webpack.ProvidePlugin({
@@ -61,16 +55,16 @@ let config = {
             jQuery: 'jquery',
 
             // legacy provider
-            SprykerAjax: 'Gui/assets/Zed/js/modules/legacy/SprykerAjax',
-            SprykerAjaxCallbacks: 'Gui/assets/Zed/js/modules/legacy/SprykerAjaxCallbacks',
-            SprykerAlert: 'Gui/assets/Zed/js/modules/legacy/SprykerAlert'
+            SprykerAjax: `${guiFolder}/assets/Zed/js/modules/legacy/SprykerAjax`,
+            SprykerAjaxCallbacks: `${guiFolder}/assets/Zed/js/modules/legacy/SprykerAjaxCallbacks`,
+            SprykerAlert: `${guiFolder}/assets/Zed/js/modules/legacy/SprykerAlert`
         }),
         new ExtractTextPlugin('assets/css/[name].css', {
             allChunks: true
         }),
         new webpack.DefinePlugin({
-            PRODUCTION: isProduction,
-            WATCH: context.has('watch'),
+            PRODUCTION: antelope.options.production,
+            WATCH: antelope.options.watch,
             'require.specified': 'require.resolve'
         })
     ],
@@ -81,16 +75,17 @@ let config = {
     progress: true,
     failOnError: false,
     devtool: 'sourceMap',
-    debug: isDebug,
+    debug: antelope.options.debug,
+    watch: antelope.options.watch
 };
 
-if (isProduction) {
+if (antelope.options.production) {
     config.plugins = config.plugins.concat([
         new webpack.optimize.UglifyJsPlugin({
             comments: false,
-            sourceMap: isDebug,
+            sourceMap: false,
             compress: {
-                warnings: isDebug
+                warnings: false
             },
             mangle: {
                 except: ['$', 'exports', 'require']
