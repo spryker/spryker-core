@@ -32,3 +32,7 @@
         margin-right: 5px;
     }
 }
+
+.col-md-6:first-child .well button {
+    display: none;
+}
