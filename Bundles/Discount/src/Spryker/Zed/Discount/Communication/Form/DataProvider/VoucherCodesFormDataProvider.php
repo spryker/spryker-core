@@ -45,13 +45,13 @@ class VoucherCodesFormDataProvider
             VoucherCodesForm::FIELD_VALID_FROM => new \DateTime('now'),
             VoucherCodesForm::FIELD_VALID_TO => new \DateTime('now'),
             VoucherCodesForm::FIELD_DECISION_RULES => [
-                'rule_1' => [
+                [
                     'value' => '',
                     'rules' => '',
                 ],
             ],
             VoucherCodesForm::FIELD_COLLECTOR_PLUGINS => [
-                'plugin_1' => [
+                [
                     'collector_plugin' => '',
                     'value' => '',
                 ],
