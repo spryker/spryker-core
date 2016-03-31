@@ -207,11 +207,10 @@ interface CmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param string $url
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function savePageUrlAndTouch(PageTransfer $pageTransfer, $url);
+    public function savePageUrlAndTouch(PageTransfer $pageTransfer);
 
     /**
      * @api

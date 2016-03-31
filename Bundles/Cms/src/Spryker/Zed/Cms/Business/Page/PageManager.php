@@ -93,7 +93,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      * @throws \Exception
@@ -101,22 +101,22 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    protected function createPage(PageTransfer $page)
+    protected function createPage(PageTransfer $pageTransfer)
     {
-        $this->checkTemplateExists($page->getFkTemplate());
+        $this->checkTemplateExists($pageTransfer->getFkTemplate());
 
         $pageEntity = new SpyCmsPage();
 
-        $pageEntity->fromArray($page->toArray());
+        $pageEntity->fromArray($pageTransfer->toArray());
         $pageEntity->save();
 
-        $page->setIdCmsPage($pageEntity->getIdCmsPage());
+        $pageTransfer->setIdCmsPage($pageEntity->getIdCmsPage());
 
-        return $page;
+        return $pageTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      * @throws \Exception
@@ -124,18 +124,20 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    protected function updatePage(PageTransfer $page)
+    protected function updatePage(PageTransfer $pageTransfer)
     {
-        $pageEntity = $this->getPageById($page->getIdCmsPage());
-        $pageEntity->fromArray($page->toArray());
+        $pageEntity = $this->getPageById($pageTransfer->getIdCmsPage());
+        $pageEntity->fromArray($pageTransfer->toArray());
+
+        $this->updatePageUrl($pageTransfer);
 
         if (!$pageEntity->isModified()) {
-            return $page;
+            return $pageTransfer;
         }
 
         $pageEntity->save();
 
-        return $page;
+        return $pageTransfer;
     }
 
     /**
@@ -216,18 +218,35 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
-     * @param string $url
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createPageUrl(PageTransfer $page, $url)
+    public function createPageUrl(PageTransfer $pageTransfer)
     {
-        $this->checkPageExists($page->getIdCmsPage());
+        $this->checkPageExists($pageTransfer->getIdCmsPage());
 
-        return $this->urlFacade->createUrlForCurrentLocale($url, CmsConstants::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
+        return $this->urlFacade->createUrlForCurrentLocale(
+            $pageTransfer->getUrl()->getUrl(),
+            CmsConstants::RESOURCE_TYPE_PAGE,
+            $pageTransfer->getIdCmsPage()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     *
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function updatePageUrl(PageTransfer $pageTransfer)
+    {
+        $this->checkPageExists($pageTransfer->getIdCmsPage());
+
+        return $this->urlFacade->saveUrlAndTouch($pageTransfer->getUrl());
     }
 
     /**
@@ -248,17 +267,16 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param string $url
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function savePageUrlAndTouch(PageTransfer $pageTransfer, $url)
+    public function savePageUrlAndTouch(PageTransfer $pageTransfer)
     {
         if (!$this->hasPageId($pageTransfer->getIdCmsPage())) {
             $pageTransfer = $this->savePage($pageTransfer);
         }
 
-        $urlTransfer = $this->createPageUrl($pageTransfer, $url);
+        $urlTransfer = $this->createPageUrl($pageTransfer);
         $this->urlFacade->touchUrlActive($urlTransfer->getIdUrl());
 
         return $urlTransfer;
