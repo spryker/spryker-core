@@ -211,6 +211,18 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     */
+    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
+    {
+        return $this->urlQueryContainer
+            ->queryResourceUrlByCategoryNodeId($idCategoryNode)
+            ->find();
+    }
+
+    /**
      * @param int $idUrl
      *
      * @return bool

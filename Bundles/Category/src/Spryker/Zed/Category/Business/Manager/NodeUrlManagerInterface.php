@@ -33,10 +33,9 @@ interface NodeUrlManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    public function removeUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer);
+    public function removeUrl(NodeTransfer $categoryNodeTransfer);
 
 }

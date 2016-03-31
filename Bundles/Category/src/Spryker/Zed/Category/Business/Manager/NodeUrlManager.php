@@ -147,16 +147,15 @@ class NodeUrlManager implements NodeUrlManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    public function removeUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    public function removeUrl(NodeTransfer $categoryNodeTransfer)
     {
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
-        $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
+        $urls = $this->urlFacade->getResourceUrlCollectionByCategoryNodeId($idNode);
 
-        if ($urlTransfer) {
+        foreach ($urls as $urlTransfer) {
             $this->urlFacade->deleteUrl($urlTransfer);
         }
     }

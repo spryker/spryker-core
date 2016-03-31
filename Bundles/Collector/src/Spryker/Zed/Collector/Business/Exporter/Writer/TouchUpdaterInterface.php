@@ -20,7 +20,7 @@ interface TouchUpdaterInterface
      *
      * @return
      */
-    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
+    public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
@@ -29,7 +29,7 @@ interface TouchUpdaterInterface
      *
      * @return void
      */
-    public function deleteMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
+    public function bulkDelete(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
 
     /**
      * @return string

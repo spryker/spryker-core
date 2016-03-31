@@ -93,6 +93,13 @@ interface UrlManagerInterface
     public function getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
 
     /**
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     */
+    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
+
+    /**
      * @param int $idUrl
      *
      * @return void

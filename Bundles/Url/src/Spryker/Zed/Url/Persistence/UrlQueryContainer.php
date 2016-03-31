@@ -151,4 +151,19 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         return $query;
     }
 
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeId($idCategoryNode)
+    {
+        $query = $this->getFactory()->createUrlQuery();
+        $query->filterByFkResourceCategorynode($idCategoryNode);
+
+        return $query;
+    }
+
 }
