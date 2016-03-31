@@ -109,7 +109,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     /**
      * @param int $idCategoryNode
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
     {

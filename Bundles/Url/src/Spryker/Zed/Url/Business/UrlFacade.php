@@ -160,7 +160,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @param int $idCategoryNode
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
     {

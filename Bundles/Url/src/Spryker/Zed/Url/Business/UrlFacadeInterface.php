@@ -107,7 +107,7 @@ interface UrlFacadeInterface
      *
      * @param int $idCategoryNode
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
 
