@@ -46,17 +46,18 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $this->provideFormTypeTemplates();
 
         $app['twig.loader.zed'] = $app->share(function () {
-            $namespace = Config::get(ApplicationConstants::PROJECT_NAMESPACE);
+            $namespaces = Config::get(ApplicationConstants::PROJECT_NAMESPACES);
 
             $storeName = Store::getInstance()->getStoreName();
 
-            return new Filesystem(
-                [
-                    APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/',
-                    APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/',
-                    $this->getConfig()->getBundlesDirectory() . '/%2$s/src/Spryker/Zed/%1$s/Presentation/',
-                ]
-            );
+            $paths = [];
+            foreach ($namespaces as $namespace) {
+                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/';
+                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/';
+            }
+            $paths[] = $this->getConfig()->getBundlesDirectory() . '/%2$s/src/Spryker/Zed/%1$s/Presentation/';
+
+            return new Filesystem($paths);
         });
 
         $app['twig.loader'] = $app->share(function ($app) {
