@@ -456,5 +456,9 @@
   },
   "bin": [
     "Bundles/Console/bin/console"
-  ]
+  ],
+  "scripts": {
+    "post-update-cmd": "SprykerInstaller::postUpdate",
+    "post-install-cmd": "SprykerInstaller::postInstall"
+  }
 }
