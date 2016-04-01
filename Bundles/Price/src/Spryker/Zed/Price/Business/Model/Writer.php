@@ -131,52 +131,52 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void
      */
-    protected function loadProductAbstractIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
+    protected function loadProductAbstractIdForPriceProductTransfer(PriceProductTransfer $priceProductTransfer)
     {
-        if ($transferPriceProduct->getIdProductAbstract() === null) {
-            $transferPriceProduct->setIdProductAbstract(
-                $this->reader->getProductAbstractIdBySku($transferPriceProduct->getSkuProductAbstract())
+        if ($priceProductTransfer->getIdProductAbstract() === null) {
+            $priceProductTransfer->setIdProductAbstract(
+                $this->reader->getProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract())
             );
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void
      */
-    protected function loadProductConcreteIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
+    protected function loadProductConcreteIdForPriceProductTransfer(PriceProductTransfer $priceProductTransfer)
     {
-        if ($transferPriceProduct->getIdProduct() === null &&
-            $this->reader->hasProductConcrete($transferPriceProduct->getSkuProduct())
+        if ($priceProductTransfer->getIdProduct() === null &&
+            $this->reader->hasProductConcrete($priceProductTransfer->getSkuProduct())
         ) {
-            $transferPriceProduct->setIdProduct(
-                $this->reader->getProductConcreteIdBySku($transferPriceProduct->getSkuProduct())
+            $priceProductTransfer->setIdProduct(
+                $this->reader->getProductConcreteIdBySku($priceProductTransfer->getSkuProduct())
             );
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Orm\Zed\Price\Persistence\SpyPriceProduct $priceProductEntity
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
-    protected function savePriceProductEntity(PriceProductTransfer $transferPriceProduct, SpyPriceProduct $priceProductEntity)
+    protected function savePriceProductEntity(PriceProductTransfer $priceProductTransfer, SpyPriceProduct $priceProductEntity)
     {
-        $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
+        $priceType = $this->reader->getPriceTypeByName($priceProductTransfer->getPriceTypeName());
         $priceProductEntity
             ->setPriceType($priceType)
-            ->setPrice($transferPriceProduct->getPrice());
+            ->setPrice($priceProductTransfer->getPrice());
 
-        if ($transferPriceProduct->getIdProduct()) {
-            $priceProductEntity->setFkProduct($transferPriceProduct->getIdProduct());
+        if ($priceProductTransfer->getIdProduct()) {
+            $priceProductEntity->setFkProduct($priceProductTransfer->getIdProduct());
         } else {
-            $priceProductEntity->setFkProductAbstract($transferPriceProduct->getIdProductAbstract());
+            $priceProductEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
         }
 
         $priceProductEntity->save();
@@ -196,20 +196,20 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function setPriceType(PriceProductTransfer $transferPriceProduct)
+    protected function setPriceType(PriceProductTransfer $priceProductTransfer)
     {
-        if ($transferPriceProduct->getPriceTypeName() === null) {
-            $transferPriceProduct->setPriceTypeName($this->priceConfig->getPriceTypeDefaultName());
+        if ($priceProductTransfer->getPriceTypeName() === null) {
+            $priceProductTransfer->setPriceTypeName($this->priceConfig->getPriceTypeDefaultName());
         }
 
-        return $transferPriceProduct;
+        return $priceProductTransfer;
     }
 
     /**
@@ -230,31 +230,17 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return bool
      */
-    protected function isPriceTypeExistingForProductAbstract(PriceProductTransfer $transferPriceProduct)
+    protected function isPriceTypeExistingForProductAbstract(PriceProductTransfer $priceProductTransfer)
     {
-        $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
+        $priceType = $this->reader->getPriceTypeByName($priceProductTransfer->getPriceTypeName());
         $priceEntities = $this->queryContainer
-            ->queryPriceEntityForProductAbstract($transferPriceProduct->getSkuProductAbstract(), $priceType);
+            ->queryPriceEntityForProductAbstract($priceProductTransfer->getSkuProductAbstract(), $priceType);
 
         return $priceEntities->count() > 0;
-    }
-
-    /**
-     * @param int $idProductConcrete
-     * @param string $priceType
-     * @param \DateTime $date
-     *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
-     */
-    protected function getPriceEntityForProductConcrete($idProductConcrete, $priceType, \DateTime $date)
-    {
-        $idPriceType = $this->reader->getPriceTypeByName($priceType)->getIdPriceType();
-
-        return $this->queryContainer->queryPriceEntityForProductConcrete($idProductConcrete, $date, $idPriceType)->findOne();
     }
 
     /**
