@@ -11,19 +11,21 @@
     }
   },
   "require": {
-    "spryker/application": "^1.0.0-RC2",
-    "spryker/glossary": "^1.0.0-RC2",
-    "spryker/kernel": "^1.0.0-RC2",
-    "spryker/mail": "^1.0.0-RC2",
-    "spryker/zed-request": "^1.0.0-RC2"
+    "spryker/application": "^2.0.0-RC1",
+    "spryker/glossary": "^2.0.0-RC1",
+    "spryker/kernel": "^2.0.0-RC1",
+    "spryker/mail": "^2.0.0-RC1",
+    "spryker/zed-request": "^2.0.0-RC1",
+    "spryker/installer": "^2.0.0-RC1",
+    "spryker/library": "^2.0.0-RC1"
   },
   "description": "newsletter bundle",
   "license": "proprietary",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   }
 }

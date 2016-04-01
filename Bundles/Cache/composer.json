@@ -11,13 +11,13 @@
     }
   },
   "require": {
-    "spryker/console": "^1.0.0-RC2",
-    "spryker/kernel": "^1.0.0-RC2",
-    "spryker/symfony": "^1.0.0-RC2"
+    "spryker/console": "^2.0.0-RC1",
+    "spryker/kernel": "^2.0.0-RC1",
+    "spryker/symfony": "^2.0.0-RC1"
   },
   "description": "cache bundle",
   "license": "proprietary",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {

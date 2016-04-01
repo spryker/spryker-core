@@ -11,18 +11,18 @@
     }
   },
   "require": {
-    "spryker/cart": "^1.0.0-RC2",
-    "spryker/kernel": "^1.0.0-RC2",
-    "spryker/price": "^1.0.0-RC2",
-    "spryker/transfer": "^1.0.0-RC2"
+    "spryker/cart": "^2.0.0-RC1",
+    "spryker/kernel": "^2.0.0-RC1",
+    "spryker/price": "^2.0.0-RC1",
+    "spryker/transfer": "^2.0.0-RC1"
   },
   "description": "price cart connector bundle",
   "license": "proprietary",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   }
 }

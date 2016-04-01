@@ -11,18 +11,18 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0-RC2",
-    "spryker/sales": "^1.0.0-RC2",
-    "spryker/symfony": "^1.0.0-RC2",
-    "spryker/application": "^1.0.0-RC2"
+    "spryker/kernel": "^2.0.0-RC1",
+    "spryker/sales": "^2.0.0-RC1",
+    "spryker/symfony": "^2.0.0-RC1",
+    "spryker/application": "^2.0.0-RC1"
   },
   "description": "payment bundle",
   "license": "proprietary",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   }
 }
