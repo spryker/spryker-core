@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Payolution\Persistence;
 
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTransactionRequestLogTableMap;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTransactionStatusLogTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Propel;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -134,12 +137,19 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      */
     public function queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst($idSalesOrder, $paymentCode)
     {
+
         return $this->queryTransactionStatusLogBySalesOrderIdLatestFirst($idSalesOrder)
-            // Payment code need to get checked in request log table
-            ->joinSpyPaymentPayolutionTransactionRequestLog()
-            ->useSpyPaymentPayolutionTransactionRequestLogQuery()
-            ->filterByPaymentCode($paymentCode)
-            ->endUse();
+            ->withColumn(SpyPaymentPayolutionTransactionRequestLogTableMap::COL_PAYMENT_CODE)
+            ->addJoin(
+                [
+                    SpyPaymentPayolutionTransactionStatusLogTableMap::COL_IDENTIFICATION_TRANSACTIONID,
+                    SpyPaymentPayolutionTransactionRequestLogTableMap::COL_PAYMENT_CODE,
+                ],
+                [
+                    SpyPaymentPayolutionTransactionRequestLogTableMap::COL_TRANSACTION_ID,
+                    Propel::getConnection()->quote($paymentCode),
+                ]
+            );
     }
 
     /**
