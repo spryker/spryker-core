@@ -123,11 +123,11 @@ class PayolutionFacadeGatewayTest extends Test
 
         $this->setBaseTestData();
 
-        $totals = new TotalsTransfer();
-        $totals->setGrandTotal(10000);
+        $totalsTransfer = new TotalsTransfer();
+        $totalsTransfer->setGrandTotal(10000);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setTotals($totals);
+        $quoteTransfer->setTotals($totalsTransfer);
 
         $addressTransfer = (new AddressTransfer())
             ->setCity('Berlin')
@@ -349,16 +349,16 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransferMock()
     {
-        $totals = new TotalsTransfer();
-        $totals->setGrandTotal(10000);
+        $totalsTransfer = new TotalsTransfer();
+        $totalsTransfer->setGrandTotal(10000);
 
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($this->orderEntity->toArray(), true);
-        $orderTransfer->setTotals($totals);
+        $orderTransfer->setTotals($totalsTransfer);
         return $orderTransfer;
     }
 
