@@ -6,10 +6,10 @@
     }
   },
   "require": {
-    "spryker/discount": "^2.0.0-RC1",
-    "spryker/kernel": "^2.0.0-RC1",
-    "spryker/oms": "^2.0.0-RC1",
-    "spryker/sales": "^2.0.0-RC1"
+    "spryker/discount": "^2.0.0-RC2",
+    "spryker/kernel": "^2.0.0-RC2",
+    "spryker/oms": "^2.0.0-RC2",
+    "spryker/sales": "^2.0.0-RC2"
   },
   "description": "oms discount connector bundle",
   "license": "proprietary",

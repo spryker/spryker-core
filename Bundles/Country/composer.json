@@ -11,14 +11,14 @@
     }
   },
   "require": {
-    "spryker/application": "^2.0.0-RC1",
-    "spryker/gui": "^2.0.0-RC1",
-    "spryker/installer": "^2.0.0-RC1",
-    "spryker/kernel": "^2.0.0-RC1",
-    "spryker/messenger": "^2.0.0-RC1",
-    "spryker/user": "^2.0.0-RC1",
-    "spryker/log": "^2.0.0-RC1",
-    "spryker/symfony": "^2.0.0-RC1"
+    "spryker/application": "^2.0.0-RC2",
+    "spryker/gui": "^2.0.0-RC2",
+    "spryker/installer": "^2.0.0-RC2",
+    "spryker/kernel": "^2.0.0-RC2",
+    "spryker/messenger": "^2.0.0-RC2",
+    "spryker/user": "^2.0.0-RC2",
+    "spryker/log": "^2.0.0-RC2",
+    "spryker/symfony": "^2.0.0-RC2"
   },
   "description": "country bundle",
   "license": "proprietary",

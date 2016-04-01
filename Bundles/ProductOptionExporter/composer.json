@@ -11,9 +11,9 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0-RC1",
-    "spryker/product": "^2.0.0-RC1",
-    "spryker/product-option": "^2.0.0-RC1"
+    "spryker/kernel": "^2.0.0-RC2",
+    "spryker/product": "^2.0.0-RC2",
+    "spryker/product-option": "^2.0.0-RC2"
   },
   "description": "product option exporter bundle",
   "license": "proprietary",
