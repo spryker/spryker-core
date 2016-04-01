@@ -28,7 +28,7 @@ class AjaxController extends AbstractController
      */
     public function keysAction(Request $request)
     {
-        $term = $request->query->get(self::SEARCH_TERM); // TODO FW Validation
+        $term = $request->query->get(self::SEARCH_TERM); 
         $keys = $this->getFacade()->getKeySuggestions($term);
 
         return new JsonResponse($keys);

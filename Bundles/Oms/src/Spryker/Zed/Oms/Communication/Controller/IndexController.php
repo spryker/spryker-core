@@ -47,14 +47,14 @@ class IndexController extends AbstractController
      */
     public function drawAction(Request $request)
     {
-        $processName = $request->query->get('process'); // TODO FW Validation
+        $processName = $request->query->get('process'); 
         if ($processName === null) {
             return $this->redirectResponse('/oms');
         }
 
-        $format = $request->query->get('format'); // TODO FW Validation
-        $fontSize = $request->query->getInt('font'); // TODO FW Validation
-        $highlightState = $request->query->get('state'); // TODO FW Validation
+        $format = $request->query->get('format'); 
+        $fontSize = $request->query->getInt('font'); 
+        $highlightState = $request->query->get('state'); 
 
         $reload = false;
         if ($format === null) {
@@ -88,8 +88,8 @@ class IndexController extends AbstractController
     {
         $id = $this->castId($request->query->get('id'));
 
-        $format = $request->query->get('format', self::DEFAULT_FORMAT); // TODO FW Validation
-        $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE); // TODO FW Validation
+        $format = $request->query->get('format', self::DEFAULT_FORMAT); 
+        $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE); 
 
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
@@ -106,7 +106,7 @@ class IndexController extends AbstractController
      */
     public function drawPreviewVersionAction(Request $request)
     {
-        $processName = $request->query->get('process'); // TODO FW Validation
+        $processName = $request->query->get('process'); 
         if ($processName === null) {
             return $this->redirectResponse('/oms');
         }

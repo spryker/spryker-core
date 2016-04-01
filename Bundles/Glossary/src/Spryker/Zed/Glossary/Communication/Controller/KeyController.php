@@ -30,7 +30,7 @@ class KeyController extends AbstractController
      */
     public function ajaxAction(Request $request)
     {
-        $term = $request->get(self::TERM); // TODO FW Validation needed
+        $term = $request->get(self::TERM);  needed
 
         $key = $this->getQueryContainer()
             ->queryKey($term)
@@ -67,7 +67,7 @@ class KeyController extends AbstractController
      */
     public function suggestAction(Request $request)
     {
-        $term = $request->get(self::TERM); // TODO FW Validation needed
+        $term = $request->get(self::TERM);  needed
 
         $keys = $this->getQueryContainer()
             ->queryByKey($term)->find();

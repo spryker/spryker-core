@@ -147,7 +147,7 @@ class VoucherController extends AbstractController
     public function viewAction(Request $request)
     {
         $idPool = $this->castId($request->query->get(self::ID_POOL_PARAMETER));
-        $batchValue = $request->query->get(self::BATCH_PARAMETER); // TODO FW Validation
+        $batchValue = $request->query->get(self::BATCH_PARAMETER); 
 
         $pool = $this->getFactory()
             ->getVoucherPoolById($idPool);
@@ -192,7 +192,7 @@ class VoucherController extends AbstractController
     protected function getGeneratedCodesTable(Request $request)
     {
         $idPool = $this->castId($request->query->get(self::ID_POOL_PARAMETER));
-        $batch = $request->query->get(self::BATCH_PARAMETER); // TODO FW Validation
+        $batch = $request->query->get(self::BATCH_PARAMETER); 
 
         $tableParameters = TableParameters::getTableParameters($request);
 
@@ -207,7 +207,7 @@ class VoucherController extends AbstractController
     public function exportAction(Request $request)
     {
         $idPool = $this->castId($request->query->get(self::ID_POOL_PARAMETER));
-        $batch = $request->query->get(self::BATCH_PARAMETER); // TODO FW Validation
+        $batch = $request->query->get(self::BATCH_PARAMETER); 
 
         return $this->generateCsvFromVouchers($idPool, $batch);
     }

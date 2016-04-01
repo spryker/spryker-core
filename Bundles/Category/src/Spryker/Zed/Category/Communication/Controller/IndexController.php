@@ -73,7 +73,7 @@ class IndexController extends AbstractController
      */
     public function nodeByNameAction(Request $request)
     {
-        $categoryName = $request->request->get('category-name'); // TODO FW Validation
+        $categoryName = $request->request->get('category-name'); 
 
         $idCategory = $this->getFacade()->getCategoryNodeIdentifier(
             trim($categoryName),

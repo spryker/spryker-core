@@ -63,7 +63,7 @@ class NodeController extends AbstractController
         $locale = $this->getFactory()
             ->getCurrentLocale();
 
-        $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true); // TODO FW Validation
+        $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true); 
 
         $order = count($categoryNodesToReorder) - 1;
         foreach ($categoryNodesToReorder as $index => $nodeData) {

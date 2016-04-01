@@ -46,7 +46,7 @@ class FulltextSearch extends AbstractSearch
      */
     protected function addFulltextSearchToQuery(Request $request, Query $searchQuery)
     {
-        $searchString = $request->get('q'); // TODO FW Validation
+        $searchString = $request->get('q'); 
         $searchQuery->setQuery(
             (new Query\Match())->setField('full-text', $searchString)
         );
