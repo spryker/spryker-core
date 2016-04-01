@@ -692,7 +692,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createComposerJsonStabilityUpdater()
     {
-        return new StabilityUpdater('dev');
+        return new StabilityUpdater('stable');
     }
 
     /**
@@ -700,7 +700,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createComposerJsonBranchAliasUpdater()
     {
-        return new BranchAliasUpdater('1.0.x-dev');
+        return new BranchAliasUpdater('2.0.x-dev');
     }
 
     /**

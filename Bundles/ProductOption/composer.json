@@ -11,21 +11,21 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0-RC2",
-    "spryker/locale": "^1.0.0-RC2",
-    "spryker/product": "^1.0.0-RC2",
-    "spryker/propel": "^1.0.0-RC2",
-    "spryker/tax": "^1.0.0-RC2",
-    "spryker/touch": "^1.0.0-RC2",
-    "spryker/sales": "^1.0.0-RC2"
+    "spryker/kernel": "^2.0.0-RC1",
+    "spryker/locale": "^2.0.0-RC1",
+    "spryker/product": "^2.0.0-RC1",
+    "spryker/propel": "^2.0.0-RC1",
+    "spryker/tax": "^2.0.0-RC1",
+    "spryker/touch": "^2.0.0-RC1",
+    "spryker/sales": "^2.0.0-RC1"
   },
   "description": "product option bundle",
   "license": "proprietary",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   }
 }
