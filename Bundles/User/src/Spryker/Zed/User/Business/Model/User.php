@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\CollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUser;
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Library\Copy;
 use Spryker\Zed\User\Business\Exception\UsernameExistsException;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
@@ -148,29 +146,6 @@ class User implements UserInterface
         $user->setStatus('deleted');
 
         return $this->save($user);
-    }
-
-    /**
-     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUsers()
-    {
-        $results = $this->queryContainer->queryUsers()->find();
-
-        if (($results instanceof ObjectCollection) === false) {
-            throw new UserNotFoundException();
-        }
-
-        $collection = new TransferArrayObject();
-
-        foreach ($results as $result) {
-            $transfer = new UserTransfer();
-            $collection->add(Copy::entityToTransfer($transfer, $result));
-        }
-
-        return $collection;
     }
 
     /**
@@ -378,16 +353,16 @@ class User implements UserInterface
     }
 
     /**
-     * @param \Orm\Zed\User\Persistence\SpyUser $entity
+     * @param \Orm\Zed\User\Persistence\SpyUser $userEntity
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function entityToTransfer(SpyUser $entity)
+    protected function entityToTransfer(SpyUser $userEntity)
     {
-        $transfer = new UserTransfer();
-        $transfer = Copy::entityToTransfer($transfer, $entity);
+        $userTransfer = new UserTransfer();
+        $userTransfer->fromArray($userEntity->toArray(), true);
 
-        return $transfer;
+        return $userTransfer;
     }
 
     /**

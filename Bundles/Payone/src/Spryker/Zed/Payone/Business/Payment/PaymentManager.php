@@ -23,7 +23,6 @@ use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 use Spryker\Shared\Payone\PayoneApiConstants;
-use Spryker\Zed\Library\Copy;
 use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payone\Business\Api\Call\CreditCardCheck;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
@@ -603,7 +602,7 @@ class PaymentManager implements PaymentManagerInterface
         $paymentEntity = $this->queryContainer->getPaymentByOrderId($idOrder)->findOne();
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
-        Copy::transferToEntity($paymentDataTransfer, $paymentDetailEntity);
+        $paymentDetailEntity->fromArray($paymentDataTransfer->toArray());
 
         $paymentDetailEntity->save();
     }
