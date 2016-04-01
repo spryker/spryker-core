@@ -176,7 +176,7 @@ class BlockController extends AbstractController
      */
     public function searchCategoryAction(Request $request)
     {
-        $term = $request->query->get('term'); 
+        $term = $request->query->get('term');
 
         $searchedItems = $this->getQueryContainer()
             ->queryNodeByCategoryName($term, $this->getCurrentIdLocale())

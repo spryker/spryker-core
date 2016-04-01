@@ -87,7 +87,7 @@ class MaintenanceController extends AbstractController
      */
     public function keyAction(Request $request)
     {
-        $key = $request->get('key'); 
+        $key = $request->get('key');
         $value = $this->getFacade()->get($key);
 
         return $this->viewResponse([

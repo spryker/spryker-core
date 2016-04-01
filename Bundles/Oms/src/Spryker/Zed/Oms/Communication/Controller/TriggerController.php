@@ -26,8 +26,8 @@ class TriggerController extends AbstractController
     public function triggerEventForOrderItemsAction(Request $request)
     {
         $idOrderItem = $this->castId($request->query->getInt('id-sales-order-item'));
-        $event = $request->query->get('event'); 
-        $redirect = $request->query->get('redirect', '/'); 
+        $event = $request->query->get('event');
+        $redirect = $request->query->get('redirect', '/');
 
         $this->getFacade()->triggerEventForOrderItems($event, [$idOrderItem]);
 
@@ -42,8 +42,8 @@ class TriggerController extends AbstractController
     public function triggerEventForOrderAction(Request $request)
     {
         $idOrder = $this->castId($request->query->getInt('id-sales-order'));
-        $event = $request->query->get('event'); 
-        $redirect = $request->query->get('redirect', '/'); 
+        $event = $request->query->get('event');
+        $redirect = $request->query->get('redirect', '/');
         $itemsList = $request->query->get('items');
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);

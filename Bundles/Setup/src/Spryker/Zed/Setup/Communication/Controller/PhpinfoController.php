@@ -20,7 +20,7 @@ class PhpinfoController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $what = $request->query->get('what'); 
+        $what = $request->query->get('what');
         echo $this->facadeSetup->getPhpInfo($what);
     }
 
