@@ -21,7 +21,7 @@
     "spryker/propel": "^2.0.0-RC1",
     "spryker/refund": "^2.0.0-RC1",
     "spryker/sequence-number": "^2.0.0-RC1",
-    "spryker/sales-aggregator": "^1.0.0",
+    "spryker/sales-aggregator": "^2.0.0-RC1",
     "spryker/shipment": "^2.0.0-RC1",
     "spryker/user": "^2.0.0-RC1",
     "spryker/zed-request": "^2.0.0-RC1",
@@ -32,7 +32,7 @@
   },
   "description": "sales bundle",
   "license": "proprietary",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {

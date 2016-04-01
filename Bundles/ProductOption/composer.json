@@ -21,7 +21,7 @@
   },
   "description": "product option bundle",
   "license": "proprietary",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {

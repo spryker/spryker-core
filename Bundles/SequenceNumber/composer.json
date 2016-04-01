@@ -16,7 +16,7 @@
   },
   "description": "sequence number bundle",
   "license": "proprietary",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {

@@ -18,15 +18,15 @@
     "spryker/oms": "^2.0.0-RC1",
     "spryker/payone": "^2.0.0-RC1",
     "spryker/sales": "^2.0.0-RC1",
-    "spryker/sales-aggregator": "^1.0.0",
-    "spryker/sales-split": "^1.0.0",
+    "spryker/sales-aggregator": "^2.0.0-RC1",
+    "spryker/sales-split": "^2.0.0-RC1",
     "spryker/propel": "^2.0.0-RC1",
     "spryker/symfony": "^2.0.0-RC1",
     "spryker/url": "^2.0.0-RC1"
   },
   "description": "refund bundle",
   "license": "proprietary",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
