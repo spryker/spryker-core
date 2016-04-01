@@ -15,7 +15,7 @@
   "require-dev": {},
   "description": "testify bundle",
   "license": "proprietary",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "extra": {
     "branch-alias": {
       "dev-master": "2.0.x-dev"
