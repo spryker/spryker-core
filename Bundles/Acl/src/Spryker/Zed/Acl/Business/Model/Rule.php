@@ -18,7 +18,6 @@ use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
-use Spryker\Zed\Library\Copy;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 class Rule implements RuleInterface
@@ -101,7 +100,7 @@ class Rule implements RuleInterface
         $aclRuleEntity->save();
 
         $ruleTransfer = new RuleTransfer();
-        $ruleTransfer = Copy::entityToTransfer($ruleTransfer, $aclRuleEntity);
+        $ruleTransfer->fromArray($aclRuleEntity->toArray(), true);
 
         return $ruleTransfer;
     }
@@ -167,13 +166,13 @@ class Rule implements RuleInterface
         $controller = AclConstants::VALIDATOR_WILDCARD,
         $action = AclConstants::VALIDATOR_WILDCARD
     ) {
-        $results = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
+        $ruleCollection = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
 
         $rulesTransfer = new RulesTransfer();
 
-        foreach ($results as $result) {
+        foreach ($ruleCollection as $ruleEntity) {
             $ruleTransfer = new RuleTransfer();
-            Copy::entityToTransfer($ruleTransfer, $result);
+            $ruleTransfer->fromArray($ruleEntity->toArray(), true);
             $rulesTransfer->addRule($ruleTransfer);
         }
 
@@ -188,13 +187,13 @@ class Rule implements RuleInterface
     public function getRulesForGroupId($idGroup)
     {
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
-        $results = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
+        $roleCollection = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
 
         $rulesTransfer = new RulesTransfer();
 
-        foreach ($results as $result) {
+        foreach ($roleCollection as $ruleEntity) {
             $ruleTransfer = new RuleTransfer();
-            Copy::entityToTransfer($ruleTransfer, $result);
+            $ruleTransfer->fromArray($ruleEntity->toArray(), true);
             $rulesTransfer->addRule($ruleTransfer);
         }
 
@@ -217,7 +216,7 @@ class Rule implements RuleInterface
         }
 
         $ruleTransfer = new RuleTransfer();
-        $ruleTransfer = Copy::entityToTransfer($ruleTransfer, $aclRuleEntity);
+        $ruleTransfer->fromArray($aclRuleEntity->toArray(), true);
 
         return $ruleTransfer;
     }
