@@ -69,7 +69,7 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     public function getRepeatData(Request $request)
     {
         return $this->getFactory()->getTransferObjectRepeater()
-            ->getRepeatData($request->query->get('mvc', null)); // TODO FW Validation
+            ->getRepeatData($request->query->get('mvc', null));
     }
 
     /**
