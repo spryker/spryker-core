@@ -5,7 +5,7 @@
 
     <transfer name="User">
         <property name="idUser" type="int" />
-        <property name="username" type="string" />
+        <property name="username" type="[]" />
         <property name="password" type="string" />
         <property name="firstName" type="string" />
         <property name="status" type="string" />
