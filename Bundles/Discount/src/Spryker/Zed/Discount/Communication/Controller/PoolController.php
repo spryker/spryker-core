@@ -164,7 +164,7 @@ class PoolController extends AbstractController
      */
     public function categorySuggestAction(Request $request)
     {
-        $term = $request->get(self::TERM);  needed
+        $term = $request->get(self::TERM);
 
         $categories = $this->getQueryContainer()
             ->queryDiscountVoucherPoolCategory()
