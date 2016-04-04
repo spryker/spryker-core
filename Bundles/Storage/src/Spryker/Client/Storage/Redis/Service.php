@@ -208,7 +208,7 @@ class Service implements ServiceInterface
      */
     public function getMulti(array $keys)
     {
-        if (empty($keys)) {
+        if (count($keys) === 0) {
             return null;
         }
 
