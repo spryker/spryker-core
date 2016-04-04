@@ -10,7 +10,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*"
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "config": {
     "use-include-path": true
