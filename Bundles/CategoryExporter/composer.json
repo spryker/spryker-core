@@ -11,11 +11,11 @@
     }
   },
   "require": {
-    "spryker/cart": "^2.0.0-RC2",
-    "spryker/category": "^2.0.0-RC2",
-    "spryker/collector": "^2.0.0-RC2",
-    "spryker/kernel": "^2.0.0-RC2",
-    "spryker/storage": "^2.0.0-RC2"
+    "spryker/cart": "^2.0.0",
+    "spryker/category": "^2.0.0",
+    "spryker/collector": "^2.0.0",
+    "spryker/kernel": "^2.0.0",
+    "spryker/storage": "^2.0.0"
   },
   "description": "category exporter bundle",
   "license": "proprietary",

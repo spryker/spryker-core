@@ -11,10 +11,10 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0-RC2",
-    "spryker/sales": "^2.0.0-RC2",
-    "spryker/symfony": "^2.0.0-RC2",
-    "spryker/application": "^2.0.0-RC2"
+    "spryker/kernel": "^2.0.0",
+    "spryker/sales": "^2.0.0",
+    "spryker/symfony": "^2.0.0",
+    "spryker/application": "^2.0.0"
   },
   "description": "payment bundle",
   "license": "proprietary",

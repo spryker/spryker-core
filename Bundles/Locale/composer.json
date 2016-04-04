@@ -11,9 +11,9 @@
     }
   },
   "require": {
-    "spryker/installer": "^2.0.0-RC2",
-    "spryker/kernel": "^2.0.0-RC2",
-    "spryker/messenger": "^2.0.0-RC2"
+    "spryker/installer": "^2.0.0",
+    "spryker/kernel": "^2.0.0",
+    "spryker/messenger": "^2.0.0"
   },
   "description": "locale bundle",
   "license": "proprietary",

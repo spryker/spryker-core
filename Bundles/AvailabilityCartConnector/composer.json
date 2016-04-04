@@ -11,8 +11,8 @@
     }
   },
   "require": {
-    "spryker/availability": "^2.0.0-RC2",
-    "spryker/kernel": "^2.0.0-RC2"
+    "spryker/availability": "^2.0.0",
+    "spryker/kernel": "^2.0.0"
   },
   "description": "availability cart connector bundle",
   "license": "proprietary",

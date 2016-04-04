@@ -9,11 +9,11 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0-RC2",
-    "spryker/product": "^2.0.0-RC2",
-    "spryker/propel": "^2.0.0-RC2",
-    "spryker/tax": "^2.0.0-RC2",
-    "spryker/touch": "^2.0.0-RC2"
+    "spryker/kernel": "^2.0.0",
+    "spryker/product": "^2.0.0",
+    "spryker/propel": "^2.0.0",
+    "spryker/tax": "^2.0.0",
+    "spryker/touch": "^2.0.0"
   },
   "description": "tax product connector bundle",
   "license": "proprietary",

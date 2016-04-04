@@ -11,11 +11,11 @@
     }
   },
   "require": {
-    "spryker/discount": "^2.0.0-RC2",
-    "spryker/kernel": "^2.0.0-RC2",
-    "spryker/sales": "^2.0.0-RC2",
-    "spryker/tax": "^2.0.0-RC2",
-    "spryker/propel": "^2.0.0-RC2"
+    "spryker/discount": "^2.0.0",
+    "spryker/kernel": "^2.0.0",
+    "spryker/sales": "^2.0.0",
+    "spryker/tax": "^2.0.0",
+    "spryker/propel": "^2.0.0"
   },
   "require-dev": {},
   "description": "product option discount connector bundle",

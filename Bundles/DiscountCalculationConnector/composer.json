@@ -11,10 +11,10 @@
     }
   },
   "require": {
-    "spryker/calculation": "^2.0.0-RC2",
-    "spryker/discount": "^2.0.0-RC2",
-    "spryker/kernel": "^2.0.0-RC2",
-    "spryker/sales": "^2.0.0-RC2"
+    "spryker/calculation": "^2.0.0",
+    "spryker/discount": "^2.0.0",
+    "spryker/kernel": "^2.0.0",
+    "spryker/sales": "^2.0.0"
   },
   "description": "discount calculation connector bundle",
   "license": "proprietary",

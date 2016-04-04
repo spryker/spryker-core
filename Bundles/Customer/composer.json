@@ -8,25 +8,25 @@
     }
   },
   "require": {
-    "spryker/application": "^2.0.0-RC2",
-    "spryker/country": "^2.0.0-RC2",
-    "spryker/gui": "^2.0.0-RC2",
-    "spryker/installer": "^2.0.0-RC2",
-    "spryker/kernel": "^2.0.0-RC2",
-    "spryker/locale": "^2.0.0-RC2",
-    "spryker/mail": "^2.0.0-RC2",
-    "spryker/sequence-number": "^2.0.0-RC2",
-    "spryker/session": "^2.0.0-RC2",
-    "spryker/transfer": "^2.0.0-RC2",
-    "spryker/zed-request": "^2.0.0-RC2",
-    "spryker/propel": "^2.0.0-RC2",
-    "spryker/symfony": "^2.0.0-RC2",
-    "spryker/assertion": "^2.0.0-RC2",
-    "spryker/checkout": "^2.0.0-RC2",
-    "spryker/library": "^2.0.0-RC2"
+    "spryker/application": "^2.0.0",
+    "spryker/country": "^2.0.0",
+    "spryker/gui": "^2.0.0",
+    "spryker/installer": "^2.0.0",
+    "spryker/kernel": "^2.0.0",
+    "spryker/locale": "^2.0.0",
+    "spryker/mail": "^2.0.0",
+    "spryker/sequence-number": "^2.0.0",
+    "spryker/session": "^2.0.0",
+    "spryker/transfer": "^2.0.0",
+    "spryker/zed-request": "^2.0.0",
+    "spryker/propel": "^2.0.0",
+    "spryker/symfony": "^2.0.0",
+    "spryker/assertion": "^2.0.0",
+    "spryker/checkout": "^2.0.0",
+    "spryker/library": "^2.0.0"
   },
   "require-dev": {
-    "spryker/testify": "^2.0.0-RC2"
+    "spryker/testify": "^2.0.0"
   },
   "description": "customer bundle",
   "license": "proprietary",

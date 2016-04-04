@@ -11,8 +11,8 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0-RC2",
-    "spryker/product-option": "^2.0.0-RC2"
+    "spryker/kernel": "^2.0.0",
+    "spryker/product-option": "^2.0.0"
   },
   "description": "product option cart connector bundle",
   "license": "proprietary",
