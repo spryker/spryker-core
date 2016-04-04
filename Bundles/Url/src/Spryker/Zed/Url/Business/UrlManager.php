@@ -201,25 +201,47 @@ class UrlManager implements UrlManagerInterface
      * @param int $idCategoryNode
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
     {
-        return $this->urlQueryContainer
+        $urlEntity = $this->urlQueryContainer
             ->queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
             ->findOne();
+
+        return $this->convertUrlEntityToTransfer($urlEntity);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $idLocale
+     *
+     * @return bool
+     */
+    public function hasResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
+    {
+        return ($this->urlQueryContainer
+            ->queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
+            ->count() > 0);
     }
 
     /**
      * @param int $idCategoryNode
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
     {
-        return $this->urlQueryContainer
+        $urlEntityCollection = $this->urlQueryContainer
             ->queryResourceUrlByCategoryNodeId($idCategoryNode)
             ->find();
+
+        $urlTransferCollection = [];
+        foreach ($urlEntityCollection as $urlEntity) {
+            $urlTransferCollection[] = $this->convertUrlEntityToTransfer($urlEntity);
+        }
+
+        return $urlTransferCollection;
     }
 
     /**

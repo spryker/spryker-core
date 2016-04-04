@@ -98,6 +98,16 @@ interface UrlFacadeInterface
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
+     * @return bool
+     */
+    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
