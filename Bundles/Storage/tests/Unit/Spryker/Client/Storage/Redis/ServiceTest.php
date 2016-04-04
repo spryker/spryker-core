@@ -75,4 +75,14 @@ class ServiceTest extends Test
         $this->redisService->getKeys('aPattern*');
     }
 
+    /**
+     * @return void
+     */
+    public function testGetMultiWithEmptyKeys()
+    {
+        $requestedKeys = [];
+
+        $this->assertNull($this->redisService->getMulti($requestedKeys));
+    }
+
 }

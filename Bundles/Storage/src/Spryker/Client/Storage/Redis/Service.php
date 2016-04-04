@@ -204,13 +204,17 @@ class Service implements ServiceInterface
     /**
      * @param array $keys
      *
-     * @return array
+     * @return array|null
      */
     public function getMulti(array $keys)
     {
+        if (empty($keys)) {
+            return null;
+        }
+
         $transformedKeys = [];
         foreach ($keys as $key) {
-            $transformedKeys[] = $this->getKeyName($key, self::KV_PREFIX);
+            $transformedKeys[] = $this->getKeyName($key);
         }
 
         $values = array_combine($transformedKeys, $this->client->mget($transformedKeys));
