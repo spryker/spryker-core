@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\Catalog\Model\Query;
 
-use Elastica\Filter\Term;
 use Elastica\Index;
 use Elastica\Query;
-use Elastica\Query\Filtered;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Term;
 use Spryker\Client\Search\Model\Query\QueryInterface;
 
 class CategorySearchQuery implements QueryInterface
@@ -48,12 +48,11 @@ class CategorySearchQuery implements QueryInterface
      */
     protected function addCategoryFilterToQuery(Query $query)
     {
-        $query->setQuery(
-            (new Filtered())
-                ->setFilter(new Term([
-                    'category.all-parents' => (int)$this->idCategory,
-                ]))
-        );
+        $term = new Term([
+            'category.all-parents' => (int)$this->idCategory,
+        ]);
+
+        $query->setQuery((new BoolQuery())->addMust($term));
 
         return $query;
     }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Communication\Plugin\Installer as LocaleInstallerPlugin;
 use Spryker\Zed\Newsletter\Communication\Plugin\Installer as NewsletterInstallerPlugin;
 use Spryker\Zed\Price\Communication\Plugin\Installer as PriceInstallerPlugin;
-use Spryker\Zed\ProductSearch\Communication\Plugin\Installer as ProductSearchInstallerPlugin;
 use Spryker\Zed\Product\Communication\Plugin\Installer as ProductInstallerPlugin;
 use Spryker\Zed\User\Communication\Plugin\Installer as UserInstallerPlugin;
 
@@ -57,7 +56,6 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
             new UserInstallerPlugin(),
             new AclInstallerPlugin(),
             new NewsletterInstallerPlugin(),
-            new ProductSearchInstallerPlugin(),
             new GlossaryInstallerPlugin(),
         ];
     }
