@@ -85,8 +85,8 @@ interface UrlManagerInterface
     public function getUrlById($idUrl);
 
     /**
-     * @param $idCategoryNode
-     * @param $idLocale
+     * @param int $idCategoryNode
+     * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
