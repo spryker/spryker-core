@@ -9,10 +9,9 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 use Elastica\Client;
 use Elastica\Index;
-use Elastica\Type;
 use Elastica\Type\Mapping;
+use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 
@@ -59,25 +58,25 @@ class IndexInstaller implements SearchInstallerInterface
     }
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition $indexDefinition
+     * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer
      *
      * @return void
      */
-    protected function createIndex(IndexDefinition $indexDefinition)
+    protected function createIndex(ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer)
     {
-        $index = $this->elasticaClient->getIndex($indexDefinition->getIndexName());
+        $index = $this->elasticaClient->getIndex($indexDefinitionTransfer->getIndexName());
 
         if (!$index->exists()) {
             $this->messenger->info(sprintf(
                 'Creating elasticsearch index: "%s"',
-                $indexDefinition->getIndexName()
+                $indexDefinitionTransfer->getIndexName()
             ));
 
-            $settings = $indexDefinition->getSettings();
+            $settings = $indexDefinitionTransfer->getSettings();
             $index->create($settings);
         }
 
-        foreach ($indexDefinition->getMappings() as $mappingName => $mappingData) {
+        foreach ($indexDefinitionTransfer->getMappings() as $mappingName => $mappingData) {
             $this->createMapping($index, $mappingName, $mappingData);
         }
     }

@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Search\Business\Model\Generator;
 
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition;
+use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 
@@ -38,26 +38,19 @@ class IndexMapClassGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $generator = new IndexMapGenerator(self::TARGET_DIRECTORY);
 
-        $indexDefinition = new IndexDefinition([
-            IndexDefinition::NAME => 'index1',
-            IndexDefinition::MAPPING => [
-                IndexDefinition::NAME => 'simple',
-                IndexDefinition::PROPERTY => [
-                    [
-                        IndexDefinition::NAME => 'foo',
-                        'a' => 'asdf',
-                        'b' => 'qwer',
-                    ],
-                    [
-                        IndexDefinition::NAME => 'bar',
-                        'a' => 'asdf',
-                        'b' => 'qwer',
-                    ],
-                    [
-                        IndexDefinition::NAME => 'baz',
-                        'a' => 'asdf',
-                        'b' => 'qwer',
-                    ],
+        $indexDefinition = $this->createIndexDefinition('index1', [], [
+            'simple' => [
+                'foo' => [
+                    'a' => 'asdf',
+                    'b' => 'qwer',
+                ],
+                'bar' => [
+                    'a' => 'asdf',
+                    'b' => 'qwer',
+                ],
+                'baz' => [
+                    'a' => 'asdf',
+                    'b' => 'qwer',
                 ],
             ],
         ]);
@@ -77,30 +70,19 @@ class IndexMapClassGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $generator = new IndexMapGenerator(self::TARGET_DIRECTORY);
 
-        $indexDefinition = new IndexDefinition([
-            IndexDefinition::NAME => 'index-1',
-            IndexDefinition::MAPPING => [
-                IndexDefinition::NAME => 'complex',
-                IndexDefinition::PROPERTY => [
-                    [
-                        IndexDefinition::NAME => 'foo',
-                        'a' => 'asdf',
-                        'b' => 'qwer',
-                        IndexDefinition::PROPERTIES => [
-                            IndexDefinition::PROPERTY => [
-                                [
-                                    IndexDefinition::NAME => 'bar',
+        $indexDefinition = $this->createIndexDefinition('index-1', [], [
+            'complex' => [
+                'foo' => [
+                    'a' => 'asdf',
+                    'b' => 'qwer',
+                    'properties' => [
+                        'bar' => [
+                            'a' => 'asdf',
+                            'b' => 'qwer',
+                            'properties' => [
+                                'baz' => [
                                     'a' => 'asdf',
                                     'b' => 'qwer',
-                                    IndexDefinition::PROPERTIES => [
-                                        IndexDefinition::PROPERTY => [
-                                            [
-                                                IndexDefinition::NAME => 'baz',
-                                                'a' => 'asdf',
-                                                'b' => 'qwer',
-                                            ],
-                                        ],
-                                    ],
                                 ],
                             ],
                         ],
@@ -115,6 +97,24 @@ class IndexMapClassGeneratorTest extends \PHPUnit_Framework_TestCase
             self::FIXTURES_DIRECTORY . 'ComplexIndexMap.expected.php',
             self::TARGET_DIRECTORY . 'Index1/ComplexIndexMap.php'
         );
+    }
+
+    /**
+     * @param string $name
+     * @param array $settings
+     * @param array $mappings
+     *
+     * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer
+     */
+    protected function createIndexDefinition($name, array $settings = [], array $mappings = [])
+    {
+        $indexDefinition = new ElasticsearchIndexDefinitionTransfer();
+        $indexDefinition
+            ->setIndexName($name)
+            ->setSettings($settings)
+            ->setMappings($mappings);
+
+        return $indexDefinition;
     }
 
 }

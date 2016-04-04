@@ -25,7 +25,7 @@ abstract class AbstractElasticsearchResultFormatter implements ResultFormatterIn
     }
 
     /**
-     * @param $searchResult
+     * @param mixed $searchResult
      *
      * @return void
      */

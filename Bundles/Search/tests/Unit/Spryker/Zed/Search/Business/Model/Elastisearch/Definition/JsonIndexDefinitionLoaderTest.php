@@ -7,16 +7,15 @@
 
 namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch\Definition;
 
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\XmlIndexDefinitionLoader;
-use Symfony\Component\Finder\Finder;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
 
 /**
  * @group Search
  * @group Business
  * @group Elasticsearch
- * @group XmlIndexDefinitionLoader
+ * @group JsonIndexDefinitionLoader
  */
-class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
+class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -24,9 +23,9 @@ class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingleIndexDefinitionLoadingWithMultipleMappingTypes()
     {
-        $xmlIndexDefinitionLoader = new XmlIndexDefinitionLoader([__DIR__ . '/Fixtures/SingleIndex']);
+        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader([__DIR__ . '/Fixtures/SingleIndex']);
 
-        $definitions = $xmlIndexDefinitionLoader->loadIndexDefinitions();
+        $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
         $this->assertEquals('foo', $definitions[0]->getIndexName());
     }
@@ -36,7 +35,7 @@ class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingleIndexDefinitionSettings()
     {
-        $xmlIndexDefinitionLoader = new XmlIndexDefinitionLoader([__DIR__ . '/Fixtures/SingleIndex']);
+        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader([__DIR__ . '/Fixtures/SingleIndex']);
 
         $expectedSettings = [
             'number_of_shards' => '1',
@@ -55,7 +54,7 @@ class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $definitions = $xmlIndexDefinitionLoader->loadIndexDefinitions();
+        $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
         $this->assertEquals($expectedSettings, $definitions[0]->getSettings());
     }
@@ -65,23 +64,25 @@ class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingleIndexDefinitionMappings()
     {
-        $xmlIndexDefinitionLoader = new XmlIndexDefinitionLoader([__DIR__ . '/Fixtures/SingleIndex']);
+        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader([__DIR__ . '/Fixtures/SingleIndex']);
 
         $expectedMappings = [
             'page1' => [
-                'foo' => [
-                    'analyzer' => 'my_analyzer',
-                ],
-                'bar' => [
-                    'properties' => [
-                        'baz' => [],
+                'properties' => [
+
+                    'foo' => [
+                        'analyzer' => 'my_analyzer',
+                    ],
+                    'bar' => [
+                        'properties' => [
+                            'baz' => [],
+                        ],
                     ],
                 ],
             ],
-            'page2' => [],
         ];
 
-        $definitions = $xmlIndexDefinitionLoader->loadIndexDefinitions();
+        $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
         $this->assertEquals($expectedMappings, $definitions[0]->getMappings());
     }
@@ -91,14 +92,11 @@ class XmlIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testMultipleIndexDefinitionLoading()
     {
-        $xmlIndexDefinitionLoader = new XmlIndexDefinitionLoader([__DIR__ . '/Fixtures/MultipleIndex']);
+        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader([__DIR__ . '/Fixtures/MultipleIndex']);
 
-        $definitions = $xmlIndexDefinitionLoader->loadIndexDefinitions();
+        $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
         $this->assertEquals(3, count($definitions));
-        $this->assertEquals('foo', $definitions[0]->getIndexName(), 'Name of IndexDefinition #0 should be foo');
-        $this->assertEquals('bar', $definitions[1]->getIndexName(), 'Name of IndexDefinition #1 should be bar');
-        $this->assertEquals('baz', $definitions[2]->getIndexName(), 'Name of IndexDefinition #2 should be baz');
     }
 
 }

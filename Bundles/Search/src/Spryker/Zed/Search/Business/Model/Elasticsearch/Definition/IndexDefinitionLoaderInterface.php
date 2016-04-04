@@ -11,7 +11,7 @@ interface IndexDefinitionLoaderInterface
 {
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition[]
+     * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer[]
      */
     public function loadIndexDefinitions();
 

@@ -9,8 +9,8 @@ namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch;
 
 use Elastica\Client;
 use Elastica\Index;
+use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 
@@ -29,18 +29,9 @@ class IndexInstallerTest extends \PHPUnit_Framework_TestCase
     public function testIndexInstallerCreatesIndexesIfTheyNotExist()
     {
         $indexDefinitions = [
-            new IndexDefinition([
-                IndexDefinition::NAME => 'foo',
-                IndexDefinition::SETTINGS => [],
-            ]),
-            new IndexDefinition([
-                IndexDefinition::NAME => 'bar',
-                IndexDefinition::SETTINGS => [],
-            ]),
-            new IndexDefinition([
-                IndexDefinition::NAME => 'baz',
-                IndexDefinition::SETTINGS => [],
-            ]),
+            $this->createIndexDefinition('foo'),
+            $this->createIndexDefinition('bar'),
+            $this->createIndexDefinition('baz'),
         ];
 
         $indexMock = $this->getMockBuilder(Index::class)
@@ -66,10 +57,7 @@ class IndexInstallerTest extends \PHPUnit_Framework_TestCase
     public function testIndexInstallerDoesNotCreatesIndexesIfTheyExist()
     {
         $indexDefinitions = [
-            new IndexDefinition([
-                IndexDefinition::NAME => 'foo',
-                IndexDefinition::SETTINGS => [],
-            ]),
+            $this->createIndexDefinition('foo'),
         ];
 
         $indexMock = $this->getMockBuilder(Index::class)
@@ -90,7 +78,7 @@ class IndexInstallerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition[] $indexDefinitions
+     * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer[] $indexDefinitions
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
@@ -137,6 +125,24 @@ class IndexInstallerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         return $messengerMock;
+    }
+
+    /**
+     * @param string $name
+     * @param array $settings
+     * @param array $mappings
+     *
+     * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer
+     */
+    protected function createIndexDefinition($name, array $settings = [], array $mappings = [])
+    {
+        $indexDefinition = new ElasticsearchIndexDefinitionTransfer();
+        $indexDefinition
+            ->setIndexName($name)
+            ->setSettings($settings)
+            ->setMappings($mappings);
+
+        return $indexDefinition;
     }
 
 }

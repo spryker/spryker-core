@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Generator;
 
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition;
+use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class IndexMapGenerator
@@ -43,11 +43,11 @@ class IndexMapGenerator
     }
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinition $indexDefinition
+     * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer $indexDefinition
      *
      * @return void
      */
-    public function generate(IndexDefinition $indexDefinition)
+    public function generate(ElasticsearchIndexDefinitionTransfer $indexDefinition)
     {
         $indexNamespaceSuffix = $this->normalizeToClassName($indexDefinition->getIndexName());
         foreach ($indexDefinition->getMappings() as $mappingName => $mapping) {
@@ -124,9 +124,9 @@ class IndexMapGenerator
         foreach ($mapping as $propertyName => $propertyValue) {
             $constants[$this->convertToConstant($path . $propertyName)] = $path . $propertyName;
 
-            if (isset($propertyValue[IndexDefinition::PROPERTIES])) {
+            if (isset($propertyValue['properties'])) {
                 $childMetadata = $this->getConstants(
-                    $propertyValue[IndexDefinition::PROPERTIES],
+                    $propertyValue['properties'],
                     $path . $propertyName . self::PROPERTY_PATH_SEPARATOR
                 );
                 $constants = array_merge($constants, $childMetadata);
@@ -154,9 +154,9 @@ class IndexMapGenerator
                 }
             }
 
-            if (isset($propertyData[IndexDefinition::PROPERTIES])) {
+            if (isset($propertyData['properties'])) {
                 $childMetadata = $this->getMetadata(
-                    $propertyData[IndexDefinition::PROPERTIES],
+                    $propertyData['properties'],
                     $path . $propertyName . self::PROPERTY_PATH_SEPARATOR
                 );
                 $metadata = array_merge($metadata, $childMetadata);

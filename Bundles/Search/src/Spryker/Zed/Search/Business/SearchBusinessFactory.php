@@ -10,7 +10,7 @@ namespace Spryker\Zed\Search\Business;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\XmlIndexDefinitionLoader;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
@@ -46,11 +46,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\XmlIndexDefinitionLoader
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader
      */
-    protected function createXmlIndexDefinitionLoader()
+    protected function createJsonIndexDefinitionLoader()
     {
-        return new XmlIndexDefinitionLoader($this->getConfig()->getXmlIndexDefinitionDirectories());
+        return new JsonIndexDefinitionLoader($this->getConfig()->getJsonIndexDefinitionDirectories());
     }
 
     /**
@@ -74,7 +74,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     protected function createElasticsearchIndexInstaller(MessengerInterface $messenger)
     {
         return new IndexInstaller(
-            $this->createXmlIndexDefinitionLoader(),
+            $this->createJsonIndexDefinitionLoader(),
             $this->getElasticsearchClient(),
             $messenger
         );
@@ -88,7 +88,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     protected function createIndexMapInstaller(MessengerInterface $messenger)
     {
         return new IndexMapInstaller(
-            $this->createXmlIndexDefinitionLoader(),
+            $this->createJsonIndexDefinitionLoader(),
             $this->createElasticsearchIndexMapCleaner(),
             $this->createElasticsearchIndexMapGenerator(),
             $messenger
