@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 /**
  * @method \Spryker\Zed\Braintree\Business\BraintreeFacade getFacade()
  */
-class IsReAuthorizationApprovedPlugin extends AbstractCheckPlugin
+class IsAuthorizationApprovedPlugin extends AbstractCheckPlugin
 {
 
     /**
@@ -22,7 +22,7 @@ class IsReAuthorizationApprovedPlugin extends AbstractCheckPlugin
      */
     protected function callFacade(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()->isReAuthorizationApproved($orderTransfer);
+        return $this->getFacade()->isAuthorizationApproved($orderTransfer);
     }
 
 }

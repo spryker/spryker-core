@@ -84,11 +84,11 @@ interface BraintreeQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idSalesOrder
-     * @param string $paymentCode
+     * @param string $transactionCode
      *
      * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLogQuery
      */
-    public function queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst($idSalesOrder, $paymentCode);
+    public function queryTransactionStatusLogBySalesOrderIdAndTransactionCodeLatestFirst($idSalesOrder, $transactionCode);
 
     /**
      * @api

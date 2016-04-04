@@ -24,23 +24,6 @@ interface PayPalInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
-     *
-     * @return array
-     */
-    public function buildPreAuthorizationRequest(OrderTransfer $orderTransfer, SpyPaymentBraintree $paymentEntity);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
-     * @param string $uniqueId
-     *
-     * @return array
-     */
-    public function buildReAuthorizationRequest(OrderTransfer $orderTransfer, SpyPaymentBraintree $paymentEntity, $uniqueId);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
      * @param string $uniqueId
      *
      * @return array

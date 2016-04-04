@@ -59,28 +59,12 @@ class BraintreeFacade extends AbstractFacade
      *
      * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
      */
-    public function preAuthorizePayment(OrderTransfer $orderTransfer, $idPayment)
+    public function authorizePayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->preAuthorizePayment($orderTransfer, $idPayment);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idPayment
-     *
-     * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
-     */
-    public function reAuthorizePayment(OrderTransfer $orderTransfer, $idPayment)
-    {
-        return $this
-            ->getFactory()
-            ->createPaymentTransactionHandler()
-            ->reAuthorizePayment($orderTransfer, $idPayment);
+            ->authorizePayment($orderTransfer, $idPayment);
     }
 
     /**
@@ -134,48 +118,16 @@ class BraintreeFacade extends AbstractFacade
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\BraintreeCalculationResponseTransfer
-     */
-    public function calculateInstallmentPayments(QuoteTransfer $quoteTransfer)
-    {
-        $braintreeResponseTransfer = $this
-            ->getFactory()
-            ->createPaymentCalculationHandler()
-            ->calculateInstallmentPayments($quoteTransfer);
-
-        return $braintreeResponseTransfer;
-    }
-
-    /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPreAuthorizationApproved(OrderTransfer $orderTransfer)
+    public function isAuthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this
             ->getFactory()
             ->createTransactionStatusLog()
-            ->isPreAuthorizationApproved($orderTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return bool
-     */
-    public function isReAuthorizationApproved(OrderTransfer $orderTransfer)
-    {
-        return $this
-            ->getFactory()
-            ->createTransactionStatusLog()
-            ->isReAuthorizationApproved($orderTransfer);
+            ->isAuthorizationApproved($orderTransfer);
     }
 
     /**

@@ -26,15 +26,7 @@ interface TransactionInterface
      *
      * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
      */
-    public function preAuthorizePayment(OrderTransfer $orderTransfer, $idPayment);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idPayment
-     *
-     * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
-     */
-    public function reAuthorizePayment(OrderTransfer $orderTransfer, $idPayment);
+    public function authorizePayment(OrderTransfer $orderTransfer, $idPayment);
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

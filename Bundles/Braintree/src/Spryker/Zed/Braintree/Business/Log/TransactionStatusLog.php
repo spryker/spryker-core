@@ -17,7 +17,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     /**
      * @var \Spryker\Zed\Braintree\Persistence\BraintreeQueryContainerInterface
      */
-    private $queryContainer;
+    protected $queryContainer;
 
     /**
      * @param \Spryker\Zed\Braintree\Persistence\BraintreeQueryContainerInterface $queryContainer
@@ -32,25 +32,11 @@ class TransactionStatusLog implements TransactionStatusLogInterface
      *
      * @return bool
      */
-    public function isPreAuthorizationApproved(OrderTransfer $orderTransfer)
+    public function isAuthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
-            ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
-            ApiConstants::STATUS_REASON_CODE_SUCCESS
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return bool
-     */
-    public function isReAuthorizationApproved(OrderTransfer $orderTransfer)
-    {
-        return $this->hasTransactionLogStatus(
-            $orderTransfer,
-            ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
+            ApiConstants::PAYMENT_CODE_AUTHORIZE,
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
@@ -99,30 +85,26 @@ class TransactionStatusLog implements TransactionStatusLogInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param string $paymentCode
+     * @param string $transactionCode
      * @param string $expectedStatusReasonCode
      *
      * @return bool
      */
-    private function hasTransactionLogStatus(OrderTransfer $orderTransfer, $paymentCode, $expectedStatusReasonCode)
+    private function hasTransactionLogStatus(OrderTransfer $orderTransfer, $transactionCode, $expectedStatusReasonCode)
     {
         $idSalesOrder = $orderTransfer->getIdSalesOrder();
-
         $logEntity = $this
             ->queryContainer
-            ->queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst(
+            ->queryTransactionStatusLogBySalesOrderIdAndTransactionCodeLatestFirst(
                 $idSalesOrder,
-                $paymentCode
+                $transactionCode
             )
             ->findOne();
-
         if (!$logEntity) {
             return false;
         }
 
-        $expectedProcessingCode = $paymentCode . '.' . $expectedStatusReasonCode;
-
-        return ($expectedProcessingCode === $logEntity->getProcessingCode());
+        return $logEntity->getIsSuccess() === (bool)$expectedStatusReasonCode;
     }
 
 }

@@ -48,48 +48,6 @@ class PayPal extends AbstractPaymentMethod implements PayPalInterface
         return $requestData;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
-     *
-     * @return array
-     */
-    public function buildPreAuthorizationRequest(OrderTransfer $orderTransfer, SpyPaymentBraintree $paymentEntity)
-    {
-        $requestData = $this->getBaseTransactionRequestForPayment(
-            $orderTransfer,
-            $paymentEntity,
-            ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
-            null
-        );
-        $this->addRequestData(
-            $requestData,
-            [
-            ]
-        );
-
-        return $requestData;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
-     * @param string $uniqueId
-     *
-     * @return array
-     */
-    public function buildReAuthorizationRequest(
-        OrderTransfer $orderTransfer,
-        SpyPaymentBraintree $paymentEntity,
-        $uniqueId
-    ) {
-        return $this->getBaseTransactionRequestForPayment(
-            $orderTransfer,
-            $paymentEntity,
-            ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
-            $uniqueId
-        );
-    }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

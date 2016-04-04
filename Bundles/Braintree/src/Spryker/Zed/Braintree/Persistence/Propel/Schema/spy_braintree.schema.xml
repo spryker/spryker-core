@@ -12,6 +12,7 @@
         <column name="id_payment_braintree" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" required="true" type="INTEGER"/>
         <column name="account_brand" required="true" type="VARCHAR"/>
+        <column name="payment_type" required="false" type="VARCHAR"/>
         <column name="client_ip" required="true" type="VARCHAR"/>
         <column name="first_name" required="true" type="VARCHAR" size="100"/>
         <column name="last_name" required="true" type="VARCHAR" size="100"/>
@@ -47,10 +48,9 @@
         />
         <column name="fk_payment_braintree" required="true" type="INTEGER"/>
         <column name="transaction_id" required="true" type="VARCHAR"/>
-        <column name="reference_id" type="VARCHAR"/>
-        <column name="payment_code" required="true" type="VARCHAR"/>
-        <column name="presentation_amount" required="true"  type="VARCHAR"/>
-        <column name="presentation_currency" required="true"  type="VARCHAR"/>
+        <column name="transaction_code" required="true" type="VARCHAR"/>
+        <column name="presentation_amount" required="false"  type="VARCHAR"/>
+        <column name="presentation_currency" required="false"  type="VARCHAR"/>
         <foreign-key name="spy_braintree_transaction_request_log-fk_payment_braintree" foreignTable="spy_payment_braintree">
             <reference foreign="id_payment_braintree" local="fk_payment_braintree"/>
         </foreign-key>
@@ -66,29 +66,17 @@
             autoIncrement="true"
         />
         <column name="fk_payment_braintree" required="true" type="INTEGER"/>
-        <column name="processing_code" required="false" type="VARCHAR"/>
-        <column name="processing_result" required="false" type="VARCHAR"/>
-        <column name="processing_status" required="false" type="VARCHAR"/>
-        <column name="processing_status_code" required="false" type="INTEGER"/>
-        <column name="processing_reason" required="false" type="VARCHAR"/>
-        <column name="processing_reason_code" required="false" type="INTEGER"/>
-        <column name="processing_return" required="false" type="VARCHAR"/>
-        <column name="processing_return_code" required="false" type="VARCHAR"/>
-        <column name="identification_transactionid" required="false" type="VARCHAR"/>
-        <column name="identification_uniqueid"  required="false" type="VARCHAR"/>
-        <column name="identification_shortid"  required="false" type="VARCHAR"/>
-        <column name="identification_referenceid" type="VARCHAR"/>
-        <column name="processing_connectordetail_connectortxid1" type="VARCHAR"/>
-        <column name="processing_connectordetail_paymentreference" type="VARCHAR"/>
+        <column name="is_success" required="true" type="boolean"/>
+        <column name="code" required="false" type="integer"/>
+        <column name="message" required="false" type="VARCHAR"/>
+        <column name="transaction_id" required="true" type="VARCHAR"/>
+        <column name="transaction_status" required="false" type="varchar"/>
+        <column name="transaction_type" required="false" type="VARCHAR"/>
+        <column name="transaction_amount" required="false"  type="VARCHAR"/>
+        <column name="merchant_account"  required="false" type="VARCHAR"/>
         <column name="processing_timestamp" required="false" type="VARCHAR"/>
         <foreign-key name="spy_braintree_transaction_status_log-fk_braintree" foreignTable="spy_payment_braintree">
             <reference foreign="id_payment_braintree" local="fk_payment_braintree"/>
-        </foreign-key>
-        <foreign-key name="spy_braintree_transaction_status_log-transactionid" foreignTable="spy_payment_braintree_transaction_request_log">
-            <reference
-                    foreign="transaction_id"
-                    local="identification_transactionid"
-            />
         </foreign-key>
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_payment_braintree_transaction_status_log_pk_seq"/>

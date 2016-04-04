@@ -7,6 +7,7 @@
     <transfer name="BraintreePayment">
         <property name="fkSalesOrder" type="int" />
         <property name="accountBrand" type="string" />
+        <property name="paymentType" type="string" />
         <property name="clientIp" type="string" />
         <property name="email" type="string"/>
         <property name="dateOfBirth" type="string"/>
@@ -14,61 +15,26 @@
         <property name="currencyIso3Code" type="string"/>
         <property name="address" type="Address"/>
         <property name="nonce" type="string"/>
+        <property name="transactionId" type="string"/>
         <property name="bankAccountHolder" type="string"/>
         <property name="bankAccountBic" type="string"/>
         <property name="bankAccountIban" type="string"/>
     </transfer>
 
     <transfer name="BraintreeTransactionResponse">
-        <property name="processingRiskScore" type="string"/>
-        <property name="p3Validation" type="string"/>
-        <property name="nameGiven" type="string"/>
-        <property name="identificationShopperid" type="string"/>
-        <property name="clearingDescriptor" type="string"/>
-        <property name="processingConnectordetailConnectortxid1" type="string"/>
-        <property name="transactionChannel" type="string"/>
-        <property name="processingReasonCode" type="string"/>
-        <property name="addressCity" type="string"/>
-        <property name="frontendRequestCancelled" type="string"/>
-        <property name="processingCode" type="string"/>
-        <property name="processingReason" type="string"/>
-        <property name="frontendMode" type="string"/>
-        <property name="clearingFxsource" type="string"/>
-        <property name="clearingAmount" type="string"/>
-        <property name="processingResult" type="string"/>
-        <property name="nameSalutation" type="string"/>
-        <property name="presentationUsage" type="string"/>
-        <property name="postValidation" type="string"/>
-        <property name="contactEmail" type="string"/>
-        <property name="clearingCurrency" type="string"/>
-        <property name="frontendSessionId" type="string"/>
-        <property name="processingStatusCode" type="string"/>
-        <property name="presentationCurrency" type="string"/>
-        <property name="paymentCode" type="string"/>
-        <property name="nameBirthdate" type="string"/>
-        <property name="processingReturnCode" type="string"/>
-        <property name="contactIp" type="string"/>
-        <property name="nameFamily" type="string"/>
-        <property name="processingStatus" type="string"/>
-        <property name="frontendCcLogo" type="string"/>
-        <property name="presentationAmount" type="string"/>
-        <property name="identificationUniqueid" type="string"/>
-        <property name="identificationTransactionid" type="string"/>
-        <property name="identificationShortid" type="string"/>
-        <property name="identificationReferenceid" type="string"/>
-        <property name="clearingFxrate" type="string"/>
-        <property name="processingTimestamp" type="string"/>
-        <property name="addressCountry" type="string"/>
-        <property name="processingConnectordetailPaymentreference" type="string"/>
-        <property name="responseVersion" type="string"/>
-        <property name="transactionMode" type="string"/>
-        <property name="processingReturn" type="string"/>
-        <property name="transactionResponse" type="string"/>
-        <property name="addressStreet" type="string"/>
-        <property name="nameSex" type="string"/>
-        <property name="clearingFxdate" type="string"/>
-        <property name="addressZip" type="string"/>
-        <property name="nameTitle" type="string"/>
+        <property name="transactionId" type="string"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="code" type="int"/>
+        <property name="message" type="string"/>
+        <property name="paymentType" type="string" />
+        <property name="transactionStatus" type="string"/>
+        <property name="transactionType" type="string"/>
+        <property name="transactionAmount" type="string"/>
+        <property name="processingTimestamp" type="integer"/>
+
+        <property name="merchantAccount" type="string"/>
+        <property name="creditCardType" type="string"/>
+        <property name="paypalPayerEmail" type="string"/>
     </transfer>
 
     <transfer name="BraintreeCalculationResponse">

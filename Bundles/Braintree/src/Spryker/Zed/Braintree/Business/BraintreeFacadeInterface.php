@@ -47,15 +47,6 @@ interface BraintreeFacadeInterface
      *
      * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
      */
-    public function reAuthorizePayment($idPayment);
-
-    /**
-     * @api
-     *
-     * @param int $idPayment
-     *
-     * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
-     */
     public function revertPayment($idPayment);
 
     /**
@@ -93,15 +84,6 @@ interface BraintreeFacadeInterface
      * @return bool
      */
     public function isPreAuthorizationApproved(OrderTransfer $orderTransfer);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return bool
-     */
-    public function isReAuthorizationApproved(OrderTransfer $orderTransfer);
 
     /**
      * @api

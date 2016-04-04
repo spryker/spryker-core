@@ -31,7 +31,6 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
     {
         $paymentTransactionHandler = new Transaction(
             $this->createAdapter(),
-            $this->createConverter(),
             $this->getQueryContainer(),
             $this->getConfig()
         );
@@ -41,24 +40,6 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
         );
 
         return $paymentTransactionHandler;
-    }
-
-    /**
-     * @return \Spryker\Zed\Braintree\Business\Payment\Handler\Calculation\CalculationInterface
-     */
-    public function createPaymentCalculationHandler()
-    {
-        $paymentCalculationHandler = new Calculation(
-            $this->createAdapter(),
-            $this->createConverter(),
-            $this->getConfig()
-        );
-
-        $paymentCalculationHandler->registerMethodMapper(
-            $this->createPayPal()
-        );
-
-        return $paymentCalculationHandler;
     }
 
     /**
@@ -91,14 +72,6 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
     protected function createPayPal()
     {
         return new PayPal($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface
-     */
-    private function createConverter()
-    {
-        return new Converter();
     }
 
 }

@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Braintree\Persistence;
 
+use Orm\Zed\Braintree\Persistence\Map\SpyPaymentBraintreeTransactionRequestLogTableMap;
+use Orm\Zed\Braintree\Persistence\Map\SpyPaymentBraintreeTransactionStatusLogTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Propel;
 use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -128,18 +131,24 @@ class BraintreeQueryContainer extends AbstractQueryContainer implements Braintre
      * @api
      *
      * @param int $idSalesOrder
-     * @param string $paymentCode
+     * @param string $transactionCode
      *
      * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLogQuery
      */
-    public function queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst($idSalesOrder, $paymentCode)
+    public function queryTransactionStatusLogBySalesOrderIdAndTransactionCodeLatestFirst($idSalesOrder, $transactionCode)
     {
         return $this->queryTransactionStatusLogBySalesOrderIdLatestFirst($idSalesOrder)
-            // Payment code need to get checked in request log table
-            ->joinSpyPaymentBraintreeTransactionRequestLog()
-            ->useSpyPaymentBraintreeTransactionRequestLogQuery()
-            ->filterByPaymentCode($paymentCode)
-            ->endUse();
+            ->withColumn(SpyPaymentBraintreeTransactionRequestLogTableMap::COL_TRANSACTION_CODE)
+            ->addJoin(
+                [
+                    SpyPaymentBraintreeTransactionStatusLogTableMap::COL_TRANSACTION_ID,
+                    SpyPaymentBraintreeTransactionRequestLogTableMap::COL_TRANSACTION_CODE,
+                ],
+                [
+                    SpyPaymentBraintreeTransactionRequestLogTableMap::COL_TRANSACTION_ID,
+                    Propel::getConnection()->quote($transactionCode),
+                ]
+            );
     }
 
     /**
