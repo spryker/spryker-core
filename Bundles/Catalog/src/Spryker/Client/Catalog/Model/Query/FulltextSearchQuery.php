@@ -7,10 +7,11 @@
 
 namespace Spryker\Client\Catalog\Model\Query;
 
-use Elastica\Filter\Term;
 use Elastica\Index;
 use Elastica\Query;
-use Elastica\Query\Filtered;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Match;
+use Generated\Shared\Search\Catalog\PageIndexMap;
 use Spryker\Client\Search\Model\Query\QueryInterface;
 
 class FulltextSearchQuery implements QueryInterface
@@ -36,7 +37,7 @@ class FulltextSearchQuery implements QueryInterface
     {
         $query = new Query();
         $query = $this->addFulltextSearchToQuery($query);
-        $query->setSource(['search-result-data']);
+        $query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
 
         return $query;
     }
@@ -48,9 +49,10 @@ class FulltextSearchQuery implements QueryInterface
      */
     protected function addFulltextSearchToQuery(Query $query)
     {
-        $query->setQuery(
-            (new Query\Match())->setField('full-text', $this->searchString)
-        );
+        $match = (new Match())->setField(PageIndexMap::FULL_TEXT, $this->searchString);
+        $boolQuery = (new BoolQuery())->addMust($match);
+
+        $query->setQuery($boolQuery);
 
         return $query;
     }

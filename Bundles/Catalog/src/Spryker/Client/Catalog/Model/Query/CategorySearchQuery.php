@@ -11,6 +11,7 @@ use Elastica\Index;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Term;
+use Generated\Shared\Search\Catalog\PageIndexMap;
 use Spryker\Client\Search\Model\Query\QueryInterface;
 
 class CategorySearchQuery implements QueryInterface
@@ -36,7 +37,7 @@ class CategorySearchQuery implements QueryInterface
     {
         $query = new Query();
         $query = $this->addCategoryFilterToQuery($query);
-        $query->setSource(['search-result-data']);
+        $query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
 
         return $query;
     }
@@ -48,11 +49,10 @@ class CategorySearchQuery implements QueryInterface
      */
     protected function addCategoryFilterToQuery(Query $query)
     {
-        $term = new Term([
-            'category.all-parents' => (int)$this->idCategory,
-        ]);
+        $term = (new Term())->setParam(PageIndexMap::CATEGORY_ALL_PARENTS, (int)$this->idCategory);
+        $boolQuery = (new BoolQuery())->addMust($term);
 
-        $query->setQuery((new BoolQuery())->addMust($term));
+        $query->setQuery($boolQuery);
 
         return $query;
     }

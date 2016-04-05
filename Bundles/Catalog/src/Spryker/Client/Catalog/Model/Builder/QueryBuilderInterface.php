@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Catalog\Model\Builder;
 
-interface FilterBuilderInterface
+interface QueryBuilderInterface
 {
 
     /**
@@ -17,36 +17,36 @@ interface FilterBuilderInterface
      * @param string $greaterParam
      * @param string $lessParam
      *
-     * @return \Elastica\Filter\Range
+     * @return \Elastica\Query\Range
      */
-    public function createRangeFilter($fieldName, $minValue, $maxValue, $greaterParam = 'gte', $lessParam = 'lte');
+    public function createRangeQuery($fieldName, $minValue, $maxValue, $greaterParam = 'gte', $lessParam = 'lte');
 
     /**
      * @param string $fieldName
      *
-     * @return \Elastica\Filter\Nested
+     * @return \Elastica\Query\Nested
      */
-    public function createNestedFilter($fieldName);
+    public function createNestedQuery($fieldName);
 
     /**
      * @param string $field
      * @param string $value
      *
-     * @return \Elastica\Filter\Term
+     * @return \Elastica\Query\Term
      */
-    public function createTermFilter($field, $value);
+    public function createTermQuery($field, $value);
 
     /**
      * @param string $field
      * @param array $values
      *
-     * @return \Elastica\Filter\Terms
+     * @return \Elastica\Query\Terms
      */
-    public function createTermsFilter($field, array $values);
+    public function createTermsQuery($field, array $values);
 
     /**
-     * @return \Elastica\Filter\BoolAnd
+     * @return \Elastica\Query\BoolQuery
      */
-    public function createBoolAndFilter();
+    public function createBoolQuery();
 
 }

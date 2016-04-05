@@ -76,7 +76,7 @@ class FacetResultFormatter extends AbstractElasticsearchResultFormatterDecorator
      */
     protected function addFacetResult(ResultSet $searchResult, array $result)
     {
-        $result['numFound'] = $this->extractFacetDataFromResult($searchResult);
+        $result['facets'] = $this->extractFacetDataFromResult($searchResult);
 
         return $result;
     }

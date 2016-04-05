@@ -9,8 +9,8 @@ namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Catalog\KeyBuilder\ProductResourceKeyBuilder;
 use Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilder;
-use Spryker\Client\Catalog\Model\Builder\FilterBuilder;
-use Spryker\Client\Catalog\Model\Builder\NestedFilterBuilder;
+use Spryker\Client\Catalog\Model\Builder\QueryBuilder;
+use Spryker\Client\Catalog\Model\Builder\NestedQueryBuilder;
 use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
 use Spryker\Client\Catalog\Model\Extractor\FacetExtractor;
 use Spryker\Client\Catalog\Model\Extractor\RangeExtractor;
@@ -246,21 +246,21 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilder
+     * @return \Spryker\Client\Catalog\Model\Builder\NestedQueryBuilder
      */
     protected function createNestedFilterBuilder()
     {
-        return new NestedFilterBuilder(
+        return new NestedQueryBuilder(
             $this->createFilterBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Client\Catalog\Model\Builder\FilterBuilder
+     * @return \Spryker\Client\Catalog\Model\Builder\QueryBuilder
      */
     protected function createFilterBuilder()
     {
-        return new FilterBuilder();
+        return new QueryBuilder();
     }
 
 }
