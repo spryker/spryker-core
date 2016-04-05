@@ -102,7 +102,11 @@ class IndexInstaller implements SearchInstallerInterface
         ));
 
         $mapping = new Mapping($type);
-        $mapping->setProperties($mappingData);
+
+        foreach ($mappingData as $key => $value) {
+            $mapping->setParam($key, $value);
+        }
+
         $mapping->send();
     }
 

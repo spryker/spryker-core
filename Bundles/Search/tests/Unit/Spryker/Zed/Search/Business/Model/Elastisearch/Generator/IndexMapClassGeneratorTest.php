@@ -40,17 +40,19 @@ class IndexMapClassGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $indexDefinition = $this->createIndexDefinition('index1', [], [
             'simple' => [
-                'foo' => [
-                    'a' => 'asdf',
-                    'b' => 'qwer',
-                ],
-                'bar' => [
-                    'a' => 'asdf',
-                    'b' => 'qwer',
-                ],
-                'baz' => [
-                    'a' => 'asdf',
-                    'b' => 'qwer',
+                'properties' => [
+                    'foo' => [
+                        'a' => 'asdf',
+                        'b' => 'qwer',
+                    ],
+                    'bar' => [
+                        'a' => 'asdf',
+                        'b' => 'qwer',
+                    ],
+                    'baz' => [
+                        'a' => 'asdf',
+                        'b' => 'qwer',
+                    ],
                 ],
             ],
         ]);
@@ -72,17 +74,19 @@ class IndexMapClassGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $indexDefinition = $this->createIndexDefinition('index-1', [], [
             'complex' => [
-                'foo' => [
-                    'a' => 'asdf',
-                    'b' => 'qwer',
-                    'properties' => [
-                        'bar' => [
-                            'a' => 'asdf',
-                            'b' => 'qwer',
-                            'properties' => [
-                                'baz' => [
-                                    'a' => 'asdf',
-                                    'b' => 'qwer',
+                'properties' => [
+                    'foo' => [
+                        'a' => 'asdf',
+                        'b' => 'qwer',
+                        'properties' => [
+                            'bar' => [
+                                'a' => 'asdf',
+                                'b' => 'qwer',
+                                'properties' => [
+                                    'baz' => [
+                                        'a' => 'asdf',
+                                        'b' => 'qwer',
+                                    ],
                                 ],
                             ],
                         ],

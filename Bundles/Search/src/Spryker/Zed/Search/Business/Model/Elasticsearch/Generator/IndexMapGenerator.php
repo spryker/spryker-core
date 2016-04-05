@@ -19,6 +19,8 @@ class IndexMapGenerator
 
     const CLASS_EXTENSION = '.php';
 
+    const PROPERTIES = 'properties';
+    
     const PROPERTY_PATH_SEPARATOR = '.';
 
     /**
@@ -103,30 +105,32 @@ class IndexMapGenerator
      */
     protected function getTemplateData($indexNamespaceSuffix, $mappingName, array $mapping)
     {
+        $properties = $this->getMappingProperties($mapping);
+
         return [
             'indexNamespaceSuffix' => $indexNamespaceSuffix,
             'className' => $mappingName . self::CLASS_NAME_SUFFIX,
-            'constants' => $this->getConstants($mapping),
-            'metadata' => $this->getMetadata($mapping),
+            'constants' => $this->getConstants($properties),
+            'metadata' => $this->getMetadata($properties),
         ];
     }
 
     /**
-     * @param array $mapping
+     * @param array $properties
      * @param string|null $path
      *
      * @return array
      */
-    protected function getConstants(array $mapping, $path = null)
+    protected function getConstants(array $properties, $path = null)
     {
         $constants = [];
 
-        foreach ($mapping as $propertyName => $propertyValue) {
+        foreach ($properties as $propertyName => $propertyValue) {
             $constants[$this->convertToConstant($path . $propertyName)] = $path . $propertyName;
 
-            if (isset($propertyValue['properties'])) {
+            if (isset($propertyValue[self::PROPERTIES])) {
                 $childMetadata = $this->getConstants(
-                    $propertyValue['properties'],
+                    $propertyValue[self::PROPERTIES],
                     $path . $propertyName . self::PROPERTY_PATH_SEPARATOR
                 );
                 $constants = array_merge($constants, $childMetadata);
@@ -137,16 +141,16 @@ class IndexMapGenerator
     }
 
     /**
-     * @param array $mapping
+     * @param array $properties
      * @param string|null $path
      *
      * @return array
      */
-    protected function getMetadata(array $mapping, $path = null)
+    protected function getMetadata(array $properties, $path = null)
     {
         $metadata = [];
 
-        foreach ($mapping as $propertyName => $propertyData) {
+        foreach ($properties as $propertyName => $propertyData) {
             $propertyConstantName = $this->convertToConstant($path . $propertyName);
             foreach ($propertyData as $key => $value) {
                 if (is_scalar($value)) {
@@ -154,9 +158,9 @@ class IndexMapGenerator
                 }
             }
 
-            if (isset($propertyData['properties'])) {
+            if (isset($propertyData[self::PROPERTIES])) {
                 $childMetadata = $this->getMetadata(
-                    $propertyData['properties'],
+                    $propertyData[self::PROPERTIES],
                     $path . $propertyName . self::PROPERTY_PATH_SEPARATOR
                 );
                 $metadata = array_merge($metadata, $childMetadata);
@@ -164,6 +168,16 @@ class IndexMapGenerator
         }
 
         return $metadata;
+    }
+
+    /**
+     * @param array $mapping
+     *
+     * @return array
+     */
+    protected function getMappingProperties(array $mapping)
+    {
+        return isset($mapping[self::PROPERTIES]) ? $mapping[self::PROPERTIES] : [];
     }
 
     /**
