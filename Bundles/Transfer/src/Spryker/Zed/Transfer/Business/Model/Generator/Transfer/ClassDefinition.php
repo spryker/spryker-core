@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
-use Spryker\Zed\Transfer\Business\Exception\CamelCaseRequired;
+use Spryker\Zed\Transfer\Business\Exception\CamelCaseRequiredException;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -354,7 +354,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
-     * @throws \Spryker\Zed\Transfer\Business\Exception\CamelCaseRequired
+     * @throws \Spryker\Zed\Transfer\Business\Exception\CamelCaseRequiredException
      *
      * @return string
      */
@@ -363,7 +363,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $filter = new CamelCaseToUnderscore();
 
         if (strpos($property['name'], '_') !== false) {
-            throw new CamelCaseRequired('Undescores are not allowed in camel-case properties: ' . $property['name']);
+            throw new CamelCaseRequiredException('Undescores are not allowed in camel-case properties: ' . $property['name']);
         }
 
         return mb_strtoupper($filter->filter($property['name']));
