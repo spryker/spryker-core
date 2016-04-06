@@ -48,6 +48,7 @@
         />
         <column name="fk_payment_braintree" required="true" type="INTEGER"/>
         <column name="transaction_id" required="true" type="VARCHAR"/>
+        <column name="transaction_type" required="false" type="VARCHAR"/>
         <column name="transaction_code" required="true" type="VARCHAR"/>
         <column name="presentation_amount" required="false"  type="VARCHAR"/>
         <column name="presentation_currency" required="false"  type="VARCHAR"/>
@@ -70,8 +71,9 @@
         <column name="code" required="false" type="integer"/>
         <column name="message" required="false" type="VARCHAR"/>
         <column name="transaction_id" required="true" type="VARCHAR"/>
-        <column name="transaction_status" required="false" type="varchar"/>
+        <column name="transaction_code" required="false" type="VARCHAR"/>
         <column name="transaction_type" required="false" type="VARCHAR"/>
+        <column name="transaction_status" required="false" type="VARCHAR"/>
         <column name="transaction_amount" required="false"  type="VARCHAR"/>
         <column name="merchant_account"  required="false" type="VARCHAR"/>
         <column name="processing_timestamp" required="false" type="VARCHAR"/>

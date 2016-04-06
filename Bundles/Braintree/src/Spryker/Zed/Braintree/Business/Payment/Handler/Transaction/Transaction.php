@@ -9,9 +9,11 @@ namespace Spryker\Zed\Braintree\Business\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\BraintreeTransactionResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLog;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLog;
+use Pyz\Yves\Braintree\Handler\BraintreeHandler;
 use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Zed\Braintree\BraintreeConfig;
@@ -75,6 +77,21 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $transaction = $response->transaction;
         $paymentTransfer->setPaymentType($transaction->paymentInstrumentType);
 
+        if ($paymentTransfer->getPaymentType() === \Braintree\PaymentInstrumentType::PAYPAL_ACCOUNT) {
+            $quoteTransfer->getPayment()->setPaymentMethod(PaymentTransfer::BRAINTREE_PAY_PAL);
+            $quoteTransfer->getPayment()->setPaymentProvider(BraintreeHandler::PAYMENT_PROVIDER);
+            $quoteTransfer->getPayment()->setPaymentSelection(PaymentTransfer::BRAINTREE_PAY_PAL);
+        } elseif ($paymentTransfer->getPaymentType() === \Braintree\PaymentInstrumentType::CREDIT_CARD) {
+            $quoteTransfer->getPayment()->setPaymentMethod(PaymentTransfer::BRAINTREE_CREDIT_CARD);
+            $quoteTransfer->getPayment()->setPaymentProvider(BraintreeHandler::PAYMENT_PROVIDER);
+            $quoteTransfer->getPayment()->setPaymentSelection(PaymentTransfer::BRAINTREE_CREDIT_CARD);
+        } else {
+            $responseTransfer->setIsSuccess(false);
+            $paymentTransfer->setNonce('');
+            $responseTransfer->setMessage('Invalid Payment type: ' . $paymentTransfer->getPaymentType());
+            return $responseTransfer;
+        }
+
         $responseTransfer->setCode($transaction->processorSettlementResponseCode);
         $responseTransfer->setTransactionId($transaction->id);
         $responseTransfer->setTransactionStatus($transaction->status);
@@ -98,13 +115,14 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         //$methodMapper = $this->getMethodMapper($paymentEntity->getAccountBrand());
 
         $this->initializeBrainTree();
-        $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::PAYMENT_CODE_AUTHORIZE, $idPayment);
+        $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::SALE, ApiConstants::TRANSACTION_CODE_AUTHORIZE, $idPayment);
 
         $transaction = \Braintree\Transaction::find($paymentEntity->getTransactionId());
         file_put_contents('xxx_auth.log', print_r($transaction, true));
 
         $responseTransfer = new BraintreeTransactionResponseTransfer();
         $responseTransfer->setTransactionId($paymentEntity->getTransactionId());
+        $responseTransfer->setTransactionCode(ApiConstants::TRANSACTION_CODE_AUTHORIZE);
         $isSuccess = $transaction->processorResponseCode === ApiConstants::PAYMENT_CODE_AUTHORIZE_SUCCESS;
         $responseTransfer->setIsSuccess($isSuccess);
 
@@ -163,7 +181,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $statusLogEntity = $this->getLatestTransactionStatusLogItem($idPayment);
 
         $this->initializeBrainTree();
-        $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::PAYMENT_CODE_REVERSAL, $idPayment);
+        $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::CREDIT, ApiConstants::TRANSACTION_CODE_REVERSAL, $idPayment);
 
         // For status of authorized or submittedForSettlement
         $response = \Braintree\Transaction::void($paymentEntity->getTransactionId());
@@ -171,6 +189,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
 
         $responseTransfer = new BraintreeTransactionResponseTransfer();
         $responseTransfer->setTransactionId($paymentEntity->getTransactionId());
+        $responseTransfer->setTransactionCode(ApiConstants::TRANSACTION_CODE_REVERSAL);
         $responseTransfer->setIsSuccess($response->success);
 
         if (!$response->success) {
@@ -204,13 +223,14 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $transactionId = $paymentEntity->getTransactionId();
 
         $this->initializeBrainTree();
-        $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::PAYMENT_CODE_CAPTURE, $idPayment);
+        $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::SALE, ApiConstants::TRANSACTION_CODE_CAPTURE, $idPayment);
 
         $response = \Braintree\Transaction::submitForSettlement($transactionId);
         file_put_contents('xxx_capture.log', print_r($response, true));
 
         $responseTransfer = new BraintreeTransactionResponseTransfer();
         $responseTransfer->setTransactionId($paymentEntity->getTransactionId());
+        $responseTransfer->setTransactionCode(ApiConstants::TRANSACTION_CODE_CAPTURE);
         $responseTransfer->setIsSuccess($response->success);
 
         if (!$response->success) {
@@ -244,13 +264,19 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $transactionId = $paymentEntity->getTransactionId();
 
         $this->initializeBrainTree();
-        $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::PAYMENT_CODE_REFUND, $idPayment);
 
-        $response = \Braintree\Transaction::refund($transactionId);
-        file_put_contents('xxx_refund.log', print_r($response, true));
+        $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::CREDIT, ApiConstants::TRANSACTION_CODE_REFUND, $idPayment);
+
+        $transaction = \Braintree\Transaction::find($transactionId);
+        if ($transaction->status === \Braintree\Transaction::SUBMITTED_FOR_SETTLEMENT) {
+            $response = \Braintree\Transaction::void($transactionId);
+        } else {
+            $response = \Braintree\Transaction::refund($transactionId);
+        }
 
         $responseTransfer = new BraintreeTransactionResponseTransfer();
         $responseTransfer->setTransactionId($paymentEntity->getTransactionId());
+        $responseTransfer->setTransactionCode(ApiConstants::TRANSACTION_CODE_REFUND);
         $responseTransfer->setIsSuccess($response->success);
 
         if (!$response->success) {
@@ -294,17 +320,22 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param string $code
+     * @param string $transactionId
+     * @param string $transactionType
+     * @param string $transactionCode
      * @param int $idPayment
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLog
      */
-    protected function logApiRequest($transactionId, $code, $idPayment)
+    protected function logApiRequest($transactionId, $transactionType, $transactionCode, $idPayment)
     {
         $logEntity = new SpyPaymentBraintreeTransactionRequestLog();
         $logEntity
             ->setTransactionId($transactionId)
-            ->setTransactionCode($code)
+            ->setTransactionType($transactionType)
+            ->setTransactionCode($transactionCode)
             ->setFkPaymentBraintree($idPayment);
         $logEntity->save();
 

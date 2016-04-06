@@ -19,6 +19,7 @@
         <property name="bankAccountHolder" type="string"/>
         <property name="bankAccountBic" type="string"/>
         <property name="bankAccountIban" type="string"/>
+        <property name="customer" type="BraintreePaymentCustomer"/>
     </transfer>
 
     <transfer name="BraintreeTransactionResponse">
@@ -27,8 +28,9 @@
         <property name="code" type="int"/>
         <property name="message" type="string"/>
         <property name="paymentType" type="string" />
-        <property name="transactionStatus" type="string"/>
+        <property name="transactionCode" type="string"/>
         <property name="transactionType" type="string"/>
+        <property name="transactionStatus" type="string"/>
         <property name="transactionAmount" type="string"/>
         <property name="processingTimestamp" type="integer"/>
 
@@ -37,36 +39,36 @@
         <property name="paypalPayerEmail" type="string"/>
     </transfer>
 
-    <transfer name="BraintreeCalculationResponse">
-        <property name="version" type="string"/>
-        <property name="transactionType" type="string"/>
-        <property name="paymentType" type="string"/>
-        <property name="identificationTransactionid" type="string"/>
-        <property name="identificationUniqueid" type="string"/>
-        <property name="status" type="string"/>
-        <property name="statusCode" type="string"/>
-        <property name="description" type="string"/>
-        <property name="paymentDetails" type="BraintreeCalculationPaymentDetail[]" singular="paymentDetail"/>
-        <property name="tacUrl" type="string"/>
-        <property name="dataPrivacyConsentUrl" type="string"/>
-        <property name="totalsAmountHash" type="string"/>
-    </transfer>
-
-    <transfer name="BraintreeCalculationPaymentDetail">
-        <property name="originalAmount" type="int"/>
-        <property name="totalAmount" type="int"/>
-        <property name="duration" type="int"/>
-        <property name="interestRate" type="int"/>
-        <property name="effectiveInterestRate" type="int"/>
-        <property name="usage" type="string"/>
-        <property name="currency" type="string"/>
-        <property name="standardCreditInformationUrl" type="string"/>
-    </transfer>
-
     <transfer name="Order">
         <property name="idSalesOrder" type="int" />
         <property name="braintreePayment" type="BraintreePayment"/>
         <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <!-- Data dependency on the Quote transfer object -->
+    <transfer name="Quote">
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <!-- Data dependency on the Customer transfer object -->
+    <transfer name="Customer">
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="company" type="string" />
+    </transfer>
+
+    <!-- Data dependency on the Address transfer object -->
+    <transfer name="Address">
+        <property name="firstName" type="string" />
+        <property name="lastNeame" type="string" />
+        <property name="address1" type="string" />
+        <property name="address2" type="string" />
+        <property name="address3" type="string" />
+        <property name="company" type="string" />
+        <property name="city" type="string" />
+        <property name="zipCode" type="string" />
+        <property name="iso2Code" type="string" />
+        <property name="salutation" type="string" />
     </transfer>
 
     <transfer name="Item">

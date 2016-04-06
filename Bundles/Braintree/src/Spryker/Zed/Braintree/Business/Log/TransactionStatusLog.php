@@ -36,6 +36,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
+            ApiConstants::TRANSACTION_CODE_AUTHORIZE,
             ApiConstants::PAYMENT_CODE_AUTHORIZE,
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
@@ -50,6 +51,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
+            ApiConstants::TRANSACTION_CODE_REVERSAL,
             ApiConstants::PAYMENT_CODE_REVERSAL,
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
@@ -64,6 +66,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
+            ApiConstants::TRANSACTION_CODE_CAPTURE,
             ApiConstants::PAYMENT_CODE_CAPTURE,
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
@@ -78,7 +81,8 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
-            ApiConstants::PAYMENT_CODE_REFUND,
+            ApiConstants::TRANSACTION_CODE_REFUND,
+            [ApiConstants::PAYMENT_CODE_REVERSAL, ApiConstants::PAYMENT_CODE_REFUND],
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
@@ -86,11 +90,12 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param string $transactionCode
+     * @param string|array $statusCode
      * @param string $expectedStatusReasonCode
      *
      * @return bool
      */
-    private function hasTransactionLogStatus(OrderTransfer $orderTransfer, $transactionCode, $expectedStatusReasonCode)
+    private function hasTransactionLogStatus(OrderTransfer $orderTransfer, $transactionCode, $statusCode, $expectedStatusReasonCode)
     {
         $idSalesOrder = $orderTransfer->getIdSalesOrder();
         $logEntity = $this
@@ -99,6 +104,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
                 $idSalesOrder,
                 $transactionCode
             )
+            ->filterByTransactionStatus($statusCode)
             ->findOne();
         if (!$logEntity) {
             return false;

@@ -37,11 +37,19 @@ interface ApiConstants
     const ADDRESS_CITY = 'ADDRESS.CITY';
     const ADDRESS_COUNTRY = 'ADDRESS.COUNTRY';
 
+    const SALE = 'sale';
+    const CREDIT = 'credit';
+
+    const TRANSACTION_CODE_AUTHORIZE = 'authorize';
+    const TRANSACTION_CODE_CAPTURE = 'capture';
+    const TRANSACTION_CODE_REVERSAL = 'reversal';
+    const TRANSACTION_CODE_REFUND = 'refund';
+
     const PAYMENT_CODE_PRE_CHECK = 'authorized';
     const PAYMENT_CODE_AUTHORIZE = 'authorized';
-    const PAYMENT_CODE_CAPTURE = 'submitted_for_settlement'; // Braintree\Transaction::SETTLEMENT_CONFIRMED
+    const PAYMENT_CODE_CAPTURE = 'settling'; // Braintree\Transaction::SETTLEMENT_CONFIRMED
     const PAYMENT_CODE_REVERSAL = 'voided';
-    const PAYMENT_CODE_REFUND = 'submitted_for_settlement';
+    const PAYMENT_CODE_REFUND = 'settling';
 
     const PAYMENT_CODE_AUTHORIZE_SUCCESS = '1000';
     const STATUS_REASON_CODE_SUCCESS = '1';
