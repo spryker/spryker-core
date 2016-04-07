@@ -119,6 +119,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @deprecated Use `queryTouchEntriesByItemTypeAndItemIds` instead
      * @api
      *
      * @param string $itemType
