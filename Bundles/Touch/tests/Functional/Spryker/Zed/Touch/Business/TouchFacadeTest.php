@@ -33,6 +33,9 @@ class TouchFacadeTest extends Test
     const ITEM_EVENT_IN_ACTIVE = 'inactive';
     const ITEM_EVENT_DELETED = 'deleted';
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
