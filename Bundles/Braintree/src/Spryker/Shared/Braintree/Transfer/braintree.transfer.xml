@@ -13,7 +13,8 @@
         <property name="dateOfBirth" type="string"/>
         <property name="languageIso2Code" type="string"/>
         <property name="currencyIso3Code" type="string"/>
-        <property name="address" type="Address"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address"/>
         <property name="nonce" type="string"/>
         <property name="transactionId" type="string"/>
         <property name="bankAccountHolder" type="string"/>
@@ -60,7 +61,7 @@
     <!-- Data dependency on the Address transfer object -->
     <transfer name="Address">
         <property name="firstName" type="string" />
-        <property name="lastNeame" type="string" />
+        <property name="lastName" type="string" />
         <property name="address1" type="string" />
         <property name="address2" type="string" />
         <property name="address3" type="string" />

@@ -133,6 +133,8 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
             return $responseTransfer;
         }
 
+        $responseTransfer->setCode($transaction->processorResponseCode);
+        $responseTransfer->setMessage($transaction->processorResponseText);
         $responseTransfer->setProcessingTimestamp($transaction->createdAt);
         $responseTransfer->setTransactionStatus($transaction->status);
         $responseTransfer->setTransactionType($transaction->type);
@@ -150,9 +152,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
             'lastName' => $customerTransfer->getLastName(),
             'company' => $customerTransfer->getCompany(),
             'email' => $customerTransfer->getEmail(),
-            //'phone' => '281.330.8004',
-            //'fax' => '419.555.1235',
-            //'website' => 'http://example.com'
         ]);
 
         $customerId = $customerId->customer->id;
@@ -178,7 +177,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     public function revertPayment(OrderTransfer $orderTransfer, $idPayment)
     {
         $paymentEntity = $this->getPaymentEntity($idPayment);
-        $statusLogEntity = $this->getLatestTransactionStatusLogItem($idPayment);
+        //$statusLogEntity = $this->getLatestTransactionStatusLogItem($idPayment);
 
         $this->initializeBrainTree();
         $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::CREDIT, ApiConstants::TRANSACTION_CODE_REVERSAL, $idPayment);
@@ -199,6 +198,8 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
             return $responseTransfer;
         }
 
+        $responseTransfer->setCode($response->transaction->processorResponseCode);
+        $responseTransfer->setMessage($response->transaction->processorResponseText);
         $responseTransfer->setProcessingTimestamp($response->transaction->createdAt);
         $responseTransfer->setTransactionStatus($response->transaction->status);
         $responseTransfer->setTransactionType($response->transaction->type);
@@ -240,6 +241,8 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
             return $responseTransfer;
         }
 
+        $responseTransfer->setCode($response->transaction->processorResponseCode);
+        $responseTransfer->setMessage($response->transaction->processorResponseText);
         $responseTransfer->setProcessingTimestamp($response->transaction->createdAt);
         $responseTransfer->setTransactionStatus($response->transaction->status);
         $responseTransfer->setTransactionType($response->transaction->type);
@@ -286,6 +289,8 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
             return $responseTransfer;
         }
 
+        $responseTransfer->setCode($response->transaction->processorResponseCode);
+        $responseTransfer->setMessage($response->transaction->processorResponseText);
         $responseTransfer->setProcessingTimestamp($response->transaction->createdAt);
         $responseTransfer->setTransactionStatus($response->transaction->status);
         $responseTransfer->setTransactionType($response->transaction->type);

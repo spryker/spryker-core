@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Braintree\Business\Order;
 
+use Braintree\Exception;
 use Generated\Shared\Transfer\BraintreePaymentTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -44,25 +45,28 @@ class Saver implements SaverInterface
     protected function savePaymentForOrder(BraintreePaymentTransfer $paymentTransfer, $idSalesOrder)
     {
         $paymentEntity = new SpyPaymentBraintree();
+        $addressTransfer = $paymentTransfer->getBillingAddress();
 
+        $formattedStreet = trim(sprintf(
+            '%s %s %s',
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getAddress3()
+        ));
+
+        $paymentEntity->fromArray($addressTransfer->toArray());
         $paymentEntity->fromArray($paymentTransfer->toArray());
 
+        //FIXME: needed?
+        //$paymentEntity->setClientIp('123');
+        $paymentEntity->setGender('Male');
+
         $paymentEntity
+            ->setStreet($formattedStreet)
+            ->setCountryIso2Code($addressTransfer->getIso2Code())
             ->setFkSalesOrder($idSalesOrder);
 
-        //FIXME: needed?
-        $paymentEntity->setClientIp('123');
-        $paymentEntity->setFirstName('123');
-        $paymentEntity->setLastName('123');
-        $paymentEntity->setSalutation('Mr');
-        $paymentEntity->setGender('Male');
-        $paymentEntity->setCountryIso2Code('DE');
-        $paymentEntity->setCity('DE');
-        $paymentEntity->setZipCode('12345');
-        $paymentEntity->setStreet('DE');
-        $paymentEntity->setEmail('email@email.de');
-        $paymentEntity->setLanguageIso2Code('DE');
-        $paymentEntity->setCurrencyIso3Code('EUR');
+        $paymentEntity->save();
 
         $paymentEntity->save();
 
