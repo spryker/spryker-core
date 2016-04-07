@@ -27,11 +27,19 @@ abstract class AbstractIndexClientProvider extends AbstractClientProvider
      */
     protected function createZedClient()
     {
-        return (new Client([
-            'protocol' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),
+        $config = [
+            'transport' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),
             'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
             'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
-        ]))->getIndex(Config::get(ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME));
+        ];
+
+        if (Config::hasValue(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
+            $config['headers'] = [
+                'Authorization' => "Basic ".Config::get(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)
+            ];
+        }
+
+        return (new Client($config))->getIndex(Config::get(ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME));
     }
 
 }

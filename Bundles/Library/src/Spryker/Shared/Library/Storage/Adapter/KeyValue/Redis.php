@@ -26,13 +26,7 @@ abstract class Redis extends AbstractKeyValue
     public function connect()
     {
         if (!$this->resource) {
-            $resource = new Client(
-                [
-                    'protocol' => $this->config['protocol'],
-                    'host' => $this->config['host'],
-                    'port' => $this->config['port'],
-                ]
-            );
+            $resource = new Client($this->config);
 
             if (!$resource) {
                 throw new ConnectionException($resource, 'Could not connect to redis server');

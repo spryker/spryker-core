@@ -39,7 +39,7 @@ class CreateDatabaseConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->info('Creating Database');
-
+        putenv(sprintf("PGPASSWORD=%s", Config::get(PropelConstants::ZED_DB_PASSWORD)));
         if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_PGSQL)) {
             $this->createPostgresDatabaseIfNotExists();
         } else {
@@ -79,8 +79,11 @@ class CreateDatabaseConsole extends Console
     protected function existsPostgresDatabase()
     {
         $databaseExistsCommand = sprintf(
-            'sudo psql -U %s -lqt | cut -d \| -f 1 | grep -w %s | wc -l',
-            'postgres',
+            'psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
+            Config::get(PropelConstants::ZED_DB_HOST),
+            Config::get(PropelConstants::ZED_DB_PORT),
+            Config::get(PropelConstants::ZED_DB_USERNAME),
+            Config::get(PropelConstants::ZED_DB_DATABASE),
             Config::get(PropelConstants::ZED_DB_DATABASE)
         );
 
