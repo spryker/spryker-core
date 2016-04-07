@@ -34,14 +34,14 @@ class TouchQueryContainerTest extends Test
     {
         parent::setUp();
 
-        $this->createTouchEntity(self::ITEM_TYPE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_1);
-        $this->createTouchEntity(self::ITEM_TYPE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_2);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_1);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_2);
 
-        $this->createTouchEntity(self::ITEM_TYPE, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_3);
-        $this->createTouchEntity(self::ITEM_TYPE, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_4);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_3);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_4);
 
-        $this->createTouchEntity(self::ITEM_TYPE, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_5);
-        $this->createTouchEntity(self::ITEM_TYPE, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_6);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_5);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_6);
     }
 
     /**
@@ -124,19 +124,18 @@ class TouchQueryContainerTest extends Test
     }
 
     /**
-     * @param string $itemType
      * @param string $itemEvent
      * @param int $itemId
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Touch\Persistence\SpyTouch
      */
-    protected function createTouchEntity($itemType, $itemEvent, $itemId)
+    protected function createTouchEntity($itemEvent, $itemId)
     {
         $touchEntity = new SpyTouch();
         $touchEntity->setItemEvent($itemEvent)
             ->setItemId($itemId)
-            ->setItemType($itemType)
+            ->setItemType(self::ITEM_TYPE)
             ->setTouched(new \DateTime());
 
         $touchEntity->save();

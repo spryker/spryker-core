@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Touch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouch;
 use Spryker\Zed\Touch\Business\Model\Touch;
 use Spryker\Zed\Touch\Business\Model\TouchRecord;
 use Spryker\Zed\Touch\TouchDependencyProvider;
@@ -36,9 +37,16 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     public function createTouchModel()
     {
         return new Touch(
-            $this->getQueryContainer(),
-            $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouchInterface
+     */
+    public function createBulkTouchModel()
+    {
+        return new BulkTouch($this->getQueryContainer());
     }
 
 }

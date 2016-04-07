@@ -141,7 +141,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     /**
      * Specification:
      *  - return all items with given `$itemType` and `$itemId` whether they are active, inactive or deleted
-     * 
+     *
      * @api
      *
      * @param string $itemType
