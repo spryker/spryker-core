@@ -139,6 +139,26 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * Specification:
+     *  - return all items with given `$itemType` and `$itemId` whether they are active, inactive or deleted
+     * 
+     * @api
+     *
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchEntriesByItemTypeAndItemIds($itemType, array $itemIds)
+    {
+        $query = $this->getFactory()->createTouchQuery()
+            ->filterByItemType($itemType)
+            ->filterByItemId($itemIds);
+
+        return $query;
+    }
+
+    /**
      * @api
      *
      * @param string $itemType
