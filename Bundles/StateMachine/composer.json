@@ -1,0 +1,28 @@
+{
+  "name": "spryker/state-machine",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/",
+      "YvesUnit": "tests/"
+    }
+  },
+  "require": {
+    "spryker/application": "^2.0.0",
+    "spryker/kernel": "^2.0.0",
+    "spryker/propel": "^2.0.0",
+    "spryker/symfony": "^2.0.0"
+  },
+  "description": "state machine",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  }
+}
