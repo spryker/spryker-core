@@ -70,7 +70,7 @@ class Config
      */
     public static function hasValue($key)
     {
-        return isset(self::$config[$key]);
+        return array_key_exists($key, self::$config);
     }
 
     /**
