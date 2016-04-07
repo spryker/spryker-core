@@ -19,8 +19,8 @@ abstract class Redis extends AbstractKeyValue
 {
 
     /**
-     * @throws \MemcachedException
-     *
+     * @throws \Predis\Connection\ConnectionException
+     * 
      * @return void
      */
     public function connect()

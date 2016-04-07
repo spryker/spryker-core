@@ -11,9 +11,6 @@ use Elastica\Client;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\LibraryConstants;
 
-/**
- * Class StorageInstanceBuilder
- */
 class StorageInstanceBuilder
 {
 
@@ -27,12 +24,12 @@ class StorageInstanceBuilder
     /**
      * @var \Spryker\Shared\Library\Storage\AdapterInterface[]
      */
-    private static $storageInstances = [];
+    protected static $storageInstances = [];
 
     /**
      * @var array
      */
-    private static $searchInstances = [];
+    protected static $searchInstances = [];
 
     /**
      * @throws \ErrorException
@@ -52,7 +49,7 @@ class StorageInstanceBuilder
 
             if (Config::hasValue(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
                 $config['headers'] = [
-                    'Authorization' => "Basic ".Config::get(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)
+                    'Authorization' => 'Basic '.Config::get(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)
                 ];
             }
 
@@ -94,16 +91,14 @@ class StorageInstanceBuilder
      *
      * @return \Spryker\Shared\Library\Storage\AdapterInterface
      */
-    private static function getStorageInstance($type, $debug = false)
+    protected static function getStorageInstance($type, $debug = false)
     {
         $kvAdapter = Config::get(LibraryConstants::STORAGE_KV_SOURCE);
-
+        
         $storageAdapter = self::createStorageAdapterName($type, $kvAdapter);
-
         $configArray = self::createAdapterConfig($kvAdapter);
-
+        
         $storage = new $storageAdapter($configArray, $debug);
-
         self::$storageInstances[$storageAdapter] = $storage;
 
         return self::$storageInstances[$storageAdapter];
@@ -130,7 +125,10 @@ class StorageInstanceBuilder
                 if (Config::hasValue(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
                     $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
                 }
+
                 return $config;
+            break;
+
             case self::SEARCH_ELASTICA_ADAPTER:
                 $config = [
                     'transport' => Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT),
@@ -145,7 +143,9 @@ class StorageInstanceBuilder
                 }
 
                 return $config;
+            break;
         }
+
         throw new \ErrorException('Missing implementation for adapter ' . $kvAdapter);
     }
 

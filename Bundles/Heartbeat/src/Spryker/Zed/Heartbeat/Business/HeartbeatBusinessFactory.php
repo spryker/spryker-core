@@ -67,7 +67,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
 
         if (Config::hasValue(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
             $config['headers'] = [
-                'Authorization' => "Basic ".Config::get(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)
+                'Authorization' => 'Basic '.Config::get(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)
             ];
         }
 
@@ -105,6 +105,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
             'protocol' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
             'port' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT),
             'host' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
+            'password' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD),
         ];
         $client = new PredisClient($config);
 
