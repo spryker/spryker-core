@@ -11,12 +11,12 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0-RC2",
-    "spryker/locale": "^1.0.0-RC2",
-    "spryker/propel": "^1.0.0-RC2",
-    "spryker/touch": "^1.0.0-RC2",
-    "spryker/application": "^1.0.0-RC2",
-    "spryker/library": "^1.0.0-RC2"
+    "spryker/kernel": "^2.0.0",
+    "spryker/locale": "^2.0.0",
+    "spryker/propel": "^2.0.0",
+    "spryker/touch": "^2.0.0",
+    "spryker/application": "^2.0.0",
+    "spryker/library": "^2.0.0"
   },
   "description": "url bundle",
   "license": "proprietary",
@@ -24,7 +24,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   }
 }
