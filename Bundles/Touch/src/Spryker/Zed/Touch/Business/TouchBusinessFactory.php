@@ -9,6 +9,11 @@ namespace Spryker\Zed\Touch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouch;
+use Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouchInterface;
+use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
+use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterUpdate;
+use Spryker\Zed\Touch\Business\Model\BulkTouch\Handler\BulkTouchHandlerInsert;
+use Spryker\Zed\Touch\Business\Model\BulkTouch\Handler\BulkTouchHandlerUpdate;
 use Spryker\Zed\Touch\Business\Model\Touch;
 use Spryker\Zed\Touch\Business\Model\TouchRecord;
 use Spryker\Zed\Touch\TouchDependencyProvider;
@@ -46,7 +51,52 @@ class TouchBusinessFactory extends AbstractBusinessFactory
      */
     public function createBulkTouchModel()
     {
-        return new BulkTouch($this->getQueryContainer());
+        $bulkTouchHandler = $this->createBulkTouchHandler();
+
+        return new BulkTouch($bulkTouchHandler);
+    }
+
+    /**
+     * @return \Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouchInterface[]
+     */
+    protected function createBulkTouchHandler()
+    {
+        return [
+            $this->createBulkTouchHandlerUpdate(),
+            $this->createBulkTouchHandlerInsert(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Touch\Business\Model\BulkTouch\Handler\BulkTouchHandlerInsert
+     */
+    protected function createBulkTouchHandlerInsert()
+    {
+        return new BulkTouchHandlerInsert($this->getQueryContainer(), $this->createIdFilterInsert());
+    }
+
+    /**
+     * @return \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert
+     */
+    protected function createIdFilterInsert()
+    {
+        return new IdFilterInsert($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Touch\Business\Model\BulkTouch\Handler\BulkTouchHandlerInsert
+     */
+    protected function createBulkTouchHandlerUpdate()
+    {
+        return new BulkTouchHandlerUpdate($this->getQueryContainer(), $this->createIdFilterUpdate());
+    }
+
+    /**
+     * @return \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterUpdate
+     */
+    protected function createIdFilterUpdate()
+    {
+        return new IdFilterUpdate($this->getQueryContainer());
     }
 
 }
