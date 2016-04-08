@@ -48,8 +48,14 @@ class ZedBootstrap
 
         $this->optimizeApp();
         $this->enableHttpMethodParameterOverride();
-        $this->registerServiceProvider();
 
+        if ($this->isInternalRequest()) {
+            $this->registerServiceProviderForInternalRequest();
+
+            return $this->application;
+        }
+
+        $this->registerServiceProvider();
         $this->addVariablesToTwig();
 
         return $this->application;
@@ -66,9 +72,27 @@ class ZedBootstrap
     }
 
     /**
+     * @return void
+     */
+    protected function registerServiceProviderForInternalRequest()
+    {
+        foreach ($this->getSimpleServiceProvider() as $provider) {
+            $this->application->register($provider);
+        }
+    }
+
+    /**
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getServiceProvider()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getSimpleServiceProvider()
     {
         return [];
     }
@@ -150,6 +174,14 @@ class ZedBootstrap
         $dependencyProvider->provideBusinessLayerDependencies($container);
         $dependencyProvider->provideCommunicationLayerDependencies($container);
         $dependencyProvider->providePersistenceLayerDependencies($container);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isInternalRequest()
+    {
+        return array_key_exists('HTTP_X_INTERNAL_REQUEST', $_SERVER);
     }
 
 }
