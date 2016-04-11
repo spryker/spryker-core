@@ -53,8 +53,6 @@ class StorageInstanceBuilder
                 ];
             }
 
-            dump($config);
-
             self::$searchInstances[$adapterName] = new Client($config);
         }
 
