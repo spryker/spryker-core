@@ -42,7 +42,7 @@ class StorageInstanceBuilder
 
         if (array_key_exists($adapterName, self::$searchInstances) === false) {
             $config = [
-                'transport' => Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT),
+                'transport' => ucfirst(Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT)),
                 'port' => Config::get(LibraryConstants::ELASTICA_PARAMETER__PORT),
                 'host' => Config::get(LibraryConstants::ELASTICA_PARAMETER__HOST),
             ];
@@ -133,7 +133,7 @@ class StorageInstanceBuilder
 
             case self::SEARCH_ELASTICA_ADAPTER:
                 $config = [
-                    'transport' => Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT),
+                    'transport' => ucfirst(Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT)),
                     'port' => Config::get(LibraryConstants::ELASTICA_PARAMETER__PORT),
                     'host' => Config::get(LibraryConstants::ELASTICA_PARAMETER__HOST),
                 ];
