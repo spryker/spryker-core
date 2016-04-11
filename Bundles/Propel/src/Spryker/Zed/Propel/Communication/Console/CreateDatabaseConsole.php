@@ -85,6 +85,11 @@ class CreateDatabaseConsole extends Console
      */
     protected function existsPostgresDatabase()
     {
+        putenv(sprintf(
+            'PGPASSWORD=%s',
+            Config::get(PropelConstants::ZED_DB_PASSWORD)
+        ));
+
         $databaseExistsCommand = sprintf(
             'psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
             Config::get(PropelConstants::ZED_DB_HOST),
@@ -96,6 +101,8 @@ class CreateDatabaseConsole extends Console
 
         $process = new Process($databaseExistsCommand);
         $process->run();
+
+        putenv('PGPASSWORD=');
 
         if (!$process->isSuccessful()) {
             throw new \RuntimeException($process->getErrorOutput());
