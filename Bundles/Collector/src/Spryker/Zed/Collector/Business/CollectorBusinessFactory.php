@@ -10,6 +10,7 @@ namespace Spryker\Zed\Collector\Business;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Collector\Business\Exporter\CollectorExporter;
 use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
+use Spryker\Zed\Collector\Business\Exporter\FileExporter;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
@@ -17,6 +18,8 @@ use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
 use Spryker\Zed\Collector\Business\Exporter\StorageExporter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterPathConstructor;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
@@ -48,6 +51,19 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
             $this->createStorageExporter(),
+            $this->getConfig()->getAvailableCollectorTypes()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\CollectorExporter
+     */
+    public function createYvesFileExporter()
+    {
+        return new CollectorExporter(
+            $this->getTouchQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->createFileExporter(),
             $this->getConfig()->getAvailableCollectorTypes()
         );
     }
@@ -103,6 +119,38 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\ExporterInterface
+     */
+    protected function createFileExporter()
+    {
+        $storageExporter = new FileExporter(
+            $this->getTouchQueryContainer(),
+            $this->createFileWriter(),
+            $this->createStorageMarker(),
+            $this->createFailedResultModel(),
+            $this->createBatchResultModel(),
+            $this->createExporterWriterStorageTouchUpdater(),
+            $this->createFileWriterPathConstructor($this->getConfig()->getFileExporterOutputDir())
+        );
+
+        foreach ($this->getProvidedDependency(CollectorDependencyProvider::FILE_PLUGINS) as $touchItemType => $collectorPlugin) {
+            $storageExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
+        }
+
+        return $storageExporter;
+    }
+
+    /**
+     * @param string $outputDir
+     *
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterPathConstructor
+     */
+    protected function createFileWriterPathConstructor($outputDir)
+    {
+        return new FileWriterPathConstructor($outputDir);
+    }
+
+    /**
      * @return \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
     protected function createStorageWriter()
@@ -110,6 +158,14 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new RedisWriter(
             StorageInstanceBuilder::getStorageReadWriteInstance()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
+     */
+    protected function createFileWriter()
+    {
+        return new FileWriter();
     }
 
     /**

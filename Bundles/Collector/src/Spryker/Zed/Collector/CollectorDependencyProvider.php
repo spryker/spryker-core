@@ -19,6 +19,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     const SEARCH_PLUGINS = 'search plugins';
     const STORAGE_PLUGINS = 'storage plugins';
     const FACADE_PROPEL = 'propel facade';
+    const FILE_PLUGINS = 'file plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
