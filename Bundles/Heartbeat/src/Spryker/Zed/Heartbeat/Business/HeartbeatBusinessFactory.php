@@ -60,7 +60,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     protected function createElasticaClient()
     {
         $config = [
-            'protocol' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),
+            'protocol' => ucfirst(Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT)),
             'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
             'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
         ];
