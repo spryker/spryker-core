@@ -13,6 +13,7 @@ use SimpleXMLElement;
 use Spryker\Zed\StateMachine\Business\Process\EventInterface;
 use Spryker\Zed\StateMachine\Business\Process\StateInterface;
 use Spryker\Zed\StateMachine\Business\Process\TransitionInterface;
+use Spryker\Zed\StateMachine\StateMachineConfig;
 
 class Builder implements BuilderInterface
 {
@@ -48,21 +49,29 @@ class Builder implements BuilderInterface
     protected $process;
 
     /**
+     * @var StateMachineConfig
+     */
+    protected $stateMachineConfig;
+
+    /**
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $state
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
+     * @param StateMachineConfig $stateMachineConfig
      */
     public function __construct(
         EventInterface $event,
         StateInterface $state,
         TransitionInterface $transition,
-        $process
+        $process,
+        StateMachineConfig $stateMachineConfig
     ) {
         $this->event = $event;
         $this->state = $state;
         $this->transition = $transition;
         $this->process = $process;
+        $this->stateMachineConfig = $stateMachineConfig;
     }
 
     /**
@@ -145,9 +154,8 @@ class Builder implements BuilderInterface
 
     /**
      * @param string $pathToXml
-     * @param string $processName
+     * @param string $fileName
      * @return SimpleXMLElement
-     * @internal param string $fileName
      *
      */
     protected function loadXmlFromFileName($pathToXml, $fileName)
@@ -158,6 +166,7 @@ class Builder implements BuilderInterface
     }
 
     /**
+     * @param string $pathToXml
      * @param string $processName
      *
      * @return \SimpleXMLElement
@@ -389,6 +398,8 @@ class Builder implements BuilderInterface
      */
     protected function createProcessIdentifier(StateMachineProcessTransfer $stateMachineProcessTransfer)
     {
+        $stateMachineProcessTransfer->requireStateMachineName()->requireProcessName();
+
         return $stateMachineProcessTransfer->getStateMachineName() . '-' . $stateMachineProcessTransfer->getProcessName();
     }
 
@@ -399,7 +410,9 @@ class Builder implements BuilderInterface
      */
     protected function buildPathToXml(StateMachineProcessTransfer $stateMachineProcessTransfer)
     {
-        return APPLICATION_ROOT_DIR . '/config/Zed/StateMachine/' . $stateMachineProcessTransfer->getStateMachineName();
+        $stateMachineProcessTransfer->requireStateMachineName();
+
+        return $this->stateMachineConfig->getPathToStateMachineXmlFiles() . DIRECTORY_SEPARATOR . $stateMachineProcessTransfer->getStateMachineName();
     }
 
 }

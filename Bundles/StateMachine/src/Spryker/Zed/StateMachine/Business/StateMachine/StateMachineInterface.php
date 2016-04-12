@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
-use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface StateMachineInterface
@@ -19,10 +18,7 @@ interface StateMachineInterface
      *
      * @return bool
      */
-    public function triggerForNewStateMachineItem(
-        StateMachineProcessTransfer $stateMachineProcessTransfer,
-        $identifier
-    );
+    public function triggerForNewStateMachineItem(StateMachineProcessTransfer $stateMachineProcessTransfer, $identifier);
 
     /**
      * @param int $eventName
@@ -33,7 +29,7 @@ interface StateMachineInterface
     public function triggerEvent($eventName, array $items);
 
     /**
-     * @return int
+     * @return bool
      */
     public function checkConditions();
 

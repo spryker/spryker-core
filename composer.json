@@ -447,7 +447,9 @@
       "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
 
       "Spryker\\Shared\\StateMachine\\": "Bundles/StateMachine/src",
-      "Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/src"
+      "Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/src",
+      "Unit\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests",
+      "Functional\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests"
     },
     "psr-4": {
       "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",

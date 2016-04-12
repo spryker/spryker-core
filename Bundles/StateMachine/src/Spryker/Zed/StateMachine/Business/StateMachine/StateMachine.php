@@ -115,7 +115,8 @@ class StateMachine implements StateMachineInterface
         StateMachineProcessTransfer $stateMachineProcessTransfer,
         $identifier
     ) {
-        $stateMachineProcessTransfer->requireStateMachineName();
+        $stateMachineProcessTransfer->requireStateMachineName()
+            ->requireProcessName();
 
         $processName = $stateMachineProcessTransfer->getProcessName();
 
@@ -123,13 +124,16 @@ class StateMachine implements StateMachineInterface
         $stateMachineItemTransfer->setProcessName($processName);
         $stateMachineItemTransfer->setIdentifier($identifier);
 
-        $initialStateName = $this->stateMachineHandler->getInitialStateForProcess($processName);
-        $stateMachineItemTransfer->setStateName($initialStateName);
-
         $idStateMachineProcess = $this->persistenceManager->getProcessId($stateMachineProcessTransfer);
+        if (!$idStateMachineProcess) {
+            return false;
+        }
         $stateMachineItemTransfer->setIdStateMachineProcess($idStateMachineProcess);
 
         $initialStateName = $this->stateMachineHandler->getInitialStateForProcess($processName);
+        if (!$initialStateName) {
+            return false;
+        }
         $stateMachineItemTransfer->setStateName($initialStateName);
 
         $idStateMachineItemState = $this->persistenceManager->getInitialStateIdByStateName(
@@ -137,11 +141,16 @@ class StateMachine implements StateMachineInterface
             $idStateMachineProcess
         );
 
+        if ($idStateMachineItemState === null) {
+            return false;
+        }
+
         $stateMachineItemTransfer->setIdItemState($idStateMachineItemState);
 
-        $processes = $this->getProcesses([$stateMachineItemTransfer]);
+        $processes = $this->getProcessesForStateMachineItems([$stateMachineItemTransfer]);
         $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent([$stateMachineItemTransfer], $processes);
-        $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent);
+
+        return $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent);
     }
 
     /**
@@ -156,29 +165,31 @@ class StateMachine implements StateMachineInterface
             return false;
         }
 
-        $stateMachineItems = $this->finder->getStateMachineItemsFromPersistence($stateMachineItems);
+        $stateMachineItems = $this->finder->updateStateMachineItemsFromPersistence($stateMachineItems);
 
-        $processes = $this->getProcesses($stateMachineItems);
+        $processes = $this->getProcessesForStateMachineItems($stateMachineItems);
 
         $stateMachineItems = $this->filterAffectedItems($eventName, $stateMachineItems, $processes);
 
-        $log = $this->initTransitionLog($stateMachineItems);
+        $transitionLogger = $this->initTransitionLog($stateMachineItems);
 
-        $this->logSourceState($stateMachineItems, $log);
+        $this->logSourceState($stateMachineItems, $transitionLogger);
 
-        $this->runCommand($eventName, $stateMachineItems, $processes, $log);
+        $this->runCommand($eventName, $stateMachineItems, $processes, $transitionLogger);
 
-        $sourceStateBuffer = $this->updateStateByEvent($eventName, $stateMachineItems, $log);
+        $sourceStateBuffer = $this->updateStateByEvent($eventName, $stateMachineItems, $transitionLogger);
 
         $this->saveItems($stateMachineItems, $processes, $sourceStateBuffer);
 
-        $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($stateMachineItems, $processes, $sourceStateBuffer);
+        $stateMachineItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent(
+            $stateMachineItems,
+            $processes,
+            $sourceStateBuffer
+        );
 
-        $log->saveAll();
+        $transitionLogger->saveAll();
 
-        $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent);
-
-        return true;
+        return $this->triggerOnEnterEvents($stateMachineItemsWithOnEnterEvent);
     }
 
     /**
@@ -186,18 +197,18 @@ class StateMachine implements StateMachineInterface
      */
     public function checkConditions()
     {
-        $affectedOrderItems = 0;
+        $affectedItems = 0;
         foreach ($this->stateMachineHandler->getActiveProcesses() as $processName) {
             $stateMachineProcessTransfer = new StateMachineProcessTransfer();
             $stateMachineProcessTransfer->setStateMachineName($this->stateMachineHandler->getStateMachineName());
             $stateMachineProcessTransfer->setProcessName($processName);
 
             $process = $this->builder->createProcess($stateMachineProcessTransfer);
-            $orderStateMachine = clone $this;
-            $affectedOrderItems += $orderStateMachine->checkConditionsForProcess($process);
+            $stateMachine = clone $this;
+            $affectedItems += $stateMachine->checkConditionsForProcess($process);
         }
 
-        return $affectedOrderItems;
+        return $affectedItems;
     }
 
     /**
@@ -211,8 +222,16 @@ class StateMachine implements StateMachineInterface
         $stateToTransitionsMap = $this->createStateToTransitionMap($transitions);
 
         $stateMachineStateItems = $this->queryContainer
-            ->queryStateMachineItemsByState(array_keys($stateToTransitionsMap), 3)
+            ->queryStateMachineItemsByIdStateMachineProcessAndItemStates(
+                $this->stateMachineHandler->getStateMachineName(),
+                $process->getName(),
+                array_keys($stateToTransitionsMap)
+            )
             ->find();
+
+        if ($stateMachineStateItems->count() === 0) {
+            return 0;
+        }
 
         $stateMachineItemStateIds = [];
         foreach ($stateMachineStateItems as $stateMachineItemEntity) {
@@ -220,10 +239,12 @@ class StateMachine implements StateMachineInterface
         }
 
         $stateMachineItems = $this->stateMachineHandler->getStateMachineItemsByStateIds($stateMachineItemStateIds);
-        $stateMachineItems = $this->finder->getStateMachineItemsFromPersistence($stateMachineItems);
+        if (count($stateMachineItems) === 0) {
+            return 0;
+        }
 
-        $countAffectedItems = count($stateMachineItems);
-        if ($countAffectedItems === 0) {
+        $stateMachineItems = $this->finder->updateStateMachineItemsFromPersistence($stateMachineItems);
+        if (count($stateMachineItems) === 0) {
             return 0;
         }
 
@@ -235,11 +256,9 @@ class StateMachine implements StateMachineInterface
 
         $this->saveItems($stateMachineItems, $processes, $sourceStateBuffer);
 
-        $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($stateMachineItems, $processes, $sourceStateBuffer);
+        $itemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($stateMachineItems, $processes, $sourceStateBuffer);
 
-        $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent);
-
-        return $countAffectedItems;
+        return $this->triggerOnEnterEvents($itemsWithOnEnterEvent);
     }
 
     /**
@@ -299,7 +318,7 @@ class StateMachine implements StateMachineInterface
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
      */
-    protected function getProcesses(array $stateMachineItems)
+    protected function getProcessesForStateMachineItems(array $stateMachineItems)
     {
         $processes = [];
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
@@ -317,15 +336,15 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
-     * Filters out all items that are not affected by the current event
+     * Filters out all items that are affected by the current event
      *
-     * @param string $eventId
+     * @param string $eventName
      * @param StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
      *
      * @return StateMachineItemTransfer[]
      */
-    protected function filterAffectedItems($eventId, array $stateMachineItems, $processes)
+    protected function filterAffectedItems($eventName, array $stateMachineItems, $processes)
     {
         $stateMachineItemsFiltered = [];
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
@@ -335,7 +354,7 @@ class StateMachine implements StateMachineInterface
 
             $state = $process->getStateFromAllProcesses($stateName);
 
-            if ($state->hasEvent($eventId)) {
+            if ($state->hasEvent($eventName)) {
                 $stateMachineItemsFiltered[] = $stateMachineItemTransfer;
             }
         }
@@ -382,14 +401,14 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
-     * @param string $eventId
+     * @param string $eventName
      * @param StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Util\TransitionLogInterface $log
      *
      * @return array
      */
     protected function updateStateByEvent(
-        $eventId,
+        $eventName,
         array $stateMachineItems,
         TransitionLogInterface $log
     ) {
@@ -410,8 +429,8 @@ class StateMachine implements StateMachineInterface
             $log->addSourceState($stateMachineItemTransfer, $sourceState->getName());
 
             $targetState = $sourceState;
-            if (isset($eventId) && $sourceState->hasEvent($eventId)) {
-                $transitions = $sourceState->getEvent($eventId)->getTransitionsBySource($sourceState);
+            if (isset($eventName) && $sourceState->hasEvent($eventName)) {
+                $transitions = $sourceState->getEvent($eventName)->getTransitionsBySource($sourceState);
                 $targetState = $this->checkCondition($transitions, $stateMachineItemTransfer, $sourceState, $log);
                 $log->addTargetState($stateMachineItemTransfer, $targetState->getName());
             }
@@ -480,7 +499,11 @@ class StateMachine implements StateMachineInterface
         if (isset($this->states[$stateName])) {
             $stateMachineItemStateEntity = $this->states[$stateName];
         } else {
-            $stateMachineItemStateEntity = SpyStateMachineItemStateQuery::create()->findOneByName($stateName);
+            $stateMachineItemStateEntity = SpyStateMachineItemStateQuery::create()
+                ->filterByFkStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess())
+                ->filterByName($stateName)
+                ->findOne();
+
             if (!isset($stateMachineItemStateEntity)) {
                 $stateMachineItemStateEntity = new SpyStateMachineItemState();
                 $stateMachineItemStateEntity->setName($stateName);
@@ -560,7 +583,7 @@ class StateMachine implements StateMachineInterface
     /**
      * @param array $itemsWithOnEnterEvent
      *
-     * @return void
+     * @return bool
      */
     protected function triggerOnEnterEvents(
         array $itemsWithOnEnterEvent
@@ -569,7 +592,11 @@ class StateMachine implements StateMachineInterface
             foreach ($itemsWithOnEnterEvent as $eventId => $stateMachineItems) {
                 $this->triggerEvent($eventId, $stateMachineItems);
             }
+
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -618,10 +645,7 @@ class StateMachine implements StateMachineInterface
                 $timeoutModel->setNewTimeout($process, $stateMachineItemTransfer, $currentTime);
                 $this->stateMachineHandler->itemStateUpdated($stateMachineItemTransfer);
 
-                $stateMachineItemStateHistory = new SpyStateMachineItemStateHistory();
-                $stateMachineItemStateHistory->setIdentifier($stateMachineItemTransfer->getIdentifier());
-                $stateMachineItemStateHistory->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState());
-                $stateMachineItemStateHistory->save();
+                $this->saveItemStateHistory($stateMachineItemTransfer);
 
             }
         }
@@ -639,7 +663,13 @@ class StateMachine implements StateMachineInterface
     protected function getCommand($commandString)
     {
         if (!isset($this->stateMachineHandler->getCommandPlugins()[$commandString])) {
-            throw new LogicException('Command ' . $commandString . ' not found in Settings');
+            throw new LogicException(
+                sprintf(
+                    'Command plugin "%s" not registered in "%s" class. Please add it to getCommandPlugins method.',
+                    $commandString,
+                    get_class($this->stateMachineHandler)
+                )
+            );
         }
 
         return $this->stateMachineHandler->getCommandPlugins()[$commandString];
@@ -653,7 +683,13 @@ class StateMachine implements StateMachineInterface
     protected function getCondition($conditionString)
     {
         if (!isset($this->stateMachineHandler->getConditionPlugins()[$conditionString])) {
-            throw new LogicException('Condition ' . $conditionString . ' not found in Settings');
+            throw new LogicException(
+                sprintf(
+                    'Condition plugin "%s" not registered in "%s" class. Please add it to getConditionPlugins method.',
+                    $conditionString,
+                    get_class($this->stateMachineHandler)
+                )
+            );
         }
 
         return $this->stateMachineHandler->getConditionPlugins()[$conditionString];
@@ -685,6 +721,19 @@ class StateMachine implements StateMachineInterface
             $stateName = $stateMachineItemTransfer->getStateName();
             $log->addSourceState($stateMachineItemTransfer, $stateName);
         }
+    }
+
+    /**
+     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return void
+     */
+    protected function saveItemStateHistory(StateMachineItemTransfer $stateMachineItemTransfer)
+    {
+        $stateMachineItemStateHistory = new SpyStateMachineItemStateHistory();
+        $stateMachineItemStateHistory->setIdentifier($stateMachineItemTransfer->getIdentifier());
+        $stateMachineItemStateHistory->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState());
+        $stateMachineItemStateHistory->save();
     }
 
 }

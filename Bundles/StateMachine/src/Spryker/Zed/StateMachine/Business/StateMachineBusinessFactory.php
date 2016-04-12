@@ -10,6 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachine\Builder;
 use Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\Finder;
+use Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolver;
 use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\StateMachine;
@@ -25,6 +26,7 @@ use Spryker\Zed\StateMachine\Business\Util\Drawer;
 use Spryker\Zed\StateMachine\Business\Util\TransitionLog;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
+use Spryker\Zed\StateMachine\StateMachineConfig;
 
 /**
  * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
@@ -60,12 +62,14 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
             $this->createProcessEvent(),
             $this->createProcessState(),
             $this->createProcessTransition(),
-            $this->createProcessProcess($stateMachineName)
+            $this->createProcessProcess($stateMachineName),
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface
+     * @param string $stateMachineName
+     * @return FinderInterface
      */
     public function createStateMachineFinder($stateMachineName)
     {
@@ -143,7 +147,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     public function createUtilDrawer($stateMachineName)
     {
         return new Drawer(
-            $this->getGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false),
+            $this->getGraph()->init(StateMachineConfig::GRAPH_NAME, $this->getConfig()->getGraphDefaults(), true, false),
             $this->createHandlerResolver()->findHandler($stateMachineName)
         );
     }

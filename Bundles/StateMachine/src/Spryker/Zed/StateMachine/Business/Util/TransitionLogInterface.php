@@ -8,8 +8,6 @@
 namespace Spryker\Zed\StateMachine\Business\Util;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\StateMachine\Business\Process\EventInterface;
 use Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface;
 use Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface;
@@ -35,7 +33,7 @@ interface TransitionLogInterface
      * @param StateMachineItemTransfer $stateMachineItem
      * @param CommandPluginInterface $command
      *
-     * @retrun void
+     * @return void
      */
     public function addCommand(StateMachineItemTransfer $stateMachineItem, CommandPluginInterface $command);
 

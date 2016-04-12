@@ -8,7 +8,6 @@
 namespace Spryker\Zed\StateMachine\Persistence;
 
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineEventTimeoutTableMap;
-use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineProcessTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -19,12 +18,48 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
 {
     /**
      * @param int $idStateMachineState
+     * @param int $idStateMachineProcess
+     * @param string $stateMachineName
+     *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryStateMachineItemStateByIdSateMachineState($idStateMachineState)
-    {
+    public function queryStateMachineItemStateByIdStateIdProcessAndStateMachineName(
+        $idStateMachineState,
+        $idStateMachineProcess,
+        $stateMachineName
+    ) {
         return $this->getFactory()->createStateMachineItemStateQuery()
             ->innerJoinProcess()
+            ->useProcessQuery()
+               ->filterByIdStateMachineProcess($idStateMachineProcess)
+               ->filterByStateMachineName($stateMachineName)
+            ->endUse()
+            ->filterByIdStateMachineItemState($idStateMachineState);
+    }
+
+    /**
+     * @param int $idStateMachineState
+     * @param int $idStateMachineProcess
+     * @param string $stateMachineName
+     * @param int $identifier
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
+     */
+    public function queryStateMachineItemsWithExistingHistory(
+        $idStateMachineState,
+        $idStateMachineProcess,
+        $stateMachineName,
+        $identifier
+    ) {
+        return $this->getFactory()->createStateMachineItemStateQuery()
+            ->innerJoinProcess()
+            ->useProcessQuery()
+               ->filterByIdStateMachineProcess($idStateMachineProcess)
+               ->filterByStateMachineName($stateMachineName)
+            ->endUse()
+            ->useStateHistoryQuery()
+               ->filterByIdentifier($identifier)
+            ->endUse()
             ->filterByIdStateMachineItemState($idStateMachineState);
     }
 
@@ -45,32 +80,55 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
-     * @api
-     *
-     * @param array $states
-     * @param int $idStateMachineProcess
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function queryStateMachineItemsByState(array $states, $idStateMachineProcess)
-    {
-        return $this->getFactory()->createStateMachineItemStateQuery()
-            ->joinProcess()
-            ->where(SpyStateMachineItemStateTableMap::COL_FK_STATE_MACHINE_PROCESS . ' = ?', $idStateMachineProcess)
-            ->where(SpyStateMachineItemStateTableMap::COL_NAME . " IN ('" . implode("', '", $states) . "')");
-    }
-
-    /**
      * @param int $identifier
+     * @param int $idStateMachineProcess
      *
      * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery
      */
-    public function queryItemHistoryByStateItemIdentifier($identifier)
+    public function queryItemHistoryByStateItemIdentifier($identifier, $idStateMachineProcess)
     {
          return $this->getFactory()
              ->createStateMachineItemStateHistoryQuery()
+             ->useStateQuery()
+                ->filterByFkStateMachineProcess($idStateMachineProcess)
+             ->endUse()
              ->joinState()
              ->filterByIdentifier($identifier)
              ->orderByCreatedAt();
+    }
+
+    /**
+     * @param string $stateMachineName
+     * @param string $processName
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery
+     */
+    public function queryProcessByStateMachineAndProcessName($stateMachineName, $processName)
+    {
+        return $this->getFactory()->createStateMachineProcessQuery()
+            ->filterByName($processName)
+            ->filterByStateMachineName($stateMachineName);
+    }
+
+    /**
+     * @param string $stateMachineName
+     * @param string $processName
+     * @param array|string[] $states
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
+     */
+    public function queryStateMachineItemsByIdStateMachineProcessAndItemStates(
+        $stateMachineName,
+        $processName,
+        array $states
+    ) {
+        return $this->getFactory()->createStateMachineItemStateQuery()
+            ->innerJoinStateHistory()
+            ->useProcessQuery()
+              ->filterByStateMachineName($stateMachineName)
+              ->filterByName($processName)
+            ->endUse()
+            ->joinProcess()
+            ->filterByName($states);
     }
 }

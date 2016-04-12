@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StateMachineConfig extends AbstractBundleConfig
 {
+    const GRAPH_NAME = 'Statemachine';
 
     /**
      * @return array
@@ -23,5 +24,13 @@ class StateMachineConfig extends AbstractBundleConfig
             'nodesep' => 0.6,
             'ranksep' => 0.8,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToStateMachineXmlFiles()
+    {
+        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'Zed' . DIRECTORY_SEPARATOR . 'StateMachine';
     }
 }

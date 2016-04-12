@@ -26,23 +26,25 @@ class TriggerController extends AbstractController
      */
     public function triggerEventAction(Request $request)
     {
-        $identifier = $request->query->get('identifier');
-        $idState = $request->query->get('id-state');
+        $identifier = $this->castId($request->query->get('identifier'));
+        $idState = $this->castId($request->query->get('id-state'));
+        $idProcess = $this->castId($request->query->get('id-process'));
 
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setIdentifier($identifier);
         $stateMachineItemTransfer->setIdItemState($idState);
+        $stateMachineItemTransfer->setIdStateMachineProcess($idProcess);
 
         $stateMachineName = $request->query->get('state-machine-name');
         $eventName = $request->query->get('event');
-        $this->getFacade()->triggerEvent($eventName, $stateMachineName, [$stateMachineItemTransfer]);
+        $this->getFacade()->triggerEvent($eventName, $stateMachineName, $stateMachineItemTransfer);
 
         $redirect = $request->query->get('redirect', '/state-machine/list');
         return $this->redirectResponse($redirect);
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -55,10 +57,11 @@ class TriggerController extends AbstractController
         $stateMachineProcessTransfer->setProcessName($processName);
         $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
 
-        $identifier = $request->query->get('identifier');
+        $identifier = $this->castId($request->query->get('identifier'));
         $this->getFacade()->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
 
         $redirect = $request->query->get('redirect', '/state-machine/list');
+
         return $this->redirectResponse($redirect);
     }
 

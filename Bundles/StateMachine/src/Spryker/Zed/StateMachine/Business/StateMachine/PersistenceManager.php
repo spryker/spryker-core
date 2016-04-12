@@ -39,7 +39,10 @@ class PersistenceManager implements PersistenceManagerInterface
             return self::$stateEntityBuffer[$stateName];
         }
 
-        $stateMachineItemStateEntity = SpyStateMachineItemStateQuery::create()->findOneByName($stateName);
+        $stateMachineItemStateEntity = SpyStateMachineItemStateQuery::create()
+            ->filterByName($stateName)
+            ->filterByFkStateMachineProcess($idStateMachineProcess)
+            ->findOne();
 
         if (!isset($stateMachineItemStateEntity)) {
             $stateMachineItemStateEntity = new SpyStateMachineItemState();
@@ -86,11 +89,15 @@ class PersistenceManager implements PersistenceManagerInterface
      * @param string $stateName
      * @param int $idStateMachineProcess
      *
-     * @return int
+     * @return int|null
      */
     public function getInitialStateIdByStateName($stateName, $idStateMachineProcess)
     {
         $stateMachineItemStateEntity = $this->getStateMachineItemStateEntity($stateName, $idStateMachineProcess);
+
+        if ($stateMachineItemStateEntity === null) {
+            return null;
+        }
 
         return $stateMachineItemStateEntity->getIdStateMachineItemState();
     }
