@@ -15,15 +15,15 @@ interface TimeoutInterface
 {
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\StateMachineInterface $stateMachine
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $stateMachineTrigger
      *
      * @return int
      */
-    public function checkTimeouts(StateMachineInterface $stateMachine);
+    public function checkTimeouts(TriggerInterface $stateMachineTrigger);
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param \DateTime $currentTime
      *
      * @throws \Exception
@@ -39,8 +39,8 @@ interface TimeoutInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
-     * @param string $stateId
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param string $stateName
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
@@ -49,7 +49,7 @@ interface TimeoutInterface
      */
     public function dropOldTimeout(
         ProcessInterface $process,
-        $stateId,
+        $stateName,
         StateMachineItemTransfer $stateMachineItemTransfer
     );
 

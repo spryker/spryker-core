@@ -12,10 +12,12 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 
 interface CommandPluginInterface
 {
+
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return bool
      */
     public function run(StateMachineItemTransfer $stateMachineItemTransfer);
+
 }

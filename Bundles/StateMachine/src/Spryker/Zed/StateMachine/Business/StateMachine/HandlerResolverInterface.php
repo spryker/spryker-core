@@ -5,16 +5,15 @@
  */
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
-use Spryker\Zed\StateMachine\Business\Exception\StateMachineHandlerNotFound;
-use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
-
 interface HandlerResolverInterface
 {
+
     /**
      * @param string $stateMachineName
      *
-     * @throws StateMachineHandlerNotFound
-     * @return StateMachineHandlerInterface
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineHandlerNotFound
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
      */
     public function findHandler($stateMachineName);
+
 }

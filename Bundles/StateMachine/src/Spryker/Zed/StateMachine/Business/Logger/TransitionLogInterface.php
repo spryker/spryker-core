@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\StateMachine\Business\Util;
+namespace Spryker\Zed\StateMachine\Business\Logger;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Process\EventInterface;
@@ -23,29 +23,30 @@ interface TransitionLogInterface
     public function setEvent(EventInterface $event);
 
     /**
-     * @param StateMachineItemTransfer[] $stateMachineItems
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return void
      */
     public function init(array $stateMachineItems);
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItem
-     * @param CommandPluginInterface $command
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItem
+     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface $command
      *
      * @return void
      */
     public function addCommand(StateMachineItemTransfer $stateMachineItem, CommandPluginInterface $command);
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItem
-     * @param ConditionPluginInterface $condition
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItem
+     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface $condition
      *
+     * @return void
      */
     public function addCondition(StateMachineItemTransfer $stateMachineItem, ConditionPluginInterface $condition);
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItem
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItem
      * @param string $stateName
      *
      * @return void
@@ -53,7 +54,7 @@ interface TransitionLogInterface
     public function addSourceState(StateMachineItemTransfer $stateMachineItem, $stateName);
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItem
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItem
      * @param string $stateName
      *
      * @return void
@@ -68,7 +69,7 @@ interface TransitionLogInterface
     public function setIsError($error);
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItem
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItem
      *
      * @return void
      */

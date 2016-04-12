@@ -13,7 +13,7 @@ class TestConditionPlugin implements ConditionPluginInterface
 {
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return bool
      */
@@ -21,4 +21,5 @@ class TestConditionPlugin implements ConditionPluginInterface
     {
         return true;
     }
+
 }

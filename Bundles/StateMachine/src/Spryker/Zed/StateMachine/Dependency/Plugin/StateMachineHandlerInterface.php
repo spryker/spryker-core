@@ -15,14 +15,14 @@ interface StateMachineHandlerInterface
     /**
      * List of command plugins for this state machine for all processes.
      *
-     * @return array|CommandPluginInterface[]
+     * @return array|\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
      */
     public function getCommandPlugins();
 
     /**
      * List of condition plugins for this state machine for all processes.
      *
-     * @return array|ConditionPluginInterface[]
+     * @return array|\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
      */
     public function getConditionPlugins();
 
@@ -53,7 +53,7 @@ interface StateMachineHandlerInterface
      * This method is called when state of item was changed, client can create custom logic for example update it's related table with new state id/name.
      * StateMachineItemTransfer:identifier is id of entity from implementor.
      *
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return bool
      */
@@ -64,7 +64,8 @@ interface StateMachineHandlerInterface
      *
      * @param array $stateIds
      *
-     * @return StateMachineItemTransfer[]
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getStateMachineItemsByStateIds($stateIds = []);
+
 }

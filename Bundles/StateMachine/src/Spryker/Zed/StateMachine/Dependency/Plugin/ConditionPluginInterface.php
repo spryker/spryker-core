@@ -10,10 +10,12 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 
 interface ConditionPluginInterface
 {
+
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return bool
      */
     public function check(StateMachineItemTransfer $stateMachineItemTransfer);
+
 }

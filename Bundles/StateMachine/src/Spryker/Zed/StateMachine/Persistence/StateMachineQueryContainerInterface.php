@@ -7,7 +7,10 @@ namespace Spryker\Zed\StateMachine\Persistence;
 
 interface StateMachineQueryContainerInterface
 {
+
     /**
+     * @api
+     *
      * @param int $idStateMachineState
      * @param int $idStateMachineProcess
      * @param string $stateMachineName
@@ -18,6 +21,8 @@ interface StateMachineQueryContainerInterface
 
 
     /**
+     * @api
+     *
      * @param int $idStateMachineState
      * @param int $idStateMachineProcess
      * @param string $stateMachineName
@@ -63,6 +68,8 @@ interface StateMachineQueryContainerInterface
     public function queryProcessByStateMachineAndProcessName($stateMachineName, $processName);
 
     /**
+     * @api
+     *
      * @param string $stateMachineName
      * @param string $processName
      * @param array|string[] $states
@@ -74,4 +81,15 @@ interface StateMachineQueryContainerInterface
         $processName,
         array $states
     );
+
+    /**
+     * @api
+     *
+     * @param int $idStateMachineProcess
+     * @param string $stateName
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
+     */
+    public function queryStateMachineItemStateByIdStateMachineProcessAndStateName($idStateMachineProcess, $stateName);
+
 }

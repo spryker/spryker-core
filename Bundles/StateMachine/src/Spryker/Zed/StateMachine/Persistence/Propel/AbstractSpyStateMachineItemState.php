@@ -8,8 +8,6 @@
 namespace Spryker\Zed\StateMachine\Persistence\Propel;
 
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineItemState as BaseSpyStateMachineItemState;
-use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory;
-use Propel\Runtime\Connection\ConnectionInterface;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_StateMachine_order_item_state' table.
@@ -22,5 +20,4 @@ use Propel\Runtime\Connection\ConnectionInterface;
  */
 abstract class AbstractSpyStateMachineItemState extends BaseSpyStateMachineItemState
 {
-
 }

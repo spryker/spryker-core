@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-
 /**
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacade getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()

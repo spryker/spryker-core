@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\StateMachine\Business\Util;
+namespace Spryker\Zed\StateMachine\Business\Logger;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog;
@@ -46,14 +46,13 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param StateMachineItemTransfer[] $stateMachineItems
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return void
      */
     public function init(array $stateMachineItems)
     {
         $this->logEntities = [];
-
         foreach ($stateMachineItems as $stateMachineItem) {
             $logEntity = $this->initEntity($stateMachineItem);
             $this->logEntities[$stateMachineItem->getIdentifier()] = $logEntity;
@@ -61,7 +60,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return void
      */
@@ -71,8 +70,8 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
-     * @param ConditionPluginInterface $condition
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface $condition
      *
      * @return void
      */
@@ -82,7 +81,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param string $stateName
      *
      * @return void
@@ -93,7 +92,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param string $stateName
      *
      * @return void
@@ -128,9 +127,9 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return SpyStateMachineTransitionLog
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog
      */
     protected function initEntity(StateMachineItemTransfer $stateMachineItemTransfer)
     {
@@ -141,14 +140,7 @@ class TransitionLog implements TransitionLogInterface
         );
         $stateMachineTransitionLogEntity->setHostname(System::getHostname());
 
-        if (PHP_SAPI === self::SAPI_CLI) {
-            $path = self::SAPI_CLI;
-            if (isset($_SERVER[self::ARGV]) && is_array($_SERVER[self::ARGV])) {
-                $path = implode(' ', $_SERVER[self::ARGV]);
-            }
-        } else {
-            $path = $_SERVER[self::DOCUMENT_URI];
-        }
+        $path = $this->getExecutorPath();
         $stateMachineTransitionLogEntity->setPath($path);
 
         $params = [];
@@ -162,7 +154,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return void
      */
@@ -181,6 +173,7 @@ class TransitionLog implements TransitionLogInterface
                 $logEntity->save();
             }
         }
+        $this->logEntities = [];
     }
 
     /**
@@ -216,6 +209,23 @@ class TransitionLog implements TransitionLogInterface
     protected function getParamsFromQueryString($queryString)
     {
         return explode('&', $queryString);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getExecutorPath()
+    {
+        if (PHP_SAPI !== self::SAPI_CLI) {
+            return $_SERVER[self::DOCUMENT_URI];
+        }
+
+        $path = self::SAPI_CLI;
+        if (isset($_SERVER[self::ARGV]) && is_array($_SERVER[self::ARGV])) {
+            $path = implode(' ', $_SERVER[self::ARGV]);
+        }
+
+        return $path;
     }
 
 }

@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\StateMachine\Business\Util;
+namespace Spryker\Zed\StateMachine\Business\Graph;
 
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Library\Generator\StringGenerator;
-use Spryker\Zed\StateMachine\Business\Exception\StatemachineException;
+use Spryker\Zed\StateMachine\Business\Exception\DrawerException;
 use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Business\Process\StateInterface;
 use Spryker\Zed\StateMachine\Business\Process\TransitionInterface;
@@ -80,13 +80,13 @@ class Drawer implements DrawerInterface
     protected $graph;
 
     /**
-     * @var StateMachineHandlerInterface
+     * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
      */
     protected $stateMachineHandler;
 
     /**
      * @param \Spryker\Shared\Graph\GraphInterface $graph
-     * @param StateMachineHandlerInterface $stateMachineHandler
+     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      */
     public function __construct(GraphInterface $graph, StateMachineHandlerInterface $stateMachineHandler)
     {
@@ -155,7 +155,7 @@ class Drawer implements DrawerInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $state
      *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\StatemachineException
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\DrawerException
      *
      * @return void
      */
@@ -167,7 +167,7 @@ class Drawer implements DrawerInterface
 
             $currentTransition = current($transitions);
             if (!$currentTransition) {
-                throw new StatemachineException('Transitions container seems to be empty.');
+                throw new DrawerException('Transitions container seems to be empty.');
             }
 
             if (count($transitions) > 1) {
@@ -403,7 +403,7 @@ class Drawer implements DrawerInterface
 
         if ($transition->isHappy()) {
             $attributes['weight'] = '100';
-            $attributes['color'] = '#70ab28'; // TODO eindeutig?
+            $attributes['color'] = '#70ab28';
         } elseif ($transition->hasEvent()) {
             $attributes['weight'] = '10';
         } else {

@@ -8,26 +8,25 @@ namespace Functional\Spryker\Zed\StateMachine\Mocks;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Pyz\Zed\StateMachineExample\Communication\Plugin\Command\TestCommandPlugin;
-use Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface;
-use Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class TestStateMachineHandler implements StateMachineHandlerInterface
 {
+
     /**
-     * @var StateMachineItemTransfer
+     * @var \Generated\Shared\Transfer\StateMachineItemTransfer
      */
     protected $itemStateUpdated;
 
     /**
-     * @var StateMachineItemTransfer[]
+     * @var \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     protected $stateMachineItemsByStateIds;
 
     /**
      * List of command plugins for this state machine for all processes.
      *
-     * @return array|CommandPluginInterface[]
+     * @return array|\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
      */
     public function getCommandPlugins()
     {
@@ -39,7 +38,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * List of condition plugins for this state machine for all processes.
      *
-     * @return array|ConditionPluginInterface[]
+     * @return array|\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
      */
     public function getConditionPlugins()
     {
@@ -65,9 +64,9 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      */
     public function getActiveProcesses()
     {
-       return [
+        return [
           'TestProcess',
-       ];
+        ];
     }
 
     /**
@@ -86,7 +85,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      * This method is called when state of item was changed, client can create custom logic for example update it's related table with new state id/name.
      * StateMachineItemTransfer:identifier is id of entity from implementor.
      *
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return bool
      */
@@ -100,7 +99,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      *
      * @param array $stateIds
      *
-     * @return StateMachineItemTransfer[]
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getStateMachineItemsByStateIds($stateIds = [])
     {
@@ -108,7 +107,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     }
 
     /**
-     * @return StateMachineItemTransfer
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
     public function getItemStateUpdated()
     {
@@ -117,9 +116,11 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemsByStateIds
+     * @return void
      */
     public function setStateMachineItemsByStateIds(array $stateMachineItemsByStateIds)
     {
         $this->stateMachineItemsByStateIds = $stateMachineItemsByStateIds;
     }
+
 }

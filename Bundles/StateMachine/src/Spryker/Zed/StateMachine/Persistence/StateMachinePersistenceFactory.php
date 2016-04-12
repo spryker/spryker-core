@@ -13,8 +13,13 @@ use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLogQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainer getQueryContainer()
+ */
 class StateMachinePersistenceFactory extends AbstractPersistenceFactory
 {
+
     /**
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLogQuery
      */

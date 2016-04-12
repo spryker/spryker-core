@@ -184,4 +184,5 @@ interface ProcessInterface
      * @return mixed
      */
     public function getFile();
+
 }

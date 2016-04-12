@@ -8,7 +8,7 @@
 namespace Spryker\Zed\StateMachine\Business\Process;
 
 use Exception;
-use Spryker\Zed\StateMachine\Business\Util\DrawerInterface;
+use Spryker\Zed\StateMachine\Business\Graph\DrawerInterface;
 
 class Process implements ProcessInterface
 {
@@ -39,7 +39,7 @@ class Process implements ProcessInterface
     protected $file;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\Util\DrawerInterface
+     * @var \Spryker\Zed\StateMachine\Business\Graph\DrawerInterface
      */
     protected $drawer;
 
@@ -49,7 +49,7 @@ class Process implements ProcessInterface
     protected $subProcesses = [];
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Util\DrawerInterface $drawer
+     * @param \Spryker\Zed\StateMachine\Business\Graph\DrawerInterface $drawer
      */
     public function __construct(DrawerInterface $drawer)
     {

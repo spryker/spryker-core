@@ -16,7 +16,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class StateMachineQueryContainer extends AbstractQueryContainer implements StateMachineQueryContainerInterface
 {
+
     /**
+     * @api
+     *
      * @param int $idStateMachineState
      * @param int $idStateMachineProcess
      * @param string $stateMachineName
@@ -38,6 +41,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * @api
+     *
      * @param int $idStateMachineState
      * @param int $idStateMachineProcess
      * @param string $stateMachineName
@@ -64,6 +69,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * @api
+     *
      * @param \DateTime $expirationDate
      * @param string $stateMachineName
      *
@@ -80,6 +87,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * @api
+     *
      * @param int $identifier
      * @param int $idStateMachineProcess
      *
@@ -98,6 +107,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * @api
+     *
      * @param string $stateMachineName
      * @param string $processName
      *
@@ -111,6 +122,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * @api
+     *
      * @param string $stateMachineName
      * @param string $processName
      * @param array|string[] $states
@@ -131,4 +144,20 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
             ->joinProcess()
             ->filterByName($states);
     }
+
+    /**
+     * @api
+     *
+     * @param int $idStateMachineProcess
+     * @param string $stateName
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
+     */
+    public function queryStateMachineItemStateByIdStateMachineProcessAndStateName($idStateMachineProcess, $stateName)
+    {
+        return $this->getFactory()->createStateMachineItemStateQuery()
+            ->filterByFkStateMachineProcess($idStateMachineProcess)
+            ->filterByName($stateName);
+    }
+
 }

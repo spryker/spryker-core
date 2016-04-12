@@ -6,6 +6,6 @@
 
 namespace Spryker\Zed\StateMachine\Business\Exception;
 
-class StateMachineHandlerNotFound extends \Exception
+class TriggerException extends \Exception
 {
 }

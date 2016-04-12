@@ -19,8 +19,18 @@ class StateMachineFacade extends AbstractFacade
 {
 
     /**
-     * @param StateMachineProcessTransfer $stateMachineProcessTransfer
-     * @param int $identifier
+     * Specification:
+     *  - Returns boolean true if trigger was successful
+     *  - Creates new process item in persistence if does not exist
+     *  - Creates new state item in persistence if does not exist
+     *  - Triggers event provided by StateMachineHandlerInterface::getInitialStateForProcess
+     *  - Triggers StateMachineHandlerInterface::itemStateUpdated when state changed happens
+     *  - Persist state history
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param int $identifier - this is id of foreign entity you want to track in state machine, it's stored in history table.
      *
      * @return bool
      */
@@ -29,7 +39,7 @@ class StateMachineFacade extends AbstractFacade
         $identifier
     ) {
         return $this->getFactory()
-            ->createStateMachine(
+            ->createStateMachineTrigger(
                 $stateMachineProcessTransfer->getStateMachineName()
             )
             ->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
@@ -40,14 +50,14 @@ class StateMachineFacade extends AbstractFacade
      *
      * @param string $eventName
      * @param string $stateMachineName
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return bool
      */
     public function triggerEvent($eventName, $stateMachineName, StateMachineItemTransfer $stateMachineItemTransfer)
     {
         return $this->getFactory()
-            ->createStateMachine($stateMachineName)
+            ->createStateMachineTrigger($stateMachineName)
             ->triggerEvent($eventName, [$stateMachineItemTransfer]);
     }
 
@@ -56,14 +66,14 @@ class StateMachineFacade extends AbstractFacade
      *
      * @param string $eventName
      * @param string $stateMachineName
-     * @param StateMachineItemTransfer[] $stateMachineItems
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return bool
      */
     public function triggerEventForItems($eventName, $stateMachineName, array $stateMachineItems)
     {
         return $this->getFactory()
-            ->createStateMachine($stateMachineName)
+            ->createStateMachineTrigger($stateMachineName)
             ->triggerEvent($eventName, $stateMachineItems);
     }
 
@@ -71,7 +81,7 @@ class StateMachineFacade extends AbstractFacade
      * @api
      *
      * @param string $stateMachineName
-     * @return \Spryker\Zed\Oms\Business\Process\Process[]
+     * @return \Spryker\Zed\StateMachine\Business\Process\Process[]
      */
     public function getProcesses($stateMachineName)
     {
@@ -89,8 +99,8 @@ class StateMachineFacade extends AbstractFacade
     public function checkConditions($stateMachineName)
     {
         return $this->getFactory()
-            ->createStateMachine($stateMachineName)
-            ->checkConditions();
+            ->createStateMachineTrigger($stateMachineName)
+            ->triggerConditionsWithoutEvent();
     }
 
     /**
@@ -102,18 +112,18 @@ class StateMachineFacade extends AbstractFacade
      */
     public function checkTimeouts($stateMachineName)
     {
-        $orderStateMachine = $this->getFactory()
-            ->createStateMachine($stateMachineName);
+        $stateMachineTrigger = $this->getFactory()
+            ->createStateMachineTrigger($stateMachineName);
 
         return $this->getFactory()
             ->createStateMachineTimeout($stateMachineName)
-            ->checkTimeouts($orderStateMachine);
+            ->checkTimeouts($stateMachineTrigger);
     }
 
     /**
      * @api
      *
-     * @param StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $highlightState
      * @param string $format
      * @param int $fontSize
@@ -138,23 +148,22 @@ class StateMachineFacade extends AbstractFacade
     /**
      * @api
      *
-     * @param StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
      * @return int
      */
     public function getStateMachineProcessId(StateMachineProcessTransfer $stateMachineProcessTransfer)
     {
         return $this->getFactory()
-            ->createStateMachinePersistenceManager()
+            ->createStateMachinePersistence($stateMachineProcessTransfer->getStateMachineName())
             ->getProcessId($stateMachineProcessTransfer);
     }
 
     /**
      * @api
-     * @todo use transfer object for event.
      *
      * @param string $stateMachineName
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return array|string[]
      */
@@ -169,10 +178,9 @@ class StateMachineFacade extends AbstractFacade
 
     /**
      * @api
-     * @todo use transfer object for event.
      *
      * @param string $stateMachineName
-     * @param StateMachineItemTransfer[] $stateMachineItems
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return array|string[]
      */
@@ -200,26 +208,28 @@ class StateMachineFacade extends AbstractFacade
         $identifier
     ) {
         return $this->getFactory()
-            ->createStateMachineFinder($stateMachineName)
+            ->createStateMachinePersistence($stateMachineName)
             ->getProcessedStateMachineItemTransfer($idState, $idStateMachineProcess, $identifier);
     }
 
     /**
      * @api
      *
-     * @param string  $stateMachineName
-     * @param StateMachineItemTransfer[] $stateMachineItems
+     * @param string $stateMachineName
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getProcessedStateMachineItems($stateMachineName, array $stateMachineItems)
     {
         return $this->getFactory()
-            ->createStateMachineFinder($stateMachineName)
+            ->createStateMachinePersistence($stateMachineName)
             ->getProcessedStateMachineItems($stateMachineItems);
     }
 
     /**
+     * @api
+     *
      * @param string $stateMachineName
      * @param int $idStateMachineProcess
      * @param int $identifier
@@ -228,17 +238,17 @@ class StateMachineFacade extends AbstractFacade
     public function getStateHistoryByStateItemIdentifier($stateMachineName, $idStateMachineProcess, $identifier)
     {
         return $this->getFactory()
-            ->createStateMachineFinder($stateMachineName)
+            ->createStateMachinePersistence($stateMachineName)
             ->getStateHistoryByStateItemIdentifier($identifier, $idStateMachineProcess);
     }
 
     /**
      * @api
      *
-     * @param StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flagName
      *
-     * @return StateMachineItemTransfer[]
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName)
     {
@@ -250,10 +260,10 @@ class StateMachineFacade extends AbstractFacade
     /**
      * @api
      *
-     * @param StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flagName
      *
-     * @return StateMachineItemTransfer[]
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName)
     {
@@ -261,4 +271,5 @@ class StateMachineFacade extends AbstractFacade
             ->createStateMachineFinder($stateMachineProcessTransfer->getStateMachineName())
             ->getItemsWithoutFlag($stateMachineProcessTransfer, $flagName);
     }
+
 }

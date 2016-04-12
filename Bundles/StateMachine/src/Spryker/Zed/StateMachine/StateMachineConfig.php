@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StateMachineConfig extends AbstractBundleConfig
 {
+
     const GRAPH_NAME = 'Statemachine';
 
     /**
@@ -33,4 +34,5 @@ class StateMachineConfig extends AbstractBundleConfig
     {
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'Zed' . DIRECTORY_SEPARATOR . 'StateMachine';
     }
+
 }

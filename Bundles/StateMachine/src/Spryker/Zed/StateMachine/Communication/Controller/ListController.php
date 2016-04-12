@@ -15,8 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ListController extends AbstractController
 {
+
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
     public function indexAction(Request $request)
@@ -29,7 +30,7 @@ class ListController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

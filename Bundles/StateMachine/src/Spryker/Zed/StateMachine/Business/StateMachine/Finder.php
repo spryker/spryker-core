@@ -21,19 +21,19 @@ class Finder implements FinderInterface
     protected $builder;
 
     /**
-     * @var StateMachineHandlerInterface
+     * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
      */
     protected $stateMachineHandler;
 
     /**
-     * @var StateMachineQueryContainerInterface
+     * @var \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface $builder
-     * @param StateMachineHandlerInterface $stateMachineHandler
-     * @param StateMachineQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
+     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $queryContainer
      */
     public function __construct(
         BuilderInterface $builder,
@@ -63,141 +63,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param StateMachineItemTransfer[] $stateMachineItems
-     *
-     * @return StateMachineItemTransfer[]
-     */
-    public function updateStateMachineItemsFromPersistence(array $stateMachineItems)
-    {
-        $updatedStateMachineItems = [];
-        foreach ($stateMachineItems as $stateMachineItemTransfer) {
-            $stateMachineItemTransfer->requireIdItemState()
-                ->requireIdStateMachineProcess();
-
-            $updatedStateMachineItemTransfer = $this->getStateMachineItemTransferByIdStateAndProcessName(
-                $stateMachineItemTransfer->getIdItemState(),
-                $stateMachineItemTransfer->getIdStateMachineProcess()
-            );
-
-            if ($updatedStateMachineItemTransfer === null) {
-                continue;
-            }
-
-            $updatedStateMachineItems[] = $stateMachineItemTransfer->fromArray(
-                $updatedStateMachineItemTransfer->modifiedToArray(),
-                true
-            );
-        }
-
-        return $updatedStateMachineItems;
-    }
-
-    /**
-     *
-     * @param int $idStateMachineState
-     * @param string $idStateMachineProcess
-     * @return StateMachineItemTransfer|null
-     */
-    protected function getStateMachineItemTransferByIdStateAndProcessName($idStateMachineState, $idStateMachineProcess)
-    {
-        $stateMachineItemStateEntity = $this->queryContainer
-            ->queryStateMachineItemStateByIdStateIdProcessAndStateMachineName(
-                $idStateMachineState,
-                $idStateMachineProcess,
-                $this->stateMachineHandler->getStateMachineName()
-            )
-            ->findOne();
-
-        if ($stateMachineItemStateEntity === null) {
-            return null;
-        }
-
-        $stateMachineProcessEntity = $stateMachineItemStateEntity->getProcess();
-
-        $stateMachineItemTransfer = new StateMachineItemTransfer();
-        $stateMachineItemTransfer->setStateName($stateMachineItemStateEntity->getName());
-        $stateMachineItemTransfer->setIdItemState($idStateMachineState);
-        $stateMachineItemTransfer->setIdStateMachineProcess(
-            $stateMachineProcessEntity->getIdStateMachineProcess()
-        );
-        $stateMachineItemTransfer->setProcessName($stateMachineProcessEntity->getName());
-
-        return $stateMachineItemTransfer;
-    }
-
-    /**
-     * @param StateMachineItemTransfer[] $stateMachineItems
-     *
-     * @return StateMachineItemTransfer[]
-     */
-    public function getProcessedStateMachineItems(array $stateMachineItems)
-    {
-        $updatedStateMachineItems = [];
-        foreach ($stateMachineItems as $stateMachineItemTransfer) {
-            $stateMachineItemTransfer->requireIdItemState()
-                ->requireIdStateMachineProcess()
-                ->requireIdentifier();
-
-            $updatedStateMachineItemTransfer = $this->getProcessedStateMachineItemTransfer(
-                $stateMachineItemTransfer->getIdItemState(),
-                $stateMachineItemTransfer->getIdStateMachineProcess(),
-                $stateMachineItemTransfer->getIdentifier()
-            );
-
-            if ($updatedStateMachineItemTransfer === null) {
-                continue;
-            }
-
-            $updatedStateMachineItems[] = $stateMachineItemTransfer->fromArray(
-                $updatedStateMachineItemTransfer->modifiedToArray(),
-                true
-            );
-        }
-
-        return $updatedStateMachineItems;
-    }
-
-    /**
-     * @param int $idStateMachineState
-     * @param int $idStateMachineProcess
-     * @param int $identifier
-     *
-     * @return StateMachineItemTransfer|null
-     */
-    public function getProcessedStateMachineItemTransfer(
-        $idStateMachineState,
-        $idStateMachineProcess,
-        $identifier
-    ) {
-        $stateMachineItemStateEntity = $this->queryContainer
-            ->queryStateMachineItemsWithExistingHistory(
-                $idStateMachineState,
-                $idStateMachineProcess,
-                $this->stateMachineHandler->getStateMachineName(),
-                $identifier
-            )
-            ->findOne();
-
-        if ($stateMachineItemStateEntity === null) {
-            return null;
-        }
-
-        $stateMachineProcessEntity = $stateMachineItemStateEntity->getProcess();
-
-        $stateMachineItemTransfer = new StateMachineItemTransfer();
-        $stateMachineItemTransfer->setIdentifier($identifier);
-        $stateMachineItemTransfer->setStateName($stateMachineItemStateEntity->getName());
-        $stateMachineItemTransfer->setIdItemState($idStateMachineState);
-        $stateMachineItemTransfer->setIdStateMachineProcess(
-            $stateMachineProcessEntity->getIdStateMachineProcess()
-        );
-        $stateMachineItemTransfer->setProcessName($stateMachineProcessEntity->getName());
-
-        return $stateMachineItemTransfer;
-    }
-
-    /**
-     * @param StateMachineItemTransfer[] $stateMachineItems
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return array|string[]
      */
@@ -216,7 +82,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return array|string[]
      */
@@ -244,39 +110,10 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param int $itemIdentifier
-     * @param int $idStateMachineProcess
-     *
-     * @return StateMachineItemTransfer[]
-     */
-    public function getStateHistoryByStateItemIdentifier($itemIdentifier, $idStateMachineProcess)
-    {
-        $stateMachineHistoryItems = $this->queryContainer
-            ->queryItemHistoryByStateItemIdentifier($itemIdentifier, $idStateMachineProcess)
-            ->find();
-
-        $stateMachineItems = [];
-        foreach ($stateMachineHistoryItems as $stateMachineHistoryItemEntity) {
-            $itemStateEntity = $stateMachineHistoryItemEntity->getState();
-            $processEntity = $itemStateEntity->getProcess();
-
-            $stateMachineItemTransfer = new StateMachineItemTransfer();
-            $stateMachineItemTransfer->setIdentifier($itemIdentifier);
-            $stateMachineItemTransfer->setStateName($itemStateEntity->getName());
-            $stateMachineItemTransfer->setIdItemState($itemStateEntity->getIdStateMachineItemState());
-            $stateMachineItemTransfer->setIdStateMachineProcess($processEntity->getIdStateMachineProcess());
-
-            $stateMachineItems[] = $stateMachineItemTransfer;
-        }
-
-        return $stateMachineItems;
-    }
-
-    /**
-     * @param StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flag
      *
-     * @return StateMachineItemTransfer[] $stateMachineItemTransfer
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfer
      */
     public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag)
     {
@@ -284,10 +121,10 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flag
      *
-     * @return StateMachineItemTransfer[] $stateMachineItemTransfer
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfer
      */
     public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag)
     {
@@ -295,11 +132,11 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flagName
      * @param bool $hasFlag
      *
-     * @return StateMachineItemTransfer[]
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     protected function getItemsByFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName, $hasFlag)
     {
@@ -342,11 +179,11 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flag
      * @param bool $hasFlag
      *
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface[]
      */
     protected function getStatesByFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, $hasFlag)
     {
@@ -362,4 +199,54 @@ class Finder implements FinderInterface
 
         return $selectedStates;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
+     * @param array $sourceStateBuffer
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
+     * @return array
+     */
+    public function filterItemsWithOnEnterEvent(
+        array $stateMachineItems,
+        array $processes,
+        array $sourceStateBuffer = []
+    ) {
+        $itemsWithOnEnterEvent = [];
+        foreach ($stateMachineItems as $stateMachineItemTransfer) {
+            $stateName = $stateMachineItemTransfer->getStateName();
+            $processName = $stateMachineItemTransfer->getProcessName();
+
+            if (!isset($processes[$processName])) {
+                throw new StatemachineException(
+                    sprintf(
+                        'Unknown process for state machine "%s".',
+                        $processName
+                    )
+                );
+            }
+
+            $process = $processes[$processName];
+            $targetState = $process->getStateFromAllProcesses($stateName);
+
+            if (isset($sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()])) {
+                $sourceState = $sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()];
+            } else {
+                $sourceState = $process->getStateFromAllProcesses($stateMachineItemTransfer->getStateName());
+            }
+
+            if ($sourceState !== $targetState->getName() && $targetState->hasOnEnterEvent()) {
+                $eventName = $targetState->getOnEnterEvent()->getName();
+                if (array_key_exists($eventName, $itemsWithOnEnterEvent) === false) {
+                    $itemsWithOnEnterEvent[$eventName] = [];
+                }
+                $itemsWithOnEnterEvent[$eventName][] = $stateMachineItemTransfer;
+            }
+        }
+
+        return $itemsWithOnEnterEvent;
+    }
+
 }

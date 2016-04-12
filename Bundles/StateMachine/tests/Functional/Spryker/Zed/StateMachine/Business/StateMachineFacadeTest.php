@@ -8,21 +8,19 @@
 namespace Functional\Spryker\Zed\StateMachine\Business;
 
 use Codeception\TestCase\Test;
+use Functional\Spryker\Zed\StateMachine\Mocks\StateMachineConfig;
 use Functional\Spryker\Zed\StateMachine\Mocks\TestStateMachineHandler;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineEventTimeoutQuery;
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineItemStateQuery;
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery;
-use Spryker\Zed\StateMachine\Business\Process\EventInterface;
-use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
-use Functional\Spryker\Zed\StateMachine\Mocks\StateMachineConfig;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
-use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 
 class StateMachineFacadeTest extends Test
 {
@@ -570,9 +568,9 @@ class StateMachineFacadeTest extends Test
     }
 
     /**
-     * @param StateMachineHandlerInterface $stateMachineHandler
+     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      *
-     * @return StateMachineFacade
+     * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
      */
     protected function createStateMachineFacade(StateMachineHandlerInterface $stateMachineHandler)
     {
@@ -581,13 +579,13 @@ class StateMachineFacadeTest extends Test
         $stateMachineBusinessFactory->setConfig($stateMachineConfig);
 
         $container = new Container();
-        $container[StateMachineDependencyProvider::PLUGINS_STATE_MACHINE_HANDLERS] = function() use($stateMachineHandler) {
-           return [
+        $container[StateMachineDependencyProvider::PLUGINS_STATE_MACHINE_HANDLERS] = function () use ($stateMachineHandler) {
+            return [
                $stateMachineHandler,
-           ];
+            ];
         };
 
-        $container[StateMachineDependencyProvider::PLUGIN_GRAPH] = function() {
+        $container[StateMachineDependencyProvider::PLUGIN_GRAPH] = function () {
              return new GraphPlugin();
         };
 
@@ -598,4 +596,5 @@ class StateMachineFacadeTest extends Test
 
         return $stateMachineFacade;
     }
+
 }

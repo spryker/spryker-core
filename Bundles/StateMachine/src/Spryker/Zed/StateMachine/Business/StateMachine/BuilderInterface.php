@@ -13,7 +13,7 @@ interface BuilderInterface
 {
 
     /**
-     * @param StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface
      */

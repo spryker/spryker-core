@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\StateMachine\Business\Util;
+namespace Spryker\Zed\StateMachine\Business\Graph;
 
 use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Business\Process\StateInterface;
