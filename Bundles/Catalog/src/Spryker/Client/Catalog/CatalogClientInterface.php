@@ -16,7 +16,7 @@ interface CatalogClientInterface
      * @param int $idCategory
      * @param array $parameters
      *
-     * @return mixed
+     * @return array
      */
     public function categorySearch($idCategory, array $parameters);
 
@@ -26,15 +26,8 @@ interface CatalogClientInterface
      * @param string $searchString
      * @param array $parameters
      *
-     * @return mixed
+     * @return array
      */
     public function fulltextSearch($searchString, array $parameters = []);
-
-    /**
-     * @api
-     *
-     * @return \Spryker\Client\Catalog\Model\FacetConfig
-     */
-    public function createFacetConfig();
 
 }

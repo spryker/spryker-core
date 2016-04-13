@@ -21,22 +21,27 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      * @param int $idCategory
      * @param array $parameters
      *
-     * @return mixed
+     * @return array
      */
     public function categorySearch($idCategory, array $parameters)
     {
         $searchQuery = $this
             ->getFactory()
-            ->createCategorySearchQuery($idCategory, $parameters);
+            ->createCategorySearchQuery($idCategory);
+
+        $searchQuery = $this
+            ->getFactory()
+            ->getSearchClient()
+            ->expandQuery($searchQuery, $this->getFactory()->createCatalogSearchQueryExpanderPlugins(), $parameters);
 
         $resultFormatter = $this
             ->getFactory()
-            ->createCatalogSearchResultFormatter($parameters);
+            ->createCatalogSearchResultFormatters();
 
         return $this
             ->getFactory()
             ->getSearchClient()
-            ->search($searchQuery, $resultFormatter);
+            ->search($searchQuery, $resultFormatter, $parameters);
     }
 
     /**
@@ -45,32 +50,27 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      * @param string $searchString
      * @param array $parameters
      *
-     * @return mixed
+     * @return array
      */
     public function fulltextSearch($searchString, array $parameters = [])
     {
         $searchQuery = $this
             ->getFactory()
-            ->createFulltextSearchQuery($searchString, $parameters);
+            ->createFulltextSearchQuery($searchString);
+
+        $searchQuery = $this
+            ->getFactory()
+            ->getSearchClient()
+            ->expandQuery($searchQuery, $this->getFactory()->createCatalogSearchQueryExpanderPlugins(), $parameters);
 
         $resultFormatter = $this
             ->getFactory()
-            ->createCatalogSearchResultFormatter($parameters);
+            ->createCatalogSearchResultFormatters();
 
         return $this
             ->getFactory()
             ->getSearchClient()
-            ->search($searchQuery, $resultFormatter);
-    }
-
-    /**
-     * @api
-     *
-     * @return \Spryker\Client\Catalog\Model\FacetConfig
-     */
-    public function createFacetConfig()
-    {
-        return $this->getFactory()->createFacetConfig();
+            ->search($searchQuery, $resultFormatter, $parameters);
     }
 
 }

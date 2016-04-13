@@ -23,11 +23,17 @@ class CategorySearchQuery implements QueryInterface
     protected $idCategory;
 
     /**
+     * @var \Elastica\Query
+     */
+    protected $query;
+
+    /**
      * @param int $idCategory
      */
     public function __construct($idCategory)
     {
         $this->idCategory = $idCategory;
+        $this->query = $this->createSearchQuery();
     }
 
     /**
@@ -35,7 +41,16 @@ class CategorySearchQuery implements QueryInterface
      */
     public function getSearchQuery()
     {
+        return $this->query;
+    }
+
+    /**
+     * @return \Elastica\Query
+     */
+    protected function createSearchQuery()
+    {
         $query = new Query();
+
         $query = $this->addCategoryFilterToQuery($query);
         $query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
 

@@ -8,17 +8,18 @@
 namespace Spryker\Client\Search\Model\Handler;
 
 use Spryker\Client\Search\Model\Query\QueryInterface;
-use Spryker\Client\Search\Model\ResultFormatter\ResultFormatterInterface;
+use Spryker\Client\Search\Model\ResultFormatter\ResultFormatterPluginInterface;
 
 interface SearchHandlerInterface
 {
 
     /**
      * @param \Spryker\Client\Search\Model\Query\QueryInterface $queryCriteria
-     * @param \Spryker\Client\Search\Model\ResultFormatter\ResultFormatterInterface $resultFormatter
+     * @param \Spryker\Client\Search\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param array $requestParameters
      *
-     * @return mixed
+     * @return array
      */
-    public function search(QueryInterface $queryCriteria, ResultFormatterInterface $resultFormatter);
+    public function search(QueryInterface $queryCriteria, array $resultFormatters, array $requestParameters = []);
 
 }

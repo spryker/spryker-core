@@ -23,17 +23,31 @@ class FulltextSearchQuery implements QueryInterface
     protected $searchString;
 
     /**
+     * @var \Elastica\Query
+     */
+    protected $query;
+
+    /**
      * @param string $searchString
      */
     public function __construct($searchString)
     {
         $this->searchString = $searchString;
+        $this->query = $this->createSearchQuery();
     }
 
     /**
      * @return \Elastica\Query
      */
     public function getSearchQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * @return \Elastica\Query
+     */
+    public function createSearchQuery()
     {
         $query = new Query();
         $query = $this->addFulltextSearchToQuery($query);
@@ -49,8 +63,13 @@ class FulltextSearchQuery implements QueryInterface
      */
     protected function addFulltextSearchToQuery(Query $query)
     {
-        $match = (new Match())->setField(PageIndexMap::FULL_TEXT, $this->searchString);
-        $boolQuery = (new BoolQuery())->addMust($match);
+        $fullTextMatch = (new Match())->setField(PageIndexMap::FULL_TEXT, $this->searchString);
+        $fullTextBoostedMatch = (new Match())->setField(PageIndexMap::FULL_TEXT_BOOSTED, $this->searchString);
+
+        $boolQuery = (new BoolQuery())
+            ->addShould($fullTextMatch)
+            ->addShould($fullTextBoostedMatch)
+            ->setMinimumNumberShouldMatch(1);
 
         $query->setQuery($boolQuery);
 
