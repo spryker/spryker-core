@@ -62,7 +62,7 @@ class CreateDatabaseConsole extends Console
             ));
 
             $createDatabaseCommand = sprintf(
-                'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
+                'psql -h %s -p %s -U %s -w -c " make me " %s',
                 Config::get(PropelConstants::ZED_DB_HOST),
                 Config::get(PropelConstants::ZED_DB_PORT),
                 Config::get(PropelConstants::ZED_DB_USERNAME),
