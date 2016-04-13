@@ -40,7 +40,6 @@ class PropelInstall extends Module
     protected function initPropel()
     {
         $this->copyFromTestBundle();
-
         $this->getFacade()->cleanPropelSchemaDirectory();
         $this->getFacade()->copySchemaFilesToTargetDirectory();
 
