@@ -41,49 +41,17 @@ class BraintreeConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getCalculationMode()
+    public function getIsVaulted()
     {
-        return $this->get(BraintreeConstants::CALCULATION_MODE);
+        return $this->get(BraintreeConstants::IS_VAULTED, false);
     }
 
     /**
      * @return string
      */
-    public function getEmailFromName()
+    public function getIs3DSecure()
     {
-        return $this->get(BraintreeConstants::EMAIL_FROM_NAME);
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmailFromAddress()
-    {
-        return $this->get(BraintreeConstants::EMAIL_FROM_ADDRESS);
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmailTemplateName()
-    {
-        return $this->get(BraintreeConstants::EMAIL_TEMPLATE_NAME);
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmailSubject()
-    {
-        return $this->get(BraintreeConstants::EMAIL_SUBJECT);
-    }
-
-    /**
-     * @return string
-     */
-    public function getWebshopUrl()
-    {
-        return $this->get(ApplicationConstants::HOST_YVES);
+        return $this->get(BraintreeConstants::IS_VAULTED, false);
     }
 
 }

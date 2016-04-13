@@ -31,10 +31,10 @@ class StatusLog extends AbstractTable
      * @var string[]
      */
     private static $includeFields = [
-        SpyPaymentBraintreeTransactionStatusLogTableMap::COL_IDENTIFICATION_TRANSACTIONID,
-        SpyPaymentBraintreeTransactionStatusLogTableMap::COL_PROCESSING_RETURN,
-        SpyPaymentBraintreeTransactionStatusLogTableMap::COL_PROCESSING_STATUS_CODE,
-        SpyPaymentBraintreeTransactionStatusLogTableMap::COL_PROCESSING_REASON_CODE,
+        SpyPaymentBraintreeTransactionStatusLogTableMap::COL_TRANSACTION_ID,
+        SpyPaymentBraintreeTransactionStatusLogTableMap::COL_TRANSACTION_CODE,
+        SpyPaymentBraintreeTransactionStatusLogTableMap::COL_TRANSACTION_STATUS,
+        SpyPaymentBraintreeTransactionStatusLogTableMap::COL_TRANSACTION_TYPE,
     ];
 
     /**
@@ -56,7 +56,7 @@ class StatusLog extends AbstractTable
     {
         $config->setHeader($this->getHeaderFields());
         $config->setSortable([
-            SpyPaymentBraintreeTransactionStatusLogTableMap::COL_IDENTIFICATION_TRANSACTIONID,
+            SpyPaymentBraintreeTransactionStatusLogTableMap::COL_TRANSACTION_ID,
         ]);
         $config->setUrl('status-log-table?id-payment=' . $this->idPayment);
 
