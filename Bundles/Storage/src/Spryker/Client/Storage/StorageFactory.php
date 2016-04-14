@@ -58,12 +58,18 @@ class StorageFactory extends AbstractFactory
      */
     protected function getConfig()
     {
-        return [
+        $config = [
             'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
             'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
             'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
             'password' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD),
         ];
+
+        if (Config::hasValue(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
+        }
+
+        return $config;
     }
 
 }
