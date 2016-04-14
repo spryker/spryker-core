@@ -15,6 +15,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ConfigInit extends Module
 {
+
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param null $config
@@ -25,11 +26,13 @@ class ConfigInit extends Module
 
         if (isset($this->config['enabled']) && $this->config['enabled']) {
             $this->copyBundleConfigurationFiles();
-            $this->initConfigDefault();
+            $this->generateConfigDefaultFile();
         }
     }
 
     /**
+     * Copy all configuration files like `stores.php` into "virtual project"
+     *
      * @return void
      */
     private function copyBundleConfigurationFiles()
@@ -49,15 +52,10 @@ class ConfigInit extends Module
     private function getConfigFiles()
     {
         $configDirectories = $this->getSourceDirectories();
-        $configDirectory = $this->getTargetDirectory();
-        if (!is_dir($configDirectory)) {
-            mkdir($configDirectory, 0775, true);
-        }
-
         $finder = new Finder();
-        $finder->files()->in($configDirectories)->exclude(
-            APPLICATION_ROOT_DIR . '/../testify/'
-        )->notName('config_*');
+        $finder->files()
+            ->in($configDirectories)
+            ->notName('config_*');
 
         return $finder;
     }
@@ -67,25 +65,43 @@ class ConfigInit extends Module
      */
     private function getSourceDirectories()
     {
-        $configDirectories = APPLICATION_ROOT_DIR . '/../*/config/';
-
-        return $configDirectories;
+        return APPLICATION_ROOT_DIR . '/../*/config/';
     }
 
     /**
+     * Path to "virtual project"
+     *
      * @return string
      */
     private function getTargetDirectory()
     {
-        $configDirectory = APPLICATION_ROOT_DIR . '/config/Shared/';
+        return APPLICATION_ROOT_DIR . '/config/Shared/';
+    }
 
-        return $configDirectory;
+    /**
+     * Merge all config_* files from bundles and copy into new config file
+     * Config class will load this file within the "virtual project"
+     *
+     * @return void
+     */
+    private function generateConfigDefaultFile()
+    {
+        $this->clearGeneratedConfigFile();
+        $this->writeConfigFile($this->generateConfig());
     }
 
     /**
      * @return void
      */
-    private function initConfigDefault()
+    private function clearGeneratedConfigFile()
+    {
+        $this->writeConfigFile('');
+    }
+
+    /**
+     * @return string
+     */
+    private function generateConfig()
     {
         $finder = $this->getConfigDefaultFiles();
         $configHeader = '<?php' . PHP_EOL . PHP_EOL;
@@ -104,9 +120,7 @@ class ConfigInit extends Module
             $configBody .= $content;
         }
 
-        $fileName = $this->getTargetDirectory() . '/config_default-test.php';
-
-        file_put_contents($fileName, $configHeader . implode(PHP_EOL, $configUseStatements) . $configBody);
+        return $configHeader . implode(PHP_EOL, $configUseStatements) . $configBody;
     }
 
     /**
@@ -116,11 +130,29 @@ class ConfigInit extends Module
     {
         $finder = new Finder();
         $configDirectories = $this->getSourceDirectories();
-        $finder->files()->in($configDirectories)->exclude(
-            APPLICATION_ROOT_DIR . '/../testify/'
-        )->name('config_*');
+        $finder->files()
+            ->in($configDirectories)
+            ->name('config_*');
 
         return $finder;
+    }
+
+    /**
+     * @param string $fileContent
+     *
+     * @return void
+     */
+    private function writeConfigFile($fileContent)
+    {
+        file_put_contents($this->getConfigFilePath(), $fileContent);
+    }
+
+    /**
+     * @return string
+     */
+    private function getConfigFilePath()
+    {
+        return $this->getTargetDirectory() . '/config_default-test.php';
     }
 
 }

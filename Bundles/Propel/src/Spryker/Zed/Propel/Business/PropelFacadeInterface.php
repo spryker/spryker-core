@@ -25,6 +25,15 @@ interface PropelFacadeInterface
     public function copySchemaFilesToTargetDirectory();
 
     /**
+     * Create database for configured driver if it does not exists
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function createDatabaseIfNotExists();
+
+    /**
      * @api
      *
      * @return void

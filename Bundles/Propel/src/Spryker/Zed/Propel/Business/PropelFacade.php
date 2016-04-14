@@ -36,6 +36,18 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * Create database for configured driver if it doesn't exists
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function createDatabaseIfNotExists()
+    {
+        $this->getFactory()->createDatabaseCreator()->createDatabaseIfNotExists();
+    }
+
+    /**
      * @api
      *
      * @return void

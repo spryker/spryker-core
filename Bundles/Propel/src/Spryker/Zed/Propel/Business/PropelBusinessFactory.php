@@ -10,6 +10,10 @@ namespace Spryker\Zed\Propel\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
 use Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\MySqlDatabaseCreator;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollection;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
@@ -120,6 +124,45 @@ class PropelBusinessFactory extends AbstractBusinessFactory
         $filesystem = new Filesystem();
 
         return $filesystem;
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabaseInterface
+     */
+    public function createDatabaseCreator()
+    {
+        return new PropelDatabase(
+            $this->createDatabaseCreatorCollection()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionInterface
+     */
+    protected function createDatabaseCreatorCollection()
+    {
+        $databaseCreatorCollection = new DatabaseCreatorCollection();
+        $databaseCreatorCollection
+            ->add($this->createMySqlDatabaseCreator())
+            ->add($this->createPostgreSqlDatabaseCreator());
+
+        return $databaseCreatorCollection;
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
+     */
+    protected function createMySqlDatabaseCreator()
+    {
+        return new MySqlDatabaseCreator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
+     */
+    protected function createPostgreSqlDatabaseCreator()
+    {
+        return new PostgreSqlDatabaseCreator();
     }
 
     /**

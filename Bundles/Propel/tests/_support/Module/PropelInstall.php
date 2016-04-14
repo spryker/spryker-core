@@ -40,9 +40,193 @@ class PropelInstall extends Module
     protected function initPropel()
     {
         $this->copyFromTestBundle();
+
         $this->getFacade()->cleanPropelSchemaDirectory();
         $this->getFacade()->copySchemaFilesToTargetDirectory();
+        $this->getFacade()->createDatabaseIfNotExists();
 
+        $this->convertConfig();
+        $this->runCommands();
+    }
+
+    /**
+     * @return void
+     */
+    private function runCommands()
+    {
+        foreach ($this->getCommands() as $command) {
+            $this->runCommand($command);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    private function getCommands()
+    {
+        return [
+            $this->createDiffCommand(),
+            $this->createMigrateCommand(),
+            $this->getModelBuildCommand(),
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    private function getModelBuildCommand()
+    {
+        $config = Config::get(PropelConstants::PROPEL);
+        return $this->getBaseCommand()
+            . ' vendor/bin/propel model:build'
+            . $this->getConfigDirectoryForCommand($config)
+            . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package'
+        ;
+    }
+
+    /**
+     * @return string
+     */
+    private function getBaseCommand()
+    {
+        return 'APPLICATION_ENV=' . APPLICATION_ENV
+            . ' APPLICATION_STORE=' . APPLICATION_STORE
+            . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
+            . ' APPLICATION=' . APPLICATION
+        ;
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return string
+     */
+    private function getConfigDirectoryForCommand(array $config)
+    {
+        return ' --config-dir ' . $config['paths']['phpConfDir'];
+    }
+
+    /**
+     * @return array
+     */
+    private function createDiffCommand()
+    {
+        $config = Config::get(PropelConstants::PROPEL);
+        $command = $this->getBaseCommand()
+            . ' vendor/bin/propel diff'
+            . $this->getConfigDirectoryForCommand($config)
+            . ' --schema-dir ' . $config['paths']['schemaDir']
+        ;
+
+        return $command;
+    }
+
+    /**
+     * @return string
+     */
+    private function createMigrateCommand()
+    {
+        $config = Config::get(PropelConstants::PROPEL);
+        $command = $this->getBaseCommand()
+            . ' vendor/bin/propel migrate'
+            . $this->getConfigDirectoryForCommand($config)
+        ;
+
+        return $command;
+    }
+
+    /**
+     * @param $command
+     *
+     * @return void
+     */
+    protected function runCommand($command)
+    {
+        $process = new Process($command, Configuration::projectDir());
+        $process->setTimeout(600);
+        $process->mustRun(function ($type, $buffer) use ($command) {
+            if (Process::ERR === $type) {
+                echo $command . ' Failed:' . PHP_EOL;
+                echo $buffer;
+            }
+        });
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\PropelFacade
+     */
+    private function getFacade()
+    {
+        return new PropelFacade();
+    }
+
+    /**
+     * Copy schema files from bundle to test into "virtual project"
+     *
+     * @return void
+     */
+    private function copyFromTestBundle()
+    {
+        $testBundleSchemaDirectory = Configuration::projectDir() . 'src/Spryker/Zed/*/Persistence/Propel/Schema';
+        if (count(glob($testBundleSchemaDirectory)) === 0) {
+            return;
+        }
+
+        $finder = $this->getBundleSchemaFinder($testBundleSchemaDirectory);
+
+        if ($finder->count() > 0) {
+            $pathForSchemas = $this->getTargetSchemaDirectory();
+            $filesystem = new Filesystem();
+            foreach ($finder as $file) {
+                $path = $pathForSchemas . DIRECTORY_SEPARATOR . $file->getFileName();
+                $filesystem->dumpFile($path, $file->getContents());
+            }
+        }
+    }
+
+    /**
+     * @param string $testBundleSchemaDirectory
+     *
+     * @return \Symfony\Component\Finder\Finder
+     */
+    private function getBundleSchemaFinder($testBundleSchemaDirectory)
+    {
+        $finder = new Finder();
+        $finder->files()->in($testBundleSchemaDirectory)->name('*.schema.xml');
+
+        return $finder;
+    }
+
+    /**
+     * Path to where the files from the bundle to test should be copied ("virtual project")
+     *
+     * @return string
+     */
+    private function getTargetSchemaDirectory()
+    {
+        $pathForSchemas = APPLICATION_ROOT_DIR . '/src/Spryker/Zed/Testify/Persistence/Propel/Schema';
+        $this->createTargetSchemaDirectoryIfNotExists($pathForSchemas);
+
+        return $pathForSchemas;
+    }
+
+    /**
+     * @param string $pathForSchemas
+     *
+     * @return void
+     */
+    private function createTargetSchemaDirectoryIfNotExists($pathForSchemas)
+    {
+        if (!is_dir($pathForSchemas)) {
+            mkdir($pathForSchemas, 0775, true);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    private function convertConfig()
+    {
         $config = [
             'propel' => Config::get(PropelConstants::PROPEL),
         ];
@@ -67,78 +251,6 @@ class PropelInstall extends Module
         }
 
         file_put_contents($fileName, $json);
-
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = 'APPLICATION_ENV=' . APPLICATION_ENV
-            . ' APPLICATION_STORE=' . APPLICATION_STORE
-            . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
-            . ' APPLICATION=' . APPLICATION
-            . ' vendor/bin/propel model:build --config-dir '
-            . $config['paths']['phpConfDir']
-            . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
-
-        $process = new Process($command, Configuration::projectDir());
-
-        return $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\Business\PropelFacade
-     */
-    private function getFacade()
-    {
-        return new PropelFacade();
-    }
-
-    /**
-     * @return void
-     */
-    private function copyFromTestBundle()
-    {
-        $testBundleSchemaDirectory = Configuration::projectDir() . 'src/Spryker/Zed/*/Persistence/Propel/Schema';
-        if (count(glob($testBundleSchemaDirectory)) === 0) {
-            return;
-        }
-
-        $finder = $this->getBundlePersistenceSchemas($testBundleSchemaDirectory);
-
-        if ($finder->count() > 0) {
-            $pathForSchemas = $this->getTargetSchemaDirectory();
-            $filesystem = new Filesystem();
-            foreach ($finder as $file) {
-                $path = $pathForSchemas . DIRECTORY_SEPARATOR . $file->getFileName();
-                $filesystem->dumpFile($path, $file->getContents());
-            }
-        }
-    }
-
-    /**
-     * @param string $testBundleSchemaDirectory
-     *
-     * @return \Symfony\Component\Finder\Finder
-     */
-    private function getBundlePersistenceSchemas($testBundleSchemaDirectory)
-    {
-        $finder = new Finder();
-        $finder->files()->in($testBundleSchemaDirectory)->name('*.schema.xml');
-
-        return $finder;
-    }
-
-    /**
-     * @return string
-     */
-    private function getTargetSchemaDirectory()
-    {
-        $pathForSchemas = APPLICATION_ROOT_DIR . '/src/Spryker/Zed/Testify/Persistence/Propel/Schema';
-
-        if (!is_dir($pathForSchemas)) {
-            mkdir($pathForSchemas, 0775, true);
-        }
-
-        return $pathForSchemas;
     }
 
 }
