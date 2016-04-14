@@ -8,7 +8,7 @@
     }
   },
   "require": {
-    "spryker/application": "dev-beta/isolated-bundle-tests as ^2.0.0",
+    "spryker/application": "dev-beta/isolated-bundle-tests as 2.0.0",
     "spryker/country": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/installer": "^2.0.0",
@@ -19,16 +19,16 @@
     "spryker/session": "^2.0.0",
     "spryker/transfer": "^2.0.0",
     "spryker/zed-request": "^2.0.0",
-    "spryker/propel": "dev-beta/isolated-bundle-tests as ^2.0.0",
+    "spryker/propel": "dev-beta/isolated-bundle-tests as 2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/assertion": "^2.0.0",
     "spryker/checkout": "^2.0.0",
-    "spryker/library": "dev-beta/isolated-bundle-tests as ^2.0.0"
+    "spryker/library": "dev-beta/isolated-bundle-tests as 2.0.0"
   },
   "require-dev": {
-    "spryker/testify": "dev-beta/isolated-bundle-tests as ^2.0.0",
+    "spryker/testify": "dev-beta/isolated-bundle-tests as 2.0.0",
     "spryker/console": "^2.0.0",
-    "spryker/config": "dev-beta/isolated-bundle-tests as  as ^2.0.0"
+    "spryker/config": "dev-beta/isolated-bundle-tests as 2.0.0"
   },
   "description": "customer bundle",
   "license": "proprietary",
