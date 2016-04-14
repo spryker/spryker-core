@@ -94,16 +94,17 @@ class CreateDatabaseConsole extends Console
         ));
 
         $databaseExistsCommand = sprintf(
-            'psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
+            'psql -h %s -p %s -U %s -w -lqt | cut -d \| -f 1 | grep -w %s | wc -l',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
-            Config::get(PropelConstants::ZED_DB_DATABASE),
             Config::get(PropelConstants::ZED_DB_DATABASE)
         );
 
         $process = new Process($databaseExistsCommand);
         $process->run();
+
+        dump($databaseExistsCommand);
 
         putenv('PGPASSWORD=');
 
