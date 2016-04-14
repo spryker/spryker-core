@@ -7,7 +7,7 @@ machine:
 
 dependencies:
   override:
-    - composer install --no-interaction
+    - composer install --no-interaction --prefer-dist
 
 test:
   override:
