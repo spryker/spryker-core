@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-class CreateDatabaseConsole extends Console
+class ResetDatabaseConsole extends Console
 {
 
     const COMMAND_NAME = 'propel:database:reset';
