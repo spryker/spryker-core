@@ -20,6 +20,8 @@ use Spryker\Zed\StateMachine\Business\StateMachine\Condition;
 use Spryker\Zed\StateMachine\Business\StateMachine\Finder;
 use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolver;
 use Spryker\Zed\StateMachine\Business\StateMachine\Persistence;
+use Spryker\Zed\StateMachine\Business\StateMachine\StateUpdater;
+use Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\Timeout;
 use Spryker\Zed\StateMachine\Business\StateMachine\Trigger;
 use Spryker\Zed\StateMachine\StateMachineConfig;
@@ -38,12 +40,13 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     public function createStateMachineTrigger()
     {
         return new Trigger(
-            $this->createStateMachineBuilder(),
             $this->createLoggerTransitionLog(),
             $this->createHandlerResolver(),
             $this->createStateMachineFinder(),
             $this->createStateMachinePersistence(),
-            $this->createStateMachineCondition()
+            $this->createStateMachineCondition(),
+            $this->createStateUpdater(),
+            $this->createStateMachineTimeout()
         );
     }
 
@@ -75,10 +78,22 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     public function createStateMachineCondition()
     {
         return new Condition(
-            $this->createStateMachineBuilder(),
             $this->createLoggerTransitionLog(),
             $this->createHandlerResolver(),
             $this->createStateMachineFinder(),
+            $this->createStateMachinePersistence(),
+            $this->createStateUpdater()
+        );
+    }
+
+    /**
+     * @return StateUpdaterInterface
+     */
+    public function createStateUpdater()
+    {
+        return new StateUpdater(
+            $this->createStateMachineTimeout(),
+            $this->createHandlerResolver(),
             $this->createStateMachinePersistence()
         );
     }
@@ -133,11 +148,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
      */
     public function createStateMachinePersistence()
     {
-        return new Persistence(
-            $this->createStateMachineTimeout(),
-            $this->createHandlerResolver(),
-            $this->getQueryContainer()
-        );
+        return new Persistence($this->getQueryContainer());
     }
 
     /**

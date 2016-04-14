@@ -25,12 +25,12 @@ class ItemLock implements ItemLockInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $queryContainer
+     * @param StateMachineConfig $stateMachineConfig
      */
     public function __construct(
         StateMachineQueryContainerInterface $queryContainer,
         StateMachineConfig $stateMachineConfig
     ) {
-
         $this->queryContainer = $queryContainer;
         $this->stateMachineConfig = $stateMachineConfig;
     }
@@ -74,10 +74,9 @@ class ItemLock implements ItemLockInterface
      */
     public function release($identifier)
     {
-        $stateMachineLockEntity = $this->queryContainer->queryStateMachineLockItemsByIdentifier($identifier)
-            ->findOne();
-
-        $stateMachineLockEntity->delete();
+        $this->queryContainer
+            ->queryStateMachineLockItemsByIdentifier($identifier)
+            ->delete();
     }
 
     /**

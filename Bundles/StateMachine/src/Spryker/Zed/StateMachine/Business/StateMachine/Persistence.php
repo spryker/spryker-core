@@ -14,7 +14,6 @@ use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
-use Propel\Runtime\Propel;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class Persistence implements PersistenceInterface
@@ -36,32 +35,15 @@ class Persistence implements PersistenceInterface
     protected $persistedStates;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface
-     */
-    protected $timeout;
-
-    /**
-     * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
-     */
-    protected $stateMachineHandlerResolver;
-
-    /**
-     * @var \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
+     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $stateMachineQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface $timeout
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $stateMachineHandlerResolver
      * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $stateMachineQueryContainer
      */
-    public function __construct(
-        TimeoutInterface $timeout,
-        HandlerResolverInterface $stateMachineHandlerResolver,
-        StateMachineQueryContainerInterface $stateMachineQueryContainer
-    ) {
-        $this->timeout = $timeout;
-        $this->stateMachineHandlerResolver = $stateMachineHandlerResolver;
+    public function __construct(StateMachineQueryContainerInterface $stateMachineQueryContainer)
+    {
         $this->queryContainer = $stateMachineQueryContainer;
     }
 
@@ -206,50 +188,11 @@ class Persistence implements PersistenceInterface
     }
 
     /**
-     * @param string $stateMachineName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param array $sourceStateBuffer
-     *
-     * @return void
-     */
-    public function updateStateMachineItemState(
-        $stateMachineName,
-        array $stateMachineItems,
-        array $processes,
-        array $sourceStateBuffer
-    ) {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
-
-        $currentTime = new \DateTime('now');
-        foreach ($stateMachineItems as $stateMachineItemTransfer) {
-            $process = $processes[$stateMachineItemTransfer->getProcessName()];
-
-            $sourceState = $sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()];
-            $targetState = $stateMachineItemTransfer->getStateName();
-
-            if ($sourceState !== $targetState) {
-                $this->timeout->dropOldTimeout($process, $sourceState, $stateMachineItemTransfer);
-                $this->timeout->setNewTimeout($process, $stateMachineItemTransfer, $currentTime);
-
-                $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
-                $stateMachineHandler->itemStateUpdated($stateMachineItemTransfer);
-
-                $this->saveItemStateHistory($stateMachineItemTransfer);
-
-            }
-        }
-
-        $connection->commit();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return void
      */
-    protected function saveItemStateHistory(StateMachineItemTransfer $stateMachineItemTransfer)
+    public function saveItemStateHistory(StateMachineItemTransfer $stateMachineItemTransfer)
     {
         $stateMachineItemStateHistory = new SpyStateMachineItemStateHistory();
         $stateMachineItemStateHistory->setIdentifier($stateMachineItemTransfer->getIdentifier());

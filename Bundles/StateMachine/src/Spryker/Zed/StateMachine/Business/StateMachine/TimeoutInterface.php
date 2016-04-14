@@ -15,14 +15,6 @@ interface TimeoutInterface
 {
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $triggerTrigger
-     * @param string $stateMachineName
-     *
-     * @return int
-     */
-    public function checkTimeouts(TriggerInterface $triggerTrigger, $stateMachineName);
-
-    /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param \DateTime $currentTime
@@ -53,5 +45,20 @@ interface TimeoutInterface
         $stateName,
         StateMachineItemTransfer $stateMachineItemTransfer
     );
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     *
+     * @return array
+     */
+    public function groupItemsByEvent(array $stateMachineItems);
+
+
+    /**
+     * @param string $stateMachineName
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $expiredStateMachineItemsTransfer
+     */
+    public function getItemsWithExpiredTimeouts($stateMachineName);
 
 }

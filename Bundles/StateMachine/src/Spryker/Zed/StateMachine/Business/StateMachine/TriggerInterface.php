@@ -16,7 +16,7 @@ interface TriggerInterface
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param int $identifier
      *
-     * @return bool
+     * @return int
      */
     public function triggerForNewStateMachineItem(
         StateMachineProcessTransfer $stateMachineProcessTransfer,
@@ -28,7 +28,7 @@ interface TriggerInterface
      * @param string $stateMachineName
      * @param array $items
      *
-     * @return bool
+     * @return int
      */
     public function triggerEvent($eventName, $stateMachineName, array $items);
 
@@ -38,5 +38,12 @@ interface TriggerInterface
      * @return int
      */
     public function triggerConditionsWithoutEvent($stateMachineName);
+
+    /**
+     * @param string $stateMachineName
+     *
+     * @return int
+     */
+    public function triggerForTimeoutExpiredItems($stateMachineName);
 
 }

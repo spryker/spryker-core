@@ -45,21 +45,6 @@ interface PersistenceInterface
     public function saveStateMachineItemState(StateMachineItemTransfer $stateMachineItemTransfer, $stateName);
 
     /**
-     * @param string $stateMachineName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param array $sourceStateBuffer
-     *
-     * @return void
-     */
-    public function updateStateMachineItemState(
-        $stateMachineName,
-        array $stateMachineItems,
-        array $processes,
-        array $sourceStateBuffer
-    );
-
-    /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param string $stateMachineName
      *
@@ -110,5 +95,12 @@ interface PersistenceInterface
         $stateMachineName,
         array $states
     );
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return void
+     */
+    public function saveItemStateHistory(StateMachineItemTransfer $stateMachineItemTransfer);
 
 }

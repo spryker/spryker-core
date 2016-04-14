@@ -32,7 +32,7 @@ class StateMachineConfig extends AbstractBundleConfig
      */
     public function getStateMachineItemLockExpirationInterval()
     {
-        return '10 seconds';
+        return '1 minutes';
     }
 
     /**

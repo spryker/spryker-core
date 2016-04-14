@@ -171,7 +171,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      */
     public function queryStateMachineLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate)
     {
-        return $this->getFactory()->createStateMachineLockQuery()
+        return $this->getFactory()
+            ->createStateMachineLockQuery()
             ->filterByIdentifier($identifier)
             ->filterByExpires(['min' => new \DateTime('now')]);
     }

@@ -33,10 +33,11 @@ interface ConditionInterface
     );
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      * @param string $stateMachineName
+     * @param string $processName
+     *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $itemsWithOnEnterEvent
      */
-    public function checkConditionsForProcess(ProcessInterface $process, $stateMachineName);
+    public function checkConditionsForProcess($stateMachineName, $processName);
 
 }

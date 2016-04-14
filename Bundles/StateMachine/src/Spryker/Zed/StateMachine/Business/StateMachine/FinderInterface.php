@@ -69,4 +69,20 @@ interface FinderInterface
         array $sourceStateBuffer = []
     );
 
+    /**
+     * @param string $stateMachineName
+     * @param string $processName
+     *
+     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface
+     */
+    public function findProcessByStateMachineAndProcessName($stateMachineName, $processName);
+
+    /**
+     * @param string $stateMachineName
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     *
+     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     */
+    public function findProcessesForItems($stateMachineName, array $stateMachineItems);
+
 }

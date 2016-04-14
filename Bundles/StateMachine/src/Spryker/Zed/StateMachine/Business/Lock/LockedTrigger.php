@@ -38,7 +38,7 @@ class LockedTrigger implements TriggerInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param int $identifier
-     * @return bool
+     * @return int
      * @throws \Spryker\Zed\StateMachine\Business\Exception\LockException
      */
     public function triggerForNewStateMachineItem(StateMachineProcessTransfer $stateMachineProcessTransfer, $identifier)
@@ -58,7 +58,7 @@ class LockedTrigger implements TriggerInterface
      * @param string $eventName
      * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @return bool
+     * @return int
      * @throws \Spryker\Zed\StateMachine\Business\Exception\LockException
      */
     public function triggerEvent($eventName, $stateMachineName, array $stateMachineItems)
@@ -107,4 +107,13 @@ class LockedTrigger implements TriggerInterface
         return $identifier;
     }
 
+    /**
+     * @param string $stateMachineName
+     *
+     * @return int
+     */
+    public function triggerForTimeoutExpiredItems($stateMachineName)
+    {
+       return $this->stateMachineTrigger->triggerForTimeoutExpiredItems($stateMachineName);
+    }
 }

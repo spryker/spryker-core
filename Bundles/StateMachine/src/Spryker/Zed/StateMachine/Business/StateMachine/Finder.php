@@ -254,4 +254,57 @@ class Finder implements FinderInterface
         return $itemsWithOnEnterEvent;
     }
 
+    /**
+     * @param string $stateMachineName
+     * @param string $processName
+     *
+     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface
+     */
+    public function findProcessByStateMachineAndProcessName($stateMachineName, $processName)
+    {
+        $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer($stateMachineName, $processName);
+        return $this->builder->createProcess($stateMachineProcessTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param string $stateMachineName
+     *
+     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     */
+    public function findProcessesForItems($stateMachineName, array $stateMachineItems)
+    {
+        $processes = [];
+        foreach ($stateMachineItems as $stateMachineItemTransfer) {
+            $processName = $stateMachineItemTransfer->requireProcessName()->getProcessName();
+            if (isset($processes[$processName])) {
+                continue;
+            }
+
+            $processes[$stateMachineItemTransfer->getProcessName()] = $this->findProcessByStateMachineAndProcessName(
+                $stateMachineName,
+                $stateMachineItemTransfer->getProcessName()
+            );
+        }
+
+        return $processes;
+    }
+
+    /**
+     * @param string $stateMachineName
+     * @param string $processName
+     *
+     * @return StateMachineProcessTransfer
+     */
+    protected function createStateMachineProcessTransfer($stateMachineName, $processName)
+    {
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setProcessName($processName);
+
+        return $stateMachineProcessTransfer;
+    }
+
+
+
 }

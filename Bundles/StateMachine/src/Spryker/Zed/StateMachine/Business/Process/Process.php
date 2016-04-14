@@ -38,11 +38,6 @@ class Process implements ProcessInterface
     protected $file;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\Graph\DrawerInterface
-     */
-    protected $drawer;
-
-    /**
      * @var \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
      */
     protected $subProcesses = [];

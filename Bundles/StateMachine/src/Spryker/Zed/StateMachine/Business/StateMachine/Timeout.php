@@ -42,23 +42,6 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $trigger
-     *
-     * @return int
-     */
-    public function checkTimeouts(TriggerInterface $trigger, $stateMachineName)
-    {
-        $stateMachineItems = $this->findItemsWithExpiredTimeouts($stateMachineName);
-
-        $groupedStateMachineItems = $this->groupItemsByEvent($stateMachineItems);
-        foreach ($groupedStateMachineItems as $event => $stateMachineItems) {
-            $trigger->triggerEvent($event, $stateMachineName, $stateMachineItems);
-        }
-
-        return count($stateMachineItems);
-    }
-
-    /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param \DateTime $currentTime
@@ -162,7 +145,7 @@ class Timeout implements TimeoutInterface
      *
      * @return array
      */
-    protected function groupItemsByEvent(array $stateMachineItems)
+    public function groupItemsByEvent(array $stateMachineItems)
     {
         $groupedStateMachineItems = [];
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
@@ -177,9 +160,11 @@ class Timeout implements TimeoutInterface
     }
 
     /**
+     * @param string $stateMachineName
+     *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $expiredStateMachineItemsTransfer
      */
-    protected function findItemsWithExpiredTimeouts($stateMachineName)
+    public function getItemsWithExpiredTimeouts($stateMachineName)
     {
         $stateMachineExpiredItems = $this->queryContainer
             ->queryItemsWithExpiredTimeout(
