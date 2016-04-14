@@ -62,11 +62,12 @@ class CreateDatabaseConsole extends Console
             ));
 
             $createDatabaseCommand = sprintf(
-                'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " postgres',
+                'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
                 Config::get(PropelConstants::ZED_DB_HOST),
                 Config::get(PropelConstants::ZED_DB_PORT),
                 Config::get(PropelConstants::ZED_DB_USERNAME),
-                Config::get(PropelConstants::ZED_DB_DATABASE)
+                Config::get(PropelConstants::ZED_DB_DATABASE),
+                'postgres'
             );
 
             dump($createDatabaseCommand);
@@ -95,15 +96,18 @@ class CreateDatabaseConsole extends Console
         ));
 
         $databaseExistsCommand = sprintf(
-            'psql -h %s -p %s -U %s -w -lqt | cut -d \| -f 1 | grep -w %s | wc -l',
+            'psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
+            Config::get(PropelConstants::ZED_DB_DATABASE),
             Config::get(PropelConstants::ZED_DB_DATABASE)
         );
 
         $process = new Process($databaseExistsCommand);
         $process->run();
+
+        dump($databaseExistsCommand);
 
         putenv('PGPASSWORD=');
 
