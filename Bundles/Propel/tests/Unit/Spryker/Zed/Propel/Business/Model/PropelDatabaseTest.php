@@ -9,8 +9,8 @@ namespace Unit\Spryker\Zed\Propel\Business\Model;
 
 use Spryker\Zed\Propel\Business\Exception\DatabaseCreatorNotFoundException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionInterface;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
 
 /**
  * @group Spryker

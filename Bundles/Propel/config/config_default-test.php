@@ -1,8 +1,8 @@
 <?php
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Zed\Propel\PropelConfig;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Propel\PropelConfig;
 
 $config[ApplicationConstants::ZED_DB_ENGINE_MYSQL] = PropelConfig::DB_ENGINE_MYSQL;
 $config[ApplicationConstants::ZED_DB_ENGINE_PGSQL] = PropelConfig::DB_ENGINE_PGSQL;

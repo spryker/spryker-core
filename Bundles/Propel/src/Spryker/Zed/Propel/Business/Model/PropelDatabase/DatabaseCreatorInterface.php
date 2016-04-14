@@ -19,4 +19,5 @@ interface DatabaseCreatorInterface
      * @return string
      */
     public function getEngine();
+
 }

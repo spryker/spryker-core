@@ -126,7 +126,7 @@ class Functional extends Module
      */
     private function getInstallerCollection()
     {
-        return $installerCollection = [
+        return [
             new LocaleInstallerPlugin(),
             new CountryInstallerPlugin(),
         ];

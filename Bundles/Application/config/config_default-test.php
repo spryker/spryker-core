@@ -1,7 +1,6 @@
 <?php
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Zed\Propel\PropelConfig;
 
 $config[ApplicationConstants::PROJECT_NAMESPACES] = [
     'Pyz',
@@ -27,4 +26,3 @@ $config[ApplicationConstants::NAVIGATION_CACHE_ENABLED] = false;
 
 $config[ApplicationConstants::HOST_YVES] = 'www.spryker.dev';
 $config[ApplicationConstants::NAVIGATION_ENABLED] = false;
-

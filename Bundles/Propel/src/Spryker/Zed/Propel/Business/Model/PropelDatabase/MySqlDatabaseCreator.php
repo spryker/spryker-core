@@ -50,8 +50,7 @@ class MySqlDatabaseCreator implements DatabaseCreatorInterface
         return Config::get(PropelConstants::ZED_DB_ENGINE)
             . ':host='
             . Config::get(PropelConstants::ZED_DB_HOST)
-            . ';port=' . Config::get(PropelConstants::ZED_DB_PORT)
-        ;
+            . ';port=' . Config::get(PropelConstants::ZED_DB_PORT);
     }
 
     /**
