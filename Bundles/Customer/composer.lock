@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "797d3c2e03a4850b83f28d188d04507a",
-    "content-hash": "a0ed00fddf4d5742d78da6f8f600163c",
+    "hash": "07aa5a8dfd238479bf252f439d214d6a",
+    "content-hash": "285f4b3d3c73b36e8ffc9fceaca5f290",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -411,16 +411,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.2.3",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "2e89629ff057ebb49492ba08e6995d3a6a80021b"
+                "reference": "31382fef2889136415751badebbd1cb022a4ed72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/2e89629ff057ebb49492ba08e6995d3a6a80021b",
-                "reference": "2e89629ff057ebb49492ba08e6995d3a6a80021b",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/31382fef2889136415751badebbd1cb022a4ed72",
+                "reference": "31382fef2889136415751badebbd1cb022a4ed72",
                 "shasum": ""
             },
             "require": {
@@ -465,7 +465,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-02-18 21:54:00"
+            "time": "2016-04-13 19:56:01"
         },
         {
             "name": "league/csv",
@@ -1141,11 +1141,11 @@
         },
         {
             "name": "spryker/application",
-            "version": "2.0.0",
+            "version": "dev-beta/isolated-bundle-tests",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Application.git",
-                "reference": "ec978c8559bd0b53173f03305a074ff926ccb938",
+                "reference": "6c792bc43e5e260e6e19a853bcae19b314743035",
                 "mirrors": [
                     {
                         "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
@@ -1155,8 +1155,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/Application/zipball/ec978c8559bd0b53173f03305a074ff926ccb938",
-                "reference": "ec978c8559bd0b53173f03305a074ff926ccb938",
+                "url": "https://api.github.com/repos/spryker/Application/zipball/6c792bc43e5e260e6e19a853bcae19b314743035",
+                "reference": "6c792bc43e5e260e6e19a853bcae19b314743035",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1210,9 +1210,9 @@
             ],
             "description": "application bundle",
             "support": {
-                "source": "https://github.com/spryker/Application/tree/master"
+                "source": "https://github.com/spryker/Application/tree/beta/isolated-bundle-tests"
             },
-            "time": "2016-04-04 15:24:01"
+            "time": "2016-04-14 13:27:07"
         },
         {
             "name": "spryker/assertion",
@@ -1649,11 +1649,11 @@
         },
         {
             "name": "spryker/cms",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Cms.git",
-                "reference": "5b9bb1f76ef4040920c26985cb29c9fe2a2153a1",
+                "reference": "5167eac55a46a23ed13949b3aaf981f8a7826152",
                 "mirrors": [
                     {
                         "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
@@ -1663,8 +1663,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/Cms/zipball/5b9bb1f76ef4040920c26985cb29c9fe2a2153a1",
-                "reference": "5b9bb1f76ef4040920c26985cb29c9fe2a2153a1",
+                "url": "https://api.github.com/repos/spryker/Cms/zipball/5167eac55a46a23ed13949b3aaf981f8a7826152",
+                "reference": "5167eac55a46a23ed13949b3aaf981f8a7826152",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1711,7 +1711,7 @@
             "support": {
                 "source": "https://github.com/spryker/Cms/tree/master"
             },
-            "time": "2016-04-04 15:24:01"
+            "time": "2016-04-06 16:26:05"
         },
         {
             "name": "spryker/collector",
@@ -1784,11 +1784,11 @@
         },
         {
             "name": "spryker/config",
-            "version": "2.0.0",
+            "version": "dev-beta/isolated-bundle-tests",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Config.git",
-                "reference": "1d3370555ae030885f7506591c426c9e160a0c0f",
+                "reference": "6b7c60fd964a46502b7761af259d8571d90f7b1e",
                 "mirrors": [
                     {
                         "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
@@ -1798,8 +1798,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/Config/zipball/1d3370555ae030885f7506591c426c9e160a0c0f",
-                "reference": "1d3370555ae030885f7506591c426c9e160a0c0f",
+                "url": "https://api.github.com/repos/spryker/Config/zipball/6b7c60fd964a46502b7761af259d8571d90f7b1e",
+                "reference": "6b7c60fd964a46502b7761af259d8571d90f7b1e",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1836,9 +1836,9 @@
             ],
             "description": "config bundle",
             "support": {
-                "source": "https://github.com/spryker/Config/tree/master"
+                "source": "https://github.com/spryker/Config/tree/beta/isolated-bundle-tests"
             },
-            "time": "2016-04-04 15:24:01"
+            "time": "2016-04-14 12:55:26"
         },
         {
             "name": "spryker/console",
@@ -1861,7 +1861,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2412,11 +2412,11 @@
         },
         {
             "name": "spryker/gui",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Gui.git",
-                "reference": "e1ea7462d96c73df50bebbcf6224a86bad06d315",
+                "reference": "98aafbfba751f5825f00affc0540d89b721625f0",
                 "mirrors": [
                     {
                         "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
@@ -2426,8 +2426,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/Gui/zipball/e1ea7462d96c73df50bebbcf6224a86bad06d315",
-                "reference": "e1ea7462d96c73df50bebbcf6224a86bad06d315",
+                "url": "https://api.github.com/repos/spryker/Gui/zipball/98aafbfba751f5825f00affc0540d89b721625f0",
+                "reference": "98aafbfba751f5825f00affc0540d89b721625f0",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2471,7 +2471,7 @@
             "support": {
                 "source": "https://github.com/spryker/Gui/tree/master"
             },
-            "time": "2016-04-04 15:58:21"
+            "time": "2016-04-06 16:26:05"
         },
         {
             "name": "spryker/guzzle",
@@ -2494,7 +2494,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2665,7 +2665,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2713,7 +2713,7 @@
         },
         {
             "name": "spryker/library",
-            "version": "2.0.0",
+            "version": "dev-beta/isolated-bundle-tests",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Library.git",
@@ -2860,7 +2860,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2973,7 +2973,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3032,7 +3032,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3077,7 +3077,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3634,11 +3634,11 @@
         },
         {
             "name": "spryker/propel",
-            "version": "2.0.0",
+            "version": "dev-beta/isolated-bundle-tests",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Propel.git",
-                "reference": "dcd0151d88c3705546c65c207cb5db392e6b8458",
+                "reference": "149fbdeb8b965df8565160c7fff6ec09c30415b4",
                 "mirrors": [
                     {
                         "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
@@ -3648,8 +3648,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/Propel/zipball/dcd0151d88c3705546c65c207cb5db392e6b8458",
-                "reference": "dcd0151d88c3705546c65c207cb5db392e6b8458",
+                "url": "https://api.github.com/repos/spryker/Propel/zipball/149fbdeb8b965df8565160c7fff6ec09c30415b4",
+                "reference": "149fbdeb8b965df8565160c7fff6ec09c30415b4",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3691,9 +3691,9 @@
             ],
             "description": "propel bundle",
             "support": {
-                "source": "https://github.com/spryker/Propel/tree/master"
+                "source": "https://github.com/spryker/Propel/tree/beta/isolated-bundle-tests"
             },
-            "time": "2016-04-04 15:24:01"
+            "time": "2016-04-14 13:27:07"
         },
         {
             "name": "spryker/redis",
@@ -3716,7 +3716,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4263,7 +4263,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4484,7 +4484,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4603,7 +4603,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4660,7 +4660,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4725,7 +4725,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4780,7 +4780,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4905,7 +4905,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4967,7 +4967,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -8371,7 +8371,7 @@
         },
         {
             "name": "spryker/testify",
-            "version": "2.0.0",
+            "version": "dev-beta/isolated-bundle-tests",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Testify.git",
@@ -8649,9 +8649,46 @@
             "time": "2016-01-20 09:13:37"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "2.0.0",
+            "alias_normalized": "2.0.0.0",
+            "version": "dev-beta/isolated-bundle-tests",
+            "package": "spryker/application"
+        },
+        {
+            "alias": "2.0.0",
+            "alias_normalized": "2.0.0.0",
+            "version": "dev-beta/isolated-bundle-tests",
+            "package": "spryker/propel"
+        },
+        {
+            "alias": "2.0.0",
+            "alias_normalized": "2.0.0.0",
+            "version": "dev-beta/isolated-bundle-tests",
+            "package": "spryker/library"
+        },
+        {
+            "alias": "2.0.0",
+            "alias_normalized": "2.0.0.0",
+            "version": "dev-beta/isolated-bundle-tests",
+            "package": "spryker/testify"
+        },
+        {
+            "alias": "2.0.0",
+            "alias_normalized": "2.0.0.0",
+            "version": "dev-beta/isolated-bundle-tests",
+            "package": "spryker/config"
+        }
+    ],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "spryker/application": 20,
+        "spryker/propel": 20,
+        "spryker/library": 20,
+        "spryker/testify": 20,
+        "spryker/config": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
