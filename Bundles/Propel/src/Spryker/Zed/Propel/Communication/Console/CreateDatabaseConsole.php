@@ -62,13 +62,14 @@ class CreateDatabaseConsole extends Console
             ));
 
             $createDatabaseCommand = sprintf(
-                'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
+                'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " postgres',
                 Config::get(PropelConstants::ZED_DB_HOST),
                 Config::get(PropelConstants::ZED_DB_PORT),
                 Config::get(PropelConstants::ZED_DB_USERNAME),
-                Config::get(PropelConstants::ZED_DB_DATABASE),
                 Config::get(PropelConstants::ZED_DB_DATABASE)
             );
+
+            dump($createDatabaseCommand);
 
             $process = new Process($createDatabaseCommand);
             $process->run();
@@ -103,8 +104,6 @@ class CreateDatabaseConsole extends Console
 
         $process = new Process($databaseExistsCommand);
         $process->run();
-
-        dump($databaseExistsCommand);
 
         putenv('PGPASSWORD=');
 
