@@ -11,10 +11,11 @@ $config[ApplicationConstants::ZED_DB_SUPPORTED_ENGINES] = [
     PropelConfig::DB_ENGINE_PGSQL => 'PostgreSql'
 ];
 
-$config[ApplicationConstants::ZED_DB_USERNAME] = 'development';
-$config[ApplicationConstants::ZED_DB_PASSWORD] = 'mate20mg';
-$config[ApplicationConstants::ZED_DB_DATABASE] = 'DE_development_zed';
+$config[ApplicationConstants::ZED_DB_USERNAME] = 'ubuntu';
+$config[ApplicationConstants::ZED_DB_PASSWORD] = '';
+$config[ApplicationConstants::ZED_DB_DATABASE] = 'circle_test';
 $config[ApplicationConstants::ZED_DB_HOST] = '127.0.0.1';
+
 $config[ApplicationConstants::ZED_DB_PORT] = (getenv(ApplicationConstants::ZED_DB_PORT)) ?: 5432;
 $config[ApplicationConstants::ZED_DB_ENGINE] = (getenv(ApplicationConstants::ZED_DB_ENGINE)) ?: $config[ApplicationConstants::ZED_DB_ENGINE_PGSQL];
 
