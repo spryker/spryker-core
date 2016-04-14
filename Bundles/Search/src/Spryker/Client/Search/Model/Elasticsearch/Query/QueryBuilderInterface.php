@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Model\Builder;
+namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 interface QueryBuilderInterface
 {

@@ -31,7 +31,7 @@ interface SearchClientInterface
      * @return array
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters, array $requestParameters = []);
-    
+
     /**
      * @api
      *

@@ -9,8 +9,7 @@ namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetAggregatedQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetFilteredQueryExpanderPlugin;
+use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\PaginatedQueryExpanderPlugin;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SortedQueryExpanderPlugin;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
@@ -42,43 +41,38 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->search()->client();
         };
 
-        $container[self::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS] = function (Container $container) {
-            return $this->createCatalogSearchQueryExpanderPlugins($container);
+        $container[self::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS] = function () {
+            return $this->createCatalogSearchQueryExpanderPlugins();
         };
 
-        $container[self::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS] = function (Container $container) {
-            return $this->createCatalogSearchResultFormatterPlugins($container);
+        $container[self::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
+            return $this->createCatalogSearchResultFormatterPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
      * @return \Spryker\Client\Search\Plugin\QueryExpanderPluginInterface[]
      */
-    protected function createCatalogSearchQueryExpanderPlugins(Container $container)
+    protected function createCatalogSearchQueryExpanderPlugins()
     {
         return [
+            new FacetQueryExpanderPlugin(),
             new SortedQueryExpanderPlugin(),
-            new FacetAggregatedQueryExpanderPlugin(),
-            new FacetFilteredQueryExpanderPlugin(),
             new PaginatedQueryExpanderPlugin(),
         ];
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
      * @return \Spryker\Client\Search\Plugin\ResultFormatterPluginInterface[]
      */
-    protected function createCatalogSearchResultFormatterPlugins(Container $container)
+    protected function createCatalogSearchResultFormatterPlugins()
     {
         return [
             new FacetResultFormatterPlugin(),
-            new PaginatedResultFormatterPlugin(),
             new SortedResultFormatterPlugin(),
+            new PaginatedResultFormatterPlugin(),
         ];
     }
 

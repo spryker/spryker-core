@@ -10,7 +10,6 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 use Elastica\Query;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Model\Query\QueryInterface;
-use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 use Spryker\Client\Search\Plugin\QueryExpanderPluginInterface;
 
 /**

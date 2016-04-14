@@ -8,14 +8,13 @@
 namespace Spryker\Client\Search;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Search\Model\Builder\FacetAggregationBuilder;
-use Spryker\Client\Search\Model\Builder\NestedQueryBuilder;
-use Spryker\Client\Search\Model\Builder\QueryBuilder;
-use Spryker\Client\Search\Plugin\Config\SearchConfig;
-use Spryker\Client\Search\Model\Extractor\FacetExtractor;
-use Spryker\Client\Search\Model\Extractor\RangeExtractor;
+use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorFactory;
+use Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactory;
+use Spryker\Client\Search\Model\Elasticsearch\Query\NestedQueryFactory;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
+use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
+use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 
@@ -26,75 +25,6 @@ class SearchFactory extends AbstractFactory
      * @var \Spryker\Client\Search\Plugin\Config\SearchConfigInterface
      */
     protected static $searchConfigInstance;
-
-    /**
-     * @return \Spryker\Client\ZedRequest\Client\ZedClient
-     * TODO: deprecate / remove
-     */
-    public function createIndexClient()
-    {
-        return $this->createProviderIndexClientProvider()->getClient();
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Provider\IndexClientProvider
-     */
-    protected function createProviderIndexClientProvider()
-    {
-        return new IndexClientProvider();
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Model\Handler\SearchHandlerInterface
-     */
-    public function createElasticsearchSearchHandler()
-    {
-        return new ElasticsearchSearchHandler(
-            $this->createProviderIndexClientProvider()->getClient()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Model\Extractor\AggregationExtractorInterface
-     */
-    public function createFacetExtractor()
-    {
-        return new FacetExtractor();
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Model\Extractor\AggregationExtractorInterface
-     */
-    public function createRangeExtractor()
-    {
-        return new RangeExtractor();
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Model\Builder\FacetAggregationBuilder
-     */
-    public function createFacetAggregationBuilder()
-    {
-        return new FacetAggregationBuilder();
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Model\Builder\NestedQueryBuilder
-     */
-    public function createNestedQueryBuilder()
-    {
-        return new NestedQueryBuilder(
-            $this->createQueryBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Model\Builder\QueryBuilder
-     */
-    public function createQueryBuilder()
-    {
-        return new QueryBuilder();
-    }
 
     /**
      * @return \Spryker\Client\Search\Plugin\Config\SearchConfigInterface
@@ -125,6 +55,41 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ZedRequest\Client\ZedClient
+     * TODO: remove
+     */
+    public function createIndexClient()
+    {
+        return $this->createProviderIndexClientProvider()->getClient();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Provider\IndexClientProvider
+     */
+    protected function createProviderIndexClientProvider()
+    {
+        return new IndexClientProvider();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Handler\SearchHandlerInterface
+     */
+    public function createElasticsearchSearchHandler()
+    {
+        return new ElasticsearchSearchHandler(
+            $this->createProviderIndexClientProvider()->getClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactoryInterface
+     */
+    public function createFacetAggregationFactory()
+    {
+        return new FacetAggregationFactory();
+    }
+
+    /**
      * @return \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface
      */
     public function createFacetConfigBuilder()
@@ -138,6 +103,30 @@ class SearchFactory extends AbstractFactory
     public function createSortConfigBuilder()
     {
         return new SortConfigBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface
+     */
+    public function createPaginationConfigBuilder()
+    {
+        return new PaginationConfigBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\NestedQueryFactoryInterface
+     */
+    public function createNestedQueryFactory()
+    {
+        return new NestedQueryFactory();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorFactoryInterface
+     */
+    public function createAggregationExtractorFactory()
+    {
+        return new AggregationExtractorFactory();
     }
 
 }

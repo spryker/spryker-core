@@ -25,15 +25,22 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
      */
     protected $sortConfigBuilder;
 
+    /**
+     * @var \Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface
+     */
+    protected $paginationConfigBuilder;
+
     public function __construct()
     {
         $this->facetConfigBuilder = $this->getFactory()->createFacetConfigBuilder();
         $this->sortConfigBuilder = $this->getFactory()->createSortConfigBuilder();
+        $this->paginationConfigBuilder = $this->getFactory()->createPaginationConfigBuilder();
 
         $searchConfigBuilder = $this->getFactory()->getSearchConfigBuilder();
 
         $searchConfigBuilder->buildFacetConfig($this->facetConfigBuilder);
         $searchConfigBuilder->buildSortConfig($this->sortConfigBuilder);
+        $searchConfigBuilder->buildPaginationConfig($this->paginationConfigBuilder);
 
         $this->extendConfig();
     }
@@ -60,6 +67,14 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
     public function getSortConfigBuilder()
     {
         return $this->sortConfigBuilder;
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface
+     */
+    public function getPaginationConfigBuilder()
+    {
+        return $this->paginationConfigBuilder;
     }
 
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
-use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()

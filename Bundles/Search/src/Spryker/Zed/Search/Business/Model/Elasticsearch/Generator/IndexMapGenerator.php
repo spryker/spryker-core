@@ -20,7 +20,7 @@ class IndexMapGenerator
     const CLASS_EXTENSION = '.php';
 
     const PROPERTIES = 'properties';
-    
+
     const PROPERTY_PATH_SEPARATOR = '.';
 
     /**

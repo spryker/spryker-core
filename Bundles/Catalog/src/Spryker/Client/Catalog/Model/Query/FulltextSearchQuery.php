@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Catalog\Model\Query;
 
-use Elastica\Index;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;

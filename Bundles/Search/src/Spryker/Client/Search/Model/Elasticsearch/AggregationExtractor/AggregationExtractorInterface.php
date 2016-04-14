@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Model\Extractor;
+namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 /**
  * Class AbstractAggregationExtractor
@@ -16,10 +16,10 @@ interface AggregationExtractorInterface
 
     /**
      * @param array $aggregations
-     * @param array $fields
+     * @param array $requestParameters
      *
      * @return array
      */
-    public function extractDataFromAggregations(array $aggregations, array $fields);
+    public function extractDataFromAggregations(array $aggregations, array $requestParameters);
 
 }

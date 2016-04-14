@@ -39,33 +39,16 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
      */
     protected function addPaginationToQuery(Query $query, array $requestParameters)
     {
-        $currentPage = $this->getCurrentPage($requestParameters);
-        $itemsPerPage = $this->getItemsPerPage($requestParameters);
+        $paginationConfig = $this
+            ->getFactory()
+            ->getSearchConfig()
+            ->getPaginationConfigBuilder();
+
+        $currentPage = $paginationConfig->getCurrentPage($requestParameters);
+        $itemsPerPage = $paginationConfig->get()->getItemsPerPage();
 
         $query->setFrom(($currentPage - 1) * $itemsPerPage);
         $query->setSize($itemsPerPage);
-    }
-
-    /**
-     * @param array $requestParameters
-     *
-     * @return int
-     * TODO: add constants
-     * TODO: move these methods outside somehow
-     */
-    protected function getCurrentPage(array $requestParameters)
-    {
-        return isset($requestParameters['page']) ? max((int)$requestParameters['page'], 1) : 1;
-    }
-
-    /**
-     * @param array $requestParameters
-     *
-     * @return int
-     */
-    protected function getItemsPerPage(array $requestParameters)
-    {
-        return isset($requestParameters['ipp']) ? max((int)$requestParameters['ipp'], 10) : 10;
     }
 
 }

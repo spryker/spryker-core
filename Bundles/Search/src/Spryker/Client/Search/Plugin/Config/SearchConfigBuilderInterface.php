@@ -11,17 +11,24 @@ interface SearchConfigBuilderInterface
 {
 
     /**
-     * @param \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface
+     * @param \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface $facetConfigBuilder
      *
      * @return void
      */
-    function buildFacetConfig(FacetConfigBuilderInterface $facetConfigBuilder);
+    public function buildFacetConfig(FacetConfigBuilderInterface $facetConfigBuilder);
 
     /**
-     * @param \Spryker\Client\Search\Plugin\Config\SortConfigBuilderInterface
+     * @param \Spryker\Client\Search\Plugin\Config\SortConfigBuilderInterface $sortConfigBuilder
      *
      * @return void
      */
-    function buildSortConfig(SortConfigBuilderInterface $sortConfigBuilder);
+    public function buildSortConfig(SortConfigBuilderInterface $sortConfigBuilder);
+
+    /**
+     * @param \Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface $paginationConfigBuilder
+     *
+     * @return void
+     */
+    public function buildPaginationConfig(PaginationConfigBuilderInterface $paginationConfigBuilder);
 
 }

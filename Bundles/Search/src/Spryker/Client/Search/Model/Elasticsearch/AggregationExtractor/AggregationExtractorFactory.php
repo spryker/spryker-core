@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
+
+use Generated\Shared\Transfer\FacetConfigTransfer;
+use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
+
+class AggregationExtractorFactory implements AggregationExtractorFactoryInterface
+{
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     */
+    public function create(FacetConfigTransfer $facetConfigTransfer)
+    {
+        return $this->createByType($facetConfigTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     */
+    protected function createByType(FacetConfigTransfer $facetConfigTransfer)
+    {
+        switch ($facetConfigTransfer->getType()) {
+            case FacetConfigBuilder::TYPE_RANGE:
+            case FacetConfigBuilder::TYPE_PRICE_RANGE:
+                return $this->createRangeExtractor($facetConfigTransfer);
+
+            default:
+                return $this->createFacetExtractor($facetConfigTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     */
+    protected function createRangeExtractor(FacetConfigTransfer $facetConfigTransfer)
+    {
+        return new RangeExtractor($facetConfigTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     */
+    protected function createFacetExtractor(FacetConfigTransfer $facetConfigTransfer)
+    {
+        return new FacetExtractor($facetConfigTransfer);
+    }
+
+}

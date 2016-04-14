@@ -31,7 +31,7 @@ class AbstractSearchMap
     public function getType($propertyName)
     {
         $metadata = $this->getMetadata($propertyName);
-        
+
         return isset($metadata['type']) ? $metadata['type'] : null;
     }
 

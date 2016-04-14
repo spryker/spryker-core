@@ -24,4 +24,9 @@
         <property name="fieldName" type="string" />
     </transfer>
 
+    <transfer name="PaginationConfig">
+        <property name="parameterName" type="string" />
+        <property name="itemsPerPage" type="integer" />
+    </transfer>
+
 </transfers>

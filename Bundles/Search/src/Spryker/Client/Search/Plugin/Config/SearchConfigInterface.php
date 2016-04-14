@@ -20,4 +20,9 @@ interface SearchConfigInterface
      */
     public function getSortConfigBuilder();
 
+    /**
+     * @return \Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface
+     */
+    public function getPaginationConfigBuilder();
+
 }

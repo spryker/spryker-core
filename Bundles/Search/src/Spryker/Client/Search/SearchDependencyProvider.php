@@ -9,6 +9,7 @@ namespace Spryker\Client\Search;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Search\Exception\MissingSearchConfigPluginException;
 use Spryker\Client\Search\Plugin\Config\SearchConfigBuilderInterface;
 
 class SearchDependencyProvider extends AbstractDependencyProvider
@@ -25,7 +26,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container[self::SEARCH_CONFIG_BUILDER] = function(Container $container) {
+        $container[self::SEARCH_CONFIG_BUILDER] = function (Container $container) {
             return $this->createSearchConfigPlugin($container);
         };
 
@@ -35,17 +36,14 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @throws \Exception
+     * @throws \Spryker\Client\Search\Exception\MissingSearchConfigPluginException
      *
      * @return \Spryker\Client\Search\Plugin\Config\SearchConfigBuilderInterface
-     *
-     * TODO: can/should we use multiple search configs with this approach?
      */
     protected function createSearchConfigPlugin(Container $container)
     {
-        // TODO: throw custom exception
-        throw new \Exception(sprintf(
-            'Missing instance of %s! You need to implement your own plugin and instantiate it in your own SearchDependencyProvider::createSearchConfigBuilder(), in order to search.',
+        throw new MissingSearchConfigPluginException(sprintf(
+            'Missing instance of %s! You need to implement your own plugin and instantiate it in your own SearchDependencyProvider::createSearchConfigBuilder() to be able to search.',
             SearchConfigBuilderInterface::class
         ));
     }

@@ -8,7 +8,6 @@
 namespace Spryker\Client\Search\Model\Handler;
 
 use Spryker\Client\Search\Model\Query\QueryInterface;
-use Spryker\Client\Search\Model\ResultFormatter\ResultFormatterPluginInterface;
 
 interface SearchHandlerInterface
 {
