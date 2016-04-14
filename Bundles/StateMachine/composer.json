@@ -17,7 +17,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/console": "^2.0.0",
     "spryker/graph": "^2.0.0",
-    "spryker/library": "^2.0.0",
+    "spryker/library": "^2.0.0"
   },
   "description": "state machine bundle",
   "license": "proprietary",
@@ -25,7 +25,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   }
 }

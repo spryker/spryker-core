@@ -80,6 +80,7 @@ class LockedTrigger implements TriggerInterface
     }
 
     /**
+     * @param string $stateMachineName
      * @return int
      */
     public function triggerConditionsWithoutEvent($stateMachineName)
