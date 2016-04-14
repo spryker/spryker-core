@@ -70,8 +70,6 @@ class CreateDatabaseConsole extends Console
                 'postgres'
             );
 
-            dump($createDatabaseCommand);
-
             $process = new Process($createDatabaseCommand);
             $process->run();
 
@@ -106,8 +104,6 @@ class CreateDatabaseConsole extends Console
 
         $process = new Process($databaseExistsCommand);
         $process->run();
-
-        dump($databaseExistsCommand);
 
         putenv('PGPASSWORD=');
 
