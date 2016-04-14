@@ -18,7 +18,9 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterSe
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider;
 use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
 use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
+use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Communication\Plugin\Installer as CountryInstallerPlugin;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Communication\Plugin\Installer as LocaleInstallerPlugin;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
@@ -64,10 +66,13 @@ class Functional extends Module
      */
     private function runInstaller()
     {
-        foreach ($this->getInstallerCollection() as $installer) {
-            $installer->setMessenger($this->getMessenger());
-            $installer->run();
-        }
+        $messenger = $this->getMessenger();
+
+        $localeFacade = new LocaleFacade();
+        $localeFacade->install($messenger);
+
+        $countryFacade = new CountryFacade();
+        $countryFacade->install($messenger);
     }
 
     /**
@@ -119,17 +124,6 @@ class Functional extends Module
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_destroy();
         }
-    }
-
-    /**
-     * @return array
-     */
-    private function getInstallerCollection()
-    {
-        return [
-            new LocaleInstallerPlugin(),
-            new CountryInstallerPlugin(),
-        ];
     }
 
 }
