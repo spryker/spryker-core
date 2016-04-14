@@ -15,14 +15,14 @@ interface StateMachineHandlerInterface
     /**
      * List of command plugins for this state machine for all processes.
      *
-     * @return array|\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
      */
     public function getCommandPlugins();
 
     /**
      * List of condition plugins for this state machine for all processes.
      *
-     * @return array|\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
      */
     public function getConditionPlugins();
 
@@ -41,7 +41,7 @@ interface StateMachineHandlerInterface
     public function getActiveProcesses();
 
     /**
-     * Provide initial state name for item when state machine initialized. Useing proces name.
+     * Provide initial state name for item when state machine initialized. Using process name.
      *
      * @param string $processName
      *
@@ -66,6 +66,6 @@ interface StateMachineHandlerInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getStateMachineItemsByStateIds($stateIds = []);
+    public function getStateMachineItemsByStateIds(array $stateIds = []);
 
 }

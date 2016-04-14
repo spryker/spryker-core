@@ -12,20 +12,23 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacade getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
  */
 class ListController extends AbstractController
 {
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
+        $stateMachines = [];
+        foreach ($this->getFactory()->getStateMachineHandlerPlugins() as $stateMachineHandlerPlugin) {
+            $stateMachines[] = $stateMachineHandlerPlugin->getStateMachineName();
+        }
+
         return $this->viewResponse([
-            'stateMachines' => [
-                'Test'
-            ],
+            'stateMachines' => $stateMachines
         ]);
     }
 

@@ -18,19 +18,25 @@ interface TriggerInterface
      *
      * @return bool
      */
-    public function triggerForNewStateMachineItem(StateMachineProcessTransfer $stateMachineProcessTransfer, $identifier);
+    public function triggerForNewStateMachineItem(
+        StateMachineProcessTransfer $stateMachineProcessTransfer,
+        $identifier
+    );
 
     /**
-     * @param int $eventName
+     * @param string $eventName
+     * @param string $stateMachineName
      * @param array $items
      *
      * @return bool
      */
-    public function triggerEvent($eventName, array $items);
+    public function triggerEvent($eventName, $stateMachineName, array $items);
 
     /**
+     * @param string $stateMachineName
+     *
      * @return int
      */
-    public function triggerConditionsWithoutEvent();
+    public function triggerConditionsWithoutEvent($stateMachineName);
 
 }

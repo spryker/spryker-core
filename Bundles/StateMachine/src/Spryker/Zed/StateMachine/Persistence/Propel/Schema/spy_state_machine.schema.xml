@@ -46,6 +46,20 @@
         <id-method-parameter value="spy_state_machine_process_pk_seq"/>
     </table>
 
+    <table name="spy_state_machine_lock" phpName="SpyStateMachineLock" identifierQuoting="true">
+        <column name="id_state_machine_lock" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="identifier" type="VARCHAR" size="255"  required="true"/>
+        <column name="expires" type="TIMESTAMP" required="true"/>
+
+        <behavior name="timestampable"/>
+
+        <index name="spy_state_machine_lock-identifier">
+            <index-column name="identifier"/>
+        </index>
+
+        <id-method-parameter value="spy_state_machine_lock_pk_seq"/>
+    </table>
+
     <table name="spy_state_machine_item_state" phpName="SpyStateMachineItemState" identifierQuoting="true">
         <column name="id_state_machine_item_state" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_state_machine_process" type="INTEGER" required="true"/>

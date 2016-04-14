@@ -34,6 +34,18 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[self::PLUGINS_STATE_MACHINE_HANDLERS] = function (Container $container) {
+            return $this->getStateMachineHandlers();
+        };
+    }
+
+    /**
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function getGraphPlugin()

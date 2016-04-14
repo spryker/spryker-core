@@ -6,14 +6,12 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
-use Exception;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
 use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Business\Process\StateInterface;
-use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class Condition implements ConditionInterface
 {
@@ -41,7 +39,7 @@ class Condition implements ConditionInterface
     /**
      * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
      */
-    protected $stateMachineHandler;
+    protected $stateMachineHandlerResolver;
 
     /**
      * @var \Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface
@@ -56,20 +54,20 @@ class Condition implements ConditionInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface $builder
      * @param \Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface $transitionLog
-     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $stateMachineHandlerResolver
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface $finder
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $stateMachinePersistence
      */
     public function __construct(
         BuilderInterface $builder,
         TransitionLogInterface $transitionLog,
-        StateMachineHandlerInterface $stateMachineHandler,
+        HandlerResolverInterface $stateMachineHandlerResolver,
         FinderInterface $finder,
         PersistenceInterface $stateMachinePersistence
     ) {
         $this->builder = $builder;
         $this->transitionLog = $transitionLog;
-        $this->stateMachineHandler = $stateMachineHandler;
+        $this->stateMachineHandlerResolver = $stateMachineHandlerResolver;
         $this->finder = $finder;
         $this->stateMachinePersistence = $stateMachinePersistence;
     }
@@ -85,6 +83,7 @@ class Condition implements ConditionInterface
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
     public function checkConditionForTransitions(
+        $stateMachineName,
         array $transitions,
         StateMachineItemTransfer $stateMachineItemTransfer,
         StateInterface $sourceState,
@@ -94,13 +93,13 @@ class Condition implements ConditionInterface
         foreach ($transitions as $transition) {
             if ($transition->hasCondition()) {
                 $conditionString = $transition->getCondition();
-                $conditionPlugin = $this->getCondition($conditionString);
+                $conditionPlugin = $this->getCondition($conditionString, $stateMachineName);
 
                 try {
                     $conditionCheck = $conditionPlugin->check($stateMachineItemTransfer);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     $transactionLogger->setIsError(true);
-                    $transactionLogger->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
+                    $transactionLogger->setErrorMessage(get_class($conditionPlugin) . ' - ' . $e->getMessage());
                     $transactionLogger->saveAll();
                     throw $e;
                 }
@@ -129,35 +128,48 @@ class Condition implements ConditionInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $itemsWithOnEnterEvent
      */
-    public function checkConditionsForProcess(ProcessInterface $process)
+    public function checkConditionsForProcess(ProcessInterface $process, $stateMachineName)
     {
         $transitions = $process->getAllTransitionsWithoutEvent();
 
         $stateToTransitionsMap = $this->createStateToTransitionMap($transitions);
 
         $stateMachineItemStateIds = $this->stateMachinePersistence->getStateMachineItemIdsByStatesProcessAndStateMachineName(
-            $this->stateMachineHandler->getStateMachineName(),
+            $stateMachineName,
             $process->getName(),
             array_keys($stateToTransitionsMap)
         );
 
-        $stateMachineItems = $this->stateMachineHandler->getStateMachineItemsByStateIds($stateMachineItemStateIds);
+        $stateMachineItems = $this->stateMachineHandlerResolver->get($stateMachineName)->getStateMachineItemsByStateIds($stateMachineItemStateIds);
         if (count($stateMachineItems) === 0) {
             return [];
         }
 
-        $stateMachineItems = $this->stateMachinePersistence->updateStateMachineItemsFromPersistence($stateMachineItems);
+        $stateMachineItems = $this->stateMachinePersistence->updateStateMachineItemsFromPersistence(
+            $stateMachineItems,
+            $stateMachineName
+        );
+
         if (count($stateMachineItems) === 0) {
             return [];
         }
 
         $this->transitionLog->init($stateMachineItems);
 
-        $sourceStateBuffer = $this->updateStateByTransition($stateToTransitionsMap, $stateMachineItems);
+        $sourceStateBuffer = $this->updateStateByTransition(
+            $stateMachineName,
+            $stateToTransitionsMap,
+            $stateMachineItems
+        );
 
         $processes = [$process->getName() => $process];
 
-        $this->stateMachinePersistence->updateStateMachineItemState($stateMachineItems, $processes, $sourceStateBuffer);
+        $this->stateMachinePersistence->updateStateMachineItemState(
+            $stateMachineName,
+            $stateMachineItems,
+            $processes,
+            $sourceStateBuffer
+        );
 
         $itemsWithOnEnterEvent = $this->finder->filterItemsWithOnEnterEvent(
             $stateMachineItems,
@@ -169,12 +181,13 @@ class Condition implements ConditionInterface
     }
 
     /**
+     * @param string $stateMachineName
      * @param array $stateToTransitionsMap
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     *
      * @return array
+     * @throws \Exception
      */
-    protected function updateStateByTransition($stateToTransitionsMap, array $stateMachineItems)
+    protected function updateStateByTransition($stateMachineName, $stateToTransitionsMap, array $stateMachineItems)
     {
         $targetStateMap = [];
         $sourceStateBuffer = [];
@@ -183,7 +196,7 @@ class Condition implements ConditionInterface
             $sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()] = $stateName;
 
             $stateMachineProcessTransfer = new StateMachineProcessTransfer();
-            $stateMachineProcessTransfer->setStateMachineName($this->stateMachineHandler->getStateMachineName());
+            $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
             $stateMachineProcessTransfer->setProcessName($stateMachineItemTransfer->getProcessName());
 
             $process = $this->builder->createProcess($stateMachineProcessTransfer);
@@ -196,6 +209,7 @@ class Condition implements ConditionInterface
             $targetState = $sourceState;
             if (count($transitions) > 0) {
                 $targetState = $this->checkConditionForTransitions(
+                    $stateMachineName,
                     $transitions,
                     $stateMachineItemTransfer,
                     $sourceState,
@@ -236,22 +250,24 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $conditionString
+     * @param string $stateMachineName
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface
      * @throws \Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException
      */
-    protected function getCondition($conditionString)
+    protected function getCondition($conditionString, $stateMachineName)
     {
-        if (!isset($this->stateMachineHandler->getConditionPlugins()[$conditionString])) {
+        $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
+        if (!isset($stateMachineHandler->getConditionPlugins()[$conditionString])) {
             throw new ConditionNotFoundException(
                 sprintf(
                     'Condition plugin "%s" not registered in "%s" class. Please add it to getConditionPlugins method.',
                     $conditionString,
-                    get_class($this->stateMachineHandler)
+                    get_class($this->stateMachineHandlerResolver)
                 )
             );
         }
 
-        return $this->stateMachineHandler->getConditionPlugins()[$conditionString];
+        return $stateMachineHandler->getConditionPlugins()[$conditionString];
     }
 
 }

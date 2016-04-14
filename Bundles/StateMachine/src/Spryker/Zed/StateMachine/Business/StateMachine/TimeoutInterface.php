@@ -15,11 +15,12 @@ interface TimeoutInterface
 {
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $stateMachineTrigger
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $triggerTrigger
+     * @param string $stateMachineName
      *
      * @return int
      */
-    public function checkTimeouts(TriggerInterface $stateMachineTrigger);
+    public function checkTimeouts(TriggerInterface $triggerTrigger, $stateMachineName);
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process

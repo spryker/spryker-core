@@ -7,7 +7,6 @@
 namespace Functional\Spryker\Zed\StateMachine\Mocks;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
-use Pyz\Zed\StateMachineExample\Communication\Plugin\Command\TestCommandPlugin;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class TestStateMachineHandler implements StateMachineHandlerInterface
@@ -54,7 +53,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      */
     public function getStateMachineName()
     {
-        return 'Test';
+        return 'TestingSm';
     }
 
     /**
@@ -101,7 +100,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getStateMachineItemsByStateIds($stateIds = [])
+    public function getStateMachineItemsByStateIds(array $stateIds = [])
     {
         return $this->stateMachineItemsByStateIds;
     }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
-use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
+use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class Finder implements FinderInterface
@@ -21,9 +21,9 @@ class Finder implements FinderInterface
     protected $builder;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
+     * @var \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
      */
-    protected $stateMachineHandler;
+    protected $stateMachineHandlerResolver;
 
     /**
      * @var \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
@@ -32,31 +32,31 @@ class Finder implements FinderInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface $builder
-     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $stateMachineHandlerResolver
      * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $queryContainer
      */
     public function __construct(
         BuilderInterface $builder,
-        StateMachineHandlerInterface $stateMachineHandler,
+        HandlerResolverInterface $stateMachineHandlerResolver,
         StateMachineQueryContainerInterface $queryContainer
     ) {
         $this->builder = $builder;
-        $this->stateMachineHandler = $stateMachineHandler;
+        $this->stateMachineHandlerResolver = $stateMachineHandlerResolver;
         $this->queryContainer = $queryContainer;
     }
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
      */
-    public function getProcesses()
+    public function getProcesses($stateMachineName)
     {
         $processes = [];
-        foreach ($this->stateMachineHandler->getActiveProcesses() as $processName) {
-            $builder = clone $this->builder;
+        $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
+        foreach ($stateMachineHandler->getActiveProcesses() as $processName) {
             $stateMachineProcessTransfer = new StateMachineProcessTransfer();
             $stateMachineProcessTransfer->setProcessName($processName);
-            $stateMachineProcessTransfer->setStateMachineName($this->stateMachineHandler->getStateMachineName());
-            $processes[$processName] = $builder->createProcess($stateMachineProcessTransfer);
+            $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+            $processes[$processName] = $this->builder->createProcess($stateMachineProcessTransfer);
         }
 
         return $processes;
@@ -64,14 +64,14 @@ class Finder implements FinderInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     *
-     * @return array|string[]
+     * @param string $stateMachineName
+     * @return array|\string[]
      */
-    public function getManualEventsForStateMachineItems(array $stateMachineItems)
+    public function getManualEventsForStateMachineItems(array $stateMachineItems, $stateMachineName)
     {
         $itemsWithManualEvents = [];
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
-            $manualEvents = $this->getManualEventsForStateMachineItem($stateMachineItemTransfer);
+            $manualEvents = $this->getManualEventsForStateMachineItem($stateMachineItemTransfer, $stateMachineName);
 
             if (count($manualEvents) > 0) {
                 $itemsWithManualEvents[$stateMachineItemTransfer->getIdentifier()] = $manualEvents;
@@ -83,11 +83,14 @@ class Finder implements FinderInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return array|string[]
+     * @param string $stateMachineName
+     * @return array|\string[]
      */
-    public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer)
-    {
+    public function getManualEventsForStateMachineItem(
+        StateMachineItemTransfer $stateMachineItemTransfer,
+        $stateMachineName
+    ) {
+
         $stateMachineItemTransfer->requireProcessName();
 
         $processName = $stateMachineItemTransfer->getProcessName();
@@ -96,7 +99,7 @@ class Finder implements FinderInterface
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($this->stateMachineHandler->getStateMachineName());
+        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
 
         $manualEvents = $processBuilder->createProcess($stateMachineProcessTransfer)->getManualEventsBySource();
 
@@ -170,11 +173,13 @@ class Finder implements FinderInterface
             $stateMachineItemTransfer->setIdItemState($stateMachineItemEntity->getIdStateMachineItemState());
             $stateMachineItemTransfer->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
             $stateMachineItemTransfer->setStateName($stateMachineItemEntity->getName());
+
             $itemIdentifier = $stateMachineItemEntity->getStateHistories()->getFirst()->getIdentifier();
             $stateMachineItemTransfer->setIdentifier($itemIdentifier);
 
             $stateMachineItemsWithFlag[] = $stateMachineItemTransfer;
         }
+
         return $stateMachineItemsWithFlag;
     }
 
@@ -189,8 +194,7 @@ class Finder implements FinderInterface
     {
         $selectedStates = [];
 
-        $builder = clone $this->builder;
-        $processStateList = $builder->createProcess($stateMachineProcessTransfer)->getAllStates();
+        $processStateList = $this->builder->createProcess($stateMachineProcessTransfer)->getAllStates();
         foreach ($processStateList as $state) {
             if (($hasFlag && $state->hasFlag($flag)) || (!$hasFlag && !$state->hasFlag($flag))) {
                 $selectedStates[$state->getName()] = $state;
@@ -216,14 +220,15 @@ class Finder implements FinderInterface
     ) {
         $itemsWithOnEnterEvent = [];
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
-            $stateName = $stateMachineItemTransfer->getStateName();
-            $processName = $stateMachineItemTransfer->getProcessName();
+            $stateName = $stateMachineItemTransfer->requireStateName()->getStateName();
+            $processName = $stateMachineItemTransfer->requireProcessName()->getProcessName();
 
             if (!isset($processes[$processName])) {
-                throw new StatemachineException(
+                throw new StateMachineException(
                     sprintf(
-                        'Unknown process for state machine "%s".',
-                        $processName
+                        'Unknown process "%s" for state machine "%s".',
+                        $processName,
+                        'SM'
                     )
                 );
             }

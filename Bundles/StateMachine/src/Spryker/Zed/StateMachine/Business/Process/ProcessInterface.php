@@ -11,15 +11,6 @@ interface ProcessInterface
 {
 
     /**
-     * @param string|null $highlightState
-     * @param string|null $format
-     * @param int|null $fontSize
-     *
-     * @return bool
-     */
-    public function draw($highlightState = null, $format = null, $fontSize = null);
-
-    /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $subProcesses
      *
      * @return void
@@ -96,13 +87,13 @@ interface ProcessInterface
     public function hasState($stateId);
 
     /**
-     * @param string $stateId
+     * @param string $stateName
      *
      * @throws \Exception
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
-    public function getStateFromAllProcesses($stateId);
+    public function getStateFromAllProcesses($stateName);
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface[]

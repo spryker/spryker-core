@@ -1,4 +1,4 @@
-# State machine Bundle
+# StateMachine Bundle
 
 ## Installation
 

@@ -8,6 +8,8 @@ namespace Spryker\Zed\StateMachine\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\StateMachine\Business\Graph\Drawer;
+use Spryker\Zed\StateMachine\Business\Lock\ItemLock;
+use Spryker\Zed\StateMachine\Business\Lock\LockedTrigger;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLog;
 use Spryker\Zed\StateMachine\Business\Process\Event;
 use Spryker\Zed\StateMachine\Business\Process\Process;
@@ -31,62 +33,78 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param string $stateMachineName
-     *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface
      */
-    public function createStateMachineTrigger($stateMachineName)
+    public function createStateMachineTrigger()
     {
         return new Trigger(
-            $this->createStateMachineBuilder($stateMachineName),
+            $this->createStateMachineBuilder(),
             $this->createLoggerTransitionLog(),
-            $this->createHandlerResolver()->findHandler($stateMachineName),
-            $this->createStateMachineFinder($stateMachineName),
-            $this->createStateMachinePersistence($stateMachineName),
-            $this->createStateMachineCondition($stateMachineName)
+            $this->createHandlerResolver(),
+            $this->createStateMachineFinder(),
+            $this->createStateMachinePersistence(),
+            $this->createStateMachineCondition()
         );
     }
 
     /**
-     * @param string $stateMachineName
-     *
-     * @return \Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface
+     * @return \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface
      */
-    public function createStateMachineCondition($stateMachineName)
+    public function createLockedStateMachineTrigger()
     {
-        return new Condition(
-            $this->createStateMachineBuilder($stateMachineName),
-            $this->createLoggerTransitionLog(),
-            $this->createHandlerResolver()->findHandler($stateMachineName),
-            $this->createStateMachineFinder($stateMachineName),
-            $this->createStateMachinePersistence($stateMachineName)
+        return new LockedTrigger(
+            $this->createStateMachineTrigger(),
+            $this->createItemLock()
         );
     }
 
     /**
-     * @param string $stateMachineName
-     * @return \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface
+     * @return \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface
      */
-    public function createStateMachineBuilder($stateMachineName)
+    protected function createItemLock()
     {
-        return new Builder(
-            $this->createProcessEvent(),
-            $this->createProcessState(),
-            $this->createProcessTransition(),
-            $this->createProcessProcess($stateMachineName),
+        return new ItemLock(
+            $this->getQueryContainer(),
             $this->getConfig()
         );
     }
 
     /**
-     * @param string $stateMachineName
+     * @return \Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface
+     */
+    public function createStateMachineCondition()
+    {
+        return new Condition(
+            $this->createStateMachineBuilder(),
+            $this->createLoggerTransitionLog(),
+            $this->createHandlerResolver(),
+            $this->createStateMachineFinder(),
+            $this->createStateMachinePersistence()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface
+     */
+    public function createStateMachineBuilder()
+    {
+        return new Builder(
+            $this->createProcessEvent(),
+            $this->createProcessState(),
+            $this->createProcessTransition(),
+            $this->createProcessProcess(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface
      */
-    public function createStateMachineFinder($stateMachineName)
+    public function createStateMachineFinder()
     {
         return new Finder(
-            $this->createStateMachineBuilder($stateMachineName),
-            $this->createHandlerResolver()->findHandler($stateMachineName),
+            $this->createStateMachineBuilder(),
+            $this->createHandlerResolver(),
             $this->getQueryContainer()
         );
     }
@@ -94,11 +112,11 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface
      */
-    public function createStateMachineTimeout($stateMachineName)
+    public function createStateMachineTimeout()
     {
         return new Timeout(
             $this->getQueryContainer(),
-            $this->createHandlerResolver()->findHandler($stateMachineName)
+            $this->createHandlerResolver()
         );
     }
 
@@ -113,11 +131,11 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface
      */
-    public function createStateMachinePersistence($stateMachineName)
+    public function createStateMachinePersistence()
     {
         return new Persistence(
-            $this->createStateMachineTimeout($stateMachineName),
-            $this->createHandlerResolver()->findHandler($stateMachineName),
+            $this->createStateMachineTimeout(),
+            $this->createHandlerResolver(),
             $this->getQueryContainer()
         );
     }
@@ -147,12 +165,11 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $stateMachineName
      * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface
      */
-    public function createProcessProcess($stateMachineName)
+    public function createProcessProcess()
     {
-        return new Process($this->createGraphDrawer($stateMachineName));
+        return new Process();
     }
 
     /**
@@ -163,16 +180,8 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     {
         return new Drawer(
             $this->getGraph()->init(StateMachineConfig::GRAPH_NAME, $this->getConfig()->getGraphDefaults(), true, false),
-            $this->createHandlerResolver()->findHandler($stateMachineName)
+            $this->createHandlerResolver()->get($stateMachineName)
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
-     */
-    protected function getGraph()
-    {
-        return $this->getProvidedDependency(StateMachineDependencyProvider::PLUGIN_GRAPH);
     }
 
     /**
@@ -184,11 +193,19 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
+     */
+    protected function getGraph()
+    {
+        return $this->getProvidedDependency(StateMachineDependencyProvider::PLUGIN_GRAPH);
+    }
+
+    /**
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[]
      */
     public function getStateMachineHandlerPlugins()
     {
-         return $this->getProvidedDependency(StateMachineDependencyProvider::PLUGINS_STATE_MACHINE_HANDLERS);
+        return $this->getProvidedDependency(StateMachineDependencyProvider::PLUGINS_STATE_MACHINE_HANDLERS);
     }
 
 }

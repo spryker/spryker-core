@@ -30,6 +30,14 @@ class StateMachineConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getStateMachineItemLockExpirationInterval()
+    {
+        return '10 seconds';
+    }
+
+    /**
+     * @return string
+     */
     public function getPathToStateMachineXmlFiles()
     {
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'Zed' . DIRECTORY_SEPARATOR . 'StateMachine';

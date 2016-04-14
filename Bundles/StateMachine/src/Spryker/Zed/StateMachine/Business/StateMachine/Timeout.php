@@ -10,9 +10,9 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineEventTimeoutQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout;
+use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Business\Process\EventInterface;
 use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
-use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class Timeout implements TimeoutInterface
@@ -34,34 +34,25 @@ class Timeout implements TimeoutInterface
     protected $stateIdToModelBuffer = [];
 
     /**
-     * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
-     */
-    protected $stateMachineHandler;
-
-    /**
      * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      */
-    public function __construct(
-        StateMachineQueryContainerInterface $queryContainer,
-        StateMachineHandlerInterface $stateMachineHandler
-    ) {
+    public function __construct(StateMachineQueryContainerInterface $queryContainer)
+    {
         $this->queryContainer = $queryContainer;
-        $this->stateMachineHandler = $stateMachineHandler;
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $stateMachine
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $trigger
      *
      * @return int
      */
-    public function checkTimeouts(TriggerInterface $stateMachine)
+    public function checkTimeouts(TriggerInterface $trigger, $stateMachineName)
     {
-        $stateMachineItems = $this->findItemsWithExpiredTimeouts();
+        $stateMachineItems = $this->findItemsWithExpiredTimeouts($stateMachineName);
 
         $groupedStateMachineItems = $this->groupItemsByEvent($stateMachineItems);
         foreach ($groupedStateMachineItems as $event => $stateMachineItems) {
-            $stateMachine->triggerEvent($event, $stateMachineItems);
+            $trigger->triggerEvent($event, $stateMachineName, $stateMachineItems);
         }
 
         return count($stateMachineItems);
@@ -96,6 +87,8 @@ class Timeout implements TimeoutInterface
                 $handledEvents[] = $event->getName();
                 $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
 
+                $this->dropTimeoutByItem($stateMachineItemTransfer);
+
                 (new SpyStateMachineEventTimeout())
                     ->setTimeout($timeoutDate)
                     ->setIdentifier($stateMachineItemTransfer->getIdentifier())
@@ -125,9 +118,7 @@ class Timeout implements TimeoutInterface
         $sourceState = $this->getStateFromProcess($stateName, $process);
 
         if ($sourceState->hasTimeoutEvent()) {
-            SpyStateMachineEventTimeoutQuery::create()
-                ->filterByIdentifier($stateMachineItemTransfer->getIdentifier())
-                ->delete();
+            $this->dropTimeoutByItem($stateMachineItemTransfer);
         }
     }
 
@@ -188,10 +179,13 @@ class Timeout implements TimeoutInterface
     /**
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $expiredStateMachineItemsTransfer
      */
-    protected function findItemsWithExpiredTimeouts()
+    protected function findItemsWithExpiredTimeouts($stateMachineName)
     {
         $stateMachineExpiredItems = $this->queryContainer
-            ->queryItemsWithExpiredTimeout(new \DateTime('now'), $this->stateMachineHandler->getStateMachineName())
+            ->queryItemsWithExpiredTimeout(
+                new \DateTime('now'),
+                $stateMachineName
+            )
             ->find();
 
         $expiredStateMachineItemsTransfer = [];
@@ -221,7 +215,7 @@ class Timeout implements TimeoutInterface
      * @param \DateInterval $interval
      * @param mixed $timeout
      *
-     * @throws \ErrorException
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
      * @return int
      */
@@ -233,10 +227,23 @@ class Timeout implements TimeoutInterface
             $vSum += (int)$v;
         }
         if ($vSum === 0) {
-            throw new \ErrorException('Invalid format for timeout "' . $timeout . '"');
+            throw new StateMachineException('Invalid format for timeout "' . $timeout . '"');
         }
 
         return $vSum;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return void
+     */
+    protected function dropTimeoutByItem(StateMachineItemTransfer $stateMachineItemTransfer)
+    {
+        SpyStateMachineEventTimeoutQuery::create()
+            ->filterByIdentifier($stateMachineItemTransfer->getIdentifier())
+            ->filterByFkStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess())
+            ->delete();
     }
 
 }

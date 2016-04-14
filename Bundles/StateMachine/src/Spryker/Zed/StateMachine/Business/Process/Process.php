@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\StateMachine\Business\Process;
 
-use Exception;
-use Spryker\Zed\StateMachine\Business\Graph\DrawerInterface;
+use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 
 class Process implements ProcessInterface
 {
@@ -47,26 +46,6 @@ class Process implements ProcessInterface
      * @var \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
      */
     protected $subProcesses = [];
-
-    /**
-     * @param \Spryker\Zed\StateMachine\Business\Graph\DrawerInterface $drawer
-     */
-    public function __construct(DrawerInterface $drawer)
-    {
-        $this->drawer = $drawer;
-    }
-
-    /**
-     * @param string|null $highlightState
-     * @param string|null $format
-     * @param int|null $fontSize
-     *
-     * @return bool
-     */
-    public function draw($highlightState = null, $format = null, $fontSize = null)
-    {
-        return $this->drawer->draw($this, $highlightState, $format, $fontSize);
-    }
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $subProcesses
@@ -181,21 +160,27 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param string $stateId
+     * @param string $stateName
      *
      * @throws \Exception
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
-    public function getStateFromAllProcesses($stateId)
+    public function getStateFromAllProcesses($stateName)
     {
         $processes = $this->getAllProcesses();
         foreach ($processes as $process) {
-            if ($process->hasState($stateId)) {
-                return $process->getState($stateId);
+            if ($process->hasState($stateName)) {
+                return $process->getState($stateName);
             }
         }
-        throw new Exception('Unknown state: ' . $stateId);
+
+        throw new StatemachineException(
+            sprintf(
+                'Unknown state: %s',
+                $stateName
+            )
+        );
     }
 
     /**
@@ -296,9 +281,10 @@ class Process implements ProcessInterface
         $transitions = [];
         $allTransitions = $this->getAllTransitions();
         foreach ($allTransitions as $transition) {
-            if ($transition->hasEvent() === false) {
-                $transitions[] = $transition;
+            if ($transition->hasEvent() === true) {
+                continue;
             }
+            $transitions[] = $transition;
         }
 
         return $transitions;

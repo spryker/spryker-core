@@ -8,6 +8,7 @@ namespace Spryker\Zed\StateMachine\Persistence;
 
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineEventTimeoutQuery;
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineItemStateHistoryQuery;
+use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineLockQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLogQuery;
@@ -58,6 +59,14 @@ class StateMachinePersistenceFactory extends AbstractPersistenceFactory
     public function createStateMachineItemStateHistoryQuery()
     {
         return SpyStateMachineItemStateHistoryQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
+     */
+    public function createStateMachineLockQuery()
+    {
+        return SpyStateMachineLockQuery::create();
     }
 
 }

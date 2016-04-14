@@ -25,6 +25,8 @@ use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
 class StateMachineFacadeTest extends Test
 {
 
+    const TESTING_SM = 'TestingSm';
+
     /**
      * @return void
      */
@@ -40,11 +42,10 @@ class StateMachineFacadeTest extends Test
     {
         $processName = 'TestProcess';
         $identifier = 1985;
-        $stateMachineName = 'Test';
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -55,7 +56,7 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineProcessEntity = SpyStateMachineProcessQuery::create()
             ->filterByName($processName)
-            ->filterByStateMachineName($stateMachineName)
+            ->filterByStateMachineName(self::TESTING_SM)
             ->findOne();
 
         $stateMachineItemStateEntity = SpyStateMachineItemStateQuery::create()
@@ -78,11 +79,10 @@ class StateMachineFacadeTest extends Test
     {
         $processName = 'TestProcess';
         $identifier = 1985;
-        $stateMachineName = 'Test';
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -93,7 +93,7 @@ class StateMachineFacadeTest extends Test
 
         $triggerResult = $stateMachineFacade->triggerEvent(
             'ship order',
-            $stateMachineName,
+            self::TESTING_SM,
             $stateMachineItemTransfer
         );
 
@@ -111,16 +111,15 @@ class StateMachineFacadeTest extends Test
     public function testGetProcessesShouldReturnListOfProcessesAddedToHandler()
     {
         $processName = 'TestProcess';
-        $stateMachineName = 'Test';
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
-        $processList = $stateMachineFacade->getProcesses($stateMachineName);
+        $processList = $stateMachineFacade->getProcesses(self::TESTING_SM);
 
         $this->assertCount(1, $processList);
 
@@ -136,20 +135,19 @@ class StateMachineFacadeTest extends Test
     public function testGetStateMachineProcessIdShouldReturnIdStoredInPersistence()
     {
         $processName = 'TestProcess';
-        $stateMachineName = 'Test';
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $processId = $stateMachineFacade->getStateMachineProcessId($stateMachineProcessTransfer);
 
         $stateMachineProcessEntity = SpyStateMachineProcessQuery::create()
             ->filterByName($processName)
-            ->filterByStateMachineName($stateMachineName)
+            ->filterByStateMachineName(self::TESTING_SM)
             ->findOne();
 
         $this->assertEquals($stateMachineProcessEntity->getIdStateMachineProcess(), $processId);
@@ -162,11 +160,10 @@ class StateMachineFacadeTest extends Test
     {
         $processName = 'TestProcess';
         $identifier = 1985;
-        $stateMachineName = 'Test';
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -176,7 +173,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
         $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItem(
-            $stateMachineName,
+            self::TESTING_SM,
             $stateMachineItemTransfer
         );
 
@@ -199,13 +196,12 @@ class StateMachineFacadeTest extends Test
     public function testGetManualEventForStateMachineItemsShouldReturnAllEventsForProvidedStates()
     {
         $processName = 'TestProcess';
-        $stateMachineName = 'Test';
         $firstItemIdentifier = 1985;
         $secondItemIdentifier = 1988;
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -216,9 +212,9 @@ class StateMachineFacadeTest extends Test
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $secondItemIdentifier);
         $stateMachineItems[$secondItemIdentifier] = $stateMachineHandler->getItemStateUpdated();
 
-        $stateMachineFacade->triggerEvent('ship order', $stateMachineName, $stateMachineItems[$secondItemIdentifier]);
+        $stateMachineFacade->triggerEvent('ship order', self::TESTING_SM, $stateMachineItems[$secondItemIdentifier]);
 
-        $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItems($stateMachineName, $stateMachineItems);
+        $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItems(self::TESTING_SM, $stateMachineItems);
 
         $this->assertCount(2, $manualEvents);
 
@@ -244,13 +240,12 @@ class StateMachineFacadeTest extends Test
     public function testGetProcessedStateMachineItemsShouldReturnItemsByProvidedStateIdsStoredInPersistence()
     {
         $processName = 'TestProcess';
-        $stateMachineName = 'Test';
         $firstItemIdentifier = 1985;
         $secondItemIdentifier = 1988;
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -266,7 +261,7 @@ class StateMachineFacadeTest extends Test
 
         /* @var $updatedStateMachineItems StateMachineItemTransfer[]  */
         $updatedStateMachineItems = $stateMachineFacade->getProcessedStateMachineItems(
-            $stateMachineName,
+            self::TESTING_SM,
             $stateMachineItems
         );
 
@@ -325,12 +320,11 @@ class StateMachineFacadeTest extends Test
     public function testGetProcessedStateMachineItemTransferShouldReturnItemTransfer()
     {
         $processName = 'TestProcess';
-        $stateMachineName = 'Test';
         $firstItemIdentifier = 1985;
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -342,7 +336,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $updatedStateMachineItemTransfer = $stateMachineFacade->getProcessedStateMachineItemTransfer(
-            $stateMachineName,
+            self::TESTING_SM,
             $stateMachineItemTransfer->getIdItemState(),
             $stateMachineItemTransfer->getIdStateMachineProcess(),
             $stateMachineItemTransfer->getIdentifier()
@@ -376,12 +370,11 @@ class StateMachineFacadeTest extends Test
     public function testGetStateHistoryByStateItemIdentifierShouldReturnAllHistoryForThatItem()
     {
         $processName = 'TestProcess';
-        $stateMachineName = 'Test';
         $identifier = 1985;
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -390,7 +383,6 @@ class StateMachineFacadeTest extends Test
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
         $stateMachineItemsTransfer = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
-            $stateMachineName,
             $stateMachineItemTransfer->getIdStateMachineProcess(),
             $identifier
         );
@@ -414,12 +406,11 @@ class StateMachineFacadeTest extends Test
     public function testGetItemsWithFlagShouldReturnListOfStateMachineItemsWithGivenFlag()
     {
         $processName = 'TestProcess';
-        $stateMachineName = 'Test';
         $identifier = 1985;
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -456,12 +447,11 @@ class StateMachineFacadeTest extends Test
     public function testGetItemsWithoutFlagShouldReturnListOfStateMachineItemsWithoutGivenFlag()
     {
         $processName = 'TestProcess';
-        $stateMachineName = 'Test';
         $identifier = 1985;
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -502,12 +492,11 @@ class StateMachineFacadeTest extends Test
     public function testCheckConditionsShouldProcessStatesWithConditionAndWithoutEvent()
     {
         $processName = 'TestProcess';
-        $stateMachineName = 'Test';
         $identifier = 1985;
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -516,11 +505,11 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $stateMachineFacade->triggerEvent('check with condition', $stateMachineName, $stateMachineItemTransfer);
+        $stateMachineFacade->triggerEvent('check with condition', self::TESTING_SM, $stateMachineItemTransfer);
 
         $stateMachineHandler->setStateMachineItemsByStateIds([$stateMachineItemTransfer]);
 
-        $stateMachineFacade->checkConditions($stateMachineName);
+        $stateMachineFacade->checkConditions(self::TESTING_SM);
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
@@ -533,12 +522,11 @@ class StateMachineFacadeTest extends Test
     public function testCheckTimeoutsShouldMoveStatesWithExpiredTimeouts()
     {
         $processName = 'TestProcess';
-        $stateMachineName = 'Test';
         $identifier = 1985;
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
@@ -547,7 +535,7 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $stateMachineFacade->triggerEvent('ship order', $stateMachineName, $stateMachineItemTransfer);
+        $stateMachineFacade->triggerEvent('ship order', self::TESTING_SM, $stateMachineItemTransfer);
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
@@ -559,7 +547,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineItemEventTimeoutEntity->setTimeout('1985-07-01');
         $stateMachineItemEventTimeoutEntity->save();
 
-        $affectedItems = $stateMachineFacade->checkTimeouts($stateMachineName);
+        $affectedItems = $stateMachineFacade->checkTimeouts(self::TESTING_SM);
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 

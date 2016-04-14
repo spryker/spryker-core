@@ -45,20 +45,27 @@ interface PersistenceInterface
     public function saveStateMachineItemState(StateMachineItemTransfer $stateMachineItemTransfer, $stateName);
 
     /**
+     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
      * @param array $sourceStateBuffer
      *
      * @return void
      */
-    public function updateStateMachineItemState(array $stateMachineItems, array $processes, array $sourceStateBuffer);
+    public function updateStateMachineItemState(
+        $stateMachineName,
+        array $stateMachineItems,
+        array $processes,
+        array $sourceStateBuffer
+    );
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param string $stateMachineName
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function updateStateMachineItemsFromPersistence(array $stateMachineItems);
+    public function updateStateMachineItemsFromPersistence(array $stateMachineItems, $stateMachineName);
 
     /**
      * @param int $itemIdentifier
@@ -71,18 +78,25 @@ interface PersistenceInterface
     /**
      * @param int $idStateMachineState
      * @param int $idStateMachineProcess
+     * @param string $stateMachineName
      * @param int $identifier
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
      */
-    public function getProcessedStateMachineItemTransfer($idStateMachineState, $idStateMachineProcess, $identifier);
+    public function getProcessedStateMachineItemTransfer(
+        $idStateMachineState,
+        $idStateMachineProcess,
+        $stateMachineName,
+        $identifier
+    );
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param string $stateMachineName
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getProcessedStateMachineItems(array $stateMachineItems);
+    public function getProcessedStateMachineItems(array $stateMachineItems, $stateMachineName);
 
     /**
      * @param string $processName

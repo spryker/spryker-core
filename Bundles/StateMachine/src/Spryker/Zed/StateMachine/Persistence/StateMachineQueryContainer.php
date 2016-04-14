@@ -103,7 +103,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
              ->endUse()
              ->joinState()
              ->filterByIdentifier($identifier)
-             ->orderByCreatedAt();
+             ->orderByCreatedAt()
+             ->orderByIdStateMachineItemStateHistory();
     }
 
     /**
@@ -158,6 +159,34 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
         return $this->getFactory()->createStateMachineItemStateQuery()
             ->filterByFkStateMachineProcess($idStateMachineProcess)
             ->filterByName($stateName);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $identifier
+     * @param \DateTime $expirationDate
+     *
+     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
+     */
+    public function queryStateMachineLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate)
+    {
+        return $this->getFactory()->createStateMachineLockQuery()
+            ->filterByIdentifier($identifier)
+            ->filterByExpires(['min' => new \DateTime('now')]);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $identifier
+     *
+     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
+     */
+    public function queryStateMachineLockItemsByIdentifier($identifier)
+    {
+        return $this->getFactory()->createStateMachineLockQuery()
+            ->filterByIdentifier($identifier);
     }
 
 }

@@ -92,4 +92,23 @@ interface StateMachineQueryContainerInterface
      */
     public function queryStateMachineItemStateByIdStateMachineProcessAndStateName($idStateMachineProcess, $stateName);
 
+    /**
+     * @api
+     *
+     * @param string $identifier
+     * @param \DateTime $expirationDate
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
+     */
+    public function queryStateMachineLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate);
+
+    /**
+     * @api
+     *
+     * @param string $identifier
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
+     */
+    public function queryStateMachineLockItemsByIdentifier($identifier);
+
 }

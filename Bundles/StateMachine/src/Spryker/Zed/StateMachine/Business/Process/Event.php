@@ -11,7 +11,7 @@ class Event implements EventInterface
 {
 
     /**
-     * @var mixed
+     * @var string
      */
     protected $id;
 
@@ -41,7 +41,7 @@ class Event implements EventInterface
     protected $manual;
 
     /**
-     * @param mixed $manual
+     * @param bool $manual
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function isManual()
     {
@@ -59,7 +59,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @param mixed $command
+     * @param string $command
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCommand()
     {
@@ -103,7 +103,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @param mixed $id
+     * @param string $id
      *
      * @return void
      */
@@ -113,7 +113,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -140,9 +140,10 @@ class Event implements EventInterface
         $transitions = [];
 
         foreach ($this->transitions as $transition) {
-            if ($transition->getSource()->getName() === $sourceState->getName()) {
-                $transitions[] = $transition;
+            if ($transition->getSource()->getName() !== $sourceState->getName()) {
+                continue;
             }
+            $transitions[] = $transition;
         }
 
         return $transitions;
@@ -157,7 +158,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @param mixed $timeout
+     * @param string $timeout
      *
      * @return void
      */
@@ -167,7 +168,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTimeout()
     {

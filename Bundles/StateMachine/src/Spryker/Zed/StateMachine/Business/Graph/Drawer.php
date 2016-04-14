@@ -80,7 +80,7 @@ class Drawer implements DrawerInterface
     protected $graph;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
+     * @var \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
      */
     protected $stateMachineHandler;
 

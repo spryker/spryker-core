@@ -14,23 +14,29 @@ interface FinderInterface
 {
 
     /**
+     * @param string $stateMachineName
      * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
      */
-    public function getProcesses();
+    public function getProcesses($stateMachineName);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param string $stateMachineName
      *
      * @return array|string[]
      */
-    public function getManualEventsForStateMachineItems(array $stateMachineItems);
+    public function getManualEventsForStateMachineItems(array $stateMachineItems, $stateMachineName);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     * @param string $stateMachineName
      *
-     * @return array|string[]
+     * @return array|\string[]
      */
-    public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
+    public function getManualEventsForStateMachineItem(
+        StateMachineItemTransfer $stateMachineItemTransfer,
+        $stateMachineName
+    );
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
