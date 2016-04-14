@@ -23,12 +23,39 @@ class CsvWriter implements CsvWriterInterface
     protected $csvFilename;
 
     /**
+     * @var string
+     */
+    protected $csvDelimiter = ",";
+
+    /**
+     * @var string
+     */
+    protected $csvEnclosure = "\"";
+
+    /**
+     * @var string
+     */
+    protected $csvEscape = "\\";
+
+    /**
      * CsvWriter constructor.
      * @param string $filename
      */
     public function __construct($filename = 'test.csv')
     {
         $this->csvFilename = $filename;
+    }
+
+    /**
+     * @param \Spryker\Shared\Library\Writer\Csv\CsvFormatter $csvFormatter
+     *
+     * @return void
+     */
+    public function setCsvFormat($csvFormatter)
+    {
+        $this->csvDelimiter = $csvFormatter->getDelimiter();
+        $this->csvEnclosure = $csvFormatter->getEnclosure();
+        $this->csvEscape = $csvFormatter->getEscape();
     }
 
     /**
@@ -39,21 +66,21 @@ class CsvWriter implements CsvWriterInterface
     protected function createCsvFile($filename)
     {
         $csvFile = new SplFileObject($filename, 'w');
-        $csvFile->setCsvControl(',', '"');
-        $csvFile->setFlags(SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD);
+        $csvFile->setCsvControl($this->csvDelimiter, $this->csvEnclosure, $this->csvEscape);
 
         return $csvFile;
     }
 
     /**
-     * @return \SplFileObject
+     * @param array $headerKeys
      *
-     * @throws \LogicException
+     * @return \SplFileObject
      */
-    public function getFile()
+    public function getFile($headerKeys = [])
     {
         if ($this->csvFile === null) {
             $this->csvFile = $this->createCsvFile($this->csvFilename);
+            $this->csvFile->fputcsv($headerKeys);
         }
 
         return $this->csvFile;
@@ -68,7 +95,7 @@ class CsvWriter implements CsvWriterInterface
     {
         $result = 0;
         foreach ($data as $key => $row) {
-            $result = $this->getFile()->fputcsv($row);
+            $result = $this->getFile(array_keys($row))->fputcsv($row);
         }
         return $result;
     }

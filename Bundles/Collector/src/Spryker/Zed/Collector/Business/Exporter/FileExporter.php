@@ -9,6 +9,7 @@ namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Spryker\Shared\Library\Writer\Csv\CsvFormatterInterface;
 use Spryker\Shared\Library\Writer\Csv\CsvWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterPathConstructor;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
@@ -28,12 +29,19 @@ class FileExporter extends AbstractExporter
     protected $pathConstructor;
 
     /**
+     * @var \Spryker\Shared\Library\Writer\Csv\CsvFormatterInterface
+     */
+    protected $fileFormatter;
+
+    /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
      * @param \Spryker\Zed\Collector\Business\Exporter\MarkerInterface $marker
      * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failedResultPrototype
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResultPrototype
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterPathConstructor $pathConstructor
+     * @param \Spryker\Shared\Library\Writer\Csv\CsvFormatterInterface $fileFormatter
      */
     public function __construct(
         TouchQueryContainerInterface $queryContainer,
@@ -42,10 +50,12 @@ class FileExporter extends AbstractExporter
         FailedResultInterface $failedResultPrototype,
         BatchResultInterface $batchResultPrototype,
         TouchUpdaterInterface $touchUpdater,
-        FileWriterPathConstructor $pathConstructor
+        FileWriterPathConstructor $pathConstructor,
+        CsvFormatterInterface $fileFormatter
     ) {
         parent::__construct($queryContainer, $writer, $marker, $failedResultPrototype, $batchResultPrototype, $touchUpdater);
         $this->pathConstructor = $pathConstructor;
+        $this->fileFormatter = $fileFormatter;
     }
 
     /**
@@ -77,6 +87,7 @@ class FileExporter extends AbstractExporter
         $collectorPlugin = $this->collectorPlugins[$type];
 
         $csvWriter = new CsvWriter($this->pathConstructor->getExportPath($type, $locale));
+        $csvWriter->setCsvFormat($this->fileFormatter);
         $this->writer->setWriterAdapter($csvWriter);
 
         $collectorPlugin->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater, $output);

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Collector\Business;
 
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
+use Spryker\Shared\Library\Writer\Csv\CsvFormatter;
 use Spryker\Zed\Collector\Business\Exporter\CollectorExporter;
 use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
 use Spryker\Zed\Collector\Business\Exporter\FileExporter;
@@ -130,7 +131,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
             $this->createExporterWriterStorageTouchUpdater(),
-            $this->createFileWriterPathConstructor($this->getConfig()->getFileExporterOutputDir())
+            $this->createFileWriterPathConstructor(),
+            $this->createFileWriterFormatter()
         );
 
         foreach ($this->getProvidedDependency(CollectorDependencyProvider::FILE_PLUGINS) as $touchItemType => $collectorPlugin) {
@@ -141,13 +143,20 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $outputDir
-     *
      * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterPathConstructor
      */
-    protected function createFileWriterPathConstructor($outputDir)
+    protected function createFileWriterPathConstructor()
     {
+        $outputDir = $this->getConfig()->getFileExporterOutputDir();
         return new FileWriterPathConstructor($outputDir);
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\Writer\Csv\CsvFormatter
+     */
+    protected function createFileWriterFormatter()
+    {
+        return new CsvFormatter();
     }
 
     /**
