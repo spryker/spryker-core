@@ -3638,7 +3638,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Propel.git",
-                "reference": "149fbdeb8b965df8565160c7fff6ec09c30415b4",
+                "reference": "3b8c39c9260cdd6707b0e8924f2a4ed7d8649367",
                 "mirrors": [
                     {
                         "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
@@ -3648,12 +3648,12 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/Propel/zipball/149fbdeb8b965df8565160c7fff6ec09c30415b4",
-                "reference": "149fbdeb8b965df8565160c7fff6ec09c30415b4",
+                "url": "https://api.github.com/repos/spryker/Propel/zipball/3b8c39c9260cdd6707b0e8924f2a4ed7d8649367",
+                "reference": "3b8c39c9260cdd6707b0e8924f2a4ed7d8649367",
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://code.spryker.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3693,7 +3693,7 @@
             "support": {
                 "source": "https://github.com/spryker/Propel/tree/beta/isolated-bundle-tests"
             },
-            "time": "2016-04-14 13:27:07"
+            "time": "2016-04-14 15:04:55"
         },
         {
             "name": "spryker/redis",
