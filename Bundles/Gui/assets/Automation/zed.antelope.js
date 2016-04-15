@@ -20,7 +20,8 @@ let config = {
     resolve: {
         root: antelope.paths.root.concat([bundlesPath]),
         alias: {
-            ZedGui: `${guiFolder}/assets/Zed/js/modules/commons`
+            ZedGui: `${guiFolder}/assets/Zed/js/modules/commons`,
+            ZedGuiEditorConfiguration: `${guiFolder}/assets/Zed/js/modules/editor`
         }
     },
     resolveLoader: {
