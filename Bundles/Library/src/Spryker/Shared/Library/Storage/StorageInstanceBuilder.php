@@ -49,7 +49,7 @@ class StorageInstanceBuilder
 
             if (Config::hasValue(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
                 $config['headers'] = [
-                    'Authorization' => 'Basic '.Config::get(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)
+                    'Authorization' => 'Basic ' . Config::get(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER),
                 ];
             }
 
@@ -94,10 +94,10 @@ class StorageInstanceBuilder
     protected static function getStorageInstance($type, $debug = false)
     {
         $kvAdapter = Config::get(LibraryConstants::STORAGE_KV_SOURCE);
-        
+
         $storageAdapter = self::createStorageAdapterName($type, $kvAdapter);
         $configArray = self::createAdapterConfig($kvAdapter);
-        
+
         $storage = new $storageAdapter($configArray, $debug);
         self::$storageInstances[$storageAdapter] = $storage;
 
@@ -114,6 +114,8 @@ class StorageInstanceBuilder
      */
     protected static function createAdapterConfig($kvAdapter)
     {
+        $config = null;
+
         switch ($kvAdapter) {
             case self::KV_ADAPTER_REDIS:
                 $config = [
@@ -125,9 +127,7 @@ class StorageInstanceBuilder
                 if (Config::hasValue(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
                     $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
                 }
-
-                return $config;
-            break;
+                break;
 
             case self::SEARCH_ELASTICA_ADAPTER:
                 $config = [
@@ -138,15 +138,17 @@ class StorageInstanceBuilder
 
                 if (Config::hasValue(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
                     $config['headers'] = [
-                        'Authorization' => "Basic ".Config::get(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)
+                        'Authorization' => "Basic " . Config::get(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER),
                     ];
                 }
-
-                return $config;
-            break;
+                break;
         }
 
-        throw new \ErrorException('Missing implementation for adapter ' . $kvAdapter);
+        if ($config === null) {
+            throw new \ErrorException('Missing implementation for adapter ' . $kvAdapter);
+        }
+
+        return $config;
     }
 
     /**
