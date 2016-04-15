@@ -20,6 +20,6 @@ interface CsvWriterInterface
      *
      * @return int
      */
-    public function write($data);
+    public function write(array $data);
 
 }

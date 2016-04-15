@@ -99,7 +99,7 @@ class CsvWriter implements CsvWriterInterface
      *
      * @return int
      */
-    public function write($data)
+    public function write(array $data)
     {
         $result = 0;
         $this->initializeHeaderColumns(array_keys($data[array_keys($data)[0]]));

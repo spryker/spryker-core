@@ -55,11 +55,9 @@ class FileWriterBuilder
      */
     public function build($type, LocaleTransfer $locale)
     {
-        $fileWriter = new FileWriter();
         $writerAdapter = new CsvWriter($this->getFullExportPath($type, $locale));
         $writerAdapter->setCsvFormat($this->delimiter, $this->enclosure, $this->escape);
-        $fileWriter->setWriterAdapter($writerAdapter);
-        return $fileWriter;
+        return new FileWriter($writerAdapter);
     }
 
     /**
