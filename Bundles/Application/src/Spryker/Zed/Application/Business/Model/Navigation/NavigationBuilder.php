@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Business\Model\Navigation;
@@ -25,6 +26,11 @@ class NavigationBuilder
      * @var \Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface
      */
     private $menuFormatter;
+
+    /**
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface
+     */
+    private $pathExtractor;
 
     /**
      * @param \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface $navigationCollector

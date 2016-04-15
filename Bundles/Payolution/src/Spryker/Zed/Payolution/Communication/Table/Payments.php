@@ -1,21 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Payolution\Communication\Table;
 
-use Spryker\Zed\Application\Business\Url\Url;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
-use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 
 class Payments extends AbstractTable
 {
 
     const FIELD_VIEW = 'FIELD_VIEW';
-    const URL_PAYOLUTION_DETAILS = '/payolution/details/';
+    const URL_PAYOLUTION_DETAILS = '/payolution/details';
     const PARAM_ID_PAYMENT = 'id-payment';
 
     /**
@@ -45,6 +47,8 @@ class Payments extends AbstractTable
             SpyPaymentPayolutionTableMap::COL_CREATED_AT => 'Created',
             self::FIELD_VIEW => 'View',
         ]);
+
+        $config->addRawColumn(self::FIELD_VIEW);
 
         $config->setSortable([
             SpyPaymentPayolutionTableMap::COL_CREATED_AT,

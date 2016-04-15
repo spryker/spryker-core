@@ -1,15 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Transfer;
 
+use Spryker\Shared\Library\Json;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\Transfer\Exception\TransferUnserializationException;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-abstract class AbstractTransfer extends \ArrayObject implements TransferInterface
+abstract class AbstractTransfer implements TransferInterface, \Serializable
 {
 
     /**
@@ -26,6 +29,11 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      * @var \Zend\Filter\Word\UnderscoreToCamelCase
      */
     private static $filterUnderscoreToCamelCase;
+
+    public function __construct()
+    {
+        $this->initCollectionProperties();
+    }
 
     /**
      * @param bool $isRecursive
@@ -45,6 +53,18 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     public function modifiedToArray($isRecursive = true)
     {
         return $this->propertiesToArray($this->modifiedProperties, $isRecursive, 'modifiedToArray');
+    }
+
+    /**
+     * @return void
+     */
+    protected function initCollectionProperties()
+    {
+        foreach ($this->transferMetadata as $property => $metaData) {
+            if ($metaData['is_collection'] && $this->$property === null) {
+                $this->$property = new \ArrayObject();
+            }
+        }
     }
 
     /**
@@ -402,6 +422,42 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
         }
 
         return $values;
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        return Json::encode($this->modifiedToArray());
+    }
+
+    /**
+     * @param string $serialized
+     *
+     * @throws \Spryker\Shared\Transfer\Exception\TransferUnserializationException
+     *
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        try {
+            $this->fromArray(Json::decode($serialized, true), true);
+            $this->initCollectionProperties();
+        } catch (\Exception $e) {
+            throw new TransferUnserializationException(sprintf(
+                'Failed to unserialize %s. Updating or clearing your data source may solve this problem.',
+                get_class($this)
+            ));
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function __wakeup()
+    {
+        $this->initCollectionProperties();
     }
 
 }

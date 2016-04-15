@@ -1,13 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\Error;
 
 use Spryker\Shared\Library\Application\Version;
 use Spryker\Shared\Library\Exception\AbstractErrorRendererException;
+use Spryker\Zed\Library\Sanitize\Html;
 
 class ErrorRenderer
 {
@@ -29,7 +31,7 @@ class ErrorRenderer
 
         $errorString .= 'in ' . $e->getFile() . ' (' . $e->getLine() . ')';
         $errorString .= '<br/><br/>';
-        $errorString .= '<b>Url:</b> ' . $uri;
+        $errorString .= '<b>Url:</b> ' . Html::escape($uri);
         $errorString .= '<br/><br/>';
         $errorString .= '<b>Trace:</b>';
         $errorString .= '<br/>';
@@ -45,7 +47,7 @@ class ErrorRenderer
         $errorString = '<pre>' . $errorString . '</pre>';
 
         if ($e instanceof AbstractErrorRendererException) {
-            $errorString .= '<br/><hr/><br/>' . (string) $e->getExtra();
+            $errorString .= '<br/><hr/><br/>' . (string)$e->getExtra();
         }
 
         return $errorString;
@@ -80,7 +82,7 @@ class ErrorRenderer
         }
 
         if ($e instanceof AbstractErrorRendererException) {
-            $errorString .= PHP_EOL . PHP_EOL . (string) $e->getExtra();
+            $errorString .= PHP_EOL . PHP_EOL . (string)$e->getExtra();
         }
 
         return $errorString;

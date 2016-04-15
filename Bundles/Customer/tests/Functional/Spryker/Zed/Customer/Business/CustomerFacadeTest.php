@@ -1,8 +1,10 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Functional\Spryker\Zed\Customer\Business;
 
 use Codeception\TestCase\Test;
@@ -206,6 +208,23 @@ class CustomerFacadeTest extends Test
     public function testUpdateCustomer()
     {
         $customerTransfer = $this->createTestCustomer();
+        $customerTransfer->setPassword(null);
+        $customerTransfer->setLastName(self::TESTER_NAME);
+        $customerResponse = $this->customerFacade->updateCustomer($customerTransfer);
+        $this->assertNotNull($customerResponse);
+        $this->assertTrue($customerResponse->getIsSuccess());
+        $customerTransfer = $customerResponse->getCustomerTransfer();
+        $this->assertEquals(self::TESTER_NAME, $customerTransfer->getLastName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCustomerWithProvidedPasswordShouldSuccessWhenPasswordAreProvided()
+    {
+        $customerTransfer = $this->createTestCustomer();
+        $customerTransfer->setNewPassword('new password');
+        $customerTransfer->setPassword(self::TESTER_PASSWORD);
         $customerTransfer->setLastName(self::TESTER_NAME);
         $customerResponse = $this->customerFacade->updateCustomer($customerTransfer);
         $this->assertNotNull($customerResponse);

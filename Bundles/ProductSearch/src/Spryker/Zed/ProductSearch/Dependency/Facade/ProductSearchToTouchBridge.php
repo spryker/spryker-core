@@ -1,11 +1,11 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductSearch\Dependency\Facade;
-
-use Spryker\Zed\Touch\Business\TouchFacade;
 
 class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
 {
@@ -34,6 +34,17 @@ class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
     public function touchActive($itemType, $itemId)
     {
         return $this->touchFacade->touchActive($itemType, $itemId);
+    }
+
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchInactive($itemType, $itemId)
+    {
+        return $this->touchFacade->touchInactive($itemType, $itemId);
     }
 
 }

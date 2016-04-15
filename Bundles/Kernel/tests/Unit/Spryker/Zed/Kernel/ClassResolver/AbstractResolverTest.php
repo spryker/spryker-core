@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Kernel\ClassResolver;
@@ -162,7 +163,7 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
         $directory = implode(DIRECTORY_SEPARATOR,  $directoryParts);
 
         if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
+            mkdir($directory, 0775, true);
         }
         $fileName = $directory . DIRECTORY_SEPARATOR . $class . '.php';
 

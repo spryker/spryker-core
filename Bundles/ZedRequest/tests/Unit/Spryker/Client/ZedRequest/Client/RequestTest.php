@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Client\ZedRequest\Client;
 
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Client\ZedRequest\Client\Request;
+use Spryker\Shared\Transfer\TransferInterface;
 use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
 
 /**
@@ -20,8 +21,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param \Spryker\Shared\Transfer\TransferInterface $transfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $metaTransfer1
-     * @param \Spryker\Shared\Transfer\TransferInterface $metaTransfer2
+     * @param \Spryker\Shared\Transfer\TransferInterface|null $metaTransfer1
+     * @param \Spryker\Shared\Transfer\TransferInterface|null $metaTransfer2
      *
      * @return \Spryker\Client\ZedRequest\Client\Request
      */

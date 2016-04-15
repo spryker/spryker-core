@@ -1,36 +1,34 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
-class RemoveAllCalculatedDiscountsCalculator
+class RemoveAllCalculatedDiscountsCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculate(CalculableInterface $calculableContainer)
+    public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
-            $item->setDiscounts(new \ArrayObject());
+        foreach ($quoteTransfer->getItems() as $item) {
+            $item->setCalculatedDiscounts(new \ArrayObject());
 
             foreach ($item->getProductOptions() as $option) {
-                $option->setDiscounts(new \ArrayObject());
-            }
-            foreach ($item->getExpenses() as $expense) {
-                $expense->setDiscounts(new \ArrayObject());
+                $option->setCalculatedDiscounts(new \ArrayObject());
             }
         }
 
-        foreach ($calculableContainer->getCalculableObject()->getExpenses() as $expense) {
-            $expense->setDiscounts(new \ArrayObject());
+        foreach ($quoteTransfer->getExpenses() as $expense) {
+            $expense->setCalculatedDiscounts(new \ArrayObject());
         }
     }
 

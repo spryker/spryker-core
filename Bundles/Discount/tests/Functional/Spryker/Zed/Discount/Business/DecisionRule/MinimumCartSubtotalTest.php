@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Discount\Business\DecisionRule;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
-use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
-use Spryker\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
+use Spryker\Zed\Kernel\Locator;
 
 /**
  * @group DiscountDecisionRuleMinimumCartSubtotalTest
@@ -30,15 +31,11 @@ class MinimumCartSubtotalTest extends Test
      */
     public function testShouldReturnTrueForAnOrderWithAHighEnoughSubtotal()
     {
-        $order = new CalculableContainer(new OrderTransfer());
-        $totals = new TotalsTransfer();
-        $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_1000);
-        $order->getCalculableObject()->setTotals($totals);
-
+        $quoteTransfer = $this->createQuoteTransferWithSubtotal(self::CART_SUBTOTAL_1000);
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
         $decisionRule = $this->createMinimumCartSubtotal();
-        $result = $decisionRule->isMinimumCartSubtotalReached($order, $decisionRuleEntity);
+        $result = $decisionRule->isMinimumCartSubtotalReached($quoteTransfer, $decisionRuleEntity);
 
         $this->assertTrue($result->isSuccess());
     }
@@ -48,15 +45,11 @@ class MinimumCartSubtotalTest extends Test
      */
     public function testShouldReturnFalseForAnOrderWithATooLowSubtotal()
     {
-        $order = new CalculableContainer(new OrderTransfer());
-        $totals = new TotalsTransfer();
-        $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_400);
-        $order->getCalculableObject()->setTotals($totals);
-
+        $quoteTransfer = $this->createQuoteTransferWithSubtotal(self::CART_SUBTOTAL_400);
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
         $decisionRule = $this->createMinimumCartSubtotal();
-        $result = $decisionRule->isMinimumCartSubtotalReached($order, $decisionRuleEntity);
+        $result = $decisionRule->isMinimumCartSubtotalReached($quoteTransfer, $decisionRuleEntity);
 
         $this->assertFalse($result->isSuccess());
     }
@@ -66,17 +59,27 @@ class MinimumCartSubtotalTest extends Test
      */
     public function testShouldReturnTrueForAnOrderWithAExactlyMatchingSubtotal()
     {
-        $order = new CalculableContainer(new OrderTransfer());
-        $totals = new TotalsTransfer();
-        $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_500);
-        $order->getCalculableObject()->setTotals($totals);
+        $quoteTransfer = $this->createQuoteTransferWithSubtotal(self::CART_SUBTOTAL_500);
 
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
         $decisionRule = $this->createMinimumCartSubtotal();
-        $result = $decisionRule->isMinimumCartSubtotalReached($order, $decisionRuleEntity);
+        $result = $decisionRule->isMinimumCartSubtotalReached($quoteTransfer, $decisionRuleEntity);
 
         $this->assertTrue($result->isSuccess());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuoteTransferWithSubtotal($subtotal)
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $totals = new TotalsTransfer();
+        $totals->setSubtotal($subtotal);
+        $quoteTransfer->setTotals($totals);
+
+        return $quoteTransfer;
     }
 
     /**
@@ -90,6 +93,14 @@ class MinimumCartSubtotalTest extends Test
         $decisionRule->setValue($value);
 
         return $decisionRule;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\AbstractLocatorLocator|\Generated\Zed\Ide\AutoCompletion
+     */
+    protected function getLocator()
+    {
+        return Locator::getInstance();
     }
 
     /**

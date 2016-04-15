@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Controller;
@@ -11,17 +12,17 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use Orm\Zed\Cms\Persistence\SpyCmsBlock;
+use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
-use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
@@ -31,7 +32,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GlossaryController extends AbstractController
 {
 
-    const REDIRECT_ADDRESS = '/cms/glossary/';
+    const REDIRECT_ADDRESS = '/cms/glossary';
     const SEARCH_LIMIT = 10;
     const ID_FORM = 'id-form';
     const TYPE = 'type';
@@ -48,13 +49,15 @@ class GlossaryController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
-        $idForm = $request->get(self::ID_FORM);
+        $idPage = $this->castId($request->get(CmsPageTable::REQUEST_ID_PAGE));
+        $idForm = (int)$request->get(self::ID_FORM);
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
 
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
         $cmsPage = $this->findCmsPageById($idPage);
-        $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+
+        $fkLocale = $this->getLocaleByCmsPage($cmsPage);
 
         if ($block === null) {
             $title = $cmsPage->getUrl();
@@ -70,12 +73,12 @@ class GlossaryController extends AbstractController
         $formViews = [];
 
         foreach ($placeholders as $place) {
-            $form = $this->createPlaceholderForm($request, $glossaryMappingArray, $place, $idPage);
+            $form = $this->createPlaceholderForm($request, $glossaryMappingArray, $place, $idPage, $fkLocale);
             $forms[] = $form;
             $formViews[] = $form->createView();
         }
 
-        if ($idForm !== null) {
+        if ($idForm !== null && $request->isXmlHttpRequest()) {
             return $this->handleAjaxRequest($forms, $idForm, $localeTransfer);
         }
 
@@ -88,17 +91,42 @@ class GlossaryController extends AbstractController
     }
 
     /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPage
+     *
+     * @return int|null
+     */
+    public function getLocaleByCmsPage(SpyCmsPage $cmsPage)
+    {
+        $fkLocale = null;
+        $url = $this->getQueryContainer()
+            ->queryUrlById($cmsPage->getIdCmsPage())
+            ->findOne();
+
+        if ($url) {
+            $fkLocale = $url->getFkLocale();
+        }
+
+        return $fkLocale;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
-        $idMapping = $request->get(CmsGlossaryTable::REQUEST_ID_MAPPING);
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $idMapping = $this->castId($request->request->get(CmsGlossaryTable::REQUEST_ID_MAPPING));
+        $idPage = $this->castId($request->request->get(CmsPageTable::REQUEST_ID_PAGE));
+
         $mappingGlossary = $this->getQueryContainer()
             ->queryGlossaryKeyMappingById($idMapping)
             ->findOne();
+
         $pageTransfer = (new PageTransfer())->setIdCmsPage($idPage);
         $this->getFacade()
             ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder());
@@ -136,10 +164,11 @@ class GlossaryController extends AbstractController
      */
     public function searchAction(Request $request)
     {
-        $value = $request->get('value');
-        $key = $request->get('key');
+        $value = $request->query->get('value');
+        $key = $request->query->get('key');
+        $localeId = $this->castId($request->query->get('localeId'));
 
-        $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key);
+        $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key, $localeId);
 
         $result = [];
         foreach ($searchedItems as $trans) {
@@ -155,10 +184,11 @@ class GlossaryController extends AbstractController
     /**
      * @param string $value
      * @param string $key
+     * @param int $localeId
      *
-     * @return array
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[]|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]
      */
-    protected function searchGlossaryKeysAndTranslations($value, $key)
+    protected function searchGlossaryKeysAndTranslations($value, $key, $localeId)
     {
         $searchedItems = [];
         if ($value !== null) {
@@ -170,7 +200,7 @@ class GlossaryController extends AbstractController
             return $searchedItems;
         } elseif ($key !== null) {
             $searchedItems = $this->getQueryContainer()
-                ->queryKeyWithTranslationByKey($key)
+                ->queryKeyWithTranslationByKeyAndLocale($key, $localeId)
                 ->limit(self::SEARCH_LIMIT)
                 ->find();
         }
@@ -201,24 +231,6 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
-     */
-    protected function getLocaleFacade()
-    {
-        return $this->getFactory()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
-     */
-    protected function getGlossaryFacade()
-    {
-        return $this->getFactory()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
-    }
-
-    /**
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -227,7 +239,7 @@ class GlossaryController extends AbstractController
     protected function saveGlossaryKeyPageMapping(array $data, LocaleTransfer $localeTransfer)
     {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer($data, $localeTransfer);
-        $this->getGlossaryFacade()
+        $this->getFactory()->getGlossaryFacade()
             ->saveGlossaryKeyTranslations($keyTranslationTransfer);
         $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
         $this->getFacade()
@@ -235,7 +247,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsPage $pageUrl
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageUrl
      *
      * @return array
      */
@@ -260,8 +272,11 @@ class GlossaryController extends AbstractController
         $glossaryQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $localeTransfer->getIdLocale());
         $glossaryMappingArray = [];
-        foreach ($glossaryQuery->find()
-                     ->getData() as $keyMapping) {
+
+        /** @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[] $keyMappings */
+        $keyMappings = $glossaryQuery->find()
+            ->getData();
+        foreach ($keyMappings as $keyMapping) {
             $glossaryMappingArray[$keyMapping->getPlaceholder()] = $keyMapping->getIdCmsGlossaryKeyMapping();
         }
 
@@ -300,10 +315,11 @@ class GlossaryController extends AbstractController
      * @param array $glossaryMappingArray
      * @param string $placeholder
      * @param int $idPage
+     * @param int $fkLocale
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage)
+    protected function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage, $fkLocale)
     {
         $idMapping = null;
         if (isset($glossaryMappingArray[$placeholder])) {
@@ -314,7 +330,7 @@ class GlossaryController extends AbstractController
         $form = $this->getFactory()
             ->createCmsGlossaryForm(
                 $this->getFacade(),
-                $dataProvider->getData($idPage, $idMapping, $placeholder)
+                $dataProvider->getData($idPage, $idMapping, $placeholder, $fkLocale)
             )
             ->handleRequest($request);
 
@@ -351,7 +367,7 @@ class GlossaryController extends AbstractController
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return \Orm\Zed\Cms\Persistence\Base\SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|\Orm\Zed\Url\Persistence\SpyUrl
      */
     protected function findCmsPageById($idPage)
     {
@@ -387,7 +403,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsBlock $blockEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlock $blockEntity
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */

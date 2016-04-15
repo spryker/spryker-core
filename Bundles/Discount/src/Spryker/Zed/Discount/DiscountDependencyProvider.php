@@ -1,23 +1,49 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount;
 
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const STORE_CONFIG = 'store config';
+    const STORE_CONFIG = 'store_config';
     const FACADE_MESSENGER = 'messenger facade';
-    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    const FACADE_TAX = 'tax facade';
+
+    const PLUGIN_PROPEL_CONNECTION = 'propel_connection_plugin';
+
+    const PLUGIN_DECISION_RULE_VOUCHER = 'PLUGIN_DECISION_RULE_VOUCHER';
+    const PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL = 'PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL';
+
+    const PLUGIN_COLLECTOR_ITEM = 'PLUGIN_COLLECTOR_ITEM';
+    const PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION = 'PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION';
+    const PLUGIN_COLLECTOR_AGGREGATE = 'PLUGIN_COLLECTOR_AGGREGATE';
+    const PLUGIN_COLLECTOR_ORDER_EXPENSE = 'PLUGIN_COLLECTOR_ORDER_EXPENSE';
+    const PLUGIN_COLLECTOR_ITEM_EXPENSE = 'PLUGIN_COLLECTOR_ITEM_EXPENSE';
+
+    const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
+    const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
+
+    const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
+    const CART_DECISION_RULE_PLUGINS = 'CART_DECISION_RULE_PLUGINS';
+    const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
+    const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +64,22 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             return (new Connection())->get();
         };
 
+        $container[self::DECISION_RULE_PLUGINS] = function (Container $container) {
+            return $this->getAvailableDecisionRulePlugins($container);
+        };
+
+        $container[self::CALCULATOR_PLUGINS] = function (Container $container) {
+            return $this->getAvailableCalculatorPlugins($container);
+        };
+
+        $container[self::COLLECTOR_PLUGINS] = function (Container $container) {
+            return $this->getAvailableCollectorPlugins($container);
+        };
+
+        $container[self::FACADE_TAX] = function (Container $container) {
+            return new DiscountToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
         return $container;
     }
 
@@ -48,11 +90,69 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::STORE_CONFIG] = function (Container $container) {
+        $container[self::STORE_CONFIG] = function () {
             return Store::getInstance();
         };
 
+        $container[self::DECISION_RULE_PLUGINS] = function () {
+            return $this->getAvailableDecisionRulePlugins();
+        };
+
+        $container[self::CART_DECISION_RULE_PLUGINS] = function () {
+            return $this->getAvailableCartDecisionRulePlugins();
+        };
+
+        $container[self::CALCULATOR_PLUGINS] = function () {
+            return $this->getAvailableCalculatorPlugins();
+        };
+
+        $container[self::COLLECTOR_PLUGINS] = function () {
+            return $this->getAvailableCollectorPlugins();
+        };
+
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     */
+    public function getAvailableDecisionRulePlugins()
+    {
+        return [
+            self::PLUGIN_DECISION_RULE_VOUCHER => new Voucher(),
+            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new MinimumCartSubtotal(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     */
+    public function getAvailableCartDecisionRulePlugins()
+    {
+        return [
+            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new MinimumCartSubtotal(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     */
+    public function getAvailableCalculatorPlugins()
+    {
+        return [
+            self::PLUGIN_CALCULATOR_PERCENTAGE => new Percentage(),
+            self::PLUGIN_CALCULATOR_FIXED => new Fixed(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
+     */
+    public function getAvailableCollectorPlugins()
+    {
+        return [
+            self::PLUGIN_COLLECTOR_ITEM => new Item(),
+        ];
     }
 
 }

@@ -1,23 +1,25 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOptionCartConnector\Business\Model;
 
-use Generated\Shared\Transfer\ChangeTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class GroupKeyExpander
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
      *
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expand(ChangeTransfer $change)
+    public function expand(CartChangeTransfer $change)
     {
         foreach ($change->getItems() as $item) {
             $item->setGroupKey($this->buildGroupKey($item));
@@ -34,11 +36,11 @@ class GroupKeyExpander
     protected function buildGroupKey(ItemTransfer $cartItem)
     {
         $currentGroupKey = $cartItem->getGroupKey();
-        if (empty($cartItem->getProductOptions())) {
+        if (!$cartItem->getProductOptions()) {
             return $currentGroupKey;
         }
 
-        $sortedProductOptions = $this->sortOptions((array) $cartItem->getProductOptions());
+        $sortedProductOptions = $this->sortOptions((array)$cartItem->getProductOptions());
         $optionGroupKey = $this->combineOptionParts($sortedProductOptions);
 
         if (empty($optionGroupKey)) {
@@ -74,7 +76,7 @@ class GroupKeyExpander
     {
         $groupKeyPart = [];
         foreach ($sortedProductOptions as $option) {
-            if (empty($option->getIdOptionValueUsage())) {
+            if (!$option->getIdOptionValueUsage()) {
                 continue;
             }
             $groupKeyPart[] = $option->getIdOptionValueUsage();

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Propel\Business\Formatter;
@@ -19,7 +20,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
      * Fills the Formatter's properties using a Criteria as source
      *
      * @param \Propel\Runtime\ActiveQuery\BaseModelCriteria $criteria
-     * @param \Propel\Runtime\DataFetcher\DataFetcherInterface $dataFetcher
+     * @param \Propel\Runtime\DataFetcher\DataFetcherInterface|null $dataFetcher
      *
      * @return $this|\Propel\Runtime\Formatter\AbstractFormatter The current formatter object
      */
@@ -38,7 +39,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
     }
 
     /**
-     * @param \Propel\Runtime\DataFetcher\DataFetcherInterface $dataFetcher
+     * @param \Propel\Runtime\DataFetcher\DataFetcherInterface|null $dataFetcher
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Session\Business\Handler;
@@ -18,9 +19,9 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     const METRIC_SESSION_READ_TIME = 'Mysql/Session_read_time';
 
     /**
-     * @var \PDO
+     * @var \PDO|null
      */
-    protected $connection = null;
+    protected $connection;
 
     /**
      * @var string

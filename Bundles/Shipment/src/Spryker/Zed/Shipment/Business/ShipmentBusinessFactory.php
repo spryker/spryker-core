@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Shipment\Business;
@@ -9,6 +10,7 @@ namespace Spryker\Zed\Shipment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
+use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -32,9 +34,25 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createMethod()
     {
         return new Method(
-                $this->getQueryContainer(),
-                $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
-            );
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver
+     */
+    public function createShipmentOrderSaver()
+    {
+        return new ShipmentOrderSaver($this->getSalesQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
+     */
+    protected function getSalesQueryContainer()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
 }

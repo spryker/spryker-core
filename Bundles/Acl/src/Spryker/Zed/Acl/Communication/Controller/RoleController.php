@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Communication\Controller;
@@ -13,6 +15,7 @@ use Spryker\Zed\Acl\Communication\Form\RoleForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
@@ -93,7 +96,7 @@ class RoleController extends AbstractController
      */
     public function updateAction(Request $request)
     {
-        $idAclRole = $request->query->getInt(self::PARAM_ID_ROLE);
+        $idAclRole = $this->castId($request->query->get(self::PARAM_ID_ROLE));
 
         if (empty($idAclRole)) {
             $this->addErrorMessage('Missing role id!');
@@ -131,7 +134,12 @@ class RoleController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idRole = $request->get(self::PARAM_ID_ROLE);
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $idRole = $this->castId($request->request->get(self::PARAM_ID_ROLE));
+
         if (empty($idRole)) {
             $this->addErrorMessage('Missing role id!');
 
@@ -158,7 +166,7 @@ class RoleController extends AbstractController
      */
     public function ruleSetTableAction(Request $request)
     {
-        $idRole = $request->get(self::PARAM_ID_ROLE);
+        $idRole = $this->castId($request->get(self::PARAM_ID_ROLE));
         $ruleSetTable = $this->getFactory()->createRulesetTable($idRole);
 
         return $this->jsonResponse(

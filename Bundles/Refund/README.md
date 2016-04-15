@@ -1,6 +1,11 @@
-# Zed Package
+# Refund Bundle
 
-## 1.0.0
-*2015-09-03 | Mark Scherer*
+## Installation
 
-- Spryker init
+```
+composer require spryker/refund
+```
+
+## Documentation
+
+[Refund Documentation](http://spryker.github.io/core/bundles/refund)

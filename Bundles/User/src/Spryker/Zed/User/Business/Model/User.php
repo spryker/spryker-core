@@ -1,21 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\CollectionTransfer;
-use Spryker\Zed\Library\Copy;
-use Propel\Runtime\Collection\ObjectCollection;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Zed\User\UserConfig;
 use Orm\Zed\User\Persistence\SpyUser;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
-use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Business\Exception\UsernameExistsException;
+use Spryker\Zed\User\Business\Exception\UserNotFoundException;
+use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
+use Spryker\Zed\User\UserConfig;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class User implements UserInterface
@@ -24,7 +23,7 @@ class User implements UserInterface
     const USER_BUNDLE_SESSION_KEY = 'user';
 
     /**
-     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -39,12 +38,12 @@ class User implements UserInterface
     protected $settings;
 
     /**
-     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $queryContainer
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Zed\User\UserConfig $settings
      */
     public function __construct(
-        UserQueryContainer $queryContainer,
+        UserQueryContainerInterface $queryContainer,
         SessionInterface $session,
         UserConfig $settings
     ) {
@@ -87,7 +86,7 @@ class User implements UserInterface
      */
     public function encryptPassword($password)
     {
-        return base64_encode(password_hash($password, PASSWORD_BCRYPT));
+        return password_hash($password, PASSWORD_BCRYPT);
     }
 
     /**
@@ -98,7 +97,7 @@ class User implements UserInterface
      */
     public function validatePassword($password, $hash)
     {
-        return password_verify($password, base64_decode($hash));
+        return password_verify($password, $hash);
     }
 
     /**
@@ -150,29 +149,6 @@ class User implements UserInterface
     }
 
     /**
-     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUsers()
-    {
-        $results = $this->queryContainer->queryUsers()->find();
-
-        if (($results instanceof ObjectCollection) === false) {
-            throw new UserNotFoundException();
-        }
-
-        $collection = new TransferArrayObject();
-
-        foreach ($results as $result) {
-            $transfer = new UserTransfer();
-            $collection->add(Copy::entityToTransfer($transfer, $result));
-        }
-
-        return $collection;
-    }
-
-    /**
      * @param string $password
      *
      * @return bool
@@ -192,6 +168,20 @@ class User implements UserInterface
     public function hasUserByUsername($username)
     {
         $amount = $this->queryContainer->queryUserByUsername($username)->count();
+
+        return $amount > 0;
+    }
+
+
+    /**
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username)
+    {
+        $amount = $this->queryContainer->queryUserByUsername($username)
+            ->filterByStatus(SpyUserTableMap::COL_STATUS_ACTIVE)->count();
 
         return $amount > 0;
     }
@@ -363,16 +353,16 @@ class User implements UserInterface
     }
 
     /**
-     * @param \Orm\Zed\User\Persistence\SpyUser $entity
+     * @param \Orm\Zed\User\Persistence\SpyUser $userEntity
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function entityToTransfer(SpyUser $entity)
+    protected function entityToTransfer(SpyUser $userEntity)
     {
-        $transfer = new UserTransfer();
-        $transfer = Copy::entityToTransfer($transfer, $entity);
+        $userTransfer = new UserTransfer();
+        $userTransfer->fromArray($userEntity->toArray(), true);
 
-        return $transfer;
+        return $userTransfer;
     }
 
     /**

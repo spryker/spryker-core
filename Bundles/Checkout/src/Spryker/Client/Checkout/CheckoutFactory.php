@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Checkout;
@@ -17,12 +18,7 @@ class CheckoutFactory extends AbstractFactory
      */
     public function createZedStub()
     {
-        $zedStub = $this->getProvidedDependency(CheckoutDependencyProvider::SERVICE_ZED);
-        $checkoutStub = new CheckoutStub(
-            $zedStub
-        );
-
-        return $checkoutStub;
+        return new CheckoutStub($this->getProvidedDependency(CheckoutDependencyProvider::SERVICE_ZED));
     }
 
 }

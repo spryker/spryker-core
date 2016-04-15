@@ -1,22 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use DateInterval;
-use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use Spryker\Zed\Oms\Business\Process\ProcessInterface;
-use Spryker\Zed\Oms\Business\Process\EventInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
-use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use DateTime;
 use ErrorException;
+use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
+use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Library\Log;
+use Spryker\Zed\Oms\Business\Process\EventInterface;
+use Spryker\Zed\Oms\Business\Process\ProcessInterface;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Timeout implements TimeoutInterface
 {
@@ -204,7 +205,7 @@ class Timeout implements TimeoutInterface
         $vars = get_object_vars($interval);
         $vSum = 0;
         foreach ($vars as $v) {
-            $vSum += (int) $v;
+            $vSum += (int)$v;
         }
         if ($vSum === 0) {
             throw new ErrorException('Invalid format for timeout "' . $timeout . '"');

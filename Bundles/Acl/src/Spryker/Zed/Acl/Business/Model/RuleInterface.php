@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Acl\AclConstants;
 
@@ -42,7 +43,7 @@ interface RuleInterface
     /**
      * @param int $idRole
      *
-     * @return \Generated\Shared\Transfer\RuleTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function getRoleRules($idRole);
 
@@ -60,6 +61,17 @@ interface RuleInterface
         $controller = AclConstants::VALIDATOR_WILDCARD,
         $action = AclConstants::VALIDATOR_WILDCARD
     );
+
+    /**
+     * @param int $idAclRole
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
+     * @param int $type
+     *
+     * @return bool
+     */
+    public function existsRoleRule($idAclRole, $bundle, $controller, $action, $type);
 
     /**
      * @param int $idGroup
@@ -99,6 +111,8 @@ interface RuleInterface
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
+     *
+     * @return void
      */
     public function registerSystemUserRules(UserTransfer $userTransfer);
 

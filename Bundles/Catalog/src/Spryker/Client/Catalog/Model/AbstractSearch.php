@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Catalog\Model;
 
-use Elastica\Query;
 use Elastica\Index;
+use Elastica\Query;
 use Elastica\ResultSet;
 use Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface;
 use Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface;
@@ -117,8 +118,8 @@ abstract class AbstractSearch
         $this->rangeExtractor = $rangeExtractor;
         $this->catalogModel = $catalogModel;
 
-        $this->currentPage = (int) $this->request->query->get(self::PAGE, 1);
-        $this->itemsPerPage = (int) $this->request->query->get(self::IPP, self::DEFAULT_ITEMS_PER_PAGE);
+        $this->currentPage = (int)$this->request->query->get(self::PAGE, 1);
+        $this->itemsPerPage = (int)$this->request->query->get(self::IPP, self::DEFAULT_ITEMS_PER_PAGE);
     }
 
     /**

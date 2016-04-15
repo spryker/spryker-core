@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -25,7 +25,7 @@ class DetailsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idPayment = (int) $request->get('id-payment');
+        $idPayment = $this->castId($request->get('id-payment'));
         $paymentEntity = $this->getPaymentEntity($idPayment);
         $requestLogTable = $this->getFactory()->createRequestLogTable($idPayment);
         $statusLogTable = $this->getFactory()->createStatusLogTable($idPayment);
@@ -61,7 +61,7 @@ class DetailsController extends AbstractController
      */
     public function requestLogTableAction(Request $request)
     {
-        $idPayment = (int) $request->get('id-payment');
+        $idPayment = $this->castId($request->get('id-payment'));
         $requestLogTable = $this->getFactory()->createRequestLogTable($idPayment);
 
         return $this->jsonResponse($requestLogTable->fetchData());
@@ -74,7 +74,7 @@ class DetailsController extends AbstractController
      */
     public function statusLogTableAction(Request $request)
     {
-        $idPayment = (int) $request->get('id-payment');
+        $idPayment = $this->castId($request->get('id-payment'));
         $statusLogTable = $this->getFactory()->createStatusLogTable($idPayment);
 
         return $this->jsonResponse($statusLogTable->fetchData());

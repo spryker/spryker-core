@@ -1,6 +1,11 @@
-# Zed Package
+# ProductCategory Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/product-category
+```
+
+## Documentation
+
+[ProductCategory Documentation](http://spryker.github.io/core/bundles/product-category)

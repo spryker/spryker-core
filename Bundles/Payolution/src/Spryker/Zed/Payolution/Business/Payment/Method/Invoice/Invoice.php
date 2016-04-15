@@ -1,15 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Invoice;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 class Invoice extends AbstractPaymentMethod implements InvoiceInterface
 {
@@ -47,17 +49,17 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function buildPreCheckRequest(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function buildPreCheckRequest(QuoteTransfer $quoteTransfer)
     {
-        $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
+        $payolutionTransfer = $quoteTransfer->getPayment()->getPayolution();
         $addressTransfer = $payolutionTransfer->getAddress();
 
         $requestData = $this->getBaseTransactionRequest(
-            $checkoutRequestTransfer->getCart()->getTotals()->getGrandTotal(),
+            $quoteTransfer->getTotals()->getGrandTotal(),
             $payolutionTransfer->getCurrencyIso3Code(),
             $isSalesOrder = null
         );
@@ -75,7 +77,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
                 ApiConstants::ADDRESS_ZIP => $addressTransfer->getZipCode(),
                 ApiConstants::ADDRESS_CITY => $addressTransfer->getCity(),
                 ApiConstants::ADDRESS_COUNTRY => $addressTransfer->getIso2Code(),
-                ApiConstants::CONTACT_EMAIL => $addressTransfer->getEmail(),
+                ApiConstants::CONTACT_EMAIL => $payolutionTransfer->getEmail(),
                 ApiConstants::CONTACT_PHONE => $addressTransfer->getPhone(),
                 ApiConstants::CONTACT_MOBILE => $addressTransfer->getCellPhone(),
                 ApiConstants::CONTACT_IP => $payolutionTransfer->getClientIp(),
@@ -88,16 +90,19 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      *
      * @return array
      */
-    public function buildPreAuthorizationRequest(SpyPaymentPayolution $paymentEntity)
+    public function buildPreAuthorizationRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity)
     {
         $requestData = $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
-            null);
+            null
+        );
         $this->addRequestData(
             $requestData,
             [
@@ -124,59 +129,83 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildReAuthorizationRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildReAuthorizationRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildRevertRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildRevertRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildCaptureRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildCaptureRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildRefundRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildRefundRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
-            $uniqueId);
+            $uniqueId
+        );
     }
 
 }

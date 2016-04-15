@@ -1,16 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer;
 
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,6 +24,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_SEQUENCE_NUMBER = 'sequence number facade';
     const FACADE_COUNTRY = 'country facade';
     const FACADE_LOCALE = 'locale facade';
+    const SERVICE_DATE_FORMATTER = 'date formatter service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -57,6 +60,10 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_COUNTRY] = function (Container $container) {
             return new CustomerToCountryBridge($container->getLocator()->country()->facade());
+        };
+
+        $container[self::SERVICE_DATE_FORMATTER] = function () {
+            return (new Pimple())->getApplication()['dateFormatter'];
         };
 
         return $container;

@@ -1,8 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Zed\Discount\DiscountConfig;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -25,18 +30,39 @@ class CartRuleForm extends AbstractRuleForm
     const VALID_TO = 'valid_to';
 
     /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
-    protected $discountConfig;
+    protected $calculatorPlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
+     * @var \Symfony\Component\Form\DataTransformerInterface
      */
-    public function __construct(DiscountConfig $discountConfig)
-    {
-        parent::__construct($discountConfig);
+    protected $decisionRulesFormTransformer;
 
-        $this->discountConfig = $discountConfig;
+    /**
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
+     */
+    protected $collectorPlugins;
+
+    /**
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     */
+    protected $decisionRulePlugins;
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     * @param \Symfony\Component\Form\DataTransformerInterface $decisionRulesFormTransformer
+     */
+    public function __construct(array $calculatorPlugins, array $collectorPlugins, array $decisionRulePlugins, DataTransformerInterface $decisionRulesFormTransformer)
+    {
+        parent::__construct($calculatorPlugins, $collectorPlugins, $decisionRulePlugins);
+
+        $this->calculatorPlugins = $calculatorPlugins;
+        $this->collectorPlugins = $collectorPlugins;
+        $this->decisionRulePlugins = $decisionRulePlugins;
+        $this->decisionRulesFormTransformer = $decisionRulesFormTransformer;
     }
 
     /**
@@ -67,6 +93,8 @@ class CartRuleForm extends AbstractRuleForm
             ->addIsPrivilegedField($builder)
             ->addIsActiveField($builder)
             ->addDecisionRulesField($builder);
+
+        $builder->addModelTransformer($this->decisionRulesFormTransformer);
     }
 
     /**
@@ -192,8 +220,11 @@ class CartRuleForm extends AbstractRuleForm
     protected function addCollectorPluginsField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-            'type' => new CollectorPluginForm($this->discountConfig),
-            'label' => null,
+            'type' => new CollectorPluginForm(
+                $this->calculatorPlugins,
+                $this->collectorPlugins,
+                $this->decisionRulePlugins
+            ),
             'allow_add' => true,
             'allow_delete' => true,
             'allow_extra_fields' => true,
@@ -210,8 +241,11 @@ class CartRuleForm extends AbstractRuleForm
     protected function addDecisionRulesField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_DECISION_RULES, 'collection', [
-            'type' => new DecisionRuleForm($this->discountConfig),
-            'label' => null,
+            'type' => new DecisionRuleForm(
+                $this->calculatorPlugins,
+                $this->collectorPlugins,
+                $this->decisionRulePlugins
+            ),
             'allow_add' => true,
             'allow_delete' => true,
             'allow_extra_fields' => true,

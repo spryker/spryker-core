@@ -1,23 +1,25 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\SystemUnderTest;
 
-use Propel\Runtime\Propel;
 // This is the only place where Project namespace is allowed
 // @todo this has to be refactored with the new test concept
+use Propel\Runtime\Propel;
 use Pyz\Yves\Application\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
 use ReflectionObject;
 use Silex\Application;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Yves\Kernel\Locator;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Spryker\Shared\Library\Application\Environment;
 use Spryker\Shared\Library\Application\TestEnvironment;
+use Spryker\Yves\Kernel\Locator;
+use Spryker\Zed\Kernel\Locator as KernelLocator;
+use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class SystemUnderTestBootstrap
 {
@@ -108,7 +110,7 @@ class SystemUnderTestBootstrap
     protected function bootstrapZed()
     {
         $application = new ZedBootstrap();
-        $locator = \Spryker\Zed\Kernel\Locator::getInstance();
+        $locator = KernelLocator::getInstance();
         $this->resetLocator($locator);
         $application->boot();
 

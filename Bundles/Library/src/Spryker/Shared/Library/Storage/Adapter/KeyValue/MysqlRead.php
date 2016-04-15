@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\Storage\Adapter\KeyValue;
@@ -148,7 +149,7 @@ class MysqlRead extends Mysql implements ReadInterface
         $statement->execute();
         $result = $statement->fetch();
 
-        return (int) $result['items'];
+        return (int)$result['items'];
     }
 
 }

@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Locale\Business\Internal\Install;
 
+use Orm\Zed\Locale\Persistence\SpyLocale;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
-use Orm\Zed\Locale\Persistence\SpyLocale;
 
 class LocaleInstaller extends AbstractInstaller
 {

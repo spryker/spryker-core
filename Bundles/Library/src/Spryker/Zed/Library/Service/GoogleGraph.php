@@ -1,12 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
- */
-
-/**
- * @link http://code.google.com/intl/de-DE/apis/chart/image/docs/data_formats.html
- * @link https://developers.google.com/chart/image/docs/chart_params
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Library\Service;
@@ -106,6 +102,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chf
+     *
      * @return void
      */
     public function setChf($chf)
@@ -116,7 +114,7 @@ class GoogleGraph
     /**
      * The chart title.
      *
-     * @param string $chl
+     * @param string $chtt
      *
      * @return void
      */
@@ -138,6 +136,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chof
+     *
      * @return void
      */
     public function setChof($chof)
@@ -170,6 +170,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chs
+     *
      * @return void
      */
     public function setChs($chs)
@@ -244,6 +246,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chxt
+     *
      * @return void
      */
     public function setChxt($chxt)
@@ -252,6 +256,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chxr
+     *
      * @return void
      */
     public function setChxr($chxr)
@@ -260,6 +266,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chds
+     *
      * @return void
      */
     public function setChds($chds)
@@ -268,6 +276,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chco
+     *
      * @return void
      */
     public function setChco($chco)
@@ -276,6 +286,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chls
+     *
      * @return void
      */
     public function setChls($chls)
@@ -284,6 +296,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chg
+     *
      * @return void
      */
     public function setChg($chg)
@@ -292,6 +306,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chm
+     *
      * @return void
      */
     public function setChm($chm)
@@ -300,6 +316,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chxp
+     *
      * @return void
      */
     public function setChxp($chxp)
@@ -308,6 +326,8 @@ class GoogleGraph
     }
 
     /**
+     * @param string $chbh
+     *
      * @return void
      */
     public function setChbh($chbh)
@@ -315,7 +335,10 @@ class GoogleGraph
         $this->chbh = $chbh;
     }
 
-    public function toGetString()
+    /**
+     * @return string
+     */
+    public function toQueryString()
     {
         $params = get_object_vars($this);
         $out = http_build_query($params);

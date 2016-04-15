@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
@@ -9,20 +10,20 @@ namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Spryker\Zed\Discount\Communication\Form\CartRuleForm;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class VoucherCodesFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
-    public function __construct(DiscountQueryContainer $discountQueryContainer)
+    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {
         $this->discountQueryContainer = $discountQueryContainer;
     }
@@ -44,18 +45,17 @@ class VoucherCodesFormDataProvider
             VoucherCodesForm::FIELD_VALID_FROM => new \DateTime('now'),
             VoucherCodesForm::FIELD_VALID_TO => new \DateTime('now'),
             VoucherCodesForm::FIELD_DECISION_RULES => [
-                'rule_1' => [
+                [
                     'value' => '',
                     'rules' => '',
                 ],
             ],
             VoucherCodesForm::FIELD_COLLECTOR_PLUGINS => [
-                'plugin_1' => [
+                [
                     'collector_plugin' => '',
                     'value' => '',
                 ],
             ],
-//            'group' => [],
         ];
     }
 
@@ -92,7 +92,7 @@ class VoucherCodesFormDataProvider
         $voucherCodesTransfer->setDecisionRules($decisionRuleEntities->toArray());
         $voucherCodesTransfer->setCalculatorPlugin($discountEntity->getCalculatorPlugin());
 
-        $voucherCodesTransfer->setIsPrivileged((bool) $discountEntity->getIsPrivileged());
+        $voucherCodesTransfer->setIsPrivileged((bool)$discountEntity->getIsPrivileged());
         $voucherCodesTransfer->setValidFrom($discountEntity->getValidFrom());
         $voucherCodesTransfer->setValidTo($discountEntity->getValidTo());
 

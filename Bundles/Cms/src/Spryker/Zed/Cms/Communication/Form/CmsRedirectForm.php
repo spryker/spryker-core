@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Form;
@@ -27,6 +28,7 @@ class CmsRedirectForm extends AbstractType
     const FIELD_STATUS = 'status';
 
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+    const MAX_COUNT_CHARACTERS_REDIRECT_URL = 255;
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
@@ -59,10 +61,9 @@ class CmsRedirectForm extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults([
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
-                if (
-                    array_key_exists(self::FIELD_FROM_URL, $defaultData) === false ||
+                if (array_key_exists(self::FIELD_FROM_URL, $defaultData) === false ||
                     $defaultData[self::FIELD_FROM_URL] !== $form->getData()[self::FIELD_FROM_URL]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_URL_CHECK];
@@ -136,7 +137,19 @@ class CmsRedirectForm extends AbstractType
      */
     protected function addStatusField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_STATUS, 'text');
+        $builder->add(
+            self::FIELD_STATUS,
+            'choice',
+            [
+                'label' => 'Redirect status code',
+                'constraints' => [
+                    $this->createNotBlankConstraint()
+                ],
+                'choices' => [201 => 201, 301 => 301, 302 => 302, 303 => 303, 307 => 307, 308 => 308],
+                'placeholder' => 'Please select',
+                'empty_value' => null,
+            ]
+        );
 
         return $this;
     }
@@ -152,7 +165,7 @@ class CmsRedirectForm extends AbstractType
             'methods' => [
                 function ($url, ExecutionContextInterface $context) {
                     if ($this->urlFacade->hasUrl($url)) {
-                        $context->addViolation('Url is already used');
+                        $context->addViolation('URL is already used');
                     }
                 },
             ],
@@ -168,10 +181,43 @@ class CmsRedirectForm extends AbstractType
     protected function getMandatoryConstraints()
     {
         return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 255]),
+            $this->createRequiredConstraint(),
+            $this->createNotBlankConstraint(),
+            $this->createLengthConstraint(self::MAX_COUNT_CHARACTERS_REDIRECT_URL),
+            new Callback([
+                'methods' => [
+                    function ($url, ExecutionContextInterface $context) {
+                        if ($url[0] !== '/') {
+                            $context->addViolation('URL must start with a slash');
+                        }
+                    },
+                ]
+            ])
         ];
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint()
+    {
+        return new NotBlank();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Required
+     */
+    protected function createRequiredConstraint()
+    {
+        return new Required();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Length
+     */
+    protected function createLengthConstraint($max)
+    {
+        return new Length(['max' => $max]);
     }
 
 }

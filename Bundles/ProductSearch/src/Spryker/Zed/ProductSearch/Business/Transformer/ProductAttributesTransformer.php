@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductSearch\Business\Transformer;
@@ -13,6 +14,9 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 class ProductAttributesTransformer implements ProductAttributesTransformerInterface
 {
 
+    /**
+     * @var array
+     */
     protected $fieldOperations = [];
 
     /**
@@ -149,7 +153,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
      */
     protected function isInitialized()
     {
-        return (!empty($this->fieldOperations));
+        return (bool)$this->fieldOperations;
     }
 
     /**
@@ -160,10 +164,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
         foreach ($this->getFieldOperations() as $fieldOperation) {
             $operationName = $fieldOperation->getOperation();
 
-            if ($this->operationLocator->findOperationByName($operationName) !== null) {
-                $fieldName = $fieldOperation->getSpyProductAttributesMetadata()->getkey();
-                $this->fieldOperations[$fieldName][$operationName][] = $fieldOperation->getTargetField();
-            } else {
+            if ($this->operationLocator->findOperationByName($operationName) === null) {
                 throw new \RuntimeException(
                     sprintf(
                         'No operation with name %s found to map field %s',
@@ -172,6 +173,9 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     )
                 );
             }
+
+            $fieldName = $fieldOperation->getSpyProductAttributesMetadata()->getkey();
+            $this->fieldOperations[$fieldName][$operationName][] = $fieldOperation->getTargetField();
         }
     }
 

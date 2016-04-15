@@ -1,17 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Touch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
 /**
@@ -22,9 +20,10 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
 
     const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
     const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
-    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
@@ -38,6 +37,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemId
      *
@@ -55,6 +56,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemId
      * @param string $itemEvent
@@ -73,6 +76,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
@@ -87,13 +92,14 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
-            ->filterByTouched(['min' => $lastTouchedAt])
-            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_EXPORTER_ID);
+            ->filterByTouched(['min' => $lastTouchedAt]);
 
         return $query;
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryExportTypes()
@@ -102,12 +108,15 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->addSelectColumn(SpyTouchTableMap::COL_ITEM_TYPE)
             ->setDistinct()
+            ->orderBy(SpyTouchTableMap::COL_ITEM_TYPE)
             ->setFormatter(new PropelArraySetFormatter());
 
         return $query;
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      * @param string $itemEvent
      * @param array $itemIds
@@ -126,6 +135,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @api
+     *
      * @param string $itemType
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
@@ -135,26 +146,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query = $this->getFactory()->createTouchQuery();
         $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
             ->filterByItemType($itemType)
-            ->leftJoinTouchSearch()
-            ->leftJoinTouchStorage()
-            ->addAnd(SpyTouchSearchTableMap::COL_FK_TOUCH, null, Criteria::ISNULL)
-            ->addAnd(SpyTouchStorageTableMap::COL_FK_TOUCH, null, Criteria::ISNULL);
-
-        return $query;
-    }
-
-    /**
-     * @param string $itemType
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
-     */
-    public function queryTouchDeleteOnlyByItemType($itemType)
-    {
-        $query = $this->getFactory()->createTouchQuery();
-        $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-            ->filterByItemType($itemType);
+            ->leftJoinTouchSearch('search')
+            ->leftJoinTouchStorage('storage');
 
         return $query;
     }

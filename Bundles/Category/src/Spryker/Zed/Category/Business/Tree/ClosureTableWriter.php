@@ -1,33 +1,33 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
-use Propel\Runtime\Propel;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTable;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Propel\Runtime\Propel;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class ClosureTableWriter implements ClosureTableWriterInterface
 {
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $categoryTreeRepository
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryTreeRepository
      */
-    public function __construct(
-        CategoryQueryContainer $categoryTreeRepository
-    ) {
+    public function __construct(CategoryQueryContainerInterface $categoryTreeRepository)
+    {
         $this->queryContainer = $categoryTreeRepository;
     }
 

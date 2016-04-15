@@ -1,13 +1,14 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Discount\DiscountConfigInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class CollectorResolver
 {
@@ -16,34 +17,32 @@ class CollectorResolver
     const OPERATOR_AND = 'AND';
 
     /**
-     * @var \Spryker\Zed\Discount\DiscountConfigInterface
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
      */
-    protected $discountConfig;
+    protected $collectorPlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfigInterface $discountConfig
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
      */
-    public function __construct(DiscountConfigInterface $discountConfig)
+    public function __construct(array $collectorPlugins)
     {
-        $this->discountConfig = $discountConfig;
+        $this->collectorPlugins = $collectorPlugins;
     }
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer[]
      */
-    public function collectItems(CalculableInterface $container, DiscountTransfer $discountTransfer)
+    public function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
         $collectedItems = [];
 
         foreach ($discountTransfer->getDiscountCollectors() as $discountCollectorTransfer) {
-            $collectorPlugin = $this->discountConfig->getCollectorPluginByName(
-                $discountCollectorTransfer->getCollectorPlugin()
-            );
+            $collectorPlugin = $this->collectorPlugins[$discountCollectorTransfer->getCollectorPlugin()];
 
-            $itemsToCombine = $collectorPlugin->collect($discountTransfer, $container, $discountCollectorTransfer);
+            $itemsToCombine = $collectorPlugin->collect($discountTransfer, $quoteTransfer, $discountCollectorTransfer);
 
             if (!$this->isCombinable($itemsToCombine, $discountTransfer)) {
                 return [];

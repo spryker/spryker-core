@@ -1,12 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library;
 
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Library\Exception\UnknownContextPropertyException;
 
 class Context
 {
@@ -153,10 +155,19 @@ class Context
      *
      * @param string $name
      *
+     * @throws \Spryker\Shared\Library\Exception\UnknownContextPropertyException
+     *
      * @return mixed
      */
     public function get($name)
     {
+        if (!array_key_exists($name, static::$contexts[$this->_contextName])) {
+            throw new UnknownContextPropertyException(sprintf(
+                'Unknown context property "%s"',
+                $name
+            ));
+        }
+
         return static::$contexts[$this->_contextName][$name];
     }
 

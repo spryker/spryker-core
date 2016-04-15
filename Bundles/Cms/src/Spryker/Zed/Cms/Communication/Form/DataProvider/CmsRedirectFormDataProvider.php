@@ -1,32 +1,33 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Form\DataProvider;
 
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsRedirectFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainer
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainer $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      */
-    public function __construct(CmsQueryContainer $cmsQueryContainer)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
     }
 
     /**
-     * @param int $idUrl
+     * @param int|null $idUrl
      *
      * @return array
      */
@@ -36,6 +37,7 @@ class CmsRedirectFormDataProvider
             return [];
         }
 
+        /** @var \Orm\Zed\Url\Persistence\SpyUrl|\Orm\Zed\Url\Persistence\SpyUrlRedirect $urlEntity */
         $urlEntity = $this
             ->cmsQueryContainer
             ->queryUrlByIdWithRedirect($idUrl)

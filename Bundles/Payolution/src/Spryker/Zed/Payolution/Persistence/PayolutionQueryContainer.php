@@ -1,14 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payolution\Persistence;
 
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTransactionRequestLogTableMap;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTransactionStatusLogTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Propel\Runtime\Propel;
 use Spryker\Shared\Payolution\PayolutionConstants;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\Payolution\Persistence\PayolutionPersistenceFactory getFactory()
@@ -17,6 +21,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
      */
     public function queryPayments()
@@ -25,6 +31,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
@@ -37,6 +45,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
@@ -49,6 +59,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     public function queryTransactionStatusLog()
@@ -57,6 +69,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -70,6 +84,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -82,6 +98,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -96,6 +114,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
@@ -108,6 +128,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      * @param string $paymentCode
      *
@@ -115,15 +137,24 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      */
     public function queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst($idSalesOrder, $paymentCode)
     {
+
         return $this->queryTransactionStatusLogBySalesOrderIdLatestFirst($idSalesOrder)
-            // Payment code need to get checked in request log table
-            ->joinSpyPaymentPayolutionTransactionRequestLog()
-            ->useSpyPaymentPayolutionTransactionRequestLogQuery()
-            ->filterByPaymentCode($paymentCode)
-            ->endUse();
+            ->withColumn(SpyPaymentPayolutionTransactionRequestLogTableMap::COL_PAYMENT_CODE)
+            ->addJoin(
+                [
+                    SpyPaymentPayolutionTransactionStatusLogTableMap::COL_IDENTIFICATION_TRANSACTIONID,
+                    SpyPaymentPayolutionTransactionRequestLogTableMap::COL_PAYMENT_CODE,
+                ],
+                [
+                    SpyPaymentPayolutionTransactionRequestLogTableMap::COL_TRANSACTION_ID,
+                    Propel::getConnection()->quote($paymentCode),
+                ]
+            );
     }
 
     /**
+     * @api
+     *
      * @param int $idPayment
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery

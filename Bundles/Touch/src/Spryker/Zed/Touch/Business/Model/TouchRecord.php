@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Touch\Business\Model;
 
 use DateTime;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface
@@ -113,7 +114,7 @@ class TouchRecord implements TouchRecordInterface
 
     /**
      * @param string $itemType
-     * @param string $idItem
+     * @param int $idItem
      *
      * @return void
      */
@@ -135,8 +136,8 @@ class TouchRecord implements TouchRecordInterface
     /**
      * @param string $itemType
      * @param string $itemEvent
-     * @param string $idItem
-     * @param string $type;
+     * @param int $idItem
+     * @param string|null $type
      *
      * @return void
      */

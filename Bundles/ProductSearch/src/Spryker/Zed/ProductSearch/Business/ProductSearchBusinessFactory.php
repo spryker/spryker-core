@@ -1,26 +1,28 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductSearch\Business;
 
-use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
-use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
-use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;
-use Spryker\Zed\ProductSearch\Business\Operation\DefaultOperation;
-use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
-use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
+use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
+use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;
 use Spryker\Zed\ProductSearch\Business\Operation\AddToResult;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToField;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField;
+use Spryker\Zed\ProductSearch\Business\Operation\DefaultOperation;
+use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
+use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchMarker;
+use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
+use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
@@ -73,8 +75,6 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorInterface
      */
     protected function getCollectorFacade()
@@ -148,7 +148,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array|\Spryker\Zed\ProductSearch\Business\Operation\OperationInterface[]
+     * @return \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface[]
      */
     protected function getPossibleOperations()
     {
@@ -190,6 +190,18 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     protected function createCopyToMultiField()
     {
         return new CopyToMultiField();
+    }
+
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Processor\ProductSearchMarkerInterface
+     */
+    public function createProductSearchMarker()
+    {
+        return new ProductSearchMarker(
+            $this->getTouchFacade(),
+            $this->getQueryContainer()
+        );
     }
 
 }

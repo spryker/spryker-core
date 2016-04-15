@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Communication\Controller;
@@ -9,7 +10,6 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,7 +26,7 @@ class AddressController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
+        $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $table = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
@@ -38,11 +38,13 @@ class AddressController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction(Request $request)
     {
-        $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
+        $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $table = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
@@ -58,7 +60,7 @@ class AddressController extends AbstractController
     public function viewAction(Request $request)
     {
         $idCustomer = false;
-        $idCustomerAddress = $request->get(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS);
+        $idCustomerAddress = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS));
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
@@ -91,7 +93,7 @@ class AddressController extends AbstractController
     public function editAction(Request $request)
     {
         $idCustomer = false;
-        $idCustomerAddress = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS);
+        $idCustomerAddress = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS));
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
@@ -119,8 +121,10 @@ class AddressController extends AbstractController
             $this->getFacade()->updateAddress($customerAddress);
 
             return $this->redirectResponse(sprintf(
-                '/customer/address/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
-            );
+                '/customer/address/?%s=%d',
+                CustomerConstants::PARAM_ID_CUSTOMER,
+                $idCustomer
+            ));
         }
 
         return $this->viewResponse([
@@ -137,7 +141,7 @@ class AddressController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
+        $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $dataProvider = $this->getFactory()->createAddressFormDataProvider();
         $addressForm = $this

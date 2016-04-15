@@ -1,14 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -36,7 +36,7 @@ class CarrierController extends AbstractController
             $this->getFacade()
                 ->createCarrier($carrierTransfer);
 
-            return $this->redirectResponse('/shipment/');
+            return $this->redirectResponse('/shipment');
         }
 
         return $this->viewResponse([

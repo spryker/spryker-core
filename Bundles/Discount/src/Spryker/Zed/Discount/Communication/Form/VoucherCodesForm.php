@@ -1,9 +1,14 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
@@ -26,32 +31,41 @@ class VoucherCodesForm extends AbstractRuleForm
     const FIELD_COLLECTOR_LOGICAL_OPERATOR = 'collector_logical_operator';
 
     /**
-     * @var array
-     */
-    protected $availablePoolCategories;
-
-    /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
-     */
-    protected $discountConfig;
-
-    /**
      * @var \Symfony\Component\Form\DataTransformerInterface
      */
     protected $decisionRulesFormTransformer;
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
+     * @var \Spryker\Zed\Discount\Communication\Form\CollectorPluginForm
+     */
+    protected $collectorPluginFormType;
+
+    /**
+     * @var \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm
+     */
+    protected $decisionRuleFormType;
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $availableCalculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $availableCollectorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $availableDecisionRulePlugins
      * @param \Symfony\Component\Form\DataTransformerInterface $decisionRulesFormTransformer
+     * @param \Spryker\Zed\Discount\Communication\Form\CollectorPluginForm $collectorPluginFormType
+     * @param \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm $decisionRuleFormType
      */
     public function __construct(
-        DiscountConfig $discountConfig,
-        DataTransformerInterface $decisionRulesFormTransformer
+        array $availableCalculatorPlugins,
+        array $availableCollectorPlugins,
+        array $availableDecisionRulePlugins,
+        DataTransformerInterface $decisionRulesFormTransformer,
+        CollectorPluginForm $collectorPluginFormType,
+        DecisionRuleForm $decisionRuleFormType
     ) {
-        parent::__construct($discountConfig);
+        parent::__construct($availableCalculatorPlugins, $availableCollectorPlugins, $availableDecisionRulePlugins);
 
-        $this->discountConfig = $discountConfig;
         $this->decisionRulesFormTransformer = $decisionRulesFormTransformer;
+        $this->collectorPluginFormType = $collectorPluginFormType;
+        $this->decisionRuleFormType = $decisionRuleFormType;
     }
 
     /**
@@ -192,6 +206,16 @@ class VoucherCodesForm extends AbstractRuleForm
             'label' => 'Valid From',
         ]);
 
+        $builder->get(self::FIELD_VALID_FROM)->addModelTransformer(new CallbackTransformer(
+            function ($originalValue) {
+                return $originalValue;
+            },
+            function (\DateTime $submittedValue) {
+                $submittedValue->setTime(0, 0, 0);
+                return $submittedValue;
+            }
+        ));
+
         return $this;
     }
 
@@ -205,6 +229,16 @@ class VoucherCodesForm extends AbstractRuleForm
         $builder->add(self::FIELD_VALID_TO, 'date', [
             'label' => 'Valid Until',
         ]);
+
+        $builder->get(self::FIELD_VALID_TO)->addModelTransformer(new CallbackTransformer(
+            function ($originalValue) {
+                return $originalValue;
+            },
+            function (\DateTime $submittedValue) {
+                $submittedValue->setTime(23, 59, 59);
+                return $submittedValue;
+            }
+        ));
 
         return $this;
     }
@@ -238,8 +272,7 @@ class VoucherCodesForm extends AbstractRuleForm
     protected function addCollectorPluginsField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-            'type' => new CollectorPluginForm($this->discountConfig),
-            'label' => null,
+            'type' => $this->collectorPluginFormType,
             'allow_add' => true,
             'allow_delete' => true,
             'allow_extra_fields' => true,
@@ -256,8 +289,7 @@ class VoucherCodesForm extends AbstractRuleForm
     protected function addDecisionRulesField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_DECISION_RULES, 'collection', [
-            'type' => new DecisionRuleForm($this->discountConfig),
-            'label' => null,
+            'type' => $this->decisionRuleFormType,
             'allow_add' => true,
             'allow_delete' => true,
             'allow_extra_fields' => true,

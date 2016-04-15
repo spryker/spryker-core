@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Refund\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 
 /**
  * @method \Spryker\Zed\Refund\Persistence\RefundPersistenceFactory getFactory()
@@ -16,6 +16,8 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
     public function queryRefund()
@@ -24,6 +26,8 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
@@ -37,6 +41,8 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
     }
 
     /**
+     * @api
+     *
      * @param int $idMethod
      *
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery

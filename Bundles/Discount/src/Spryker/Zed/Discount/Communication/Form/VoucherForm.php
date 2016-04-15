@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
@@ -147,7 +152,7 @@ class VoucherForm extends AbstractType
                 'data-toggle' => 'tooltip',
                 'data-placement' => 'top',
                 'title' => 'Add [code] template to position generated code',
-                'help' => 'Please enter a string that will be used as custom code, the string code can be used to put the code in a certain position, e.g. "summer-code-special"',
+                'help' => 'Please enter a string that will be used as custom code, the string code can be used to put the code in a certain position, e.g. "summer-[code]-special"',
             ],
         ]);
 
@@ -156,6 +161,7 @@ class VoucherForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
      *
      * @return $this
      */
@@ -179,7 +185,7 @@ class VoucherForm extends AbstractType
                                 return;
                             }
 
-                            if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[VoucherForm::FIELD_QUANTITY]) {
+                            if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[self::FIELD_QUANTITY]) {
                                 $context->addViolation('The quantity of required codes is to high regarding the code length');
 
                                 return;

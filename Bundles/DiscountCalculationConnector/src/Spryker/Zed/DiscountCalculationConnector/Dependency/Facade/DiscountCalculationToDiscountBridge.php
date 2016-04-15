@@ -1,12 +1,13 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
-use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscountInterface
 {
@@ -25,13 +26,13 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
     }
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
-    public function calculateDiscounts(CalculableInterface $calculableContainer)
+    public function calculateDiscounts(QuoteTransfer $quoteTransfer)
     {
-        return $this->discountFacade->calculateDiscounts($calculableContainer);
+        return $this->discountFacade->calculateDiscounts($quoteTransfer);
     }
 
 }

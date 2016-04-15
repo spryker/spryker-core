@@ -1,26 +1,27 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RolesTransfer;
-use Spryker\Shared\Acl\AclConstants;
-use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
-use Orm\Zed\Acl\Persistence\SpyAclRole;
-use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Generated\Shared\Transfer\RoleTransfer;
-use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
+use Orm\Zed\Acl\Persistence\SpyAclRole;
+use Spryker\Shared\Acl\AclConstants;
+use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
+use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
+use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 
 class Role implements RoleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -31,9 +32,9 @@ class Role implements RoleInterface
 
     /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      */
-    public function __construct(GroupInterface $group, AclQueryContainer $queryContainer)
+    public function __construct(GroupInterface $group, AclQueryContainerInterface $queryContainer)
     {
         $this->group = $group;
         $this->queryContainer = $queryContainer;
@@ -67,7 +68,7 @@ class Role implements RoleInterface
     public function save(RoleTransfer $roleTransfer)
     {
         $aclRoleEntity = new SpyAclRole();
-        if (!empty($roleTransfer->getIdAclRole())) {
+        if ($roleTransfer->getIdAclRole()) {
             $aclRoleEntity = $this->queryContainer->queryRoleById($roleTransfer->getIdAclRole())->findOne();
             if ($aclRoleEntity->getName() === AclConstants::ROOT_ROLE) {
                 throw new RootNodeModificationException('Could not modify root role node!');

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Cms\Business;
@@ -10,14 +11,16 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Locale\Business\LocaleFacade;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
@@ -135,6 +138,7 @@ class CmsFacadeTest extends Test
         $template2 = $this->cmsFacade->createTemplate('YetAnotherUsedTemplateName', 'YetAnotherUsedTemplatePath');
 
         $pageTransfer = new PageTransfer();
+        $pageTransfer->setUrl($this->getUrlTransfer());
         $pageTransfer->setFkTemplate($template1->getIdCmsTemplate());
         $pageTransfer->setIsActive(true);
 
@@ -335,6 +339,21 @@ class CmsFacadeTest extends Test
         $factory->setContainer($container);
 
         $this->glossaryFacade->setFactory($factory);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function getUrlTransfer()
+    {
+        $urlTransfer = new UrlTransfer();
+        $localeEntity = (new LocaleQueryContainer())->queryLocales()->findOne();
+
+        $urlTransfer
+            ->setFkLocale($localeEntity->getIdLocale())
+            ->setUrl('/url');
+
+        return $urlTransfer;
     }
 
 }

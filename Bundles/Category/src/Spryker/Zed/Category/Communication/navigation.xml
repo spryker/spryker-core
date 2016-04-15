@@ -8,5 +8,6 @@
         <action>index</action>
         <order>0</order>
         <shortcut>c</shortcut>
+        <icon>fa-sitemap</icon>
     </category>
 </config>

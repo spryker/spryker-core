@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Discount;
@@ -28,5 +29,11 @@ interface DiscountConstants
     const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';
     const KEY_VOUCHER_CODE_VOWELS = 'vowels';
     const KEY_VOUCHER_CODE_NUMBERS = 'numbers';
+
+    /**
+     * Types of result type saved in VoucherCreateInfoTransfer.
+     */
+    const MESSAGE_TYPE_SUCCESS = 'success';
+    const MESSAGE_TYPE_ERROR = 'error';
 
 }

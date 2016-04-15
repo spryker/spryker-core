@@ -1,24 +1,28 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Nopayment\Business\Nopayment;
 
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Orm\Zed\Nopayment\Persistence\SpyNopaymentPaid;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface;
 
 class Paid
 {
 
     /**
-     * @var \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainer
+     * @var \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface
      */
     protected $queryContainer;
 
-    public function __construct(QueryContainerInterface $queryContainer)
+    /**
+     * @param \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface $queryContainer
+     */
+    public function __construct(NopaymentQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }

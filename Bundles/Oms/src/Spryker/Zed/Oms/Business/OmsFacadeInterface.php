@@ -1,12 +1,12 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -15,6 +15,8 @@ interface OmsFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idOrderItem
      *
      * @return string[]
@@ -22,6 +24,8 @@ interface OmsFacadeInterface
     public function getManualEvents($idOrderItem);
 
     /**
+     * @api
+     *
      * @param int $idOrder
      * @param string $flag
      *
@@ -30,6 +34,8 @@ interface OmsFacadeInterface
     public function isOrderFlagged($idOrder, $flag);
 
     /**
+     * @api
+     *
      * @param int $idOrder
      * @param string $flag
      *
@@ -38,6 +44,8 @@ interface OmsFacadeInterface
     public function isOrderFlaggedAll($idOrder, $flag);
 
     /**
+     * @api
+     *
      * @param string $eventId
      * @param array $orderItemIds
      * @param array $data
@@ -47,6 +55,8 @@ interface OmsFacadeInterface
     public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []);
 
     /**
+     * @api
+     *
      * @param array $orderItemIds
      * @param array $data
      *
@@ -55,6 +65,8 @@ interface OmsFacadeInterface
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data = []);
 
     /**
+     * @api
+     *
      * @param string $eventId
      * @param int $orderItemId
      * @param array $data
@@ -64,16 +76,22 @@ interface OmsFacadeInterface
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = []);
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\Oms\Business\Process\Process[]
      */
     public function getProcesses();
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getProcessList();
 
     /**
+     * @api
+     *
      * @param array $logContext
      *
      * @return int
@@ -81,6 +99,8 @@ interface OmsFacadeInterface
     public function checkConditions(array $logContext = []);
 
     /**
+     * @api
+     *
      * @param array $logContext
      *
      * @return int
@@ -88,6 +108,8 @@ interface OmsFacadeInterface
     public function checkTimeouts(array $logContext = []);
 
     /**
+     * @api
+     *
      * @param string $processName
      * @param string|null $highlightState
      * @param string|null $format
@@ -98,6 +120,8 @@ interface OmsFacadeInterface
     public function drawProcess($processName, $highlightState = null, $format = null, $fontSize = null);
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return \Spryker\Zed\Oms\Business\Process\Event[]
@@ -105,6 +129,8 @@ interface OmsFacadeInterface
     public function getGroupedManuallyExecutableEvents(SpySalesOrder $order);
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
@@ -113,6 +139,8 @@ interface OmsFacadeInterface
     public function getItemsWithFlag(SpySalesOrder $order, $flag);
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
@@ -121,6 +149,8 @@ interface OmsFacadeInterface
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag);
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
@@ -129,6 +159,8 @@ interface OmsFacadeInterface
     public function getLogForOrder(SpySalesOrder $order, array $logContext = []);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -136,6 +168,8 @@ interface OmsFacadeInterface
     public function getReservedOrderItemsForSku($sku);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -143,6 +177,8 @@ interface OmsFacadeInterface
     public function countReservedOrderItemsForSku($sku);
 
     /**
+     * @api
+     *
      * @param string $stateName
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
@@ -150,6 +186,8 @@ interface OmsFacadeInterface
     public function getStateEntity($stateName);
 
     /**
+     * @api
+     *
      * @param string $processName
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
@@ -157,18 +195,15 @@ interface OmsFacadeInterface
     public function getProcessEntity($processName);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getInitialStateEntity();
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
+     * @api
      *
-     * @return string
-     */
-    public function selectProcess(OrderTransfer $transferOrder);
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return string
@@ -176,6 +211,8 @@ interface OmsFacadeInterface
     public function getStateDisplayName(SpySalesOrderItem $orderItem);
 
     /**
+     * @api
+     *
      * @param string $eventId
      * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
@@ -186,6 +223,8 @@ interface OmsFacadeInterface
     public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = []);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
@@ -195,6 +234,8 @@ interface OmsFacadeInterface
     public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = []);
 
     /**
+     * @api
+     *
      * @param string $eventId
      * @param \Generated\Shared\Transfer\OrderTransfer $orderItem
      * @param array $logContext
@@ -205,8 +246,19 @@ interface OmsFacadeInterface
     public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = []);
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getOrderItemMatrix();
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getManualEventsByIdSalesOrder($idSalesOrder);
 
 }

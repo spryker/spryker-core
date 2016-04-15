@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Sales;
@@ -17,6 +18,10 @@ class SalesClient extends AbstractClient implements SalesClientInterface
 {
 
     /**
+     * Returns the sales orders for the given customer and filters
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
@@ -29,6 +34,10 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     }
 
     /**
+     * Returns details for the given order id
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

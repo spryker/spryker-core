@@ -1,20 +1,21 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Url\Business\Exception\MissingUrlException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Dependency\UrlToLocaleInterface;
 use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
-use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlManager implements UrlManagerInterface
@@ -210,6 +211,18 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     */
+    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
+    {
+        return $this->urlQueryContainer
+            ->queryResourceUrlByCategoryNodeId($idCategoryNode)
+            ->find();
+    }
+
+    /**
      * @param int $idUrl
      *
      * @return bool
@@ -352,11 +365,13 @@ class UrlManager implements UrlManagerInterface
      */
     protected function syncUrlEntityWithTransfer(UrlTransfer $urlTransfer, SpyUrl $urlEntity)
     {
-        $urlEntity
-            ->setFkLocale($urlTransfer->getFkLocale())
-            ->setResource($urlTransfer->getResourceType(), $urlTransfer->getResourceId())
+        $urlEntity->setFkLocale($urlTransfer->getFkLocale())
             ->setUrl($urlTransfer->getUrl())
             ->setIdUrl($urlTransfer->getIdUrl());
+
+        if ($urlTransfer->getResourceType() && $urlTransfer->getResourceId()) {
+            $urlEntity->setResource($urlTransfer->getResourceType(), $urlTransfer->getResourceId());
+        }
     }
 
     /**

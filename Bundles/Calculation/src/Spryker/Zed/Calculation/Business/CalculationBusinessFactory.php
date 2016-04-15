@@ -1,36 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Calculation\Business;
 
-use Spryker\Zed\Calculation\Business\Model\PriceCalculationHelper;
-use Spryker\Zed\Calculation\Business\Model\Calculator\ItemTotalPriceCalculator;
-use Spryker\Zed\Calculation\Business\Model\StackExecutor;
-use Spryker\Zed\Calculation\Business\Model\Calculator\ExpensePriceToPayCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
-use Spryker\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator;
-use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
-use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
-use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
-use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
+use Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPreCondition;
+use Spryker\Zed\Calculation\Business\Model\StackExecutor;
+use Spryker\Zed\Calculation\CalculationDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\SubtotalWithoutItemExpensesTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlugin;
-use Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
 
 /**
  * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
@@ -39,129 +26,27 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\StackExecutor
+     * @return \Spryker\Zed\Calculation\Business\Model\StackExecutorInterface
      */
     public function createStackExecutor()
     {
-        $stackExecutor = new StackExecutor();
-
-        return $stackExecutor;
+        return new StackExecutor($this->getProvidedCalculatorStack());
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpensePriceToPayCalculator
+     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
-    public function createExpensePriceToPayCalculator()
+    protected function getProvidedCalculatorStack()
     {
-        $expensePriceToPayCalculator = new ExpensePriceToPayCalculator();
-
-        return $expensePriceToPayCalculator;
+        return $this->getProvidedDependency(CalculationDependencyProvider::CALCULATOR_STACK);
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalculator
      */
-    public function createGrandTotalsCalculator()
+    public function createExpenseGrossSumAmount()
     {
-        $subtotalTotalsCalculator = $this->createSubTotalsCalculator();
-        $expenseTotalsCalculator = $this->createExpenseTotalsCalculator();
-
-        $grandTotalsCalculator = new GrandTotalTotalsCalculator(
-            $subtotalTotalsCalculator,
-            $expenseTotalsCalculator
-        );
-
-        return $grandTotalsCalculator;
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator
-     */
-    public function createItemPriceToPayCalculator()
-    {
-        $itemPriceToPayCalculator = new ItemPriceToPayCalculator();
-
-        return $itemPriceToPayCalculator;
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator
-     */
-    public function createOptionPriceToPayCalculator()
-    {
-        $productOptionPriceToPayCalculator = new ProductOptionPriceToPayCalculator();
-
-        return $productOptionPriceToPayCalculator;
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator
-     */
-    public function createRemoveAllExpensesCalculator()
-    {
-        $removeAllExpensesCalculator = new RemoveAllExpensesCalculator();
-
-        return $removeAllExpensesCalculator;
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator
-     */
-    public function createRemoveTotalsCalculator()
-    {
-        $removeTotalsCalculator = new RemoveTotalsCalculator();
-
-        return $removeTotalsCalculator;
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator
-     */
-    public function createSubtotalTotalsCalculator()
-    {
-        $subtotalTotalsCalculator = new SubtotalTotalsCalculator();
-
-        return $subtotalTotalsCalculator;
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemTotalPriceCalculator
-     */
-    public function createItemTotalCalculator()
-    {
-        $itemTotalPriceCalculator = new ItemTotalPriceCalculator();
-
-        return $itemTotalPriceCalculator;
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator
-     */
-    public function createSubtotalWithoutItemExpensesTotalsCalculator()
-    {
-        $subtotalWithoutItemExpensesTotalsCalculator = new SubtotalWithoutItemExpensesTotalsCalculator();
-
-        return $subtotalWithoutItemExpensesTotalsCalculator;
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator
-     */
-    public function createTaxTotalsCalculator()
-    {
-        return new TaxTotalsCalculator(
-            $this->createPriceCalculationHelper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator
-     */
-    protected function createSubTotalsCalculator()
-    {
-        $subtotalTotalsCalculator = new SubtotalTotalsCalculator();
-
-        return $subtotalTotalsCalculator;
+        return new ExpenseGrossSumAmountCalculator();
     }
 
     /**
@@ -169,127 +54,55 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createExpenseTotalsCalculator()
     {
-        $expenseTotalsCalculator = new ExpenseTotalsCalculator();
-
-        return $expenseTotalsCalculator;
+        return new ExpenseTotalsCalculator();
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\PriceCalculationHelper
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator
      */
-    protected function createPriceCalculationHelper()
+    public function createGrandTotalsCalculator()
     {
-        $priceCalculationHelper = new PriceCalculationHelper();
-
-        return $priceCalculationHelper;
+        return new GrandTotalTotalsCalculator();
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface[]
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator
      */
-    public function getCalculatorStack()
+    public function createItemGrossSumCalculator()
     {
-        return [
-            $this->createRemoveTotalsCalculatorPlugin(),
-            $this->createRemoveAllExpensesCalculatorPlugin(),
-            $this->createExpenseTotalsCalculatorPlugin(),
-            $this->createSubtotalTotalsCalculatorPlugin(),
-            $this->createSubtotalWithoutItemExpensesTotalsCalculatorPlugin(),
-            $this->createGrandTotalTotalsCalculatorPlugin(),
-            $this->createExpensePriceToPayCalculatorPlugin(),
-            $this->createItemPriceToPayCalculatorPlugin(),
-            $this->createProductOptionPriceToPayCalculatorPlugin(),
-            $this->createTaxTotalsCalculatorPlugin(),
-            $this->createItemTotalPriceCalculatorPlugin(),
-        ];
+        return new ItemGrossAmountsCalculator();
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalculator
      */
-    protected function createRemoveTotalsCalculatorPlugin()
+    public function createOptionGrossSumCalculator()
     {
-        return new RemoveTotalsCalculatorPlugin();
+        return new ProductOptionGrossSumCalculator();
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator
      */
-    protected function createRemoveAllExpensesCalculatorPlugin()
+    public function createRemoveTotalsCalculator()
     {
-        return new RemoveAllExpensesCalculatorPlugin();
+        return new RemoveTotalsCalculator();
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator
      */
-    protected function createExpenseTotalsCalculatorPlugin()
+    public function createSubtotalTotalsCalculator()
     {
-        return new ExpenseTotalsCalculatorPlugin();
+        return new SubtotalTotalsCalculator();
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPreConditionInterface
      */
-    protected function createSubtotalTotalsCalculatorPlugin()
+    public function createCheckoutGrandTotalPreCondition()
     {
-        return new SubtotalTotalsCalculatorPlugin();
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\SubtotalWithoutItemExpensesTotalsCalculatorPlugin
-     */
-    protected function createSubtotalWithoutItemExpensesTotalsCalculatorPlugin()
-    {
-        return new SubtotalWithoutItemExpensesTotalsCalculatorPlugin();
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin
-     */
-    protected function createGrandTotalTotalsCalculatorPlugin()
-    {
-        return new GrandTotalTotalsCalculatorPlugin();
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin
-     */
-    protected function createExpensePriceToPayCalculatorPlugin()
-    {
-        return new ExpensePriceToPayCalculatorPlugin();
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin
-     */
-    protected function createItemPriceToPayCalculatorPlugin()
-    {
-        return new ItemPriceToPayCalculatorPlugin();
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin
-     */
-    protected function createProductOptionPriceToPayCalculatorPlugin()
-    {
-        return new ProductOptionPriceToPayCalculatorPlugin();
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin
-     */
-    protected function createTaxTotalsCalculatorPlugin()
-    {
-        return new TaxTotalsCalculatorPlugin();
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin
-     */
-    protected function createItemTotalPriceCalculatorPlugin()
-    {
-        return new ItemTotalPriceCalculatorPlugin();
+        return new CheckoutGrandTotalPreCondition($this->createStackExecutor());
     }
 
 }

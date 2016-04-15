@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Shipment\Communication;
 
-use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
-use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
+use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
+use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -31,49 +32,40 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $formData
-     * @param array $options
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCarrierForm(array $formData = [], array $options = [])
+    public function createCarrierForm()
     {
-        $formType = new CarrierForm();
+        $carrierQuery = $this->getQueryContainer()->queryCarriers();
 
-        return $this->getFormFactory()->create($formType, $formData, $options);
-    }
+        $form = new CarrierForm($carrierQuery);
 
-    /**
-     * @param array $formData
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createMethodForm(array $formData = [], array $options = [])
-    {
-        $form = new MethodForm();
-
-        return $this->getFormFactory()->create($form, $formData, $options);
+        return $this->getFormFactory()->create($form);
     }
 
     /**
      * @return \Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function createMethodFormDataProvider()
     {
         return new MethodFormDataProvider(
             $this->getQueryContainer(),
-            $this->getTaxQueryContainer(),
             $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
         );
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
+     * @param array $data
+     * @param array $options
+     * @return \Symfony\Component\Form\FormInterface
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    protected function getTaxQueryContainer()
+    public function createMethodForm(array $data, array $options = [])
     {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_TAX);
+        $form = new MethodForm();
+
+        return $this->getFormFactory()->create($form, $data, $options);
     }
 
 }

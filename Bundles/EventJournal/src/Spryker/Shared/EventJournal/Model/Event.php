@@ -1,10 +1,13 @@
 <?php
 
 /**
- * (c) Copyright Spryker Systems GmbH 2015
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\EventJournal\Model;
+
+use Spryker\Zed\Library\Generator\StringGenerator;
 
 class Event implements EventInterface
 {
@@ -26,7 +29,17 @@ class Event implements EventInterface
     public function __construct()
     {
         $this->setField(self::FIELD_NAME, null);
-        $this->setField(self::FIELD_EVENT_ID, uniqid('', true));
+        $this->setField(self::FIELD_EVENT_ID, $this->getRandomString());
+    }
+
+    /**
+     * @return string
+     */
+    private function getRandomString()
+    {
+        $generator = new StringGenerator();
+
+        return $generator->generateRandomString();
     }
 
     /**

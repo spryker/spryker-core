@@ -1,22 +1,21 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOption\Business\Model;
 
 use Generated\Shared\Transfer\ProductOptionsNameValueTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ArrayCollection;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
-use Generated\Shared\Transfer\TaxRateTransfer;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionTypeTranslationTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTranslationTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ArrayCollection;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionReader implements ProductOptionReaderInterface
 {
@@ -48,7 +47,6 @@ class ProductOptionReader implements ProductOptionReaderInterface
     public function __construct(
         ProductOptionQueryContainerInterface $queryContainer,
         ProductOptionToLocaleInterface $localeFacade
-
     ) {
         $this->queryContainer = $queryContainer;
         $this->localeFacade = $localeFacade;
@@ -69,7 +67,8 @@ class ProductOptionReader implements ProductOptionReaderInterface
             ->setLocaleCode($localeCode);
 
         $result = $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
-            $idProductOptionValueUsage, $localeTransfer->getIdLocale()
+            $idProductOptionValueUsage,
+            $localeTransfer->getIdLocale()
         )->select([
             self::COL_PRICE,
             self::COL_TRANSLATION_TYPE,
@@ -86,15 +85,16 @@ class ProductOptionReader implements ProductOptionReaderInterface
 
         $price = $result[self::COL_PRICE];
         if ($price === null) {
-            $productOptionTransfer->setGrossPrice(0);
+            $productOptionTransfer->setUnitGrossPrice(0);
         } else {
-            $productOptionTransfer->setGrossPrice((int) $price);
+            $productOptionTransfer->setUnitGrossPrice((int)$price);
         }
 
         $taxSetEntity = $this->queryContainer->queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage)
             ->findOne();
+
         if ($taxSetEntity !== null) {
-            $this->addTaxesToProductOptionTransfer($productOptionTransfer, $taxSetEntity);
+            $this->addTaxRate($productOptionTransfer, $taxSetEntity);
         }
 
         return $productOptionTransfer;
@@ -153,22 +153,13 @@ class ProductOptionReader implements ProductOptionReaderInterface
      *
      * @return void
      */
-    private function addTaxesToProductOptionTransfer(ProductOptionTransfer $productOptionTransfer, SpyTaxSet $taxSetEntity)
+    protected function addTaxRate(productOptionTransfer $productOptionTransfer, SpyTaxSet $taxSetEntity)
     {
-        $taxTransfer = new TaxSetTransfer();
-        $taxTransfer->setIdTaxSet($taxSetEntity->getIdTaxSet())
-            ->setName($taxSetEntity->getName());
-
-        foreach ($taxSetEntity->getSpyTaxRates() as $taxRate) {
-            $taxRateTransfer = new TaxRateTransfer();
-            $taxRateTransfer->setIdTaxRate($taxRate->getIdTaxRate())
-                ->setName($taxRate->getName())
-                ->setRate($taxRate->getRate());
-
-            $taxTransfer->addTaxRate($taxRateTransfer);
+        $taxRate = 0;
+        foreach ($taxSetEntity->getSpyTaxRates() as $taxRateEntity) {
+            $taxRate += $taxRateEntity->getRate();
         }
-
-        $productOptionTransfer->setTaxSet($taxTransfer);
+        $productOptionTransfer->setTaxRate($taxRate);
     }
 
     /**

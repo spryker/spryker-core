@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Glossary\Business;
@@ -8,8 +10,8 @@ namespace Functional\Spryker\Zed\Glossary\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 
 /**
  * @group Spryker
@@ -92,7 +94,7 @@ class GlossaryFacadeTest extends Test
      */
     public function testAddTranslation()
     {
-        $facade = $this->getGlossaryFacade();
+        $glossaryFacade = $this->getGlossaryFacade();
 
         $formData = [
             self::GLOSSARY_KEY => 'form.button.save',
@@ -103,7 +105,7 @@ class GlossaryFacadeTest extends Test
 
         $translationTransfer = (new KeyTranslationTransfer())->fromArray($formData);
 
-        $action = $facade->saveGlossaryKeyTranslations($translationTransfer);
+        $action = $glossaryFacade->saveGlossaryKeyTranslations($translationTransfer);
 
         $this->assertTrue($action);
     }
@@ -113,7 +115,7 @@ class GlossaryFacadeTest extends Test
      */
     public function testUpdateTranslation()
     {
-        $facade = $this->getGlossaryFacade();
+        $glossaryFacade = $this->getGlossaryFacade();
         $localesIds = array_keys($this->locales);
 
         $locale = $this->buildLocaleTransferObject($localesIds);
@@ -127,9 +129,9 @@ class GlossaryFacadeTest extends Test
 
         $translationTransfer = (new KeyTranslationTransfer())->fromArray($formData);
 
-        $facade->saveGlossaryKeyTranslations($translationTransfer);
+        $glossaryFacade->saveGlossaryKeyTranslations($translationTransfer);
 
-        $translatedKey = $facade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
+        $translatedKey = $glossaryFacade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
 
         $changedLocales = [];
         foreach ($this->locales as $localeId => $localeName) {
@@ -138,8 +140,8 @@ class GlossaryFacadeTest extends Test
 
         $translationTransfer->setLocales($changedLocales);
 
-        $facade->saveGlossaryKeyTranslations($translationTransfer);
-        $translatedKeyChanged = $facade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
+        $glossaryFacade->saveGlossaryKeyTranslations($translationTransfer);
+        $translatedKeyChanged = $glossaryFacade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
 
         $this->assertNotSame($translatedKey->getValue(), $translatedKeyChanged->getValue());
     }

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
@@ -9,31 +10,29 @@ namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\DiscountConfig;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class VoucherFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
+     * @var array
      */
-    protected $discountConfig;
+    private $calculatorPlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
-    public function __construct(DiscountQueryContainer $discountQueryContainer, DiscountConfig $discountConfig)
+    public function __construct(DiscountQueryContainerInterface $discountQueryContainer, array $calculatorPlugins)
     {
         $this->discountQueryContainer = $discountQueryContainer;
-        $this->discountConfig = $discountConfig;
+        $this->calculatorPlugins = $calculatorPlugins;
     }
 
     /**
@@ -86,7 +85,6 @@ class VoucherFormDataProvider
      */
     protected function getDiscountVoucherPoolDisplayName(SpyDiscountVoucherPool $discountVoucherPoolEntity)
     {
-        $availableCalculatorPlugins = $this->discountConfig->getAvailableCalculatorPlugins();
         $displayName = $discountVoucherPoolEntity->getName();
 
         $discounts = [];
@@ -94,8 +92,8 @@ class VoucherFormDataProvider
             $discountTransfer = new DiscountTransfer();
             $discountTransfer->fromArray($discountEntity->toArray(), true);
 
-            /* @var DiscountCalculatorPluginInterface $calculator */
-            $calculator = $availableCalculatorPlugins[$discountEntity->getCalculatorPlugin()];
+            /** @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculator */
+            $calculator = $this->calculatorPlugins[$discountEntity->getCalculatorPlugin()];
 
             $discounts[] = $calculator->getFormattedAmount($discountTransfer);
         }

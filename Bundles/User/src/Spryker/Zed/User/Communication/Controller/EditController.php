@@ -1,18 +1,20 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Communication\Controller;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
-use Spryker\Zed\User\Communication\Form\UserForm;
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
+use Spryker\Zed\User\Communication\Form\UserForm;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\User\Business\UserFacade getFacade()
@@ -41,8 +43,13 @@ class EditController extends AbstractController
             )
             ->handleRequest($request);
 
+        $viewData = [
+            'userForm' => $userForm->createView()
+        ];
+
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
+
             $userTransfer = $this->getFacade()->addUser(
                 $formData[UserForm::FIELD_FIRST_NAME],
                 $formData[UserForm::FIELD_LAST_NAME],
@@ -58,14 +65,12 @@ class EditController extends AbstractController
                 );
 
                 return $this->redirectResponse(self::USER_LISTING_URL);
-            } else {
-                $this->addErrorMessage('Failed to create new user!');
             }
+
+            $this->addErrorMessage('Failed to create new user!');
         }
 
-        return $this->viewResponse([
-            'userForm' => $userForm->createView(),
-        ]);
+        return $this->viewResponse($viewData);
     }
 
     /**
@@ -75,7 +80,7 @@ class EditController extends AbstractController
      */
     public function updateAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -120,7 +125,7 @@ class EditController extends AbstractController
      */
     public function activateUserAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -146,7 +151,7 @@ class EditController extends AbstractController
      */
     public function deactivateUserAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        $idUser = $this->castId($request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -172,7 +177,11 @@ class EditController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idUser = $request->get(self::PARAM_ID_USER);
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $idUser = $this->castId($request->request->get(self::PARAM_ID_USER));
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');

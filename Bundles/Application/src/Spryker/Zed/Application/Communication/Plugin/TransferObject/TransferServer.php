@@ -1,16 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 
-use Spryker\Shared\Library\Communication\Response;
-use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class TransferServer
 {
@@ -54,7 +54,7 @@ class TransferServer
     }
 
     /**
-     * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater $repeater
+     * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater|null $repeater
      *
      * @return $this
      */
@@ -142,7 +142,7 @@ class TransferServer
      */
     public function send()
     {
-        $jsonResponse = new JsonResponse($this->response->toArray(false));
+        $jsonResponse = new JsonResponse($this->response->toArray());
         if ($this->repeatIsActive) {
             $jsonResponse->setEncodingOptions(JSON_PRETTY_PRINT);
         }

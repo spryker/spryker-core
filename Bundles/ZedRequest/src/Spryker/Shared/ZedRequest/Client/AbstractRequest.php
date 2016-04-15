@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\ZedRequest\Client;
@@ -26,7 +27,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     ];
 
     /**
-     * @param array $values
+     * @param array|null $values
      */
     public function __construct(array $values = null)
     {

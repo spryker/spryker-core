@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Storage\Redis;
@@ -308,7 +309,7 @@ class Service implements ServiceInterface
      *
      * @throws \Exception
      *
-     * @return bool
+     * @return void
      */
     public function setMulti(array $items)
     {
@@ -325,7 +326,7 @@ class Service implements ServiceInterface
         }
 
         if (count($data) === 0) {
-            return false;
+            return;
         }
 
         $result = $this->client->mset($data);
@@ -337,8 +338,6 @@ class Service implements ServiceInterface
                 . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );
         }
-
-        return $result;
     }
 
     /**

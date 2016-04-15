@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Shared\Kernel;
@@ -66,7 +67,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
         $locale = $this->Store->getCurrentLocale();
         $this->assertSame('de_DE', $locale);
 
-        $newLocale = 'fr_FR';
+        $newLocale = 'en_US';
         $this->Store->setCurrentLocale($newLocale);
 
         $locale = $this->Store->getCurrentLocale();

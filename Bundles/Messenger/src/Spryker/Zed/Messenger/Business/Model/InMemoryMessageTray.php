@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Messenger\Business\Model;
@@ -54,9 +56,9 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     public function addErrorMessage(MessageTransfer $message)
     {
         self::getFlashMessagesTransfer()->addErrorMessage(
-             $this->translate(
-               $message->getValue(),
-               $message->getParameters()
+            $this->translate(
+                $message->getValue(),
+                $message->getParameters()
             )
         );
     }

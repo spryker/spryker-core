@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Business;
 
-use Generated\Shared\Transfer\RolesTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\GroupTransfer;
+use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Acl\Business\AclBusinessFactory getFactory()
@@ -22,6 +23,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     /**
      * Main Installer Method
      *
+     * @api
+     *
      * @return void
      */
     public function install()
@@ -30,6 +33,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $groupName
      * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
@@ -49,6 +54,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\GroupTransfer $transfer
      * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
@@ -68,6 +75,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
@@ -80,6 +89,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
@@ -92,6 +103,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getAllGroups()
@@ -102,6 +115,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function hasCurrentUser()
@@ -110,6 +125,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser()
@@ -118,6 +135,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return bool
@@ -130,6 +149,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -142,6 +163,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -154,6 +177,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -164,6 +189,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -174,6 +201,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Generated\Shared\Transfer\RuleTransfer
@@ -186,6 +215,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUser
      * @param int $idGroup
      *
@@ -199,6 +230,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUser
      * @param int $idGroup
      *
@@ -212,6 +245,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return bool
@@ -224,20 +259,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed in 1.0.0.
+     * @api
      *
-     * @param int $idUser
-     *
-     * @return \Generated\Shared\Transfer\GroupTransfer
-     */
-    public function getUserGroup($idUser)
-    {
-        return $this->getFactory()
-            ->createGroupModel()
-            ->getUserGroup($idUser);
-    }
-
-    /**
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer
@@ -248,6 +271,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUser
      * @param int $idGroup
      *
@@ -261,6 +286,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
      * @return \Generated\Shared\Transfer\RuleTransfer
@@ -273,6 +300,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idGroup
      *
      * @return \Generated\Shared\Transfer\RolesTransfer
@@ -285,6 +314,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idGroup
      *
      * @return \Generated\Shared\Transfer\RulesTransfer
@@ -297,6 +328,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idRole
      *
      * @return \Generated\Shared\Transfer\RulesTransfer
@@ -309,10 +342,13 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idAclRole
      * @param string $bundle
      * @param string $controller
      * @param string $action
+     * @param int $type
      *
      * @return bool
      */
@@ -324,9 +360,11 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getUserRoles($idUser)
     {
@@ -336,6 +374,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idGroup
      *
      * @return bool
@@ -348,6 +388,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idRole
      *
      * @return bool
@@ -360,6 +402,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idRule
      *
      * @return bool
@@ -372,6 +416,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idRole
      * @param int $idGroup
      *
@@ -385,6 +431,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\GroupTransfer $groupTransfer
      * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
@@ -403,6 +451,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      * @param string $bundle
      * @param string $controller
@@ -418,6 +468,8 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param string $controller
      * @param string $action

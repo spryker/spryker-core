@@ -1,26 +1,48 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
-class RemoveTotalsCalculator implements CalculatorPluginInterface
+class RemoveTotalsCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculate(CalculableInterface $calculableContainer)
+    public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $calculableContainer->getCalculableObject()->setTotals(new TotalsTransfer());
+        $totalsTransfer = $this->createTotalsTransfer();
+        $totalsTransfer->setTaxTotal($this->createTaxTotalsTransfer());
+        $totalsTransfer->setDiscountTotal(0);
+        $totalsTransfer->setExpenseTotal(0);
+
+        $quoteTransfer->setTotals($totalsTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    protected function createTotalsTransfer()
+    {
+        return new TotalsTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\TaxTotalTransfer
+     */
+    protected function createTaxTotalsTransfer()
+    {
+        return new TaxTotalTransfer();
     }
 
 }

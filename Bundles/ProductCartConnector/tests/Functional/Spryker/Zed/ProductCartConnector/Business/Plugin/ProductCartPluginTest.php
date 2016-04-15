@@ -1,22 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\ProductCartConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
-use Spryker\Zed\Locale\Business\LocaleFacade;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 
 /**
  * @group Spryker
@@ -89,7 +90,7 @@ class ProductCartPluginTest extends Test
             ->setSku(self::SKU_PRODUCT_CONCRETE)
             ->save();
 
-        $changeTransfer = new ChangeTransfer();
+        $changeTransfer = new CartChangeTransfer();
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku(self::SKU_PRODUCT_CONCRETE);
         $changeTransfer->addItem($itemTransfer);
@@ -102,9 +103,7 @@ class ProductCartPluginTest extends Test
         $this->assertEquals(self::SKU_PRODUCT_CONCRETE, $expandedItemTransfer->getSku());
         $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
         $this->assertEquals($productConcreteEntity->getIdProduct(), $expandedItemTransfer->getId());
-        $expandedTSetTransfer = $expandedItemTransfer->getTaxSet();
-        $this->assertNotNull($expandedTSetTransfer);
-        $this->assertEquals(self::TAX_SET_NAME, $expandedTSetTransfer->getName());
+        $this->assertNotNull($expandedItemTransfer->getTaxRate());
     }
 
 }

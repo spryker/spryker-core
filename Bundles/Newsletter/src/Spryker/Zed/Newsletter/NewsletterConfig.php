@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Newsletter;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Newsletter\NewsletterConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class NewsletterConfig extends AbstractBundleConfig
 {
@@ -69,6 +70,14 @@ class NewsletterConfig extends AbstractBundleConfig
     public function getMergeLanguage()
     {
         return $this->get(NewsletterConstants::MERGE_LANGUAGE_HANDLEBARS);
+    }
+
+    /**
+     * @return array
+     */
+    public function getNewsletterTypes()
+    {
+        return [];
     }
 
 }

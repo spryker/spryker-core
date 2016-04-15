@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -12,7 +17,7 @@ class DiscountVoucherCodesTable extends AbstractTable
 {
 
     /**
-     * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
@@ -32,11 +37,12 @@ class DiscountVoucherCodesTable extends AbstractTable
     protected $batchValue;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
+     * @param \Generated\Shared\Transfer\DataTablesTransfer $dataTablesTransfer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param int $idPool
-     * @param int $batchValue
+     * @param int|null $batchValue
      */
-    public function __construct(DataTablesTransfer $dataTablesTransfer, DiscountQueryContainer $discountQueryContainer, $idPool, $batchValue = null)
+    public function __construct(DataTablesTransfer $dataTablesTransfer, DiscountQueryContainerInterface $discountQueryContainer, $idPool, $batchValue = null)
     {
         $this->dataTablesTransfer = $dataTablesTransfer;
         $this->discountQueryContainer = $discountQueryContainer;
@@ -51,7 +57,8 @@ class DiscountVoucherCodesTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setUrl('table/?id-pool=' . $this->idPool . '&batch=' . $this->batchValue);
+        //FIXME: Use Url class
+        $config->setUrl('table?id-pool=' . $this->idPool . '&batch=' . $this->batchValue);
         $this->tableClass = 'table-data-codes';
 
         $config->setHeader([
@@ -100,7 +107,7 @@ class DiscountVoucherCodesTable extends AbstractTable
         foreach ($collectionObject as $code) {
             $result[] = [
                 SpyDiscountVoucherTableMap::COL_CODE => $code->getCode(),
-                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => (int) $code->getNumberOfUses(),
+                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => (int)$code->getNumberOfUses(),
                 SpyDiscountVoucherTableMap::COL_CREATED_AT => $code->getCreatedAt('Y-m-d'),
                 SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => $code->getVoucherBatch(),
             ];

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Development\Communication\Console;
@@ -17,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CodeCreateConsole extends Console
 {
 
-    const COMMAND_NAME = 'code:create:bridge';
+    const COMMAND_NAME = 'dev:bridge:create';
     const OPTION_BUNDLE = 'from bundle';
     const OPTION_TO_BUNDLE = 'to bundle';
 

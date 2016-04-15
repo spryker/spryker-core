@@ -1,6 +1,11 @@
-# Zed Package
+# Console Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/console
+```
+
+## Documentation
+
+[Console Documentation](http://spryker.github.io/core/bundles/console)

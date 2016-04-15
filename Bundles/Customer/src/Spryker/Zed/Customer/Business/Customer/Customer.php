@@ -1,18 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
@@ -20,8 +22,8 @@ use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\Library\Generator\StringGenerator;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer
@@ -61,11 +63,11 @@ class Customer
     protected $customerConfig;
 
     /**
-     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
      */
-    public function __construct(QueryContainerInterface $queryContainer, CustomerReferenceGeneratorInterface $customerReferenceGenerator, CustomerConfig $customerConfig)
+    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerReferenceGeneratorInterface $customerReferenceGenerator, CustomerConfig $customerConfig)
     {
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
@@ -124,7 +126,7 @@ class Customer
     public function get(CustomerTransfer $customerTransfer)
     {
         $customerEntity = $this->getCustomer($customerTransfer);
-        $customerTransfer->fromArray($customerEntity->toArray());
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
         $addresses = $customerEntity->getAddresses();
         if ($addresses) {
             $customerTransfer->setAddresses($this->entityCollectionToTransferCollection($addresses, $customerEntity));
@@ -178,7 +180,9 @@ class Customer
      */
     protected function generateKey()
     {
-        return uniqid();
+        $generator = new StringGenerator();
+
+        return $generator->generateRandomString();
     }
 
     /**
@@ -247,7 +251,7 @@ class Customer
         $customerEntity->setRegistrationKey(null);
 
         $customerEntity->save();
-        $customerTransfer->fromArray($customerEntity->toArray());
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         return $customerTransfer;
     }
@@ -358,15 +362,18 @@ class Customer
      */
     public function update(CustomerTransfer $customerTransfer)
     {
-        $customerTransfer = $this->encryptPassword($customerTransfer);
+        if (!empty($customerTransfer->getNewPassword())) {
+            $customerResponseTransfer = $this->updatePassword(clone $customerTransfer);
+            if ($customerResponseTransfer->getIsSuccess() === false) {
+                return $customerResponseTransfer;
+            }
+        }
 
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
 
         if (!$this->isEmailAvailableForCustomer($customerEntity)) {
-            $customerResponseTransfer = $this->createCustomerEmailAlreadyUsedResponse();
-
-            return $customerResponseTransfer;
+            return $this->createCustomerEmailAlreadyUsedResponse();
         }
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
@@ -377,7 +384,9 @@ class Customer
             ->setIsSuccess($changedRows > 0)
             ->setCustomerTransfer($customerTransfer);
 
-        $this->sendRegistrationToken($customerTransfer);
+        if ($customerTransfer->getSendPasswordToken()) {
+            $this->sendPasswordRestoreMail($customerTransfer);
+        }
 
         return $customerResponseTransfer;
     }
@@ -480,15 +489,17 @@ class Customer
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $addressEntity
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function entityToTransfer(SpyCustomerAddress $customer)
+    protected function entityToTransfer(SpyCustomerAddress $addressEntity)
     {
-        $entity = new AddressTransfer();
+        $addressTransfer = new AddressTransfer();
+        $addressTransfer->fromArray($addressEntity->toArray(), true);
+        $addressTransfer->setIso2Code($addressEntity->getCountry()->getIso2Code());
 
-        return $entity->fromArray($customer->toArray(), true);
+        return $addressTransfer;
     }
 
     /**

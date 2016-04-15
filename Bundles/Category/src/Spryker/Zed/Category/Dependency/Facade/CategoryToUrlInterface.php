@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Dependency\Facade;
@@ -18,8 +19,7 @@ interface CategoryToUrlInterface
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Category\Business\Exception\UrlExistsException
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -27,11 +27,15 @@ interface CategoryToUrlInterface
 
     /**
      * @param int $idUrl
+     *
+     * @return void
      */
     public function touchUrlActive($idUrl);
 
     /**
      * @param int $idUrl
+     *
+     * @return void
      */
     public function touchUrlDeleted($idUrl);
 
@@ -65,6 +69,13 @@ interface CategoryToUrlInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer

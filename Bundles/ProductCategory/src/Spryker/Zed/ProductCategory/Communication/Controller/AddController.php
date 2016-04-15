@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
@@ -10,9 +11,8 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
@@ -30,6 +30,9 @@ class AddController extends AbstractController
     public function indexAction(Request $request)
     {
         $idParentNode = $request->get(ProductCategoryConstants::PARAM_ID_PARENT_NODE);
+        if ($idParentNode) {
+            $idParentNode = $this->castId($idParentNode);
+        }
 
         $dataProvider = $this->getFactory()->createCategoryFormAddDataProvider();
         $form = $this
@@ -47,12 +50,17 @@ class AddController extends AbstractController
             $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
             $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
 
-            $idCategory = $this->getFacade()
-                ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
+            try {
+                $idCategory = $this
+                    ->getFacade()
+                    ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
 
-            $this->addSuccessMessage('The category was added successfully.');
+                $this->addSuccessMessage('The category was added successfully.');
 
-            return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
+                return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
+            } catch (CategoryUrlExistsException $e) {
+                $this->addErrorMessage($e->getMessage());
+            }
         }
 
         return $this->viewResponse([
@@ -68,7 +76,7 @@ class AddController extends AbstractController
      */
     public function productCategoryTableAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
+        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
         $locale = $this->getFactory()
             ->getCurrentLocale();
 
@@ -87,7 +95,7 @@ class AddController extends AbstractController
      */
     public function productTableAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
+        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
         $locale = $this->getFactory()
             ->getCurrentLocale();
 

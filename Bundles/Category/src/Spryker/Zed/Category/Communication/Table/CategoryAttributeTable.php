@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Communication\Table;
@@ -14,6 +16,11 @@ class CategoryAttributeTable extends AbstractTable
 {
 
     const TABLE_IDENTIFIER = 'category_attribute_table';
+
+    /**
+     * @var \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    protected $categoryAttributeQuery;
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery $categoryAttributeQuery

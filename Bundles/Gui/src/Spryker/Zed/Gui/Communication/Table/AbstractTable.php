@@ -1,21 +1,22 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Gui\Communication\Table;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
-use Generated\Shared\Transfer\DataTablesTransfer;
+use Generated\Shared\Transfer\DataTablesColumnTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Config\Config;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Gui\Communication\Form\DeleteForm;
+use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Library\Sanitize\Html;
-use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
 {
@@ -193,6 +194,8 @@ abstract class AbstractTable
         $tableData = [];
 
         $headers = $this->config->getHeader();
+        $safeColumns = $this->config->getRawColumns();
+
         $isArray = is_array($headers);
         foreach ($data as $row) {
             if ($isArray) {
@@ -201,10 +204,33 @@ abstract class AbstractTable
                 $row = $this->reOrderByHeaders($headers, $row);
             }
 
+            $row = $this->escapeColumns($row, $safeColumns);
+
             $tableData[] = array_values($row);
         }
 
         $this->setData($tableData);
+    }
+
+    /**
+     * @param array $row
+     * @param array $safeColumns
+     *
+     * @return mixed
+     */
+    protected function escapeColumns(array $row, array $safeColumns)
+    {
+        $callback = function (&$value, $key) use ($safeColumns) {
+            if (!in_array($key, $safeColumns)) {
+                $value = twig_escape_filter(new \Twig_Environment(), $value);
+            }
+
+            return $value;
+        };
+
+        array_walk($row, $callback);
+
+        return $row;
     }
 
     /**
@@ -269,13 +295,14 @@ abstract class AbstractTable
      */
     protected function generateTableIdentifier($prefix = 'table-')
     {
-        $this->tableIdentifier = uniqid($prefix);
+        $generator = new StringGenerator();
+        $this->tableIdentifier = $prefix . $generator->generateRandomString();
 
         return $this;
     }
 
     /**
-     * @param null $tableIdentifier
+     * @param string|null $tableIdentifier
      *
      * @return void
      */
@@ -396,7 +423,7 @@ abstract class AbstractTable
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param bool $returnRawResults
      *
-     * @return array
+     * @return array|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config, $returnRawResults = false)
     {
@@ -405,7 +432,7 @@ abstract class AbstractTable
         $offset = $this->getOffset();
         $order = $this->getOrders($config);
         // @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
-        if (!empty($config->getHeader())) {
+        if ($config->getHeader()) {
             $columns = array_keys($config->getHeader());
         } else {
             $columns = array_keys($query->getTableMap()->getColumns());
@@ -452,14 +479,7 @@ abstract class AbstractTable
         if ($this->dataTablesTransfer !== null) {
             $searchColumns = $config->getSearchable();
 
-            foreach ($this->dataTablesTransfer->getColumns() as $column) {
-                $search = $column->getSearch();
-                if (empty($search[self::PARAMETER_VALUE])) {
-                    continue;
-                }
-
-                $this->addQueryCondition($query, $searchColumns, $column);
-            }
+            $this->addFilteringConditions($query, $searchColumns);
         }
 
         $query->offset($offset)
@@ -541,7 +561,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param bool $filtered
+     * @param int $filtered
      *
      * @return void
      */
@@ -610,16 +630,33 @@ abstract class AbstractTable
      */
     protected function generateRemoveButton($url, $title, array $options = [])
     {
-        $defaultOptions = [
-            'class' => 'btn-danger',
-            'icon' => 'fa-trash',
+        $formFactory = $this->getFormFactory();
+
+        $deleteForm = new DeleteForm();
+
+        $options = [
+            'fields' => $options,
+            'action' => $url
         ];
 
-        return $this->generateButton($url, $title, $defaultOptions, $options);
+        $form = $formFactory->create($deleteForm, [], $options);
+
+        $options['form'] = $form->createView();
+        $options['title'] = $title;
+
+        return $this->getTwig()->render('delete-form.twig', $options);
     }
 
     /**
-     * @param string|\Spryker\Zed\Application\Business\Url\Url $url
+     * @return \Symfony\Component\Form\FormFactoryInterface
+     */
+    protected function getFormFactory()
+    {
+        return (new Pimple())->getApplication()['form.factory'];
+    }
+
+    /**
+     * @param string|\Spryker\Shared\Url\Url $url
      * @param string $title
      * @param array $defaultOptions
      * @param array $customOptions
@@ -712,11 +749,11 @@ abstract class AbstractTable
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $searchColumns
-     * @param \ArrayObject $column
+     * @param \Generated\Shared\Transfer\DataTablesColumnTransfer $column
      *
      * @return void
      */
-    protected function addQueryCondition(ModelCriteria $query, array $searchColumns, \ArrayObject $column)
+    protected function addQueryCondition(ModelCriteria $query, array $searchColumns, DataTablesColumnTransfer $column)
     {
         $search = $column->getSearch();
         if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {
@@ -741,8 +778,26 @@ abstract class AbstractTable
         $query->where(sprintf(
             "%s = '%s'",
             $searchColumns[$column->getData()],
-            $value)
-        );
+            $value
+        ));
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param array $searchColumns
+     *
+     * @return void
+     */
+    protected function addFilteringConditions(ModelCriteria $query, array $searchColumns)
+    {
+        foreach ($this->dataTablesTransfer->getColumns() as $column) {
+            $search = $column->getSearch();
+            if (empty($search[self::PARAMETER_VALUE])) {
+                continue;
+            }
+
+            $this->addQueryCondition($query, $searchColumns, $column);
+        }
     }
 
 }

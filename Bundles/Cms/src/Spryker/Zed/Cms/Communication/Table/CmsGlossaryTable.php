@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Table;
 
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -21,8 +22,8 @@ class CmsGlossaryTable extends AbstractTable
 
     const ACTIONS = 'Actions';
     const REQUEST_ID_MAPPING = 'id-mapping';
-    const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit/';
-    const URL_CMS_GLOSSARY_DELETE = '/cms/glossary/delete/';
+    const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit';
+    const URL_CMS_GLOSSARY_DELETE = '/cms/glossary/delete';
 
     /**
      * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
@@ -48,7 +49,6 @@ class CmsGlossaryTable extends AbstractTable
      * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      * @param int $idPage
      * @param array $placeholders
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      * @param array $searchArray
      */
     public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, $idPage, array $placeholders = [], array $searchArray = [])
@@ -73,6 +73,9 @@ class CmsGlossaryTable extends AbstractTable
             CmsQueryContainer::TRANS => 'Glossary Value',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
         ]);
@@ -140,13 +143,10 @@ class CmsGlossaryTable extends AbstractTable
             ]),
             'Edit'
         );
-        $buttons[] = $this->generateRemoveButton(
-            Url::generate(self::URL_CMS_GLOSSARY_DELETE, [
-                CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
-                self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
-            ]),
-            'Delete'
-        );
+        $buttons[] = $this->generateRemoveButton(self::URL_CMS_GLOSSARY_DELETE, 'Delete', [
+            CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
+            self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
+        ]);
 
         return $buttons;
     }

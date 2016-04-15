@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Communication;
@@ -10,10 +11,10 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserFormDataProvider;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserUpdateFormDataProvider;
+use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 use Spryker\Zed\User\Communication\Table\UsersTable;
-use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\User\UserDependencyProvider;
 
 /**
@@ -42,7 +43,8 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     public function createUserTable()
     {
         return new UsersTable(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(UserDependencyProvider::SERVICE_DATE_FORMATTER)
         );
     }
 
@@ -54,7 +56,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserForm(array $data = [], array $options = [])
     {
-        $formType = new UserForm();
+        $formType = new UserForm($this->getFacade());
 
         return $this->getFormFactory()->create($formType, $data, $options);
     }
@@ -67,7 +69,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUpdateUserForm(array $data = [], array $options = [])
     {
-        $formType = new UserUpdateForm();
+        $formType = new UserUpdateForm($this->getFacade());
 
         return $this->getFormFactory()->create($formType, $data, $options);
     }

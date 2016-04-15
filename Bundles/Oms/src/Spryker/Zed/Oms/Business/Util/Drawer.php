@@ -1,49 +1,88 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Spryker\Shared\Graph\GraphInterface;
+use Spryker\Zed\Library\Generator\StringGenerator;
+use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 
 class Drawer implements DrawerInterface
 {
-
-    protected $attributesProcess = ['fontname' => 'Verdana', 'fillcolor' => '#cfcfcf', 'style' => 'filled', 'color' => '#ffffff', 'fontsize' => 12, 'fontcolor' => 'black'];
-
-    protected $attributesState = ['fontname' => 'Verdana', 'fontsize' => 14, 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
-
-    protected $attributesDiamond = ['fontname' => 'Verdana', 'label' => '?', 'shape' => 'diamond', 'fontcolor' => 'white', 'fontsize' => '1', 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
-
-    protected $attributesTransition = ['fontname' => 'Verdana', 'fontsize' => 12];
-
-    protected $brLeft = '<br align="left" />  ';
-
-    protected $notImplemented = '<font color="red">(not implemented)</font>';
-
-    protected $br = '<br/>';
-
-    protected $format = 'svg';
-
-    protected $fontSizeBig = null;
-
-    protected $fontSizeSmall = null;
-
-    protected $conditionModels = [];
-
-    protected $commandModels = [];
 
     const ATTRIBUTE_FONT_SIZE = 'fontsize';
 
     const EDGE_UPPER_HALF = 'upper half';
     const EDGE_LOWER_HALF = 'lower half';
     const EDGE_FULL = 'edge full';
+
+    /**
+     * @var array
+     */
+    protected $attributesProcess = ['fontname' => 'Verdana', 'fillcolor' => '#cfcfcf', 'style' => 'filled', 'color' => '#ffffff', 'fontsize' => 12, 'fontcolor' => 'black'];
+
+    /**
+     * @var array
+     */
+    protected $attributesState = ['fontname' => 'Verdana', 'fontsize' => 14, 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
+
+    /**
+     * @var array
+     */
+    protected $attributesDiamond = ['fontname' => 'Verdana', 'label' => '?', 'shape' => 'diamond', 'fontcolor' => 'white', 'fontsize' => '1', 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
+
+    /**
+     * @var array
+     */
+    protected $attributesTransition = ['fontname' => 'Verdana', 'fontsize' => 12];
+
+    /**
+     * @var string
+     */
+    protected $brLeft = '<br align="left" />  ';
+
+    /**
+     * @var string
+     */
+    protected $notImplemented = '<font color="red">(not implemented)</font>';
+
+    /**
+     * @var string
+     */
+    protected $br = '<br/>';
+
+    /**
+     * @var string
+     */
+    protected $format = 'svg';
+
+    /**
+     * @var int|null
+     */
+    protected $fontSizeBig = null;
+
+    /**
+     * @var int|null
+     */
+    protected $fontSizeSmall = null;
+
+    /**
+     * @var array
+     */
+    protected $conditionModels = [];
+
+    /**
+     * @var array
+     */
+    protected $commandModels = [];
 
     /**
      * @var array
@@ -78,7 +117,7 @@ class Drawer implements DrawerInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function draw(ProcessInterface $process, $highlightState = null, $format = null, $fontSize = null)
     {
@@ -121,7 +160,19 @@ class Drawer implements DrawerInterface
     }
 
     /**
+     * @return string
+     */
+    protected function getDiamondId()
+    {
+        $generator = new StringGenerator();
+
+        return $generator->generateRandomString();
+    }
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
+     *
+     * @throws \Spryker\Zed\Oms\Business\Exception\StatemachineException
      *
      * @return void
      */
@@ -131,18 +182,22 @@ class Drawer implements DrawerInterface
         foreach ($events as $event) {
             $transitions = $state->getOutgoingTransitionsByEvent($event);
 
+            $currentTransition = current($transitions);
+            if (!$currentTransition) {
+                throw new StatemachineException('Transitions container seems to be empty.');
+            }
+
             if (count($transitions) > 1) {
-                $diamondId = uniqid();
+                $diamondId = $this->getDiamondId();
 
                 $this->graph->addNode($diamondId, $this->attributesDiamond, $state->getProcess()->getName());
-
-                $this->addEdge(current($transitions), self::EDGE_UPPER_HALF, [], null, $diamondId);
+                $this->addEdge($currentTransition, self::EDGE_UPPER_HALF, [], null, $diamondId);
 
                 foreach ($transitions as $transition) {
                     $this->addEdge($transition, self::EDGE_LOWER_HALF, [], $diamondId);
                 }
             } else {
-                $this->addEdge(current($transitions), self::EDGE_FULL);
+                $this->addEdge($currentTransition, self::EDGE_FULL);
             }
         }
     }

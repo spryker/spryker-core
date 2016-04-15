@@ -1,19 +1,26 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Communication\Table;
 
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
-use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class UrlTable extends AbstractTable
 {
 
     const TABLE_IDENTIFIER = 'url_table';
+
+    /**
+     * @var \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected $urlQuery;
 
     /**
      * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery

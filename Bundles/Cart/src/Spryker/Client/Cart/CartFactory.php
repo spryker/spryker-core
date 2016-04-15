@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Cart;
 
+use Spryker\Client\Cart\Session\QuoteSession;
 use Spryker\Client\Cart\Zed\CartStub;
-use Spryker\Client\Cart\Session\CartSession;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CartFactory extends AbstractFactory
@@ -18,7 +19,7 @@ class CartFactory extends AbstractFactory
      */
     public function createSession()
     {
-        return new CartSession($this->createSessionClient());
+        return new QuoteSession($this->createSessionClient());
     }
 
     /**

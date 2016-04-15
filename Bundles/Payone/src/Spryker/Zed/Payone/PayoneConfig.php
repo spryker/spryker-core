@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone;
 
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class PayoneConfig extends AbstractBundleConfig
 {

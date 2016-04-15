@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Business\Page;
@@ -50,14 +51,22 @@ interface PageManagerInterface
     public function touchPageActive(PageTransfer $page);
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
-     * @param string $url
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createPageUrl(PageTransfer $page, $url);
+    public function createPageUrl(PageTransfer $pageTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     *
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function updatePageUrl(PageTransfer $pageTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $page
@@ -71,12 +80,11 @@ interface PageManagerInterface
     public function createPageUrlWithLocale(PageTransfer $page, $url, LocaleTransfer $localeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
-     * @param string $url
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function savePageUrlAndTouch(PageTransfer $page, $url);
+    public function savePageUrlAndTouch(PageTransfer $pageTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $page

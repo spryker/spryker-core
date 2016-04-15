@@ -1,14 +1,16 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Communication\Table;
 
-use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -36,8 +38,8 @@ class RootNodeTable extends AbstractTable
     protected $idLocale;
 
     /**
-     * @param int $idLocale
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param int $idLocale
      */
     public function __construct(CategoryQueryContainerInterface $productCategoryQueryContainer, $idLocale)
     {
@@ -61,6 +63,9 @@ class RootNodeTable extends AbstractTable
             SpyLocaleTableMap::COL_LOCALE_NAME => 'Locale',
             self::COL_REORDER => '',
         ]);
+
+        $config->addRawColumn(self::COL_REORDER);
+
         $config->setSortable([
             SpyLocaleTableMap::COL_LOCALE_NAME,
             SpyCategoryAttributeTableMap::COL_NAME,

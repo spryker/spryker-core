@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Oms\OmsDependencyProvider;
-use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory getFactory()
@@ -20,6 +21,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
 {
 
     /**
+     * @api
+     *
      * @param array $states
      * @param string $processName
      *
@@ -43,6 +46,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -54,6 +59,20 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
+     * @param int $idOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsByIdSalesOrder($idOrder)
+    {
+        return $this->getSalesQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder);
+    }
+
+    /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
@@ -66,6 +85,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      * @param bool $orderById
      *
@@ -86,6 +107,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \DateTime $now
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -99,6 +122,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -126,6 +151,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -152,6 +179,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param array $orderItemIds
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -163,6 +192,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -174,7 +205,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
-     * @param array|string[] $activeProcesses
+     * @api
+     *
+     * @param string[] $activeProcesses
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
      */
@@ -186,6 +219,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param array $orderItemStates
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
@@ -198,6 +233,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param array $processIds
      * @param array $stateBlacklist
      *
@@ -215,6 +252,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param string[] $orderItemStates
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery

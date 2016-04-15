@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Refund\Communication\Controller;
@@ -11,7 +12,6 @@ use Generated\Shared\Transfer\RefundExpenseTransfer;
 use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -51,9 +51,9 @@ class IndexController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $idOrder = $request->query->get('id-sales-order');
+        $idOrder = $this->castId($request->query->get('id-sales-order'));
 
-        $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idOrder);
+        $orderTransfer = $this->getFactory()->getSalesAggregatorFacade()->getOrderTotalsByIdSalesOrder($idOrder);
 
         $orderItems = $this->getFacade()->getRefundableItems($idOrder);
 

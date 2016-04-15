@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Application\Business\Routing;
@@ -36,7 +37,7 @@ class SilexRouter implements RouterInterface
 
     /**
      * @param \Pimple $app
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      */
     public function __construct(\Pimple $app, LoggerInterface $logger = null)
     {

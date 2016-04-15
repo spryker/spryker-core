@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Category\Business\Tree;
 
 class CategoryTreeFormat
@@ -21,7 +26,7 @@ class CategoryTreeFormat
         foreach ($categories as $item) {
             if ($item['parent'] === '#') {
                 $children['text'] = $item['text'];
-                $children['state']['selected'] = ((int) $parentIdCategory === (int) $item['id']);
+                $children['state']['selected'] = ((int)$parentIdCategory === (int)$item['id']);
             } else {
                 $children['children'][] = $item['text'];
             }

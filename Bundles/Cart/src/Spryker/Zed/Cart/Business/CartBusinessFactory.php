@@ -1,22 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cart\Business;
 
-use Spryker\Zed\Cart\Business\StorageProvider\InMemoryProvider;
-use Spryker\Zed\Cart\Business\Operator\CouponCodeClearOperator;
-use Spryker\Zed\Cart\Business\Operator\CouponCodeRemoveOperator;
-use Spryker\Zed\Cart\Business\Operator\CouponCodeAddOperator;
-use Spryker\Zed\Cart\Business\Operator\DecreaseOperator;
-use Spryker\Zed\Cart\Business\Operator\RemoveOperator;
-use Spryker\Zed\Cart\Business\Operator\IncreaseOperator;
-use Spryker\Zed\Cart\Business\Operator\AddOperator;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Cart\Business\Operator\OperatorInterface;
+use Spryker\Zed\Cart\Business\Model\Operation;
+use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Cart\CartConfig getConfig()
@@ -25,107 +19,16 @@ class CartBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Model\OperationInterface
      */
-    public function createAddOperator()
+    public function createCartOperation()
     {
-        return $this->configureCartOperator(
-            new AddOperator(
-                $this->createStorageProvider(),
-                $this->getCartCalculator(),
-                $this->getItemGrouper()
-                //@todo messenger
-            )
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
-     */
-    public function createIncreaseOperator()
-    {
-        return $this->configureCartOperator(
-            new IncreaseOperator(
-                $this->createStorageProvider(),
-                $this->getCartCalculator(),
-                $this->getItemGrouper()
-                //@todo messenger
-            )
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
-     */
-    public function createRemoveOperator()
-    {
-        return $this->configureCartOperator(
-            new RemoveOperator(
-                $this->createStorageProvider(),
-                $this->getCartCalculator(),
-                $this->getItemGrouper()
-                //@todo messenger
-            )
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
-     */
-    public function createDecreaseOperator()
-    {
-        return $this->configureCartOperator(
-            new DecreaseOperator(
-                $this->createStorageProvider(),
-                $this->getCartCalculator(),
-                $this->getItemGrouper()
-                //@todo messenger
-            )
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
-     */
-    public function createCouponCodeAddOperator()
-    {
-        return $this->configureCartOperator(
-            new CouponCodeAddOperator(
-                $this->createStorageProvider(),
-                $this->getCartCalculator(),
-                $this->getItemGrouper()
-                //@todo messenger
-            )
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
-     */
-    public function createCouponCodeRemoveOperator()
-    {
-        return $this->configureCartOperator(
-            new CouponCodeRemoveOperator(
-                $this->createStorageProvider(),
-                $this->getCartCalculator(),
-                $this->getItemGrouper()
-                //@todo messenger
-            )
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
-     */
-    public function createCouponCodeClearOperator()
-    {
-        return $this->configureCartOperator(
-            new CouponCodeClearOperator(
-                $this->createStorageProvider(),
-                $this->getCartCalculator(),
-                $this->getItemGrouper()
-                //@todo messenger
-            )
+        return new Operation(
+            $this->createStorageProvider(),
+            $this->getCalculatorFacade(),
+            $this->getItemGrouperFacade(),
+            $this->getMessengerFacade(),
+            $this->getItemExpanderPlugins()
         );
     }
 
@@ -134,13 +37,13 @@ class CartBusinessFactory extends AbstractBusinessFactory
      */
     protected function createStorageProvider()
     {
-        return new InMemoryProvider();
+        return new NonPersistentProvider();
     }
 
     /**
      * @return \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface
      */
-    public function getItemGrouper()
+    protected function getItemGrouperFacade()
     {
         return $this->getProvidedDependency(CartDependencyProvider::FACADE_ITEM_GROUPER);
     }
@@ -148,25 +51,25 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      */
-    public function getCartCalculator()
+    protected function getCalculatorFacade()
     {
         return $this->getProvidedDependency(CartDependencyProvider::FACADE_CALCULATION);
     }
 
     /**
-     * @param \Spryker\Zed\Cart\Business\Operator\OperatorInterface $operator
-     *
-     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridgeInterface
      */
-    protected function configureCartOperator(OperatorInterface $operator)
+    protected function getMessengerFacade()
     {
-        $bundleConfig = $this->getConfig();
+        return $this->getProvidedDependency(CartDependencyProvider::FACADE_MESSENGER);
+    }
 
-        foreach ($bundleConfig->getCartItemPlugins() as $itemExpanderPlugin) {
-            $operator->addItemExpanderPlugin($itemExpanderPlugin);
-        }
-
-        return $operator;
+    /**
+     * @return \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
+     */
+    protected function getItemExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS);
     }
 
 }

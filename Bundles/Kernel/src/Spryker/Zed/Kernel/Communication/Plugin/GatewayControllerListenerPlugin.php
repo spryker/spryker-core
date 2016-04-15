@@ -1,21 +1,22 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Communication\Plugin;
 
 use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\ZedRequest\Client\Message;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
+use Spryker\Zed\Messenger\MessengerConfig;
 use Spryker\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Spryker\Zed\Messenger\MessengerConfig;
 
 /**
  * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
@@ -155,9 +156,9 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
     /**
      * @param array $messages
-     * @param array|\Spryker\Shared\ZedRequest\Client\Message[] $storedMessages
+     * @param \Spryker\Shared\ZedRequest\Client\Message[] $storedMessages
      *
-     * @return array|\Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     protected function createResponseMessages(array $messages, array $storedMessages = [])
     {

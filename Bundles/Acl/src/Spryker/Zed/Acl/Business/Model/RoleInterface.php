@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Business\Model;
@@ -47,7 +48,7 @@ interface RoleInterface
     /**
      * @param int $idUser
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getUserRoles($idUser);
 
@@ -56,7 +57,7 @@ interface RoleInterface
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getGroupRoles($idGroup);
 

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Communication;
@@ -11,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Container;
-use Symfony\Component\Form\FormTypeInterface;
 
 abstract class AbstractCommunicationFactory extends AbstractFactory
 {
@@ -72,22 +72,6 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     protected function getFormFactory()
     {
         return (new Pimple())->getApplication()[self::FORM_FACTORY];
-    }
-
-    /**
-     * @deprecated Use $this->getFormFactory()->create() instead.
-     *
-     * @param \Symfony\Component\Form\FormTypeInterface $formTypeInterface
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function createForm(FormTypeInterface $formTypeInterface, array $options = [])
-    {
-        $form = $this->getFormFactory()
-            ->create($formTypeInterface, $formTypeInterface->populateFormFields(), $options);
-
-        return $form;
     }
 
 }

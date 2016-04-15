@@ -1,25 +1,26 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOption\Business\Model;
 
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusion;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraint;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPreset;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValue;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusion;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraint;
 use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
-use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
 use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
 use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class DataImportWriter implements DataImportWriterInterface
 {
@@ -57,7 +58,7 @@ class DataImportWriter implements DataImportWriterInterface
     /**
      * @param string $importKeyProductOptionType
      * @param array $localizedNames
-     * @param string $importKeyTaxSet
+     * @param string|null $importKeyTaxSet
      *
      * @return int
      */
@@ -122,7 +123,7 @@ class DataImportWriter implements DataImportWriterInterface
      * @param string $importKeyProductOptionValue
      * @param string $importKeyProductOptionType
      * @param array $localizedNames
-     * @param int $price
+     * @param int|null $price
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      *
@@ -193,7 +194,7 @@ class DataImportWriter implements DataImportWriterInterface
      * @param string $sku
      * @param string $importKeyProductOptionType
      * @param bool $isOptional
-     * @param int $sequence
+     * @param int|null $sequence
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      *
@@ -222,7 +223,7 @@ class DataImportWriter implements DataImportWriterInterface
     /**
      * @param int $idProductOptionTypeUsage
      * @param string $importKeyProductOptionValue
-     * @param int $sequence
+     * @param int|null $sequence
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
@@ -326,7 +327,7 @@ class DataImportWriter implements DataImportWriterInterface
      * @param string $sku
      * @param array $importKeysProductOptionValues
      * @param bool $isDefault
-     * @param int $sequence
+     * @param int|null $sequence
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException

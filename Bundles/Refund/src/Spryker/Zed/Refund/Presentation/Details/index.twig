@@ -1,7 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% block section_title %}
-    {{ 'Refund ID:' | trans }} {{ idRefund }} ({{ refund.CreatedAt.date | date('Y-m-d G:i:s', false) }})
+    {{ 'Refund ID:' | trans }} {{ idRefund }} ({{ refund.CreatedAt.date | formatDateTime }})
 {% endblock %}
 
 {% block breadcrumb_body '' %}

@@ -1,11 +1,11 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Glossary\Dependency\Facade;
-
-use Spryker\Zed\Locale\Business\LocaleFacade;
 
 class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
 {
@@ -18,7 +18,7 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     /**
      * GlossaryToLocaleBridge constructor.
      *
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {

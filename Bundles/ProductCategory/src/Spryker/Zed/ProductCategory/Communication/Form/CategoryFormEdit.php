@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Communication\Form;
@@ -15,7 +16,7 @@ class CategoryFormEdit extends CategoryFormAdd
     const FIELD_META_TITLE = 'meta_title';
     const FIELD_META_DESCRIPTION = 'meta_description';
     const FIELD_META_KEYWORDS = 'meta_keywords';
-    const FIELD_CATEGORY_IMAGE_NAME = 'category_image_nam';
+    const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
     const FIELD_CATEGORY_ROBOTS = 'robots';
     const FIELD_CATEGORY_CANONICAL = 'canonical';
     const FIELD_CATEGORY_ALTERNATE_TAG = 'alternate_tag';
@@ -137,7 +138,7 @@ class CategoryFormEdit extends CategoryFormAdd
     protected function addCategoryIsClickableField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::CATEGORY_IS_CLICKABLE, 'checkbox', [
+            ->add(self::CATEGORY_IS_CLICKABLE, 'hidden', [
                 'label' => 'Clickable',
             ]);
 
@@ -156,7 +157,7 @@ class CategoryFormEdit extends CategoryFormAdd
             ->add(self::EXTRA_PARENTS, new Select2ComboBoxType(), [
                 'label' => 'Additional Parents',
                 'choices' => $choices,
-                'multiple' => true,
+                'multiple' => true
             ]);
 
         return $this;

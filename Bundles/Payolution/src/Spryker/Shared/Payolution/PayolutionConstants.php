@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Payolution;
@@ -9,6 +10,7 @@ namespace Spryker\Shared\Payolution;
 interface PayolutionConstants
 {
 
+    const PAYOLUTION = 'payolution';
     const TRANSACTION_GATEWAY_URL = 'PAYOLUTION_TRANSACTION_GATEWAY_URL';
     const CALCULATION_GATEWAY_URL = 'PAYOLUTION_CALCULATION_GATEWAY_URL';
 

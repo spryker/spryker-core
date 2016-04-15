@@ -1,6 +1,11 @@
-# Zed Package
+# StockSalesConnector Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/stock-sales-connector
+```
+
+## Documentation
+
+[StockSalesConnector Documentation](http://spryker.github.io/core/bundles/stock-sales-connector)

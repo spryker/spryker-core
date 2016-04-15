@@ -1,13 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Kernel;
 
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
-use Spryker\Shared\Config;
+use Spryker\Shared\Library\Context;
 
 class Store
 {
@@ -30,6 +32,11 @@ class Store
      * @var array
      */
     protected $allStoreNames;
+
+    /**
+     * @var array
+     */
+    protected $allStores;
 
     /**
      * List of locales
@@ -157,6 +164,7 @@ class Store
 
         $this->storeName = $currentStoreName;
         $this->allStoreNames = array_keys($stores);
+        $this->allStores = $stores;
 
         if (APPLICATION === self::APPLICATION_ZED) {
             $this->setCurrentLocale(current($this->locales));
@@ -238,6 +246,20 @@ class Store
     }
 
     /**
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getLocalesPerStore($storeName)
+    {
+        if (!array_key_exists($storeName, $this->allStores)) {
+            return [];
+        }
+
+        return $this->allStores[$storeName]['locales'];
+    }
+
+    /**
      * @return string
      */
     public function getStoreName()
@@ -274,11 +296,19 @@ class Store
     }
 
     /**
+     * @param string|\Spryker\Shared\Library\Context|null $context
+     *
      * @return string
      */
-    public function getTimezone()
+    public function getTimezone($context = null)
     {
-        return Config::get(KernelConstants::PROJECT_TIMEZONE);
+        $contextInstance = Context::getInstance($context);
+
+        if ($contextInstance->has('timezone')) {
+            return $contextInstance->get('timezone');
+        } else {
+            return Config::get(KernelConstants::PROJECT_TIMEZONE);
+        }
     }
 
     /**

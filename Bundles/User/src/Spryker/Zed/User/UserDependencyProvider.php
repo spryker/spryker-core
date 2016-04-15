@@ -1,11 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User;
 
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\User\Dependency\Facade\UserToAclBridge;
@@ -15,6 +17,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_ACL = 'facade acl';
     const CLIENT_SESSION = 'client session';
+    const SERVICE_DATE_FORMATTER = 'date formatter service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,6 +42,10 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_ACL] = function (Container $container) {
             return new UserToAclBridge($container->getLocator()->acl()->facade());
+        };
+
+        $container[self::SERVICE_DATE_FORMATTER] = function () {
+            return (new Pimple())->getApplication()['dateFormatter'];
         };
 
         return $container;

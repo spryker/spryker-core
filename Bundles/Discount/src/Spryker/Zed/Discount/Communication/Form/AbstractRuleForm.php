@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\AbstractType;
 
 abstract class AbstractRuleForm extends AbstractType
@@ -12,28 +16,33 @@ abstract class AbstractRuleForm extends AbstractType
     const DECISION_COLLECTOR_PREFIX = 'PLUGIN_COLLECTOR_';
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected $availableCalculatorPlugins;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
      */
     protected $availableCollectorPlugins;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
     protected $availableDecisionRulePlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $availableCalculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $availableCollectorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $availableDecisionRulePlugins
      */
-    public function __construct(DiscountConfig $discountConfig)
-    {
-        $this->availableCalculatorPlugins = $discountConfig->getAvailableCalculatorPlugins();
-        $this->availableCollectorPlugins = $discountConfig->getAvailableCollectorPlugins();
-        $this->availableDecisionRulePlugins = $discountConfig->getAvailableDecisionRulePlugins();
+    public function __construct(
+        array $availableCalculatorPlugins,
+        array $availableCollectorPlugins,
+        array $availableDecisionRulePlugins
+    ) {
+        $this->availableCalculatorPlugins = $availableCalculatorPlugins;
+        $this->availableCollectorPlugins = $availableCollectorPlugins;
+        $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
     }
 
     /**
@@ -59,7 +68,6 @@ abstract class AbstractRuleForm extends AbstractType
     {
         $plugins = [];
         $availablePlugins = array_keys($this->availableCalculatorPlugins);
-
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);
         }
@@ -74,7 +82,6 @@ abstract class AbstractRuleForm extends AbstractType
     {
         $plugins = [];
         $availablePlugins = array_keys($this->availableCollectorPlugins);
-
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);
         }
@@ -89,7 +96,6 @@ abstract class AbstractRuleForm extends AbstractType
     {
         $plugins = [];
         $availablePlugins = array_keys($this->availableDecisionRulePlugins);
-
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);
         }
@@ -98,7 +104,7 @@ abstract class AbstractRuleForm extends AbstractType
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     protected function getCollectorLogicalOperators()
     {

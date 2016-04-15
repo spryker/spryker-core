@@ -1,20 +1,23 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Glossary\Communication;
 
 use Spryker\Zed\Glossary\Communication\Form\DataProvider\TranslationFormDataProvider;
-use Spryker\Zed\Glossary\Communication\Form\UpdateTranslationForm;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
+use Spryker\Zed\Glossary\Communication\Form\UpdateTranslationForm;
 use Spryker\Zed\Glossary\Communication\Table\TranslationTable;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  */
 class GlossaryCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -43,13 +46,13 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createTranslationTable(array $locales)
     {
-        $translationQuery = $this->getQueryContainer()
-            ->queryTranslations();
+        $glossaryKeyQuery = $this->getQueryContainer()
+            ->queryKeys();
 
         $subQuery = $this->getQueryContainer()
             ->queryTranslations();
 
-        return new TranslationTable($translationQuery, $subQuery, $locales);
+        return new TranslationTable($glossaryKeyQuery, $subQuery, $locales);
     }
 
     /**
@@ -57,7 +60,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createTranslationAddForm()
     {
-        return $this->getFormFactory()->create(new TranslationForm(), null, [
+        return $this->getFormFactory()->create($this->createTranslationForm(), null, [
             TranslationForm::OPTION_LOCALES => $this->getEnabledLocales(),
         ]);
     }
@@ -69,7 +72,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createTranslationUpdateForm(array $formData)
     {
-        return $this->getFormFactory()->create(new UpdateTranslationForm(), $formData, [
+        return $this->getFormFactory()->create($this->createUpdateTranslationForm(), $formData, [
             UpdateTranslationForm::OPTION_LOCALES => $this->getEnabledLocales(),
         ]);
     }
@@ -80,6 +83,22 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     public function createTranslationDataProvider()
     {
         return new TranslationFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Glossary\Communication\Form\TranslationForm
+     */
+    protected function createTranslationForm()
+    {
+        return new TranslationForm($this->getFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Glossary\Communication\Form\UpdateTranslationForm
+     */
+    protected function createUpdateTranslationForm()
+    {
+        return new UpdateTranslationForm($this->getFacade());
     }
 
 }

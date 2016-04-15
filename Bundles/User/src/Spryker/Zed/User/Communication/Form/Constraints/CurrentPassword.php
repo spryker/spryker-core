@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Communication\Form\Constraints;
@@ -19,14 +20,14 @@ class CurrentPassword extends Constraint
     /**
      * @var \Spryker\Zed\User\Business\UserFacade
      */
-    protected $facadeUser;
+    protected $userFacade;
 
     /**
      * @return \Spryker\Zed\User\Business\UserFacade
      */
     public function getFacadeUser()
     {
-        return $this->facadeUser;
+        return $this->userFacade;
     }
 
     /**

@@ -1,12 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Checkout\Zed;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CheckoutStub implements CheckoutStubInterface
@@ -26,13 +27,13 @@ class CheckoutStub implements CheckoutStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $transferCheckout
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(CheckoutRequestTransfer $transferCheckout)
+    public function placeOrder(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedStub->call('/checkout/gateway/request-checkout', $transferCheckout);
+        return $this->zedStub->call('/checkout/gateway/place-order', $quoteTransfer);
     }
 
 }

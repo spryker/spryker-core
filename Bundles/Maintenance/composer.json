@@ -10,19 +10,20 @@
     }
   },
   "require": {
-    "spryker/application": "^1.0.0",
-    "spryker/console": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/library": "^1.0.0",
-    "spryker/graph": "^1.0.0"
+    "spryker/application": "^2.0.0",
+    "spryker/kernel": "^2.0.0",
+    "spryker/library": "^2.0.0",
+    "spryker/graph": "^2.0.0",
+    "spryker/symfony": "^2.0.0",
+    "spryker/zend": "^2.0.0"
   },
-  "require-dev": {},
   "description": "maintenance bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   }
 }

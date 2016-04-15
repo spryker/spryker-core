@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\CategoryExporter;
 
 use Spryker\Client\Cart\CartDependencyProvider;
+use Spryker\Client\CategoryExporter\Builder\CategoryTreeBuilder;
 use Spryker\Client\CategoryExporter\KeyBuilder\CategoryResourceKeyBuilder;
 use Spryker\Client\CategoryExporter\KeyBuilder\NavigationKeyBuilder as KeyBuilderNavigationKeyBuilder;
-use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\CategoryExporter\Builder\CategoryTreeBuilder;
 use Spryker\Client\CategoryExporter\Model\Navigation;
+use Spryker\Client\Kernel\AbstractFactory;
 
 class CategoryExporterFactory extends AbstractFactory
 {

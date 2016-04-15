@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Auth;
 
 use Codeception\TestCase\Test;
-use Spryker\Shared\Config;
-use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Shared\Auth\AuthConstants;
+use Spryker\Shared\Config\Config;
+use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\AuthFacade;
-use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
+use Spryker\Zed\User\Business\UserFacade;
 
 /**
  * @group Spryker
@@ -78,7 +79,7 @@ class AuthTest extends Test
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $token = $this->authFacade->getUserToken($userDto);
-        $fakeToken = md5(sprintf('%s%s', $userDto->getPassword(), $userDto->getIdUser()));
+        $fakeToken = hash('sha256', sprintf('%s%s', $userDto->getPassword(), $userDto->getIdUser()));
 
         $this->assertEquals($fakeToken, $token);
 

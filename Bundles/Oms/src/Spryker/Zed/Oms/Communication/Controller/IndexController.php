@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
@@ -20,6 +21,14 @@ class IndexController extends AbstractController
 
     const DEFAULT_FORMAT = 'svg';
     const DEFAULT_FONT_SIZE = '14';
+
+    /**
+     * @var array
+     */
+    protected $formatContentTypes = [
+        'jpg' => 'image/jpeg',
+        'svg' => 'image/svg+xml',
+    ];
 
     /**
      * @return array
@@ -58,7 +67,7 @@ class IndexController extends AbstractController
         }
 
         if ($reload) {
-            return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontSize);
+            return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontSize.'&state='.$highlightState);
         }
 
         $response = $this->getFacade()->drawProcess($processName, $highlightState, $format, $fontSize);
@@ -67,17 +76,17 @@ class IndexController extends AbstractController
             echo $response;
         };
 
-        return $this->streamedResponse($callback);
+        return $this->streamedResponse($callback, Response::HTTP_OK, $this->getStreamedResponseHeaders($format));
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function drawItemAction(Request $request)
     {
-        $id = $request->query->get('id');
+        $id = $this->castId($request->query->get('id'));
 
         $format = $request->query->get('format', self::DEFAULT_FORMAT);
         $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE);
@@ -85,7 +94,9 @@ class IndexController extends AbstractController
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
 
-        echo $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName(), $format, $fontSize);
+        return new Response(
+            $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName(), $format, $fontSize)
+        );
     }
 
     /**
@@ -103,6 +114,22 @@ class IndexController extends AbstractController
         return $this->viewResponse([
             'processName' => $processName,
         ]);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @return array
+     */
+    protected function getStreamedResponseHeaders($format)
+    {
+        $headers = [];
+
+        if (isset($this->formatContentTypes[$format])) {
+            $headers['content-type'] = $this->formatContentTypes[$format];
+        }
+
+        return $headers;
     }
 
 }

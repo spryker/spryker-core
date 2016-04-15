@@ -9,7 +9,6 @@
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product data' } %}
-
         {% block widget_content %}
 
             <div class="ibox product-detail">
@@ -24,7 +23,9 @@
                             {% for name, productAttribute in attributes.attributes %}
                                 {% if productAttribute is not iterable %}
                                 <tr>
-                                    <td>{{ name }}</td>
+                                    {#this is correct key, but in Zed trans does not work, so for now I will comment it#}
+                                    {#<td>{{ ('product.attribute.'~name) | trans }}</td>#}
+                                    <td>{{ name | trans }}</td>
                                     <td>{{ productAttribute }}</td>
                                 </tr>
                                 {% endif %}
@@ -42,12 +43,9 @@
             </div>
 
         {% endblock %}
-
     {% endembed %}
 
-
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Concrete Products' } %}
-
         {% block widget_content %}
 
             <div class="row">
@@ -102,7 +100,13 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="product-desc">
+                                        {{ render(controller('/stock/product/stock', {'sku': product.sku})) }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -110,7 +114,6 @@
             </div>
 
         {% endblock %}
-
     {% endembed %}
 
 {% endblock %}

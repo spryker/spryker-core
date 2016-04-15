@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\ZedRequest\Client;
@@ -15,11 +16,11 @@ abstract class AbstractObject implements ObjectInterface
     protected $values;
 
     /**
-     * @param array $values
+     * @param array|null $values
      */
     public function __construct(array $values = null)
     {
-        if (!empty($values)) {
+        if ($values) {
             $this->fromArray($values);
         }
     }
@@ -38,8 +39,8 @@ abstract class AbstractObject implements ObjectInterface
 
             foreach ($value as $subKey => $subValue) {
                 if (is_object($subValue) && method_exists($subValue, 'toArray')) {
-                    /* @var ObjectInterface $subValue */
-                    $value[$subKey] = $subValue->toArray(false);
+                    /** @var \Spryker\Shared\ZedRequest\Client\ObjectInterface $subValue */
+                    $value[$subKey] = $subValue->toArray();
                 }
             }
             $values[$key] = $value;

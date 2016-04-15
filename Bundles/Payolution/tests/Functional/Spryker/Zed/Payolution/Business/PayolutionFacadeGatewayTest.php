@@ -1,24 +1,27 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
@@ -44,11 +47,6 @@ class PayolutionFacadeGatewayTest extends Test
     private $paymentEntity;
 
     /**
-     * @var bool
-     */
-    private $enableTests = false;
-
-    /**
      * @var \Spryker\Zed\Payolution\Business\PayolutionFacade
      */
     private $payolutionFacade;
@@ -68,9 +66,7 @@ class PayolutionFacadeGatewayTest extends Test
      */
     public function testSaveOrderPayment()
     {
-        if ($this->enableTests === false) {
-            return;
-        }
+        $this->markTestSkipped('Payolution request is too slow');
 
         $this->setBaseTestData();
 
@@ -81,30 +77,39 @@ class PayolutionFacadeGatewayTest extends Test
             ->setFirstName('Jane')
             ->setLastName('Doe')
             ->setEmail('jane@family-doe.org')
-            ->setIso2Code('de')
+            ->setIso2Code('DE')
             ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR);
 
-        $paymentTransfer = new PayolutionPaymentTransfer();
-        $paymentTransfer->setAccountBrand(ApiConstants::BRAND_INVOICE)
+        $payolutionPaymentTransfer = new PayolutionPaymentTransfer();
+        $payolutionPaymentTransfer->setAccountBrand(ApiConstants::BRAND_INVOICE)
             ->setClientIp('127.0.0.1')
             ->setDateOfBirth('1970-01-02')
             ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
             ->setAddress($addressTransfer)
             ->setAccountBrand(ApiConstants::BRAND_INVOICE)
-            ->setLanguageIso2Code('de')
-            ->setCurrencyIso3Code('EUR');
+            ->setLanguageIso2Code('DE')
+            ->setCurrencyIso3Code('EUR')
+            ->setEmail($addressTransfer->getEmail());
 
         // PayolutionCheckoutConnector-HydrateOrderPlugin emulation
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer->setIdSalesOrder($this->orderEntity->getIdSalesOrder());
-        $orderTransfer->setPayolutionPayment($paymentTransfer);
+        $quoteTransfer = new QuoteTransfer();
+
+        $paymentTransfer = new PaymentTransfer();
+        $paymentTransfer->setPayolution($payolutionPaymentTransfer);
+
+        $quoteTransfer->setPayment($paymentTransfer);
+
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $saveOrderTransfer = new SaveOrderTransfer();
+        $saveOrderTransfer->setIdSalesOrder($this->orderEntity->getIdSalesOrder());
+        $checkoutResponseTransfer->setSaveOrder($saveOrderTransfer);
 
         $facade = $this->payolutionFacade;
-        $facade->saveOrderPayment($orderTransfer);
+        $facade->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
 
         $paymentEntity = $this->orderEntity->getSpyPaymentPayolutions()->getFirst();
 
-        $this->assertInstanceOf('Spryker\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution', $paymentEntity);
+        $this->assertInstanceOf(SpyPaymentPayolution::class, $paymentEntity);
         $this->assertEquals(ApiConstants::BRAND_INVOICE, $paymentEntity->getAccountBrand());
         $this->assertEquals('127.0.0.1', $paymentEntity->getClientIp());
     }
@@ -114,17 +119,15 @@ class PayolutionFacadeGatewayTest extends Test
      */
     public function testPreCheckPayment()
     {
-        if ($this->enableTests === false) {
-            return;
-        }
+        $this->markTestSkipped('Payolution request is too slow');
 
         $this->setBaseTestData();
 
-        $totals = new TotalsTransfer();
-        $totals->setGrandTotal(10000);
+        $totalsTransfer = new TotalsTransfer();
+        $totalsTransfer->setGrandTotal(10000);
 
-        $cartTransfer = new CartTransfer();
-        $cartTransfer->setTotals($totals);
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setTotals($totalsTransfer);
 
         $addressTransfer = (new AddressTransfer())
             ->setCity('Berlin')
@@ -134,26 +137,26 @@ class PayolutionFacadeGatewayTest extends Test
             ->setLastName('Doe')
             ->setSalutation('Mr')
             ->setEmail('john@doe.com')
-            ->setIso2Code('de');
+            ->setIso2Code('DE');
 
-        $paymentTransfer = (new PayolutionPaymentTransfer())
+        $payolutionPaymentTransfer = (new PayolutionPaymentTransfer())
             ->setGender('Male')
             ->setDateOfBirth('1970-01-01')
             ->setClientIp('127.0.0.1')
             ->setAccountBrand(ApiConstants::BRAND_INVOICE)
             ->setAddress($addressTransfer)
-            ->setLanguageIso2Code('de')
+            ->setLanguageIso2Code('DE')
             ->setCurrencyIso3Code('EUR');
 
-        $checkoutRequestTransfer = new CheckoutRequestTransfer();
-        $checkoutRequestTransfer
-            ->setCart($cartTransfer)
-            ->setPayolutionPayment($paymentTransfer);
+        $paymentTransfer = new PaymentTransfer();
+        $paymentTransfer->setPayolution($payolutionPaymentTransfer);
+
+        $quoteTransfer->setPayment($paymentTransfer);
 
         $facade = $this->payolutionFacade;
-        $response = $facade->preCheckPayment($checkoutRequestTransfer);
+        $response = $facade->preCheckPayment($quoteTransfer);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $this->assertInstanceOf(PayolutionTransactionResponseTransfer::class, $response);
     }
 
     /**
@@ -161,17 +164,17 @@ class PayolutionFacadeGatewayTest extends Test
      */
     public function testPreAuthorizePayment()
     {
-        if ($this->enableTests === false) {
-            return;
-        }
+        $this->markTestSkipped('Payolution request is too slow');
 
         $this->setBaseTestData();
         $this->setPaymentTestData();
 
-        $facade = $this->payolutionFacade;
-        $response = $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
+        $orderTransfer = $this->createOrderTransferMock();
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $facade = $this->payolutionFacade;
+        $response = $facade->preAuthorizePayment($orderTransfer, $this->paymentEntity->getIdPaymentPayolution());
+
+        $this->assertInstanceOf(PayolutionTransactionResponseTransfer::class, $response);
     }
 
     /**
@@ -179,15 +182,15 @@ class PayolutionFacadeGatewayTest extends Test
      */
     public function testReAuthorizePayment()
     {
-        if ($this->enableTests === false) {
-            return;
-        }
+        $this->markTestSkipped('Payolution request is too slow');
 
         $this->setBaseTestData();
         $this->setPaymentTestData();
 
+        $orderTransfer = $this->createOrderTransferMock();
+
         $facade = $this->payolutionFacade;
-        $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
+        $facade->preAuthorizePayment($orderTransfer, $this->paymentEntity->getIdPaymentPayolution());
 
         /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
         $preAuthorizationStatusLogEntity = $this
@@ -195,17 +198,10 @@ class PayolutionFacadeGatewayTest extends Test
             ->getSpyPaymentPayolutionTransactionStatusLogs()
             ->getFirst();
 
-        // Emulate increase of order price
-        $orderEntity = $this->paymentEntity->getSpySalesOrder();
-        $orderEntity
-            ->setGrandTotal(20000)
-            ->setSubtotal(20000)
-            ->save();
+        $responseTransfer = $facade->reAuthorizePayment($orderTransfer, $this->paymentEntity->getIdPaymentPayolution());
+        $this->assertInstanceOf(PayolutionTransactionResponseTransfer::class, $responseTransfer);
 
-        $responseTransfer = $facade->reAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
-
-        /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
         $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
         $reAuthorizationRequestLogEntity = $this
             ->paymentEntity
@@ -225,15 +221,15 @@ class PayolutionFacadeGatewayTest extends Test
      */
     public function testRevertPayment()
     {
-        if ($this->enableTests === false) {
-            return;
-        }
+        $this->markTestSkipped('Payolution request is too slow');
 
         $this->setBaseTestData();
         $this->setPaymentTestData();
 
+        $orderTransfer = $this->createOrderTransferMock();
+
         $facade = $this->payolutionFacade;
-        $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
+        $facade->preAuthorizePayment($orderTransfer, $this->paymentEntity->getIdPaymentPayolution());
 
         /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
         $preAuthorizationStatusLogEntity = $this
@@ -241,10 +237,10 @@ class PayolutionFacadeGatewayTest extends Test
             ->getSpyPaymentPayolutionTransactionStatusLogs()
             ->getLast();
 
-        $responseTransfer = $facade->revertPayment($this->paymentEntity->getIdPaymentPayolution());
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
+        $responseTransfer = $facade->revertPayment($orderTransfer, $this->paymentEntity->getIdPaymentPayolution());
+        $this->assertInstanceOf(PayolutionTransactionResponseTransfer::class, $responseTransfer);
 
-        /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
         $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
         $revertRequestLogEntity = $this->paymentEntity->getSpyPaymentPayolutionTransactionRequestLogs()->getLast();
 
@@ -259,29 +255,32 @@ class PayolutionFacadeGatewayTest extends Test
      */
     public function testRefundPayment()
     {
-        if ($this->enableTests === false) {
-            return;
-        }
+        $this->markTestSkipped('Payolution request is too slow');
 
         $this->setBaseTestData();
         $this->setPaymentTestData();
 
+        $orderTransfer = $this->createOrderTransferMock();
+
         $facade = $this->payolutionFacade;
-        $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
-        $facade->capturePayment($this->paymentEntity->getIdPaymentPayolution());
+        $facade->preAuthorizePayment($orderTransfer, $this->paymentEntity->getIdPaymentPayolution());
+        $facade->capturePayment($orderTransfer, $this->paymentEntity->getIdPaymentPayolution());
 
-        /* @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
-        $captureStatusLogEntity = $this->paymentEntity->getSpyPaymentPayolutionTransactionStatusLogs()->getLast();
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
+        $preAuthorizationStatusLogEntity = $this
+            ->paymentEntity
+            ->getSpyPaymentPayolutionTransactionStatusLogs()
+            ->getFirst();
 
-        $responseTransfer = $facade->refundPayment($this->paymentEntity->getIdPaymentPayolution());
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
+        $responseTransfer = $facade->refundPayment($orderTransfer, $this->paymentEntity->getIdPaymentPayolution());
+        $this->assertInstanceOf(PayolutionTransactionResponseTransfer::class, $responseTransfer);
 
-        /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
         $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
         $refundRequestLogEntity = $this->paymentEntity->getSpyPaymentPayolutionTransactionRequestLogs()->getLast();
 
         $this->assertEquals(
-            $captureStatusLogEntity->getIdentificationUniqueid(),
+            $preAuthorizationStatusLogEntity->getIdentificationUniqueid(),
             $refundRequestLogEntity->getReferenceId()
         );
     }
@@ -293,7 +292,7 @@ class PayolutionFacadeGatewayTest extends Test
      */
     private function setBaseTestData()
     {
-        $country = SpyCountryQuery::create()->findOneByIso2Code('de');
+        $country = SpyCountryQuery::create()->findOneByIso2Code('DE');
 
         $billingAddress = (new SpySalesOrderAddress())
             ->setFkCountry($country->getIdCountry())
@@ -315,8 +314,6 @@ class PayolutionFacadeGatewayTest extends Test
 
         $this->orderEntity = (new SpySalesOrder())
             ->setEmail('john@doe.com')
-            ->setGrandTotal(10000)
-            ->setSubtotal(10000)
             ->setIsTest(true)
             ->setFkSalesOrderAddressBilling($billingAddress->getIdSalesOrderAddress())
             ->setFkSalesOrderAddressShipping($billingAddress->getIdSalesOrderAddress())
@@ -342,13 +339,27 @@ class PayolutionFacadeGatewayTest extends Test
             ->setEmail('jane@family-doe.org')
             ->setGender(SpyPaymentPayolutionTableMap::COL_GENDER_MALE)
             ->setSalutation(SpyPaymentPayolutionTableMap::COL_SALUTATION_MR)
-            ->setCountryIso2Code('de')
+            ->setCountryIso2Code('DE')
             ->setCity('Berlin')
             ->setStreet('Straße des 17. Juni 135')
             ->setZipCode('10623')
-            ->setLanguageIso2Code('de')
+            ->setLanguageIso2Code('DE')
             ->setCurrencyIso3Code('EUR');
         $this->paymentEntity->save();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function createOrderTransferMock()
+    {
+        $totalsTransfer = new TotalsTransfer();
+        $totalsTransfer->setGrandTotal(10000);
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->fromArray($this->orderEntity->toArray(), true);
+        $orderTransfer->setTotals($totalsTransfer);
+        return $orderTransfer;
     }
 
 }

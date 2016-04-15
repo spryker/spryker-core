@@ -1,26 +1,27 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication;
 
 use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
+use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
+use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
+use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsBlockFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
-use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
-use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
@@ -72,7 +73,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable
      */
-    public function createCmsGlossaryTable($idPage, $fkLocale, array $placeholders = null, array $searchArray = null)
+    public function createCmsGlossaryTable($idPage, $fkLocale, array $placeholders = [], array $searchArray = [])
     {
         $glossaryQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale);
@@ -88,7 +89,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageForm(array $formData = [], array $formOptions = [])
     {
-        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+        $urlFacade = $this->getUrlFacade();
         $cmsPageForm = new CmsPageForm($urlFacade);
 
         return $this->getFormFactory()->create($cmsPageForm, $formData, $formOptions);
@@ -99,7 +100,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageFormDataProvider()
     {
-        return new CmsPageFormDataProvider($this->getQueryContainer());
+        return new CmsPageFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
     }
 
     /**
@@ -131,7 +132,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsRedirectForm(array $formData = [], array $formOptions = [])
     {
-        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+        $urlFacade = $this->getUrlFacade();
         $cmsRedirectFormType = new CmsRedirectForm($urlFacade);
 
         return $this->getFormFactory()->create($cmsRedirectFormType, $formData, $formOptions);
@@ -184,6 +185,22 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
+     */
+    public function getUrlFacade()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     */
+    public function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }
 
 }

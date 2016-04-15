@@ -41,8 +41,8 @@
                         <div class="panel-body">
                             {{ productsTable | raw }}
 
-                            <div class="">
-                                <a onclick="allProductsClickSelectAll();" href="javascript:void(0);" class="btn btn-primary ">Select All</a>
+                            <div class="prcat-select-all">
+                                <a href="#" class="btn btn-primary ">Select All</a>
                             </div>
                         </div>
                     </div>
@@ -79,8 +79,8 @@
                         <div class="panel-body">
                             {{ productCategoriesTable | raw }}
 
-                            <div class="">
-                                <a onclick="categoryProductClickDeSelectAll();" href="javascript:void(0);" class="btn btn-primary ">Deselect All</a>
+                            <div class="prcat-deselect-all">
+                                <a href="#" class="btn btn-primary ">Deselect All</a>
                             </div>
                         </div>
                     </div>
@@ -121,7 +121,5 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script>
-        $('.spryker-form-select2combobox').select2();
-    </script>
+    <script src="/assets/js/spryker-zed-productcategory-main.js"></script>
 {% endblock %}

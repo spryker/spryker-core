@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Auth\Business\Model;
 
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Exception\UserNotLoggedException;
-use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
+use Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
-use Generated\Shared\Transfer\UserTransfer;
 
 class Auth implements AuthInterface
 {
@@ -24,7 +25,7 @@ class Auth implements AuthInterface
     protected $session;
 
     /**
-     * @var \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
+     * @var \Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface
      */
     protected $userFacade;
 
@@ -45,18 +46,18 @@ class Auth implements AuthInterface
 
     /**
      * @param \Spryker\Client\Session\SessionClientInterface $session
-     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge $userBridge
+     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface $userFacade
      * @param \Spryker\Zed\Auth\AuthConfig $authConfig
      * @param \Spryker\Zed\Auth\Business\Client\StaticToken $staticToken
      */
     public function __construct(
         SessionClientInterface $session,
-        AuthToUserBridge $userBridge,
+        AuthToUserInterface $userFacade,
         AuthConfig $authConfig,
         StaticToken $staticToken
     ) {
         $this->session = $session;
-        $this->userFacade = $userBridge;
+        $this->userFacade = $userFacade;
         $this->authConfig = $authConfig;
         $this->staticToken = $staticToken;
     }
@@ -69,7 +70,7 @@ class Auth implements AuthInterface
      */
     public function authenticate($username, $password)
     {
-        $hasUser = $this->userFacade->hasUserByUsername($username);
+        $hasUser = $this->userFacade->hasActiveUserByUsername($username);
         if (!$hasUser) {
             return false;
         }
@@ -100,7 +101,7 @@ class Auth implements AuthInterface
      */
     public function generateToken(UserTransfer $user)
     {
-        return md5(sprintf('%s%s', $user->getPassword(), $user->getIdUser()));
+        return hash('sha256', sprintf('%s%s', $user->getPassword(), $user->getIdUser()));
     }
 
     /**

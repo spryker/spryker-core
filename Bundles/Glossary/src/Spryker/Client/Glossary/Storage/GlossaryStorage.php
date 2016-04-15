@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Glossary\Storage;
@@ -24,13 +26,16 @@ class GlossaryStorage implements GlossaryStorageInterface
     /**
      * @var string
      */
-    protected $locale;
+    protected $localeName;
 
     /**
      * @var array
      */
     protected $translations = [];
-
+    
+    /**
+     * @var array
+     */
     protected $translationKeyMap = [];
 
     /**
@@ -42,7 +47,7 @@ class GlossaryStorage implements GlossaryStorageInterface
     {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
-        $this->locale = $localeName;
+        $this->localeName = $localeName;
     }
 
     /**
@@ -53,7 +58,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      */
     public function translate($keyName, array $parameters = [])
     {
-        if ((string) $keyName === '') {
+        if ((string)$keyName === '') {
             return $keyName;
         }
 
@@ -75,9 +80,22 @@ class GlossaryStorage implements GlossaryStorageInterface
      */
     protected function loadTranslation($keyName)
     {
-        $key = $this->keyBuilder->generateKey($keyName, $this->locale);
-        $this->translations[$keyName] = $this->storage->get($key);
-        $this->translationKeyMap[$keyName] = true;
+        $key = $this->keyBuilder->generateKey($keyName, $this->localeName);
+        $this->addTranslation($keyName, $this->storage->get($key));
+    }
+
+    /**
+     * @param string $keyName
+     * @param string $translation
+     *
+     * @return void
+     */
+    protected function addTranslation($keyName, $translation)
+    {
+        if ($translation === null) {
+            $translation = $keyName;
+        }
+        $this->translations[$keyName] = $translation;
     }
 
 }

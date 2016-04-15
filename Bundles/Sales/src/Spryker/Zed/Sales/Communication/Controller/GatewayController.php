@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Communication\Controller;
@@ -23,17 +24,28 @@ class GatewayController extends AbstractGatewayController
      */
     public function getOrdersAction(OrderListTransfer $orderListTransfer)
     {
-        return $this->getFacade()->getOrders($orderListTransfer);
+        return $this->getFacade()->getCustomerOrders($orderListTransfer, $orderListTransfer->getIdCustomer());
     }
 
     /**
+     * @deprecated use getOrderByIdSalesOrder instead
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetailsAction(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()->getOrderDetails($orderTransfer);
+        return $this->getFacade()->getOrderByIdSalesOrder($orderTransfer->getIdSalesOrder());
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
     }
 
 }

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
@@ -21,11 +22,6 @@ class ClassDefinition implements ClassDefinitionInterface
      * @var array
      */
     private $uses = [];
-
-    /**
-     * @var array
-     */
-    private $bundles = [];
 
     /**
      * @var array
@@ -95,26 +91,6 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param string $bundle
-     *
-     * @return void
-     */
-    private function addBundle($bundle)
-    {
-        if (!in_array($bundle, $this->bundles)) {
-            $this->bundles[] = $bundle;
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getBundles()
-    {
-        return $this->bundles;
-    }
-
-    /**
      * @return array
      */
     public function getUses()
@@ -178,7 +154,6 @@ class ClassDefinition implements ClassDefinitionInterface
 
         $this->properties[$property['name']] = $propertyInfo;
         $this->addUseForType($property);
-        $this->addPropertyConstructorIfCollection($property);
     }
 
     /**
@@ -214,7 +189,7 @@ class ClassDefinition implements ClassDefinitionInterface
             $property['propertyConst'] = $this->getPropertyConstantName($property);
             $property['name_underscore'] = mb_strtolower($property['propertyConst']);
 
-            if (!preg_match('/^int|integer|float|string|array|bool|boolean/', $property['type'])) {
+            if (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean/', $property['type'])) {
                 $property['is_transfer'] = true;
                 $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\';
                 if (preg_match('/\[\]$/', $property['type'])) {
@@ -330,18 +305,6 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
-     *
-     * @return void
-     */
-    private function addPropertyConstructorIfCollection(array $property)
-    {
-        if ($this->isCollection($property)) {
-            $this->constructorDefinition[$property['name']] = '\ArrayObject';
-        }
-    }
-
-    /**
      * @return array
      */
     public function getConstructorDefinition()
@@ -436,7 +399,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function isCollection(array $property)
     {
-        return (bool) preg_match('/((.*?)\[\]|\[\])/', $property['type']);
+        return (bool)preg_match('/((.*?)\[\])/', $property['type']);
     }
 
     /**
@@ -505,11 +468,11 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param string $property
+     * @param array $property
      *
      * @return void
      */
-    private function buildSetMethod($property)
+    private function buildSetMethod(array $property)
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'set' . ucfirst($propertyName);
@@ -529,11 +492,11 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param string $property
+     * @param array $property
      *
      * @return void
      */
-    private function buildAddMethod($property)
+    private function buildAddMethod(array $property)
     {
         $parent = $this->getPropertyName($property);
         $propertyConstant = $this->getPropertyConstantName($property);

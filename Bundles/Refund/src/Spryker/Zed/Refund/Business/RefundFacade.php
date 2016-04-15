@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Refund\Business;
@@ -18,6 +19,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
@@ -30,6 +33,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\RefundTransfer[]
@@ -50,18 +55,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
-     * @param int $idSalesOrder
+     * @api
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderByIdSalesOrder($idSalesOrder)
-    {
-        return $this->getFactory()
-            ->getSalesFacade()
-            ->getOrderByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return \Generated\Shared\Transfer\RefundTransfer
@@ -74,6 +69,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem[]
@@ -84,6 +81,8 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]

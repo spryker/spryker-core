@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Development\Business;
@@ -10,14 +11,8 @@ interface DevelopmentFacadeInterface
 {
 
     /**
-     * @param string|null $bundle
-     * @param array $options
+     * @api
      *
-     * @return void
-     */
-    public function fixCodeStyle($bundle = null, array $options = []);
-
-    /**
      * @param string|null $bundle
      * @param array $options
      *
@@ -26,6 +21,8 @@ interface DevelopmentFacadeInterface
     public function checkCodeStyle($bundle = null, array $options = []);
 
     /**
+     * @api
+     *
      * @param string|null $bundle
      * @param array $options
      *
@@ -34,6 +31,8 @@ interface DevelopmentFacadeInterface
     public function runTest($bundle, array $options = []);
 
     /**
+     * @api
+     *
      * @param string|null $bundle
      *
      * @return void
@@ -41,11 +40,98 @@ interface DevelopmentFacadeInterface
     public function runPhpMd($bundle);
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param string $toBundle
      *
      * @return void
      */
     public function createBridge($bundle, $toBundle);
+
+    /**
+     * @api
+     *
+     * @param string $bundleName
+     *
+     * @return array
+     */
+    public function showOutgoingDependenciesForBundle($bundleName);
+
+    /**
+     * @api
+     *
+     * @param string $bundleName
+     *
+     * @return array
+     */
+    public function showIncomingDependenciesForBundle($bundleName);
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getAllBundles();
+
+    /**
+     * @api
+     *
+     * @param string $application
+     * @param string $bundle
+     * @param string $layer
+     *
+     * @return void
+     */
+    public function buildDependencyTree($application, $bundle, $layer);
+
+    /**
+     * @api
+     *
+     * @param string|bool $bundleToView
+     *
+     * @return string
+     */
+    public function drawDetailedDependencyTreeGraph($bundleToView);
+
+    /**
+     * @api
+     *
+     * @param bool $showEngineBundle
+     * @param string|bool $bundleToView
+     *
+     * @return string
+     */
+    public function drawSimpleDependencyTreeGraph($showEngineBundle, $bundleToView);
+
+    /**
+     * @api
+     *
+     * @param string $bundleToView
+     *
+     * @return string
+     */
+    public function drawExternalDependencyTreeGraph($bundleToView);
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function getAdjacencyMatrixData();
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getDependencyViolations();
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getEngineBundleList();
 
 }

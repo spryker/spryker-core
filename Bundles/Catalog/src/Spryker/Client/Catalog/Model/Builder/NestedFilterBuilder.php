@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Catalog\Model\Builder;
@@ -34,8 +35,7 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
         return $this->bindMultipleNestedFilter($fieldName, [
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-name', $nestedFieldName),
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-value', $nestedFieldValue),
-            ]
-        );
+            ]);
     }
 
     /**
@@ -50,8 +50,7 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
         return $this->bindMultipleNestedFilter($fieldName, [
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-name', $nestedFieldName),
                 $this->filterBuilder->createTermsFilter($fieldName . '.facet-value', $nestedFieldValues),
-            ]
-        );
+            ]);
     }
 
     /**
@@ -75,8 +74,7 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
         return $this->bindMultipleNestedFilter($fieldName, [
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-name', $nestedFieldName),
                 $this->filterBuilder->createRangeFilter($fieldName . '.facet-value', $minValue, $maxValue, $greaterParam, $lessParam),
-            ]
-        );
+            ]);
     }
 
     /**

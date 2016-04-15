@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library;
@@ -22,7 +23,7 @@ class DataDirectory
     /**
      * This directory is local host only and not store specific
      *
-     * @param string $relativePath relative path in data directory
+     * @param string|null $relativePath relative path in data directory
      *
      * @return mixed
      */
@@ -38,7 +39,7 @@ class DataDirectory
     /**
      * This directory is local host only but store specific
      *
-     * @param string $relativePath relative path in data directory
+     * @param string|null $relativePath relative path in data directory
      *
      * @return mixed
      */
@@ -53,7 +54,7 @@ class DataDirectory
     /**
      * This directory is shared between hosts (NFS) but not store specific
      *
-     * @param string $relativePath relative path in data directory
+     * @param string|null $relativePath relative path in data directory
      *
      * @return mixed
      */
@@ -73,7 +74,7 @@ class DataDirectory
     /**
      * This directory is shared between hosts (NFS) and is store specific
      *
-     * @param string $relativePath relative path in data directory
+     * @param string|null $relativePath relative path in data directory
      *
      * @return mixed
      */

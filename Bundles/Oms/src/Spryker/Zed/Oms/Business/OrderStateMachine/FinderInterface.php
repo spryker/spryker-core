@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface FinderInterface
 {
@@ -83,5 +84,19 @@ interface FinderInterface
      * @return string
      */
     public function getStateDisplayName(SpySalesOrderItem $orderItem);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     */
+    public function getManualEventsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
 }

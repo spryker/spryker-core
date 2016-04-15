@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Table;
 
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
-use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -12,6 +17,7 @@ class VoucherPoolCategoryTable extends AbstractTable
 {
 
     const URL_DISCOUNT_POOL_EDIT_CATEGORY = '/discount/pool/edit-category';
+    const OPTIONS = 'options';
 
     /**
      * @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery
@@ -35,7 +41,13 @@ class VoucherPoolCategoryTable extends AbstractTable
     {
         $config->setHeader([
             SpyDiscountVoucherPoolCategoryTableMap::COL_NAME => 'Name',
-            'options' => 'Options',
+            self::OPTIONS => 'Options',
+        ]);
+
+        $config->addRawColumn(self::OPTIONS);
+
+        $config->setSearchable([
+            SpyDiscountVoucherPoolCategoryTableMap::COL_NAME,
         ]);
 
         $config->setUrl('categories-table');
@@ -57,7 +69,7 @@ class VoucherPoolCategoryTable extends AbstractTable
         foreach ($queryResults as $item) {
             $results[] = [
                 SpyDiscountVoucherPoolCategoryTableMap::COL_NAME => $item[SpyDiscountVoucherPoolCategoryTableMap::COL_NAME],
-                'options' => implode(' ', $this->getOptionsUrls($item)),
+                self::OPTIONS => implode(' ', $this->getOptionsUrls($item)),
             ];
         }
 

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Library\Sanitize;
@@ -52,11 +53,12 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      */
     protected function filter(array $array)
     {
-        if (empty($this->filters)) {
+        if (count($this->filters) < 1) {
             return $array;
         }
 
         $result = $array;
+
         /** @var \Spryker\Zed\Library\Sanitize\FilterInterface $filter */
         foreach ($this->filters as $filter) {
             $result = $filter->filter($result);

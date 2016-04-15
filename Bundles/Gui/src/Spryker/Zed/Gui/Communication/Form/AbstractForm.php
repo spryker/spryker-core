@@ -1,15 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Gui\Communication\Form;
 
+use Spryker\Shared\Gui\Form\AbstractForm as SharedAbstractForm;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
-use Symfony\Component\HttpFoundation\Request;
-use Spryker\Shared\Gui\Form\AbstractForm as SharedAbstractForm;
 
 /**
  * @deprecated Use \Symfony\Component\Form\AbstractType instead.

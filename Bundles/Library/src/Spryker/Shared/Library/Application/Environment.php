@@ -1,17 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\Application;
 
-use Spryker\Shared\Config;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Autoloader;
 use Spryker\Shared\Library\Error\ErrorHandler;
 use Spryker\Shared\Library\LibraryConstants;
-use Spryker\Shared\Library\TestAutoloader;
 
 class Environment
 {
@@ -24,14 +24,11 @@ class Environment
     ];
 
     /**
-     * @param string $application
-     * @param bool $disableApplicationCheck
-     *
      * @throws \Exception
      *
      * @return void
      */
-    public static function initialize($application, $disableApplicationCheck = false)
+    public static function initialize()
     {
         date_default_timezone_set('UTC');
 
@@ -43,39 +40,23 @@ class Environment
         self::defineApplicationStaticDir();
         self::defineApplicationVendorDir();
         self::defineApplicationDataDir();
-        self::defineApplicationSprykerRoot();
 
         $errorCode = error_reporting();
         self::initializeErrorHandler();
 
-        require_once APPLICATION_SPRYKER_ROOT . '/Library/src/Spryker/Shared/Library/Autoloader.php';
-
-        Autoloader::unregister();
-        Autoloader::register(APPLICATION_SPRYKER_ROOT, APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
-        TestAutoloader::register(APPLICATION_SPRYKER_ROOT, APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
-
-        $coreNamespaces = Config::get(LibraryConstants::CORE_NAMESPACES);
-        $configErrorCode = Config::get(LibraryConstants::ERROR_LEVEL);
+        $configErrorCode = Config::get(ApplicationConstants::ERROR_LEVEL);
         if ($configErrorCode !== $errorCode) {
             error_reporting($configErrorCode);
             self::initializeErrorHandler();
         }
-
-        foreach ($coreNamespaces as $namespace) {
-            Autoloader::allowNamespace($namespace);
-        }
-
         ini_set('display_errors', Config::get(LibraryConstants::DISPLAY_ERRORS, false));
 
         $store = Store::getInstance();
         $locale = current($store->getLocales());
 
         self::initializeLocale($locale);
-
         mb_internal_encoding('UTF-8');
         mb_regex_encoding('UTF-8');
-
-        date_default_timezone_set($store->getTimezone());
     }
 
     /**
@@ -198,24 +179,6 @@ class Environment
                 define('APPLICATION_DATA', APPLICATION_ROOT_DIR . '/data');
             } else {
                 define('APPLICATION_DATA', getenv('APPLICATION_DATA'));
-            }
-        }
-    }
-
-    /**
-     * @return void
-     */
-    protected static function defineApplicationSprykerRoot()
-    {
-        if (!defined('APPLICATION_SPRYKER_ROOT')) {
-            if (!getenv('APPLICATION_SPRYKER_ROOT')) {
-                $sprykerRoot = APPLICATION_VENDOR_DIR . '/spryker';
-                if (is_dir($sprykerRoot . '/spryker/Bundles')) {
-                    $sprykerRoot = $sprykerRoot . '/spryker/Bundles';
-                }
-                define('APPLICATION_SPRYKER_ROOT', $sprykerRoot);
-            } else {
-                define('APPLICATION_SPRYKER_ROOT', getenv('APPLICATION_SPRYKER_ROOT'));
             }
         }
     }

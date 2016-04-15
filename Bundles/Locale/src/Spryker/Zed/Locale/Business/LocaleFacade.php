@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Locale\Business;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Locale\Business\LocaleBusinessFactory getFactory()
@@ -17,6 +18,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return bool
@@ -29,6 +32,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
@@ -43,6 +48,24 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
+     * @param string $localeCode
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleByCode($localeCode)
+    {
+        $localeManager = $this->getFactory()->createLocaleManager();
+
+        return $localeManager->getLocaleByCode($localeCode);
+    }
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentLocaleName()
@@ -51,21 +74,20 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAvailableLocales()
     {
-        $availableLocales = Store::getInstance()->getLocales();
-        $locales = [];
-        foreach ($availableLocales as $localeName) {
-            $localeInfo = $this->getLocale($localeName);
-            $locales[$localeInfo->getIdLocale()] = $localeInfo->getLocaleName();
-        }
+        $localeManager = $this->getFactory()->createLocaleManager();
 
-        return $locales;
+        return $localeManager->getAvailableLocales();
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
@@ -76,6 +98,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
@@ -90,6 +114,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return void
@@ -101,6 +127,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
@@ -108,6 +136,18 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     public function install(MessengerInterface $messenger)
     {
         $this->getFactory()->createInstaller($messenger)->install();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    public function getLocaleCollection()
+    {
+        $localeManager = $this->getFactory()->createLocaleManager();
+
+        return $localeManager->getLocaleCollection();
     }
 
 }

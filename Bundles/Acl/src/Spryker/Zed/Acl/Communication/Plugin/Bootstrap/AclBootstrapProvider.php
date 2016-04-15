@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Communication\Plugin\Bootstrap;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -30,28 +31,28 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
     /**
      * @param \Silex\Application $app
      *
-     * @return string
+     * @return void
      */
     public function boot(Application $app)
     {
-        $facadeAcl = $this->getFacade();
+        $aclFacade = $this->getFacade();
         $config = $this->getFactory()->getConfig();
 
-        $app->before(function (Request $request) use ($app, $facadeAcl, $config) {
+        $app->before(function (Request $request) use ($app, $aclFacade, $config) {
             $bundle = $request->attributes->get('module');
             $controller = $request->attributes->get('controller');
             $action = $request->attributes->get('action');
 
-            if ($facadeAcl->isIgnorable($bundle, $controller, $action)) {
+            if ($aclFacade->isIgnorable($bundle, $controller, $action)) {
                 return true;
             }
 
-            if (!$facadeAcl->hasCurrentUser()) {
+            if (!$aclFacade->hasCurrentUser()) {
                 return $app->redirect($config->getAccessDeniedUri());
             }
 
-            $user = $facadeAcl->getCurrentUser();
-            if (!$facadeAcl->checkAccess($user, $bundle, $controller, $action)) {
+            $user = $aclFacade->getCurrentUser();
+            if (!$aclFacade->checkAccess($user, $bundle, $controller, $action)) {
                 return $app->redirect($config->getAccessDeniedUri());
             }
         });

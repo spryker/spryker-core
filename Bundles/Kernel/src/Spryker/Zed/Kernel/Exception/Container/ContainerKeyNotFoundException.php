@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Exception\Container;
@@ -33,9 +34,9 @@ class ContainerKeyNotFoundException extends \Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-                'Container does not contain the called "%s"',
-                $key
-            ) . PHP_EOL;
+            'Container does not contain the called "%s"',
+            $key
+        ) . PHP_EOL;
 
         $message .= sprintf(
             'You can fix this by adding the key "%s" to your "%sDependencyProvider"',

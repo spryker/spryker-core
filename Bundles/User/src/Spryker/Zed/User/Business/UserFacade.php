@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\User\Business\UserBusinessFactory getFactory()
@@ -16,6 +17,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @return void
      */
     public function install()
@@ -26,6 +29,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $username
      *
      * @return bool
@@ -38,6 +43,22 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username)
+    {
+        return $this->getFactory()
+            ->createUserModel()
+            ->hasActiveUserByUsername($username);
+    }
+
+    /**
+     * @api
+     *
      * @param string $username
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -50,6 +71,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -62,6 +85,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -74,6 +99,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $firstName
      * @param string $lastName
      * @param string $username
@@ -89,6 +116,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @throws Exception\UserNotFoundException
@@ -103,6 +132,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return mixed
@@ -115,6 +146,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser()
@@ -125,6 +158,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function hasCurrentUser()
@@ -135,6 +170,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $password
      * @param string $hash
      *
@@ -148,6 +185,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return bool
@@ -160,6 +199,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CollectionTransfer
      */
     public function getSystemUsers()
@@ -170,6 +211,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUsers()
@@ -180,6 +223,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -192,6 +237,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return bool
@@ -202,6 +249,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return bool

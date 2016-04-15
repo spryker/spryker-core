@@ -1,13 +1,12 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\Zed;
 
-use Spryker\Client\EventJournal\EventJournalClient;
-use Spryker\Shared\Library\Communication\Response as CommunicationResponse;
 use Guzzle\Http\Client;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\Message\Response;
@@ -15,14 +14,16 @@ use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
 use Spryker\Client\EventJournal\EventJournal;
+use Spryker\Client\EventJournal\EventJournalClient;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\Library\Communication\ObjectInterface;
-use Spryker\Shared\Config;
+use Spryker\Shared\Library\Communication\Request;
+use Spryker\Shared\Library\Communication\Response as CommunicationResponse;
 use Spryker\Shared\Library\LibraryConstants;
 use Spryker\Shared\Library\System;
-use Spryker\Shared\Library\Communication\Request;
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
+use Spryker\Shared\Transfer\TransferInterface;
 
 class ZedClient
 {
@@ -59,8 +60,8 @@ class ZedClient
 
     /**
      * @param string $baseUrl
-     * @param string $username
-     * @param string $password
+     * @param string|null $username
+     * @param string|null $password
      */
     public function __construct($baseUrl, $username = null, $password = null)
     {
@@ -81,9 +82,9 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
-     * @param null $timeoutInSeconds
+     * @param int|null $timeoutInSeconds
      * @param bool $isBackgroundRequest
      *
      * @throws \LogicException
@@ -139,7 +140,7 @@ class ZedClient
     /**
      * @param string $pathInfo
      * @param \Spryker\Shared\Library\Communication\Request $requestTransfer
-     * @param int $timeoutInSeconds
+     * @param int|null $timeoutInSeconds
      *
      * @return \Guzzle\Http\Message\EntityEnclosingRequest
      */
@@ -170,7 +171,7 @@ class ZedClient
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
 
-        $rawRequestBody = json_encode($requestTransfer->toArray(false));
+        $rawRequestBody = json_encode($requestTransfer->toArray());
 
         $request->setBody($rawRequestBody, 'application/json');
         //$request->setHeader('Host', System::getHostname());
@@ -199,13 +200,13 @@ class ZedClient
             }
             $request->addMetaTransfer($name, $metaTransfer);
         }
-        if (!empty($this->username)) {
+        if ($this->username) {
             $request->setUsername($this->username);
         }
-        if (!empty($this->password)) {
+        if ($this->password) {
             $request->setPassword($this->password);
         }
-        if (!empty($transferObject)) {
+        if ($transferObject) {
             $request->setTransfer($transferObject);
         }
 
@@ -283,7 +284,7 @@ class ZedClient
      */
     protected function doLog($pathInfo, $subType, ObjectInterface $transfer, $rawBody)
     {
-        $lumberjack = new EventJournalClient();
+        $eventJournalClient = new EventJournalClient();
         $event = new Event();
         $responseTransfer = $transfer->getTransfer();
         if ($responseTransfer instanceof TransferInterface) {
@@ -298,7 +299,7 @@ class ZedClient
         $event->setField('name', 'transfer');
         $event->setField('path_info', $pathInfo);
         $event->setField('sub_type', $subType);
-        $lumberjack->saveEvent($event);
+        $eventJournalClient->saveEvent($event);
     }
 
     /**

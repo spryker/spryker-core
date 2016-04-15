@@ -1,30 +1,37 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Functional\Spryker\Zed\Payolution\Business\Order;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
-use Spryker\Shared\Payolution\PayolutionConstants;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-use Spryker\Zed\Payolution\Business\Order\Saver;
-use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundleItem;
+use Spryker\Shared\Payolution\PayolutionConstants;
+use Spryker\Zed\Payolution\Business\Order\Saver;
+use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
 
 class SaverTest extends Test
 {
@@ -34,15 +41,16 @@ class SaverTest extends Test
      */
     public function testSaveOrderPaymentCreatesPersistentPaymentData()
     {
-        $orderTransfer = $this->getOrderTransfer();
+        $checkoutResponseTransfer = $this->createCheckoutResponse();
+        $quoteTransfer = $this->getQuoteTransfer($checkoutResponseTransfer);
         $orderManager = new Saver($this->getPayolutionBusinessBusinessFactory());
-        $orderManager->saveOrderPayment($orderTransfer);
 
-        $paymentEntity = SpyPaymentPayolutionQuery::create()->findOneByFkSalesOrder($orderTransfer->getIdSalesOrder());
-        $this->assertInstanceOf(
-            'Orm\Zed\Payolution\Persistence\SpyPaymentPayolution',
-            $paymentEntity
+        $orderManager->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
+
+        $paymentEntity = SpyPaymentPayolutionQuery::create()->findOneByFkSalesOrder(
+            $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder()
         );
+        $this->assertInstanceOf(SpyPaymentPayolution::class, $paymentEntity);
 
         $paymentOrderItemEntities = $paymentEntity->getSpyPaymentPayolutionOrderItems();
         $this->assertCount(1, $paymentOrderItemEntities);
@@ -53,14 +61,16 @@ class SaverTest extends Test
      */
     public function testSaveOrderPaymentHasAddressData()
     {
-        $orderTransfer = $this->getOrderTransfer();
+        $checkoutResponseTransfer = $this->createCheckoutResponse();
+        $quoteTransfer = $this->getQuoteTransfer($checkoutResponseTransfer);
         $orderManager = new Saver($this->getPayolutionBusinessBusinessFactory());
-        $orderManager->saveOrderPayment($orderTransfer);
 
-        $paymentTransfer = $orderTransfer->getPayolutionPayment();
+        $orderManager->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
+
+        $paymentTransfer = $quoteTransfer->getPayment()->getPayolution();
         $addressTransfer = $paymentTransfer->getAddress();
         /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity */
-        $paymentEntity = SpyPaymentPayolutionQuery::create()->findOneByFkSalesOrder($orderTransfer->getIdSalesOrder());
+        $paymentEntity = SpyPaymentPayolutionQuery::create()->findOneByFkSalesOrder($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
         $this->assertEquals($addressTransfer->getCity(), $paymentEntity->getCity());
         $this->assertEquals($addressTransfer->getIso2Code(), $paymentEntity->getCountryIso2Code());
         $this->assertEquals($addressTransfer->getZipCode(), $paymentEntity->getZipCode());
@@ -92,16 +102,19 @@ class SaverTest extends Test
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    private function getOrderTransfer()
+    private function getQuoteTransfer(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $orderEntity = $this->createOrderEntity();
 
         $paymentAddressTransfer = new AddressTransfer();
+        $email = 'testst@tewst.com';
         $paymentAddressTransfer
-            ->setIso2Code('de')
-            ->setEmail('testst@tewst.com')
+            ->setIso2Code('DE')
+            ->setEmail($email)
             ->setFirstName('John')
             ->setLastName('Doe')
             ->setCellPhone('+40 175 0815')
@@ -112,33 +125,43 @@ class SaverTest extends Test
             ->setSalutation(SpyPaymentPayolutionTableMap::COL_SALUTATION_MR)
             ->setCity('Berlin');
 
-        $paymentTransfer = new PayolutionPaymentTransfer();
-        $paymentTransfer
+        $payolutionPaymentTransfer = new PayolutionPaymentTransfer();
+        $payolutionPaymentTransfer
+            ->setEmail($email)
             ->setGender(SpyPaymentPayolutionTableMap::COL_GENDER_MALE)
             ->setDateOfBirth('1970-01-02')
             ->setClientIp('127.0.0.1')
             ->setAccountBrand(PayolutionConstants::BRAND_INVOICE)
-            ->setLanguageIso2Code('de')
+            ->setLanguageIso2Code('DE')
             ->setCurrencyIso3Code('EUR')
             ->setAddress($paymentAddressTransfer);
 
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer
-            ->setIdSalesOrder($orderEntity->getIdSalesOrder())
-            ->setPayolutionPayment($paymentTransfer);
+        $quoteTransfer = new QuoteTransfer();
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setEmail($email);
+        $customerTransfer->setIsGuest(true);
+        $quoteTransfer->setCustomer($customerTransfer);
+
+        $checkoutResponseTransfer->getSaveOrder()->setIdSalesOrder($orderEntity->getIdSalesOrder());
+
+        $paymentTransfer = new PaymentTransfer();
+        $paymentTransfer->setPayolution($payolutionPaymentTransfer);
+
+        $quoteTransfer->setPayment($paymentTransfer);
 
         foreach ($orderEntity->getItems() as $orderItemEntity) {
             $itemTransfer = new ItemTransfer();
             $itemTransfer
                 ->setName($orderItemEntity->getName())
                 ->setQuantity($orderItemEntity->getQuantity())
-                ->setPriceToPay($orderItemEntity->getPriceToPay())
+                ->setUnitGrossPrice($orderItemEntity->getGrossPrice())
                 ->setFkSalesOrder($orderItemEntity->getFkSalesOrder())
                 ->setIdSalesOrderItem($orderItemEntity->getIdSalesOrderItem());
-            $orderTransfer->addItem($itemTransfer);
+            $checkoutResponseTransfer->getSaveOrder()->addOrderItem($itemTransfer);
         }
 
-        return $orderTransfer;
+        return $quoteTransfer;
     }
 
     /**
@@ -148,7 +171,7 @@ class SaverTest extends Test
      */
     private function createOrderEntity()
     {
-        $country = SpyCountryQuery::create()->findOneByIso2Code('de');
+        $country = SpyCountryQuery::create()->findOneByIso2Code('DE');
 
         $billingAddress = (new SpySalesOrderAddress())
             ->setFkCountry($country->getIdCountry())
@@ -170,8 +193,6 @@ class SaverTest extends Test
 
         $orderEntity = (new SpySalesOrder())
             ->setEmail('john@doe.com')
-            ->setGrandTotal(10000)
-            ->setSubtotal(10000)
             ->setIsTest(true)
             ->setFkSalesOrderAddressBilling($billingAddress->getIdSalesOrderAddress())
             ->setFkSalesOrderAddressShipping($billingAddress->getIdSalesOrderAddress())
@@ -204,7 +225,6 @@ class SaverTest extends Test
             ->setName('test product')
             ->setSku('1324354657687980')
             ->setGrossPrice(1000)
-            ->setPriceToPay(100)
             ->setQuantity(1);
         $orderItemEntity->save();
 
@@ -245,7 +265,6 @@ class SaverTest extends Test
             ->setName('test bundle')
             ->setSku('13243546')
             ->setGrossPrice(1000)
-            ->setPriceToPay(1000)
             ->setBundleType('NonSplitBundle');
         $bundleEntity->save();
 
@@ -259,6 +278,18 @@ class SaverTest extends Test
         $bundleItemEntity->save();
 
         return $bundleEntity;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function createCheckoutResponse()
+    {
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $saveOrderTransfer = new SaveOrderTransfer();
+        $checkoutResponseTransfer->setSaveOrder($saveOrderTransfer);
+
+        return $checkoutResponseTransfer;
     }
 
 }

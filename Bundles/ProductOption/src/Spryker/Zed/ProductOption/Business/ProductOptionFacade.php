@@ -1,11 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOption\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -15,6 +19,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 {
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValueUsage
      * @param string $localeCode
      *
@@ -26,6 +32,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      * @param string $localeCode
      *
@@ -37,9 +45,11 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param string $importKeyProductOptionType
      * @param array $localizedNames
-     * @param string $importKeyTaxSet
+     * @param string|null $importKeyTaxSet
      *
      * @return int
      */
@@ -49,10 +59,12 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param string $importKeyProductOptionValue
      * @param string $importKeyProductOptionType
      * @param array $localizedNames
-     * @param float $price
+     * @param float|null $price
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      *
@@ -64,10 +76,12 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $importKeyProductOptionType
      * @param bool $isOptional
-     * @param int $sequence
+     * @param int|null $sequence
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      *
@@ -79,9 +93,11 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      * @param string $importKeyProductOptionValue
-     * @param int $sequence
+     * @param int|null $sequence
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
@@ -94,19 +110,25 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param string $importKeyProductOptionTypeA
      * @param string $importKeyProductOptionTypeB
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
+     *
+     * @return void
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB)
     {
-        return $this->getFactory()->createDataImportWriterModel()->importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
+        $this->getFactory()->createDataImportWriterModel()->importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $idProductOptionValueUsageSource
      * @param string $importKeyProductOptionValueTarget
@@ -115,17 +137,21 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
+     *
+     * @return void
      */
     public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator)
     {
-        return $this->getFactory()->createDataImportWriterModel()->importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
+        $this->getFactory()->createDataImportWriterModel()->importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param array $importKeysOptionValues
      * @param bool $isDefault
-     * @param int $sequence
+     * @param int|null $sequence
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
@@ -139,6 +165,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      * @param int $idLocale
      *
@@ -150,6 +178,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionTypeUsage
      * @param int $idLocale
      *
@@ -161,6 +191,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAttributeTypeUsage
      *
      * @return array
@@ -171,6 +203,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idValueUsage
      *
      * @return array
@@ -181,6 +215,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idValueUsage
      * @param string $operator
      *
@@ -192,6 +228,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return array
@@ -202,6 +240,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idConfigPreset
      *
      * @return array
@@ -212,6 +252,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAttributeTypeUsage
      *
      * @return string|null
@@ -222,11 +264,50 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function flushBuffer()
     {
         $this->getFactory()->createDataImportWriterModel()->flushBuffer();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function saveSaleOrderProductOptions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        $this->getFactory()->createProductOptionOrderSaver()->save($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderItemProductOptionGrossPrice(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createItemProductOptionGrossPriceAggregator()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderSubtotalWithProductOptions(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createSubtotalWithProductOption()->aggregate($orderTransfer);
     }
 
 }

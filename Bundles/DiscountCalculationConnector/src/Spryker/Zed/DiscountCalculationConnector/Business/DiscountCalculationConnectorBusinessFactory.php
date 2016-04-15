@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
-use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig getConfig()
@@ -27,17 +28,11 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator
      */
-    public function createGrandTotalWithDiscountsTotalsCalculator()
+    public function createGrandTotalWithDiscountsCalculator()
     {
-        $calculationFacade = $this->getCalculationFacade();
-        $discountTotalsCalculator = $this->createDiscountTotalsCalculator();
-
-        return new GrandTotalWithDiscountsTotalsCalculator(
-            $calculationFacade,
-            $discountTotalsCalculator
-        );
+        return new GrandTotalWithDiscountsCalculator();
     }
 
     /**
@@ -49,11 +44,11 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator
      */
-    public function getCalculationFacade()
+    public function createSumGrossCalculatedDiscountAmountCalculator()
     {
-        return $this->getProvidedDependency(DiscountCalculationConnectorDependencyProvider::FACADE_CALCULATOR);
+        return new SumGrossCalculatedDiscountAmountCalculator();
     }
 
 }

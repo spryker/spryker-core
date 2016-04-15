@@ -1,12 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Setup\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,6 +18,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param array $roles
      *
      * @return mixed
@@ -26,6 +30,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function enableJenkins()
@@ -34,6 +40,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function disableJenkins()
@@ -42,6 +50,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function removeGeneratedDirectory()
@@ -50,6 +60,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
@@ -61,11 +73,25 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
     {
         return $this->getFactory()->getConsoleCommands();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
+     *
+     * @return void
+     */
+    public function installTestData(MessengerInterface $messenger)
+    {
+        $this->getFactory()->createTestDataInstaller($messenger)->install();
     }
 
 }

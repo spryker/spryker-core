@@ -1,18 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 
 abstract class AbstractMapper implements PaymentMethodMapperInterface
 {

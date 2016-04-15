@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductSearch\Business\Operation;
 
-use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation;
+use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class OperationManager implements OperationManagerInterface
 {

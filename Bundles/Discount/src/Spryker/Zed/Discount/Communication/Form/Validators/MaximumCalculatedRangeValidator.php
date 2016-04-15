@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Communication\Form\Validators;
@@ -57,7 +58,7 @@ class MaximumCalculatedRangeValidator
         $numitor = $this->factorial($numberOfCombinations) * $this->factorial($difference);
         $possibleCodeCombinations = $this->factorial($this->charactersCount) / $numitor;
 
-        return (int) $possibleCodeCombinations;
+        return (int)$possibleCodeCombinations;
     }
 
 }

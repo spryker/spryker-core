@@ -1,23 +1,24 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Communication\Controller;
 
-use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
-use Generated\Shared\Transfer\PersonalDataTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\AuthorizationTransfer;
 use Generated\Shared\Transfer\CaptureTransfer;
-use Generated\Shared\Transfer\DebitTransfer;
-use Generated\Shared\Transfer\RefundTransfer;
-use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\CreditCardTransfer;
+use Generated\Shared\Transfer\DebitTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use Generated\Shared\Transfer\PersonalDataTransfer;
+use Generated\Shared\Transfer\RefundTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
@@ -470,6 +471,11 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @param array $request
+     *
+     * @return string
+     */
     protected function rawResponseFromArray(array $request)
     {
         $rawResponse = '';

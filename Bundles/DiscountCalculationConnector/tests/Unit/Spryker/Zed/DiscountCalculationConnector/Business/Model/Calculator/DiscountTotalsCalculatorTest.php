@@ -1,19 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group Spryker
@@ -22,122 +22,154 @@ use Spryker\Zed\Sales\Business\Model\CalculableContainer;
  * @group Business
  * @group DiscountTotalsCalculator
  */
-class DiscountTotalsCalculatorTest extends Test
+class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
 
-    const EXPENSE_1000 = 1000;
-    const SALES_DISCOUNT_100 = 100;
-    const SALES_DISCOUNT_50 = 50;
-    const ITEM_GROSS_PRICE_1000 = 1000;
+    const ITEM_GROSS_PRICE_WITH_OPTIONS = 500;
+    const ITEM_GROSS_UNIT_PRICE_WITH_OPTIONS = 250;
+    const ITEM_QUANTITY = 2;
+    const UNIT_GROSS_AMOUNT = 10;
 
     /**
      * @return void
      */
-    public function testRecalculateTotalsMustSetDiscountWithZeroAmountIfNoDiscountWasApplied()
+    public function testCalculateTotalsShouldSumAllDiscounts()
     {
-        $calculableContainer = $this->getCalculableContainer();
+        $discountTotalsCalculator = $this->createDiscountTotalsCalculator();
 
-        $itemTransfer = new ItemTransfer();
-        $calculableContainer->getCalculableObject()->addItem($itemTransfer);
+        $calculatedDiscountFixtures = $this->getCalculatedDiscountFixtures();
 
-        $calculator = new DiscountTotalsCalculator();
-        $totalsTransfer = new TotalsTransfer();
-        $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableContainer->getCalculableObject()->getItems());
-
-        $this->assertEquals(0, $totalsTransfer->getDiscount()->getTotalAmount());
-    }
-
-    /**
-     * @return void
-     */
-    public function testRecalculateTotalsMustNotSetDiscountItemsToDiscountIfNoDiscountWasApplied()
-    {
-        $calculableContainer = $this->getCalculableContainer();
-
-        $itemTransfer = new ItemTransfer();
-        $calculableContainer->getCalculableObject()->addItem($itemTransfer);
-
-        $calculator = new DiscountTotalsCalculator();
-        $totalsTransfer = new TotalsTransfer();
-        $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableContainer->getCalculableObject()->getItems());
-
-        $this->assertCount(0, $totalsTransfer->getDiscount()->getDiscountItems());
-    }
-
-    /**
-     * @return void
-     */
-    public function testDiscountShouldBeItemDiscountForOnlyDiscountedItems()
-    {
-        $calculableContainer = $this->getCalculableContainer();
-
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setAmount(self::SALES_DISCOUNT_100);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
-        $itemTransfer->setQuantity(1);
-
-        $itemTransfer->addDiscount($discountTransfer);
-        $calculableContainer->getCalculableObject()->addItem($itemTransfer);
-        $totalsTransfer = new TotalsTransfer();
-
-        $calculator = new DiscountTotalsCalculator();
-
-        $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableContainer->getCalculableObject()->getItems());
-
-        $this->assertEquals(self::SALES_DISCOUNT_100, $totalsTransfer->getDiscount()->getTotalAmount());
-        $this->assertCount(1, $totalsTransfer->getDiscount()->getDiscountItems());
-
-        $this->assertEquals(self::SALES_DISCOUNT_100, $totalsTransfer->getDiscount()->getDiscountItems()[0]->getAmount());
-    }
-
-    /**
-     * @return void
-     */
-    public function testDiscountShouldBeItemDiscountAndExpenseDiscountForDiscountedItemsAndExpenses()
-    {
-        $calculableContainer = $this->getCalculableContainer();
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
-        $itemTransfer->setQuantity(1);
-        $expenseTransfer = new ExpenseTransfer();
-
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setDisplayName('test1');
-
-        $discountTransfer->setAmount(self::SALES_DISCOUNT_50);
-
-        $expenseTransfer->setGrossPrice(self::EXPENSE_1000);
-        $expenseTransfer->setQuantity(1);
-        $expenseTransfer->addDiscountItem($discountTransfer);
-
-        $itemTransfer->addExpense($expenseTransfer);
-
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setDisplayName('test1');
-        $discountTransfer->setAmount(self::SALES_DISCOUNT_100);
-        $itemTransfer->addDiscount($discountTransfer);
-        $calculableContainer->getCalculableObject()->addItem($itemTransfer);
-
-        $totalsTransfer = new TotalsTransfer();
-        $calculator = new DiscountTotalsCalculator();
-        $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableContainer->getCalculableObject()->getItems());
-
-        $this->assertEquals(
-            self::SALES_DISCOUNT_50 + self::SALES_DISCOUNT_100,
-            $totalsTransfer->getDiscount()->getTotalAmount()
+        $quoteTransfer = $this->createQuoteTransferWithFixtureData(
+            self::ITEM_QUANTITY,
+            self::ITEM_GROSS_PRICE_WITH_OPTIONS,
+            self::ITEM_GROSS_UNIT_PRICE_WITH_OPTIONS,
+            $calculatedDiscountFixtures
         );
 
-        $this->assertEquals(self::SALES_DISCOUNT_50 + self::SALES_DISCOUNT_100, $totalsTransfer->getDiscount()->getDiscountItems()[0]->getAmount());
+        $discountTotalsCalculator->recalculate($quoteTransfer);
+
+        $this->assertEquals(120, $quoteTransfer->getTotals()->getDiscountTotal());
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
+     * @param int $itemQuantity
+     * @param int $itemGrossSumPriceWithOptions
+     * @param int $itemGrossUnitPriceWithOptions
+     * @param array $calculatedDiscounts
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getCalculableContainer()
+    protected function createQuoteTransferWithFixtureData(
+        $itemQuantity,
+        $itemGrossSumPriceWithOptions,
+        $itemGrossUnitPriceWithOptions,
+        array $calculatedDiscounts
+    ) {
+        $quoteTransfer = $this->createQuoteTransfer();
+
+        $quoteTransfer->setTotals($this->createTotalsTransfer());
+
+        $itemTransfer = $this->createItemTransfer();
+        $itemTransfer->setQuantity($itemQuantity);
+        $itemTransfer->setUnitGrossPriceWithProductOptions($itemGrossUnitPriceWithOptions);
+        $itemTransfer->setSumGrossPriceWithProductOptions($itemGrossSumPriceWithOptions);
+        $productOptionTransfer = $this->createProductOptionTransfer();
+        $itemTransfer->addProductOption($productOptionTransfer);
+
+        foreach ($calculatedDiscounts as $calculatedDiscount) {
+            $calculatedDiscountTransfer = $this->createCalculatedDiscountTransfer();
+            $calculatedDiscountTransfer->setQuantity($calculatedDiscount['quantity']);
+            $calculatedDiscountTransfer->setUnitGrossAmount($calculatedDiscount['unitGrossAmount']);
+            $calculatedDiscountTransfer->setSumGrossAmount(
+                $calculatedDiscount['unitGrossAmount'] * $calculatedDiscount['quantity']
+            );
+            $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
+
+            foreach ($itemTransfer->getProductOptions() as $productOption) {
+                $productOption->addCalculatedDiscount(clone $calculatedDiscountTransfer);
+            }
+
+            $expenseTransfer = $this->createExpenseTransfer();
+            $expenseTransfer->addCalculatedDiscount(clone $calculatedDiscountTransfer);
+            $quoteTransfer->addExpense($expenseTransfer);
+        }
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCalculatedDiscountFixtures()
     {
-        return new CalculableContainer(new OrderTransfer());
+        return [
+            [
+                'quantity' => 2,
+                'unitGrossAmount' => 10,
+            ],
+            [
+                'quantity' => 2,
+                'unitGrossAmount' => 10,
+            ],
+        ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    protected function createTotalsTransfer()
+    {
+        return new TotalsTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuoteTransfer()
+    {
+        return new QuoteTransfer();
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator
+     */
+    protected function createDiscountTotalsCalculator()
+    {
+        return new DiscountTotalsCalculator();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemTransfer()
+    {
+        return new ItemTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
+     */
+    protected function createCalculatedDiscountTransfer()
+    {
+        return new CalculatedDiscountTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     */
+    protected function createProductOptionTransfer()
+    {
+        return new ProductOptionTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function createExpenseTransfer()
+    {
+        return new ExpenseTransfer();
     }
 
 }

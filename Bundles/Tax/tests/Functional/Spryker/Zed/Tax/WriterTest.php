@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Tax;
@@ -9,10 +10,10 @@ namespace Functional\Spryker\Zed\Tax;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
-use Spryker\Zed\Tax\Business\TaxFacade;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
+use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
  * @group Business
@@ -50,6 +51,9 @@ class WriterTest extends Test
         $this->taxFacade = new TaxFacade();
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\TaxRateTransfer
+     */
     private function createTaxRateTransfer()
     {
         $taxRateTransfer = new TaxRateTransfer();
@@ -59,6 +63,9 @@ class WriterTest extends Test
         return $taxRateTransfer;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
+     */
     private function createTaxSetTransfer()
     {
         $taxSetTransfer = new TaxSetTransfer();

@@ -1,16 +1,18 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
+use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
 
 /**
  * @group Business
@@ -56,7 +58,7 @@ class ProductOptionCartConnectorFacadeTest extends Test
         $itemTransfer = (new ItemTransfer())
             ->addProductOption($productOptionTransfer);
 
-        $changeTransfer = (new ChangeTransfer())
+        $changeTransfer = (new CartChangeTransfer())
             ->addItem($itemTransfer);
 
         $this->facade->expandProductOptions($changeTransfer);
@@ -67,15 +69,9 @@ class ProductOptionCartConnectorFacadeTest extends Test
         $this->assertEquals(self::LOCALE_CODE, $productOptionTransfer->getLocaleCode());
         $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
         $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
-        $this->assertEquals(199, $productOptionTransfer->getGrossPrice());
+        $this->assertEquals(199, $productOptionTransfer->getUnitGrossPrice());
 
-        $taxSetTransfer = $productOptionTransfer->getTaxSet();
-
-        $this->assertEquals('Baz', $taxSetTransfer->getName());
-
-        $taxRateTransfer = $taxSetTransfer->getTaxRates()[0];
-        $this->assertEquals('Foo', $taxRateTransfer->getName());
-        $this->assertEquals('10', $taxRateTransfer->getRate());
+        $this->assertEquals('15', $productOptionTransfer->getTaxRate());
     }
 
 }

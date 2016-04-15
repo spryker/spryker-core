@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\Storage\Adapter\Solr;
@@ -24,7 +25,7 @@ class SolrReadWrite extends SolrRead implements ReadWriteInterface
 
     /**
      * @param string $type
-     * @param array $options
+     * @param array|null $options
      *
      * @return \Solarium\Core\Query\Query
      */

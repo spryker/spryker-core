@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\ProductOptionExporter\Business\Model;
 
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
-use Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 
 /**
  * @group Business
@@ -80,7 +81,7 @@ class DataProcessorTest extends Test
         $option = $product['options'][0];
         $this->assertEquals('Color', $option['label']);
         $this->assertFalse($option['isOptional']);
-        $this->assertEquals('15.0', $option['taxRate']);
+        $this->assertEquals('15', $option['taxRate']);
         $this->assertEquals($ids['idUsageSize'], $option['excludes'][0]);
 
         $this->assertCount(4, $option['values']);

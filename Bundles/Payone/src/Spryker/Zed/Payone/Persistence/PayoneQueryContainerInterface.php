@@ -1,15 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Persistence;
 
-interface PayoneQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface PayoneQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idPaymentPayone
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
@@ -17,6 +22,8 @@ interface PayoneQueryContainerInterface
     public function getCurrentSequenceNumberQuery($idPaymentPayone);
 
     /**
+     * @api
+     *
      * @param int $transactionId
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
@@ -24,6 +31,8 @@ interface PayoneQueryContainerInterface
     public function getPaymentByTransactionIdQuery($transactionId);
 
     /**
+     * @api
+     *
      * @param int $fkPayment
      * @param string $requestType
      *
@@ -32,6 +41,8 @@ interface PayoneQueryContainerInterface
     public function getApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestType);
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
@@ -39,6 +50,8 @@ interface PayoneQueryContainerInterface
     public function getPaymentByOrderId($idOrder);
 
     /**
+     * @api
+     *
      * @param int $orderId
      * @param string $request
      *
@@ -47,6 +60,8 @@ interface PayoneQueryContainerInterface
     public function getApiLogsByOrderIdAndRequest($orderId, $request);
 
     /**
+     * @api
+     *
      * @param int $paymentId
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
@@ -54,6 +69,8 @@ interface PayoneQueryContainerInterface
     public function getPaymentById($paymentId);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog[]
@@ -61,6 +78,8 @@ interface PayoneQueryContainerInterface
     public function getTransactionStatusLogsBySalesOrder($idSalesOrder);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrderItem
      * @param array $ids
      *
@@ -69,6 +88,8 @@ interface PayoneQueryContainerInterface
     public function getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
@@ -76,6 +97,8 @@ interface PayoneQueryContainerInterface
     public function getApiLogsByOrderIds($orders);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
@@ -83,6 +106,8 @@ interface PayoneQueryContainerInterface
     public function getLastApiLogsByOrderId($idSalesOrder);
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery

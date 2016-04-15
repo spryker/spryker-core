@@ -1,6 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Add a translation' %}
+{% if widget_title is not defined %}
+    {% set widget_title = 'Add a translation' %}
+{% endif %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -8,7 +10,7 @@
 {% form_theme form '@Glossary/Twig/filter-label-form.twig' %}
 
 {% block action %}
-    {{ backActionButton('/glossary/', 'List Translations' | trans) }}
+    {{ backActionButton('/glossary', 'List Translations' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -31,36 +33,5 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script type="text/javascript">
-        ;(function ($) {
-
-            $(document).ready(function () {
-                $('#form_glossary_key').blur(function () {
-                    var obj = $('#form_glossary_key').val();
-
-                    $.ajax({
-                        url: '/glossary/key/ajax',
-                        type: 'GET',
-                        data: {term: obj}
-                    }).done(function(data) {
-                        changed = false;
-                        $.each(data, function(i, item) {
-                            var key = '#form_locale_' + i;
-
-                            value = $(key).val();
-                            if (!value.length) {
-                                $(key).val(item);
-                                changed = true;
-                            }
-                        });
-
-                        if (changed) {
-                            $('#form_submit').text('Save');
-                        }
-                    });
-                });
-            });
-
-        })(jQuery);
-    </script>
+    <script src="/assets/js/spryker-zed-glossary-main.js"></script>
 {% endblock %}

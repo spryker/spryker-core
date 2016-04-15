@@ -1,18 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Communication\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Collector\Business\CollectorFacade getFacade()
@@ -27,6 +29,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -35,7 +38,8 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
         LocaleTransfer $locale,
         BatchResultInterface $result,
         WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
     );
 
     /**
@@ -44,6 +48,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -52,7 +57,8 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
         LocaleTransfer $locale,
         BatchResultInterface $result,
         WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
     ) {
     }
 

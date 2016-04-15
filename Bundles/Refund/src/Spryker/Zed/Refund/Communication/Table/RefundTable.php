@@ -1,39 +1,44 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Refund\Communication\Table;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Shared\Library\DateFormatter;
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
-use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Refund\Business\RefundFacade;
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Library\DateFormatterInterface;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Refund\Business\RefundFacadeInterface;
 
 class RefundTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
-    const URL_REFUND_DETAILS = '/refund/details/';
+    const URL_REFUND_DETAILS = '/refund/details';
     const PARAM_ID_REFUND = 'id-refund';
 
     /**
-     * @var \Spryker\Zed\Refund\Business\RefundFacade
+     * @var \Spryker\Zed\Refund\Business\RefundFacadeInterface
      */
     protected $refundFacade;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
     protected $dateFormatter;
 
     /**
      * @param \Orm\Zed\Refund\Persistence\SpyRefundQuery $refundQuery
-     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
-     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
+     * @param \Spryker\Zed\Refund\Business\RefundFacadeInterface $refundFacade
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(SpyRefundQuery $refundQuery, RefundFacade $refundFacade, DateFormatter $dateFormatter)
+    public function __construct(SpyRefundQuery $refundQuery, RefundFacadeInterface $refundFacade, DateFormatterInterface $dateFormatter)
     {
         $this->refundQuery = $refundQuery;
         $this->refundFacade = $refundFacade;
@@ -54,6 +59,8 @@ class RefundTable extends AbstractTable
             SpyRefundTableMap::COL_COMMENT => 'Comment',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
 
         $config->setSortable([
             SpyRefundTableMap::COL_CREATED_AT,

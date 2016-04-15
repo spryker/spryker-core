@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Product\Storage;
@@ -35,6 +37,11 @@ class ProductStorage implements ProductStorageInterface
         $this->locale = $localeName;
     }
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return mixed
+     */
     public function getProductAbstractFromStorageById($idProductAbstract)
     {
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);

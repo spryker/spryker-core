@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
+use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 
 interface PaymentMethodMapperInterface
 {
@@ -56,14 +57,14 @@ interface PaymentMethodMapperInterface
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer
      */
     public function mapPaymentToDebit(SpyPaymentPayone $paymentEntity);
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer
      */
     public function mapPaymentToRefund(SpyPaymentPayone $paymentEntity);
 

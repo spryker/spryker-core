@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Discount\Business\Model;
@@ -10,15 +11,17 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Shared\Discount\DiscountConstants;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Config;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\DiscountConfig;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
-use Spryker\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Kernel\Locator;
 
 /**
  * @group DiscountCalculatorTest
@@ -34,12 +37,11 @@ class CalculatorTest extends Test
      */
     public function testCalculationWithoutAnyDiscountShouldNotReturnMatchingDiscounts()
     {
-        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
-        $order = $this->getCalculableContainerWithTwoItems();
+        $quoteTransfer = $this->getQuoteTransferWithTwoItems();
 
-        $result = $calculator->calculate([], $order, $settings, new Distributor());
+        $result = $calculator->calculate([], $quoteTransfer, new Distributor(Locator::getInstance()));
 
         $this->assertEquals(0, count($result));
     }
@@ -52,23 +54,21 @@ class CalculatorTest extends Test
         $discountCollection = [];
         $discountCollection[] = $discount = $this->initializeDiscount(
             'name 1',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
-        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
-        $calculableContainer = $this->getCalculableContainerWithTwoItems();
+        $quoteTransfer = $this->getQuoteTransferWithTwoItems();
 
         $result = $calculator->calculate(
             $discountCollection,
-            $calculableContainer,
-            $settings,
-            new Distributor()
+            $quoteTransfer,
+            new Distributor(Locator::getInstance())
         );
 
         $this->assertEquals(1, count($result));
@@ -82,32 +82,25 @@ class CalculatorTest extends Test
         $discountCollection = [];
         $discountCollection[] = $this->initializeDiscount(
             'name 1',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             true
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 2',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
-        $settings = new DiscountConfig();
-
         $calculator = $this->getCalculator();
 
-        $order = $this->getCalculableContainerWithTwoItems();
-        $result = $calculator->calculate(
-            $discountCollection,
-            $order,
-            $settings,
-            new Distributor()
-        );
+        $quoteTransfer = $this->getQuoteTransferWithTwoItems();
+        $result = $calculator->calculate($discountCollection, $quoteTransfer, new Distributor(Locator::getInstance()));
         $this->assertEquals(2, count($result));
     }
 
@@ -119,39 +112,34 @@ class CalculatorTest extends Test
         $discountCollection = [];
         $discountCollection[] = $this->initializeDiscount(
             'name 1',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             true
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 2',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             false
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 3',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
-        $settings = new DiscountConfig();
+        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = $this->getCalculator();
 
-        $order = $this->getCalculableContainerWithTwoItems();
-        $result = $calculator->calculate(
-            $discountCollection,
-            $order,
-            $settings,
-            new Distributor()
-        );
+        $quoteTransfer = $this->getQuoteTransferWithTwoItems();
+        $result = $calculator->calculate($discountCollection, $quoteTransfer, new Distributor(Locator::getInstance()));
         $this->assertEquals(2, count($result));
     }
 
@@ -163,46 +151,44 @@ class CalculatorTest extends Test
         $discountCollection = [];
         $discountCollection[] = $this->initializeDiscount(
             'name 1',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             true
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 2',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             false
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 3',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             false
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 4',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             70,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
-        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
-        $order = $this->getCalculableContainerWithTwoItems();
+        $order = $this->getQuoteTransferWithTwoItems();
         $result = $calculator->calculate(
             $discountCollection,
             $order,
-            $settings,
-            new Distributor()
+            new Distributor(Locator::getInstance())
         );
         $this->assertEquals(2, count($result));
     }
@@ -215,42 +201,41 @@ class CalculatorTest extends Test
         $discountCollection = [];
         $discountCollection[] = $this->initializeDiscount(
             'name 1',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             true
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 2',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             true
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 3',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             false
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 4',
-            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             70,
             true,
-            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
+            DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
-        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
-        $order = $this->getCalculableContainerWithTwoItems();
-        $result = $calculator->calculate($discountCollection, $order, $settings, new Distributor());
+        $quoteTransfer = $this->getQuoteTransferWithTwoItems();
+        $result = $calculator->calculate($discountCollection, $quoteTransfer, new Distributor(Locator::getInstance()));
         $this->assertEquals(3, count($result));
     }
 
@@ -288,18 +273,18 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getCalculableContainerWithTwoItems()
+    protected function getQuoteTransferWithTwoItems()
     {
-        $order = new OrderTransfer();
+        $quoteTransfer = new QuoteTransfer();
+
         $item = new ItemTransfer();
+        $item->setUnitGrossPrice(self::ITEM_GROSS_PRICE_500);
+        $quoteTransfer->addItem($item);
+        $quoteTransfer->addItem(clone $item);
 
-        $item->setGrossPrice(self::ITEM_GROSS_PRICE_500);
-        $order->addItem($item);
-        $order->addItem(clone $item);
-
-        return new CalculableContainer($order);
+        return $quoteTransfer;
     }
 
     /**
@@ -307,11 +292,13 @@ class CalculatorTest extends Test
      */
     protected function getCalculator()
     {
-        $settings = new DiscountConfig();
-        $collectorResolver = new CollectorResolver($settings);
+        $locator = Locator::getInstance();
+        $calculatorPlugins[DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE] = new Percentage();
+        $collectorPlugins[DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM] = new Item();
 
-        $messengerFacade = new MessengerFacade();
-        $calculator = new Calculator($collectorResolver, new DiscountToMessengerBridge($messengerFacade));
+        $collectorResolver = new CollectorResolver($collectorPlugins);
+        $messengerFacade = new DiscountToMessengerBridge($locator->messenger()->facade());
+        $calculator = new Calculator($collectorResolver, $messengerFacade, $calculatorPlugins);
 
         return $calculator;
     }

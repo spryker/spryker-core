@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 abstract class AbstractOptInHandler
 {
 
     /**
-     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer
+     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -28,10 +29,10 @@ abstract class AbstractOptInHandler
     protected $subscriberOptInSenders;
 
     /**
-     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface $subscriberKeyGenerator
      */
-    public function __construct(NewsletterQueryContainer $queryContainer, SubscriberKeyGeneratorInterface $subscriberKeyGenerator)
+    public function __construct(NewsletterQueryContainerInterface $queryContainer, SubscriberKeyGeneratorInterface $subscriberKeyGenerator)
     {
         $this->queryContainer = $queryContainer;
         $this->subscriberKeyGenerator = $subscriberKeyGenerator;

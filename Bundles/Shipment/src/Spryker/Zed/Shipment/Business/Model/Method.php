@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Shipment\Business\Model;
 
-use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -51,29 +52,29 @@ class Method
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
-        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
         $methods = $this->queryContainer->queryActiveMethods()->find();
 
-        foreach ($methods as $method) {
-            $methodTransfer = new ShipmentMethodTransfer();
-            $methodTransfer->fromArray($method->toArray());
+        foreach ($methods as $shipmentMethodEntity) {
+            $shipmentMethodTransfer = new ShipmentMethodTransfer();
+            $shipmentMethodTransfer->setTaxRate($this->getEffectiveTaxRate($shipmentMethodEntity));
+            $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray());
 
-            if ($this->isAvailable($method, $shipmentMethodAvailabilityTransfer)) {
-                $methodTransfer->setPrice($this->getPrice($method, $shipmentMethodAvailabilityTransfer));
-                $methodTransfer->setTaxRate($this->getTaxRate($method, $shipmentMethodAvailabilityTransfer));
-                $methodTransfer->setTime($this->getDeliveryTime($method, $shipmentMethodAvailabilityTransfer));
+            if ($this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
+                $shipmentMethodTransfer->setDefaultPrice($this->getPrice($shipmentMethodEntity, $quoteTransfer));
+                $shipmentMethodTransfer->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer));
 
-                $shipmentTransfer->addMethod($methodTransfer);
+                $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
             }
         }
 
-        return $shipmentTransfer;
+        return $shipmentMethodsTransfer;
     }
 
     /**
@@ -98,7 +99,6 @@ class Method
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
 
         $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
-
         $shipmentMethodTransferEntity = $methodQuery->findOne();
 
         $shipmentMethodTransfer->fromArray($shipmentMethodTransferEntity->toArray());
@@ -146,19 +146,18 @@ class Method
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
-     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isAvailable(SpyShipmentMethod $method, ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
+    protected function isAvailable(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
 
         if (isset($availabilityPlugins[$method->getAvailabilityPlugin()])) {
-            /** @var \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface $availabilityPlugin */
-            $availabilityPlugin = $availabilityPlugins[$method->getAvailabilityPlugin()];
-            $isAvailable = $availabilityPlugin->isAvailable($shipmentMethodAvailabilityTransfer);
+            $availabilityPlugin = $this->getAvailabilityPlugin($method, $availabilityPlugins);
+            $isAvailable = $availabilityPlugin->isAvailable($quoteTransfer);
         }
 
         return $isAvailable;
@@ -166,19 +165,29 @@ class Method
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
-     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param array $availabilityPlugins
+     *
+     * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface
+     */
+    protected function getAvailabilityPlugin(SpyShipmentMethod $method, array $availabilityPlugins)
+    {
+        return $availabilityPlugins[$method->getAvailabilityPlugin()];
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
      */
-    protected function getPrice(SpyShipmentMethod $method, ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
+    protected function getPrice(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
-        $price = $method->getPrice();
-        $priceCalculationPlugins = $this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS];
+        $price = $method->getDefaultPrice();
+        $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
 
-        if (isset($priceCalculationPlugins[$method->getPriceCalculationPlugin()])) {
-            /** @var \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPriceCalculationPluginInterface $priceCalculationPlugin */
-            $priceCalculationPlugin = $priceCalculationPlugins[$method->getPriceCalculationPlugin()];
-            $price = $priceCalculationPlugin->getPrice($shipmentMethodAvailabilityTransfer);
+        if (isset($pricePlugins[$method->getPricePlugin()])) {
+            $pricePlugin = $this->getPricePlugin($method, $pricePlugins);
+            $price = $pricePlugin->getPrice($quoteTransfer);
         }
 
         return $price;
@@ -186,51 +195,62 @@ class Method
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
-     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param array $pricePlugins
      *
-     * @return int
+     * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface
      */
-    protected function getTaxRate(SpyShipmentMethod $method, ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
+    protected function getPricePlugin(SpyShipmentMethod $method, array $pricePlugins)
     {
-        $taxSetEntity = $method->getTaxSet();
-
-        $effectiveTaxRate = 0;
-
-        if (isset($taxSetEntity)) {
-            $taxRates = $taxSetEntity->getSpyTaxRates();
-            foreach ($taxRates as &$taxRate) {
-                $effectiveTaxRate += $taxRate->getRate();
-            }
-        }
-
-        $taxCalculationPlugins = $this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS];
-        if (isset($taxCalculationPlugins[$method->getTaxCalculationPlugin()])) {
-            /** @var \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodTaxCalculationPluginInterface $taxCalculationPlugin */
-            $taxCalculationPlugin = $taxCalculationPlugins[$method->getTaxCalculationPlugin()];
-            $effectiveTaxRate = $taxCalculationPlugin->getTaxRate($shipmentMethodAvailabilityTransfer, $effectiveTaxRate);
-        }
-
-        return $effectiveTaxRate;
+        return $pricePlugins[$method->getPricePlugin()];
     }
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
-     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
-    protected function getDeliveryTime(SpyShipmentMethod $method, ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
+    protected function getDeliveryTime(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
         $timeString = '';
-
         $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
+
         if (isset($deliveryTimePlugins[$method->getDeliveryTimePlugin()])) {
-            /** @var \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin */
-            $deliveryTimePlugin = $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
-            $timeString = $deliveryTimePlugin->getTime($shipmentMethodAvailabilityTransfer);
+            $deliveryTimePlugin = $this->getDeliveryTimePlugin($method, $deliveryTimePlugins);
+            $timeString = $deliveryTimePlugin->getTime($quoteTransfer);
         }
 
         return $timeString;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param array $deliveryTimePlugins
+     *
+     * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface
+     */
+    protected function getDeliveryTimePlugin(SpyShipmentMethod $method, array $deliveryTimePlugins)
+    {
+        return $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     *
+     * @return int
+     */
+    protected function getEffectiveTaxRate(SpyShipmentMethod $shipmentMethodEntity)
+    {
+        if (!$shipmentMethodEntity->getTaxSet()) {
+            return 0;
+        }
+
+        $effectiveTaxRate = 0;
+        foreach ($shipmentMethodEntity->getTaxSet()->getSpyTaxRates() as $taxRate) {
+            $effectiveTaxRate = $taxRate->getRate();
+        }
+
+        return $effectiveTaxRate;
     }
 
 }

@@ -1,6 +1,11 @@
-# Zed Package
+# ProductSearch Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/product-search
+```
+
+## Documentation
+
+[ProductSearch Documentation](http://spryker.github.io/core/bundles/product-search)

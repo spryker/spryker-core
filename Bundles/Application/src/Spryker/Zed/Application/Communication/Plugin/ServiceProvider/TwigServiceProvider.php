@@ -1,20 +1,21 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Application\Business\Model\Twig\RouteResolver;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Library\Twig\Loader\Filesystem;
-use Silex\Application;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -45,19 +46,18 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $this->provideFormTypeTemplates();
 
         $app['twig.loader.zed'] = $app->share(function () {
-            $namespace = Config::get(ApplicationConstants::PROJECT_NAMESPACE);
+            $namespaces = Config::get(ApplicationConstants::PROJECT_NAMESPACES);
 
             $storeName = Store::getInstance()->getStoreName();
 
-            return new Filesystem(
-                [
-                    APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/',
-                    APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/',
+            $paths = [];
+            foreach ($namespaces as $namespace) {
+                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/';
+                $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/';
+            }
+            $paths[] = $this->getConfig()->getBundlesDirectory() . '/%2$s/src/Spryker/Zed/%1$s/Presentation/';
 
-                    $this->getConfig()->getBundlesDirectory() . '/%1$s/src/Spryker/Zed/%1$s/Presentation/',
-                    $this->getConfig()->getBundlesDirectory() . '/%1$s/src/Spryker/Zed/%1$s/Presentation/',
-                ]
-            );
+            return new Filesystem($paths);
         });
 
         $app['twig.loader'] = $app->share(function ($app) {
@@ -105,7 +105,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $response = $event->getControllerResult();
 
         if (empty($response) || is_array($response)) {
-            $response = $this->render((array) $response);
+            $response = $this->render((array)$response);
             if ($response instanceof Response) {
                 $event->setResponse($response);
             }
@@ -139,7 +139,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         }
 
         if (isset($parameters['alternativeRoute'])) {
-            $route = (string) $parameters['alternativeRoute'];
+            $route = (string)$parameters['alternativeRoute'];
         } else {
             $route = (new RouteResolver())
                 ->buildRouteFromControllerServiceName($controller);
@@ -165,7 +165,11 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     protected function provideFormTypeTemplates()
     {
-        $path = $this->getConfig()->getBundlesDirectory() . '/Gui/src/Spryker/Zed/Gui/Presentation/Form/Type';
+        $guiDirectory = $path = $this->getConfig()->getBundlesDirectory() . '/Gui';
+        if (!is_dir($guiDirectory)) {
+            $guiDirectory = $path = $this->getConfig()->getBundlesDirectory() . '/gui';
+        }
+        $path = $guiDirectory . '/src/Spryker/Zed/Gui/Presentation/Form/Type';
 
         $this->app['twig.loader.filesystem']->addPath(
             $path

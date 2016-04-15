@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Setup\Communication\Console;
@@ -17,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DeployPreparePropelConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:deploy:prepare_propel';
+    const COMMAND_NAME = 'setup:deploy:prepare-propel';
     const DESCRIPTION = 'Prepares propel configuration on appserver';
 
     /**

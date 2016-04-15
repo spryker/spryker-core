@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Library\Twig\Loader;
@@ -66,8 +67,13 @@ class Filesystem extends \Twig_Loader_Filesystem
     protected function getPathsForBundle($bundle)
     {
         $paths = [];
+        $filter = new CamelCaseToDash();
         foreach ($this->paths as $path) {
-            $path = sprintf($path, $bundle);
+            $formattedBundleName = $bundle;
+            if (strpos($path, 'vendor/spryker/spryker/Bundles') === false && strpos($path, 'vendor/spryker/') > 0) {
+                $formattedBundleName = strtolower($filter->filter($bundle));
+            }
+            $path = sprintf($path, $bundle, $formattedBundleName);
             if (strpos($path, '*') !== false) {
                 $path = glob($path);
                 if (count($path) > 0) {
@@ -86,7 +92,7 @@ class Filesystem extends \Twig_Loader_Filesystem
      */
     protected function findTemplate($name)
     {
-        $name = (string) $name;
+        $name = (string)$name;
 
         // normalize name
         $name = str_replace(['///', '//', '\\'], '/', $name);
@@ -115,7 +121,7 @@ class Filesystem extends \Twig_Loader_Filesystem
                 throw new \Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
             }
             $bundle = ucfirst(substr($name, 1, $pos - 1));
-            $templateName = substr($name, $pos + 1);
+            $templateName = ucfirst(substr($name, $pos + 1));
 
             return $this->load($name, $bundle, $templateName);
         }
@@ -127,7 +133,7 @@ class Filesystem extends \Twig_Loader_Filesystem
             throw new \Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
         }
         $bundle = ucfirst(substr($name, 1, $pos));
-        $templateName = substr($name, $pos + 2);
+        $templateName = ucfirst(substr($name, $pos + 2));
 
         return $this->load($name, $bundle, $templateName);
     }

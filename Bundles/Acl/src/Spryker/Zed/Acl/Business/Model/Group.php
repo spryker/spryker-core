@@ -1,38 +1,38 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Business\Model;
 
-use Generated\Shared\Transfer\RoleTransfer;
-use Generated\Shared\Transfer\RolesTransfer;
-use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\GroupsTransfer;
-use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
+use Generated\Shared\Transfer\GroupTransfer;
+use Generated\Shared\Transfer\RolesTransfer;
+use Generated\Shared\Transfer\RoleTransfer;
 use Orm\Zed\Acl\Persistence\SpyAclGroup;
 use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRoles;
 use Orm\Zed\Acl\Persistence\SpyAclUserHasGroup;
-use Spryker\Zed\Library\Copy;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
 use Spryker\Zed\Acl\Business\Exception\GroupNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
-use Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
+use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 
 class Group implements GroupInterface
 {
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      */
-    public function __construct(AclQueryContainer $queryContainer)
+    public function __construct(AclQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }
@@ -86,7 +86,7 @@ class Group implements GroupInterface
         $entity->save();
 
         $transfer = new GroupTransfer();
-        $transfer = Copy::entityToTransfer($transfer, $entity);
+        $transfer->fromArray($entity->toArray(), true);
 
         return $transfer;
     }
@@ -227,7 +227,7 @@ class Group implements GroupInterface
     public function addUser($idGroup, $idUser)
     {
         if ($this->hasUser($idGroup, $idUser)) {
-            return;
+            return 0;
         }
 
         $entity = new SpyAclUserHasGroup();
@@ -265,18 +265,20 @@ class Group implements GroupInterface
      */
     public function getAllGroups()
     {
-        $collection = new GroupsTransfer();
+        $groupTransferCollection = new GroupsTransfer();
 
-        $results = $this->queryContainer
+        $groupCollection = $this->queryContainer
             ->queryGroup()
             ->find();
 
-        foreach ($results as $result) {
-            $transfer = new GroupTransfer();
-            $collection->addGroup(Copy::entityToTransfer($transfer, $result));
+        foreach ($groupCollection as $groupEntity) {
+            $groupTransfer = new GroupTransfer();
+            $groupTransfer->fromArray($groupEntity->toArray(), true);
+
+            $groupTransferCollection->addGroup($groupTransfer);
         }
 
-        return $collection;
+        return $groupTransferCollection;
     }
 
     /**
@@ -286,13 +288,12 @@ class Group implements GroupInterface
      */
     public function getByName($name)
     {
-        $entity = $this->queryContainer->queryGroupByName($name)->findOne();
+        $groupEntity = $this->queryContainer->queryGroupByName($name)->findOne();
 
-        $transfer = new GroupTransfer();
+        $groupTransfer = new GroupTransfer();
+        $groupTransfer->fromArray($groupEntity->toArray(), true);
 
-        $transfer = Copy::entityToTransfer($transfer, $entity);
-
-        return $transfer;
+        return $groupTransfer;
     }
 
     /**
@@ -304,13 +305,12 @@ class Group implements GroupInterface
      */
     public function getGroupById($id)
     {
-        $entity = $this->getGroupEntityById($id);
+        $groupEntity = $this->getGroupEntityById($id);
 
-        $transfer = new GroupTransfer();
+        $groupTransfer = new GroupTransfer();
+        $groupTransfer->fromArray($groupEntity->toArray(), true);
 
-        $transfer = Copy::entityToTransfer($transfer, $entity);
-
-        return $transfer;
+        return $groupTransfer;
     }
 
     /**
@@ -360,19 +360,19 @@ class Group implements GroupInterface
      */
     public function getRoles($idGroup)
     {
-        $results = $this->queryContainer
+        $roleCollection = $this->queryContainer
             ->queryGroupRoles($idGroup)
             ->find();
 
-        $collection = new RolesTransfer();
+        $roleTransferCollection = new RolesTransfer();
 
-        foreach ($results as $result) {
-            $transfer = new RoleTransfer();
-            Copy::entityToTransfer($transfer, $result);
-            $collection->addRole($transfer);
+        foreach ($roleCollection as $roleEntity) {
+            $roleTransfer = new RoleTransfer();
+            $roleTransfer->fromArray($roleEntity->toArray(), true);
+            $roleTransferCollection->addRole($roleTransfer);
         }
 
-        return $collection;
+        return $roleTransferCollection;
     }
 
     /**

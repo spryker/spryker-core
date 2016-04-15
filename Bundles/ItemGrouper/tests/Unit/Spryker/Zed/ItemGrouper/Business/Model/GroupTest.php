@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\ItemGrouper\Business\Model;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\ItemGrouper\Business\Model\Group;
 
 class GroupTest extends \PHPUnit_Framework_TestCase
@@ -21,7 +22,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $groupAbleContainer = $this->getGroupableContainer();
 
         $group = new Group(0, true);
-        $groupedItems = (array) $group->groupByKey($groupAbleContainer)->getItems();
+        $groupedItems = (array)$group->groupByKey($groupAbleContainer)->getItems();
 
         $this->assertCount(2, $groupedItems);
 
@@ -42,7 +43,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $groupAbleContainer = $this->getGroupableContainer();
 
         $group = new Group(1, true);
-        $groupedItems = (array) $group->groupByKey($groupAbleContainer)->getItems();
+        $groupedItems = (array)$group->groupByKey($groupAbleContainer)->getItems();
 
         $this->assertCount(2, $groupedItems);
 

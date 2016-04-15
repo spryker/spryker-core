@@ -1,22 +1,20 @@
 <?php
 
 /**
- * (c) Copyright Spryker Systems GmbH 2015
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\EventJournal\Model\Collector;
 
-use Symfony\Component\HttpFoundation\Request;
+use Spryker\Zed\Library\Generator\StringGenerator;
 
 class RequestDataCollector extends AbstractDataCollector
 {
 
     const TYPE = 'request';
-
     const FIELD_REQUEST_ID = 'request_id';
-
     const FIELD_MICROTIME = 'microtime';
-
     const FIELD_REQUEST_PARAMS = 'request_params';
 
     /**
@@ -24,13 +22,26 @@ class RequestDataCollector extends AbstractDataCollector
      */
     public static $idRequest;
 
+    /**
+     * @param array $options
+     */
     public function __construct(array $options)
     {
         parent::__construct($options);
 
         if (self::$idRequest === null) {
-            self::$idRequest = uniqid('', true);
+            self::$idRequest = $this->getRandomString();
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRandomString()
+    {
+        $generator = new StringGenerator();
+
+        return $generator->generateRandomString();
     }
 
     /**

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Business\Model;
@@ -11,63 +12,61 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RulesTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\Acl\Persistence\SpyAclRule;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
-use Orm\Zed\Acl\Persistence\SpyAclRule;
-use Spryker\Zed\Library\Copy;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 class Rule implements RuleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Acl\Business\Model\Group
+     * @var \Spryker\Zed\Acl\Business\Model\GroupInterface
      */
     protected $group;
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacade
+     * @var \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
-    protected $facadeUser;
+    protected $userFacade;
 
     /**
-     * @var \Spryker\Zed\Acl\Business\Model\RuleValidator
+     * @var \Spryker\Zed\Acl\Business\Model\RuleValidatorInterface
      */
     protected $rulesValidator;
 
     /**
      * @var \Spryker\Zed\Acl\AclConfig
      */
-    protected $settings;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
-     * @param \Spryker\Zed\Acl\Business\Model\RuleValidator $rulesValidator
-     * @param \Spryker\Zed\Acl\Business\Model\RuleValidator $rulesValidator
-     * @param \Spryker\Zed\Acl\AclConfig $settings
+     * @param \Spryker\Zed\Acl\Business\Model\RuleValidatorInterface $rulesValidator
+     * @param \Spryker\Zed\Acl\AclConfig $config
      */
     public function __construct(
         GroupInterface $group,
-        AclQueryContainer $queryContainer,
+        AclQueryContainerInterface $queryContainer,
         AclToUserInterface $facadeUser,
-        RuleValidator $rulesValidator,
-        AclConfig $settings
+        RuleValidatorInterface $rulesValidator,
+        AclConfig $config
     ) {
         $this->group = $group;
         $this->queryContainer = $queryContainer;
-        $this->facadeUser = $facadeUser;
+        $this->userFacade = $facadeUser;
         $this->rulesValidator = $rulesValidator;
-        $this->settings = $settings;
+        $this->config = $config;
     }
 
     /**
@@ -101,7 +100,7 @@ class Rule implements RuleInterface
         $aclRuleEntity->save();
 
         $ruleTransfer = new RuleTransfer();
-        $ruleTransfer = Copy::entityToTransfer($ruleTransfer, $aclRuleEntity);
+        $ruleTransfer->fromArray($aclRuleEntity->toArray(), true);
 
         return $ruleTransfer;
     }
@@ -121,7 +120,7 @@ class Rule implements RuleInterface
     /**
      * @param int $idRole
      *
-     * @return \Generated\Shared\Transfer\RuleTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function getRoleRules($idRole)
     {
@@ -159,7 +158,7 @@ class Rule implements RuleInterface
      * @param string $controller
      * @param string $action
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function findByRoles(
         RolesTransfer $roles,
@@ -167,13 +166,13 @@ class Rule implements RuleInterface
         $controller = AclConstants::VALIDATOR_WILDCARD,
         $action = AclConstants::VALIDATOR_WILDCARD
     ) {
-        $results = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
+        $ruleCollection = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
 
         $rulesTransfer = new RulesTransfer();
 
-        foreach ($results as $result) {
+        foreach ($ruleCollection as $ruleEntity) {
             $ruleTransfer = new RuleTransfer();
-            Copy::entityToTransfer($ruleTransfer, $result);
+            $ruleTransfer->fromArray($ruleEntity->toArray(), true);
             $rulesTransfer->addRule($ruleTransfer);
         }
 
@@ -188,13 +187,13 @@ class Rule implements RuleInterface
     public function getRulesForGroupId($idGroup)
     {
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
-        $results = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
+        $roleCollection = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
 
         $rulesTransfer = new RulesTransfer();
 
-        foreach ($results as $result) {
+        foreach ($roleCollection as $ruleEntity) {
             $ruleTransfer = new RuleTransfer();
-            Copy::entityToTransfer($ruleTransfer, $result);
+            $ruleTransfer->fromArray($ruleEntity->toArray(), true);
             $rulesTransfer->addRule($ruleTransfer);
         }
 
@@ -217,7 +216,7 @@ class Rule implements RuleInterface
         }
 
         $ruleTransfer = new RuleTransfer();
-        $ruleTransfer = Copy::entityToTransfer($ruleTransfer, $aclRuleEntity);
+        $ruleTransfer->fromArray($aclRuleEntity->toArray(), true);
 
         return $ruleTransfer;
     }
@@ -249,7 +248,7 @@ class Rule implements RuleInterface
      */
     public function isIgnorable($bundle, $controller, $action)
     {
-        $ignoredRules = $this->settings->getRules();
+        $ignoredRules = $this->config->getRules();
 
         foreach ($ignoredRules as $arrayRule) {
             $ruleTransfer = new RuleTransfer();
@@ -273,7 +272,7 @@ class Rule implements RuleInterface
      */
     public function registerSystemUserRules(UserTransfer $userTransfer)
     {
-        $credentials = $this->settings->getCredentials();
+        $credentials = $this->config->getCredentials();
 
         $credential = array_filter($credentials, function ($username) use ($userTransfer) {
             return $username === $userTransfer->getUsername();
@@ -284,7 +283,7 @@ class Rule implements RuleInterface
         }
 
         foreach ($credential[$userTransfer->getUsername()]['rules'] as $rule) {
-            $this->settings->setRules($rule['bundle'], $rule['controller'], $rule['action'], $rule['type']);
+            $this->config->setRules($rule['bundle'], $rule['controller'], $rule['action'], $rule['type']);
         }
     }
 
@@ -298,7 +297,7 @@ class Rule implements RuleInterface
      */
     public function isAllowed(UserTransfer $userTransfer, $bundle, $controller, $action)
     {
-        if ($this->facadeUser->isSystemUser($userTransfer)) {
+        if ($this->userFacade->isSystemUser($userTransfer)) {
             $this->registerSystemUserRules($userTransfer);
         }
 
@@ -307,7 +306,7 @@ class Rule implements RuleInterface
         }
 
         $groups = $this->group->getUserGroups($userTransfer->getIdUser());
-        if (empty($groups->getGroups())) {
+        if (!$groups->getGroups()) {
             return false;
         }
 
@@ -316,14 +315,14 @@ class Rule implements RuleInterface
         foreach ($groups->getGroups() as $group) {
             $rulesTransfer = $this->getRulesForGroupId($group->getIdAclGroup());
 
-            if (empty($rulesTransfer->getRules())) {
+            if (!$rulesTransfer->getRules()) {
                 continue;
             }
 
             $this->rulesValidator->setRules($rulesTransfer);
-            $isAccesible = $this->rulesValidator->isAccessible($bundle, $controller, $action);
+            $isAccessible = $this->rulesValidator->isAccessible($bundle, $controller, $action);
 
-            if ($isAccesible) {
+            if ($isAccessible) {
                 return true;
             }
         }
@@ -336,7 +335,7 @@ class Rule implements RuleInterface
      */
     protected function provideUserRuleWhitelist()
     {
-        $ruleWhitelist = $this->settings->getUserRuleWhitelist();
+        $ruleWhitelist = $this->config->getUserRuleWhitelist();
 
         foreach ($ruleWhitelist as $rule) {
             $rulesTransfer = new RuleTransfer();

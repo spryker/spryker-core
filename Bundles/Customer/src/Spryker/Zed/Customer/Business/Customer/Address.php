@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Business\Customer;
@@ -9,40 +10,40 @@ namespace Spryker\Zed\Customer\Business\Customer;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CountryNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class Address
 {
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
      * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface
      */
-    private $countryFacade;
+    protected $countryFacade;
 
     /**
      * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */
-    private $localeFacade;
+    protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
      */
-    public function __construct(QueryContainerInterface $queryContainer, CustomerToCountryInterface $countryFacade, CustomerToLocaleInterface $localeFacade)
+    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerToCountryInterface $countryFacade, CustomerToLocaleInterface $localeFacade)
     {
         $this->queryContainer = $queryContainer;
         $this->countryFacade = $countryFacade;
@@ -107,7 +108,6 @@ class Address
         }
 
         $addressTransfer = $this->entityToAddressTransfer($addressEntity);
-        $addressTransfer->setIso2Code($addressEntity->getCountry()->getIso2Code());
 
         return $addressTransfer;
     }
@@ -139,7 +139,7 @@ class Address
      */
     protected function isDefaultAddress($idCustomerAddress, $idDefaultAddress)
     {
-        return ((int) $idCustomerAddress === (int) $idDefaultAddress);
+        return ((int)$idCustomerAddress === (int)$idDefaultAddress);
     }
 
     /**
@@ -149,7 +149,9 @@ class Address
      */
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
-        $entities = $this->queryContainer->queryAddresses()
+        $entities = $this->queryContainer
+            ->queryAddresses()
+            ->joinCountry()
             ->filterByFkCustomer($customerTransfer->getIdCustomer())
             ->find();
 
@@ -274,8 +276,10 @@ class Address
     protected function entityToAddressTransfer(SpyCustomerAddress $entity)
     {
         $addressTransfer = new AddressTransfer();
+        $addressTransfer->fromArray($entity->toArray(), true);
+        $addressTransfer->setIso2Code($entity->getCountry()->getIso2Code());
 
-        return $addressTransfer->fromArray($entity->toArray(), true);
+        return $addressTransfer;
     }
 
     /**

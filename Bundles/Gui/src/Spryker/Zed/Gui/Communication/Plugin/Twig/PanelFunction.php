@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
@@ -33,7 +34,7 @@ class PanelFunction extends TwigFunction
                 'collapsed' => false,
             ];
 
-            $options = array_merge($defaultOptions, (array) $options);
+            $options = array_merge($defaultOptions, (array)$options);
 
             $collapsable = '';
             $id = '';

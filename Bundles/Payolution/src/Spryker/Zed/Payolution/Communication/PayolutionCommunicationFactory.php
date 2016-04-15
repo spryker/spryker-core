@@ -1,8 +1,10 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Payolution\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -66,6 +68,14 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     public function getGlossaryFacade()
     {
         return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToSalesAggregatorInterface
+     */
+    public function getSalesAggregator()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_SALES_AGGREGATOR);
     }
 
 }

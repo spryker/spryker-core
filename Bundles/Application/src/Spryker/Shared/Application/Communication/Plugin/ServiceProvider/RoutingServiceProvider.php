@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Application\Communication\Plugin\ServiceProvider;
@@ -15,6 +16,8 @@ class RoutingServiceProvider implements ServiceProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -35,6 +38,8 @@ class RoutingServiceProvider implements ServiceProviderInterface
 
     /**
      * @codeCoverageIgnore
+     *
+     * @param \Silex\Application $app
      *
      * @return void
      */

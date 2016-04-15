@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Search\Business;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Search\Business\SearchBusinessFactory getFactory()
@@ -16,6 +17,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
@@ -26,6 +29,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getTotalCount()
@@ -34,6 +39,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getMetaData()
@@ -42,6 +49,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return \Elastica\Response
      */
     public function delete()
@@ -50,6 +59,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $key
      * @param string $type
      *

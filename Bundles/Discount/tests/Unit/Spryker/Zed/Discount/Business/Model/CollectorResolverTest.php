@@ -1,17 +1,18 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Discount\Business\Model\CollectorResolver;
-use Spryker\Zed\Cart\Business\Model\CalculableContainer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Discount\Business\Model\CollectorResolver;
 
 class CollectorResolverTest extends Test
 {
@@ -24,22 +25,21 @@ class CollectorResolverTest extends Test
      */
     public function testWhenANDConditionUsedWithCollectorsProvidingDifferentItemsThenNoItemsReturned()
     {
-        $calculableContainer = $this->createCalculableContainer();
+        $quoteTransfer = $this->buildQuoteTransfer();
 
-        $collectorPickedItem1 = $calculableContainer->getCalculableObject()->getItems()[0];
-        $collectorPickedItem2 = $calculableContainer->getCalculableObject()->getItems()[2];
+        $collectorPickedItem1 = $quoteTransfer->getItems()[0];
+        $collectorPickedItem2 = $quoteTransfer->getItems()[2];
 
         $collectors = [];
         $collectors[self::COLLECTOR_1] = $this->createCollectorPluginMock([$collectorPickedItem1]);
         $collectors[self::COLLECTOR_2] = $this->createCollectorPluginMock([$collectorPickedItem2]);
 
-        $collectorConfig = $this->getDiscountCollectorConfigurator($collectors);
-        $collectorResolver = $this->createCollectorResolver($collectorConfig);
+        $collectorResolver = $this->createCollectorResolver($collectors);
 
         $discountTransfer = $this->createDiscountTransfer();
         $discountTransfer->setCollectorLogicalOperator(CollectorResolver::OPERATOR_AND);
 
-        $collectedItems = $collectorResolver->collectItems($calculableContainer, $discountTransfer);
+        $collectedItems = $collectorResolver->collectItems($quoteTransfer, $discountTransfer);
 
         $this->assertCount(0, $collectedItems);
     }
@@ -49,21 +49,20 @@ class CollectorResolverTest extends Test
      */
     public function testWhenANDConditionUsedWithCollectorsProvidingSameItemsThenMatchedItemReturned()
     {
-        $calculableContainer = $this->createCalculableContainer();
+        $quoteTransfer = $this->buildQuoteTransfer();
 
-        $collectorPickedItem1 = $calculableContainer->getCalculableObject()->getItems()[0];
+        $collectorPickedItem1 = $quoteTransfer->getItems()[0];
 
         $collectors = [];
         $collectors[self::COLLECTOR_1] = $this->createCollectorPluginMock([$collectorPickedItem1]);
         $collectors[self::COLLECTOR_2] = $this->createCollectorPluginMock([$collectorPickedItem1]);
 
-        $collectorConfig = $this->getDiscountCollectorConfigurator($collectors);
-        $collectorResolver = $this->createCollectorResolver($collectorConfig);
+        $collectorResolver = $this->createCollectorResolver($collectors);
 
         $discountTransfer = $this->createDiscountTransfer();
         $discountTransfer->setCollectorLogicalOperator(CollectorResolver::OPERATOR_AND);
 
-        $collectedItems = $collectorResolver->collectItems($calculableContainer, $discountTransfer);
+        $collectedItems = $collectorResolver->collectItems($quoteTransfer, $discountTransfer);
 
         $this->assertCount(1, $collectedItems);
     }
@@ -73,22 +72,21 @@ class CollectorResolverTest extends Test
      */
     public function testWhenORConditionUsedWithDifferentItemsThenItShouldReturnAllCollectorItems()
     {
-        $calculableContainer = $this->createCalculableContainer();
+        $quoteTransfer = $this->buildQuoteTransfer();
 
-        $collectorPickedItem1 = $calculableContainer->getCalculableObject()->getItems()[0];
-        $collectorPickedItem2 = $calculableContainer->getCalculableObject()->getItems()[2];
+        $collectorPickedItem1 = $quoteTransfer->getItems()[0];
+        $collectorPickedItem2 = $quoteTransfer->getItems()[2];
 
         $collectors = [];
         $collectors[self::COLLECTOR_1] = $this->createCollectorPluginMock([$collectorPickedItem1]);
         $collectors[self::COLLECTOR_2] = $this->createCollectorPluginMock([$collectorPickedItem2]);
 
-        $collectorConfig = $this->getDiscountCollectorConfigurator($collectors);
-        $collectorResolver = $this->createCollectorResolver($collectorConfig);
+        $collectorResolver = $this->createCollectorResolver($collectors);
 
         $discountTransfer = $this->createDiscountTransfer();
         $discountTransfer->setCollectorLogicalOperator(CollectorResolver::OPERATOR_OR);
 
-        $collectedItems = $collectorResolver->collectItems($calculableContainer, $discountTransfer);
+        $collectedItems = $collectorResolver->collectItems($quoteTransfer, $discountTransfer);
 
         $this->assertCount(2, $collectedItems);
     }
@@ -98,18 +96,17 @@ class CollectorResolverTest extends Test
      */
     public function testWhenFirstCollectorEmptyAndANDConditionUsedShouldBeNoItemsCollected()
     {
-        $calculableContainer = $this->createCalculableContainer();
+        $quoteTransfer = $this->buildQuoteTransfer();
 
         $collectors = [];
         $collectors[self::COLLECTOR_1] = $this->createCollectorPluginMock([]);
 
-        $collectorConfig = $this->getDiscountCollectorConfigurator($collectors);
-        $collectorResolver = $this->createCollectorResolver($collectorConfig);
+        $collectorResolver = $this->createCollectorResolver($collectors);
 
         $discountTransfer = $this->createDiscountTransfer();
         $discountTransfer->setCollectorLogicalOperator(CollectorResolver::OPERATOR_AND);
 
-        $collectedItems = $collectorResolver->collectItems($calculableContainer, $discountTransfer);
+        $collectedItems = $collectorResolver->collectItems($quoteTransfer, $discountTransfer);
 
         $this->assertCount(0, $collectedItems);
     }
@@ -136,19 +133,17 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Cart\Business\Model\CalculableContainer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createCalculableContainer()
+    protected function buildQuoteTransfer()
     {
-        $cartTransfer = $this->createCartTransfer();
-        $cartTransfer->addItem($this->createItemTransfer('SKU-123'));
-        $cartTransfer->addItem($this->createItemTransfer('SKU-321'));
-        $cartTransfer->addItem($this->createItemTransfer('SKU-111'));
-        $cartTransfer->addItem($this->createItemTransfer('SKU-222'));
+        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer->addItem($this->createItemTransfer('SKU-123'));
+        $quoteTransfer->addItem($this->createItemTransfer('SKU-321'));
+        $quoteTransfer->addItem($this->createItemTransfer('SKU-111'));
+        $quoteTransfer->addItem($this->createItemTransfer('SKU-222'));
 
-        $calculableContainer = new CalculableContainer($cartTransfer);
-
-        return $calculableContainer;
+        return $quoteTransfer;
     }
 
     /**
@@ -206,11 +201,11 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createCartTransfer()
+    protected function createQuoteTransfer()
     {
-        return new CartTransfer();
+        return new QuoteTransfer();
     }
 
     /**
@@ -222,13 +217,13 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfigInterface $collectorConfig
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
      *
      * @return \Spryker\Zed\Discount\Business\Model\CollectorResolver
      */
-    protected function createCollectorResolver($collectorConfig)
+    protected function createCollectorResolver(array $collectorPlugins = [])
     {
-        return new CollectorResolver($collectorConfig);
+        return new CollectorResolver($collectorPlugins);
     }
 
 }

@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Business\Api\Call;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use Spryker\Zed\Payone\Business\Key\HashGeneratorInterface;
-use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+use Spryker\Zed\Payone\Business\Key\HashGeneratorInterface;
 
 abstract class AbstractCall
 {

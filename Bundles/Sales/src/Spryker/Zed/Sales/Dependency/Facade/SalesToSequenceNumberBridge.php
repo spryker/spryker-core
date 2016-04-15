@@ -1,12 +1,12 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 
 class SalesToSequenceNumberBridge implements SalesToSequenceNumberInterface

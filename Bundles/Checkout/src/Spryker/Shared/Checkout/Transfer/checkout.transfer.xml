@@ -11,15 +11,11 @@
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="billingAddresses" type="Address[]" singular="billingAddress" />
         <property name="shippingAddresses" type="Address[]" singular="shippingAddress" />
-        <property name="process" type="string" />
     </transfer>
 
     <transfer name="CheckoutError">
         <property name="errorCode" type="int" />
         <property name="message" type="string" />
-        <property name="step" type="string" />
-        <property name="trace" type="string" />
-        <property name="type" type="string" />
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -27,7 +23,7 @@
         <property name="errors" type="CheckoutError[]" singular="error" />
         <property name="isExternalRedirect" type="bool" />
         <property name="redirectUrl" type="string" />
-        <property name="order" type="Order" />
+        <property name="saveOrder" type="SaveOrder" />
     </transfer>
 
     <transfer name="Comment">
@@ -42,8 +38,8 @@
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int" />
         <property name="sku" type="string" />
-        <property name="grossPrice" type="int" />
-        <property name="priceToPay" type="int" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
         <property name="quantity" type="int" />
     </transfer>
 
@@ -60,30 +56,25 @@
         <property name="iso2Code" type="string" />
     </transfer>
 
-    <transfer name="CheckoutRequest">
-        <property name="isGuest" type="bool" />
-        <property name="idUser" type="int" />
-        <property name="email" type="string" />
-        <property name="customerPassword" type="string" />
-        <property name="billingAddress" type="Address" />
-        <property name="shippingAddress" type="Address" />
-        <property name="paymentMethod" type="string" />
-        <property name="cart" type="Cart" />
-    </transfer>
-
-    <transfer name="Cart">
-        <property name="items" type="Item[]" singular="item" />
-        <property name="totals" type="Totals" />
-        <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="couponCodes" type="array" singular="couponCode" />
-    </transfer>
-
     <transfer name="ProductOption">
         <property name="idSalesOrderItemOption" type="int" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
     </transfer>
 
     <transfer name="Expense">
         <property name="idSalesExpense" type="int" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals" />
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address"/>
+        <property name="billingSameAsShipping" type="bool"/>
+        <property name="customer" type="Customer" />
+        <property name="orderReference" type="string" />
     </transfer>
 
 </transfers>

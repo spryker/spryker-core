@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Application\Plugin\Provider;
 
-use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use Spryker\Shared\Library\Log;
-use Spryker\Shared\Library\Monolog\EventJournalHandler;
+use Monolog\Logger;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Library\Log;
+use Spryker\Shared\Library\Monolog\EventJournalHandler;
 
 /**
  * @deprecated Use Spryker\Shared\Log\LoggerTrait where ever you need to log something with monolog
@@ -21,6 +22,8 @@ class MonologServiceProvider implements ServiceProviderInterface
 {
 
     /**
+     * @param \Silex\Application $app
+     *
      * @return void
      */
     public function register(Application $app)
@@ -63,8 +66,9 @@ class MonologServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param \Silex\Application $app
      * @codeCoverageIgnore
+     *
+     * @param \Silex\Application $app
      *
      * @return void
      */

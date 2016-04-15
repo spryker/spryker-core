@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DecisionRuleTransfer;
@@ -120,7 +125,8 @@ class VoucherCodesWriter extends AbstractWriter
 
         $formCollectorPlugins = array_column(
             $voucherCodesTransferArray[self::COLLECTOR_PLUGINS],
-            self::ID_DISCOUNT_COLLECTOR);
+            self::ID_DISCOUNT_COLLECTOR
+        );
 
         $collectorPluginsCollection = $this->getQueryContainer()
             ->queryDiscountCollectorByDiscountId($voucherCodesTransfer->getIdDiscount())

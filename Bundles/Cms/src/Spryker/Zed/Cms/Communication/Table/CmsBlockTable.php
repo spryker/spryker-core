@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Table;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -20,16 +21,16 @@ class CmsBlockTable extends AbstractTable
     const ACTIONS = 'Actions';
     const REQUEST_ID_BLOCK = 'id-block';
     const REQUEST_ID_PAGE = 'id-page';
-    const PARAM_CMS_GLOSSARY = '/cms/glossary/';
-    const PARAM_CMS_BLOCK_EDIT = '/cms/block/edit/';
+    const PARAM_CMS_GLOSSARY = '/cms/glossary';
+    const PARAM_CMS_BLOCK_EDIT = '/cms/block/edit';
 
     /**
-     * @var \Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     protected $cmsBlockQuery;
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery $cmsBlockQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery $cmsBlockQuery
      */
     public function __construct(SpyCmsBlockQuery $cmsBlockQuery)
     {
@@ -51,6 +52,9 @@ class CmsBlockTable extends AbstractTable
             SpyCmsBlockTableMap::COL_VALUE => 'Value',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
         ]);
@@ -63,6 +67,8 @@ class CmsBlockTable extends AbstractTable
             SpyCmsBlockTableMap::COL_NAME,
             SpyCategoryAttributeTableMap::COL_NAME,
         ]);
+
+        $config->addRawColumn(SpyCmsBlockTableMap::COL_VALUE);
 
         return $config;
     }
@@ -117,6 +123,11 @@ class CmsBlockTable extends AbstractTable
         return $buttons;
     }
 
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
     private function buildValueItem(array $item)
     {
         $result = $item[CmsQueryContainer::CATEGORY_NAME] . '<br><div style="font-size:.8em">' . $item[CmsQueryContainer::URL] . '<div>';

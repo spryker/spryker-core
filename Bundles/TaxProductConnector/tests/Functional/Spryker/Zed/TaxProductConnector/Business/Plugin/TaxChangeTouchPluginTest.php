@@ -1,17 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\TaxProductConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 
 /**
  * @group Business
@@ -22,10 +23,19 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 class TaxChangeTouchPluginTest extends Test
 {
 
+    /**
+     * @var array
+     */
     private $taxRateIds = [];
 
+    /**
+     * @var int|null
+     */
     private $taxSetId = null;
 
+    /**
+     * @var array
+     */
     private $productAbstractIds = [];
 
     /**

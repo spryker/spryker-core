@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Cleaner;
@@ -25,7 +26,7 @@ class TransferCleanerTest extends \PHPUnit_Framework_TestCase
     {
         $testDirectory = $this->getTestDirectory();
         if (!is_dir($testDirectory)) {
-            mkdir($testDirectory, 0777, true);
+            mkdir($testDirectory, 0775, true);
         }
 
         file_put_contents($testDirectory . 'file', '');

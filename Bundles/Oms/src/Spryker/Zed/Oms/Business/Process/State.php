@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\Process;
@@ -69,7 +70,7 @@ class State implements StateInterface
      */
     public function hasIncomingTransitions()
     {
-        return !empty($this->incomingTransitions);
+        return (bool)$this->incomingTransitions;
     }
 
     /**
@@ -95,7 +96,7 @@ class State implements StateInterface
      */
     public function hasOutgoingTransitions()
     {
-        return !empty($this->outgoingTransitions);
+        return (bool)$this->outgoingTransitions;
     }
 
     /**

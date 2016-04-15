@@ -1,14 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -28,12 +28,9 @@ class MethodController extends AbstractController
     public function addAction(Request $request)
     {
         $dataProvider = $this->getFactory()->createMethodFormDataProvider();
-        $form = $this
-            ->getFactory()
-            ->createMethodForm(
-                $dataProvider->getData(),
-                $dataProvider->getOptions()
-            )
+
+        $form = $this->getFactory()
+            ->createMethodForm($dataProvider->getData(), $dataProvider->getOptions())
             ->handleRequest($request);
 
         if ($form->isValid()) {
@@ -45,7 +42,7 @@ class MethodController extends AbstractController
 
             $this->addSuccessMessage('Shipment method ' . $methodTransfer->getName() . ' saved');
 
-            return $this->redirectResponse('/shipment/');
+            return $this->redirectResponse('/shipment');
         }
 
         return $this->viewResponse([
@@ -60,16 +57,13 @@ class MethodController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idMethod = $request->query->get(self::ID_METHOD_PARAMETER);
+        $idMethod = $this->castId($request->query->get(self::ID_METHOD_PARAMETER));
 
         if ($this->getFacade()->hasMethod($idMethod)) {
             $dataProvider = $this->getFactory()->createMethodFormDataProvider();
-            $form = $this
-                ->getFactory()
-                ->createMethodForm(
-                    $dataProvider->getData($idMethod),
-                    $dataProvider->getOptions()
-                )
+
+            $form = $this->getFactory()
+                ->createMethodForm($dataProvider->getData($idMethod), $dataProvider->getOptions())
                 ->handleRequest($request);
 
             if ($form->isValid()) {
@@ -81,7 +75,7 @@ class MethodController extends AbstractController
                     ->updateMethod($methodTransfer);
                 $this->addSuccessMessage('Shipment method ' . $methodTransfer->getName() . ' updated');
 
-                return $this->redirectResponse('/shipment/');
+                return $this->redirectResponse('/shipment');
             }
 
             return $this->viewResponse([
@@ -89,23 +83,7 @@ class MethodController extends AbstractController
             ]);
         }
 
-        return $this->redirectResponse('/shipment/');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deleteAction(Request $request)
-    {
-        $idMethod = $request->query->get(self::ID_METHOD_PARAMETER);
-
-        if ($this->getFacade()->hasMethod($idMethod)) {
-            $this->getFacade()->deleteMethod($idMethod);
-        }
-
-        return $this->redirectResponse('/shipment/');
+        return $this->redirectResponse('/shipment');
     }
 
 }

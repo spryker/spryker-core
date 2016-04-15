@@ -1,11 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Availability\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -15,6 +18,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
 {
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $quantity
      *
@@ -26,6 +31,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return int
@@ -33,6 +40,23 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     public function calculateStockForProduct($sku)
     {
         return $this->getFactory()->createSellableModel()->calculateStockForProduct($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function checkoutAvailabilityPreCondition(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+        $this->getFactory()
+            ->createProductsAvailablePreCondition()
+            ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
     }
 
 }

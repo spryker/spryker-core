@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Transfer\Business;
@@ -50,7 +51,7 @@ class TransferConfigTest extends \PHPUnit_Framework_TestCase
     public function testGetSourceDirectoriesShouldReturnArrayWithTwoEntriesIfProjectAndVendorTransferExist()
     {
         $directory = APPLICATION_SOURCE_DIR . '/Foo/Shared/Bar/Transfer/';
-        mkdir($directory, 0777, true);
+        mkdir($directory, 0775, true);
 
         $this->assertTrue(is_array($this->getConfig()->getSourceDirectories()));
         $this->assertCount(2, $this->getConfig()->getSourceDirectories());

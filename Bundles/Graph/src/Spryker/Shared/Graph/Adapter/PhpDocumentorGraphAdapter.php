@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Graph\Adapter;
@@ -10,6 +11,7 @@ use phpDocumentor\GraphViz\Edge;
 use phpDocumentor\GraphViz\Graph;
 use phpDocumentor\GraphViz\Node;
 use Spryker\Shared\Graph\GraphAdapterInterface;
+use Spryker\Zed\Library\Generator\StringGenerator;
 
 class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 {
@@ -132,7 +134,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 
     /**
      * @param string $type
-     * @param string $fileName
+     * @param string|null $fileName
      *
      * @throws \phpDocumentor\GraphViz\Exception
      *
@@ -140,8 +142,10 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      */
     public function render($type, $fileName = null)
     {
+        $generator = new StringGenerator();
+
         if ($fileName === null) {
-            $fileName = sys_get_temp_dir() . '/' . uniqid();
+            $fileName = sys_get_temp_dir() . '/' . $generator->generateRandomString();
         }
         $this->graph->export($type, $fileName);
 

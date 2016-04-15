@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\StockSalesConnector\Dependency\Facade;
@@ -20,8 +21,10 @@ interface StockSalesConnectorToStockInterface
 
     /**
      * @param string $sku
-     * @param int $decrementBy
      * @param string $stockType
+     * @param int $decrementBy
+     *
+     * @return void
      */
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1);
 
@@ -29,6 +32,8 @@ interface StockSalesConnectorToStockInterface
      * @param string $sku
      * @param string $stockType
      * @param int $incrementBy
+     *
+     * @return void
      */
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1);
 

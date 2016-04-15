@@ -1,7 +1,7 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Cms/Layout/layout.twig' %}
 
 {% block action %}
-    {{ backActionButton('/cms/' ~ type ~ '/', 'Back to CMS ' ~ type | trans) }}
+    {{ backActionButton('/cms/' ~ type, 'Back to CMS ' ~ type | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -40,14 +40,14 @@
                                 {{ form_widget(form.glossary_key, { 'attr': {'autocomplete' : 'off'} }) }}
                                 {{ form_errors(form.glossary_key) }}
                                 <div class="loading loading-{{ loop.index }}">
-                                    <img src="/bundles/images/loading.gif">
+                                    <img src="/assets/img/cms-loader.gif">
                                     Loading...
                                 </div>
                             </div>
                             <div class="col-sm-12" class="translation">
                                 {{ form_label(form.translation) }}
                                 {{ form_errors(form.translation) }}
-                                {{ form_widget(form.translation, {'attr' : { 'rows' : 5 }}) }}
+                                {{ form_widget(form.translation, {'attr': {'rows': 5}}) }}
                             </div>
                             <div class="col-sm-1 small-padding">
                                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
@@ -68,7 +68,7 @@
                         <div class="col-sm-10 small-padding alert">
                             <div class="save-all-message"></div>
                             <div class="save-all-loading small-padding" style="display: none">
-                                <img src="/bundles/images/loading.gif" width="20px">
+                                <img src="/assets/img/cms-loader.gif">
                                 Waiting ...
                             </div>
                         </div>

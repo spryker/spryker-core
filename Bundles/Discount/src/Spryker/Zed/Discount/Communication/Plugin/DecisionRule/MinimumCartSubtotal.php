@@ -1,13 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
 /**
@@ -18,17 +19,15 @@ class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisi
 
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
-    public function check(
-        DiscountTransfer $discountTransfer,
-        CalculableInterface $container
-    ) {
+    public function check(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
+    {
         $decisionRuleEntity = $this->getContext()[self::KEY_ENTITY];
 
-        return $this->getFacade()->isMinimumCartSubtotalReached($container, $decisionRuleEntity);
+        return $this->getFacade()->isMinimumCartSubtotalReached($quoteTransfer, $decisionRuleEntity);
     }
 
     /**

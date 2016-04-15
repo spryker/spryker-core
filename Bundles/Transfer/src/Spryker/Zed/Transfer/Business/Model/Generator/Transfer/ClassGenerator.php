@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
@@ -17,7 +18,7 @@ class ClassGenerator implements GeneratorInterface
     /**
      * @var string
      */
-    protected $targetDirectory = null;
+    protected $targetDirectory;
 
     /**
      * @var \Twig_Environment
@@ -47,7 +48,7 @@ class ClassGenerator implements GeneratorInterface
         $fileContent = $this->twig->render('class.php.twig', $twigData);
 
         if (!is_dir($this->targetDirectory)) {
-            mkdir($this->targetDirectory, 0755, true);
+            mkdir($this->targetDirectory, 0775, true);
         }
 
         file_put_contents($this->targetDirectory . $fileName, $fileContent);

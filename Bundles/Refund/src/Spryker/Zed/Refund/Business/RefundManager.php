@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Refund\Business;
@@ -28,8 +29,10 @@ class RefundManager
      * @param \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface $refundQueryContainer
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
-    public function __construct(RefundQueryContainerInterface $refundQueryContainer, SalesQueryContainerInterface $salesQueryContainer)
-    {
+    public function __construct(
+        RefundQueryContainerInterface $refundQueryContainer,
+        SalesQueryContainerInterface $salesQueryContainer
+    ) {
         $this->refundQueryContainer = $refundQueryContainer;
         $this->salesQueryContainer = $salesQueryContainer;
     }
@@ -53,7 +56,7 @@ class RefundManager
             $sum += $expense->getPriceToPay();
         }
 
-        $orderGrandTotal = (int) $orderTransfer->getGrandTotal();
+        $orderGrandTotal = (int)$orderTransfer->getGrandTotal();
 
         $refunds = $this->getRefunds($orderTransfer->getIdSalesOrder());
         foreach ($refunds as $refund) {

@@ -1,25 +1,25 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Catalog;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Client\Catalog\KeyBuilder\ProductResourceKeyBuilder;
-use Spryker\Client\Catalog\Model\Extractor\RangeExtractor;
-use Spryker\Client\Catalog\Model\Extractor\FacetExtractor;
 use Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilder;
 use Spryker\Client\Catalog\Model\Builder\FilterBuilder;
 use Spryker\Client\Catalog\Model\Builder\NestedFilterBuilder;
-use Spryker\Client\Catalog\Model\FacetFilterHandler;
-use Spryker\Client\Catalog\Model\FulltextSearch;
-use Spryker\Client\Catalog\Model\FacetSearch;
 use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
-use Elastica\Index;
+use Spryker\Client\Catalog\Model\Extractor\FacetExtractor;
+use Spryker\Client\Catalog\Model\Extractor\RangeExtractor;
 use Spryker\Client\Catalog\Model\FacetConfig;
+use Spryker\Client\Catalog\Model\FacetFilterHandler;
+use Spryker\Client\Catalog\Model\FacetSearch;
+use Spryker\Client\Catalog\Model\FulltextSearch;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Shared\Kernel\Store;
 use Symfony\Component\HttpFoundation\Request;
 
 class CatalogFactory extends AbstractFactory

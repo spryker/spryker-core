@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library;
@@ -44,7 +45,9 @@ class Log
             $string .= date('c', time()) . ' ';
         }
 
-        $string .= print_r($expression, true);
+        $sanitizedExpression = print_r($expression, true);
+
+        $string .= htmlentities($sanitizedExpression, ENT_QUOTES);
         $string .= PHP_EOL;
 
         $filePath = self::getFilePath($fileName, $dir);
@@ -104,7 +107,7 @@ class Log
         if ($dir === 'logs') {
             $logPath .= APPLICATION . DIRECTORY_SEPARATOR;
             if (is_dir($logPath) === false) {
-                mkdir($logPath, 0777, true);
+                mkdir($logPath, 0775, true);
             }
         }
 

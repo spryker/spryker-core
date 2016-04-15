@@ -1,17 +1,21 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\Process;
 
-use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 use Exception;
+use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 
 class Process implements ProcessInterface
 {
 
+    /**
+     * @var string
+     */
     protected $name;
 
     /**
@@ -119,7 +123,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      *
      * @return void
      */
@@ -129,7 +133,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -207,7 +211,7 @@ class Process implements ProcessInterface
      */
     public function hasStates()
     {
-        return !empty($this->states);
+        return (bool)$this->states;
     }
 
     /**
@@ -243,7 +247,7 @@ class Process implements ProcessInterface
      */
     public function hasTransitions()
     {
-        return !empty($this->transitions);
+        return (bool)$this->transitions;
     }
 
     /**
@@ -372,7 +376,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param mixed $file
+     * @param string $file
      *
      * @return void
      */
@@ -390,7 +394,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFile()
     {

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\Error;
@@ -34,9 +35,9 @@ class ErrorLogger
 
     /**
      * @param \Exception $exception
-     * @param bool $ignoreInternalExceptions
      * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
      * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
+     * @param bool $ignoreInternalExceptions
      *
      * @return void
      */
@@ -101,6 +102,7 @@ class ErrorLogger
     ) {
         try {
             $message = ErrorRenderer::renderException($exception);
+
             Log::log($message, 'exception.log');
         } catch (\Exception $internalException) {
             self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);

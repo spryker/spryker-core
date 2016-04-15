@@ -1,10 +1,17 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Sales\Communication\Controller;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,25 +28,34 @@ class EditController extends AbstractController
      */
     public function customerAction(Request $request)
     {
-        $idOrder = $request->query->getInt('id-sales-order');
+        $idSalesOrder = $this->castId($request->query->get(SalesConfig::PARAM_ID_SALES_ORDER));
 
         $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
         $form = $this->getFactory()
             ->createCustomerForm(
-                $dataProvider->getData($idOrder),
+                $dataProvider->getData($idSalesOrder),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
         if ($form->isValid()) {
             $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
-            $this->getFacade()->updateOrderCustomer($orderTransfer, $idOrder);
+            $this->getFacade()->updateOrder($orderTransfer, $idSalesOrder);
 
-            return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
+            $this->addSuccessMessage('Customer successfully updated.');
+
+            return $this->redirectResponse(
+                Url::generate(
+                    '/sales/detail',
+                    [
+                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder
+                    ]
+                )->build()
+            );
         }
 
         return $this->viewResponse([
-            'idOrder' => $idOrder,
+            'idSalesOrder' => $idSalesOrder,
             'form' => $form->createView(),
         ]);
     }
@@ -51,8 +67,8 @@ class EditController extends AbstractController
      */
     public function addressAction(Request $request)
     {
-        $idOrder = $request->query->getInt('id-sales-order');
-        $idOrderAddress = $request->query->getInt('id-address');
+        $idSalesOrder = $this->castId($request->query->get(SalesConfig::PARAM_ID_SALES_ORDER));
+        $idOrderAddress = $this->castId($request->query->get('id-address'));
 
         $dataProvider = $this->getFactory()->createAddressFormDataProvider();
         $form = $this->getFactory()
@@ -64,14 +80,24 @@ class EditController extends AbstractController
 
         if ($form->isValid()) {
             $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);
+            $addressTransfer->setIdSalesOrderAddress($idOrderAddress);
             $this->getFacade()
                 ->updateOrderAddress($addressTransfer, $idOrderAddress);
 
-            return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
+            $this->addSuccessMessage('Address successfully updated.');
+
+            return $this->redirectResponse(
+                Url::generate(
+                    '/sales/detail',
+                    [
+                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder
+                    ]
+                )->build()
+            );
         }
 
         return $this->viewResponse([
-            'idOrder' => $idOrder,
+            'idSalesOrder' => $idSalesOrder,
             'form' => $form->createView(),
         ]);
     }

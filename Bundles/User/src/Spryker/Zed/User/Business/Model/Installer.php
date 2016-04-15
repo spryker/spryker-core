@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Business\Model;
 
-use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
 
 class Installer implements InstallerInterface
 {
 
     /**
-     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -28,12 +29,12 @@ class Installer implements InstallerInterface
     protected $settings;
 
     /**
-     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $queryContainer
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\User\Business\Model\UserInterface $user
      * @param \Spryker\Zed\User\UserConfig $settings
      */
     public function __construct(
-        UserQueryContainer $queryContainer,
+        UserQueryContainerInterface $queryContainer,
         UserInterface $user,
         UserConfig $settings
     ) {
@@ -53,19 +54,23 @@ class Installer implements InstallerInterface
     }
 
     /**
+     * @param array $usersArray
+     *
      * @return void
      */
     protected function addUsers(array $usersArray)
     {
         foreach ($usersArray as $user) {
-            if (!$this->user->hasUserByUsername($user['username'])) {
-                $this->user->addUser(
-                    $user['firstName'],
-                    $user['lastName'],
-                    $user['username'],
-                    $user['password']
-                );
+            if ($this->user->hasUserByUsername($user['username'])) {
+                continue;
             }
+
+            $this->user->addUser(
+                $user['firstName'],
+                $user['lastName'],
+                $user['username'],
+                $user['password']
+            );
         }
     }
 

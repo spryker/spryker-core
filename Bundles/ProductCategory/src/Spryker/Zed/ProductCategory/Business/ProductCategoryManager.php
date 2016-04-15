@@ -1,25 +1,26 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Business;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {
@@ -279,7 +280,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     public function updateProductMappingsPreConfig($idCategory, array $productPreConfigList)
     {
         foreach ($productPreConfigList as $idProduct => $idPreconfigProduct) {
-            $idPreconfigProduct = (int) $idPreconfigProduct;
+            $idPreconfigProduct = (int)$idPreconfigProduct;
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 

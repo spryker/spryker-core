@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
-use Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class NodeWriter implements NodeWriterInterface
 {
@@ -17,14 +18,14 @@ class NodeWriter implements NodeWriterInterface
     const CATEGORY_URL_IDENTIFIER_LENGTH = 4;
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      */
-    public function __construct(CategoryQueryContainer $queryContainer)
+    public function __construct(CategoryQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }

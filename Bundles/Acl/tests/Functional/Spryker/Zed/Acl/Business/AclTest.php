@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Functional\Spryker\Zed\Acl\Business;
@@ -240,7 +241,7 @@ class AclTest extends Test
         $groupData = $this->mockGroupData();
         $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
         $roleData = $this->mockRoleData();
-        $roleDto = $this->facade->addRole($roleData['name'], $this->rolesTransfer);
+        $roleDto = $this->facade->addRole($roleData['name']);
 
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
@@ -268,7 +269,7 @@ class AclTest extends Test
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
-        $roleData = $this->mockRoleData($groupDto->getIdAclGroup());
+        $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
@@ -296,7 +297,7 @@ class AclTest extends Test
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
-        $roleData = $this->mockRoleData($groupDto->getIdAclGroup());
+        $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
@@ -324,7 +325,7 @@ class AclTest extends Test
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
-        $roleData = $this->mockRoleData($groupDto->getIdAclGroup());
+        $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
@@ -367,7 +368,7 @@ class AclTest extends Test
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
-        $roleData = $this->mockRoleData($groupDto->getIdAclGroup());
+        $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
@@ -430,7 +431,7 @@ class AclTest extends Test
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
-        $roleData = $this->mockRoleData($groupDto->getIdAclGroup());
+        $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
@@ -461,7 +462,7 @@ class AclTest extends Test
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
-        $roleData = $this->mockRoleData($groupDto->getIdAclGroup());
+        $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
         $this->facade->addRoleToGroup($roleDto->getIdAclRole(), $groupDto->getIdAclGroup());

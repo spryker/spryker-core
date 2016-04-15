@@ -1,11 +1,11 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Dependency\Facade;
-
-use Spryker\Zed\Touch\Business\TouchFacade;
 
 class CmsToTouchBridge implements CmsToTouchInterface
 {
@@ -56,7 +56,7 @@ class CmsToTouchBridge implements CmsToTouchInterface
      */
     public function touchDeleted($itemType, $itemId)
     {
-        return $this->touchDeleted($itemType, $itemId);
+        return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
 
 }

@@ -1,13 +1,15 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library;
 
 use Spryker\Shared\Library\Exception\UnsupportedDateFormatException;
 
-class DateFormatter
+class DateFormatter implements DateFormatterInterface
 {
 
     const DATE_FORMAT_SHORT = 'short';
@@ -30,7 +32,7 @@ class DateFormatter
 
     /**
      * @param string $date
-     * @param \DateTimeZone $timezone
+     * @param \DateTimeZone|null $timezone
      *
      * @return string
      */
@@ -41,7 +43,7 @@ class DateFormatter
 
     /**
      * @param string $date
-     * @param \DateTimeZone $timezone
+     * @param \DateTimeZone|null $timezone
      *
      * @return string
      */
@@ -52,7 +54,7 @@ class DateFormatter
 
     /**
      * @param string $date
-     * @param \DateTimeZone $timezone
+     * @param \DateTimeZone|null $timezone
      *
      * @return string
      */
@@ -63,7 +65,7 @@ class DateFormatter
 
     /**
      * @param string $date
-     * @param \DateTimeZone $timezone
+     * @param \DateTimeZone|null $timezone
      *
      * @return string
      */
@@ -75,14 +77,18 @@ class DateFormatter
     /**
      * @param \DateTime|string $date
      * @param string $dateFormat
-     * @param \DateTimeZone $timezone
+     * @param \DateTimeZone|null $timezone
      *
      * @throws \Spryker\Shared\Library\Exception\UnsupportedDateFormatException
      *
-     * @return string
+     * @return string|null
      */
     protected function formatDate($date, $dateFormat, \DateTimeZone $timezone = null)
     {
+        if (empty($date)) {
+            return null;
+        }
+
         if (!array_key_exists($dateFormat, $this->context->dateFormat)) {
             throw new UnsupportedDateFormatException(sprintf('Unsupported date format: %s', $dateFormat));
         }

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Communication\Controller;
@@ -10,7 +11,6 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
@@ -55,7 +55,7 @@ class IndexController extends AbstractController
      */
     public function nodeAction(Request $request)
     {
-        $idCategoryNode = $request->get(self::PARAM_ID_CATEGORY_NODE);
+        $idCategoryNode = $this->castId($request->get(self::PARAM_ID_CATEGORY_NODE));
 
         $categories = $this->getCategoryChildrenByIdCategory($idCategoryNode);
 
@@ -96,7 +96,7 @@ class IndexController extends AbstractController
      */
     public function attributesAction(Request $request)
     {
-        $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
+        $idCategory = $this->castId($request->get(self::PARAM_ID_CATEGORY_NODE));
 
         /** @var \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable $table */
         $table = $this->getFactory()
@@ -114,7 +114,7 @@ class IndexController extends AbstractController
      */
     public function urlsAction(Request $request)
     {
-        $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
+        $idCategory = $this->castId($request->get(self::PARAM_ID_CATEGORY_NODE));
 
         $table = $this->getFactory()
             ->createUrlTable($idCategory);

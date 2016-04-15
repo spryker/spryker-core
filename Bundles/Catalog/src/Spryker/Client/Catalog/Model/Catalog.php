@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Catalog\Model;
@@ -116,15 +117,15 @@ class Catalog implements CatalogInterface
     /**
      * @param array $product
      *
-     * @return array|\array[]
+     * @return array[]
      */
     public function getSubProducts(array $product)
     {
         $subProducts = [];
         switch ($product[self::INDEXKEY_VARIETY]) {
-            case self::PRODUCT_VARIETY_CONFIG :
+            case self::PRODUCT_VARIETY_CONFIG:
                 return $this->getSubProductsBySkuIndex($product, self::INDEXKEY_PRODUCT_CONFIG_SKUS);
-            case self::PRODUCT_VARIETY_BUNDLE :
+            case self::PRODUCT_VARIETY_BUNDLE:
                 return $this->getSubProductsBySkuIndex($product, self::INDEXKEY_PRODUCT_BUNDLE_SKUS);
         }
 

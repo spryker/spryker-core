@@ -1,91 +1,96 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartClientInterface
 {
 
     /**
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getCart();
+    public function getQuote();
 
     /**
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @api
+     *
+     * @return void
      */
-    public function clearCart();
+    public function clearQuote();
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getItemCount();
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addItem(ItemTransfer $itemTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @api
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItem(ItemTransfer $itemTransfer);
+    public function removeItem($sku, $groupKey = null);
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @api
+     *
+     * @param string $sku
+     * @param string|null $groupKey
+     * @param int $quantity
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param string|null $groupKey
      * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
+    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @api
+     *
+     * @param string $sku
+     * @param string|null $groupKey
      * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
+    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $quantity
+     * @api
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function increaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
-
-    /**
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function recalculate();
-
-    /**
-     * @param string $coupon
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return void
      */
-    public function addCoupon($coupon);
-
-    /**
-     * @param string $coupon
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function removeCoupon($coupon);
-
-    /**
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function clearCoupons();
+    public function storeQuote(QuoteTransfer $quoteTransfer);
 
 }

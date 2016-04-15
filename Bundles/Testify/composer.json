@@ -1,0 +1,25 @@
+{
+  "name": "spryker/testify",
+  "autoload": {
+    "psr-0": {
+      "Generated": "src/",
+      "Orm": "src/"
+    },
+    "psr-4": {
+      "Testify\\Module\\": "tests/_support/Module"
+    }
+  },
+  "require": {
+    "codeception/codeception": "~2.1.5"
+  },
+  "require-dev": {},
+  "description": "testify bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  },
+  "prefer-stable": true
+}

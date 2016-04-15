@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Glossary\Business\Translation;
@@ -9,17 +11,17 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation;
 use Propel\Runtime\Propel;
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerInterface;
 use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
 use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
 use Spryker\Zed\Glossary\Business\Key\KeyManagerInterface;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerInterface;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation;
 
 class TranslationManager implements TranslationManagerInterface
 {
@@ -83,7 +85,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
     {
-        if (empty($keyTranslationTransfer->getGlossaryKey())) {
+        if (!$keyTranslationTransfer->getGlossaryKey()) {
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
@@ -599,7 +601,7 @@ class TranslationManager implements TranslationManagerInterface
     protected function doUpdateAndTouchTranslation(SpyGlossaryTranslation $translation)
     {
         if (!$translation->isModified()) {
-            return $translation;
+            return $this->convertEntityToTranslationTransfer($translation);
         }
 
         Propel::getConnection()

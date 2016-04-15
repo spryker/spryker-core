@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Communication\Controller;
@@ -12,7 +13,7 @@ use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
@@ -90,7 +91,7 @@ class GroupController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idAclGroup = $request->query->get(self::PARAMETER_ID_GROUP);
+        $idAclGroup = $this->castId($request->query->get(self::PARAMETER_ID_GROUP));
 
         $dataProvider = $this->getFactory()->createGroupFormDataProvider();
 
@@ -148,7 +149,7 @@ class GroupController extends AbstractController
      */
     public function usersAction(Request $request)
     {
-        $idGroup = $request->query->get(self::PARAMETER_ID_GROUP);
+        $idGroup = $this->castId($request->query->get(self::PARAMETER_ID_GROUP));
 
         $usersTable = $this->getFactory()->createGroupUsersTable($idGroup);
 
@@ -162,26 +163,23 @@ class GroupController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function removeUserFromGroupAction(Request $request)
+    public function deleteUserFromGroupAction(Request $request)
     {
-        $idGroup = (int) $request->request->get(self::PARAMETER_ID_GROUP);
-        $idUser = (int) $request->request->get(self::PARAMETER_ID_USER);
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $idGroup = $this->castId($request->request->get(self::PARAMETER_ID_GROUP));
+        $idUser = $this->castId($request->request->get(self::PARAMETER_ID_USER));
 
         try {
             $this->getFacade()->removeUserFromGroup($idUser, $idGroup);
-            $response = [
-                'code' => Response::HTTP_OK,
-                'id-group' => $idGroup,
-                'id-user' => $idUser,
-            ];
+            $this->addSuccessMessage('Deleted user from group');
         } catch (UserAndGroupNotFoundException $e) {
-            $response = [
-                'code' => Response::HTTP_NOT_FOUND,
-                'message' => 'User and group not found',
-            ];
+            $this->addErrorMessage('User and group not found');
         }
 
-        return $this->jsonResponse($response);
+        return $this->redirectResponse('/acl/group/edit?id-group=' . $idGroup);
     }
 
     /**
@@ -191,7 +189,7 @@ class GroupController extends AbstractController
      */
     public function rolesAction(Request $request)
     {
-        $idGroup = $request->get(self::PARAMETER_ID_GROUP);
+        $idGroup = $this->castId($request->get(self::PARAMETER_ID_GROUP));
 
         $roles = $this->getFactory()->getGroupRoleListByGroupId($idGroup);
 

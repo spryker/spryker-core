@@ -1,12 +1,14 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Glossary\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,7 +23,7 @@ class AddController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -37,12 +39,12 @@ class AddController extends AbstractController
             $keyTranslationTransfer = new KeyTranslationTransfer();
             $keyTranslationTransfer->fromArray($data, true);
 
-            $facade = $this->getFacade();
-            $facade->saveGlossaryKeyTranslations($keyTranslationTransfer);
+            $glossaryFacade = $this->getFacade();
+            $glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
 
             $this->addSuccessMessage('Saved entry to glossary.');
 
-            return $this->redirectResponse('/glossary/');
+            return $this->redirectResponse('/glossary');
         }
 
         return $this->viewResponse([

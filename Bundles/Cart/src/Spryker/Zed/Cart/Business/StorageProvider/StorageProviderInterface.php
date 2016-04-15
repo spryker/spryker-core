@@ -1,70 +1,29 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cart\Business\StorageProvider;
 
-use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface StorageProviderInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CartTransfer $cart
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(CartTransfer $cart, ChangeTransfer $change);
+    public function addItems(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\CartTransfer $cart
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItems(CartTransfer $cart, ChangeTransfer $change);
-
-    /**
-     * @param \Generated\Shared\Transfer\CartTransfer $cart
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function increaseItems(CartTransfer $cart, ChangeTransfer $change);
-
-    /**
-     * @param \Generated\Shared\Transfer\CartTransfer $cart
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function decreaseItems(CartTransfer $cart, ChangeTransfer $change);
-
-    /**
-     * @param \Generated\Shared\Transfer\CartTransfer $cart
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function addCouponCode(CartTransfer $cart, ChangeTransfer $change);
-
-    /**
-     * @param \Generated\Shared\Transfer\CartTransfer $cart
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function removeCouponCode(CartTransfer $cart, ChangeTransfer $change);
-
-    /**
-     * @param \Generated\Shared\Transfer\CartTransfer $cart
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function clearCouponCodes(CartTransfer $cart);
+    public function removeItems(CartChangeTransfer $cartChangeTransfer);
 
 }

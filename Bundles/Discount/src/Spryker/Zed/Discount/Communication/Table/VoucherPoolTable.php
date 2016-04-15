@@ -1,23 +1,26 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Table;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
+use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class VoucherPoolTable extends AbstractTable
 {
 
-    const COL_OPTIONS = 'options';
+    const ACTIONS = 'options';
     const COL_CATEGORY_NAME = 'category_name';
     const COL_VOUCHERS_COUNT = 'Vouchers';
     const COL_AMOUNT = 'amount';
@@ -36,18 +39,18 @@ class VoucherPoolTable extends AbstractTable
     protected $poolQuery;
 
     /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
+     * @var array
      */
-    protected $discountConfig;
+    private $calculatorPlugins;
 
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery $discountVoucherPool
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
-    public function __construct(SpyDiscountVoucherPoolQuery $discountVoucherPool, DiscountConfig $discountConfig)
+    public function __construct(SpyDiscountVoucherPoolQuery $discountVoucherPool, array $calculatorPlugins)
     {
         $this->poolQuery = $discountVoucherPool;
-        $this->discountConfig = $discountConfig;
+        $this->calculatorPlugins = $calculatorPlugins;
     }
 
     /**
@@ -65,8 +68,15 @@ class VoucherPoolTable extends AbstractTable
             self::COL_CATEGORY_NAME => 'Category Name',
             self::COL_AMOUNT => 'Amount',
             self::COL_VOUCHERS_COUNT => 'Codes',
-            self::COL_OPTIONS => 'Options',
+            self::ACTIONS => 'Actions',
         ]);
+
+        $config->setSearchable([
+            SpyDiscountVoucherPoolTableMap::COL_CREATED_AT,
+            SpyDiscountVoucherPoolTableMap::COL_NAME,
+        ]);
+
+        $config->addRawColumn(self::ACTIONS);
 
         return $config;
     }
@@ -103,7 +113,7 @@ class VoucherPoolTable extends AbstractTable
                 self::COL_CATEGORY_NAME => $categoryName,
                 self::COL_AMOUNT => $this->getDiscountVoucherPoolDisplayName($discountVoucherPool),
                 self::COL_VOUCHERS_COUNT => $discountVoucherPool->getDiscountVouchers()->count(),
-                self::COL_OPTIONS => $this->createRowOptions($discountVoucherPool),
+                self::ACTIONS => $this->createRowOptions($discountVoucherPool),
             ];
         }
 
@@ -163,7 +173,7 @@ class VoucherPoolTable extends AbstractTable
      */
     protected function getDiscountVoucherPoolDisplayName(SpyDiscountVoucherPool $discountVoucherPoolEntity)
     {
-        $availableCalculatorPlugins = $this->discountConfig->getAvailableCalculatorPlugins();
+        $availableCalculatorPlugins = $this->calculatorPlugins;
         $displayName = null;
 
         $discounts = [];
@@ -171,13 +181,13 @@ class VoucherPoolTable extends AbstractTable
             $discountTransfer = new DiscountTransfer();
             $discountTransfer->fromArray($discountEntity->toArray(), true);
 
-            /* @var DiscountCalculatorPluginInterface $calculator */
+            /** @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculator */
             $calculator = $availableCalculatorPlugins[$discountEntity->getCalculatorPlugin()];
 
             $discounts[] = $calculator->getFormattedAmount($discountTransfer);
         }
 
-        if (!empty($discounts)) {
+        if (count($discounts) > 0) {
             $displayName = implode(', ', $discounts);
         }
 

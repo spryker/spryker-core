@@ -1,25 +1,24 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Checkout;
 
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
 
 class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CHECKOUT_PRE_CONDITIONS = 'checkout_pre_conditions';
-    const CHECKOUT_PRE_HYDRATOR = 'checkout_pre_hydrator';
     const CHECKOUT_POST_HOOKS = 'checkout_post_hooks';
-    const CHECKOUT_ORDER_HYDRATORS = 'checkout_order_hydrators';
     const CHECKOUT_ORDER_SAVERS = 'checkout_order_savers';
+
     const FACADE_OMS = 'oms facade';
-    const FACADE_CALCULATION = 'calculation facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,14 +29,6 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
             return $this->getCheckoutPreConditions($container);
-        };
-
-        $container[self::CHECKOUT_PRE_HYDRATOR] = function (Container $container) {
-            return $this->getCheckoutPreHydrator($container);
-        };
-
-        $container[self::CHECKOUT_ORDER_HYDRATORS] = function (Container $container) {
-            return $this->getCheckoutOrderHydrators($container);
         };
 
         $container[self::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
@@ -61,26 +52,6 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
      */
     protected function getCheckoutPreConditions(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface[]
-     */
-    protected function getCheckoutPreHydrator(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface[]
-     */
-    protected function getCheckoutOrderHydrators(Container $container)
     {
         return [];
     }

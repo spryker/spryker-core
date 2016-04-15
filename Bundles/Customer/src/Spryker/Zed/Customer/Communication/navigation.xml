@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <customer>
-        <bundle>customer</bundle>
+        <label>Customers</label>
+        <title>Customers</title>
+        <uri>/customer</uri>
+        <icon>fa-users</icon>
         <controller>profile</controller>
         <action>index</action>
     </customer>

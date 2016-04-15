@@ -1,16 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\Address;
-use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Business\Customer\Customer;
+use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver;
+use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
@@ -89,6 +92,22 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     protected function getSequenceNumberFacade()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_SEQUENCE_NUMBER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Model\CustomerOrderSaver
+     */
+    public function createCustomerOrderSaver()
+    {
+        return new CustomerOrderSaver($this->createCustomer(), $this->createAddress());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Model\PreConditionChecker
+     */
+    public function createPreConditionChecker()
+    {
+        return new PreConditionChecker($this->createCustomer());
     }
 
 }

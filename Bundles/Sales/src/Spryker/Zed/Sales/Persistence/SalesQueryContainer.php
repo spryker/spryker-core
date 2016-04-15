@@ -1,13 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Propel\PropelFilterCriteria;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesPersistenceFactory getFactory()
@@ -16,6 +21,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 {
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrder()
@@ -24,6 +31,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItem()
@@ -32,6 +41,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
      */
     public function querySalesExpense()
@@ -40,7 +51,9 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @var int
+     * @api
+     *
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -52,7 +65,9 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @var int
+     * @api
+     *
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -66,6 +81,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrderAddress
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
@@ -79,6 +96,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
@@ -92,6 +111,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idOrderItem
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -105,6 +126,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
      */
     public function queryComments()
@@ -115,6 +138,20 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
+     */
+    public function queryCommentsByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()->createSalesOrderCommentQuery()->filterByFkSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -128,6 +165,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
@@ -142,26 +181,61 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
-     * @param int $idCustomer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function querySalesOrderDetails($idSalesOrder, $idCustomer)
+    public function querySalesOrderDetails($idSalesOrder)
     {
-        $query = $this->getFactory()->createSalesOrderQuery();
-        $query
-            ->filterByIdSalesOrder($idSalesOrder)
-            ->filterByFkCustomer($idCustomer);
-
-        $query
-            ->innerJoinWith('order.BillingAddress billingAddress')
-            ->innerJoinWith('billingAddress.Country billingCountry')
-            ->innerJoinWith('order.ShippingAddress shippingAddress')
-            ->innerJoinWith('shippingAddress.Country shippingCountry')
-            ->innerJoinWithShipmentMethod();
+        $query = $this->getFactory()->createSalesOrderQuery()
+         ->setModelAlias('order')
+         ->filterByIdSalesOrder($idSalesOrder)
+         ->innerJoinWith('order.BillingAddress billingAddress')
+         ->innerJoinWith('billingAddress.Country billingCountry')
+         ->innerJoinWith('order.ShippingAddress shippingAddress')
+         ->innerJoinWith('shippingAddress.Country shippingCountry')
+         ->leftJoinShipmentMethod();
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function queryCustomerOrders($idCustomer, FilterTransfer $filterTransfer = null)
+    {
+        $criteria = new Criteria();
+        if ($filterTransfer !== null) {
+            $criteria = (new PropelFilterCriteria($filterTransfer))
+                ->toCriteria();
+        }
+
+        return $this->querySalesOrdersByCustomerId($idCustomer, $criteria);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
+     *
+     * @return void
+     */
+    public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems)
+    {
+        foreach ($salesOrderItems as $orderItemEntity) {
+
+            $criteria = new Criteria();
+            $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
+            $orderItemEntity->getStateHistoriesJoinState($criteria);
+            $orderItemEntity->resetPartialStateHistories(false);
+        }
     }
 
 }

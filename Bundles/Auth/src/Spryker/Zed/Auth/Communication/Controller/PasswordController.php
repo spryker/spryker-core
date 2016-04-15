@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Auth\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
 use Symfony\Component\HttpFoundation\Request;
-use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
 
 /**
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
@@ -34,8 +35,11 @@ class PasswordController extends AbstractController
 
         if ($resetRequestForm->isValid()) {
             $formData = $resetRequestForm->getData();
-            $this->getFacade()->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL]);
-            $this->addSuccessMessage('Email sent. Please check your inbox for further instructions.');
+            if (!$this->getFacade()->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL])) {
+                $this->addErrorMessage('Email address is unknown.');
+            } else {
+                $this->addSuccessMessage('Email sent. Please check your inbox for further instructions.');
+            }
         }
 
         return $this->viewResponse([

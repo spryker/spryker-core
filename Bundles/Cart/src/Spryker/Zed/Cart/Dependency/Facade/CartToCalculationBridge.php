@@ -1,24 +1,24 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cart\Dependency\Facade;
 
-use Spryker\Zed\Calculation\Business\CalculationFacade;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartToCalculationBridge implements CartToCalculationInterface
 {
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\CalculationFacade
+     * @var \Spryker\Zed\Calculation\Business\CalculationFacadeInterface
      */
     protected $calculationFacade;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
+     * @param \Spryker\Zed\Calculation\Business\CalculationFacadeInterface $calculationFacade
      */
     public function __construct($calculationFacade)
     {
@@ -26,13 +26,13 @@ class CartToCalculationBridge implements CartToCalculationInterface
     }
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculate(CalculableInterface $calculableContainer)
+    public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        return $this->calculationFacade->recalculate($calculableContainer);
+        return $this->calculationFacade->recalculate($quoteTransfer);
     }
 
 }

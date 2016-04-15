@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ItemGrouper\Business\Model;
@@ -11,7 +13,7 @@ class Group
 {
 
     /**
-     * @var \Generated\Shared\Transfer\ItemTransfer
+     * @var \Generated\Shared\Transfer\ItemTransfer[]
      */
     private $groupedItems = [];
 
@@ -27,7 +29,7 @@ class Group
 
     /**
      * @param int $threshold
-     * @param bool $regroupAllItemCollection;
+     * @param bool $regroupAllItemCollection
      */
     public function __construct($threshold, $regroupAllItemCollection)
     {
@@ -64,7 +66,7 @@ class Group
      */
     protected function fillIndex($item)
     {
-        $groupKey = !empty($item->getGroupKey()) ? $item->getGroupKey() : count($this->groupedItems) + 1;
+        $groupKey = $item->getGroupKey() ?: count($this->groupedItems) + 1;
 
         if (!isset($this->groupedItems[$groupKey])) {
             $this->setQuantity($item);

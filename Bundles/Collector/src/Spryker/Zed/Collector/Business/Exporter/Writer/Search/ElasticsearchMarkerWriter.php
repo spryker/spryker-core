@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Elastica\Client;
-use Elastica\Index;
 use Elastica\Type\Mapping;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
@@ -68,7 +68,7 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function __destruct()
     {
-        if (empty($this->metaData) === false) {
+        if (!empty($this->metaData)) {
             $mapping = new Mapping($this->index->getType($this->type));
             $mapping->setMeta($this->metaData)->send();
         }

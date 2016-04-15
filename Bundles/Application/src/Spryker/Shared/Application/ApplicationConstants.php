@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Application;
@@ -16,6 +17,7 @@ interface ApplicationConstants
     const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
     const ENABLE_WEB_PROFILER = 'ENABLE_WEB_PROFILER';
     const NAVIGATION_CACHE_ENABLED = 'navigation cache enabled';
+    const NAVIGATION_ENABLED = 'NAVIGATION_ENABLED';
     const SET_REPEAT_DATA = 'SET_REPEAT_DATA';
     const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
     const STORE_PREFIX = 'STORE_PREFIX';
@@ -41,6 +43,7 @@ interface ApplicationConstants
     const YVES_COOKIE_DEVICE_ID_NAME = 'YVES_COOKIE_DEVICE_ID_NAME';
     const YVES_COOKIE_DEVICE_ID_VALID_FOR = 'YVES_COOKIE_DEVICE_ID_VALID_FOR';
     const YVES_COOKIE_DOMAIN = 'YVES_COOKIE_DOMAIN';
+    const YVES_COOKIE_SECURE = 'YVES_COOKIE_SECURE';
 
     const TRANSFER_USERNAME = 'TRANSFER_USERNAME';
     const TRANSFER_PASSWORD = 'TRANSFER_PASSWORD';
@@ -61,6 +64,7 @@ interface ApplicationConstants
 
     const ZED_STORAGE_SESSION_TIME_TO_LIVE = 'ZED_STORAGE_SESSION_TIME_TO_LIVE';
     const ZED_STORAGE_SESSION_COOKIE_NAME = 'ZED_STORAGE_SESSION_COOKIE_NAME';
+    const ZED_STORAGE_SESSION_COOKIE_SECURE = 'ZED_COOKIE_SECURE';
     const ZED_STORAGE_SESSION_REDIS_PROTOCOL = 'ZED_STORAGE_SESSION_REDIS_PROTOCOL';
     const ZED_STORAGE_SESSION_REDIS_HOST = 'ZED_STORAGE_SESSION_REDIS_HOST';
     const ZED_STORAGE_SESSION_REDIS_PORT = 'ZED_STORAGE_SESSION_REDIS_PORT';
@@ -90,12 +94,19 @@ interface ApplicationConstants
     /**
      * Database
      */
-    const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
     const ZED_DB_USERNAME = 'ZED_DB_USERNAME';
     const ZED_DB_PASSWORD = 'ZED_DB_PASSWORD';
     const ZED_DB_DATABASE = 'ZED_DB_DATABASE';
     const ZED_DB_HOST = 'ZED_DB_HOST';
     const ZED_DB_PORT = 'ZED_DB_PORT';
+
+    /**
+     * Database engines
+     */
+    const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
+    const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
+    const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
+    const ZED_DB_SUPPORTED_ENGINES = 'ZED_DB_SUPPORTED_ENGINES';
 
     /**
      * RabbitMQ
@@ -136,7 +147,9 @@ interface ApplicationConstants
     const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
     const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
+    /* @deprecated Use LogConstants::LOG_LEVEL instead */
     const LOG_LEVEL = 'LOG_LEVEL';
+
     const ERROR_LEVEL = 'ERROR_LEVEL';
 
     const PROPEL = 'PROPEL';
@@ -146,5 +159,7 @@ interface ApplicationConstants
     const STORAGE_KV_SOURCE = 'STORAGE_KV_SOURCE';
     const ZED_ERROR_PAGE = 'ZED_ERROR_PAGE';
     const ZED_SHOW_EXCEPTION_STACK_TRACE = 'ZED_SHOW_EXCEPTION_STACK_TRACE';
+
+    const APPLICATION_SPRYKER_ROOT = 'APPLICATION_SPRYKER_ROOT';
 
 }

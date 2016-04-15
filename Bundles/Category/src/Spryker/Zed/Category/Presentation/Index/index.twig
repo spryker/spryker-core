@@ -55,3 +55,8 @@
     </div>
 
 {% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-category-main.js"></script>
+{% endblock %}

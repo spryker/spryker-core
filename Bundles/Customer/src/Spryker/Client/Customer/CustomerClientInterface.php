@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Customer;
@@ -13,6 +14,8 @@ interface CustomerClientInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
@@ -20,6 +23,8 @@ interface CustomerClientInterface
     public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
@@ -27,6 +32,8 @@ interface CustomerClientInterface
     public function findCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -34,6 +41,8 @@ interface CustomerClientInterface
     public function registerCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -41,6 +50,8 @@ interface CustomerClientInterface
     public function confirmRegistration(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -48,6 +59,8 @@ interface CustomerClientInterface
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -55,6 +68,8 @@ interface CustomerClientInterface
     public function restorePassword(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -62,11 +77,15 @@ interface CustomerClientInterface
     public function deleteCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer();
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -74,6 +93,8 @@ interface CustomerClientInterface
     public function setCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
@@ -81,16 +102,22 @@ interface CustomerClientInterface
     public function login(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @return mixed
      */
     public function logout();
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isLoggedIn();
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
@@ -98,6 +125,8 @@ interface CustomerClientInterface
     public function getAddresses(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -105,6 +134,8 @@ interface CustomerClientInterface
     public function getCustomerByEmail(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -112,6 +143,8 @@ interface CustomerClientInterface
     public function updateCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -119,6 +152,8 @@ interface CustomerClientInterface
     public function updateCustomerPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -126,6 +161,8 @@ interface CustomerClientInterface
     public function getAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -133,6 +170,8 @@ interface CustomerClientInterface
     public function updateAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -140,6 +179,8 @@ interface CustomerClientInterface
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -147,6 +188,8 @@ interface CustomerClientInterface
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -154,6 +197,8 @@ interface CustomerClientInterface
     public function createAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -161,6 +206,8 @@ interface CustomerClientInterface
     public function deleteAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -168,6 +215,8 @@ interface CustomerClientInterface
     public function setDefaultShippingAddress(AddressTransfer $addressTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer

@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\CategoryExporter\Builder;
 
 use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Spryker\Shared\CategoryExporter\Business\CategoryNodeKeyInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class CategoryTreeBuilder
 {
@@ -46,7 +47,6 @@ class CategoryTreeBuilder
     {
         $parents = array_slice(array_reverse($categoryNode[CategoryNodeKeyInterface::PARENTS]), 0, self::SUBTREE_DEPTH);
         $subtree = [];
-        $idCategoryCode = $categoryNode[CategoryNodeKeyInterface::NODE_ID];
 
         foreach ($parents as $parent) {
             $storageKey = $this->keyBuilder->generateKey(
@@ -54,10 +54,6 @@ class CategoryTreeBuilder
                 $locale
             );
             $parentCategory = $this->kvReader->get($storageKey);
-
-            if (isset($parentCategory[CategoryNodeKeyInterface::CHILDREN][$idCategoryCode])) {
-                $parentCategory[CategoryNodeKeyInterface::CHILDREN][$idCategoryCode] = $categoryNode;
-            }
 
             if (empty($subtree)) {
                 $subtree = $parentCategory;

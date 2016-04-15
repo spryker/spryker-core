@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Application\Communication\Plugin\ServiceProvider;
@@ -18,6 +19,8 @@ class UrlGeneratorServiceProvider implements ServiceProviderInterface
     /**
      * {@inheritdoc}
      *
+     * @param \Silex\Application $app
+     *
      * @return void
      */
     public function register(Application $app)
@@ -31,6 +34,8 @@ class UrlGeneratorServiceProvider implements ServiceProviderInterface
 
     /**
      * @codeCoverageIgnore
+     *
+     * @param \Silex\Application $app
      *
      * @return void
      */

@@ -18,7 +18,7 @@
         ],
     {% endfor -%}
 ];
-{% endmacro %}
+{%- endmacro %}
 
 {# property #}
 {% macro addProperty(property) %}
@@ -31,9 +31,12 @@
 {# constructor #}
 {% macro addConstructor(properties) %}
 {% if properties %}
+
     public function __construct()
     {
 {% for property, collectionType in properties %}
+        parent::__construct();
+
         $this->{{ property }} = new {{ collectionType }}();
 {% endfor %}
     }
@@ -49,7 +52,7 @@
 {% endif %}
      * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}
      *
-     * @return self
+     * @return $this
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
@@ -84,7 +87,7 @@
 {% endif %}
      * @param {{ method.var }} ${{ method.property }}
      *
-     * @return self
+     * @return $this
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
@@ -102,9 +105,9 @@
      * @bundle {{ method.bundles|join('|') }}
      *
 {% endif %}
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
-     * @return self
+     * @return $this
      */
     public function {{ method.name }}()
     {

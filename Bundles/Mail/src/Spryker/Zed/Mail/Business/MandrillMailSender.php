@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Mail\Business;
@@ -55,7 +56,7 @@ class MandrillMailSender implements MailSenderInterface
             $sendAt = (new \DateTime($sendAt))->format('Y-m-d H:i:s');
         }
 
-        $responses = (array) $this->mandrill->messages->sendTemplate($templateName, $templateContent, $message, $async, $ipPool, $sendAt);
+        $responses = (array)$this->mandrill->messages->sendTemplate($templateName, $templateContent, $message, $async, $ipPool, $sendAt);
 
         return $this->convertResponsesToTransfer($responses);
     }
@@ -86,7 +87,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $responses
+     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $mailResponses
      *
      * @return bool
      */
@@ -209,7 +210,7 @@ class MandrillMailSender implements MailSenderInterface
 
         /** @var \Generated\Shared\Transfer\MailRecipientTransfer $recipient */
         foreach ($recipients as $recipient) {
-            if (empty($recipient->getMergeVars())) {
+            if (!$recipient->getMergeVars()) {
                 continue;
             }
 
@@ -232,7 +233,7 @@ class MandrillMailSender implements MailSenderInterface
         $result = [];
         /** @var \Generated\Shared\Transfer\MailRecipientTransfer $individualData */
         foreach ($recipientMetadata as $individualData) {
-            if (empty($individualData->getMetadata())) {
+            if (!$individualData->getMetadata()) {
                 continue;
             }
 

@@ -1,16 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Business;
 
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
-use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -20,54 +22,12 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     * Specification:
+     *  - Returns persisted order information stored into OrderTransfer
+     *  - Aggregates order totals calls -> SalesAggregator
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer
-     */
-    public function saveComment(CommentTransfer $commentTransfer)
-    {
-        $commentsManager = $this->getFactory()->createCommentsManager();
-
-        return $commentsManager->saveComment($commentTransfer);
-    }
-
-    /**
-     * @param int $idOrder
+     * @api
      *
-     * @return array
-     */
-    public function getArrayWithManualEvents($idOrder)
-    {
-        $orderManager = $this->getFactory()->createOrderDetailsManager();
-
-        return $orderManager->getArrayWithManualEvents($idOrder);
-    }
-
-    /**
-     * @param int $idOrder
-     *
-     * @return array
-     */
-    public function getAggregateState($idOrder)
-    {
-        $orderManager = $this->getFactory()->createOrderDetailsManager();
-
-        return $orderManager->getAggregateState($idOrder);
-    }
-
-    /**
-     * @deprecated
-     *
-     * @param int $idOrderItem
-     *
-     * @return array
-     */
-    public function getOrderItemManualEvents($idOrderItem)
-    {
-        return $this->getFactory()->getFacadeOms()->getManualEvents($idOrderItem);
-    }
-
-    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -75,117 +35,138 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderManager()
-            ->getOrderByIdSalesOrder($idSalesOrder);
+            ->createOrderHydrator()
+            ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * Specification:
+     *  - Returns a list of of orders for the given customer id and (optional) filters.
+     *  - Aggregates order totals calls -> SalesAggregator
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function saveOrder(OrderTransfer $orderTransfer)
+    public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer)
     {
         return $this->getFactory()
-            ->createOrderManager()
-            ->saveOrder($orderTransfer);
+            ->createCustomerOrderReader()
+            ->getOrders($orderListTransfer, $idCustomer);
     }
 
     /**
-     * @param int $idSalesOrderItem
-     * @param int $quantity
+     * Specification:
+     * - Save order and items to database
+     * - Set "is test" flag
+     * - update checkout response with saved order data
+     * - set initial state for state machine
      *
-     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
-     */
-    public function splitSalesOrderItem($idSalesOrderItem, $quantity)
-    {
-        return $this->getFactory()->createOrderItemSplitter()->split($idSalesOrderItem, $quantity);
-    }
-
-    /**
-     * @param int $idRefund
-     * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function updateOrderItemsAndExpensesAfterRefund($idRefund, OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $this->getFactory()
-            ->createOrderDetailsManager()
-            ->updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsAndExpensesTransfer);
+            ->createOrderSaver()
+            ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idOrder
+     * Specification:
+     * - Add username to comment
+     * - Save comment to database
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentTransfer
      */
-    public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder)
+    public function saveComment(CommentTransfer $commentTransfer)
     {
         return $this->getFactory()
-            ->createOrderDetailsManager()
-            ->updateOrderCustomer($orderTransfer, $idOrder);
+            ->createOrderCommentSaver()
+            ->save($commentTransfer);
     }
 
     /**
+     * Specification:
+     * - Return the distinct states of all order items for the given order id
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getDistinctOrderStates($idSalesOrder)
+    {
+        return $this->getFactory()
+            ->createOrderReader()
+            ->getDistinctOrderStates($idSalesOrder);
+    }
+
+    /**
+     * Specification:
+     * - Return all comments for the given order id
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderDetailsCommentsTransfer
+     */
+    public function getOrderCommentsByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()
+            ->createOrderCommentReader()
+            ->getCommentsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * Specification
+     * - Update sales order with data from order transfer
+     * - Returns true if order was successfully updated
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idSalesOrder
+     *
+     * @return bool
+     */
+    public function updateOrder(OrderTransfer $orderTransfer, $idSalesOrder)
+    {
+        return $this->getFactory()
+            ->createOrderUpdater()
+            ->update($orderTransfer, $idSalesOrder);
+    }
+
+    /**
+     * Specification:
+     * - Replaces all values of the order address by the values from the addresses transfer
+     * - Returns true if order was successfully updated
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
-     * @return mixed
+     * @return boolean
      */
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress)
     {
         return $this->getFactory()
-            ->createOrderDetailsManager()
-            ->updateOrderAddress($addressesTransfer, $idAddress);
-    }
-
-    /**
-     * @param string $idOrder
-     *
-     * @return array
-     */
-    public function getPaymentLogs($idOrder)
-    {
-        return $this->getFactory()
-            ->createOrderDetailsManager()
-            ->getPaymentLogs($idOrder);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function getOrders(OrderListTransfer $orderListTransfer)
-    {
-        return $this->getFactory()
-            ->createOrderManager()
-            ->getOrders($orderListTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderDetails(OrderTransfer $orderTransfer)
-    {
-        return $this->getFactory()
-            ->createOrderDetailsManager()
-            ->getOrderDetails($orderTransfer);
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\RefundTransfer[]
-     */
-    public function getRefunds($idSalesOrder)
-    {
-        return $this->getFactory()->getFacadeRefund()
-            ->getRefundsByIdSalesOrder($idSalesOrder);
+            ->createOrderAddressUpdater()
+            ->update($addressesTransfer, $idAddress);
     }
 
 }

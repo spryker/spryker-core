@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Business\Calculator;
@@ -30,7 +31,7 @@ class Percentage implements CalculatorInterface
         }
 
         foreach ($discountableObjects as $discountableObject) {
-            $itemTotalAmount = $discountableObject->getGrossPrice() * $discountableObject->getQuantity();
+            $itemTotalAmount = $discountableObject->getUnitGrossPrice() * $discountableObject->getQuantity();
             $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $percentage);
         }
 

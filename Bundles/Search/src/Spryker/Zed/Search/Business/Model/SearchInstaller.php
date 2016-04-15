@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Search\Business\Model;
@@ -36,9 +37,9 @@ class SearchInstaller implements SearchInstallerInterface
      */
     public function install()
     {
-        foreach ($this->installer as $installer) {
-            $installer->setMessenger($this->messenger);
-            $installer->install();
+        foreach ($this->installer as $installerPlugin) {
+            $installerPlugin->setMessenger($this->messenger);
+            $installerPlugin->run();
         }
     }
 

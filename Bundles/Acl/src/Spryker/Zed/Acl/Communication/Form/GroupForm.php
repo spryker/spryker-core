@@ -1,12 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,14 +29,14 @@ class GroupForm extends AbstractType
     const GROUP_UNIQUE_GROUP_CHECK = 'unique_group_check';
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      */
-    public function __construct(AclQueryContainer $queryContainer)
+    public function __construct(AclQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }
@@ -64,12 +65,12 @@ class GroupForm extends AbstractType
                 $defaultData = $form->getConfig()->getData();
                 $submittedData = $form->getData();
 
-                if (
-                    array_key_exists(self::FIELD_TITLE, $defaultData) === false ||
+                if (array_key_exists(self::FIELD_TITLE, $defaultData) === false ||
                     $defaultData[self::FIELD_TITLE] !== $submittedData[self::FIELD_TITLE]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_GROUP_CHECK];
                 }
+
                 return [Constraint::DEFAULT_GROUP];
             },
         ]);

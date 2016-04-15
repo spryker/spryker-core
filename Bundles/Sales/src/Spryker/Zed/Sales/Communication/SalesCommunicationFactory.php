@@ -1,21 +1,21 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Sales\Communication;
 
-use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
-use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
-use Spryker\Zed\Sales\Communication\Form\DataProvider\OrderItemSplitDataProvider;
-use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Sales\SalesDependencyProvider;
-use Spryker\Zed\Sales\Communication\Table\OrdersTable;
-use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
+use Spryker\Zed\Sales\Communication\Form\CommentForm;
+use Spryker\Zed\Sales\Communication\Form\CustomerForm;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
+use Spryker\Zed\Sales\Communication\Table\OrdersTable;
+use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
@@ -23,16 +23,6 @@ use Spryker\Zed\Sales\Communication\Form\AddressForm;
  */
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
-
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createOrderItemSplitForm()
-    {
-        $formType = new OrderItemSplitForm();
-
-        return $this->getFormFactory()->create($formType);
-    }
 
     /**
      * @param array $formData
@@ -56,6 +46,14 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider
+     */
+    public function createCommentFormDataProvider()
+    {
+        return new CommentFormDataProvider();
+    }
+
+    /**
      * @param array $formData
      * @param array $formOptions
      *
@@ -69,42 +67,22 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCommentForm(array $formData = [], array $formOptions = [])
+    {
+        return $this->getFormFactory()->create(new CommentForm(), $formData, $formOptions);
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider
      */
     public function createAddressFormDataProvider()
     {
         return new AddressFormDataProvider($this->getQueryContainer());
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
-     *
-     * @return array
-     */
-    public function createOrderItemSplitFormCollection(ObjectCollection $orderItems)
-    {
-        $formCollectionArray = [];
-
-        $orderItemSplitDataProvider = $this->createOrderItemSplitDataProvider();
-
-        foreach ($orderItems as $item) {
-            $formType = new OrderItemSplitForm();
-
-            $formCollectionArray[$item->getIdSalesOrderItem()] = $this
-                ->getFormFactory()
-                ->create($formType, $orderItemSplitDataProvider->getData($item), $orderItemSplitDataProvider->getOptions())
-                ->createView();
-        }
-
-        return $formCollectionArray;
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\OrderItemSplitDataProvider
-     */
-    public function createOrderItemSplitDataProvider()
-    {
-        return new OrderItemSplitDataProvider();
     }
 
     /**
@@ -114,8 +92,12 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         $orderQuery = $this->getQueryContainer()->querySalesOrder();
         $orderItemQuery = $this->getQueryContainer()->querySalesOrderItem();
-
-        return new OrdersTable($orderQuery, $orderItemQuery);
+        return new OrdersTable(
+            $orderQuery,
+            $orderItemQuery,
+            $this->getSalesAggregator(),
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER)
+        );
     }
 
     /**
@@ -124,6 +106,30 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getOmsFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToUserInterface
+     */
+    public function getUserFacade()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface
+     */
+    public function getSalesAggregator()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SALES_AGGREGATOR);
+    }
+
+    /**
+     * @return array
+     */
+    public function getSalesDetailExternalBlocksUrls()
+    {
+        return $this->getConfig()->getSalesDetailExternalBlocksUrls();
     }
 
 }

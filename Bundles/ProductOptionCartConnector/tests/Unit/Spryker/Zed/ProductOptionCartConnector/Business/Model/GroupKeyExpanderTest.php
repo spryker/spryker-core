@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\ProductOptionCartConnector\Business\Model;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
-use Generated\Shared\Transfer\ChangeTransfer;
 
 class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
 {
@@ -91,11 +92,11 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     protected function createCartChangeTransfer(array $cartItems)
     {
-        $changeTransfer = new ChangeTransfer();
+        $changeTransfer = new CartChangeTransfer();
 
         foreach ($cartItems as $cartItem => $options) {
             $cartItem = new ItemTransfer();

@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface SalesToOmsInterface
@@ -21,18 +25,6 @@ interface SalesToOmsInterface
     public function getProcessEntity($processName);
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
-     *
-     * @return string
-     */
-    public function selectProcess(OrderTransfer $transferOrder);
-
-    /**
-     * @return array
-     */
-    public function getOrderItemMatrix();
-
-    /**
      * @param int $idOrderItem
      *
      * @return string[]
@@ -46,5 +38,19 @@ interface SalesToOmsInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getManualEventsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return array
+     */
+    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
 }

@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Glossary\Business\Key;
@@ -60,5 +62,12 @@ interface KeyManagerInterface
      * @return int
      */
     public function getOrCreateKey($keyName);
+
+    /**
+     * @param string $keyFragment
+     *
+     * @return array
+     */
+    public function getKeySuggestions($keyFragment);
 
 }

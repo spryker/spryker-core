@@ -1,19 +1,22 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategory\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Library\Json;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 
 class ProductCategoryTable extends AbstractTable
 {
@@ -69,6 +72,9 @@ class ProductCategoryTable extends AbstractTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
 
+        $config->addRawColumn(SpyProductCategoryTableMap::COL_PRODUCT_ORDER);
+        $config->addRawColumn(self::COL_CHECKBOX);
+
         return $config;
     }
 
@@ -122,7 +128,7 @@ class ProductCategoryTable extends AbstractTable
         $items = '<option value="0">Default</option>';
         foreach ($preconfigItems as $preconfigItem) {
             $selected = '';
-            if ((int) $productCategory['preconfig_product'] === (int) $preconfigItem->getIdProduct()) {
+            if ((int)$productCategory['preconfig_product'] === (int)$preconfigItem->getIdProduct()) {
                 $selected = 'selected="selected"';
             }
 
@@ -139,12 +145,16 @@ class ProductCategoryTable extends AbstractTable
      */
     protected function getCheckboxHtml(array $productCategory)
     {
+        $info = [
+            'id' => $productCategory['id_product_abstract'],
+            'sku' => $productCategory['sku'],
+            'name' => urlencode($productCategory['name']),
+        ];
+
         return sprintf(
-            '<input id="product_category_checkbox_%d" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
+            "<input id='product_category_checkbox_%d' class='product_category_checkbox' type='checkbox' checked='checked' data-info='%s'>",
             $productCategory['id_product_abstract'],
-            $productCategory['id_product_abstract'],
-            $productCategory['sku'],
-            urlencode($productCategory['name'])
+            Json::encode($info)
         );
     }
 
@@ -155,11 +165,15 @@ class ProductCategoryTable extends AbstractTable
      */
     protected function getOrderHtml(array $productCategory)
     {
+        $info = [
+            'id' => $productCategory['id_product_abstract'],
+        ];
+
         return sprintf(
-            '<input type="text" value="%d" id="product_category_order_%d" size="4" onchange="updateProductOrder(this, %d)" />',
+            "<input type='text' value='%d' id='product_category_order_%d' class='product_category_order' size='4' data-info='%s'>",
             $productCategory['product_order'],
             $productCategory['id_product_abstract'],
-            $productCategory['id_product_abstract']
+            Json::encode($info)
         );
     }
 

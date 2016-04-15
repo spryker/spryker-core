@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Price\Business\Internal;
 
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
-use Spryker\Zed\Price\Business\Model\Writer;
 use Spryker\Zed\Price\Business\Model\WriterInterface;
 use Spryker\Zed\Price\PriceConfig;
 

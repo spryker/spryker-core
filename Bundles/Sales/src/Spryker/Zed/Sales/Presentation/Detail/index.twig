@@ -1,0 +1,23 @@
+{% extends '@Sales/Layout/layout.twig' %}
+
+{% block section_title %}
+    {{ 'Order ID:' | trans }} {{ order.idSalesOrder }} ({{ order.createdAt | formatDateTime }})
+{% endblock %}
+
+{% block content %}
+
+    <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
+    <div id="items">{% include '@Sales/Detail/boxes/items.twig' %}</div>
+
+    {% for blockName, externalBlock in blocks %}
+    <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
+    {% endfor %}
+
+    <div id="address">{% include '@Sales/Detail/boxes/addresses.twig' %}</div>
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-sales-main.css">
+{% endblock %}

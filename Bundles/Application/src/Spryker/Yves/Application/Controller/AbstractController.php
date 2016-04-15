@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Application\Controller;
 
+use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Yves\Application\Application;
-use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Locator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,10 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractController
 {
-
-    const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
-    const FLASH_MESSAGES_ERROR = 'flash.messages.error';
-    const FLASH_MESSAGES_INFO = 'flash.messages.info';
 
     /**
      * @var \Spryker\Yves\Application\Application
@@ -31,11 +28,6 @@ abstract class AbstractController
      * @var \Spryker\Yves\Kernel\AbstractFactory
      */
     private $factory;
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
-     */
-    private $flashBag;
 
     /**
      * @var \Spryker\Client\Kernel\AbstractClient
@@ -57,20 +49,6 @@ abstract class AbstractController
     public function setApplication(Application $application)
     {
         $this->application = $application;
-
-        return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
-     */
-    protected function getFlashBag()
-    {
-        if ($this->flashBag === null) {
-            $this->flashBag = $this->getApplication()['request']->getSession()->getFlashBag();
-        }
-
-        return $this->flashBag;
     }
 
     /**
@@ -113,7 +91,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param null $data
+     * @param mixed|null $data
      * @param int $status
      * @param array $headers
      *
@@ -135,15 +113,6 @@ abstract class AbstractController
     }
 
     /**
-     * @param mixed $transferResponse
-     *
-     * @return void
-     */
-    protected function addMessagesFromZedResponse($transferResponse)
-    {
-    }
-
-    /**
      * @param string $message
      *
      * @throws \ErrorException
@@ -152,7 +121,7 @@ abstract class AbstractController
      */
     protected function addSuccessMessage($message)
     {
-        $this->addToFlashBag(self::FLASH_MESSAGES_SUCCESS, $message);
+        $this->getFlashMessenger()->addSuccessMessage($message);
 
         return $this;
     }
@@ -166,7 +135,7 @@ abstract class AbstractController
      */
     protected function addInfoMessage($message)
     {
-        $this->addToFlashBag(self::FLASH_MESSAGES_INFO, $message);
+        $this->getFlashMessenger()->addInfoMessage($message);
 
         return $this;
     }
@@ -180,28 +149,12 @@ abstract class AbstractController
      */
     protected function addErrorMessage($message)
     {
-        $this->addToFlashBag(self::FLASH_MESSAGES_ERROR, $message);
+        $this->getFlashMessenger()->addErrorMessage($message);
 
         return $this;
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     *
-     * @return $this
-     */
-    protected function addToFlashBag($key, $value)
-    {
-        $this->getFlashBag()->add($key, $value);
-
-        return $this;
-    }
-
-    /**
-     * @deprecated Create forms inside your bundle's factory with getting the form factory,
-     * e.g. FooBundleFactory.php: $this->getFormFactory()->create(new FooFormType());
-     *
      * @param \Spryker\Shared\Gui\Form\AbstractForm $form
      * @param array $options
      *
@@ -371,6 +324,14 @@ abstract class AbstractController
     private function getFactoryResolver()
     {
         return new FactoryResolver();
+    }
+
+    /**
+     * @return \Pyz\Yves\Application\Business\Model\FlashMessengerInterface
+     */
+    private function getFlashMessenger()
+    {
+        return $this->application['flash_messenger'];
     }
 
 }

@@ -1,16 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\User\Communication\Table;
 
-use Spryker\Zed\Application\Business\Url\Url;
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+use Spryker\Shared\Library\DateFormatterInterface;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 
 class UsersTable extends AbstractTable
 {
@@ -23,16 +25,23 @@ class UsersTable extends AbstractTable
     const PARAM_ID_USER = 'id-user';
 
     /**
-     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected $userQueryContainer;
 
     /**
-     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $userQueryContainer
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
-    public function __construct(UserQueryContainer $userQueryContainer)
+    protected $dateFormatter;
+
+    /**
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $userQueryContainer
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     */
+    public function __construct(UserQueryContainerInterface $userQueryContainer, DateFormatterInterface $dateFormatter)
     {
         $this->userQueryContainer = $userQueryContainer;
+        $this->dateFormatter = $dateFormatter;
     }
 
     /**
@@ -50,6 +59,8 @@ class UsersTable extends AbstractTable
             SpyUserTableMap::COL_STATUS => 'Status',
             self::ACTION => self::ACTION,
         ]);
+
+        $config->setRawColumns([SpyUserTableMap::COL_STATUS, self::ACTION]);
 
         $config->setSortable([
             SpyUserTableMap::COL_USERNAME,
@@ -84,7 +95,7 @@ class UsersTable extends AbstractTable
                 SpyUserTableMap::COL_USERNAME => $item[SpyUserTableMap::COL_USERNAME],
                 SpyUserTableMap::COL_FIRST_NAME => $item[SpyUserTableMap::COL_FIRST_NAME],
                 SpyUserTableMap::COL_LAST_NAME => $item[SpyUserTableMap::COL_LAST_NAME],
-                SpyUserTableMap::COL_LAST_LOGIN => $item[SpyUserTableMap::COL_LAST_LOGIN],
+                SpyUserTableMap::COL_LAST_LOGIN => $this->dateFormatter->dateTime($item[SpyUserTableMap::COL_LAST_LOGIN]),
                 SpyUserTableMap::COL_STATUS => $this->createStatusLabel($item),
                 self::ACTION => implode(' ', $this->createActionButtons($item)),
             ];
@@ -108,24 +119,12 @@ class UsersTable extends AbstractTable
             ]),
             'Edit'
         );
-        $urls[] = $this->generateViewButton(
-            Url::generate(self::DEACTIVATE_USER_URL, [
-                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
-            ]),
-            'Deactivate'
-        );
-        $urls[] = $this->generateViewButton(
-            Url::generate(self::ACTIVATE_USER_URL, [
-                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
-            ]),
-            'Activate'
-        );
-        $urls[] = $this->generateRemoveButton(
-            Url::generate(self::DELETE_USER_URL, [
-                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
-            ]),
-            'Delete'
-        );
+
+        $urls[] = $this->createStatusButton($user);
+
+        $urls[] = $this->generateRemoveButton(self::DELETE_USER_URL, 'Delete', [
+            self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+        ]);
 
         return $urls;
     }
@@ -151,6 +150,30 @@ class UsersTable extends AbstractTable
         }
 
         return $statusLabel;
+    }
+
+    /**
+     * @param array $user
+     *
+     * @return array
+     */
+    protected function createStatusButton(array $user)
+    {
+        if ($user[SpyUserTableMap::COL_STATUS] === SpyUserTableMap::COL_STATUS_BLOCKED) {
+            return $this->generateViewButton(
+                Url::generate(self::ACTIVATE_USER_URL, [
+                    self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+                ]),
+                'Activate'
+            );
+        }
+
+        return $urls[] = $this->generateViewButton(
+            Url::generate(self::DEACTIVATE_USER_URL, [
+                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+            ]),
+            'Deactivate'
+        );
     }
 
 }

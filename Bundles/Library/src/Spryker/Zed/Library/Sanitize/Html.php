@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Library\Sanitize;
 
 /**
@@ -16,7 +21,7 @@ class Html
      *   Arrays will be mapped and have all their elements escaped. Objects will be string cast if they
      *   implement a `__toString` method. Otherwise the class name will be used.
      * @param bool $double Encode existing html entities.
-     * @param string $charset Character set to use when escaping. Defaults to config value in `mb_internal_encoding()`
+     * @param string|null $charset Character set to use when escaping. Defaults to config value in `mb_internal_encoding()`
      *   or 'UTF-8'.
      *
      * @return string Wrapped text.
@@ -34,7 +39,7 @@ class Html
             return $texts;
         } elseif (is_object($text)) {
             if (method_exists($text, '__toString')) {
-                $text = (string) $text;
+                $text = (string)$text;
             } else {
                 $text = '(object)' . get_class($text);
             }

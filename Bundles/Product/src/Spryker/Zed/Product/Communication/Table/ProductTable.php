@@ -1,21 +1,25 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Product\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
-use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Zed\Url\Business\UrlFacade;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 
 class ProductTable extends AbstractTable
 {
 
     const OPTIONS = 'Options';
-    const URL_PRODUCT_INDEX_VIEW = '/product/index/view/';
+    const URL_PRODUCT_INDEX_VIEW = '/product/index/view';
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
@@ -68,6 +72,8 @@ class ProductTable extends AbstractTable
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
             self::OPTIONS => self::OPTIONS,
         ]);
+
+        $config->addRawColumn(self::OPTIONS);
 
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Shared\ZedRequest\Client\Message;
 
 abstract class AbstractClient
 {
@@ -63,6 +63,8 @@ abstract class AbstractClient
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedInfoMessages()
@@ -71,6 +73,8 @@ abstract class AbstractClient
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedSuccessMessages()
@@ -78,8 +82,10 @@ abstract class AbstractClient
         return $this->getZedStub()->getSuccessMessages();
     }
 
-    /***
-     * @return Message[]
+    /**
+     * @api
+     *
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedErrorMessages()
     {

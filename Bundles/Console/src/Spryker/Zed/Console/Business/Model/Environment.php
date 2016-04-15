@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Console\Business\Model;
@@ -16,9 +17,6 @@ class Environment
      */
     public static function initialize()
     {
-        defined('APPLICATION_ROOT_DIR')
-            || define('APPLICATION_ROOT_DIR', realpath(__DIR__ . '/../../../../../../../../../../..'));
-
         defined('APPLICATION_SOURCE_DIR')
             || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . '/src');
 

@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Auth\Communication\Plugin\ServiceProvider;
 
-use Spryker\Shared\Auth\AuthConstants;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Auth\AuthConstants;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -96,18 +97,18 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
      */
     protected function isAuthenticated(Request $request)
     {
-        $facadeAuth = $this->getFacade();
+        $authFacade = $this->getFacade();
         $token = null;
 
-        if ($facadeAuth->hasCurrentUser()) {
-            $token = $facadeAuth->getCurrentUserToken();
+        if ($authFacade->hasCurrentUser()) {
+            $token = $authFacade->getCurrentUserToken();
         }
 
         if ($request->headers->get(AuthConstants::AUTH_TOKEN)) {
             $token = $request->headers->get(AuthConstants::AUTH_TOKEN);
         }
 
-        if (!$facadeAuth->isAuthenticated($token)) {
+        if (!$authFacade->isAuthenticated($token)) {
             return false;
         }
 

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Payone\Communication\Plugin\Command;
@@ -9,11 +10,11 @@ namespace Spryker\Zed\Payone\Communication\Plugin\Command;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
  * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()

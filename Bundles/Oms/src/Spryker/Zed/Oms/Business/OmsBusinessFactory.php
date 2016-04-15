@@ -1,28 +1,27 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business;
 
-use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
-use Spryker\Zed\Oms\Business\Process\ProcessSelector;
-use Spryker\Zed\Oms\Business\Util\Drawer;
-use Spryker\Zed\Oms\Business\Process\Process;
-use Spryker\Zed\Oms\Business\Process\Transition;
-use Spryker\Zed\Oms\Business\Process\State;
-use Spryker\Zed\Oms\Business\Process\Event;
-use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
-use Spryker\Zed\Oms\Business\Util\TransitionLog;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
-use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
+use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
+use Spryker\Zed\Oms\Business\Process\Event;
+use Spryker\Zed\Oms\Business\Process\Process;
+use Spryker\Zed\Oms\Business\Process\State;
+use Spryker\Zed\Oms\Business\Process\Transition;
+use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Business\Util\TransitionLog;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
@@ -47,23 +46,35 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
      */
-    public function createOrderStateMachineOrderStateMachine(array $logContext = [])
+    public function createOrderStateMachine(array $logContext = [])
     {
         return new OrderStateMachine(
             $this->getQueryContainer(),
-
             $this->createOrderStateMachineBuilder(),
             $this->createUtilTransitionLog($logContext),
             $this->createOrderStateMachineTimeout(),
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
-
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS)
         );
     }
 
     /**
-     * @param string $xmlFolder
+     * @deprecated Please use createOrderStateMachine() instead
+     *
+     * @param array $logContext
+     *
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
+     */
+    public function createOrderStateMachineOrderStateMachine(array $logContext = [])
+    {
+        trigger_error('Deprecated, please use createOrderStateMachine() instead', E_USER_DEPRECATED);
+
+        return $this->createOrderStateMachine($logContext);
+    }
+
+    /**
+     * @param string|null $xmlFolder
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */
@@ -190,14 +201,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createUtilOrderItemMatrix()
     {
         return new OrderItemMatrix($this->getQueryContainer(), $this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Business\Process\ProcessSelector
-     */
-    public function createProcessSelector()
-    {
-        return new ProcessSelector($this->getConfig());
     }
 
 }

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\Library\Storage\Adapter\KeyValue;
@@ -65,7 +66,7 @@ class MemcachedRead extends Memcached implements ReadInterface
         $stats = $this->getStats();
         $currentStats = array_pop($stats);
 
-        return (int) $currentStats['curr_items'];
+        return (int)$currentStats['curr_items'];
     }
 
 }

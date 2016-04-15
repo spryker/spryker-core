@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Business\Model\Twig;
@@ -33,7 +34,7 @@ class EnvironmentInfo extends TwigFunction
                 . '<dt>Locale:'
                 . '<dd>' . Store::getInstance()->getCurrentLocale()
                 . '<dt>Store:'
-                . '<dd>' . \Spryker\Shared\Kernel\Store::getInstance()->getStoreName()
+                . '<dd>' . Store::getInstance()->getStoreName()
                 . '<dt>Server:'
                 . '<dd>' . System::getHostName()
                 . '<dt>Controller:'

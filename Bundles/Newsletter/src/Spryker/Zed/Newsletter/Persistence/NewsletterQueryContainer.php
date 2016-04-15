@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Newsletter\Persistence;
@@ -15,10 +16,12 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
 {
 
     /**
+     * @api
+     *
      * @param string $email
      * @param string $newsletterTypeName
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionByEmailAndNewsletterTypeName($email, $newsletterTypeName)
     {
@@ -36,10 +39,12 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * @api
+     *
      * @param string $subscriberKey
      * @param string $newsletterTypeName
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionBySubscriberKeyAndNewsletterTypeName($subscriberKey, $newsletterTypeName)
     {
@@ -57,10 +62,12 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      * @param string $newsletterTypeName
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionByIdCustomerAndNewsletterTypeName($idCustomer, $newsletterTypeName)
     {
@@ -78,6 +85,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */
     public function querySubscriber()
@@ -86,7 +95,9 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @api
+     *
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscription()
     {
@@ -94,6 +105,8 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterTypeQuery
      */
     public function queryNewsletterType()

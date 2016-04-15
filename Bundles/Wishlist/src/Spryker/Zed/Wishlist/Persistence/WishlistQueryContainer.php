@@ -1,16 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Wishlist\Persistence;
 
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
-use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
-use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 
 /**
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistPersistenceFactory getFactory()
@@ -19,6 +16,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
 {
 
     /**
+     * @api
+     *
      * @param int $idWishlist
      * @param int $idProduct
      *
@@ -34,6 +33,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
+     * @api
+     *
      * @param int $idWishlist
      * @param string $groupKey
      *
@@ -49,6 +50,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
      */
     public function queryWishlistItem()
@@ -57,6 +60,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
      */
     public function queryWishlist()

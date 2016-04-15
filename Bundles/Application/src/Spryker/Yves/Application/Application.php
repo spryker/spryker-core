@@ -1,14 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Application;
 
 use Spryker\Shared\Application\Communication\Application as SharedApplication;
 use Spryker\Yves\Library\Session\TransferSession;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class Application extends SharedApplication
 {

@@ -14,6 +14,7 @@
         <property name="fkTemplate" type="int" />
         <property name="validFrom" type="string" />
         <property name="validTo" type="string" />
+        <property name="url" type="Url" />
         <property name="isActive" type="string" />
     </transfer>
 

@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Console\Business\Model;
 
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 
 trait Helper
@@ -141,7 +145,7 @@ trait Helper
      * it will throw a RuntimeException.
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output An Output instance
-     * @param string|array $question The question to ask
+     * @param string $question The question to ask
      * @param bool $default The default answer if the user enters nothing
      *
      * @throws \RuntimeException
@@ -174,7 +178,7 @@ trait Helper
      */
     public function ask($question, $default = null)
     {
-        /* @var DialogHelper $dialog */
+        /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
         $dialog = $this->getHelperSet()->get('dialog');
 
         return $dialog->ask($this->output, $question, $default);
@@ -189,7 +193,7 @@ trait Helper
      */
     public function select($question, array $options, $default)
     {
-        /* @var DialogHelper $dialog */
+        /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
         $dialog = $this->getHelperSet()->get('dialog');
         $selected = $dialog->select(
             $this->output,

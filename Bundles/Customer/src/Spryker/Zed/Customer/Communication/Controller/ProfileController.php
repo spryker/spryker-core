@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Communication\Controller;
@@ -10,8 +11,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -33,7 +32,7 @@ class ProfileController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->query->get('id');
+        $idCustomer = $this->castId($request->query->get('id'));
         $customerUri = '/customer';
 
         $this->clearBreadcrumbs();
@@ -102,11 +101,11 @@ class ProfileController extends AbstractController
     public function sendPasswordRestoreTokenAction(Request $request)
     {
         $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($request->query->get('id'));
+        $customerTransfer->setIdCustomer($this->castId($request->query->get('id')));
         $this->getFacade()
             ->sendPasswordRestoreMail($customerTransfer);
 
-        return $this->redirectResponse('/customer/profile?id=' . $request->query->get('id'));
+        return $this->redirectResponse('/customer/profile?id=' . $this->castId($request->query->get('id')));
     }
 
     /**
@@ -164,12 +163,12 @@ class ProfileController extends AbstractController
     public function setDefaultShippingAddressAction(Request $request)
     {
         $addressTransfer = new AddressTransfer();
-        $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
-        $addressTransfer->setFkCustomer($request->query->get('customer_id'));
+        $addressTransfer->setIdCustomerAddress($this->castId($request->query->get('address_id')));
+        $addressTransfer->setFkCustomer($this->castId($request->query->get('customer_id')));
         $this->getFacade()
             ->setDefaultShippingAddress($addressTransfer);
 
-        return $this->redirectResponse('/customer/profile?id=' . $request->query->get('customer_id'));
+        return $this->redirectResponse('/customer/profile?id=' . $this->castId($request->query->get('customer_id')));
     }
 
     /**
@@ -180,12 +179,12 @@ class ProfileController extends AbstractController
     public function setDefaultBillingAddressAction(Request $request)
     {
         $addressTransfer = new AddressTransfer();
-        $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
-        $addressTransfer->setFkCustomer($request->query->get('customer_id'));
+        $addressTransfer->setIdCustomerAddress($this->castId($request->query->get('address_id')));
+        $addressTransfer->setFkCustomer($this->castId($request->query->get('customer_id')));
         $this->getFacade()
             ->setDefaultBillingAddress($addressTransfer);
 
-        return $this->redirectResponse('/customer/profile?id=' . $request->query->get('customer_id'));
+        return $this->redirectResponse('/customer/profile?id=' . $this->castId($request->query->get('customer_id')));
     }
 
 }

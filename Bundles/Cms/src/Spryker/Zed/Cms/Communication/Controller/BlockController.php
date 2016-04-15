@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Controller;
@@ -13,8 +14,6 @@ use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -25,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 class BlockController extends AbstractController
 {
 
-    const REDIRECT_ADDRESS = '/cms/glossary/';
+    const REDIRECT_ADDRESS = '/cms/glossary';
     const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
@@ -76,6 +75,7 @@ class BlockController extends AbstractController
             $blockTransfer = $this->createBlockTransfer($data);
 
             $this->getFacade()->savePageBlockAndTouch($pageTransfer, $blockTransfer);
+            //FIXME: Use proper URL class
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
@@ -94,7 +94,7 @@ class BlockController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idBlock = $request->query->getInt(CmsBlockTable::REQUEST_ID_BLOCK);
+        $idBlock = $this->castId($request->query->get(CmsBlockTable::REQUEST_ID_BLOCK));
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $dataProvider = $this->getFactory()->createCmsBlockFormDataProvider();
@@ -129,7 +129,7 @@ class BlockController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    private function createPageTransfer(array $data)
+    protected function createPageTransfer(array $data)
     {
         $pageTransfer = new PageTransfer();
         $pageTransfer->fromArray($data, true);
@@ -145,7 +145,7 @@ class BlockController extends AbstractController
      */
     protected function updatePageAndBlock(array $data, PageTransfer $pageTransfer)
     {
-        if ((int) $data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int) $data[CmsPageForm::FIELD_FK_TEMPLATE]) {
+        if ((int)$data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int)$data[CmsPageForm::FIELD_FK_TEMPLATE]) {
             $this->getFacade()->deleteGlossaryKeysByIdPage($data[CmsBlockForm::FIELD_FK_PAGE]);
         }
         $blockTransfer = $this->createBlockTransfer($data);
@@ -158,7 +158,7 @@ class BlockController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    private function createBlockTransfer(array $data)
+    protected function createBlockTransfer(array $data)
     {
         $blockTransfer = new CmsBlockTransfer();
         $blockTransfer->fromArray($data, true);
@@ -167,14 +167,6 @@ class BlockController extends AbstractController
         }
 
         return $blockTransfer;
-    }
-
-    /**
-     * @return \Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade
-     */
-    private function getLocaleFacade()
-    {
-        return $this->getFactory()->getLocaleFacade();
     }
 
     /**
@@ -207,7 +199,8 @@ class BlockController extends AbstractController
      */
     protected function getCurrentIdLocale()
     {
-        return $this->getLocaleFacade()->getCurrentLocale()->getIdLocale();
+        $localeFacade = $this->getFactory()->getLocaleFacade();
+        return $localeFacade->getCurrentLocale()->getIdLocale();
     }
 
 }

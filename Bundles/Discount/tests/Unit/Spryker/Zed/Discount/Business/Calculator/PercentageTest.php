@@ -1,14 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Zed\Discount\Business\Calculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Percentage;
-use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
 
 /**
  * Class PercentageTest
@@ -102,7 +102,7 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array $grossPrices
      *
-     * @return \Spryker\Zed\Sales\Business\Model\Split\OrderItem[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getItems(array $grossPrices)
     {
@@ -110,7 +110,7 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
 
         foreach ($grossPrices as $grossPrice) {
             $item = new ItemTransfer();
-            $item->setGrossPrice($grossPrice);
+            $item->setUnitGrossPrice($grossPrice);
             $item->setQuantity(1);
             $items[] = $item;
         }

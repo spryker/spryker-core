@@ -1,19 +1,23 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Business;
 
-use Spryker\Shared\Transfer\TransferInterface;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
+use Spryker\Shared\Transfer\TransferInterface;
 
+/**
+ * //TODO: Move this class away from Kernel bundle.
+ */
 class ModelResult
 {
 
     /**
-     * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null
      */
     protected $entity = null;
 
@@ -23,7 +27,7 @@ class ModelResult
     protected $entityModifiedColumns = [];
 
     /**
-     * @var \Spryker\Shared\Transfer\TransferInterface
+     * @var \Spryker\Shared\Transfer\TransferInterface|null
      */
     protected $transfer = null;
 
@@ -38,9 +42,7 @@ class ModelResult
     protected $success = true;
 
     /**
-     * @deprecated
-     *
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null $entity
      */
     public function __construct(ActiveRecordInterface $entity = null)
     {
@@ -48,8 +50,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return bool
      */
     public function isSuccess()
@@ -58,8 +58,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return array
      */
     public function getErrors()
@@ -76,9 +74,7 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
-     * @return \Spryker\Shared\Transfer\TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface|null
      */
     public function getTransfer()
     {
@@ -86,8 +82,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @param \Spryker\Shared\Transfer\TransferInterface $transfer
      *
      * @return $this
@@ -100,8 +94,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return bool
      */
     public function hasTransfer()
@@ -110,8 +102,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return bool
      */
     public function hasEntity()
@@ -120,8 +110,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
     public function getEntity()
@@ -144,8 +132,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @param array $entityModifiedColumns
      *
      * @return void
@@ -156,8 +142,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @return array
      */
     public function getEntityModifiedColumns()
@@ -166,8 +150,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @param string $error
      *
      * @return $this
@@ -181,8 +163,6 @@ class ModelResult
     }
 
     /**
-     * @deprecated
-     *
      * @param array $errors
      *
      * @return void

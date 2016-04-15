@@ -1,12 +1,17 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Table;
 
-use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Application\Business\Url\Url;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -15,13 +20,12 @@ class DiscountsTable extends AbstractTable
 
     const COL_VALUE = 'Value';
     const COL_PERIOD = 'Period';
-    const COL_OPTIONS = 'Options';
+    const ACTIONS = 'Actions';
     const DATE_FORMAT = 'Y-m-d';
     const COL_DECISION_RULES = 'Cart Rules';
     const DECISION_RULE_PLUGIN = 'DecisionRulePlugin';
 
     const PARAM_ID_DISCOUNT = 'id-discount';
-    const URL_DISCOUNT_CART_RULE_EDIT = '/discount/cart-rule/edit';
 
     /**
      * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
@@ -52,8 +56,15 @@ class DiscountsTable extends AbstractTable
             SpyDiscountTableMap::COL_IS_ACTIVE => 'Is Active',
             self::COL_PERIOD => self::COL_PERIOD,
             self::COL_DECISION_RULES => self::COL_DECISION_RULES,
-            self::COL_OPTIONS => self::COL_OPTIONS,
+            self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->setSearchable([
+            SpyDiscountTableMap::COL_DISPLAY_NAME,
+            SpyDiscountTableMap::COL_DESCRIPTION,
+        ]);
+
+        $config->addRawColumn(self::ACTIONS);
 
         return $config;
     }
@@ -84,7 +95,7 @@ class DiscountsTable extends AbstractTable
                 SpyDiscountTableMap::COL_IS_ACTIVE => $item->getIsActive(),
                 self::COL_PERIOD => $item->getValidFrom(self::DATE_FORMAT) . ' - ' . $item->getValidTo(self::DATE_FORMAT),
                 self::COL_DECISION_RULES => implode(', ', $chosenDecisionRules),
-                self::COL_OPTIONS => implode(' ', $this->getRowOptions($item)),
+                self::ACTIONS => $this->getRowOptions($item),
             ];
         }
 
@@ -111,7 +122,7 @@ class DiscountsTable extends AbstractTable
      */
     protected function getDiscountAmountType(SpyDiscount $discount)
     {
-        if ($discount->getCalculatorPlugin() === DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE) {
+        if ($discount->getCalculatorPlugin() === DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE) {
             return 'percentage';
         }
 
@@ -121,19 +132,13 @@ class DiscountsTable extends AbstractTable
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $item
      *
-     * @return array
+     * @return string
      */
     protected function getRowOptions(SpyDiscount $item)
     {
-        $options = [];
-        $options[] = $this->generateEditButton(
-            Url::generate(self::URL_DISCOUNT_CART_RULE_EDIT, [
-                self::PARAM_ID_DISCOUNT => $item->getIdDiscount(),
-            ]),
-            'Edit'
-        );
+        $url = Url::generate('/discount/cart-rule/edit', [self::PARAM_ID_DISCOUNT => $item->getIdDiscount()]);
 
-        return $options;
+        return '<a class="btn btn-xs btn-info" href="' . $url->buildEscaped() . '">Edit</a>';
     }
 
 }

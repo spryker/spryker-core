@@ -1,23 +1,24 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Customer\Communication\Table;
 
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
+use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\Library\DateFormatterInterface;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CustomerTable extends AbstractTable
 {
 
-    const FORMAT = 'Y-m-d G:i:s';
     const ACTIONS = 'Actions';
 
     const COL_ZIP_CODE = 'zip_code';
@@ -30,16 +31,23 @@ class CustomerTable extends AbstractTable
     const COL_LAST_NAME = 'last_name';
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     protected $customerQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $customerQueryContainer
+     * @var \Spryker\Shared\Library\DateFormatterInterface
      */
-    public function __construct(CustomerQueryContainer $customerQueryContainer)
+    protected $dateFormatter;
+
+    /**
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     */
+    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, DateFormatterInterface $dateFormatter)
     {
         $this->customerQueryContainer = $customerQueryContainer;
+        $this->dateFormatter = $dateFormatter;
     }
 
     /**
@@ -60,6 +68,10 @@ class CustomerTable extends AbstractTable
             self::COL_FK_COUNTRY => 'Country',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
+        $config->addRawColumn(self::ACTIONS);
 
         $config->setSortable([
             self::COL_ID_CUSTOMER,
@@ -105,7 +117,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer|null $customer
      *
      * @return string
      */
@@ -149,7 +161,7 @@ class CustomerTable extends AbstractTable
         $customerRow = $customer->toArray();
 
         $customerRow[self::COL_FK_COUNTRY] = $this->getCountryNameByCustomer($customer);
-        $customerRow[self::COL_CREATED_AT] = $customer->getCreatedAt(self::FORMAT);
+        $customerRow[self::COL_CREATED_AT] = $this->dateFormatter->dateTime($customer->getCreatedAt());
         $customerRow[self::ACTIONS] = $this->buildLinks($customer);
 
         return $customerRow;

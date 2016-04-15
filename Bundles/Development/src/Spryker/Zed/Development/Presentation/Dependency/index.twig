@@ -1,0 +1,28 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Dependency graphs of all core bundles' } %}
+        {% block widget_content %}
+            <div class="spy-layout sparse">
+                <p><a href="/development/dependency/simple?build-tree=true">Simple Dependency Graph</a> | <a href="/development/dependency/adjacency-matrix?build-tree=true">Adjacency Matrix</a></p>
+
+                <table class="table-condensed table-hover table-striped table-dependency">
+                    {% for bundle in bundles %}
+                        <tr>
+                            <td class="text-right">{{ bundle }}</td>
+                            <td>
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/incoming', {bundle: bundle}) }}">in</a>&nbsp;
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/outgoing', {bundle: bundle}) }}">out</a>&nbsp;
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/simple', {bundle: bundle}) }}">simple</a>&nbsp;
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/dependency-tree-graph', {bundle: bundle}) }}">detailed</a>&nbsp;
+                                <a class="btn btn-xs btn-default" href="{{ url('/development/dependency/adjacency-matrix', {bundle: bundle}) }}">adjacency</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

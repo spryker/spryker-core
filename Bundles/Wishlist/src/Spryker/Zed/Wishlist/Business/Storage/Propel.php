@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Wishlist\Business\Storage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Wishlist\Business\Model\Customer;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
@@ -186,7 +187,7 @@ class Propel implements StorageInterface
     protected function getWishlistItemEntity(ItemTransfer $wishlistItemTransfer, $idWishlist)
     {
         $wishlistItemEntity = null;
-        if (!empty($wishlistItemTransfer->getGroupKey())) {
+        if ($wishlistItemTransfer->getGroupKey()) {
             $wishlistItemEntity = $this->wishlistQueryContainer
                 ->queryCustomerWishlistByGroupKey($idWishlist, $wishlistItemTransfer->getGroupKey())
                 ->findOne();

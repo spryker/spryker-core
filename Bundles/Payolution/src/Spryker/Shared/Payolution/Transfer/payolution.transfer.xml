@@ -8,6 +8,7 @@
         <property name="fkSalesOrder" type="int" />
         <property name="accountBrand" type="string" />
         <property name="clientIp" type="string" />
+        <property name="email" type="string"/>
         <property name="gender" type="string"/>
         <property name="dateOfBirth" type="string"/>
         <property name="languageIso2Code" type="string"/>
@@ -87,6 +88,7 @@
         <property name="paymentDetails" type="PayolutionCalculationPaymentDetail[]" singular="paymentDetail"/>
         <property name="tacUrl" type="string"/>
         <property name="dataPrivacyConsentUrl" type="string"/>
+        <property name="totalsAmountHash" type="string"/>
     </transfer>
 
     <transfer name="PayolutionCalculationPaymentDetail">
@@ -117,8 +119,7 @@
         <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
-    <transfer name="CheckoutRequest">
-        <property name="payolutionPayment" type="PayolutionPayment"/>
-        <property name="cart" type="Cart"/>
+    <transfer name="Payment">
+        <property name="payolution" type="PayolutionPayment"/>
     </transfer>
 </transfer>

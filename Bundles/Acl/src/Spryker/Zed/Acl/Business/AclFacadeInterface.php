@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Acl\Business;
@@ -18,11 +19,15 @@ interface AclFacadeInterface
     /**
      * Main Installer Method
      *
+     * @api
+     *
      * @return void
      */
     public function install();
 
     /**
+     * @api
+     *
      * @param string $groupName
      * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
@@ -31,6 +36,8 @@ interface AclFacadeInterface
     public function addGroup($groupName, RolesTransfer $rolesTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\GroupTransfer $transfer
      * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
@@ -39,6 +46,8 @@ interface AclFacadeInterface
     public function updateGroup(GroupTransfer $transfer, RolesTransfer $rolesTransfer);
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
@@ -46,6 +55,8 @@ interface AclFacadeInterface
     public function getGroup($id);
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
@@ -53,21 +64,29 @@ interface AclFacadeInterface
     public function getGroupByName($name);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getAllGroups();
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function hasCurrentUser();
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser();
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return bool
@@ -75,6 +94,8 @@ interface AclFacadeInterface
     public function existsRoleByName($name);
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -82,6 +103,8 @@ interface AclFacadeInterface
     public function getRoleById($id);
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -89,6 +112,8 @@ interface AclFacadeInterface
     public function getRoleByName($name);
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -96,6 +121,8 @@ interface AclFacadeInterface
     public function addRole($name);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -103,6 +130,8 @@ interface AclFacadeInterface
     public function updateRole(RoleTransfer $roleTransfer);
 
     /**
+     * @api
+     *
      * @param int $id
      *
      * @return \Generated\Shared\Transfer\RuleTransfer
@@ -110,6 +139,8 @@ interface AclFacadeInterface
     public function getRule($id);
 
     /**
+     * @api
+     *
      * @param int $idUser
      * @param int $idGroup
      *
@@ -118,6 +149,8 @@ interface AclFacadeInterface
     public function addUserToGroup($idUser, $idGroup);
 
     /**
+     * @api
+     *
      * @param int $idUser
      * @param int $idGroup
      *
@@ -126,6 +159,8 @@ interface AclFacadeInterface
     public function userHasGroupId($idUser, $idGroup);
 
     /**
+     * @api
+     *
      * @param string $name
      *
      * @return bool
@@ -133,15 +168,8 @@ interface AclFacadeInterface
     public function hasGroupByName($name);
 
     /**
-     * @deprecated Will be removed in 1.0.0.
+     * @api
      *
-     * @param int $idUser
-     *
-     * @return \Generated\Shared\Transfer\GroupTransfer
-     */
-    public function getUserGroup($idUser);
-
-    /**
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer
@@ -149,6 +177,8 @@ interface AclFacadeInterface
     public function getUserGroups($idUser);
 
     /**
+     * @api
+     *
      * @param int $idUser
      * @param int $idGroup
      *
@@ -157,6 +187,8 @@ interface AclFacadeInterface
     public function removeUserFromGroup($idUser, $idGroup);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
      * @return \Generated\Shared\Transfer\RuleTransfer
@@ -164,6 +196,8 @@ interface AclFacadeInterface
     public function addRule(RuleTransfer $ruleTransfer);
 
     /**
+     * @api
+     *
      * @param int $idGroup
      *
      * @return \Generated\Shared\Transfer\RolesTransfer
@@ -171,6 +205,8 @@ interface AclFacadeInterface
     public function getGroupRoles($idGroup);
 
     /**
+     * @api
+     *
      * @param int $idGroup
      *
      * @return \Generated\Shared\Transfer\RulesTransfer
@@ -178,6 +214,8 @@ interface AclFacadeInterface
     public function getGroupRules($idGroup);
 
     /**
+     * @api
+     *
      * @param int $idRole
      *
      * @return \Generated\Shared\Transfer\RulesTransfer
@@ -185,16 +223,21 @@ interface AclFacadeInterface
     public function getRoleRules($idRole);
 
     /**
+     * @api
+     *
      * @param int $idAclRole
      * @param string $bundle
      * @param string $controller
      * @param string $action
+     * @param int $type
      *
      * @return bool
      */
     public function existsRoleRule($idAclRole, $bundle, $controller, $action, $type);
 
     /**
+     * @api
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -202,6 +245,8 @@ interface AclFacadeInterface
     public function getUserRoles($idUser);
 
     /**
+     * @api
+     *
      * @param int $idGroup
      *
      * @return bool
@@ -209,6 +254,8 @@ interface AclFacadeInterface
     public function removeGroup($idGroup);
 
     /**
+     * @api
+     *
      * @param int $idRole
      *
      * @return bool
@@ -216,6 +263,8 @@ interface AclFacadeInterface
     public function removeRole($idRole);
 
     /**
+     * @api
+     *
      * @param int $idRule
      *
      * @return bool
@@ -223,6 +272,8 @@ interface AclFacadeInterface
     public function removeRule($idRule);
 
     /**
+     * @api
+     *
      * @param int $idRole
      * @param int $idGroup
      *
@@ -231,6 +282,8 @@ interface AclFacadeInterface
     public function addRoleToGroup($idRole, $idGroup);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\GroupTransfer $groupTransfer
      * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
@@ -239,6 +292,8 @@ interface AclFacadeInterface
     public function addRolesToGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      * @param string $bundle
      * @param string $controller
@@ -249,6 +304,8 @@ interface AclFacadeInterface
     public function checkAccess(UserTransfer $user, $bundle, $controller, $action);
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param string $controller
      * @param string $action

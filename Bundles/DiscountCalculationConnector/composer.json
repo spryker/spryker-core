@@ -11,18 +11,18 @@
     }
   },
   "require": {
-    "spryker/calculation": "^1.0.0",
-    "spryker/discount": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/sales": "^1.0.0"
+    "spryker/calculation": "^2.0.0",
+    "spryker/discount": "^2.0.0",
+    "spryker/kernel": "^2.0.0",
+    "spryker/sales": "^2.0.0"
   },
-  "require-dev": {},
   "description": "discount calculation connector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   }
 }

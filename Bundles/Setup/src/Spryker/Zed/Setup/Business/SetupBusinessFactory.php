@@ -1,14 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Setup\Business;
 
-use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Setup\Business\Internal\Install;
 use Spryker\Zed\Setup\Business\Model\Cronjobs;
+use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Spryker\Zed\Setup\Communication\Console\DeployPreparePropelConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
@@ -164,6 +167,19 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     protected function createDeployPreparePropelConsole()
     {
         return new DeployPreparePropelConsole();
+    }
+
+    /**
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     *
+     * @return \Spryker\Zed\Product\Business\Internal\Install
+     */
+    public function createTestDataInstaller(MessengerInterface $messenger)
+    {
+        $installer = new Install();
+        $installer->setMessenger($messenger);
+
+        return $installer;
     }
 
 }

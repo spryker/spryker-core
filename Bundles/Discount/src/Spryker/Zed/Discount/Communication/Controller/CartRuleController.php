@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Transfer\CartRuleTransfer;
@@ -47,46 +52,6 @@ class CartRuleController extends AbstractController
      *
      * @return array
      */
-    public function decisionRuleAction(Request $request)
-    {
-        $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
-
-        $form = $this
-            ->getFactory()
-            ->createDecisionRuleForm()
-            ->handleRequest($request);
-
-        return [
-            'form' => $form->createView(),
-            'elementsCount' => $elements,
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function collectorPluginsAction(Request $request)
-    {
-        $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
-
-        $form = $this
-            ->getFactory()
-            ->createCollectorPluginForm()
-            ->handleRequest($request);
-
-        return [
-            'form' => $form->createView(),
-            'elementsCount' => $elements,
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
     public function createAction(Request $request)
     {
         $dataProvider = $this->getFactory()->createCartRuleFormDataProvider();
@@ -119,7 +84,7 @@ class CartRuleController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idDiscount = $request->query->getInt(DiscountConstants::PARAM_ID_DISCOUNT);
+        $idDiscount = $this->castId($request->query->get(DiscountConstants::PARAM_ID_DISCOUNT));
 
         $dataProvider = $this->getFactory()->createCartRuleFormDataProvider();
         $form = $this

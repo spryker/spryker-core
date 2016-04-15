@@ -1,24 +1,25 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 // FIXME core-120 move queries to queryContainer
 class Dummy implements DummyInterface
 {
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\Builder
+     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */
     protected $builder;
 
@@ -97,8 +98,6 @@ class Dummy implements DummyInterface
             $item->setName('Testproduct');
             $item->setSku('12345ABC');
             $item->setGrossPrice(10);
-            $item->setPriceToPay(5);
-            $item->setVariety('Single');
 
             $orders[$orderItemArray['orderId']]->addItem($item);
 

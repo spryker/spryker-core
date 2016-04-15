@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cart\Communication\Controller;
 
-use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -17,83 +17,23 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItemAction(ChangeTransfer $cartChange)
+    public function addItemAction(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->addToCart($cartChange);
+        return $this->getFacade()->add($cartChangeTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantityAction(ChangeTransfer $cartChange)
+    public function removeItemAction(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->increaseQuantity($cartChange);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function decreaseItemQuantityAction(ChangeTransfer $cartChange)
-    {
-        return $this->getFacade()->decreaseQuantity($cartChange);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function removeItemAction(ChangeTransfer $cartChange)
-    {
-        return $this->getFacade()->removeFromCart($cartChange);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartTransfer $cartTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function recalculateAction(CartTransfer $cartTransfer)
-    {
-        return $this->getFacade()->recalculate($cartTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function addCouponCodeAction(ChangeTransfer $cartChange)
-    {
-        return $this->getFacade()->addCouponCode($cartChange);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function removeCouponCodeAction(ChangeTransfer $cartChange)
-    {
-        return $this->getFacade()->removeCouponCode($cartChange);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function clearCouponCodesAction(ChangeTransfer $cartChange)
-    {
-        return $this->getFacade()->clearCouponCodes($cartChange);
+        return $this->getFacade()->remove($cartChangeTransfer);
     }
 
 }

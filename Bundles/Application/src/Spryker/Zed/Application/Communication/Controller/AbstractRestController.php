@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Application\Communication\Controller;
@@ -36,32 +37,47 @@ abstract class AbstractRestController
         return new JsonResponse($result);
     }
 
+    /**
+     * @return mixed|null
+     */
     protected function routeRequest()
     {
         $result = null;
         switch ($this->request->getMethod()) {
-            case self::GET :
+            case self::GET:
                 $result = $this->get();
                 break;
-            case self::POST :
+            case self::POST:
                 $result = $this->post();
                 break;
-            case self::PUT :
+            case self::PUT:
                 $result = $this->put();
                 break;
-            case self::DELETE :
+            case self::DELETE:
                 $result = $this->delete();
         }
 
         return $result;
     }
 
+    /**
+     * @return mixed
+     */
     abstract protected function get();
 
+    /**
+     * @return mixed
+     */
     abstract protected function post();
 
+    /**
+     * @return mixed
+     */
     abstract protected function put();
 
+    /**
+     * @return mixed
+     */
     abstract protected function delete();
 
 }

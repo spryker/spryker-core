@@ -1,19 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Tax\Business\Model;
 
-use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
-use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Propel\Runtime\Collection\Collection;
+use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
+use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 class TaxWriter implements TaxWriterInterface
 {
@@ -275,7 +276,7 @@ class TaxWriter implements TaxWriterInterface
      */
     private function findOrCreateTaxRateEntity(TaxRateTransfer $taxRateTransfer)
     {
-        if (!empty($taxRateTransfer->getIdTaxRate())) {
+        if ($taxRateTransfer->getIdTaxRate()) {
             $taxRateEntity = $this->queryContainer->queryTaxRate($taxRateTransfer->getIdTaxRate())->findOne();
             if (!$taxRateEntity) {
                 throw new ResourceNotFoundException();

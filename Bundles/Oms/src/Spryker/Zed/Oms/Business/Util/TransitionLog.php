@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Spryker\Shared\Library\System;
-use Spryker\Zed\Oms\Business\Process\EventInterface;
+use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
+use Spryker\Shared\Library\System;
+use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -66,12 +67,9 @@ class TransitionLog implements TransitionLogInterface
         }
     }
 
-    /***
-     * @param SpySalesOrderItem[] $salesOrderItems
-     *
-     * @return void
-     */
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
+     *
      * @return void
      */
     public function init(array $salesOrderItems)

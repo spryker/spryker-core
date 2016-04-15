@@ -1,30 +1,29 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class Item implements CollectorInterface
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function collect(
-        CalculableInterface $container,
-        DiscountCollectorTransfer $discountCollectorTransfer
-    ) {
+    public function collect(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer)
+    {
         $discountableItems = [];
 
-        foreach ($container->getCalculableObject()->getItems() as $item) {
+        foreach ($quoteTransfer->getItems() as $item) {
             $discountableItems[] = $item;
         }
 

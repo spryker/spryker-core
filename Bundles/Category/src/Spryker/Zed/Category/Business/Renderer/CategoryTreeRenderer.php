@@ -1,16 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Category\Business\Renderer;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Graph\GraphInterface;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Shared\Graph\GraphInterface;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTreeRenderer
 {
@@ -23,12 +24,12 @@ class CategoryTreeRenderer
     protected $fontSize = 11;
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var int
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
 
@@ -38,11 +39,11 @@ class CategoryTreeRenderer
     protected $graph;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Spryker\Shared\Graph\GraphInterface $graph
      */
-    public function __construct(CategoryQueryContainer $queryContainer, LocaleTransfer $locale, GraphInterface $graph)
+    public function __construct(CategoryQueryContainerInterface $queryContainer, LocaleTransfer $locale, GraphInterface $graph)
     {
         $this->queryContainer = $queryContainer;
         $this->locale = $locale;
@@ -120,7 +121,7 @@ class CategoryTreeRenderer
      */
     protected function getNodeHash(SpyCategoryNode $node)
     {
-        return md5($this->getNodeName($node));
+        return sha1($this->getNodeName($node));
     }
 
     /**

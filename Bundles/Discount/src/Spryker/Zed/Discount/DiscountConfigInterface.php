@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Discount;
@@ -9,33 +10,9 @@ namespace Spryker\Zed\Discount;
 interface DiscountConfigInterface
 {
 
-    /**
-     * @throws \ErrorException
-     *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface
-     */
-    public function getDefaultVoucherDecisionRulePlugin();
-
-    /**
-     * @param string $pluginName
-     *
-     * @return mixed
-     */
-    public function getDecisionRulePluginByName($pluginName);
-
-    /**
-     * @param string $pluginName
-     *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
-     */
-    public function getCalculatorPluginByName($pluginName);
-
-    /**
-     * @param string $pluginName
-     *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface
-     */
-    public function getCollectorPluginByName($pluginName);
+    const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';
+    const KEY_VOUCHER_CODE_VOWELS = 'vowels';
+    const KEY_VOUCHER_CODE_NUMBERS = 'numbers';
 
     /**
      * @return array

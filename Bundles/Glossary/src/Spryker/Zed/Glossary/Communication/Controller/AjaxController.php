@@ -1,12 +1,13 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,14 +29,7 @@ class AjaxController extends AbstractController
     public function keysAction(Request $request)
     {
         $term = $request->query->get(self::SEARCH_TERM);
-        $keys = $this->getFactory()
-            ->getQueryContainer()
-            ->queryActiveKeysByName('%' . $term . '%')
-            ->select([
-                SpyGlossaryKeyTableMap::COL_KEY,
-            ])
-            ->find()
-            ->toArray();
+        $keys = $this->getFacade()->getKeySuggestions($term);
 
         return new JsonResponse($keys);
     }

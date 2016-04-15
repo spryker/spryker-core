@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ItemGrouperWishlistConnector\Communication\Plugin;
@@ -29,7 +30,7 @@ class PreSaveItemGroupingPlugin extends AbstractPlugin implements PreSavePluginI
         $groupAbleContainerTransfer = $this->getFacade()->groupOrderItems($groupAbleContainerTransfer);
 
         if (count($groupAbleContainerTransfer->getItems()) > 0) {
-            $itemsCollection->exchangeArray((array) $groupAbleContainerTransfer->getItems());
+            $itemsCollection->exchangeArray((array)$groupAbleContainerTransfer->getItems());
         }
     }
 

@@ -1,15 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Cms\Communication\Table;
 
-use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -45,6 +46,9 @@ class CmsPageTable extends AbstractTable
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
         ]);
@@ -92,13 +96,13 @@ class CmsPageTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
-            Url::generate('/cms/glossary/', [
+            Url::generate('/cms/glossary', [
                 self::REQUEST_ID_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
             'Edit Placeholders'
         );
         $buttons[] = $this->generateEditButton(
-            Url::generate('/cms/page/edit/', [
+            Url::generate('/cms/page/edit', [
                 self::REQUEST_ID_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
             ]),
             'Edit Page'

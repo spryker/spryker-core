@@ -1,6 +1,11 @@
-# Zed Package
+# Storage Bundle
 
-## 1.0.0
-*2015-01-14 | René Klatt*
+## Installation
 
-- Spryker init
+```
+composer require spryker/storage
+```
+
+## Documentation
+
+[Storage Documentation](http://spryker.github.io/core/bundles/storage)

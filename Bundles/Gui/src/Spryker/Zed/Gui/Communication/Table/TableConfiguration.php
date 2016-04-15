@@ -1,6 +1,8 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Gui\Communication\Table;
@@ -42,7 +44,7 @@ class TableConfiguration
     private $sortableFields;
 
     /**
-     * @var string
+     * @var int
      */
     private $defaultSortColumnIndex = 0;
 
@@ -50,6 +52,43 @@ class TableConfiguration
      * @var string
      */
     private $defaultSortDirection = self::SORT_ASC;
+
+    /**
+     * @var array
+     */
+    private $rawColumns = [];
+
+    /**
+     * @return array
+     */
+    public function getRawColumns()
+    {
+        return $this->rawColumns;
+    }
+
+    /**
+     * @param array $rawColumns
+     *
+     * @return $this
+     */
+    public function setRawColumns(array $rawColumns)
+    {
+        $this->rawColumns = $rawColumns;
+
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     *
+     * @return $this
+     */
+    public function addRawColumn($column)
+    {
+        $this->rawColumns[] = $column;
+
+        return $this;
+    }
 
     /**
      * @return array
@@ -97,7 +136,7 @@ class TableConfiguration
      */
     public function setFooterFromHeader()
     {
-        if (empty($this->getHeader()) === true) {
+        if (!$this->getHeader()) {
             return $this;
         }
 

@@ -1,14 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Collector\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -18,43 +19,67 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
 {
 
     /**
+     * @api
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportStorage(OutputInterface $output)
+    {
+        $exporter = $this->getFactory()->createYvesStorageExporter();
+
+        return $exporter->exportStorage($output);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output)
+    {
+        $exporter = $this->getFactory()->createYvesStorageExporter();
+
+        return $exporter->exportStorageByLocale($locale, $output);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportSearchByLocale(LocaleTransfer $locale, OutputInterface $output)
+    {
+        $exporter = $this->getFactory()->createYvesSearchExporter();
+
+        return $exporter->exportStorageByLocale($locale, $output);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
-    public function exportKeyValueForLocale(LocaleTransfer $locale, OutputInterface $output = null)
-    {
-        $exporter = $this->getFactory()->createYvesKeyValueExporter();
-
-        return $exporter->exportForLocale($locale, $output);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
-     */
-    public function exportSearchForLocale(LocaleTransfer $locale)
-    {
-        $exporter = $this->getFactory()->createYvesSearchExporter();
-
-        return $exporter->exportForLocale($locale);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
-     */
-    public function updateSearchForLocale(LocaleTransfer $locale)
+    public function updateSearchByLocale(LocaleTransfer $locale, OutputInterface $output)
     {
         $exporter = $this->getFactory()->createYvesSearchUpdateExporter();
 
-        return $exporter->exportForLocale($locale);
+        return $exporter->exportStorageByLocale($locale, $output);
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
@@ -65,6 +90,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchIndexName()
@@ -73,6 +100,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchDocumentType()
@@ -81,6 +110,8 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return bool
@@ -91,13 +122,39 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param array $keys
      *
      * @return bool
      */
     public function deleteStorageTimestamps(array $keys = [])
     {
-        return $this->getFactory()->createKeyValueMarker()->deleteTimestamps($keys);
+        return $this->getFactory()->createStorageMarker()->deleteTimestamps($keys);
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getAllCollectorTypes()
+    {
+        $exporter = $this->getFactory()->createYvesStorageExporter();
+
+        return $exporter->getAllCollectorTypes();
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getEnabledCollectorTypes()
+    {
+        $exporter = $this->getFactory()->createYvesStorageExporter();
+
+        return $exporter->getEnabledCollectorTypes();
     }
 
 }
