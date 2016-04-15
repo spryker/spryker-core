@@ -84,7 +84,7 @@ class Transition implements TransitionInterface
      *
      * @return void
      */
-    public function setEvent($event)
+    public function setEvent(EventInterface $event)
     {
         $this->event = $event;
     }
@@ -110,7 +110,7 @@ class Transition implements TransitionInterface
      *
      * @return void
      */
-    public function setSource($source)
+    public function setSource(StateInterface $source)
     {
         $this->source = $source;
     }
@@ -128,7 +128,7 @@ class Transition implements TransitionInterface
      *
      * @return void
      */
-    public function setTarget($target)
+    public function setTarget(StateInterface $target)
     {
         $this->target = $target;
     }

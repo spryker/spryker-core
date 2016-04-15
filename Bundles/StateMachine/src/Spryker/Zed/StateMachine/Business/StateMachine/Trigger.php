@@ -94,7 +94,7 @@ class Trigger implements TriggerInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param int $identifier
-     * @return bool
+     * @return int
      * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
      */
     public function triggerForNewStateMachineItem(
@@ -119,10 +119,12 @@ class Trigger implements TriggerInterface
             $processes
         );
 
-        return $this->triggerOnEnterEvents(
+        $this->triggerOnEnterEvents(
             $itemsWithOnEnterEvent,
             $stateMachineProcessTransfer->getStateMachineName()
         );
+
+        return $this->affectedItems;
     }
 
     /**

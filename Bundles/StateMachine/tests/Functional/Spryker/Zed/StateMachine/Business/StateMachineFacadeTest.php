@@ -18,6 +18,7 @@ use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\StateMachine\Business\Process\EventInterface;
+use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
@@ -67,7 +68,7 @@ class StateMachineFacadeTest extends Test
             ->findOne();
 
         $this->assertNotEmpty($stateMachineItemStateEntity);
-        $this->assertEquals(1, $triggerResult);
+        $this->assertEquals(3, $triggerResult);
         $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
         $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
         $this->assertEquals($processName, $stateMachineItemTransfer->getProcessName());

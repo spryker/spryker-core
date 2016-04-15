@@ -289,24 +289,25 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processMap
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap
      *
      * @return void
      */
     protected function createSubProcesses(array $processMap)
     {
         foreach ($this->rootElement as $xmlProcess) {
-            if (empty($xmlProcess->subprocesses)) {
-                continue;
-            }
+            $processName = $this->getAttributeString($xmlProcess, 'name');
 
-            $processName = $this->getAttributeString($xmlProcess, self::STATE_NAME_ATTRIBUTE);
             $process = $processMap[$processName];
-            $xmlSubProcesses = $xmlProcess->subprocesses->children();
-            foreach ($xmlSubProcesses as $xmlSubProcess) {
-                $subProcessName = (string)$xmlSubProcess;
-                $subProcess = $processMap[$subProcessName];
-                $process->addSubProcess($subProcess);
+
+            if (!empty($xmlProcess->subprocesses)) {
+                $xmlSubProcesses = $xmlProcess->subprocesses->children();
+
+                foreach ($xmlSubProcesses as $xmlSubProcess) {
+                    $subProcessName = (string)$xmlSubProcess;
+                    $subProcess = $processMap[$subProcessName];
+                    $process->addSubProcess($subProcess);
+                }
             }
         }
     }

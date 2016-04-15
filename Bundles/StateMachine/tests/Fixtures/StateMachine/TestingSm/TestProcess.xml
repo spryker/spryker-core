@@ -2,6 +2,11 @@
 <statemachine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <process name="TestProcess" main="true">
+        <subprocesses>
+            <process>TestSubProcess</process>
+        </subprocesses>
+
+
         <states>
             <state name="new" reserved="true"/>
             <state name="invoice created">
@@ -150,5 +155,5 @@
             <event name="item not returned" timeout="14days" />
         </events>
     </process>
-
+    <process name="TestSubProcess" file="SubProcesses/TestSubProcess"/>
 </statemachine>

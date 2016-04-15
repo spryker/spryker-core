@@ -56,30 +56,31 @@ class Timeout implements TimeoutInterface
         StateMachineItemTransfer $stateMachineItemTransfer,
         \DateTime $currentTime
     ) {
+
         $targetState = $this->getStateFromProcess($stateMachineItemTransfer->getStateName(), $process);
+        if (!$targetState->hasTimeoutEvent()) {
+            return;
+        }
 
-        if ($targetState->hasTimeoutEvent()) {
-            $events = $targetState->getTimeoutEvents();
-
-            $handledEvents = [];
-            foreach ($events as $event) {
-                if (in_array($event->getName(), $handledEvents)) {
-                    continue;
-                }
-
-                $handledEvents[] = $event->getName();
-                $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
-
-                $this->dropTimeoutByItem($stateMachineItemTransfer);
-
-                (new SpyStateMachineEventTimeout())
-                    ->setTimeout($timeoutDate)
-                    ->setIdentifier($stateMachineItemTransfer->getIdentifier())
-                    ->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState())
-                    ->setFkStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess())
-                    ->setEvent($event->getName())
-                    ->save();
+        $events = $targetState->getTimeoutEvents();
+        $handledEvents = [];
+        foreach ($events as $event) {
+            if (in_array($event->getName(), $handledEvents)) {
+                continue;
             }
+
+            $handledEvents[] = $event->getName();
+            $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
+
+            $this->dropTimeoutByItem($stateMachineItemTransfer);
+
+            (new SpyStateMachineEventTimeout())
+                ->setTimeout($timeoutDate)
+                ->setIdentifier($stateMachineItemTransfer->getIdentifier())
+                ->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState())
+                ->setFkStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess())
+                ->setEvent($event->getName())
+                ->save();
         }
     }
 

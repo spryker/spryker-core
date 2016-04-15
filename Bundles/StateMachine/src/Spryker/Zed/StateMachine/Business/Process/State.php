@@ -45,11 +45,13 @@ class State implements StateInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $incomingTransitions
      *
-     * @return void
+     * @return $this
      */
     public function setIncomingTransitions(array $incomingTransitions)
     {
         $this->incomingTransitions = $incomingTransitions;
+
+        return $this;
     }
 
     /**
@@ -71,11 +73,13 @@ class State implements StateInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $outgoingTransitions
      *
-     * @return void
+     * @return $this
      */
     public function setOutgoingTransitions(array $outgoingTransitions)
     {
         $this->outgoingTransitions = $outgoingTransitions;
+
+        return $this;
     }
 
     /**
@@ -204,11 +208,13 @@ class State implements StateInterface
     /**
      * @param string $name
      *
-     * @return void
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -222,11 +228,13 @@ class State implements StateInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      *
-     * @return void
+     * @return $this
      */
     public function setProcess($process)
     {
         $this->process = $process;
+
+        return $this;
     }
 
     /**
@@ -313,11 +321,13 @@ class State implements StateInterface
     /**
      * @param string $flag
      *
-     * @return void
+     * @return $this
      */
     public function addFlag($flag)
     {
         $this->flags[] = $flag;
+
+        return $this;
     }
 
     /**
@@ -357,11 +367,13 @@ class State implements StateInterface
     /**
      * @param string $display
      *
-     * @return void
+     * @return $this
      */
     public function setDisplay($display)
     {
         $this->display = $display;
+
+        return $this;
     }
 
 }

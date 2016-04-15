@@ -44,7 +44,7 @@ interface TransitionInterface
      *
      * @return void
      */
-    public function setEvent($event);
+    public function setEvent(EventInterface $event);
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface
@@ -61,7 +61,7 @@ interface TransitionInterface
      *
      * @return void
      */
-    public function setSource($source);
+    public function setSource(StateInterface $source);
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
@@ -73,7 +73,7 @@ interface TransitionInterface
      *
      * @return void
      */
-    public function setTarget($target);
+    public function setTarget(StateInterface $target);
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface

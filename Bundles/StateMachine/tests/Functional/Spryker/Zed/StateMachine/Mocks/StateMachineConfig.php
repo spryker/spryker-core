@@ -17,7 +17,7 @@ class StateMachineConfig extends SprykerStateMachineConfig
      */
     public function getPathToStateMachineXmlFiles()
     {
-        return realpath(__DIR__ . '/../Fixtures/StateMachine');
+        return realpath(__DIR__ . '/../../../../../Fixtures/StateMachine');
     }
 
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
-use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Business\Process\StateInterface;
 
 class Condition implements ConditionInterface
@@ -94,7 +93,7 @@ class Condition implements ConditionInterface
         foreach ($transitions as $transition) {
             if ($transition->hasCondition()) {
                 $conditionName = $transition->getCondition();
-                $conditionPlugin = $this->getCondition($conditionName, $stateMachineName);
+                $conditionPlugin = $this->getConditionPlugin($conditionName, $stateMachineName);
 
                 try {
                     $conditionCheck = $conditionPlugin->check($stateMachineItemTransfer);
@@ -114,14 +113,7 @@ class Condition implements ConditionInterface
             }
         }
 
-        $targetState = $sourceState;
-        if (count($possibleTransitions) > 0) {
-            /** @var \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $selectedTransition */
-            $selectedTransition = array_shift($possibleTransitions);
-            $targetState = $selectedTransition->getTarget();
-        }
-
-        return $targetState;
+        return $this->findTargetState($sourceState, $possibleTransitions);
     }
 
     /**
@@ -137,10 +129,11 @@ class Condition implements ConditionInterface
 
         $stateToTransitionsMap = $this->createStateToTransitionMap($transitions);
 
+        $states = array_keys($stateToTransitionsMap);
         $stateMachineItemStateIds = $this->stateMachinePersistence->getStateMachineItemIdsByStatesProcessAndStateMachineName(
             $stateMachineName,
             $process->getName(),
-            array_keys($stateToTransitionsMap)
+            $states
         );
 
         $stateMachineItems = $this->stateMachineHandlerResolver
@@ -261,7 +254,7 @@ class Condition implements ConditionInterface
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface
      * @throws \Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException
      */
-    protected function getCondition($conditionString, $stateMachineName)
+    protected function getConditionPlugin($conditionString, $stateMachineName)
     {
         $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
         if (!isset($stateMachineHandler->getConditionPlugins()[$conditionString])) {
@@ -275,6 +268,23 @@ class Condition implements ConditionInterface
         }
 
         return $stateMachineHandler->getConditionPlugins()[$conditionString];
+    }
+
+    /**
+     * @param StateInterface $sourceState
+     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $possibleTransitions
+     *
+     * @return StateInterface
+     */
+    protected function findTargetState(StateInterface $sourceState, array $possibleTransitions)
+    {
+        $targetState = $sourceState;
+        if (count($possibleTransitions) > 0) {
+            /** @var \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $selectedTransition */
+            $selectedTransition = array_shift($possibleTransitions);
+            $targetState = $selectedTransition->getTarget();
+        }
+        return $targetState;
     }
 
 }

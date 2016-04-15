@@ -13,7 +13,7 @@ interface StateInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $incomingTransitions
      *
-     * @return void
+     * @return $this
      */
     public function setIncomingTransitions(array $incomingTransitions);
 
@@ -30,7 +30,7 @@ interface StateInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $outgoingTransitions
      *
-     * @return void
+     * @return $this
      */
     public function setOutgoingTransitions(array $outgoingTransitions);
 
@@ -94,7 +94,7 @@ interface StateInterface
     /**
      * @param string $name
      *
-     * @return void
+     * @return $this
      */
     public function setName($name);
 
@@ -106,7 +106,7 @@ interface StateInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      *
-     * @return void
+     * @return $this
      */
     public function setProcess($process);
 
@@ -142,7 +142,7 @@ interface StateInterface
     /**
      * @param string $flag
      *
-     * @return void
+     * @return $this
      */
     public function addFlag($flag);
 
@@ -171,7 +171,7 @@ interface StateInterface
     /**
      * @param string $display
      *
-     * @return void
+     * @return $this
      */
     public function setDisplay($display);
 
