@@ -25,9 +25,23 @@ class PropelConfigConverterJson
     public function __construct(array $config)
     {
         $this->config = $config;
-
         $this->validateConfig();
+
+        $this->fixMissingZedConfig();
+
         $this->createTargetDirectoryIfNotExists();
+    }
+
+    /**
+     * This method can be removed when clients get fixed `config/Shared/propel.php` config
+     *
+     * @return void
+     */
+    private function fixMissingZedConfig()
+    {
+        if (empty($this->config['database']['connections']['zed'])) {
+            $this->config['database']['connections']['zed'] = $this->config['database']['connections']['default'];
+        }
     }
 
     /**

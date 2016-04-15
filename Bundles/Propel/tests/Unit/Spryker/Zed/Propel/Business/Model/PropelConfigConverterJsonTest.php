@@ -53,12 +53,28 @@ class PropelConfigConverterJsonTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return array
+     */
+    protected function getTestConfiguration()
+    {
+        return [
+            'paths' => [
+                'phpConfDir' => $this->getFixtureDirectory()
+            ],
+            'database' => [
+                'connections' => [
+                    'default' => ''
+                ]
+            ]
+        ];
+    }
+
+    /**
      * @return void
      */
     public function testInitialization()
     {
-        $config = ['paths' => ['phpConfDir' => 'cat face']];
-        $propelConfigConverterJson = new PropelConfigConverterJson($config);
+        $propelConfigConverterJson = new PropelConfigConverterJson($this->getTestConfiguration());
 
         $this->assertInstanceOf(PropelConfigConverterJson::class, $propelConfigConverterJson);
     }
@@ -66,7 +82,7 @@ class PropelConfigConverterJsonTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testInitializationThrowsExceptionWhenNeededDataIsMissing()
+    public function testInitializationThrowsExceptionWhenDataIsMissing()
     {
         $this->setExpectedException(ConfigMissingPropertyException::class);
         new PropelConfigConverterJson([]);
@@ -79,30 +95,32 @@ class PropelConfigConverterJsonTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse(is_dir($this->getFixtureDirectory()));
 
-        $config = ['paths' => ['phpConfDir' => $this->getFixtureDirectory()]];
-        new PropelConfigConverterJson($config);
+        new PropelConfigConverterJson($this->getTestConfiguration());
 
         $this->assertTrue(is_dir($this->getFixtureDirectory()));
     }
 
+    /**
+     * @return void
+     */
     public function testConvertConfig()
     {
         $this->assertFalse(file_exists($this->fixtureDirectory . self::FILE_NAME));
 
-        $config = ['paths' => ['phpConfDir' => $this->getFixtureDirectory()]];
-        $propelConfigConverterJson = new PropelConfigConverterJson($config);
+        $propelConfigConverterJson = new PropelConfigConverterJson($this->getTestConfiguration());
         $propelConfigConverterJson->convertConfig();
 
         $this->assertTrue(file_exists($this->fixtureDirectory . self::FILE_NAME));
     }
 
+    /**
+     * @return void
+     */
     public function testConvertConfigThrowsExceptionIfFileNotCreated()
     {
         $this->assertFalse(file_exists($this->fixtureDirectory . self::FILE_NAME));
 
-        $config = ['paths' => ['phpConfDir' => $this->getFixtureDirectory()]];
-
-        $propelConfigConverterJsonMock = $this->getMock(PropelConfigConverterJson::class, ['writeToFile'], [$config]);
+        $propelConfigConverterJsonMock = $this->getMock(PropelConfigConverterJson::class, ['writeToFile'], [$this->getTestConfiguration()]);
         $propelConfigConverterJsonMock->expects($this->once())->method('writeToFile');
 
         $this->setExpectedException(ConfigFileNotCreatedException::class);
