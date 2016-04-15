@@ -24,4 +24,12 @@ class StateMachineCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(StateMachineDependencyProvider::PLUGINS_STATE_MACHINE_HANDLERS);
     }
 
+    /**
+     * @return \Spryker\Zed\StateMachine\StateMachineConfig
+     */
+    public function getBundleConfig()
+    {
+        return $this->getConfig();
+    }
+
 }

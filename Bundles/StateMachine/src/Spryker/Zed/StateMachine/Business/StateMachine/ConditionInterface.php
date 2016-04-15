@@ -7,7 +7,6 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
-use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Business\Process\StateInterface;
 
 interface ConditionInterface

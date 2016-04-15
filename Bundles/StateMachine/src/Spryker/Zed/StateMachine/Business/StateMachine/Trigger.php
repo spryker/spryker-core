@@ -284,11 +284,8 @@ class Trigger implements TriggerInterface
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @return array
      */
-    protected function updateStateByEvent(
-        $eventName,
-        $stateMachineName,
-        array $stateMachineItems
-    ) {
+    protected function updateStateByEvent($eventName, $stateMachineName, array $stateMachineItems)
+    {
         $sourceStateBuffer = [];
         $targetStateMap = [];
         foreach ($stateMachineItems as $i => $stateMachineItemTransfer) {

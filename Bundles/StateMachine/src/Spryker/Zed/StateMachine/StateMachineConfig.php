@@ -43,4 +43,30 @@ class StateMachineConfig extends AbstractBundleConfig
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'Zed' . DIRECTORY_SEPARATOR . 'StateMachine';
     }
 
+    /**
+     * @return string
+     */
+    public function getGraphDefaultFormat()
+    {
+        return 'svg';
+    }
+
+    /**
+     * @return string
+     */
+    public function getGraphDefaultFontSize()
+    {
+        return '14';
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getGraphFormatContentTypes()
+    {
+        return  [
+            'jpg' => 'image/jpeg',
+            'svg' => 'image/svg+xml',
+        ];
+    }
 }

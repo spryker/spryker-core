@@ -12,7 +12,7 @@ class HandlerResolver implements HandlerResolverInterface
 {
 
     /**
-     * @var array|\Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[]
+     * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[]
      */
     protected $handlers = [];
 

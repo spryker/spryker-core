@@ -50,8 +50,8 @@ interface StateMachineHandlerInterface
     public function getInitialStateForProcess($processName);
 
     /**
-     * This method is called when state of item was changed, client can create custom logic for example update it's related table with new state id/name.
-     * StateMachineItemTransfer:identifier is id of entity from implementor.
+     * This method is called when state of item was changed, client can create custom logic for example update it's related table with new stateId and processId.
+     * StateMachineItemTransfer:identifier is id of entity from client.
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
@@ -60,9 +60,9 @@ interface StateMachineHandlerInterface
     public function itemStateUpdated(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
-     * This method should return all item identifiers which are in passed state ids.
+     * This method returns list of StateMachineItemTransfer with identifier, processId and stateId
      *
-     * @param array $stateIds
+     * @param int[] $stateIds
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */

@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ListController extends AbstractController
 {
+    const URL_PARAM_STATE_MACHINE = 'state-machine';
 
     /**
      * @return array
@@ -39,7 +40,7 @@ class ListController extends AbstractController
      */
     public function processAction(Request $request)
     {
-        $stateMachineName = $request->query->get('state-machine');
+        $stateMachineName = $request->query->get(self::URL_PARAM_STATE_MACHINE);
 
         return $this->viewResponse([
             'processes' => $this->getFacade()->getProcesses($stateMachineName),

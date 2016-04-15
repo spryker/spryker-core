@@ -121,7 +121,7 @@ class StateMachineFacade extends AbstractFacade
      * @api
      *
      * @param string $stateMachineName
-     * @return bool
+     * @return int
      */
     public function checkConditions($stateMachineName)
     {
@@ -210,7 +210,7 @@ class StateMachineFacade extends AbstractFacade
      * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getManualEventsForStateMachineItem(
         $stateMachineName,
@@ -232,7 +232,7 @@ class StateMachineFacade extends AbstractFacade
      * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getManualEventsForStateMachineItems($stateMachineName, array $stateMachineItems)
     {
@@ -286,7 +286,7 @@ class StateMachineFacade extends AbstractFacade
 
     /**
      * Specification:
-     *  - Get history for given state machine item and process
+     *  - Get history for given state machine item reading state machine history table
      *
      * @api
      *
@@ -302,6 +302,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     *  - Find all items with flag for given state machine and process, parse xml.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -317,6 +320,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     *  - Find all items without flag for given state machine and process, parse xml.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer

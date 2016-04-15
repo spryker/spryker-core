@@ -7,6 +7,7 @@
 namespace Spryker\Zed\StateMachine\Communication\Controller;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,20 +15,17 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacade getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
  */
 class GraphController extends AbstractController
 {
 
-    const DEFAULT_FORMAT = 'svg';
-    const DEFAULT_FONT_SIZE = '14';
-
-    /**
-     * @var array
-     */
-    protected $formatContentTypes = [
-        'jpg' => 'image/jpeg',
-        'svg' => 'image/svg+xml',
-    ];
+    const URL_PARAM_PROCESS = 'process';
+    const URL_PARAM_FORMAT = 'format';
+    const URL_PARAM_FONT_SIZE = 'font';
+    const URL_PARAM_HIGHLIGHT_STATE = 'highlight-state';
+    const URL_PARAM_STATE_MACHINE = 'state-machine';
+    const URL_STATE_MACHINE_LIST = '/state-machine/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,29 +34,39 @@ class GraphController extends AbstractController
      */
     public function drawAction(Request $request)
     {
-        $processName = $request->query->get('process');
+        $processName = $request->query->get(self::URL_PARAM_PROCESS);
         if ($processName === null) {
-            return $this->redirectResponse('/state-machine/list');
+            return $this->redirectResponse(self::URL_STATE_MACHINE_LIST);
         }
 
-        $format = $request->query->get('format');
-        $fontSize = $request->query->getInt('font');
-        $highlightState = $request->query->get('state');
-        $stateMachine = $request->query->get('state-machine');
+        $format = $request->query->get(self::URL_PARAM_FORMAT);
+        $fontSize = $request->query->getInt(self::URL_PARAM_FONT_SIZE);
+        $highlightState = $request->query->get(self::URL_PARAM_HIGHLIGHT_STATE);
+        $stateMachine = $request->query->get(self::URL_PARAM_STATE_MACHINE);
 
         $reload = false;
+        $stateMachineBundleConfig = $this->getFactory()->getConfig();
         if ($format === null) {
-            $format = self::DEFAULT_FORMAT;
+            $format = $stateMachineBundleConfig->getGraphDefaultFormat();
             $reload = true;
         }
         if ($fontSize === 0) {
-            $fontSize = self::DEFAULT_FONT_SIZE;
+            $fontSize = $stateMachineBundleConfig->getGraphDefaultFontSize();
             $reload = true;
         }
 
         if ($reload) {
             return $this->redirectResponse(
-                '/state-machine/graph/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontSize.'&state='.$highlightState. '&state-machine='. $stateMachine
+                Url::generate(
+                    '/state-machine/graph/draw',
+                    [
+                        self::URL_PARAM_PROCESS => $processName,
+                        self::URL_PARAM_FORMAT => $format,
+                        self::URL_PARAM_FONT_SIZE => $fontSize,
+                        self::URL_PARAM_HIGHLIGHT_STATE => $highlightState,
+                        self::URL_PARAM_STATE_MACHINE => $stateMachine
+                    ]
+                )->build()
             );
         }
 
@@ -82,12 +90,13 @@ class GraphController extends AbstractController
      */
     public function drawItemAction(Request $request)
     {
-        $stateMachine = $request->query->get('state-machine');
-        $processName = $request->query->get('process-name');
-        $highlightState = $request->query->get('highlight-state');
+        $stateMachine = $request->query->get(self::URL_PARAM_STATE_MACHINE);
+        $processName = $request->query->get(self::URL_PARAM_PROCESS);
+        $highlightState = $request->query->get(self::URL_PARAM_HIGHLIGHT_STATE);
 
-        $format = $request->query->get('format', self::DEFAULT_FORMAT);
-        $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE);
+        $stateMachineBundleConfig = $this->getFactory()->getConfig();
+        $format = $request->query->get(self::URL_PARAM_FORMAT, $stateMachineBundleConfig->getGraphDefaultFormat());
+        $fontSize = $request->query->getInt(self::URL_PARAM_FONT_SIZE, $stateMachineBundleConfig->getGraphDefaultFontSize());
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setStateMachineName($stateMachine);
@@ -105,9 +114,9 @@ class GraphController extends AbstractController
      */
     public function drawPreviewVersionAction(Request $request)
     {
-        $processName = $request->query->get('process');
+        $processName = $request->query->get(self::URL_PARAM_PROCESS);
         if ($processName === null) {
-            return $this->redirectResponse('/state-machine/list');
+            return $this->redirectResponse(self::URL_STATE_MACHINE_LIST);
         }
 
         return $this->viewResponse([
@@ -123,8 +132,10 @@ class GraphController extends AbstractController
     protected function getStreamedResponseHeaders($format)
     {
         $headers = [];
-        if (isset($this->formatContentTypes[$format])) {
-            $headers['content-type'] = $this->formatContentTypes[$format];
+        $stateMachineBundleConfig = $this->getFactory()->getConfig();
+        $formatContentTypes = $stateMachineBundleConfig->getGraphFormatContentTypes();
+        if (isset($formatContentTypes[$format])) {
+            $headers['content-type'] =$formatContentTypes[$format];
         }
 
         return $headers;
