@@ -47,15 +47,17 @@ class CsvWriter implements CsvWriterInterface
     }
 
     /**
-     * @param \Spryker\Shared\Library\Writer\Csv\CsvFormatter $csvFormatter
+     * @param string $delimiter
+     * @param string $enclosure
+     * @param string $escape
      *
      * @return void
      */
-    public function setCsvFormat($csvFormatter)
+    public function setCsvFormat($delimiter = ",", $enclosure = "\"", $escape = "\\")
     {
-        $this->csvDelimiter = $csvFormatter->getDelimiter();
-        $this->csvEnclosure = $csvFormatter->getEnclosure();
-        $this->csvEscape = $csvFormatter->getEscape();
+        $this->csvDelimiter = $delimiter;
+        $this->csvEnclosure = $enclosure;
+        $this->csvEscape = $escape;
     }
 
     /**
@@ -72,18 +74,24 @@ class CsvWriter implements CsvWriterInterface
     }
 
     /**
-     * @param array $headerKeys
-     *
      * @return \SplFileObject
      */
-    public function getFile($headerKeys = [])
+    public function getFile()
+    {
+        return $this->csvFile;
+    }
+
+    /**
+     * @param array $columns
+     *
+     * @return void
+     */
+    protected function initializeHeaderColumns(array $columns)
     {
         if ($this->csvFile === null) {
             $this->csvFile = $this->createCsvFile($this->csvFilename);
-            $this->csvFile->fputcsv($headerKeys);
+            $this->csvFile->fputcsv($columns);
         }
-
-        return $this->csvFile;
     }
 
     /**
@@ -94,8 +102,9 @@ class CsvWriter implements CsvWriterInterface
     public function write($data)
     {
         $result = 0;
+        $this->initializeHeaderColumns(array_keys($data[array_keys($data)[0]]));
         foreach ($data as $key => $row) {
-            $result = $this->getFile(array_keys($row))->fputcsv($row);
+            $result = $this->getFile()->fputcsv($row);
         }
         return $result;
     }

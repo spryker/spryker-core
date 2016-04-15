@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Collector\Business;
 
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
-use Spryker\Shared\Library\Writer\Csv\CsvFormatter;
 use Spryker\Zed\Collector\Business\Exporter\CollectorExporter;
 use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
 use Spryker\Zed\Collector\Business\Exporter\FileExporter;
@@ -20,7 +19,7 @@ use Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
 use Spryker\Zed\Collector\Business\Exporter\StorageExporter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterPathConstructor;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
@@ -126,13 +125,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         $storageExporter = new FileExporter(
             $this->getTouchQueryContainer(),
-            $this->createFileWriter(),
+            $this->createFileWriterBuilder(),
             $this->createStorageMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterStorageTouchUpdater(),
-            $this->createFileWriterPathConstructor(),
-            $this->createFileWriterFormatter()
+            $this->createExporterWriterStorageTouchUpdater()
         );
 
         foreach ($this->getProvidedDependency(CollectorDependencyProvider::FILE_PLUGINS) as $touchItemType => $collectorPlugin) {
@@ -143,20 +140,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterPathConstructor
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder
      */
-    protected function createFileWriterPathConstructor()
+    protected function createFileWriterBuilder()
     {
-        $outputDir = $this->getConfig()->getFileExporterOutputDir();
-        return new FileWriterPathConstructor($outputDir);
-    }
-
-    /**
-     * @return \Spryker\Shared\Library\Writer\Csv\CsvFormatter
-     */
-    protected function createFileWriterFormatter()
-    {
-        return new CsvFormatter();
+        return new FileWriterBuilder($this->getConfig()->getFileExporterOutputDir());
     }
 
     /**

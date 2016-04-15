@@ -9,11 +9,8 @@ namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Spryker\Shared\Library\Writer\Csv\CsvFormatterInterface;
-use Spryker\Shared\Library\Writer\Csv\CsvWriter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterPathConstructor;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Business\Model\FailedResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
@@ -35,27 +32,26 @@ class FileExporter extends AbstractExporter
 
     /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder $fileWriterBuilder
      * @param \Spryker\Zed\Collector\Business\Exporter\MarkerInterface $marker
      * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failedResultPrototype
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResultPrototype
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterPathConstructor $pathConstructor
-     * @param \Spryker\Shared\Library\Writer\Csv\CsvFormatterInterface $fileFormatter
      */
     public function __construct(
         TouchQueryContainerInterface $queryContainer,
-        WriterInterface $writer,
+        FileWriterBuilder $fileWriterBuilder,
         MarkerInterface $marker,
         FailedResultInterface $failedResultPrototype,
         BatchResultInterface $batchResultPrototype,
-        TouchUpdaterInterface $touchUpdater,
-        FileWriterPathConstructor $pathConstructor,
-        CsvFormatterInterface $fileFormatter
+        TouchUpdaterInterface $touchUpdater
     ) {
-        parent::__construct($queryContainer, $writer, $marker, $failedResultPrototype, $batchResultPrototype, $touchUpdater);
-        $this->pathConstructor = $pathConstructor;
-        $this->fileFormatter = $fileFormatter;
+        $this->queryContainer = $queryContainer;
+        $this->marker = $marker;
+        $this->failedResultPrototype = $failedResultPrototype;
+        $this->batchResultPrototype = $batchResultPrototype;
+        $this->touchUpdater = $touchUpdater;
+        $this->writerBuilder = $fileWriterBuilder;
     }
 
     /**
@@ -86,9 +82,7 @@ class FileExporter extends AbstractExporter
 
         $collectorPlugin = $this->collectorPlugins[$type];
 
-        $csvWriter = new CsvWriter($this->pathConstructor->getExportPath($type, $locale));
-        $csvWriter->setCsvFormat($this->fileFormatter);
-        $this->writer->setWriterAdapter($csvWriter);
+        $this->writer = $this->writerBuilder->build($type, $locale);
 
         $collectorPlugin->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater, $output);
 
