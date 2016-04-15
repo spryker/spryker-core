@@ -29,4 +29,5 @@ interface PropelConstants
     const ZED_DB_ENGINE_MYSQL = ApplicationConstants::ZED_DB_ENGINE_MYSQL;
     const ZED_DB_ENGINE_PGSQL = ApplicationConstants::ZED_DB_ENGINE_PGSQL;
 
+    const ZED_DB_SUPPORTED_ENGINES = 'ZED_DB_SUPPORTED_ENGINES';
 }

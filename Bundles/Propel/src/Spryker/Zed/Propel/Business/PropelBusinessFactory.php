@@ -10,6 +10,7 @@ namespace Spryker\Zed\Propel\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
 use Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
+use Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollection;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\MySqlDatabaseCreator;
@@ -163,6 +164,14 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     protected function createPostgreSqlDatabaseCreator()
     {
         return new PostgreSqlDatabaseCreator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson
+     */
+    public function createConfigConverter()
+    {
+        return new PropelConfigConverterJson($this->getConfig()->getPropelConfig());
     }
 
     /**

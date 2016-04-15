@@ -36,7 +36,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * Create database for configured driver if it doesn't exists
+     * Specification:
+     * - Create database for configured driver if it doesn't exists
      *
      * @api
      *
@@ -45,6 +46,20 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     public function createDatabaseIfNotExists()
     {
         $this->getFactory()->createDatabaseCreator()->createDatabaseIfNotExists();
+    }
+
+    /**
+     * Specification:
+     * - Convert given PHP configuration into json configuration
+     * - File is placed in configured phpConfDir
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function convertConfig()
+    {
+        $this->getFactory()->createConfigConverter()->convertConfig();
     }
 
     /**

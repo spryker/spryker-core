@@ -25,13 +25,25 @@ interface PropelFacadeInterface
     public function copySchemaFilesToTargetDirectory();
 
     /**
-     * Create database for configured driver if it does not exists
+     * Specification:
+     * - Create database for configured driver if it does not exists
      *
      * @api
      *
      * @return void
      */
     public function createDatabaseIfNotExists();
+
+    /**
+     * Specification:
+     * - Convert given PHP configuration into json configuration
+     * - File is placed in configured phpConfDir
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function convertConfig();
 
     /**
      * @api

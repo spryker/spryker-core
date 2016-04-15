@@ -44,8 +44,8 @@ class PropelInstall extends Module
         $this->getFacade()->cleanPropelSchemaDirectory();
         $this->getFacade()->copySchemaFilesToTargetDirectory();
         $this->getFacade()->createDatabaseIfNotExists();
+        $this->getFacade()->convertConfig();
 
-        $this->convertConfig();
         $this->runCommands();
     }
 
@@ -78,10 +78,10 @@ class PropelInstall extends Module
     {
         $config = Config::get(PropelConstants::PROPEL);
         return $this->getBaseCommand()
-            . ' vendor/bin/propel model:build'
-            . $this->getConfigDirectoryForCommand($config)
-            . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package'
-        ;
+        . ' vendor/bin/propel model:build'
+        . $this->getConfigDirectoryForCommand($config)
+        . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package'
+            ;
     }
 
     /**
@@ -90,10 +90,10 @@ class PropelInstall extends Module
     private function getBaseCommand()
     {
         return 'APPLICATION_ENV=' . APPLICATION_ENV
-            . ' APPLICATION_STORE=' . APPLICATION_STORE
-            . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
-            . ' APPLICATION=' . APPLICATION
-        ;
+        . ' APPLICATION_STORE=' . APPLICATION_STORE
+        . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
+        . ' APPLICATION=' . APPLICATION
+            ;
     }
 
     /**
@@ -220,37 +220,6 @@ class PropelInstall extends Module
         if (!is_dir($pathForSchemas)) {
             mkdir($pathForSchemas, 0775, true);
         }
-    }
-
-    /**
-     * @return void
-     */
-    private function convertConfig()
-    {
-        $config = [
-            'propel' => Config::get(PropelConstants::PROPEL),
-        ];
-
-        $dsn = Config::get(PropelConstants::ZED_DB_ENGINE) . ':host=' . Config::get(PropelConstants::ZED_DB_HOST)
-            . ';dbname=' . Config::get(PropelConstants::ZED_DB_DATABASE);
-
-        $config['propel']['database']['connections']['default']['dsn'] = $dsn;
-        $config['propel']['database']['connections']['default']['user'] = Config::get(PropelConstants::ZED_DB_USERNAME);
-        $config['propel']['database']['connections']['default']['password'] = Config::get(PropelConstants::ZED_DB_PASSWORD);
-
-        $config['propel']['database']['connections']['zed'] = $config['propel']['database']['connections']['default'];
-
-        $json = json_encode($config, JSON_PRETTY_PRINT);
-
-        $fileName = $config['propel']['paths']['phpConfDir']
-            . DIRECTORY_SEPARATOR
-            . 'propel.json';
-
-        if (!is_dir(dirname($fileName))) {
-            mkdir(dirname($fileName), 0775, true);
-        }
-
-        file_put_contents($fileName, $json);
     }
 
 }
