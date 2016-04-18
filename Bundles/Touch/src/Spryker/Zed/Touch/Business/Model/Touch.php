@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Touch\Business\Model;
 
-use DateTime;
 use Generated\Shared\Transfer\TouchTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class Touch implements TouchInterface
@@ -23,21 +21,16 @@ class Touch implements TouchInterface
     protected $touchQueryContainer;
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected $connection;
-
-    /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
-     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
-    public function __construct(TouchQueryContainerInterface $queryContainer, ConnectionInterface $connection)
+    public function __construct(TouchQueryContainerInterface $queryContainer)
     {
         $this->touchQueryContainer = $queryContainer;
-        $this->connection = $connection;
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouch::bulkTouch()` instead
+     *
      * @param string $itemType
      * @param string $itemEvent
      * @param array $itemIds
@@ -50,7 +43,7 @@ class Touch implements TouchInterface
         $itemIdChunks = array_chunk($itemIds, self::BULK_UPDATE_CHUNK_SIZE);
         foreach ($itemIdChunks as $itemIdChunk) {
             $touchQuery = $this->touchQueryContainer->queryTouchEntries($itemType, $itemEvent, $itemIdChunk);
-            $updated += $touchQuery->update(['Touched' => new DateTime()]);
+            $updated += $touchQuery->update(['Touched' => new \DateTime()]);
         }
 
         return $updated;
