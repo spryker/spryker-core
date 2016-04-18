@@ -51,10 +51,9 @@ class IndexMapGenerator
      */
     public function generate(ElasticsearchIndexDefinitionTransfer $indexDefinition)
     {
-        $indexNamespaceSuffix = $this->normalizeToClassName($indexDefinition->getIndexName());
         foreach ($indexDefinition->getMappings() as $mappingName => $mapping) {
             $mappingName = $this->normalizeToClassName($mappingName);
-            $this->generateIndexMapClass($indexNamespaceSuffix, $mappingName, $mapping);
+            $this->generateIndexMapClass($mappingName, $mapping);
         }
     }
 
@@ -76,39 +75,35 @@ class IndexMapGenerator
     }
 
     /**
-     * @param string $indexNamespaceSuffix
      * @param string $mappingName
      * @param array $mapping
      *
      * @return void
      */
-    protected function generateIndexMapClass($indexNamespaceSuffix, $mappingName, array $mapping)
+    protected function generateIndexMapClass($mappingName, array $mapping)
     {
-        $targetDirectory = $this->targetBaseDirectory . $indexNamespaceSuffix . '/';
         $fileName = $mappingName . self::CLASS_NAME_SUFFIX . self::CLASS_EXTENSION;
-        $templateData =  $this->getTemplateData($indexNamespaceSuffix, $mappingName, $mapping);
+        $templateData =  $this->getTemplateData($mappingName, $mapping);
         $fileContent = $this->twig->render('class.php.twig', $templateData);
 
-        if (!is_dir($targetDirectory)) {
-            mkdir($targetDirectory, 0755, true);
+        if (!is_dir($this->targetBaseDirectory)) {
+            mkdir($this->targetBaseDirectory, 0755, true);
         }
 
-        file_put_contents($targetDirectory . $fileName, $fileContent);
+        file_put_contents($this->targetBaseDirectory . $fileName, $fileContent);
     }
 
     /**
-     * @param string $indexNamespaceSuffix
      * @param string $mappingName
      * @param array $mapping
      *
      * @return array
      */
-    protected function getTemplateData($indexNamespaceSuffix, $mappingName, array $mapping)
+    protected function getTemplateData($mappingName, array $mapping)
     {
         $properties = $this->getMappingProperties($mapping);
 
         return [
-            'indexNamespaceSuffix' => $indexNamespaceSuffix,
             'className' => $mappingName . self::CLASS_NAME_SUFFIX,
             'constants' => $this->getConstants($properties),
             'metadata' => $this->getMetadata($properties),

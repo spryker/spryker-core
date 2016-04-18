@@ -36,9 +36,16 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getJsonIndexDefinitionDirectories()
     {
-        return [
-            APPLICATION_ROOT_DIR . '/config/Zed/search/',
+        $directories = [
+            $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/*/Shared/*/IndexMap/',
         ];
+
+        $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/IndexMap/';
+        if (glob($applicationTransferGlobPattern)) {
+            $directories[] = $applicationTransferGlobPattern;
+        }
+
+        return $directories;
     }
 
     /**

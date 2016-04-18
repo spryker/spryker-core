@@ -8,7 +8,7 @@
 namespace Spryker\Client\Catalog\Plugin\ResultFormatter\Elasticsearch;
 
 use Elastica\ResultSet;
-use Generated\Shared\Search\Catalog\PageIndexMap;
+use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 /**

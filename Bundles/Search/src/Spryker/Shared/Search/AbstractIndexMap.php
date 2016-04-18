@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Search;
 
-class AbstractSearchMap
+class AbstractIndexMap implements IndexMapInterface
 {
 
     /**

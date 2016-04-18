@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Search\Business;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
@@ -50,7 +52,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     protected function createJsonIndexDefinitionLoader()
     {
-        return new JsonIndexDefinitionLoader($this->getConfig()->getJsonIndexDefinitionDirectories());
+        return new JsonIndexDefinitionLoader(
+            $this->getConfig()->getJsonIndexDefinitionDirectories(),
+            $this->createJsonIndexDefinitionMerger(),
+            Store::getInstance()->getAllowedStores()
+        );
     }
 
     /**
@@ -118,6 +124,14 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     {
         // FIXME
         return StorageInstanceBuilder::getElasticsearchInstance();
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface
+     */
+    protected function createJsonIndexDefinitionMerger()
+    {
+        return new JsonIndexDefinitionMerger();
     }
 
 }

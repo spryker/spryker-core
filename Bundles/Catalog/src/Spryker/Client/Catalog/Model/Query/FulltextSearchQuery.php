@@ -10,7 +10,7 @@ namespace Spryker\Client\Catalog\Model\Query;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;
-use Generated\Shared\Search\Catalog\PageIndexMap;
+use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Model\Query\QueryInterface;
 
 class FulltextSearchQuery implements QueryInterface

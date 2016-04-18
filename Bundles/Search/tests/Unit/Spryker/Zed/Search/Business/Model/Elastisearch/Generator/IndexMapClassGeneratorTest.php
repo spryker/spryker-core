@@ -61,7 +61,7 @@ class IndexMapClassGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFileEquals(
             self::FIXTURES_DIRECTORY . 'SimpleIndexMap.expected.php',
-            self::TARGET_DIRECTORY . 'Index1/SimpleIndexMap.php'
+            self::TARGET_DIRECTORY . 'SimpleIndexMap.php'
         );
     }
 
@@ -99,7 +99,7 @@ class IndexMapClassGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFileEquals(
             self::FIXTURES_DIRECTORY . 'ComplexIndexMap.expected.php',
-            self::TARGET_DIRECTORY . 'Index1/ComplexIndexMap.php'
+            self::TARGET_DIRECTORY . 'ComplexIndexMap.php'
         );
     }
 

@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Generated\Shared\Search\Index1;
+namespace Generated\Shared\Search;
 
-use Spryker\Shared\Search\AbstractSearchMap;
+use Spryker\Shared\Search\AbstractIndexMap;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF SEARCH MAP GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-class SimpleIndexMap extends AbstractSearchMap
+class SimpleIndexMap extends AbstractIndexMap
 {
 
     const FOO = 'foo';

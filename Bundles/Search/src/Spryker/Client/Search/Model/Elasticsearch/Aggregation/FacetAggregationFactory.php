@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
-use Generated\Shared\Search\Catalog\PageIndexMap;
+use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Exception\MissingFacetAggregationException;
 
