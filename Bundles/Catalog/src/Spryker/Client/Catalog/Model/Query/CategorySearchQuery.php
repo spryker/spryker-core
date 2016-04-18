@@ -36,9 +36,11 @@ class CategorySearchQuery implements QueryInterface
     }
 
     /**
+     * @param array $requestParameters
+     *
      * @return \Elastica\Query
      */
-    public function getSearchQuery()
+    public function getSearchQuery(array $requestParameters = [])
     {
         return $this->query;
     }

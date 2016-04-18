@@ -34,8 +34,10 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
             ->getSearchConfig()
             ->getFacetConfigBuilder();
 
-        $this->addFacetAggregationToQuery($searchQuery->getSearchQuery(), $facetConfig);
-        $this->addFacetFiltersToQuery($searchQuery->getSearchQuery(), $facetConfig, $requestParameters);
+        $query = $searchQuery->getSearchQuery();
+
+        $this->addFacetAggregationToQuery($query, $facetConfig);
+        $this->addFacetFiltersToQuery($query, $facetConfig, $requestParameters);
 
         return $searchQuery;
     }

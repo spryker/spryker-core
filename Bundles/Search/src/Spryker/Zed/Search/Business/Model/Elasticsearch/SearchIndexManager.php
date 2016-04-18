@@ -5,26 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Business\Model;
+namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 use Elastica\Exception\ResponseException;
-use Spryker\Client\Search\SearchClient;
+use Elastica\Index;
 
-// TODO: #1041 - This class needs to be reviewed and refactored
-class Search
+class SearchIndexManager implements SearchIndexManagerInterface
 {
 
     /**
-     * @var \Spryker\Client\Search\SearchClient
+     * @var \Elastica\Index
      */
-    private $searchClient;
+    private $index;
 
     /**
-     * @param \Spryker\Client\Search\SearchClient $searchClient
+     * @param \Elastica\Index $index
      */
-    public function __construct(SearchClient $searchClient)
+    public function __construct(Index $index)
     {
-        $this->searchClient = $searchClient;
+        $this->index = $index;
     }
 
     /**
@@ -33,7 +32,7 @@ class Search
     public function getTotalCount()
     {
         try {
-            return $this->searchClient->getIndexClient()->count();
+            return $this->index->count();
         } catch (ResponseException $e) {
             return 0;
         }
@@ -47,7 +46,7 @@ class Search
         $metaData = [];
 
         try {
-            $mapping = $this->searchClient->getIndexClient()->getMapping();
+            $mapping = $this->index->getMapping();
 
             if (isset($mapping['page']) && isset($mapping['page']['_meta'])) {
                 $metaData = $mapping['page']['_meta'];
@@ -64,7 +63,7 @@ class Search
      */
     public function delete()
     {
-        return $this->searchClient->getIndexClient()->delete();
+        return $this->index->delete();
     }
 
     /**
@@ -75,7 +74,7 @@ class Search
      */
     public function getDocument($key, $type)
     {
-        return $this->searchClient->getIndexClient()->getType($type)->getDocument($key);
+        return $this->index->getType($type)->getDocument($key);
     }
 
 }

@@ -35,7 +35,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      */
     public function getTotalCount()
     {
-        return $this->getFactory()->createSearch()->getTotalCount();
+        return $this->getFactory()->createSearchIndexManager()->getTotalCount();
     }
 
     /**
@@ -45,7 +45,10 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      */
     public function getMetaData()
     {
-        return $this->getFactory()->createSearch()->getMetaData();
+        return $this
+            ->getFactory()
+            ->createSearchIndexManager()
+            ->getMetaData();
     }
 
     /**
@@ -55,7 +58,10 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      */
     public function delete()
     {
-        return $this->getFactory()->createSearch()->delete();
+        return $this
+            ->getFactory()
+            ->createSearchIndexManager()
+            ->delete();
     }
 
     /**
@@ -68,7 +74,30 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      */
     public function getDocument($key, $type)
     {
-        return $this->getFactory()->createSearch()->getDocument($key, $type);
+        return $this
+            ->getFactory()
+            ->createSearchIndexManager()
+            ->getDocument($key, $type);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return \Elastica\ResultSet
+     */
+    public function searchKeys($searchString, array $requestParameters = [])
+    {
+        $query = $this
+            ->getFactory()
+            ->createSearchKeysQuery($searchString);
+
+        return $this
+            ->getFactory()
+            ->getSearchClient()
+            ->search($query, [], $requestParameters);
     }
 
 }

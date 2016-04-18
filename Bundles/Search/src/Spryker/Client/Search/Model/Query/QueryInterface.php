@@ -11,8 +11,10 @@ interface QueryInterface
 {
 
     /**
+     * @param array $requestParameters
+     *
      * @return mixed
      */
-    public function getSearchQuery();
+    public function getSearchQuery(array $requestParameters = []);
 
 }

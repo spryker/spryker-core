@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Heartbeat\Business;
 
-use Elastica\Client as ElasticaClient;
 use Predis\Client as PredisClient;
+use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
@@ -59,21 +59,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
      */
     protected function createElasticaClient()
     {
-        $config = [
-            'protocol' => ucfirst(Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT)),
-            'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
-            'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
-        ];
-
-        if (Config::hasValue(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
-            $config['headers'] = [
-                'Authorization' => 'Basic ' . Config::get(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)
-            ];
-        }
-
-        $client = new ElasticaClient($config);
-
-        return $client;
+        return (new SearchClientProvider())->getInstance();
     }
 
     /**

@@ -17,6 +17,7 @@ use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 use Spryker\Client\Search\Provider\IndexClientProvider;
+use Spryker\Client\Search\Provider\SearchClientProvider;
 
 class SearchFactory extends AbstractFactory
 {
@@ -55,20 +56,19 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\Client\ZedClient
-     * TODO: remove
+     * @return \Elastica\Client
      */
-    public function createIndexClient()
+    public function getElasticsearchClient()
     {
-        return $this->createProviderIndexClientProvider()->getClient();
+        return $this->createSearchClientProvider()->getInstance();
     }
 
     /**
-     * @return \Spryker\Client\Search\Provider\IndexClientProvider
+     * @return \Spryker\Client\Search\Provider\SearchClientProvider
      */
-    protected function createProviderIndexClientProvider()
+    protected function createSearchClientProvider()
     {
-        return new IndexClientProvider();
+        return new SearchClientProvider();
     }
 
     /**
@@ -77,8 +77,16 @@ class SearchFactory extends AbstractFactory
     public function createElasticsearchSearchHandler()
     {
         return new ElasticsearchSearchHandler(
-            $this->createProviderIndexClientProvider()->getClient()
+            $this->createIndexClientProvider()->getClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Provider\IndexClientProvider
+     */
+    protected function createIndexClientProvider()
+    {
+        return new IndexClientProvider();
     }
 
     /**

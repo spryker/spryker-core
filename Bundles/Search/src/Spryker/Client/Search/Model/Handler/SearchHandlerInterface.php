@@ -17,8 +17,8 @@ interface SearchHandlerInterface
      * @param \Spryker\Client\Search\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return array
+     * @return mixed
      */
-    public function search(QueryInterface $queryCriteria, array $resultFormatters, array $requestParameters = []);
+    public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []);
 
 }

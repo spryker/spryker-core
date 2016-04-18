@@ -7,32 +7,29 @@
 
 namespace Spryker\Zed\Search\Communication\Table;
 
-use Elastica\Exception\ResponseException;
-use Spryker\Client\Search\SearchClient;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Search\Business\SearchFacadeInterface;
 
 class SearchTable extends AbstractTable
 {
 
-    const ACTIONS = 'Actions';
+    const COL_ID = 'id';
+    const COL_INDEX = 'index';
+    const COL_TYPE = 'type';
+    const COL_SCORE = 'score';
 
     /**
-     * @var int
+     * @var \Spryker\Zed\Search\Business\SearchFacadeInterface
      */
-    protected $defaultLimit = 1000;
+    protected $searchFacade;
 
     /**
-     * @var \Spryker\Client\Search\SearchClient
+     * @param \Spryker\Zed\Search\Business\SearchFacadeInterface $searchFacade
      */
-    protected $searchClient;
-
-    /**
-     * @param \Spryker\Client\Search\SearchClient $searchClient
-     */
-    public function __construct(SearchClient $searchClient)
+    public function __construct(SearchFacadeInterface $searchFacade)
     {
-        $this->searchClient = $searchClient;
+        $this->searchFacade = $searchFacade;
     }
 
     /**
@@ -43,13 +40,18 @@ class SearchTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $headers = [
-            'id' => 'Id',
-            'index' => 'Index',
-            'type' => 'Type',
-            'score' => 'Score',
+            self::COL_ID => 'Id',
+            self::COL_INDEX => 'Index',
+            self::COL_TYPE => 'Type',
+            self::COL_SCORE => 'Score',
         ];
 
         $config->setHeader($headers);
+        $config->setRawColumns([
+            self::COL_ID,
+        ]);
+        $config->setDefaultSortColumnIndex(3);
+        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         $config->setUrl('list-ajax');
 
@@ -65,27 +67,22 @@ class SearchTable extends AbstractTable
     {
         $tableData = [];
 
-        try {
-            $query = $this->searchClient->getIndexClient()->search('*');
-            $totalHits = $query->getTotalHits();
-            $this->setTotal($totalHits);
-            $this->setFiltered($totalHits);
+        $searchString = !$this->getSearchTerm() ?: $this->getSearchTerm()['value'];
 
-            $offset = $this->getOffset();
-            $limit = $this->getLimit();
+        $results = $this
+            ->searchFacade
+            ->searchKeys($searchString, $this->request->query->all());
 
-            $results = $this->searchClient->getIndexClient()->search('*', ['limit' => $limit, 'from' => $offset])->getResults();
+        $this->setTotal($results->getTotalHits());
+        $this->setFiltered($results->getTotalHits());
 
-            foreach ($results as $result) {
-                $tableData[] = [
-                    'id' => '<a href="/search/maintenance/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
-                    'index' => $result->getIndex(),
-                    'type' => $result->getType(),
-                    'score' => $result->getScore(),
-                ];
-            }
-        } catch (ResponseException $e) {
-            // allowed catch, because ElasticSearch index is not always there
+        foreach ($results as $result) {
+            $tableData[] = [
+                self::COL_ID => '<a href="/search/maintenance/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
+                self::COL_INDEX => $result->getIndex(),
+                self::COL_TYPE => $result->getType(),
+                self::COL_SCORE => $result->getScore(),
+            ];
         }
 
         return $tableData;

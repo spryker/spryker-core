@@ -15,6 +15,7 @@ use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Search\SearchConfig getConfig()
+ * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  */
 class SearchCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -24,9 +25,7 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSearchTable()
     {
-        $searchClient = $this->getSearchClient();
-
-        return new SearchTable($searchClient);
+        return new SearchTable($this->getFacade());
     }
 
     /**

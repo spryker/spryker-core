@@ -52,4 +52,14 @@ interface SearchFacadeInterface
      */
     public function getDocument($key, $type);
 
+    /**
+     * @api
+     *
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return \Elastica\ResultSet
+     */
+    public function searchKeys($searchString, array $requestParameters = []);
+
 }

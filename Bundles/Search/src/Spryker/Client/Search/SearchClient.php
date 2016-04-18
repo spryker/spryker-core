@@ -19,15 +19,16 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     /**
      * @api
      *
-     * @deprecated This method will be removed, because it exposes a third party vendor.
+     * @throws \Exception
      *
-     * @return \Elastica\Index
+     * @return void
      */
-    public function getIndexClient()
+    public function checkConnection()
     {
-        // TODO: remove method usages
-        trigger_error('This method will be removed.', E_USER_DEPRECATED);
-        return $this->getFactory()->createIndexClient();
+        $this->getFactory()
+            ->getElasticsearchClient()
+            ->getStatus()
+            ->getData();
     }
 
     /**
@@ -37,9 +38,9 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * @param \Spryker\Client\Search\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return array
+     * @return mixed
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters, array $requestParameters = [])
+    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
         return $this
             ->getFactory()

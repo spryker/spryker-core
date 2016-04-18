@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search\Model\Handler;
 
+use Elastica\ResultSet;
 use Elastica\SearchableInterface;
 use Spryker\Client\Search\Model\Query\QueryInterface;
 
@@ -31,13 +32,29 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
      * @param \Spryker\Client\Search\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return array
+     * @return mixed
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters, array $requestParameters = [])
+    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
-        $query = $searchQuery->getSearchQuery();
+        $query = $searchQuery->getSearchQuery($requestParameters);
         $rawSearchResult = $this->searchableInterface->search($query);
 
+        if (!$resultFormatters) {
+            return $rawSearchResult;
+        }
+
+        return $this->formatSearchResults($resultFormatters, $rawSearchResult, $requestParameters);
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param \Elastica\ResultSet $rawSearchResult
+     * @param array $requestParameters
+     *
+     * @return mixed
+     */
+    protected function formatSearchResults(array $resultFormatters, ResultSet $rawSearchResult, array $requestParameters)
+    {
         $formattedSearchResult = [];
 
         foreach ($resultFormatters as $resultFormatter) {
