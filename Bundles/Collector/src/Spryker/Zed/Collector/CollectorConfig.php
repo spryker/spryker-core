@@ -169,7 +169,7 @@ class CollectorConfig extends AbstractBundleConfig
      */
     public function getFileExporterOutputDir()
     {
-        return './';
+        return APPLICATION_ROOT_DIR;
     }
 
 }

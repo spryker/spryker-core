@@ -142,7 +142,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder
      */
-    protected function createFileWriterBuilder()
+    public function createFileWriterBuilder()
     {
         return new FileWriterBuilder($this->getConfig()->getFileExporterOutputDir());
     }
