@@ -3,16 +3,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
  */
 
-%zed-logo {
-    background-image: url(https://static.spryker.com/logo.svg);
-}
-
 .zed-logo {
-    @extend %zed-logo;
-
     display: block;
     width: 165px;
     height: 159px;
+    background-image: $zed-logo;
 }
 
 .icon-holder {
@@ -65,7 +60,7 @@ body.login {
 }
 
 .svg-commerce {
-  @extend %zed-logo;
+  background-image: $zed-logo;
   background-position: 100% 0;
 }
 
@@ -75,7 +70,7 @@ body.login {
 }
 
 .svg-mail {
-  @extend %zed-logo;
+  background-image: $zed-logo;
   background-position: 56.74740484429066% 7.746478873239437%;
 }
 
@@ -85,7 +80,7 @@ body.login {
 }
 
 .svg-padlock {
-  @extend %zed-logo;
+  background-image: $zed-logo;
   background-position: 56.3573883161512% 17.985611510791365%;
 }
 
@@ -95,7 +90,7 @@ body.login {
 }
 
 .svg-spryker {
-  @extend %zed-logo;
+  background-image: $zed-logo;
   background-position: 0 0;
 }
 
