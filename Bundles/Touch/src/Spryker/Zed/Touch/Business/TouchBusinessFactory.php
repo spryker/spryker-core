@@ -9,7 +9,6 @@ namespace Spryker\Zed\Touch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouch;
-use Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouchInterface;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterUpdate;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\Handler\BulkTouchHandlerInsert;
