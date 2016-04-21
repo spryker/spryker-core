@@ -59,8 +59,6 @@ abstract class AbstractPaymentHandler
     public function registerMethodMapper($mapper)
     {
         $this->methodMappers[$mapper->getAccountBrand()] = $mapper;
-
-        file_put_contents('xxx.log', print_r($this->methodMappers, true));
     }
 
     /**
@@ -72,33 +70,11 @@ abstract class AbstractPaymentHandler
      */
     protected function getMethodMapper($accountBrand)
     {
-        file_put_contents('xxx2.log', print_r($accountBrand, true));
-
-        if (isset($this->methodMappers[$accountBrand]) === false) {
+        if (!isset($this->methodMappers[$accountBrand])) {
             throw new NoMethodMapperException('The method mapper is not registered.');
         }
 
         return $this->methodMappers[$accountBrand];
-    }
-
-    /**
-     * @param int $amount
-     * @param int $min
-     * @param int $max
-     *
-     * @throws \Spryker\Zed\Braintree\Business\Exception\OrderGrandTotalException
-     *
-     * @return void
-     */
-    protected function checkMaxMinGrandTotal($amount, $min, $max)
-    {
-        if ($amount < $min) {
-            throw new OrderGrandTotalException('The grand total is less than the allowed minimum amount');
-        }
-
-        if ($amount > $max) {
-            throw new OrderGrandTotalException('The grand total is greater than the allowed maximum amount');
-        }
     }
 
 }

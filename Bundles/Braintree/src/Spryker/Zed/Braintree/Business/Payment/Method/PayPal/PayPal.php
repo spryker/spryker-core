@@ -36,8 +36,7 @@ class PayPal extends AbstractPaymentMethod implements PayPalInterface
 
         $requestData = $this->getBaseTransactionRequest(
             $quoteTransfer->getTotals()->getGrandTotal(),
-            $braintreeTransfer->getCurrencyIso3Code(),
-            $isSalesOrder = null
+            $braintreeTransfer->getCurrencyIso3Code()
         );
         $this->addRequestData(
             $requestData,
