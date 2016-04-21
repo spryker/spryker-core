@@ -55,9 +55,12 @@ class Finder implements FinderInterface
         $processes = [];
         $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
         foreach ($stateMachineHandler->getActiveProcesses() as $processName) {
+
+            // TODO FW Extract to create*Transfer()
             $stateMachineProcessTransfer = new StateMachineProcessTransfer();
             $stateMachineProcessTransfer->setProcessName($processName);
             $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+
             $processes[$processName] = $stateMachineProcessTransfer;
         }
 
@@ -101,6 +104,7 @@ class Finder implements FinderInterface
 
         $processBuilder = clone $this->builder;
 
+        // TODO FW Extract createProcessTransfer()
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
         $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
@@ -172,6 +176,7 @@ class Finder implements FinderInterface
         $stateMachineItemsWithFlag = [];
         foreach ($stateMachineItems as $stateMachineItemEntity) {
 
+            // TODO FW Extract create*Transfer()
             $stateMachineItemTransfer = new StateMachineItemTransfer();
             $stateMachineItemTransfer->setProcessName($stateMachineProcessTransfer->getProcessName());
             $stateMachineItemTransfer->setIdItemState($stateMachineItemEntity->getIdStateMachineItemState());
@@ -227,6 +232,7 @@ class Finder implements FinderInterface
             $stateName = $stateMachineItemTransfer->requireStateName()->getStateName();
             $processName = $stateMachineItemTransfer->requireProcessName()->getProcessName();
 
+            // TODO FW Extract to assert*()
             if (!isset($processes[$processName])) {
                 throw new StateMachineException(
                     sprintf(

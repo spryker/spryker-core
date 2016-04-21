@@ -11,9 +11,11 @@ interface StateMachineQueryContainerInterface
     /**
      * @api
      *
-     * @param int $idStateMachineState
-     * @param int $idStateMachineProcess
-     * @param string $stateMachineName
+     * TODO FW Make name shorter, like queryStateByIdStateAndIdProcessAndName() (same for other methods here)
+     *
+     * @param int $idStateMachineState // TODO FW You can cut out the bundle name from here. Just make it like $idState
+     * @param int $idStateMachineProcess // TODO FW $idProcess
+     * @param string $stateMachineName // TODO FW ... (same for all the other method variables in this class)
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */

@@ -38,6 +38,7 @@ class Timeout implements TimeoutInterface
      */
     public function __construct(StateMachineQueryContainerInterface $queryContainer)
     {
+        // TODO FW Rename to $stateMachineQueryContainer
         $this->queryContainer = $queryContainer;
     }
 
@@ -74,6 +75,7 @@ class Timeout implements TimeoutInterface
 
             $this->dropTimeoutByItem($stateMachineItemTransfer);
 
+            // TODO FW Extract to save*() method
             (new SpyStateMachineEventTimeout())
                 ->setTimeout($timeoutDate)
                 ->setIdentifier($stateMachineItemTransfer->getIdentifier())

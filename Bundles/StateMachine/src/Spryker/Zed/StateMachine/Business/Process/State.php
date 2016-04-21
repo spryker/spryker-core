@@ -149,6 +149,8 @@ class State implements StateInterface
                 }
             }
         }
+
+        // TODO FW Use your own exception
         throw new Exception('Event ' . $id . ' not found.');
     }
 
@@ -277,6 +279,8 @@ class State implements StateInterface
                 }
             }
         }
+
+        // TODO FW Use your own Exception
         throw new Exception('There is no onEnter event for state ' . $this->getName());
     }
 

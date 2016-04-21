@@ -64,6 +64,9 @@ class LockedTrigger implements TriggerInterface
     public function triggerEvent($eventName, $stateMachineName, array $stateMachineItems)
     {
         $identifier = $this->buildIdentifierForMultipleItemLock($stateMachineItems);
+
+        // TODO FW To make it more stable you could have a transaction around isLocked() and acquire()
+
         if ($this->itemLock->isLocked($identifier)) {
             throw new LockException('State machine item is locked.');
         }

@@ -60,6 +60,7 @@ class Persistence implements PersistenceInterface
             return self::$stateEntityBuffer[$stateName];
         }
 
+        // TODO FW Please move this to QueryContainer
         $stateMachineItemStateEntity = SpyStateMachineItemStateQuery::create()
             ->filterByName($stateName)
             ->filterByFkStateMachineProcess($idStateMachineProcess)
@@ -95,6 +96,7 @@ class Persistence implements PersistenceInterface
             $itemStateEntity = $stateMachineHistoryItemEntity->getState();
             $processEntity = $itemStateEntity->getProcess();
 
+            // TODO FW Extract *()
             $stateMachineItemTransfer = new StateMachineItemTransfer();
             $stateMachineItemTransfer->setIdentifier($itemIdentifier);
             $stateMachineItemTransfer->setStateName($itemStateEntity->getName());
@@ -120,11 +122,13 @@ class Persistence implements PersistenceInterface
             return self::$processEntityBuffer[$stateMachineProcessTransfer->getProcessName()];
         }
 
+        // TODO FW Use QueryContainer
         $stateMachineProcessEntity = SpyStateMachineProcessQuery::create()->findOneByName(
             $stateMachineProcessTransfer->getProcessName()
         );
 
         if (!isset($stateMachineProcessEntity)) {
+            // TODO FW Extract save*()
             $stateMachineProcessEntity = new SpyStateMachineProcess();
             $stateMachineProcessEntity->setName($stateMachineProcessTransfer->getProcessName());
             $stateMachineProcessEntity->setStateMachineName($stateMachineProcessTransfer->getStateMachineName());
@@ -147,7 +151,7 @@ class Persistence implements PersistenceInterface
         $stateMachineItemStateEntity = $this->getStateMachineItemStateEntity($stateName, $idStateMachineProcess);
 
         if ($stateMachineItemStateEntity === null) {
-            return null;
+            return null; // TODO FW Throw exception (not in Trigger class)
         }
 
         return $stateMachineItemStateEntity->getIdStateMachineItemState();
@@ -173,6 +177,8 @@ class Persistence implements PersistenceInterface
                 )->findOne();
 
             if (!isset($stateMachineItemStateEntity)) {
+
+                // TODO FW Extract save*()
                 $stateMachineItemStateEntity = new SpyStateMachineItemState();
                 $stateMachineItemStateEntity->setName($stateName);
                 $stateMachineItemStateEntity->setFkStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess());
@@ -245,6 +251,9 @@ class Persistence implements PersistenceInterface
         $idStateMachineProcess,
         $stateMachineName
     ) {
+
+         // TODO FW To avoid the "return null" you can cut out the query from this method and add the entity as a parameter
+
         $stateMachineItemStateEntity = $this->queryContainer
             ->queryStateMachineItemStateByIdStateIdProcessAndStateMachineName(
                 $idStateMachineState,
@@ -317,6 +326,8 @@ class Persistence implements PersistenceInterface
         $stateMachineName,
         $identifier
     ) {
+
+        // TODO FW To avoid the "return null" you can cut out the query from this method and add the entity as a parameter
         $stateMachineItemStateEntity = $this->queryContainer
             ->queryStateMachineItemsWithExistingHistory(
                 $idStateMachineState,

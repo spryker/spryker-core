@@ -238,6 +238,7 @@ class Condition implements ConditionInterface
             $targetStateMap[$i] = $targetState->getName();
         }
 
+        // TODO FW Extract the foreach
         foreach ($stateMachineItems as $i => $stateMachineItemTransfer) {
             $this->stateMachinePersistence->saveStateMachineItemState($stateMachineItems[$i], $targetStateMap[$i]);
         }
@@ -274,6 +275,8 @@ class Condition implements ConditionInterface
     protected function getConditionPlugin($conditionString, $stateMachineName)
     {
         $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
+
+        // TODO FW Extract assert*()
         if (!isset($stateMachineHandler->getConditionPlugins()[$conditionString])) {
             throw new ConditionNotFoundException(
                 sprintf(

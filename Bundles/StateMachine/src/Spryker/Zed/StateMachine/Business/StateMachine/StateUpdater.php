@@ -55,7 +55,8 @@ class StateUpdater implements StateUpdaterInterface
         array $processes,
         array $sourceStateBuffer
     ) {
-        $connection = Propel::getConnection();
+
+        $connection = Propel::getConnection(); // TODO FW The more explict way is to use the \Spryker\Zed\Propel\Communication\Plugin\Connection plugin
         $connection->beginTransaction();
 
         $currentDate = new \DateTime('now');
@@ -65,7 +66,9 @@ class StateUpdater implements StateUpdaterInterface
             $sourceState = $sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()];
             $targetState = $stateMachineItemTransfer->getStateName();
 
+
             if ($sourceState !== $targetState) {
+
                 $this->timeout->dropOldTimeout($process, $sourceState, $stateMachineItemTransfer);
                 $this->timeout->setNewTimeout($process, $stateMachineItemTransfer, $currentDate);
 

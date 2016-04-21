@@ -165,7 +165,9 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      * @api
      *
      * @param string $identifier
-     * @param \DateTime $expirationDate
+     * @param \DateTime $expirationDate TODO FW This parameter is not used.
+     *
+     * TODO FW What is the TTL of the lock? Where does it check?
      *
      * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */

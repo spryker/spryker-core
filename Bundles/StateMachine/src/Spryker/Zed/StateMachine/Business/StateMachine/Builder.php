@@ -501,6 +501,8 @@ class Builder implements BuilderInterface
     {
         if (isset($xmlTransition->event)) {
             $eventName = (string)$xmlTransition->event;
+
+            // TODO FW Extract assert*()
             if (!isset($eventMap[$eventName])) {
                 throw new StateMachineException(
                     sprintf(

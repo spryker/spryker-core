@@ -369,7 +369,11 @@ class Trigger implements TriggerInterface
     protected function getCommand($commandString, $stateMachineName)
     {
         $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
+
+        // TODO FW Extract to assert*() method
         if (!isset($stateMachineHandler->getCommandPlugins()[$commandString])) {
+
+            // TODO FW Use your own exception, not from Symfony
             throw new CommandNotFoundException(
                 sprintf(
                     'Command plugin "%s" not registered in "%s" class. Please add it to getCommandPlugins method.',
@@ -414,6 +418,8 @@ class Trigger implements TriggerInterface
         $stateMachineItemTransfer->setIdentifier($identifier);
 
         $idStateMachineProcess = $this->stateMachinePersistence->getProcessId($stateMachineProcessTransfer);
+
+        // TODO FW Extract to assert*() method
         if (!$idStateMachineProcess) {
             throw new TriggerException(
                 sprintf(
@@ -429,6 +435,7 @@ class Trigger implements TriggerInterface
             ->get($stateMachineProcessTransfer->getStateMachineName())
             ->getInitialStateForProcess($processName);
 
+        // TODO FW Extract to assert*() method
         if (!$initialStateName) {
             throw new TriggerException(
                 sprintf(
@@ -445,6 +452,7 @@ class Trigger implements TriggerInterface
             $idStateMachineProcess
         );
 
+        // TODO FW Extract to assert*() method
         if ($idStateMachineItemState === null) {
             throw new TriggerException(
                 sprintf(
