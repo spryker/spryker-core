@@ -9,8 +9,8 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
 use Elastica\Query\MatchAll;
+use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Model\Query\QueryInterface;
 
@@ -18,6 +18,8 @@ class SearchKeysQuery implements QueryInterface
 {
     const PARAM_LIMIT = 'length';
     const PARAM_OFFSET = 'start';
+
+    const FULL_TEXT_BOOSTED_BOOSTING = 3;
 
     /**
      * @var string
@@ -52,6 +54,8 @@ class SearchKeysQuery implements QueryInterface
         $this->setLimit($baseQuery, $requestParameters);
         $this->setOffset($baseQuery, $requestParameters);
 
+        $baseQuery->setExplain(true);
+
         return $baseQuery;
     }
 
@@ -62,13 +66,18 @@ class SearchKeysQuery implements QueryInterface
      */
     protected function createFullTextSearchQuery($searchString)
     {
-        $fullTextMatch = (new Match())->setField(PageIndexMap::FULL_TEXT, $searchString);
-        $fullTextBoostedMatch = (new Match())->setField(PageIndexMap::FULL_TEXT_BOOSTED, $searchString);
+        $fields = [
+            PageIndexMap::FULL_TEXT,
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . self::FULL_TEXT_BOOSTED_BOOSTING,
+        ];
+
+        $multiMatch = (new MultiMatch())
+            ->setFields($fields)
+            ->setQuery($searchString)
+            ->setType(MultiMatch::TYPE_CROSS_FIELDS);
 
         $boolQuery = (new BoolQuery())
-            ->addShould($fullTextMatch)
-            ->addShould($fullTextBoostedMatch)
-            ->setMinimumNumberShouldMatch(1);
+            ->addMust($multiMatch);
 
         return $boolQuery;
     }

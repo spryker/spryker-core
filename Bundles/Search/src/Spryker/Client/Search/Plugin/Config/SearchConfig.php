@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Search\Plugin\Config;
 
+use Generated\Shared\Transfer\FacetConfigTransfer;
+use Generated\Shared\Transfer\SortConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
@@ -46,14 +48,6 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
     }
 
     /**
-     * @return void
-     */
-    protected function extendConfig()
-    {
-        // TODO: query redis, extend config dynamically, etc.
-    }
-
-    /**
      * @return \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface
      */
     public function getFacetConfigBuilder()
@@ -75,6 +69,72 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
     public function getPaginationConfigBuilder()
     {
         return $this->paginationConfigBuilder;
+    }
+
+    /**
+     * @return void
+     */
+    protected function extendConfig()
+    {
+        $configData = $this->loadDynamicConfigData();
+
+        $this->setDynamicFacets($configData);
+        $this->setDynamicSorts($configData);
+    }
+
+    /**
+     * TODO: get real data from redis
+     *
+     * @return array
+     */
+    protected function loadDynamicConfigData()
+    {
+        return [
+            'facets' => [
+                
+            ],
+            'sorts' => [
+
+            ],
+        ];
+    }
+
+    /**
+     * @param array $configData
+     *
+     * @return void
+     */
+    protected function setDynamicFacets(array $configData)
+    {
+        if (!isset($configData['facets'])) {
+            return;
+        }
+
+        foreach ($configData['facets'] as $facetData) {
+            $facetConfigTransfer = new FacetConfigTransfer();
+            $facetConfigTransfer->fromArray($facetData, true);
+
+            $this->facetConfigBuilder->addFacet($facetConfigTransfer);
+        }
+    }
+
+    /**
+     * @param array $configData
+     *
+     * @return void
+     */
+    protected function setDynamicSorts(array $configData)
+    {
+        if (!isset($configData['sorts'])) {
+            return;
+        }
+
+        foreach ($configData['sorts'] as $sortData) {
+            $sortConfigTransfer = new SortConfigTransfer();
+            $sortConfigTransfer->fromArray($sortData, true);
+
+            $this->sortConfigBuilder->addSort($sortConfigTransfer);
+        }
     }
 
 }
