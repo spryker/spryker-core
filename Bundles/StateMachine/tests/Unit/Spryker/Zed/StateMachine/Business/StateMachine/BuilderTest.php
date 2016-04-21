@@ -19,6 +19,7 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
 
 class BuilderTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -112,7 +113,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Builder
+     * @return \Spryker\Zed\StateMachine\Business\StateMachine\Builder
      */
     protected function createBuilder()
     {
@@ -122,7 +123,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
              $this->createTransition(),
              $this->createProcess(),
              $this->createStateMachineConfig()
-        );
+         );
     }
 
     protected function createEvent()
@@ -131,7 +132,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return State
+     * @return \Spryker\Zed\StateMachine\Business\Process\State
      */
     protected function createState()
     {
@@ -139,7 +140,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Transition
+     * @return \Spryker\Zed\StateMachine\Business\Process\Transition
      */
     protected function createTransition()
     {
@@ -147,7 +148,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Process
+     * @return \Spryker\Zed\StateMachine\Business\Process\Process
      */
     protected function createProcess()
     {
@@ -155,7 +156,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StateMachineConfig
+     * @return \Spryker\Zed\StateMachine\StateMachineConfig
      */
     protected function createStateMachineConfig()
     {
@@ -168,7 +169,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return StateMachineProcessTransfer
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
      */
     protected function createStateMachineProcessTransfer()
     {
@@ -177,4 +178,5 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $stateMachineProcessTransfer->setStateMachineName('TestingSm');
         return $stateMachineProcessTransfer;
     }
+
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
-use DateTime;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 
@@ -27,7 +26,7 @@ interface TimeoutInterface
     public function setNewTimeout(
         ProcessInterface $process,
         StateMachineItemTransfer $stateMachineItemTransfer,
-        DateTime $currentTime
+        \DateTime $currentTime
     );
 
     /**
@@ -52,7 +51,6 @@ interface TimeoutInterface
      * @return array
      */
     public function groupItemsByEvent(array $stateMachineItems);
-
 
     /**
      * @param string $stateMachineName

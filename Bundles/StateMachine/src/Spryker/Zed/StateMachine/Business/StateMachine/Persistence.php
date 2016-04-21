@@ -209,7 +209,8 @@ class Persistence implements PersistenceInterface
     {
         $updatedStateMachineItems = [];
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
-            $stateMachineItemTransfer->requireIdItemState()
+            $stateMachineItemTransfer->requireIdentifier()
+                ->requireIdItemState()
                 ->requireIdStateMachineProcess();
 
             $updatedStateMachineItemTransfer = $this->getStateMachineItemTransferByIdStateAndProcessName(

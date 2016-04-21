@@ -7,6 +7,7 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 interface StateUpdaterInterface
 {
+
     /**
      * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
@@ -16,4 +17,5 @@ interface StateUpdaterInterface
      * @return void
      */
     public function updateStateMachineItemState($stateMachineName, array $stateMachineItems, array $processes, array $sourceStateBuffer);
+
 }

@@ -13,14 +13,24 @@ interface StateMachineHandlerInterface
 {
 
     /**
-     * List of command plugins for this state machine for all processes.
+     * List of command plugins for this state machine for all processes. Array key is identifier in SM xml file.
+     *
+     * [
+     *   'Command/Plugin' => new Command(),
+     *   'Command/Plugin2' => new Command2(),
+     * ]
      *
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
      */
     public function getCommandPlugins();
 
     /**
-     * List of condition plugins for this state machine for all processes.
+     * List of condition plugins for this state machine for all processes. Array key is identifier in SM xml file.
+     *
+     *  [
+     *   'Condition/Plugin' => new Condition(),
+     *   'Condition/Plugin2' => new Condition2(),
+     * ]
      *
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
      */
@@ -34,7 +44,12 @@ interface StateMachineHandlerInterface
     public function getStateMachineName();
 
     /**
-     * List of active processes used for this state machine
+     * List of active processes used for this state machine.
+     *
+     * [
+     *   'ProcessName',
+     *   'ProcessName2 ,
+     * ]
      *
      * @return string[]
      */
@@ -60,7 +75,7 @@ interface StateMachineHandlerInterface
     public function itemStateUpdated(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
-     * This method returns list of StateMachineItemTransfer with identifier, processId and stateId
+     * This method should return all list of StateMachineItemTransfer, with (identifier, IdStateMachineProcess, IdItemState)
      *
      * @param int[] $stateIds
      *

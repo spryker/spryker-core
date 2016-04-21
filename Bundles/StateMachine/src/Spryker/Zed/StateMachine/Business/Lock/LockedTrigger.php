@@ -114,6 +114,7 @@ class LockedTrigger implements TriggerInterface
      */
     public function triggerForTimeoutExpiredItems($stateMachineName)
     {
-       return $this->stateMachineTrigger->triggerForTimeoutExpiredItems($stateMachineName);
+        return $this->stateMachineTrigger->triggerForTimeoutExpiredItems($stateMachineName);
     }
+
 }

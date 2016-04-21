@@ -10,34 +10,35 @@ use Propel\Runtime\Propel;
 
 class StateUpdater implements StateUpdaterInterface
 {
+
     /**
-     * @var TimeoutInterface
+     * @var \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface
      */
     protected $timeout;
 
     /**
-     * @var HandlerResolverInterface
+     * @var \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
      */
     protected $stateMachineHandlerResolver;
 
     /**
-     * @var PersistenceInterface
+     * @var \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface
      */
-    protected $stateMachinePersitence;
+    protected $stateMachinePersistence;
 
     /**
-     * @param TimeoutInterface $timeout
-     * @param HandlerResolverInterface $stateMachineHandlerResolver
-     * @param PersistenceInterface $stateMachinePersitence
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface $timeout
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $stateMachineHandlerResolver
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $stateMachinePersistence
      */
     public function __construct(
         TimeoutInterface $timeout,
         HandlerResolverInterface $stateMachineHandlerResolver,
-        PersistenceInterface $stateMachinePersitence
+        PersistenceInterface $stateMachinePersistence
     ) {
         $this->timeout = $timeout;
         $this->stateMachineHandlerResolver = $stateMachineHandlerResolver;
-        $this->stateMachinePersitence = $stateMachinePersitence;
+        $this->stateMachinePersistence = $stateMachinePersistence;
     }
 
     /**
@@ -71,11 +72,12 @@ class StateUpdater implements StateUpdaterInterface
                 $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
                 $stateMachineHandler->itemStateUpdated($stateMachineItemTransfer);
 
-                $this->stateMachinePersitence->saveItemStateHistory($stateMachineItemTransfer);
+                $this->stateMachinePersistence->saveItemStateHistory($stateMachineItemTransfer);
 
             }
         }
 
         $connection->commit();
     }
+
 }

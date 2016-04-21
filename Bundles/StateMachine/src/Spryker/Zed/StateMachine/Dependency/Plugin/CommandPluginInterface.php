@@ -14,9 +14,11 @@ interface CommandPluginInterface
 {
 
     /**
+     * This method is called when event have concrete command assigned.
+     *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return bool
+     * @return void
      */
     public function run(StateMachineItemTransfer $stateMachineItemTransfer);
 

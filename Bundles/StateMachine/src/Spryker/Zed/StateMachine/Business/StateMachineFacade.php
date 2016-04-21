@@ -46,7 +46,7 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Trigger event for single item. Must be already initialized with  triggerForNewStateMachineItem
+     * Trigger event for single item. Must be already initialized with triggerForNewStateMachineItem
      *
      * Specification:
      *  - Returns boolean true if trigger was successful
@@ -70,7 +70,7 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Trigger event for multiple items. Must be already initialized with  triggerForNewStateMachineItem
+     * Trigger event for multiple items. Must be already initialized with triggerForNewStateMachineItem
      *
      * Specification:
      *  - Returns boolean true if trigger was successful
@@ -103,7 +103,8 @@ class StateMachineFacade extends AbstractFacade
      * @api
      *
      * @param string $stateMachineName
-     * @return \Spryker\Zed\StateMachine\Business\Process\Process[]
+     *
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer[]
      */
     public function getProcesses($stateMachineName)
     {
@@ -121,6 +122,7 @@ class StateMachineFacade extends AbstractFacade
      * @api
      *
      * @param string $stateMachineName
+     *
      * @return int
      */
     public function checkConditions($stateMachineName)

@@ -21,7 +21,6 @@ use Spryker\Zed\StateMachine\Business\StateMachine\Finder;
 use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolver;
 use Spryker\Zed\StateMachine\Business\StateMachine\Persistence;
 use Spryker\Zed\StateMachine\Business\StateMachine\StateUpdater;
-use Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\Timeout;
 use Spryker\Zed\StateMachine\Business\StateMachine\Trigger;
 use Spryker\Zed\StateMachine\StateMachineConfig;
@@ -37,6 +36,17 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface
      */
+    public function createLockedStateMachineTrigger()
+    {
+        return new LockedTrigger(
+            $this->createStateMachineTrigger(),
+            $this->createItemLock()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface
+     */
     public function createStateMachineTrigger()
     {
         return new Trigger(
@@ -47,17 +57,6 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
             $this->createStateMachineCondition(),
             $this->createStateUpdater(),
             $this->createStateMachineTimeout()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface
-     */
-    public function createLockedStateMachineTrigger()
-    {
-        return new LockedTrigger(
-            $this->createStateMachineTrigger(),
-            $this->createItemLock()
         );
     }
 
@@ -87,7 +86,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StateUpdaterInterface
+     * @return \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface
      */
     public function createStateUpdater()
     {
@@ -185,6 +184,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @param string $stateMachineName
+     *
      * @return \Spryker\Zed\StateMachine\Business\Graph\DrawerInterface
      */
     public function createGraphDrawer($stateMachineName)

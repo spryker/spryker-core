@@ -25,7 +25,7 @@ class ItemLock implements ItemLockInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $queryContainer
-     * @param StateMachineConfig $stateMachineConfig
+     * @param \Spryker\Zed\StateMachine\StateMachineConfig $stateMachineConfig
      */
     public function __construct(
         StateMachineQueryContainerInterface $queryContainer,

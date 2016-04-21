@@ -64,9 +64,10 @@ class StateMachineConfig extends AbstractBundleConfig
      */
     public function getGraphFormatContentTypes()
     {
-        return  [
+        return [
             'jpg' => 'image/jpeg',
             'svg' => 'image/svg+xml',
         ];
     }
+
 }

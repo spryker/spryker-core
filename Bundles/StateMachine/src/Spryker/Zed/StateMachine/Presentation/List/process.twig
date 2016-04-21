@@ -14,11 +14,11 @@
                     <div class="col-md-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h2>{{ process.name }}</h2>
+                                <h2>{{ process.processName }}</h2>
                             </div>
                             <div class="panel-body">
-                                <a href="{{ url('/state-machine/graph/draw', {process: process.name, 'state-machine': stateMachineName}) }}" target="_blank">{{ process.name }}</a>
-                                <a style="font-size:10px;" href="{{ url('/state-machine/graph/draw-preview-version', {process: process.name}) }}" target="_blank">[preview-version]</a>
+                                <a href="{{ url('/state-machine/graph/draw', {process: process.processName, 'state-machine': stateMachineName}) }}" target="_blank">{{ process.processName }}</a>
+                                <a style="font-size:10px;" href="{{ url('/state-machine/graph/draw-preview-version', {process: process.processName}) }}" target="_blank">[preview-version]</a>
                             </div>
 
                         </div>

@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TriggerController extends AbstractController
 {
+
     const URL_PARAM_IDENTIFIER = 'identifier';
     const URL_PARAM_ID_STATE = 'id-state';
     const URL_PARAM_ID_PROCESS = 'id-process';

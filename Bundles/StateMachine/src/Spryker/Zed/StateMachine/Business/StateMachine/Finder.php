@@ -46,7 +46,9 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     *
+     * @param string $stateMachineName
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer[]
      */
     public function getProcesses($stateMachineName)
     {
@@ -56,7 +58,7 @@ class Finder implements FinderInterface
             $stateMachineProcessTransfer = new StateMachineProcessTransfer();
             $stateMachineProcessTransfer->setProcessName($processName);
             $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
-            $processes[$processName] = $this->builder->createProcess($stateMachineProcessTransfer);
+            $processes[$processName] = $stateMachineProcessTransfer;
         }
 
         return $processes;
@@ -65,6 +67,7 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param string $stateMachineName
+     *
      * @return array|\string[]
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems, $stateMachineName)
@@ -84,6 +87,7 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param string $stateMachineName
+     *
      * @return array|\string[]
      */
     public function getManualEventsForStateMachineItem(
@@ -294,7 +298,7 @@ class Finder implements FinderInterface
      * @param string $stateMachineName
      * @param string $processName
      *
-     * @return StateMachineProcessTransfer
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
      */
     protected function createStateMachineProcessTransfer($stateMachineName, $processName)
     {
@@ -304,7 +308,5 @@ class Finder implements FinderInterface
 
         return $stateMachineProcessTransfer;
     }
-
-
 
 }

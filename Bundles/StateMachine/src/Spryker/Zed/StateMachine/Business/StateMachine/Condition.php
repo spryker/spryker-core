@@ -45,7 +45,7 @@ class Condition implements ConditionInterface
     protected $stateMachinePersistence;
 
     /**
-     * @var StateUpdaterInterface
+     * @var \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface
      */
     protected $stateUpdater;
 
@@ -54,7 +54,7 @@ class Condition implements ConditionInterface
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $stateMachineHandlerResolver
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface $finder
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $stateMachinePersistence
-     * @param StateUpdaterInterface $stateUpdate
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface $stateUpdate
      */
     public function __construct(
         TransitionLogInterface $transitionLog,
@@ -77,9 +77,9 @@ class Condition implements ConditionInterface
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $sourceState
      * @param \Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface $transactionLogger
      *
-     * @return StateInterface
+     * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      *
-     * @throws ConditionNotFoundException
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException
      * @throws \Exception
      */
     public function checkConditionForTransitions(
@@ -114,6 +114,23 @@ class Condition implements ConditionInterface
         }
 
         return $this->findTargetState($sourceState, $possibleTransitions);
+    }
+
+    /**
+     * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $sourceState
+     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $possibleTransitions
+     *
+     * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
+     */
+    protected function findTargetState(StateInterface $sourceState, array $possibleTransitions)
+    {
+        $targetState = $sourceState;
+        if (count($possibleTransitions) > 0) {
+            /** @var \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $selectedTransition */
+            $selectedTransition = array_shift($possibleTransitions);
+            $targetState = $selectedTransition->getTarget();
+        }
+        return $targetState;
     }
 
     /**
@@ -268,23 +285,6 @@ class Condition implements ConditionInterface
         }
 
         return $stateMachineHandler->getConditionPlugins()[$conditionString];
-    }
-
-    /**
-     * @param StateInterface $sourceState
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $possibleTransitions
-     *
-     * @return StateInterface
-     */
-    protected function findTargetState(StateInterface $sourceState, array $possibleTransitions)
-    {
-        $targetState = $sourceState;
-        if (count($possibleTransitions) > 0) {
-            /** @var \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $selectedTransition */
-            $selectedTransition = array_shift($possibleTransitions);
-            $targetState = $selectedTransition->getTarget();
-        }
-        return $targetState;
     }
 
 }

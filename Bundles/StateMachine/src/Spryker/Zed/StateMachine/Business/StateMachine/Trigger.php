@@ -50,12 +50,12 @@ class Trigger implements TriggerInterface
     protected $condition;
 
     /**
-     * @var StateUpdaterInterface
+     * @var \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface
      */
     protected $stateUpdater;
 
     /**
-     * @var TimeoutInterface
+     * @var \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface
      */
     protected $timeout;
 
@@ -70,8 +70,8 @@ class Trigger implements TriggerInterface
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface $finder
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $stateMachinePersistence
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface $condition
-     * @param StateUpdaterInterface $stateUpdater
-     * @param TimeoutInterface $timeout
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface $stateUpdater
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface $timeout
      */
     public function __construct(
         TransitionLogInterface $transitionLog,
@@ -248,6 +248,7 @@ class Trigger implements TriggerInterface
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
      *
      * @throws \Exception
+     * @return void
      */
     protected function runCommand($eventName, $stateMachineName, array $stateMachineItems, array $processes)
     {

@@ -21,25 +21,7 @@ class ConditionTest extends StateMachineMocks
      */
     public function testCheckConditionForTransitionShouldReturnTargetStateOfGivenTransition()
     {
-        $stateMachineHandlerResolverMock = $this->createHandlerResolverMock();
-
-        $stateMachineHandler = $this->createStateMachineHandlerMock();
-
-        $conditionPluginMock = $this->createConditionPluginMock();
-        $conditionPluginMock->expects($this->once())
-            ->method('check')
-            ->willReturn(true);
-
-        $stateMachineHandler->expects($this->exactly(2))
-            ->method('getConditionPlugins')
-            ->willReturn([
-               'condition' => $conditionPluginMock
-            ]
-        );
-
-        $stateMachineHandlerResolverMock->expects($this->once())
-            ->method('get')
-            ->willReturn($stateMachineHandler);
+        $stateMachineHandlerResolverMock = $this->createStateMachineResolverMock(true);
 
         $condition = new Condition(
             $this->createTransitionLogMock(),
@@ -48,7 +30,6 @@ class ConditionTest extends StateMachineMocks
             $this->createPersistenceMock(),
             $this->createStateUpdaterMock()
         );
-
 
         $transitions = [];
         $sourceState = new State();
@@ -63,22 +44,83 @@ class ConditionTest extends StateMachineMocks
         $transition->setTarget($targetState);
         $transitions[] = $transition;
 
-        $stateMachineItemTransfer = new StateMachineItemTransfer();
-
-        $sourcesState = new State();
-
-        $targetState = $condition->checkConditionForTransitions(
+        $processedTargetState = $condition->checkConditionForTransitions(
             'Test',
             $transitions,
-            $stateMachineItemTransfer,
-            $sourcesState,
+            new StateMachineItemTransfer(),
+            new State(),
             $this->createTransitionLogMock()
         );
 
-        $this->assertEquals($targetState->getName(), $targetState->getName());
+        $this->assertEquals($targetState->getName(), $processedTargetState->getName());
     }
 
+    /**
+     * @return void
+     */
+    public function testCheckConditionForTransitionWhenConditionReturnsFalseShouldReturnSourceState()
+    {
+        $stateMachineHandlerResolverMock = $this->createStateMachineResolverMock(false);
 
+        $condition = new Condition(
+            $this->createTransitionLogMock(),
+            $stateMachineHandlerResolverMock,
+            $this->createFinderMock(),
+            $this->createPersistenceMock(),
+            $this->createStateUpdaterMock()
+        );
 
+        $transitions = [];
+        $sourceState = new State();
+        $sourceState->setName('source state');
+
+        $targetState = new State();
+        $targetState->setName('target state');
+
+        $transition = new Transition();
+        $transition->setCondition('condition');
+        $transition->setSource($sourceState);
+        $transition->setTarget($targetState);
+        $transitions[] = $transition;
+
+        $sourceState = new State();
+        $sourceState->setName('initial source');
+
+        $processedTargetState = $condition->checkConditionForTransitions(
+            'Test',
+            $transitions,
+            new StateMachineItemTransfer(),
+            $sourceState,
+            $this->createTransitionLogMock()
+        );
+
+        $this->assertEquals($sourceState->getName(), $processedTargetState->getName());
+    }
+
+    /**
+     * @param bool $conditionCheckResult
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
+     */
+    protected function createStateMachineResolverMock($conditionCheckResult)
+    {
+        $conditionPluginMock = $this->createConditionPluginMock();
+        $conditionPluginMock->expects($this->once())
+            ->method('check')
+            ->willReturn($conditionCheckResult);
+
+        $stateMachineHandler = $this->createStateMachineHandlerMock();
+        $stateMachineHandler->expects($this->exactly(2))
+            ->method('getConditionPlugins')
+            ->willReturn([
+                    'condition' => $conditionPluginMock
+                ]);
+
+        $stateMachineHandlerResolverMock = $this->createHandlerResolverMock();
+        $stateMachineHandlerResolverMock->expects($this->once())
+            ->method('get')
+            ->willReturn($stateMachineHandler);
+
+        return $stateMachineHandlerResolverMock;
+    }
 
 }
