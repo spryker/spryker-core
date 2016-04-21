@@ -7,7 +7,25 @@
   },
   "mappings": {
     "page": {
+      "dynamic_templates": [
+        {
+          "search-result-data": {
+            "mapping": {
+              "type": "string",
+              "index": "no"
+            },
+            "path_match": "search-result-data.*"
+          }
+        }
+      ],
       "properties": {
+        "search-result-data": {
+          "type": "object",
+          "include_in_all": false,
+          "properties": {
+
+          }
+        },
         "store": {
           "type": "string",
           "include_in_all": false
@@ -22,25 +40,7 @@
         },
         "full-text-boosted": {
           "type": "string",
-          "include_in_all": false,
-          "boost": 2.0
-        },
-        "search-result-data": {
-          "type": "object",
-          "include_in_all": false,
-          "properties": {
-            "sku": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "name": {
-              "type": "string"
-            },
-            "url": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
-          }
+          "include_in_all": false
         },
         "string-facet": {
           "type": "nested",

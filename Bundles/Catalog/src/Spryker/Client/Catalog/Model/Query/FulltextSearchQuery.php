@@ -9,12 +9,14 @@ namespace Spryker\Client\Catalog\Model\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
+use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Model\Query\QueryInterface;
 
 class FulltextSearchQuery implements QueryInterface
 {
+
+    const FULL_TEXT_BOOSTED_BOOSTING = 3;
 
     /**
      * @var string
@@ -58,23 +60,28 @@ class FulltextSearchQuery implements QueryInterface
     }
 
     /**
-     * @param \Elastica\Query $query
+     * @param \Elastica\Query $baseQuery
      *
      * @return \Elastica\Query
      */
-    protected function addFulltextSearchToQuery(Query $query)
+    protected function addFulltextSearchToQuery(Query $baseQuery)
     {
-        $fullTextMatch = (new Match())->setField(PageIndexMap::FULL_TEXT, $this->searchString);
-        $fullTextBoostedMatch = (new Match())->setField(PageIndexMap::FULL_TEXT_BOOSTED, $this->searchString);
+        $fields = [
+            PageIndexMap::FULL_TEXT,
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . self::FULL_TEXT_BOOSTED_BOOSTING
+        ];
+
+        $matchQuery = (new MultiMatch())
+            ->setFields($fields)
+            ->setQuery($this->searchString)
+            ->setType(MultiMatch::TYPE_CROSS_FIELDS);
 
         $boolQuery = (new BoolQuery())
-            ->addShould($fullTextMatch)
-            ->addShould($fullTextBoostedMatch)
-            ->setMinimumNumberShouldMatch(1);
+            ->addMust($matchQuery);
 
-        $query->setQuery($boolQuery);
+        $baseQuery->setQuery($boolQuery);
 
-        return $query;
+        return $baseQuery;
     }
 
 }
