@@ -67,7 +67,7 @@ class FileWriterBuilder
      */
     public function getFullExportPath($type, LocaleTransfer $locale)
     {
-        return $this->baseExportDirPath.'/'.$type.'_'.$locale->getLocaleName().'_beta.csv';
+        return $this->baseExportDirPath.'/'.$type.'_'.$locale->getLocaleName().'.csv';
     }
 
 }
