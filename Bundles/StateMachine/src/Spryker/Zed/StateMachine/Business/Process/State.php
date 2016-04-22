@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\StateMachine\Business\Process;
 
-use Exception;
+use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 
 class State implements StateInterface
 {
@@ -135,7 +135,7 @@ class State implements StateInterface
     /**
      * @param string $id
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Oms\Business\Exception\StatemachineException
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface
      */
@@ -150,8 +150,12 @@ class State implements StateInterface
             }
         }
 
-        // TODO FW Use your own exception
-        throw new Exception('Event ' . $id . ' not found.');
+        throw new StatemachineException(
+            sprintf(
+                'Event "%d" not found.',
+                $id
+            )
+        );
     }
 
     /**
@@ -265,7 +269,7 @@ class State implements StateInterface
     }
 
     /**
-     * @throws \Exception
+     * @throws \Spryker\Zed\Oms\Business\Exception\StatemachineException
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface
      */
@@ -280,8 +284,12 @@ class State implements StateInterface
             }
         }
 
-        // TODO FW Use your own Exception
-        throw new Exception('There is no onEnter event for state ' . $this->getName());
+        throw new StatemachineException(
+            sprintf(
+                'There is no onEnter event for state "%s"',
+                $this->getName()
+            )
+        );
     }
 
     /**
@@ -302,7 +310,7 @@ class State implements StateInterface
     }
 
     /**
-     * @throws \Exception
+     * @throws \Spryker\Zed\Oms\Business\Exception\StatemachineException
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
      */

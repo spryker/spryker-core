@@ -25,7 +25,7 @@ interface ItemLockInterface
     /**
      * @param int $identifier
      *
-     * @return bool
+     * @return void
      */
     public function release($identifier);
 

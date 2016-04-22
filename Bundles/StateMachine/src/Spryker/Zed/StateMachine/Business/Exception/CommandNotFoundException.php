@@ -6,6 +6,6 @@
 
 namespace Spryker\Zed\StateMachine\Business\Exception;
 
-class CommandNowFoundException extends \Exception
+class CommandNotFoundException extends \Exception
 {
 }

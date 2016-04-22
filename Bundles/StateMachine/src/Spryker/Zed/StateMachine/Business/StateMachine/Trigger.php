@@ -9,10 +9,10 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
+use Spryker\Zed\StateMachine\Business\Exception\CommandNotFoundException;
 use Spryker\Zed\StateMachine\Business\Exception\TriggerException;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
-use Symfony\Component\Console\Exception\CommandNotFoundException;
 
 class Trigger implements TriggerInterface
 {
@@ -320,7 +320,7 @@ class Trigger implements TriggerInterface
         }
 
         foreach ($stateMachineItems as $i => $stateMachineItemTransfer) {
-            $this->stateMachinePersistence->saveStateMachineItemState($stateMachineItems[$i], $targetStateMap[$i]);
+            $this->stateMachinePersistence->getStateMachineItemState($stateMachineItems[$i], $targetStateMap[$i]);
         }
 
         return $sourceStateBuffer;
@@ -364,24 +364,14 @@ class Trigger implements TriggerInterface
     /**
      * @param string $commandString
      * @param string $stateMachineName
+     *
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface
      */
     protected function getCommand($commandString, $stateMachineName)
     {
         $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
 
-        // TODO FW Extract to assert*() method
-        if (!isset($stateMachineHandler->getCommandPlugins()[$commandString])) {
-
-            // TODO FW Use your own exception, not from Symfony
-            throw new CommandNotFoundException(
-                sprintf(
-                    'Command plugin "%s" not registered in "%s" class. Please add it to getCommandPlugins method.',
-                    $commandString,
-                    get_class($stateMachineHandler)
-                )
-            );
-        }
+        $this->assertCommandIsSet($commandString, $stateMachineHandler);
 
         return $stateMachineHandler->getCommandPlugins()[$commandString];
     }
@@ -404,6 +394,7 @@ class Trigger implements TriggerInterface
      * @param string $identifier
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
+     *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
      */
     protected function createStateMachineItemTransferForNewProcess(
@@ -411,23 +402,17 @@ class Trigger implements TriggerInterface
         $identifier
     ) {
 
-        $processName = $stateMachineProcessTransfer->getProcessName();
+        $processName = $stateMachineProcessTransfer->requireProcessName()
+            ->getProcessName();
 
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setProcessName($processName);
         $stateMachineItemTransfer->setIdentifier($identifier);
 
-        $idStateMachineProcess = $this->stateMachinePersistence->getProcessId($stateMachineProcessTransfer);
+        $idStateMachineProcess = $this->stateMachinePersistence
+            ->getProcessId($stateMachineProcessTransfer);
 
-        // TODO FW Extract to assert*() method
-        if (!$idStateMachineProcess) {
-            throw new TriggerException(
-                sprintf(
-                    'Process with name "%s" not found!',
-                    $idStateMachineProcess
-                )
-            );
-        }
+        $this->assertProcessCreated($idStateMachineProcess);
 
         $stateMachineItemTransfer->setIdStateMachineProcess($idStateMachineProcess);
 
@@ -435,24 +420,53 @@ class Trigger implements TriggerInterface
             ->get($stateMachineProcessTransfer->getStateMachineName())
             ->getInitialStateForProcess($processName);
 
-        // TODO FW Extract to assert*() method
+        $this->assertInitialStateNameProvided($initialStateName, $processName);
+        $stateMachineItemTransfer->setStateName($initialStateName);
+
+        $idStateMachineItemState = $this->stateMachinePersistence
+            ->getInitialStateIdByStateName(
+                $stateMachineItemTransfer,
+                $initialStateName
+            );
+
+        $this->assertInitialStateCreated($idStateMachineItemState, $initialStateName);
+
+        $stateMachineItemTransfer->setIdItemState($idStateMachineItemState);
+
+        return $stateMachineItemTransfer;
+    }
+
+    /**
+     * @param string $initialStateName
+     * @param string $processName
+     *
+     * @return void
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
+     */
+    protected function assertInitialStateNameProvided($initialStateName, $processName)
+    {
         if (!$initialStateName) {
             throw new TriggerException(
                 sprintf(
-                    'Initial state name for process "%s" is not provided. Please implement this in "%s::getInitialStateForProcess" method.',
+                    'Initial state name for process "%s" is not provided. You can provide it in "%s::getInitialStateForProcess" method.',
                     $processName,
                     StateMachineHandlerInterface::class
                 )
             );
         }
-        $stateMachineItemTransfer->setStateName($initialStateName);
+    }
 
-        $idStateMachineItemState = $this->stateMachinePersistence->getInitialStateIdByStateName(
-            $initialStateName,
-            $idStateMachineProcess
-        );
-
-        // TODO FW Extract to assert*() method
+    /**
+     * @param int $idStateMachineItemState
+     * @param string $initialStateName
+     *
+     * @return void
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
+     */
+    protected function assertInitialStateCreated($idStateMachineItemState, $initialStateName)
+    {
         if ($idStateMachineItemState === null) {
             throw new TriggerException(
                 sprintf(
@@ -461,10 +475,46 @@ class Trigger implements TriggerInterface
                 )
             );
         }
+    }
 
-        $stateMachineItemTransfer->setIdItemState($idStateMachineItemState);
+    /**
+     * @param int $idStateMachineProcess
+     *
+     * @return void
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
+     */
+    protected function assertProcessCreated($idStateMachineProcess)
+    {
+        if (!$idStateMachineProcess) {
+            throw new TriggerException(
+                sprintf(
+                    'Process with name "%s" not found!',
+                    $idStateMachineProcess
+                )
+            );
+        }
+    }
 
-        return $stateMachineItemTransfer;
+    /**
+     * @param string $commandString
+     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
+     *
+     * @return void
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\CommandNotFoundException
+     */
+    protected function assertCommandIsSet($commandString, StateMachineHandlerInterface $stateMachineHandler)
+    {
+        if (!isset($stateMachineHandler->getCommandPlugins()[$commandString])) {
+            throw new CommandNotFoundException(
+                sprintf(
+                    'Command plugin "%s" not registered in "%s" class. Please add it to getCommandPlugins method.',
+                    $commandString,
+                    get_class($stateMachineHandler)
+                )
+            );
+        }
     }
 
 }

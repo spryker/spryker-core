@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
 use Spryker\Zed\StateMachine\Business\Process\StateInterface;
+use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class Condition implements ConditionInterface
 {
@@ -238,9 +239,8 @@ class Condition implements ConditionInterface
             $targetStateMap[$i] = $targetState->getName();
         }
 
-        // TODO FW Extract the foreach
         foreach ($stateMachineItems as $i => $stateMachineItemTransfer) {
-            $this->stateMachinePersistence->saveStateMachineItemState($stateMachineItems[$i], $targetStateMap[$i]);
+            $this->stateMachinePersistence->getStateMachineItemState($stateMachineItems[$i], $targetStateMap[$i]);
         }
 
         return $sourceStateBuffer;
@@ -276,7 +276,20 @@ class Condition implements ConditionInterface
     {
         $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
 
-        // TODO FW Extract assert*()
+        $this->assertConditionIsSet($conditionString, $stateMachineHandler);
+
+        return $stateMachineHandler->getConditionPlugins()[$conditionString];
+    }
+
+    /**
+     * @param string $conditionString
+     * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException
+     * @return void
+     */
+    protected function assertConditionIsSet($conditionString, StateMachineHandlerInterface $stateMachineHandler)
+    {
         if (!isset($stateMachineHandler->getConditionPlugins()[$conditionString])) {
             throw new ConditionNotFoundException(
                 sprintf(
@@ -286,8 +299,6 @@ class Condition implements ConditionInterface
                 )
             );
         }
-
-        return $stateMachineHandler->getConditionPlugins()[$conditionString];
     }
 
 }

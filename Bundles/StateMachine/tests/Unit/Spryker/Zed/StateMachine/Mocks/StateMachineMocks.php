@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\StateMachine\Mocks;
 
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
+use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface;
@@ -118,6 +119,17 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
         $builderMock = $this->getMock(StateMachineQueryContainerInterface::class);
 
         return $builderMock;
+    }
+
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Process\ProcessInterface
+     */
+    public function createProcessMock()
+    {
+        $processMock = $this->getMock(ProcessInterface::class);
+
+        return $processMock;
     }
 
 }

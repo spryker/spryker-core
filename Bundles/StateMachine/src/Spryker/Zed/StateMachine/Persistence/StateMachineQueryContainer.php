@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\StateMachine\Persistence;
 
+use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineEventTimeoutTableMap;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineProcessTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -20,52 +21,50 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     /**
      * @api
      *
-     * @param int $idStateMachineState
-     * @param int $idStateMachineProcess
-     * @param string $stateMachineName
+     * @param int $idState
+     * @param int $idProcess
+     * @param string $name
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryStateMachineItemStateByIdStateIdProcessAndStateMachineName(
-        $idStateMachineState,
-        $idStateMachineProcess,
-        $stateMachineName
+    public function queryStateByIdStateAndIdProcessAndName(
+        $idState,
+        $idProcess,
+        $name
     ) {
-        return $this->getFactory()->createStateMachineItemStateQuery()
+        return $this->getFactory()
+            ->createStateMachineItemStateQuery()
             ->innerJoinProcess()
             ->useProcessQuery()
-               ->filterByIdStateMachineProcess($idStateMachineProcess)
-               ->filterByStateMachineName($stateMachineName)
+               ->filterByIdStateMachineProcess($idProcess)
+               ->filterByStateMachineName($name)
             ->endUse()
-            ->filterByIdStateMachineItemState($idStateMachineState);
+            ->filterByIdStateMachineItemState($idState);
     }
 
     /**
      * @api
      *
-     * @param int $idStateMachineState
-     * @param int $idStateMachineProcess
      * @param string $stateMachineName
-     * @param int $identifier
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryStateMachineItemsWithExistingHistory(
-        $idStateMachineState,
-        $idStateMachineProcess,
+    public function queryItemsWithExistingHistory(
         $stateMachineName,
-        $identifier
+        StateMachineItemTransfer $stateMachineItemTransfer
     ) {
-        return $this->getFactory()->createStateMachineItemStateQuery()
+        return $this->getFactory()
+            ->createStateMachineItemStateQuery()
             ->innerJoinProcess()
             ->useProcessQuery()
-               ->filterByIdStateMachineProcess($idStateMachineProcess)
+               ->filterByIdStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess())
                ->filterByStateMachineName($stateMachineName)
             ->endUse()
             ->useStateHistoryQuery()
-               ->filterByIdentifier($identifier)
+               ->filterByIdentifier($stateMachineItemTransfer->getIdentifier())
             ->endUse()
-            ->filterByIdStateMachineItemState($idStateMachineState);
+            ->filterByIdStateMachineItemState($stateMachineItemTransfer->getIdItemState());
     }
 
     /**
@@ -78,7 +77,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      */
     public function queryItemsWithExpiredTimeout(\DateTime $expirationDate, $stateMachineName)
     {
-        return $this->getFactory()->createStateMachineEventTimeoutQuery()
+        return $this->getFactory()
+            ->createStateMachineEventTimeoutQuery()
             ->innerJoinState()
             ->innerJoinProcess()
             ->where(SpyStateMachineEventTimeoutTableMap::COL_TIMEOUT . ' < ? ', $expirationDate->format('Y-m-d H:i:s'), \PDO::PARAM_STR)
@@ -117,7 +117,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      */
     public function queryProcessByStateMachineAndProcessName($stateMachineName, $processName)
     {
-        return $this->getFactory()->createStateMachineProcessQuery()
+        return $this->getFactory()
+            ->createStateMachineProcessQuery()
             ->filterByName($processName)
             ->filterByStateMachineName($stateMachineName);
     }
@@ -131,12 +132,13 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryStateMachineItemsByIdStateMachineProcessAndItemStates(
+    public function queryItemsByIdStateMachineProcessAndItemStates(
         $stateMachineName,
         $processName,
         array $states
     ) {
-        return $this->getFactory()->createStateMachineItemStateQuery()
+        return $this->getFactory()
+            ->createStateMachineItemStateQuery()
             ->innerJoinStateHistory()
             ->useProcessQuery()
               ->filterByStateMachineName($stateMachineName)
@@ -149,15 +151,16 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     /**
      * @api
      *
-     * @param int $idStateMachineProcess
+     * @param int $idProcess
      * @param string $stateName
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryStateMachineItemStateByIdStateMachineProcessAndStateName($idStateMachineProcess, $stateName)
+    public function queryItemStateByIdProcessAndStateName($idProcess, $stateName)
     {
-        return $this->getFactory()->createStateMachineItemStateQuery()
-            ->filterByFkStateMachineProcess($idStateMachineProcess)
+        return $this->getFactory()
+            ->createStateMachineItemStateQuery()
+            ->filterByFkStateMachineProcess($idProcess)
             ->filterByName($stateName);
     }
 
@@ -165,18 +168,16 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      * @api
      *
      * @param string $identifier
-     * @param \DateTime $expirationDate TODO FW This parameter is not used.
-     *
-     * TODO FW What is the TTL of the lock? Where does it check?
+     * @param \DateTime $expirationDate
      *
      * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
-    public function queryStateMachineLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate)
+    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate)
     {
         return $this->getFactory()
             ->createStateMachineLockQuery()
             ->filterByIdentifier($identifier)
-            ->filterByExpires(['min' => new \DateTime('now')]);
+            ->filterByExpires(['min' => $expirationDate]);
     }
 
     /**
@@ -186,10 +187,41 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
-    public function queryStateMachineLockItemsByIdentifier($identifier)
+    public function queryLockItemsByIdentifier($identifier)
     {
-        return $this->getFactory()->createStateMachineLockQuery()
+        return $this->getFactory()
+            ->createStateMachineLockQuery()
             ->filterByIdentifier($identifier);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $processName
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery
+     */
+    public function queryProcessByProcessName($processName)
+    {
+        return $this->getFactory()
+            ->createStateMachineProcessQuery()
+            ->filterByName($processName);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $identifier
+     * @param int $fkProcess
+     *
+     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery
+     */
+    public function queryEventTimeoutByIdentifierAndFkProcess($identifier, $fkProcess)
+    {
+        return $this->getFactory()
+            ->createStateMachineEventTimeoutQuery()
+            ->filterByIdentifier($identifier)
+            ->filterByFkStateMachineProcess($fkProcess);
     }
 
 }

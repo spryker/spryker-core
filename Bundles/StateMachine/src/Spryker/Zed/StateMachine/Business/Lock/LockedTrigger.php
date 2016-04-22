@@ -7,6 +7,7 @@
 namespace Spryker\Zed\StateMachine\Business\Lock;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\StateMachine\Business\Exception\LockException;
 use Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface;
 
@@ -24,15 +25,23 @@ class LockedTrigger implements TriggerInterface
     protected $stateMachineTrigger;
 
     /**
+     * @var \Spryker\Zed\Propel\Communication\Plugin\Connection
+     */
+    protected $propelConnection;
+
+    /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $stateMachineTrigger
      * @param \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface $itemLock
+     * @param \Propel\Runtime\Connection\ConnectionInterface $propelConnection
      */
     public function __construct(
         TriggerInterface $stateMachineTrigger,
-        ItemLockInterface $itemLock
+        ItemLockInterface $itemLock,
+        ConnectionInterface $propelConnection
     ) {
         $this->itemLock = $itemLock;
         $this->stateMachineTrigger = $stateMachineTrigger;
+        $this->propelConnection = $propelConnection;
     }
 
     /**
@@ -43,12 +52,16 @@ class LockedTrigger implements TriggerInterface
      */
     public function triggerForNewStateMachineItem(StateMachineProcessTransfer $stateMachineProcessTransfer, $identifier)
     {
+        $this->propelConnection->beginTransaction();
         if ($this->itemLock->isLocked($identifier)) {
             throw new LockException('State machine item is locked.');
         }
 
         $this->itemLock->acquire($identifier);
+        $this->propelConnection->commit();
+
         $triggerResult = $this->stateMachineTrigger->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+
         $this->itemLock->release($identifier);
 
         return $triggerResult;
@@ -65,18 +78,20 @@ class LockedTrigger implements TriggerInterface
     {
         $identifier = $this->buildIdentifierForMultipleItemLock($stateMachineItems);
 
-        // TODO FW To make it more stable you could have a transaction around isLocked() and acquire()
-
+        $this->propelConnection->beginTransaction();
         if ($this->itemLock->isLocked($identifier)) {
             throw new LockException('State machine item is locked.');
         }
 
         $this->itemLock->acquire($identifier);
+        $this->propelConnection->commit();
+
         $triggerEventResult = $this->stateMachineTrigger->triggerEvent(
             $eventName,
             $stateMachineName,
             $stateMachineItems
         );
+
         $this->itemLock->release($identifier);
 
         return $triggerEventResult;

@@ -40,7 +40,8 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     {
         return new LockedTrigger(
             $this->createStateMachineTrigger(),
-            $this->createItemLock()
+            $this->createItemLock(),
+            $this->getPropelConnection()
         );
     }
 
@@ -67,7 +68,8 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     {
         return new ItemLock(
             $this->getQueryContainer(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getPropelConnection()
         );
     }
 
@@ -93,7 +95,8 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
         return new StateUpdater(
             $this->createStateMachineTimeout(),
             $this->createHandlerResolver(),
-            $this->createStateMachinePersistence()
+            $this->createStateMachinePersistence(),
+            $this->getPropelConnection()
         );
     }
 
@@ -217,6 +220,14 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     public function getStateMachineHandlerPlugins()
     {
         return $this->getProvidedDependency(StateMachineDependencyProvider::PLUGINS_STATE_MACHINE_HANDLERS);
+    }
+
+    /**
+     * @return \Propel\Runtime\Connection\ConnectionInterface
+     */
+    public function getPropelConnection()
+    {
+        return $this->getProvidedDependency(StateMachineDependencyProvider::PLUGIN_PROPEL_CONNECTION);
     }
 
 }

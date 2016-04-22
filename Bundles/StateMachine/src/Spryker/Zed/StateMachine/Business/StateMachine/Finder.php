@@ -9,6 +9,8 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
@@ -55,13 +57,7 @@ class Finder implements FinderInterface
         $processes = [];
         $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
         foreach ($stateMachineHandler->getActiveProcesses() as $processName) {
-
-            // TODO FW Extract to create*Transfer()
-            $stateMachineProcessTransfer = new StateMachineProcessTransfer();
-            $stateMachineProcessTransfer->setProcessName($processName);
-            $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
-
-            $processes[$processName] = $stateMachineProcessTransfer;
+            $processes[$processName] = $this->createStateMachineProcessTransfer($stateMachineName, $processName);
         }
 
         return $processes;
@@ -104,10 +100,7 @@ class Finder implements FinderInterface
 
         $processBuilder = clone $this->builder;
 
-        // TODO FW Extract createProcessTransfer()
-        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
-        $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName($stateMachineName);
+        $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer($stateMachineName, $processName);
 
         $manualEvents = $processBuilder->createProcess($stateMachineProcessTransfer)->getManualEventsBySource();
 
@@ -167,7 +160,7 @@ class Finder implements FinderInterface
             return [];
         }
 
-        $stateMachineItems = $this->queryContainer->queryStateMachineItemsByIdStateMachineProcessAndItemStates(
+        $stateMachineItems = $this->queryContainer->queryItemsByIdStateMachineProcessAndItemStates(
             $stateMachineProcessTransfer->getStateMachineName(),
             $stateMachineProcessTransfer->getProcessName(),
             array_keys($statesByFlag)
@@ -175,16 +168,11 @@ class Finder implements FinderInterface
 
         $stateMachineItemsWithFlag = [];
         foreach ($stateMachineItems as $stateMachineItemEntity) {
-
-            // TODO FW Extract create*Transfer()
-            $stateMachineItemTransfer = new StateMachineItemTransfer();
-            $stateMachineItemTransfer->setProcessName($stateMachineProcessTransfer->getProcessName());
-            $stateMachineItemTransfer->setIdItemState($stateMachineItemEntity->getIdStateMachineItemState());
-            $stateMachineItemTransfer->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
-            $stateMachineItemTransfer->setStateName($stateMachineItemEntity->getName());
-
-            $itemIdentifier = $stateMachineItemEntity->getStateHistories()->getFirst()->getIdentifier();
-            $stateMachineItemTransfer->setIdentifier($itemIdentifier);
+            $stateMachineItemTransfer = $this->createStateMachineHistoryItemTransfer(
+                $stateMachineProcessTransfer,
+                $stateMachineItemEntity,
+                $stateMachineProcessEntity
+            );
 
             $stateMachineItemsWithFlag[] = $stateMachineItemTransfer;
         }
@@ -232,16 +220,7 @@ class Finder implements FinderInterface
             $stateName = $stateMachineItemTransfer->requireStateName()->getStateName();
             $processName = $stateMachineItemTransfer->requireProcessName()->getProcessName();
 
-            // TODO FW Extract to assert*()
-            if (!isset($processes[$processName])) {
-                throw new StateMachineException(
-                    sprintf(
-                        'Unknown process "%s" for state machine "%s".',
-                        $processName,
-                        'SM'
-                    )
-                );
-            }
+            $this->assertProcessExists($processes, $processName);
 
             $process = $processes[$processName];
             $targetState = $process->getStateFromAllProcesses($stateName);
@@ -313,6 +292,54 @@ class Finder implements FinderInterface
         $stateMachineProcessTransfer->setProcessName($processName);
 
         return $stateMachineProcessTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
+     * @param string $processName
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     * @return void
+     */
+    protected function assertProcessExists(array $processes, $processName)
+    {
+        if (!isset($processes[$processName])) {
+            throw new StateMachineException(
+                sprintf(
+                    'Unknown process "%s" for state machine "%s".',
+                    $processName,
+                    'SM'
+                )
+            );
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState $stateMachineItemEntity
+     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess $stateMachineProcessEntity
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
+     */
+    protected function createStateMachineHistoryItemTransfer(
+        StateMachineProcessTransfer $stateMachineProcessTransfer,
+        SpyStateMachineItemState $stateMachineItemEntity,
+        SpyStateMachineProcess $stateMachineProcessEntity
+    ) {
+
+        $stateMachineItemTransfer = new StateMachineItemTransfer();
+        $stateMachineItemTransfer->setProcessName($stateMachineProcessTransfer->getProcessName());
+        $stateMachineItemTransfer->setIdItemState($stateMachineItemEntity->getIdStateMachineItemState());
+        $stateMachineItemTransfer->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
+        $stateMachineItemTransfer->setStateName($stateMachineItemEntity->getName());
+
+        $stateMachineItemHistory = $stateMachineItemEntity->getStateHistories();
+        if (count($stateMachineItemHistory) > 0) {
+            $itemIdentifier = $stateMachineItemHistory->getFirst()->getIdentifier();
+            $stateMachineItemTransfer->setIdentifier($itemIdentifier);
+        }
+
+        return $stateMachineItemTransfer;
     }
 
 }

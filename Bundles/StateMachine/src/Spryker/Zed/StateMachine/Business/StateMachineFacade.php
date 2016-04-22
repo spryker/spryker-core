@@ -251,21 +251,17 @@ class StateMachineFacade extends AbstractFacade
      * @api
      *
      * @param string $stateMachineName
-     * @param int $idState
-     * @param int $idStateMachineProcess
-     * @param int $identifier
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
     public function getProcessedStateMachineItemTransfer(
         $stateMachineName,
-        $idState,
-        $idStateMachineProcess,
-        $identifier
+        StateMachineItemTransfer $stateMachineItemTransfer
     ) {
         return $this->getFactory()
             ->createStateMachinePersistence()
-            ->getProcessedStateMachineItemTransfer($idState, $idStateMachineProcess, $stateMachineName, $identifier);
+            ->getProcessedStateMachineItemTransfer($stateMachineName, $stateMachineItemTransfer);
     }
 
     /**

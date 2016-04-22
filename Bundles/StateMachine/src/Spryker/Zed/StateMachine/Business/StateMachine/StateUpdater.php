@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
-use Propel\Runtime\Propel;
+use Propel\Runtime\Connection\ConnectionInterface;
 
 class StateUpdater implements StateUpdaterInterface
 {
@@ -27,18 +27,26 @@ class StateUpdater implements StateUpdaterInterface
     protected $stateMachinePersistence;
 
     /**
+     * @var \Propel\Runtime\Connection\ConnectionInterface
+     */
+    protected $propelConnection;
+
+    /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface $timeout
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $stateMachineHandlerResolver
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $stateMachinePersistence
+     * @param \Propel\Runtime\Connection\ConnectionInterface $propelConnection
      */
     public function __construct(
         TimeoutInterface $timeout,
         HandlerResolverInterface $stateMachineHandlerResolver,
-        PersistenceInterface $stateMachinePersistence
+        PersistenceInterface $stateMachinePersistence,
+        ConnectionInterface $propelConnection
     ) {
         $this->timeout = $timeout;
         $this->stateMachineHandlerResolver = $stateMachineHandlerResolver;
         $this->stateMachinePersistence = $stateMachinePersistence;
+        $this->propelConnection = $propelConnection;
     }
 
     /**
@@ -56,8 +64,7 @@ class StateUpdater implements StateUpdaterInterface
         array $sourceStateBuffer
     ) {
 
-        $connection = Propel::getConnection(); // TODO FW The more explict way is to use the \Spryker\Zed\Propel\Communication\Plugin\Connection plugin
-        $connection->beginTransaction();
+        $this->propelConnection->beginTransaction();
 
         $currentDate = new \DateTime('now');
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
@@ -65,7 +72,6 @@ class StateUpdater implements StateUpdaterInterface
 
             $sourceState = $sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()];
             $targetState = $stateMachineItemTransfer->getStateName();
-
 
             if ($sourceState !== $targetState) {
 
@@ -80,7 +86,7 @@ class StateUpdater implements StateUpdaterInterface
             }
         }
 
-        $connection->commit();
+        $this->propelConnection->commit();
     }
 
 }

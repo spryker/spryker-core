@@ -502,16 +502,7 @@ class Builder implements BuilderInterface
         if (isset($xmlTransition->event)) {
             $eventName = (string)$xmlTransition->event;
 
-            // TODO FW Extract assert*()
-            if (!isset($eventMap[$eventName])) {
-                throw new StateMachineException(
-                    sprintf(
-                        'Event: "%s" does not exist from source: "%s"',
-                        $eventName,
-                        $sourceName
-                    )
-                );
-            }
+            $this->assertEventExists($eventMap, $sourceName, $eventName);
 
             $event = $eventMap[$eventName];
             $event->addTransition($transition);
@@ -567,6 +558,27 @@ class Builder implements BuilderInterface
         $stateMachineProcessTransfer->requireStateMachineName();
 
         return $this->stateMachineConfig->getPathToStateMachineXmlFiles() . DIRECTORY_SEPARATOR . $stateMachineProcessTransfer->getStateMachineName();
+    }
+
+    /**
+     * @param array $eventMap
+     * @param string $sourceName
+     * @param string $eventName
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     * @return void
+     */
+    protected function assertEventExists(array $eventMap, $sourceName, $eventName)
+    {
+        if (!isset($eventMap[$eventName])) {
+            throw new StateMachineException(
+                sprintf(
+                    'Event: "%s" does not exist from source: "%s"',
+                    $eventName,
+                    $sourceName
+                )
+            );
+        }
     }
 
 }

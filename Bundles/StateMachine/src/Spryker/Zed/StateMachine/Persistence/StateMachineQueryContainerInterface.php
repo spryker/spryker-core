@@ -5,38 +5,33 @@
  */
 namespace Spryker\Zed\StateMachine\Persistence;
 
+use Generated\Shared\Transfer\StateMachineItemTransfer;
+
 interface StateMachineQueryContainerInterface
 {
 
     /**
      * @api
      *
-     * TODO FW Make name shorter, like queryStateByIdStateAndIdProcessAndName() (same for other methods here)
-     *
-     * @param int $idStateMachineState // TODO FW You can cut out the bundle name from here. Just make it like $idState
-     * @param int $idStateMachineProcess // TODO FW $idProcess
-     * @param string $stateMachineName // TODO FW ... (same for all the other method variables in this class)
+     * @param int $idState
+     * @param int $idProcess
+     * @param string $name
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryStateMachineItemStateByIdStateIdProcessAndStateMachineName($idStateMachineState, $idStateMachineProcess, $stateMachineName);
-
+    public function queryStateByIdStateAndIdProcessAndName($idState, $idProcess, $name);
 
     /**
      * @api
      *
-     * @param int $idStateMachineState
-     * @param int $idStateMachineProcess
      * @param string $stateMachineName
-     * @param int $identifier
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryStateMachineItemsWithExistingHistory(
-        $idStateMachineState,
-        $idStateMachineProcess,
+    public function queryItemsWithExistingHistory(
         $stateMachineName,
-        $identifier
+        StateMachineItemTransfer $stateMachineItemTransfer
     );
 
     /**
@@ -74,11 +69,11 @@ interface StateMachineQueryContainerInterface
      *
      * @param string $stateMachineName
      * @param string $processName
-     * @param array|string[] $states
+     * @param string[] $states
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryStateMachineItemsByIdStateMachineProcessAndItemStates(
+    public function queryItemsByIdStateMachineProcessAndItemStates(
         $stateMachineName,
         $processName,
         array $states
@@ -87,12 +82,12 @@ interface StateMachineQueryContainerInterface
     /**
      * @api
      *
-     * @param int $idStateMachineProcess
+     * @param int $idProcess
      * @param string $stateName
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryStateMachineItemStateByIdStateMachineProcessAndStateName($idStateMachineProcess, $stateName);
+    public function queryItemStateByIdProcessAndStateName($idProcess, $stateName);
 
     /**
      * @api
@@ -102,7 +97,7 @@ interface StateMachineQueryContainerInterface
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
-    public function queryStateMachineLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate);
+    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate);
 
     /**
      * @api
@@ -111,6 +106,25 @@ interface StateMachineQueryContainerInterface
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
-    public function queryStateMachineLockItemsByIdentifier($identifier);
+    public function queryLockItemsByIdentifier($identifier);
+
+    /**
+     * @api
+     *
+     * @param string $processName
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery
+     */
+    public function queryProcessByProcessName($processName);
+
+    /**
+     * @api
+     *
+     * @param int $identifier
+     * @param int $fkProcess
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery
+     */
+    public function queryEventTimeoutByIdentifierAndFkProcess($identifier, $fkProcess);
 
 }

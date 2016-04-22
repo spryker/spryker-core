@@ -31,7 +31,12 @@ class CheckTimeoutConsole extends Console
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
 
-        $this->addOption(self::OPTION_STATE_MACHINE_NAME, 's', InputOption::VALUE_OPTIONAL, 'Name of state machine to execute condition check');
+        $this->addOption(
+            self::OPTION_STATE_MACHINE_NAME,
+            's',
+            InputOption::VALUE_REQUIRED,
+            'Name of state machine to execute condition check'
+        );
 
         parent::configure();
     }

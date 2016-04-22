@@ -14,14 +14,6 @@ interface PersistenceInterface
 {
 
     /**
-     * @param string $stateName
-     * @param int $idStateMachineProcess
-     *
-     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState
-     */
-    public function getStateMachineItemStateEntity($stateName, $idStateMachineProcess);
-
-    /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
      * @return int
@@ -29,12 +21,12 @@ interface PersistenceInterface
     public function getProcessId(StateMachineProcessTransfer $stateMachineProcessTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param string $stateName
-     * @param int $idStateMachineProcess
      *
      * @return int
      */
-    public function getInitialStateIdByStateName($stateName, $idStateMachineProcess);
+    public function getInitialStateIdByStateName(StateMachineItemTransfer $stateMachineItemTransfer, $stateName);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
@@ -42,7 +34,7 @@ interface PersistenceInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    public function saveStateMachineItemState(StateMachineItemTransfer $stateMachineItemTransfer, $stateName);
+    public function getStateMachineItemState(StateMachineItemTransfer $stateMachineItemTransfer, $stateName);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
@@ -61,18 +53,15 @@ interface PersistenceInterface
     public function getStateHistoryByStateItemIdentifier($itemIdentifier, $idStateMachineProcess);
 
     /**
-     * @param int $idStateMachineState
-     * @param int $idStateMachineProcess
-     * @param string $stateMachineName
-     * @param int $identifier
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
+     * @param string $stateMachineName
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
     public function getProcessedStateMachineItemTransfer(
-        $idStateMachineState,
-        $idStateMachineProcess,
         $stateMachineName,
-        $identifier
+        StateMachineItemTransfer $stateMachineItemTransfer
     );
 
     /**

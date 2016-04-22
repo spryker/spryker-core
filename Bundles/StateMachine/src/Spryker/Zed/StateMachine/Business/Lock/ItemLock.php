@@ -46,7 +46,6 @@ class ItemLock implements ItemLockInterface
         $stateMachineLockEntity->setIdentifier($identifier);
         $expirationDate = $this->createExpirationDate();
         $stateMachineLockEntity->setExpires($expirationDate);
-
         $affectedRows = $stateMachineLockEntity->save();
 
         return $affectedRows > 0;
@@ -59,7 +58,7 @@ class ItemLock implements ItemLockInterface
      */
     public function isLocked($identifier)
     {
-        $locked = $this->queryContainer->queryStateMachineLockedItemsByIdentifierAndExpirationDate(
+        $locked = $this->queryContainer->queryLockedItemsByIdentifierAndExpirationDate(
             $identifier,
             new \DateTime('now')
         )->count();
@@ -75,7 +74,7 @@ class ItemLock implements ItemLockInterface
     public function release($identifier)
     {
         $this->queryContainer
-            ->queryStateMachineLockItemsByIdentifier($identifier)
+            ->queryLockItemsByIdentifier($identifier)
             ->delete();
     }
 

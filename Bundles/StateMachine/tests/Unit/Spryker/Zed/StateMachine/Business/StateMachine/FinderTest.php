@@ -6,15 +6,26 @@
 
 namespace Unit\Spryker\Zed\StateMachine\Business;
 
+use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
+use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\StateMachine\Business\Process\State;
 use Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\Finder;
 use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface;
-use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
+use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
 class FinderTest extends StateMachineMocks
 {
+
+    const TEST_STATE_MACHINE_NAME = 'TestStateMachine';
+
     /**
      * @return void
      */
@@ -32,31 +43,136 @@ class FinderTest extends StateMachineMocks
 
         $finder = $this->createFinder($handlerResolverMock);
 
-        $subProcesses = $finder->getProcesses('TestStateMachine');
+        $subProcesses = $finder->getProcesses(self::TEST_STATE_MACHINE_NAME);
 
         $this->assertCount(2, $subProcesses);
 
         /* @var $subProcess StateMachineProcessTransfer  */
         $subProcess = array_pop($subProcesses);
         $this->assertInstanceOf(StateMachineProcessTransfer::class, $subProcess);
-        $this->assertEquals('TestStateMachine', $subProcess->getStateMachineName());
+        $this->assertEquals(self::TEST_STATE_MACHINE_NAME, $subProcess->getStateMachineName());
         $this->assertEquals('Process2', $subProcess->getProcessName());
 
     }
 
     /**
-     * @param BuilderInterface $builderMock
-     * @param HandlerResolverInterface $handlerResolverMock
-     * @param StateMachineHandlerInterface $stateMachineQueryContainerMock
+     * @return void
+     */
+    public function testGetManualEventsForStateMachineItemsShouldReturnManualEventsForGivenItems()
+    {
+        $manualEvents = [
+           'state name' => [
+               'event1',
+               'event2'
+           ]
+        ];
+
+        $processMock = $this->createProcessMock();
+        $processMock->method('getManualEventsBySource')->willReturn($manualEvents);
+
+        $builderMock = $this->createBuilderMock();
+        $builderMock->method('createProcess')->willReturn($processMock);
+
+        $finder = $this->createFinder(null, $builderMock);
+
+        $stateMachineItems = [];
+
+        $stateMachineItemTransfer = new StateMachineItemTransfer();
+        $stateMachineItemTransfer->setProcessName('Process1');
+        $stateMachineItemTransfer->setStateName('state name');
+
+        $stateMachineItems[] = $stateMachineItemTransfer;
+
+        $manualEvents = $finder->getManualEventsForStateMachineItems(
+            $stateMachineItems,
+            self::TEST_STATE_MACHINE_NAME
+        );
+
+        $this->assertCount(1, $manualEvents);
+
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetItemWithFlagShouldReturnStatesMarkedWithGivenFlag()
+    {
+        $states = [];
+        $state = new State();
+        $state->addFlag('test');
+        $states[] = $state;
+
+        $state = new State();
+        $state->addFlag('test2');
+        $states[] = $state;
+
+        $processMock = $this->createProcessMock();
+        $processMock->expects($this->once())
+            ->method('getAllStates')
+            ->willReturn($states);
+
+        $builderMock = $this->createBuilderMock();
+        $builderMock->method('createProcess')->willReturn($processMock);
+
+        $stateMachineQueryContainerMock = $this->createStateMachineQueryContainerMock();
+
+        $stateMachineProcessQuery = $this->getMock(SpyStateMachineProcessQuery::class);
+        $stateMachineProcessQuery->method('findOne')->willReturn(new SpyStateMachineProcess());
+
+        $stateMachineQueryContainerMock->expects($this->once())
+            ->method('queryProcessByStateMachineAndProcessName')
+            ->willReturn($stateMachineProcessQuery);
+
+        $stateMachineItemStateQuery = $this->getMock(SpyStateMachineItemStateQuery::class);
+
+        $stateMachineItemEntity = new SpyStateMachineItemState();
+        $stateMachineItemEntity->setIdStateMachineItemState(1);
+        $stateMachineItemEntity->setFkStateMachineProcess(1);
+        $stateMachineItemEntity->setName('State');
+
+        $itemStateHistory = new SpyStateMachineItemStateHistory();
+
+        $stateHistories = new ObjectCollection();
+        $stateHistories->append($itemStateHistory);
+
+        $stateMachineItemEntity->setStateHistories($stateHistories);
+
+        $stateMachineItemStateQuery->method('find')->willReturn([$stateMachineItemEntity]);
+
+        $stateMachineQueryContainerMock->expects($this->once())
+            ->method('queryStateMachineItemsByIdStateMachineProcessAndItemStates')
+            ->willReturn($stateMachineItemStateQuery);
+
+        $finder = $this->createFinder(null, $builderMock, $stateMachineQueryContainerMock);
+
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName('Process1');
+        $stateMachineProcessTransfer->setStateMachineName(self::TEST_STATE_MACHINE_NAME);
+
+        $stateMachineItems = $finder->getItemsWithFlag($stateMachineProcessTransfer, 'test');
+
+        $this->assertCount(1, $stateMachineItems);
+
+        /* @var $stateMachineItem StateMachineItemTransfer  */
+
+        $stateMachineItem = $stateMachineItems[0];
+        $this->assertInstanceOf(StateMachineItemTransfer::class, $stateMachineItem);
+
+    }
+
+    /**
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface $builderMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $handlerResolverMock
+     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $stateMachineQueryContainerMock
      *
-     * @return Finder
+     * @return \Spryker\Zed\StateMachine\Business\StateMachine\Finder
      */
     protected function createFinder(
         HandlerResolverInterface $handlerResolverMock = null,
         BuilderInterface $builderMock = null,
-        StateMachineHandlerInterface $stateMachineQueryContainerMock = null
-    )
-    {
+        StateMachineQueryContainerInterface $stateMachineQueryContainerMock = null
+    ) {
+
         if ($builderMock === null) {
             $builderMock = $this->createBuilderMock();
         }
@@ -75,4 +191,5 @@ class FinderTest extends StateMachineMocks
             $stateMachineQueryContainerMock
         );
     }
+
 }

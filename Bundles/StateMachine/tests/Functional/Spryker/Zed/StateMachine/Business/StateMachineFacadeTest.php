@@ -17,6 +17,7 @@ use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineItemStateQuery;
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
@@ -338,9 +339,7 @@ class StateMachineFacadeTest extends Test
 
         $updatedStateMachineItemTransfer = $stateMachineFacade->getProcessedStateMachineItemTransfer(
             self::TESTING_SM,
-            $stateMachineItemTransfer->getIdItemState(),
-            $stateMachineItemTransfer->getIdStateMachineProcess(),
-            $stateMachineItemTransfer->getIdentifier()
+            $stateMachineItemTransfer
         );
 
         $this->assertEquals(
@@ -576,6 +575,10 @@ class StateMachineFacadeTest extends Test
 
         $container[StateMachineDependencyProvider::PLUGIN_GRAPH] = function () {
              return new GraphPlugin();
+        };
+
+        $container[StateMachineDependencyProvider::PLUGIN_PROPEL_CONNECTION] = function () {
+            return (new Connection())->get();
         };
 
         $stateMachineBusinessFactory->setContainer($container);

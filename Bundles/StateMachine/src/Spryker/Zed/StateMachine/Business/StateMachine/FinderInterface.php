@@ -32,7 +32,7 @@ interface FinderInterface
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param string $stateMachineName
      *
-     * @return array|\string[]
+     * @return array|string[]
      */
     public function getManualEventsForStateMachineItem(
         StateMachineItemTransfer $stateMachineItemTransfer,
