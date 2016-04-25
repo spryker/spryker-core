@@ -31,7 +31,7 @@ class Condition implements ConditionInterface
     protected $transitionLog;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
+     * @var \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
      */
     protected $stateMachineHandlerResolver;
 

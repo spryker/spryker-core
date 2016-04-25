@@ -80,7 +80,7 @@ class Drawer implements DrawerInterface
     protected $graph;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface
+     * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
      */
     protected $stateMachineHandler;
 
@@ -302,11 +302,11 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
-     * @param string $label
+     * @param array $label
      *
      * @return array
      */
-    protected function addEdgeConditionText(TransitionInterface $transition, $label)
+    protected function addEdgeConditionText(TransitionInterface $transition, array $label)
     {
         if ($transition->hasCondition()) {
             $conditionLabel = $transition->getCondition();
@@ -323,11 +323,11 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
-     * @param string $label
+     * @param array $label
      *
      * @return array
      */
-    protected function addEdgeEventText(TransitionInterface $transition, $label)
+    protected function addEdgeEventText(TransitionInterface $transition, array $label)
     {
         if ($transition->hasEvent()) {
             $event = $transition->getEvent();
@@ -362,11 +362,11 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param string $label
+     * @param array $label
      *
      * @return string
      */
-    protected function addEdgeElse($label)
+    protected function addEdgeElse(array $label)
     {
         if (!empty($label)) {
             $label = implode($this->brLeft, $label);

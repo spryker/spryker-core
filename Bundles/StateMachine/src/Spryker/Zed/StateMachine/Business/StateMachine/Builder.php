@@ -285,6 +285,10 @@ class Builder implements BuilderInterface
             }
         }
 
+        if ($mainProcess === null) {
+            throw new StateMachineException('Main process not found.');
+        }
+
         return [$processMap, $mainProcess];
     }
 
@@ -493,6 +497,7 @@ class Builder implements BuilderInterface
      * @param \SimpleXMLElement $xmlTransition
      * @param string $sourceName
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
+     *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
      * @return void

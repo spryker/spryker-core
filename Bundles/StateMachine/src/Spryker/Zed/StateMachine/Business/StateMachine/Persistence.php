@@ -79,7 +79,8 @@ class Persistence implements PersistenceInterface
         $stateMachineProcessTransfer->requireProcessName();
 
         if (array_key_exists($stateMachineProcessTransfer->getProcessName(), self::$processEntityBuffer)) {
-            return self::$processEntityBuffer[$stateMachineProcessTransfer->getProcessName()];
+            return self::$processEntityBuffer[$stateMachineProcessTransfer->getProcessName()]
+                ->getIdStateMachineProcess();
         }
 
         $stateMachineProcessEntity = $this->stateMachineQueryContainer

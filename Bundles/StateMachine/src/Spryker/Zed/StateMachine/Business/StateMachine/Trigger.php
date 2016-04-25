@@ -122,7 +122,7 @@ class Trigger implements TriggerInterface
     public function triggerEvent($eventName, $stateMachineName, array $stateMachineItems)
     {
         if ($this->checkForEventRepetitions($eventName) === false) {
-            return false;
+            return 0;
         }
 
         $stateMachineItems = $this->stateMachinePersistence->updateStateMachineItemsFromPersistence(

@@ -31,7 +31,7 @@ class Event implements EventInterface
     protected $command;
 
     /**
-     * @var int
+     * @var string
      */
     protected $timeout;
 

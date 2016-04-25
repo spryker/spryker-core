@@ -26,15 +26,15 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::PLUGINS_STATE_MACHINE_HANDLERS] = function (Container $container) {
+        $container[self::PLUGINS_STATE_MACHINE_HANDLERS] = function () {
             return $this->getStateMachineHandlers();
         };
 
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
             return (new Connection())->get();
         };
 
-        $container[self::PLUGIN_GRAPH] = function (Container $container) {
+        $container[self::PLUGIN_GRAPH] = function () {
             return $this->getGraphPlugin();
         };
     }
@@ -46,7 +46,7 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::PLUGINS_STATE_MACHINE_HANDLERS] = function (Container $container) {
+        $container[self::PLUGINS_STATE_MACHINE_HANDLERS] = function () {
             return $this->getStateMachineHandlers();
         };
     }
