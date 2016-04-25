@@ -42,7 +42,12 @@ interface TouchFacadeInterface
     public function touchDeleted($itemType, $idItem);
 
     /**
+     * Specification
+     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `active`
+     *
      * @api
+     *
+     * @deprecated Use bulkTouchSetActive instead
      *
      * @param string $itemType
      * @param array $itemIds
@@ -52,7 +57,25 @@ interface TouchFacadeInterface
     public function bulkTouchActive($itemType, array $itemIds = []);
 
     /**
+     * Specification
+     *  - set `touched` to current date and `item_event` to `active` where given `$itemType` and `$itemId` matches
+     *
      * @api
+     *
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return int
+     */
+    public function bulkTouchSetActive($itemType, array $itemIds);
+
+    /**
+     * Specification
+     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `inactive`
+     *
+     * @api
+     *
+     * @deprecated Use bulkTouchSetInActive instead
      *
      * @param string $itemType
      * @param array $itemIds
@@ -62,6 +85,9 @@ interface TouchFacadeInterface
     public function bulkTouchInactive($itemType, array $itemIds = []);
 
     /**
+     * Specification
+     *  - set `touched` to current date and `item_event` to `inactive` where given `$itemType` and `$itemId` matches
+     *
      * @api
      *
      * @param string $itemType
@@ -69,7 +95,35 @@ interface TouchFacadeInterface
      *
      * @return int
      */
+    public function bulkTouchSetInActive($itemType, array $itemIds);
+
+    /**
+     * Specification
+     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `deleted`
+     *
+     * @api
+     *
+     * @deprecated Use bulkTouchSetDeleted instead
+     *
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return int
+     */
     public function bulkTouchDeleted($itemType, array $itemIds = []);
+
+    /**
+     * Specification
+     *  - set `touched` to current date and `item_event` to `deleted` where given `$itemType` and `$itemId` matches
+     *
+     * @api
+     *
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return int
+     */
+    public function bulkTouchSetDeleted($itemType, array $itemIds);
 
     /**
      * @api

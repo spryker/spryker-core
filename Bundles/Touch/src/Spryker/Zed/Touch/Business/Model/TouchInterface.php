@@ -18,6 +18,8 @@ interface TouchInterface
     public function getItemsByType($itemType);
 
     /**
+     * @deprecated Use `Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouch::bulkTouch()` instead
+     *
      * @param string $itemType
      * @param string $itemEvent
      * @param array $itemIds

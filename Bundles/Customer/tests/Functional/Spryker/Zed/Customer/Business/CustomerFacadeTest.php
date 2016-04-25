@@ -10,7 +10,10 @@ namespace Functional\Spryker\Zed\Customer\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * @group Spryker
@@ -42,6 +45,46 @@ class CustomerFacadeTest extends Test
     {
         parent::setUp();
         $this->customerFacade = new CustomerFacade();
+        $this->customerFacade->setFactory($this->getBusinessFactory());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerBusinessFactory
+     */
+    protected function getBusinessFactory()
+    {
+        $customerBusinessFactory = new CustomerBusinessFactory();
+        $customerBusinessFactory->setContainer($this->getContainer());
+
+        return $customerBusinessFactory;
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function getContainer()
+    {
+        $dependencyProvider = new CustomerDependencyProvider();
+        $container = new Container();
+
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $container[CustomerDependencyProvider::SENDER_PLUGINS] = $this->getSenderPlugins();
+
+        return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSenderPlugins()
+    {
+        $senderPlugins = [];
+
+        $senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] = [];
+        $senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORE_TOKEN_SENDERS] = [];
+        $senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORED_CONFIRMATION_SENDERS] = [];
+
+        return $senderPlugins;
     }
 
     /**

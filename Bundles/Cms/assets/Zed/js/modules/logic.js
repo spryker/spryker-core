@@ -5,7 +5,7 @@
 
 'use strict';
 
-var summernote = require('Gui/assets/Zed/js/modules/editor');
+var summernote = require('ZedGuiEditorConfiguration');
 
 const GLOSSARY_SELECT_MARGIN_TOP = 159;
 const GLOSSARY_SELECT_MARGIN_LEFT = 230;
