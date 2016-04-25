@@ -102,6 +102,15 @@ interface StateMachineQueryContainerInterface
     /**
      * @api
      *
+     * @param \DateTime $expirationDate
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
+     */
+    public function queryLockedItemsByExpirationDate(\DateTime $expirationDate);
+
+    /**
+     * @api
+     *
      * @param string $identifier
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery

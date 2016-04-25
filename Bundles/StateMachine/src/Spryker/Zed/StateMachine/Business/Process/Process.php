@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\StateMachine\Business\Process;
 
-use Spryker\Zed\Oms\Business\Exception\StatemachineException;
+use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 
 class Process implements ProcessInterface
 {
@@ -170,7 +170,7 @@ class Process implements ProcessInterface
             }
         }
 
-        throw new StatemachineException(
+        throw new StateMachineException(
             sprintf(
                 'Unknown state: %s',
                 $stateName

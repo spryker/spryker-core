@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\StateMachine\Business;
+namespace Unit\Spryker\Zed\StateMachine\Business\SateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
@@ -140,7 +140,7 @@ class FinderTest extends StateMachineMocks
         $stateMachineItemStateQuery->method('find')->willReturn([$stateMachineItemEntity]);
 
         $stateMachineQueryContainerMock->expects($this->once())
-            ->method('queryStateMachineItemsByIdStateMachineProcessAndItemStates')
+            ->method('queryItemsByIdStateMachineProcessAndItemStates')
             ->willReturn($stateMachineItemStateQuery);
 
         $finder = $this->createFinder(null, $builderMock, $stateMachineQueryContainerMock);

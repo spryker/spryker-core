@@ -15,26 +15,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory getFactory()
  */
-class StateMachineFacade extends AbstractFacade
+class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInterface
 {
 
     /**
-     * Trigger when first time adding item to state machine process
-     *
-     * Specification:
-     *  - Returns boolean true if trigger was successful
-     *  - Creates new process item in persistence if does not exist
-     *  - Creates new state item in persistence if does not exist
-     *  - Calls plugin method in StateMachineHandlerInterface::getInitialStateForProcess
-     *  - Calls plugin method in StateMachineHandlerInterface::itemStateUpdated when state changed happens
-     *  - Persist state history
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
-     * @param int $identifier - this is id of foreign entity you want to track in state machine, it's stored in history table.
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function triggerForNewStateMachineItem(
         StateMachineProcessTransfer $stateMachineProcessTransfer,
@@ -46,21 +33,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Trigger event for single item. Must be already initialized with triggerForNewStateMachineItem
-     *
-     * Specification:
-     *  - Returns boolean true if trigger was successful
-     *  - Creates new state item in persistence if does not exist
-     *  - Calls plugin method in StateMachineHandlerInterface::itemStateUpdated when state changed happens
-     *  - Persist state history
-     *
      * @api
      *
-     * @param string $eventName
-     * @param string $stateMachineName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function triggerEvent($eventName, $stateMachineName, StateMachineItemTransfer $stateMachineItemTransfer)
     {
@@ -70,21 +45,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Trigger event for multiple items. Must be already initialized with triggerForNewStateMachineItem
-     *
-     * Specification:
-     *  - Returns boolean true if trigger was successful
-     *  - Creates new state item in persistence if does not exist
-     *  - Calls plugin method in StateMachineHandlerInterface::itemStateUpdated when state changed happens
-     *  - Persist state history
-     *
      * @api
      *
-     * @param string $eventName
-     * @param string $stateMachineName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function triggerEventForItems($eventName, $stateMachineName, array $stateMachineItems)
     {
@@ -94,17 +57,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Return available state machine process list. Includes all state machine details: states transitions, events
-     *
-     * Specification:
-     *  - Parse xml file and build object graph from it.
-     *  - Calls plugin method in StateMachineHandlerInterface::getActiveProcesses to get list of process
-     *
      * @api
      *
-     * @param string $stateMachineName
-     *
-     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer[]
+     * {@inheritdoc}
      */
     public function getProcesses($stateMachineName)
     {
@@ -114,16 +69,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *  - Read all transition without event for given state machine.
-     *  - Read from database items with those transitions
-     *  - execute each transition
-     *
      * @api
      *
-     * @param string $stateMachineName
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function checkConditions($stateMachineName)
     {
@@ -133,16 +81,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     *
-     *  Specification:
-     *  - Read all expired timeout events for given state machine
-     *  - Execute events
-     *
      * @api
      *
-     * @param string $stateMachineName
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function checkTimeouts($stateMachineName)
     {
@@ -152,19 +93,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     *
-     * Specification:
-     *  - Read all processes from given state machine
-     *  - Using graph library draw graph
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
-     * @param string $highlightState
-     * @param string $format
-     * @param int $fontSize
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function drawProcess(
         StateMachineProcessTransfer $stateMachineProcessTransfer,
@@ -184,14 +115,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *  - Read process id from database.
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getStateMachineProcessId(StateMachineProcessTransfer $stateMachineProcessTransfer)
     {
@@ -201,18 +127,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     *
-     *  Specification:
-     *  - Read state machine process list
-     *  - Find all manual events
-     *  - Map manual events with give event name.
-     *
      * @api
      *
-     * @param string $stateMachineName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getManualEventsForStateMachineItem(
         $stateMachineName,
@@ -224,17 +141,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *  - Read state machine process list
-     *  - Find all manual events
-     *  - Map manual events with give event state machine items.
-     *
      * @api
      *
-     * @param string $stateMachineName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     *
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getManualEventsForStateMachineItems($stateMachineName, array $stateMachineItems)
     {
@@ -244,16 +153,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     *
-     * Specification:
-     *  - Get StateMachine item transfer as stored in persistence
-     *
      * @api
      *
-     * @param string $stateMachineName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
+     * {@inheritdoc}
      */
     public function getProcessedStateMachineItemTransfer(
         $stateMachineName,
@@ -265,15 +167,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *  - Get StateMachine items transfer as stored in persistence
-     *
      * @api
      *
-     * @param string $stateMachineName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * {@inheritdoc}
      */
     public function getProcessedStateMachineItems($stateMachineName, array $stateMachineItems)
     {
@@ -283,14 +179,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *  - Get history for given state machine item reading state machine history table
-     *
      * @api
      *
-     * @param int $idStateMachineProcess
-     * @param int $identifier
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * {@inheritdoc}
      */
     public function getStateHistoryByStateItemIdentifier($idStateMachineProcess, $identifier)
     {
@@ -300,15 +191,9 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *  - Find all items with flag for given state machine and process, parse xml.
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
-     * @param string $flagName
-     *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * {@inheritdoc}
      */
     public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName)
     {
@@ -318,21 +203,25 @@ class StateMachineFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *  - Find all items without flag for given state machine and process, parse xml.
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
-     * @param string $flagName
-     *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * {@inheritdoc}
      */
     public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName)
     {
         return $this->getFactory()
             ->createStateMachineFinder()
             ->getItemsWithoutFlag($stateMachineProcessTransfer, $flagName);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function clearLocks()
+    {
+        $this->getFactory()->createItemLock()->clearLocks();
     }
 
 }

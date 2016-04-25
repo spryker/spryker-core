@@ -16,25 +16,18 @@ interface TimeoutInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     * @param \DateTime $currentTime
      *
-     * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
-    public function setNewTimeout(
-        ProcessInterface $process,
-        StateMachineItemTransfer $stateMachineItemTransfer,
-        \DateTime $currentTime
-    );
+    public function setNewTimeout(ProcessInterface $process, StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      * @param string $stateName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
@@ -44,19 +37,5 @@ interface TimeoutInterface
         $stateName,
         StateMachineItemTransfer $stateMachineItemTransfer
     );
-
-    /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     *
-     * @return array
-     */
-    public function groupItemsByEvent(array $stateMachineItems);
-
-    /**
-     * @param string $stateMachineName
-     *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $expiredStateMachineItemsTransfer
-     */
-    public function getItemsWithExpiredTimeouts($stateMachineName);
 
 }

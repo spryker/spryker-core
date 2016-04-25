@@ -42,7 +42,8 @@ class ItemLock implements ItemLockInterface
      */
     public function acquire($identifier)
     {
-        $stateMachineLockEntity = new SpyStateMachineLock();
+        $stateMachineLockEntity = $this->createStateMachineLockEntity();
+
         $stateMachineLockEntity->setIdentifier($identifier);
         $expirationDate = $this->createExpirationDate();
         $stateMachineLockEntity->setExpires($expirationDate);
@@ -79,6 +80,16 @@ class ItemLock implements ItemLockInterface
     }
 
     /**
+     * @return void
+     */
+    public function clearLocks()
+    {
+        $this->queryContainer
+            ->queryLockedItemsByExpirationDate(new \DateTime('now'))
+            ->delete();
+    }
+
+    /**
      * @return \DateTime
      */
     protected function createExpirationDate()
@@ -90,6 +101,14 @@ class ItemLock implements ItemLockInterface
         $expirationDate->add($dateInterval);
 
         return $expirationDate;
+    }
+
+    /**
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLock
+     */
+    protected function createStateMachineLockEntity()
+    {
+        return new SpyStateMachineLock();
     }
 
 }

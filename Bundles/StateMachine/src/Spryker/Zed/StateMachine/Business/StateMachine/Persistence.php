@@ -9,10 +9,11 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess;
-use Spryker\Zed\Oms\Business\Exception\StatemachineException;
+use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class Persistence implements PersistenceInterface
@@ -244,7 +245,8 @@ class Persistence implements PersistenceInterface
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
-     * @throws \Spryker\Zed\Oms\Business\Exception\StatemachineException
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      */
     public function getProcessedStateMachineItemTransfer(
         $stateMachineName,
@@ -262,7 +264,7 @@ class Persistence implements PersistenceInterface
             )->findOne();
 
         if ($stateMachineItemStateEntity === null) {
-            throw new StatemachineException('State machine item not found.');
+            throw new StateMachineException('State machine item not found.');
         }
 
         $stateMachineProcessEntity = $stateMachineItemStateEntity->getProcess();
@@ -306,6 +308,82 @@ class Persistence implements PersistenceInterface
         }
 
         return $stateMachineItemStateIds;
+    }
+
+    /**
+     * @param string $stateMachineName
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $expiredStateMachineItemsTransfer
+     */
+    public function getItemsWithExpiredTimeouts($stateMachineName)
+    {
+        $stateMachineExpiredItems = $this->stateMachineQueryContainer
+            ->queryItemsWithExpiredTimeout(
+                new \DateTime('now'),
+                $stateMachineName
+            )->find();
+
+        $expiredStateMachineItemsTransfer = [];
+        foreach ($stateMachineExpiredItems as $stateMachineEventTimeoutEntity) {
+
+            $stateMachineItemTransfer = new StateMachineItemTransfer();
+            $stateMachineItemTransfer->setEventName($stateMachineEventTimeoutEntity->getEvent());
+            $stateMachineItemTransfer->setIdentifier($stateMachineEventTimeoutEntity->getIdentifier());
+
+            $stateMachineItemStateEntity = $stateMachineEventTimeoutEntity->getState();
+            $stateMachineItemTransfer->setIdItemState($stateMachineItemStateEntity->getIdStateMachineItemState());
+            $stateMachineItemTransfer->setStateName($stateMachineItemStateEntity->getName());
+
+            $stateMachineProcessEntity = $stateMachineItemStateEntity->getProcess();
+            $stateMachineItemTransfer->setProcessName($stateMachineProcessEntity->getName());
+            $stateMachineItemTransfer->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
+
+            $expiredStateMachineItemsTransfer[] = $stateMachineItemTransfer;
+
+        }
+
+        return $expiredStateMachineItemsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \DateTime $timeoutDate
+     * @param string $eventName
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    public function saveStateMachineItemTimeout(
+        StateMachineItemTransfer $stateMachineItemTransfer,
+        \DateTime $timeoutDate,
+        $eventName
+    ) {
+
+        $stateMachineItemTimeoutEntity = new SpyStateMachineEventTimeout();
+        $stateMachineItemTimeoutEntity
+            ->setTimeout($timeoutDate)
+            ->setIdentifier($stateMachineItemTransfer->getIdentifier())
+            ->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState())
+            ->setFkStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess())
+            ->setEvent($eventName)
+            ->save();
+
+        return $stateMachineItemTimeoutEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return void
+     */
+    public function dropTimeoutByItem(StateMachineItemTransfer $stateMachineItemTransfer)
+    {
+        $this->stateMachineQueryContainer
+            ->queryEventTimeoutByIdentifierAndFkProcess(
+                $stateMachineItemTransfer->getIdentifier(),
+                $stateMachineItemTransfer->getIdStateMachineProcess()
+            )->delete();
     }
 
     /**

@@ -208,7 +208,7 @@ class Finder implements FinderInterface
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,
@@ -299,6 +299,7 @@ class Finder implements FinderInterface
      * @param string $processName
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
      * @return void
      */
     protected function assertProcessExists(array $processes, $processName)

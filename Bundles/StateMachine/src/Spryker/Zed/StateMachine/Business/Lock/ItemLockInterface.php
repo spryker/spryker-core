@@ -29,4 +29,9 @@ interface ItemLockInterface
      */
     public function release($identifier);
 
+    /**
+     * @return void
+     */
+    public function clearLocks();
+
 }

@@ -56,15 +56,14 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
             $this->createStateMachineFinder(),
             $this->createStateMachinePersistence(),
             $this->createStateMachineCondition(),
-            $this->createStateUpdater(),
-            $this->createStateMachineTimeout()
+            $this->createStateUpdater()
         );
     }
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface
      */
-    protected function createItemLock()
+    public function createItemLock()
     {
         return new ItemLock(
             $this->getQueryContainer(),
@@ -132,8 +131,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     public function createStateMachineTimeout()
     {
         return new Timeout(
-            $this->getQueryContainer(),
-            $this->createHandlerResolver()
+            $this->createStateMachinePersistence()
         );
     }
 

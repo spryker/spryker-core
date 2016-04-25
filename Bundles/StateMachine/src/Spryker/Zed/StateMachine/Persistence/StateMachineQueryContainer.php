@@ -183,9 +183,23 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     /**
      * @api
      *
-     * @param string $identifier
+     * @param \DateTime $expirationDate
      *
      * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
+     */
+    public function queryLockedItemsByExpirationDate(\DateTime $expirationDate)
+    {
+        return $this->getFactory()
+            ->createStateMachineLockQuery()
+            ->filterByExpires(['max' => $expirationDate]);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $identifier
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
     public function queryLockItemsByIdentifier($identifier)
     {

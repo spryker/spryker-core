@@ -18,7 +18,7 @@ class Event implements EventInterface
     /**
      * @var \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
      */
-    protected $transitions;
+    protected $transitions = [];
 
     /**
      * @var bool

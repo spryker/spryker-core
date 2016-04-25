@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineEventTimeoutQuery;
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineItemStateQuery;
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineLock;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
@@ -553,6 +555,28 @@ class StateMachineFacadeTest extends Test
 
         $this->assertEquals(1, $affectedItems);
         $this->assertEquals('reminder I sent', $stateMachineItemTransfer->getStateName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearLocksShouldEmptyDatabaseFromExpiredLocks()
+    {
+        $identifier = '1985-07-01';
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        $stateMachineLockEntity = new SpyStateMachineLock();
+        $stateMachineLockEntity->setIdentifier($identifier);
+        $stateMachineLockEntity->setExpires(new \DateTime('Yesterday'));
+        $stateMachineLockEntity->save();
+
+        $stateMachineFacade->clearLocks();
+
+        $numberOfItems = SpyStateMachineLockQuery::create()->filterByIdentifier($identifier)->count();
+
+        $this->assertEquals(0, $numberOfItems);
+
     }
 
     /**

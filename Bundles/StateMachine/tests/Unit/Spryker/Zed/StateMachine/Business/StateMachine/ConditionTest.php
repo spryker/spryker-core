@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\StateMachine\Business;
+namespace Unit\Spryker\Zed\StateMachine\Business\SateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 

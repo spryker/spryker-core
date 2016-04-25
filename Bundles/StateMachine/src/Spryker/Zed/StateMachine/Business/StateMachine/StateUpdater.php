@@ -7,6 +7,7 @@
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 
 class StateUpdater implements StateUpdaterInterface
 {
@@ -53,7 +54,9 @@ class StateUpdater implements StateUpdaterInterface
      * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param array $sourceStateBuffer
+     * @param string[] $sourceStateBuffer
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
      * @return void
      */
@@ -64,11 +67,24 @@ class StateUpdater implements StateUpdaterInterface
         array $sourceStateBuffer
     ) {
 
+        if (count($stateMachineItems) === 0) {
+            return;
+        }
+
         $this->propelConnection->beginTransaction();
 
-        $currentDate = new \DateTime('now');
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
+            $stateMachineItemTransfer->requireProcessName()
+                ->requireIdentifier()
+                ->requireStateName();
+
             $process = $processes[$stateMachineItemTransfer->getProcessName()];
+
+            if (!isset($sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()])) {
+                throw new StateMachineException(
+                    sprintf('Could not update state, source state not found.')
+                );
+            }
 
             $sourceState = $sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()];
             $targetState = $stateMachineItemTransfer->getStateName();
@@ -76,7 +92,7 @@ class StateUpdater implements StateUpdaterInterface
             if ($sourceState !== $targetState) {
 
                 $this->timeout->dropOldTimeout($process, $sourceState, $stateMachineItemTransfer);
-                $this->timeout->setNewTimeout($process, $stateMachineItemTransfer, $currentDate);
+                $this->timeout->setNewTimeout($process, $stateMachineItemTransfer);
 
                 $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
                 $stateMachineHandler->itemStateUpdated($stateMachineItemTransfer);

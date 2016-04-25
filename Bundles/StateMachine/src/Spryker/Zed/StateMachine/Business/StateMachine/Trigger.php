@@ -55,11 +55,6 @@ class Trigger implements TriggerInterface
     protected $stateUpdater;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface
-     */
-    protected $timeout;
-
-    /**
      * @var int
      */
     protected $affectedItems = 0;
@@ -71,7 +66,6 @@ class Trigger implements TriggerInterface
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $stateMachinePersistence
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface $condition
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface $stateUpdater
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface $timeout
      */
     public function __construct(
         TransitionLogInterface $transitionLog,
@@ -79,8 +73,7 @@ class Trigger implements TriggerInterface
         FinderInterface $finder,
         PersistenceInterface $stateMachinePersistence,
         ConditionInterface $condition,
-        StateUpdaterInterface $stateUpdater,
-        TimeoutInterface $timeout
+        StateUpdaterInterface $stateUpdater
     ) {
         $this->transitionLog = $transitionLog;
         $this->stateMachineHandlerResolver = $stateMachineHandlerResolver;
@@ -88,13 +81,14 @@ class Trigger implements TriggerInterface
         $this->stateMachinePersistence = $stateMachinePersistence;
         $this->condition = $condition;
         $this->stateUpdater = $stateUpdater;
-        $this->timeout = $timeout;
     }
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param int $identifier
+     *
      * @return int
+     *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
      */
     public function triggerForNewStateMachineItem(
@@ -104,25 +98,16 @@ class Trigger implements TriggerInterface
         $stateMachineProcessTransfer->requireStateMachineName()
             ->requireProcessName();
 
-        $stateMachineItemTransfer = $this->createStateMachineItemTransferForNewProcess(
-            $stateMachineProcessTransfer,
-            $identifier
-        );
+        $stateMachineItemTransfer = $this->createItemTransferForNewProcess($stateMachineProcessTransfer, $identifier);
 
         $processes = $this->finder->findProcessesForItems(
             $stateMachineProcessTransfer->getStateMachineName(),
             [$stateMachineItemTransfer]
         );
 
-        $itemsWithOnEnterEvent = $this->finder->filterItemsWithOnEnterEvent(
-            [$stateMachineItemTransfer],
-            $processes
-        );
+        $itemsWithOnEnterEvent = $this->finder->filterItemsWithOnEnterEvent([$stateMachineItemTransfer], $processes);
 
-        $this->triggerOnEnterEvents(
-            $itemsWithOnEnterEvent,
-            $stateMachineProcessTransfer->getStateMachineName()
-        );
+        $this->triggerOnEnterEvents($itemsWithOnEnterEvent, $stateMachineProcessTransfer->getStateMachineName());
 
         return $this->affectedItems;
     }
@@ -130,7 +115,7 @@ class Trigger implements TriggerInterface
     /**
      * @param string $eventName
      * @param string $stateMachineName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[]|array $stateMachineItems
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return int
      */
@@ -203,14 +188,33 @@ class Trigger implements TriggerInterface
      */
     public function triggerForTimeoutExpiredItems($stateMachineName)
     {
-        $stateMachineItems = $this->timeout->getItemsWithExpiredTimeouts($stateMachineName);
+        $stateMachineItems = $this->stateMachinePersistence->getItemsWithExpiredTimeouts($stateMachineName);
 
-        $groupedStateMachineItems = $this->timeout->groupItemsByEvent($stateMachineItems);
+        $groupedStateMachineItems = $this->groupItemsByEvent($stateMachineItems);
         foreach ($groupedStateMachineItems as $event => $stateMachineItems) {
             $this->triggerEvent($event, $stateMachineName, $stateMachineItems);
         }
 
         return $this->affectedItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     *
+     * @return array
+     */
+    protected function groupItemsByEvent(array $stateMachineItems)
+    {
+        $groupedStateMachineItems = [];
+        foreach ($stateMachineItems as $stateMachineItemTransfer) {
+            $eventName = $stateMachineItemTransfer->getEventName();
+            if (!isset($groupedStateMachineItems[$eventName])) {
+                $groupedStateMachineItems[$eventName] = [];
+            }
+            $groupedStateMachineItems[$eventName][] = $stateMachineItemTransfer;
+        }
+
+        return $groupedStateMachineItems;
     }
 
     /**
@@ -285,6 +289,7 @@ class Trigger implements TriggerInterface
      * @param string $eventName
      * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     *
      * @return array
      */
     protected function updateStateByEvent($eventName, $stateMachineName, array $stateMachineItems)
@@ -346,6 +351,7 @@ class Trigger implements TriggerInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $itemsWithOnEnterEvent
      * @param string $stateMachineName
+     *
      * @return bool
      */
     protected function triggerOnEnterEvents(array $itemsWithOnEnterEvent, $stateMachineName)
@@ -397,7 +403,7 @@ class Trigger implements TriggerInterface
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
      */
-    protected function createStateMachineItemTransferForNewProcess(
+    protected function createItemTransferForNewProcess(
         StateMachineProcessTransfer $stateMachineProcessTransfer,
         $identifier
     ) {

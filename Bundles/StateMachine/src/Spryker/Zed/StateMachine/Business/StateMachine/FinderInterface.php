@@ -60,9 +60,7 @@ interface FinderInterface
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
      * @param array $sourceStateBuffer
      *
-     * @throws \LogicException
-     *
-     * @return array
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,

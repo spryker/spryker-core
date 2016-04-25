@@ -6,7 +6,7 @@
  */
 
 
-namespace Unit\Spryker\Zed\StateMachine\Business;
+namespace Unit\Spryker\Zed\StateMachine\Business\SateMachine;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;

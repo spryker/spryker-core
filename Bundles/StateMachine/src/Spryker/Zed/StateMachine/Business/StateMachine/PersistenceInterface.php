@@ -92,4 +92,33 @@ interface PersistenceInterface
      */
     public function saveItemStateHistory(StateMachineItemTransfer $stateMachineItemTransfer);
 
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \DateTime $timeoutDate
+     * @param string $eventName
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    public function saveStateMachineItemTimeout(
+        StateMachineItemTransfer $stateMachineItemTransfer,
+        \DateTime $timeoutDate,
+        $eventName
+    );
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return void
+     */
+    public function dropTimeoutByItem(StateMachineItemTransfer $stateMachineItemTransfer);
+
+    /**
+     * @param string $stateMachineName
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $expiredStateMachineItemsTransfer
+     */
+    public function getItemsWithExpiredTimeouts($stateMachineName);
+
 }
