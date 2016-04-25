@@ -18,4 +18,3 @@ test:
     - vendor/bin/codecept run --env isolated --coverage-xml
     - wget https://scrutinizer-ci.com/ocular.phar
     - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml --access-token=${SCRUTINIZER}
- 
