@@ -19,7 +19,7 @@ class PayPal extends AbstractPaymentMethod implements PayPalInterface
     /**
      * @return string
      */
-    public function getAccountBrand()
+    public function getMethodType()
     {
         return ApiConstants::METHOD_PAY_PAL;
     }

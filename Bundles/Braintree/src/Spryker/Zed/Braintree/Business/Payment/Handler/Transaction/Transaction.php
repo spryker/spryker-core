@@ -112,7 +112,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     public function authorizePayment(OrderTransfer $orderTransfer, $idPayment)
     {
         $paymentEntity = $this->getPaymentEntity($idPayment);
-        //$methodMapper = $this->getMethodMapper($paymentEntity->getAccountBrand());
+        //$methodMapper = $this->getMethodMapper($paymentEntity->getMethodType());
 
         $this->initializeBrainTree();
         $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::SALE, ApiConstants::TRANSACTION_CODE_AUTHORIZE, $idPayment);

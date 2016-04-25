@@ -17,7 +17,7 @@ class BraintreeConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getTransactionUserLogin()
+    public function getPublicKey()
     {
         return $this->get(BraintreeConstants::PUBLIC_KEY);
     }
@@ -25,7 +25,7 @@ class BraintreeConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getTransactionUserPassword()
+    public function getPrivateKey()
     {
         return $this->get(BraintreeConstants::PRIVATE_KEY);
     }
@@ -33,13 +33,21 @@ class BraintreeConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getTransactionMode()
+    public function getMerchantId()
     {
-        return $this->get(BraintreeConstants::TRANSACTION_MODE);
+        return $this->get(BraintreeConstants::MERCHANT_ID);
     }
 
     /**
      * @return string
+     */
+    public function getEnvironment()
+    {
+        return $this->get(BraintreeConstants::ENVIRONMENT);
+    }
+
+    /**
+     * @return bool
      */
     public function getIsVaulted()
     {
@@ -47,7 +55,7 @@ class BraintreeConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
+     * @return bool
      */
     public function getIs3DSecure()
     {

@@ -51,6 +51,6 @@ interface PayPalInterface
     /**
      * @return string
      */
-    public function getAccountBrand();
+    public function getMethodType();
 
 }

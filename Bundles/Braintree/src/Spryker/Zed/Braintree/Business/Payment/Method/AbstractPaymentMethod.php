@@ -41,7 +41,7 @@ abstract class AbstractPaymentMethod
     /**
      * @return string
      */
-    abstract public function getAccountBrand();
+    abstract public function getMethodType();
 
     /**
      * @param int $grandTotal
@@ -53,8 +53,7 @@ abstract class AbstractPaymentMethod
     protected function getBaseTransactionRequest($grandTotal, $currency, $idOrder)
     {
         return [
-            ApiConstants::ACCOUNT_BRAND => $this->getAccountBrand(),
-            ApiConstants::TRANSACTION_MODE => $this->getConfig()->getTransactionMode(),
+            ApiConstants::TRANSACTION_MODE => $this->getConfig()->getEnvironment(),
             ApiConstants::PRESENTATION_AMOUNT => $this->getCurrencyManager()->convertCentToDecimal($grandTotal),
             ApiConstants::PRESENTATION_USAGE => $idOrder,
             ApiConstants::PRESENTATION_CURRENCY => $currency,
