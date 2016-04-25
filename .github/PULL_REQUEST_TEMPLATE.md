@@ -13,6 +13,7 @@
 
 - Recommended reviewers: @reviewer1_name
 
+-----------------------------------------
 #### [Major] Bundle A
 - [ ] API contract checked
 - [ ] Unit tests
@@ -26,8 +27,9 @@
 - [ ] Project integration [PR](https://github.com/spryker/project/pull/pr_number)
 
 ###### Change log
-Changes go here. Those will be copied to the release log for this bunlde.
+Changes go here. Those will be copied to the release log for this bundle.
 
+-----------------------------------------
 #### [Minor] Bundle B
 - [ ] Tests for the feature
 - [ ] Scrutinizer score is not worse
@@ -39,9 +41,9 @@ Changes go here. Those will be copied to the release log for this bunlde.
 - [ ] Project integration [PR](https://github.com/spryker/project/pull/pr_number)
 
 ###### Change log
-Changes go here. Those will be copied to the release log for this bunlde.
+Changes go here. Those will be copied to the release log for this bundle.
 
-
+-----------------------------------------
 #### [Patch] Bundle C
 - [ ] Tests for the patch
 - [ ] Scrutinizer score is not worse
@@ -51,4 +53,4 @@ Changes go here. Those will be copied to the release log for this bunlde.
 - [ ] Project integration [PR](https://github.com/spryker/project/pull/pr_number)
 
 ###### Change log
-Changes go here. Those will be copied to the release log for this bunlde.
+Changes go here. Those will be copied to the release log for this bundle.
