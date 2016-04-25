@@ -110,8 +110,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
         return $this->getFactory()
             ->createGraphDrawer(
                 $stateMachineProcessTransfer->getStateMachineName()
-            )
-            ->draw($process, $highlightState, $format, $fontSize);
+            )->draw($process, $highlightState, $format, $fontSize);
     }
 
     /**
