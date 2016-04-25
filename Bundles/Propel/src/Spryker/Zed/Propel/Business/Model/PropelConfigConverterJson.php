@@ -33,7 +33,7 @@ class PropelConfigConverterJson
     }
 
     /**
-     * This method can be removed when clients get fixed `config/Shared/propel.php` config
+     * This method can be removed when clients use fixed `config/Shared/config_propel.php`
      *
      * @return void
      */

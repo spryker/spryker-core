@@ -29,6 +29,9 @@ class PropelConfigConverterJsonTest extends \PHPUnit_Framework_TestCase
      */
     protected $fixtureDirectory;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $this->fixtureDirectory = $this->getFixtureDirectory();

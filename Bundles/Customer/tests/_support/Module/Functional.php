@@ -19,10 +19,7 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProv
 use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
 use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
 use Spryker\Zed\Country\Business\CountryFacade;
-use Spryker\Zed\Country\Communication\Plugin\Installer as CountryInstallerPlugin;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Locale\Communication\Plugin\Installer as LocaleInstallerPlugin;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
