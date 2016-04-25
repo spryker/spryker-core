@@ -73,7 +73,7 @@ abstract class AbstractFactory implements FactoryInterface
         }
 
         return $this->container[$key];
-    }   
+    }
 
     /**
      * @return \Spryker\Yves\Kernel\Container

@@ -8,7 +8,6 @@
 namespace Unit\Spryker\Yves\Kernel;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
@@ -58,7 +57,7 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ConcreteFactory
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Unit\Spryker\Yves\Kernel\Fixtures\ConcreteFactory
      */
     protected function getFactoryMock()
     {
