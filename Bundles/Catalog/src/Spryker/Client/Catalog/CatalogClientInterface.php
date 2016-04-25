@@ -14,11 +14,12 @@ interface CatalogClientInterface
      * @api
      *
      * @param int $idCategory
+     * @param string $searchString
      * @param array $parameters
      *
      * @return array
      */
-    public function categorySearch($idCategory, array $parameters);
+    public function categorySearch($idCategory, $searchString = null, array $parameters = []);
 
     /**
      * @api

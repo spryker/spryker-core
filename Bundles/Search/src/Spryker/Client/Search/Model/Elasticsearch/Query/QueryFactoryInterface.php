@@ -9,14 +9,14 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
-interface NestedQueryFactoryInterface
+interface QueryFactoryInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param mixed $filterValue
      *
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\NestedQueryInterface
+     * @return \Elastica\Query\AbstractQuery
      */
     public function create(FacetConfigTransfer $facetConfigTransfer, $filterValue);
 

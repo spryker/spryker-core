@@ -59,8 +59,10 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $searchQueryExpanders, array $requestParameters = [])
     {
+        $searchConfig = $this->getSearchConfig();
+        
         foreach ($searchQueryExpanders as $searchQueryExpander) {
-            $searchQuery = $searchQueryExpander->expandQuery($searchQuery, $requestParameters);
+            $searchQuery = $searchQueryExpander->expandQuery($searchQuery, $searchConfig, $requestParameters);
         }
 
         return $searchQuery;

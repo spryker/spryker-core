@@ -11,12 +11,9 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
-use Spryker\Client\Search\Model\Query\QueryInterface;
 
-class FulltextSearchQuery implements QueryInterface
+class FulltextSearchQuery extends AbstractCatalogSearchQuery
 {
-
-    const FULL_TEXT_BOOSTED_BOOSTING = 3;
 
     /**
      * @var string
@@ -66,15 +63,11 @@ class FulltextSearchQuery implements QueryInterface
      */
     protected function addFulltextSearchToQuery(Query $baseQuery)
     {
-        $fields = [
-            PageIndexMap::FULL_TEXT,
-            PageIndexMap::FULL_TEXT_BOOSTED . '^' . self::FULL_TEXT_BOOSTED_BOOSTING
-        ];
-
-        $matchQuery = (new MultiMatch())
-            ->setFields($fields)
-            ->setQuery($this->searchString)
-            ->setType(MultiMatch::TYPE_CROSS_FIELDS);
+        if (!empty($this->searchString)) {
+            $matchQuery = $this->createFulltextSearchQuery($this->searchString);
+        } else {
+            $matchQuery = new Query\MatchAll();
+        }
 
         $boolQuery = (new BoolQuery())
             ->addMust($matchQuery);

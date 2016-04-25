@@ -9,7 +9,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
-class RangeExtractor implements AggregationExtractorInterface
+class CategoryExtractor implements AggregationExtractorInterface
 {
 
     /**
@@ -38,37 +38,27 @@ class RangeExtractor implements AggregationExtractorInterface
 
         $result = [
             'name' => $parameterName,
-            'rangeValues' => $this->extractRangeData($aggregations, $parameterName, $fieldName),
-        ]; 
+            'values' => $this->extractFacetData($aggregations, $fieldName),
+        ];
 
         return $result;
     }
 
     /**
      * @param array $aggregation
-     * @param string $parameterName
      * @param string $fieldName
      *
      * @return array
      */
-    protected function extractRangeData(array $aggregation, $parameterName, $fieldName)
+    protected function extractFacetData(array $aggregation, $fieldName)
     {
-        $ranges = [];
-
-        foreach ($aggregation[$fieldName . '-name']['buckets'] as $nameBucket) {
-            if ($nameBucket['key'] !== $parameterName) {
-                continue;
-            }
-
-            if (isset($nameBucket[$fieldName . '-stats'])) {
-                $ranges['min'] = $nameBucket[$fieldName . '-stats']['min'];
-                $ranges['max'] = $nameBucket[$fieldName . '-stats']['max'];
-            }
-
-            break;
+        $facetValues = [];
+        // TODO: use the commented code for mixed aggregation filtering or remove it if not needed
+        foreach ($aggregation/*[$fieldName][$fieldName]*/['buckets'] as $bucket) {
+            $facetValues[$bucket['key']] = $bucket['doc_count'];
         }
 
-        return $ranges;
+        return $facetValues;
     }
 
 }

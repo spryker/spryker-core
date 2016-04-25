@@ -10,14 +10,14 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 
-class NestedQueryFactory implements NestedQueryFactoryInterface
+class QueryFactory implements QueryFactoryInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param mixed $filterValue
      *
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\NestedQueryInterface
+     * @return \Elastica\Query\AbstractQuery
      */
     public function create(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
@@ -36,16 +36,19 @@ class NestedQueryFactory implements NestedQueryFactoryInterface
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param string $filterValue
      *
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\NestedQueryInterface|null
+     * @return \Elastica\Query\AbstractQuery|null
      */
     protected function createByFacetType(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
         switch ($facetConfigTransfer->getType()) {
             case FacetConfigBuilder::TYPE_RANGE:
-                return $this->createNestedRangeQuery($facetConfigTransfer, $filterValue);
+                return $this->createNestedRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
 
             case FacetConfigBuilder::TYPE_PRICE_RANGE:
-                return $this->createNestedPriceRangeQuery($facetConfigTransfer, $filterValue);
+                return $this->createNestedPriceRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
+
+            case FacetConfigBuilder::TYPE_CATEGORY:
+                return $this->createTermQuery($facetConfigTransfer, $filterValue);
 
             default:
                 return null;
@@ -56,15 +59,15 @@ class NestedQueryFactory implements NestedQueryFactoryInterface
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param mixed $filterValue
      *
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\NestedQueryInterface
+     * @return \Elastica\Query\AbstractQuery
      */
     protected function createByFilterValue(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
         if (is_array($filterValue)) {
-            return $this->createNestedTermsQuery($facetConfigTransfer, $filterValue);
+            return $this->createNestedTermsQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
         }
 
-        return $this->createNestedTermQuery($facetConfigTransfer, $filterValue);
+        return $this->createNestedTermQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
     }
 
     /**
@@ -117,6 +120,19 @@ class NestedQueryFactory implements NestedQueryFactoryInterface
     protected function createNestedTermQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
         return new NestedTermQuery($facetConfigTransfer, $filterValue, $this->createQueryBuilder());
+    }
+
+    /**
+     * @param FacetConfigTransfer $facetConfigTransfer
+     * @param string $filterValue
+     *
+     * @return \Elastica\Query\Term
+     */
+    protected function createTermQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
+    {
+        return $this
+            ->createQueryBuilder()
+            ->createTermQuery($facetConfigTransfer->getFieldName(), $filterValue);
     }
 
 }

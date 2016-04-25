@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
+use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
 interface FacetAggregationFactoryInterface
@@ -17,6 +18,6 @@ interface FacetAggregationFactoryInterface
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationInterface
      */
-    public function create(FacetConfigTransfer $facetConfigTransfer);
+    public function create(FacetConfigTransfer $facetConfigTransfer, BoolQuery $filters);
 
 }

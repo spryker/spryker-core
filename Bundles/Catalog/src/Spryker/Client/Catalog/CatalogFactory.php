@@ -28,12 +28,13 @@ class CatalogFactory extends AbstractFactory
 
     /**
      * @param int $idCategory
+     * @param string $searchString
      *
      * @return \Spryker\Client\Search\Model\Query\QueryInterface
      */
-    public function createCategorySearchQuery($idCategory)
+    public function createCategorySearchQuery($idCategory, $searchString = null)
     {
-        $searchQuery = new CategorySearchQuery($idCategory);
+        $searchQuery = new CategorySearchQuery($idCategory, $searchString);
 
         return $searchQuery;
     }

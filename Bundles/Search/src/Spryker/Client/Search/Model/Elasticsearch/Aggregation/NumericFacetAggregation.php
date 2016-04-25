@@ -7,9 +7,7 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
-use Elastica\Aggregation\Max;
-use Elastica\Aggregation\Min;
-use Elastica\Aggregation\Terms;
+use Elastica\Aggregation\Stats;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class NumericFacetAggregation extends AbstractFacetAggregation
@@ -36,18 +34,12 @@ class NumericFacetAggregation extends AbstractFacetAggregation
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
         $prefixedFieldName = $this->addNestedFieldPrefix($fieldName, self::FACET_VALUE);
-        $facetValueTerm = (new Terms($fieldName . '-value'))
-            ->setField($prefixedFieldName);
-        $facetValueMin = (new Min($fieldName . '-min'))
-            ->setField($prefixedFieldName);
-        $facetValueMax = (new Max($fieldName . '-max'))
+        $facetValueStats = (new Stats($fieldName . '-stats'))
             ->setField($prefixedFieldName);
 
-        $facetNameAgg = $this->createFacetNameAggregation($fieldName);
-
-        $facetNameAgg->addAggregation($facetValueTerm);
-        $facetNameAgg->addAggregation($facetValueMin);
-        $facetNameAgg->addAggregation($facetValueMax);
+        $facetNameAgg = $this
+            ->createFacetNameAggregation($fieldName)
+            ->addAggregation($facetValueStats);
 
         return $this->createNestedFacetAggregation($fieldName, $facetNameAgg);
     }

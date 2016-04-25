@@ -19,15 +19,16 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      * @api
      *
      * @param int $idCategory
+     * @param string $searchString
      * @param array $parameters
      *
      * @return array
      */
-    public function categorySearch($idCategory, array $parameters)
+    public function categorySearch($idCategory, $searchString = null, array $parameters = [])
     {
         $searchQuery = $this
             ->getFactory()
-            ->createCategorySearchQuery($idCategory);
+            ->createCategorySearchQuery($idCategory, $searchString);
 
         $searchQuery = $this
             ->getFactory()
