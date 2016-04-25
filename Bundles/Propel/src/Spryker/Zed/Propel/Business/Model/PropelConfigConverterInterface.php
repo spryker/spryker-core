@@ -7,6 +7,14 @@
 
 namespace Spryker\Zed\Propel\Business\Model;
 
-interface PropelDatabaseInterface extends PropelDatabaseCreatorInterface
+interface PropelConfigConverterInterface
 {
+
+    /**
+     * @throws \Exception
+     *
+     * @return void
+     */
+    public function convertConfig();
+
 }

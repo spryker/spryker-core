@@ -11,7 +11,7 @@ use Spryker\Shared\Library\Json;
 use Spryker\Zed\Propel\Business\Exception\ConfigFileNotCreatedException;
 use Spryker\Zed\Propel\Business\Exception\ConfigMissingPropertyException;
 
-class PropelConfigConverterJson
+class PropelConfigConverterJson implements PropelConfigConverterInterface
 {
 
     /**

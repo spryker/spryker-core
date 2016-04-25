@@ -37,7 +37,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
 
     /**
      * Specification:
-     * - Create database for configured driver if it doesn't exists
+     * - Create database for configured driver if it doesn't exist
      *
      * @api
      *

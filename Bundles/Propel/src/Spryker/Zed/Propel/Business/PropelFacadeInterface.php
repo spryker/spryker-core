@@ -26,7 +26,7 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Create database for configured driver if it does not exists
+     * - Create database for configured driver if it doesn't exist
      *
      * @api
      *

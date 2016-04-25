@@ -7,6 +7,12 @@
 
 namespace Spryker\Zed\Propel\Business\Model;
 
-interface PropelDatabaseInterface extends PropelDatabaseCreatorInterface
+interface PropelDatabaseCreatorInterface
 {
+
+    /**
+     * @return void
+     */
+    public function createDatabaseIfNotExists();
+
 }
