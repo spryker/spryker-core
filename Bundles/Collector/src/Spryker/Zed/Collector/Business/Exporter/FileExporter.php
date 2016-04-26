@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter;
 
+use \DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder;
@@ -73,7 +74,7 @@ class FileExporter extends AbstractExporter
         }
 
         $lastTimeStamp = '2000-01-01 00:00:00';
-        $lastRunDatetime = \DateTime::createFromFormat('Y-m-d H:i:s', $lastTimeStamp);
+        $lastRunDatetime = new DateTime($lastTimeStamp);
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $locale, $lastRunDatetime);
         $baseQuery->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID);
