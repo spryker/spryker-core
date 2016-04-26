@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter;
 
-use \DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder;
@@ -17,6 +16,7 @@ use Spryker\Zed\Collector\Business\Model\FailedResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use \DateTime;
 
 class FileExporter extends AbstractExporter
 {
