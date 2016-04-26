@@ -57,14 +57,28 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     {
         $paymentTransfer = $quoteTransfer->getPayment()->getBraintree();
 
+        $responseTransfer = new BraintreeTransactionResponseTransfer();
+
+        if ($paymentTransfer === null) {
+            $responseTransfer->setIsSuccess(false);
+            $responseTransfer->setMessage('Invalid Payment Method');
+            return $responseTransfer;
+        }
+
         $this->initializeBrainTree();
+
+        $options = [
+            'three_d_secure' => [
+                'required' => $this->config->getIs3DSecure()
+            ]
+        ];
 
         $response = \Braintree\Transaction::sale([
             'amount' => $quoteTransfer->getTotals()->getGrandTotal() / 100,
             'paymentMethodNonce' => $paymentTransfer->getNonce(),
+            'options' => $options
         ]);
 
-        $responseTransfer = new BraintreeTransactionResponseTransfer();
         $responseTransfer->setIsSuccess($response->success);
 
         if (!$response->success) {
@@ -76,6 +90,13 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         /** @var \Braintree\Transaction $transaction */
         $transaction = $response->transaction;
         $paymentTransfer->setPaymentType($transaction->paymentInstrumentType);
+
+        if (!$this->isValidPaymentType($quoteTransfer->getPayment()->getPaymentSelection(), $transaction->paymentInstrumentType)) {
+            $responseTransfer->setIsSuccess(false);
+            $paymentTransfer->setNonce('');
+            $responseTransfer->setMessage('Invalid Payment method type selected');
+            return $responseTransfer;
+        }
 
         if ($paymentTransfer->getPaymentType() === \Braintree\PaymentInstrumentType::PAYPAL_ACCOUNT) {
             $quoteTransfer->getPayment()->setPaymentMethod(PaymentTransfer::BRAINTREE_PAY_PAL);
@@ -374,14 +395,25 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
      */
     protected function initializeBrainTree()
     {
-        $environment = Config::get(BraintreeConstants::ENVIRONMENT);
-        $merchantId = Config::get(BraintreeConstants::MERCHANT_ID);
-        $publicKey = Config::get(BraintreeConstants::PUBLIC_KEY);
-        $privateKey = Config::get(BraintreeConstants::PRIVATE_KEY);
-        \Braintree\Configuration::environment($environment);
-        \Braintree\Configuration::merchantId($merchantId);
-        \Braintree\Configuration::publicKey($publicKey);
-        \Braintree\Configuration::privateKey($privateKey);
+        \Braintree\Configuration::environment($this->config->getEnvironment());
+        \Braintree\Configuration::merchantId($this->config->getMerchantId());
+        \Braintree\Configuration::publicKey($this->config->getPublicKey());
+        \Braintree\Configuration::privateKey($this->config->getPrivateKey());
+    }
+
+    /**
+     * @param string $postedSelection
+     * @param string $returnedType
+     *
+     * @return bool
+     */
+    protected function isValidPaymentType($postedSelection, $returnedType)
+    {
+        $matching = [
+            'braintreePayPal' => \Braintree\PaymentInstrumentType::PAYPAL_ACCOUNT,
+            'braintreeCreditCard' => \Braintree\PaymentInstrumentType::CREDIT_CARD,
+        ];
+        return ($matching[$postedSelection] === $returnedType);
     }
 
 }

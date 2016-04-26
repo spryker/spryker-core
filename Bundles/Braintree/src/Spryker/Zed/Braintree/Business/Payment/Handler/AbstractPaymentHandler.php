@@ -58,7 +58,7 @@ abstract class AbstractPaymentHandler
      */
     public function registerMethodMapper($mapper)
     {
-        $this->methodMappers[$mapper->getAccountBrand()] = $mapper;
+        $this->methodMappers[$mapper->getMethodType()] = $mapper;
     }
 
     /**
