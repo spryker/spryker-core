@@ -35,7 +35,9 @@ class ZedRequestFactory extends AbstractFactory
         $httpClient = new HttpClient(
             $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_AUTH),
             $this->getConfig()->getZedRequestBaseUrl(),
-            $this->getConfig()->getRawToken()
+            $this->getConfig()->getRawToken(),
+            $this->getConfig()->getAuthenticationType(),
+            $this->getConfig()->getStaticCredential()
         );
 
         return $httpClient;

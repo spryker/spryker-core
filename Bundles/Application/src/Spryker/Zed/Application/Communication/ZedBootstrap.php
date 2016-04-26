@@ -9,6 +9,7 @@ namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\DataDirectory;
@@ -41,6 +42,7 @@ class ZedBootstrap
     {
         $this->application['debug'] = Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
         $this->application['locale'] = Store::getInstance()->getCurrentLocale();
+        $authenticationType = Config::get(ApplicationConstants::APPLICATION_AUTH_TYPE);
 
         if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {
             $this->application['profiler.cache_dir'] = DataDirectory::getLocalStoreSpecificPath('cache/profiler');
@@ -49,14 +51,14 @@ class ZedBootstrap
         $this->optimizeApp();
         $this->enableHttpMethodParameterOverride();
 
-        if ($this->isInternalRequest()) {
-            $this->registerServiceProviderForInternalRequest();
+        if ($authenticationType !== 0 || !$this->isInternalRequest()) {
+            $this->registerServiceProvider();
+            $this->addVariablesToTwig();
 
             return $this->application;
         }
 
-        $this->registerServiceProvider();
-        $this->addVariablesToTwig();
+        $this->registerServiceProviderForInternalRequest();
 
         return $this->application;
     }
@@ -76,7 +78,7 @@ class ZedBootstrap
      */
     protected function registerServiceProviderForInternalRequest()
     {
-        foreach ($this->getSimpleServiceProvider() as $provider) {
+        foreach ($this->getInternalCallServiceProvider() as $provider) {
             $this->application->register($provider);
         }
     }
@@ -92,7 +94,7 @@ class ZedBootstrap
     /**
      * @return \Silex\ServiceProviderInterface[]
      */
-    protected function getSimpleServiceProvider()
+    protected function getInternalCallServiceProvider()
     {
         return [];
     }

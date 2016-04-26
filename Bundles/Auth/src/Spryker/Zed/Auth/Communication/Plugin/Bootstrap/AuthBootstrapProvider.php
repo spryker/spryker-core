@@ -58,6 +58,10 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
                 $token = $request->headers->get(AuthConstants::AUTH_TOKEN);
             }
 
+            if ($authFacade->isStaticAuthenticated($request)) {
+                return true;
+            }
+
             if (!$authFacade->isAuthenticated($token)) {
                 return $app->redirect($bundleSettings->getLoginPageUrl());
             }

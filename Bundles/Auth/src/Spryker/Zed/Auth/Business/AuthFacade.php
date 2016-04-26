@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Auth\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Auth\Business\AuthBusinessFactory getFactory()
@@ -54,6 +55,20 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
         return $this->getFactory()
             ->createAuthModel()
             ->isAuthorized($token);
+    }
+
+    /**
+     * @api
+     *
+     * @param Request $request
+     *
+     * @return bool
+     */
+    public function isStaticAuthenticated(Request $request)
+    {
+        return $this->getFactory()
+            ->createAuthModel()
+            ->isStaticAuthorized($request);
     }
 
     /**

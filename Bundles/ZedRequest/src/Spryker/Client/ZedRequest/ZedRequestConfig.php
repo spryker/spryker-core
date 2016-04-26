@@ -51,4 +51,24 @@ class ZedRequestConfig
         }
     }
 
+    /**
+     * @return int
+     */
+    public function getAuthenticationType()
+    {
+        return $this->config->get(ZedRequestConstants::AUTH_TYPE);
+    }
+
+    /**
+     * @return array
+     */
+    public function getStaticCredential()
+    {
+        if ($this->config->hasValue(ZedRequestConstants::AUTH_STATIC_CREDENTIAL)) {
+            return $this->config->get(ZedRequestConstants::AUTH_STATIC_CREDENTIAL);
+        }
+
+        return [];
+    }
+
 }
