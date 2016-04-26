@@ -82,15 +82,15 @@ class CsvWriter implements CsvWriterInterface
     }
 
     /**
-     * @param array $columns
+     * @param array $data_row
      *
      * @return void
      */
-    protected function initializeHeaderColumns(array $columns)
+    protected function initializeHeaderColumns(array $data_row)
     {
         if ($this->csvFile === null) {
             $this->csvFile = $this->createCsvFile($this->csvFilename);
-            $this->csvFile->fputcsv($columns);
+            $this->csvFile->fputcsv(array_keys($data_row));
         }
     }
 
@@ -102,7 +102,8 @@ class CsvWriter implements CsvWriterInterface
     public function write(array $data)
     {
         $result = 0;
-        $this->initializeHeaderColumns(array_keys($data[array_keys($data)[0]]));
+
+        $this->initializeHeaderColumns(current($data));
         foreach ($data as $key => $row) {
             $result = $this->getFile()->fputcsv($row);
         }
