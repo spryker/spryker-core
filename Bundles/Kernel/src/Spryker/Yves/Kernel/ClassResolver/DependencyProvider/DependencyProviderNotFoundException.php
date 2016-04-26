@@ -32,7 +32,7 @@ class DependencyProviderNotFoundException extends \Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve $1$sDependencyProvider for your bundle "%1$s"',
+            'Can not resolve %1$sDependencyProvider for your bundle "%1$s"',
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
