@@ -9,8 +9,20 @@ namespace Customer\Module;
 use Codeception\TestCase;
 use Codeception\Module;
 use Propel\Runtime\Propel;
-use Silex\Application;
+use Silex\Provider\FormServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
+use Silex\Provider\TwigServiceProvider as SilexTwigServiceProvider;
+use Spryker\Shared\Application\Communication\Application;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider;
+use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
+use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
+use Spryker\Zed\Country\Business\CountryFacade;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Functional extends Module
 {
@@ -22,8 +34,54 @@ class Functional extends Module
     {
         parent::__construct($config);
 
+        $this->registerServiceProvider();
+        $this->runInstaller();
+    }
+
+    /**
+     * @return void
+     */
+    private function registerServiceProvider()
+    {
+        $application = new Application();
+        $application->register(new AssertionServiceProvider());
+        $application->register(new SilexTwigServiceProvider());
+        $application->register(new ValidatorServiceProvider());
+        $application->register(new FormServiceProvider());
+        $application->register(new TwigServiceProvider());
+        $application->register(new DateFormatterServiceProvider());
+
         $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
+        $propelServiceProvider->boot($application);
+
+        $pimple = new Pimple();
+        $pimple->setApplication($application);
+    }
+
+    /**
+     * @return void
+     */
+    private function runInstaller()
+    {
+        $messenger = $this->getMessenger();
+
+        $localeFacade = new LocaleFacade();
+        $localeFacade->install($messenger);
+
+        $countryFacade = new CountryFacade();
+        $countryFacade->install($messenger);
+    }
+
+    /**
+     * @return \Spryker\Zed\Console\Business\Model\ConsoleMessenger
+     */
+    protected function getMessenger()
+    {
+        $messenger = new ConsoleMessenger(
+            new ConsoleOutput(OutputInterface::VERBOSITY_QUIET)
+        );
+
+        return $messenger;
     }
 
     /**

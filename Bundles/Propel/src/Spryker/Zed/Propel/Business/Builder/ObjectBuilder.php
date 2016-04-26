@@ -132,7 +132,7 @@ class ObjectBuilder extends PropelObjectBuilder
             $script .= "
         if (null === \$this->{$columnProperty}) {
             try {";
-            $script .= $platform->getIdentifierPhp('$this->'. $columnProperty, '$con', $primaryKeyMethodInfo, '                ');
+            $script .= $platform->getIdentifierPhp('$this->' . $columnProperty, '$con', $primaryKeyMethodInfo, '                ');
             $script .= "
             } catch (Exception \$e) {
                 throw new PropelException('Unable to get sequence id.', 0, \$e);
@@ -216,11 +216,11 @@ class ObjectBuilder extends PropelObjectBuilder
                 if ($table->isAllowPkInsert()) {
                     $script .= "
         if (\$pk !== null) {
-            \$this->set".$column->getPhpName()."(\$pk);
+            \$this->set" . $column->getPhpName() . "(\$pk);
         }";
                 } else {
                     $script .= "
-        \$this->set".$column->getPhpName()."(\$pk);";
+        \$this->set" . $column->getPhpName() . "(\$pk);";
                 }
             }
             $script .= "

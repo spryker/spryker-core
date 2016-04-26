@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method \Spryker\Zed\Propel\Business\PropelFacade getFacade()
+ */
 class ConvertConfigConsole extends Console
 {
 
@@ -38,31 +39,7 @@ class ConvertConfigConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->info('Write propel config');
-
-        $config = [
-            'propel' => Config::get(PropelConstants::PROPEL),
-        ];
-
-        $dsn = Config::get(PropelConstants::ZED_DB_ENGINE) . ':host=' . Config::get(PropelConstants::ZED_DB_HOST)
-            . ';dbname=' . Config::get(PropelConstants::ZED_DB_DATABASE);
-
-        $config['propel']['database']['connections']['default']['dsn'] = $dsn;
-        $config['propel']['database']['connections']['default']['user'] = Config::get(PropelConstants::ZED_DB_USERNAME);
-        $config['propel']['database']['connections']['default']['password'] = Config::get(PropelConstants::ZED_DB_PASSWORD);
-
-        $config['propel']['database']['connections']['zed'] = $config['propel']['database']['connections']['default'];
-
-        $json = json_encode($config, JSON_PRETTY_PRINT);
-
-        $fileName = $config['propel']['paths']['phpConfDir']
-            . DIRECTORY_SEPARATOR
-            . 'propel.json';
-
-        if (!is_dir(dirname($fileName))) {
-            mkdir(dirname($fileName), 0775, true);
-        }
-
-        file_put_contents($fileName, $json);
+        $this->getFacade()->convertConfig();
     }
 
 }

@@ -139,7 +139,7 @@ class PhpMdRunner
             $config .= ' --exclude=' . $options['ignore'];
         }
 
-        $command = 'vendor/bin/phpmd ' . $pathToFiles . ' ' . $format .' ' . $config;
+        $command = 'vendor/bin/phpmd ' . $pathToFiles . ' ' . $format . ' ' . $config;
         if (!empty($options[self::OPTION_DRY_RUN])) {
             echo $command;
 
