@@ -68,7 +68,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $this->initializeBrainTree();
 
         $options = [
-            'three_d_secure' => [
+            \Braintree\Transaction::THREE_D_SECURE => [
                 'required' => $this->config->getIs3DSecure()
             ]
         ];
