@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\Kernel;
 
+use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Yves\Kernel\Locator;
 
 /**
@@ -25,7 +26,7 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
     {
         $locator = Locator::getInstance();
 
-        $this->assertInstanceOf('Spryker\Shared\Kernel\BundleProxy', $locator->locateFoo());
+        $this->assertInstanceOf(BundleProxy::class, $locator->locateFoo());
     }
 
 }

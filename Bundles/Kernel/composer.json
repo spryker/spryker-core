@@ -23,7 +23,12 @@
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/zend": "^2.0.0",
-    "spryker/config": "^2.0.0"
+    "spryker/config": "^2.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "0.3.1",
+    "spryker/testify": "^2.0.0",
+    "spryker/console": "^2.0.1"
   },
   "description": "kernel bundle",
   "license": "proprietary",
@@ -33,5 +38,11 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }
