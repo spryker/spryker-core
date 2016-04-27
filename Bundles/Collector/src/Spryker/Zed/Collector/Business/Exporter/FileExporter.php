@@ -32,6 +32,11 @@ class FileExporter extends AbstractExporter
     protected $fileFormatter;
 
     /**
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder
+     */
+    protected $writerBuilder;
+
+    /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder $fileWriterBuilder
      * @param \Spryker\Zed\Collector\Business\Exporter\MarkerInterface $marker
