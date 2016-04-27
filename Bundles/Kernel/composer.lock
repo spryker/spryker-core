@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ce465bb76b974094968460ce3ea5f7ea",
-    "content-hash": "d11333f42926fac5b53182d58d8ea1f4",
+    "hash": "f9a8dbeb117498accebedf1eae50dc39",
+    "content-hash": "3457c917ba7df645ac6ced0c5ea84c06",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1083,7 +1083,7 @@
                 "reference": "1867286563a7066424933b47fda2177978854152",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1148,7 +1148,7 @@
                 "reference": "6843c027e510e6cf719c3468b9dcc7ad4482817b",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1223,7 +1223,7 @@
                 "reference": "445cf1b98d7beeb899a4c1165c4b15c0f6023921",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1275,7 +1275,7 @@
                 "reference": "7eb2bbdfb09a37b8eda8e8d994314f6463963ff2",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1339,7 +1339,7 @@
                 "reference": "91e358ae7d6215ff00e21bcc86eba91927bc97e9",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1398,7 +1398,7 @@
                 "reference": "29bc31fb7c525169884c4215808ecaefbe540e5a",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1459,7 +1459,7 @@
                 "reference": "9b1981074b28d9135a6cdbd92fd20c8e1fe5330c",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1525,7 +1525,7 @@
                 "reference": "785ebf0a27467f0e7ccef7f929924d3c4c624d66",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1589,7 +1589,7 @@
                 "reference": "be38777cda8c735a1acbdd54f57557e797bb5b44",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1656,7 +1656,7 @@
                 "reference": "5167eac55a46a23ed13949b3aaf981f8a7826152",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1722,7 +1722,7 @@
                 "reference": "04c167af0864f7383fbd8b4b35f77fea5cacc644",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1784,22 +1784,22 @@
         },
         {
             "name": "spryker/config",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Config.git",
-                "reference": "83cac076191ca344820277c4362bbd4838a3fade",
+                "reference": "19bd8ecef91f3a2373238a232874dd118ead88eb",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/Config/zipball/83cac076191ca344820277c4362bbd4838a3fade",
-                "reference": "83cac076191ca344820277c4362bbd4838a3fade",
+                "url": "https://api.github.com/repos/spryker/Config/zipball/19bd8ecef91f3a2373238a232874dd118ead88eb",
+                "reference": "19bd8ecef91f3a2373238a232874dd118ead88eb",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1838,7 +1838,7 @@
             "support": {
                 "source": "https://github.com/spryker/Config/tree/master"
             },
-            "time": "2016-04-25 07:18:49"
+            "time": "2016-04-27 07:29:17"
         },
         {
             "name": "spryker/console",
@@ -1849,7 +1849,7 @@
                 "reference": "bbaa2e00784ea37efb4b68abc46afbfc370ea81c",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1913,7 +1913,7 @@
                 "reference": "c2b5776fc07113635f9fe3ba067925a60269566d",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1975,7 +1975,7 @@
                 "reference": "8cb90a168a9dd3d574e3dfed8e7bac68e6a68d6b",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2020,7 +2020,7 @@
                 "reference": "ee98b539cd0b6e7bbba6e3f95a8770d718101f3b",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2093,7 +2093,7 @@
                 "reference": "7393354e443d557f6e94b3b177dad9c6bb4521e8",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2162,7 +2162,7 @@
                 "reference": "9741ac40f37a8b2da0c85132a2f910a1e1bae083",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2220,7 +2220,7 @@
                 "reference": "c2c17f6aa454d4c7434fac0f78073040597ac5d1",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2265,7 +2265,7 @@
                 "reference": "2c21bb9af3e22c94ce0dca324342be889255029b",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2324,7 +2324,7 @@
                 "reference": "7c0cb91bd22b3c5c1eeb6ae044ca98877d04fe90",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2390,7 +2390,7 @@
                 "reference": "b66f3df972b1406fdc127661010d7ce5049b155f",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2447,7 +2447,7 @@
                 "reference": "d55068c88baf0649801f0abb4ad10ad350a55c79",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2492,7 +2492,7 @@
                 "reference": "2cb4aaceff44a616311621e66448ac52bdd9d4ec",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2555,7 +2555,7 @@
                 "reference": "cda5c5b7404fa39c874617568055ec95ccd1c743",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2601,7 +2601,7 @@
                 "reference": "80caf6b7c49c4f2686ecdfc7246e7e6787c661c8",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2671,7 +2671,7 @@
                 "reference": "00a09a172d9cdd3c86a8aac24d22fc6a2e25096c",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2726,7 +2726,7 @@
                 "reference": "f663929971aca31aaaff46bdc5708b42b3ecc59b",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2797,7 +2797,7 @@
                 "reference": "cf35f2b3da88375eb954e175f1f59952c8e7d36d",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2854,7 +2854,7 @@
                 "reference": "6f4e7d79905bfffc5d28b18179909c2858324682",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2908,7 +2908,7 @@
                 "reference": "366fd3126a248c4c9d45aa22c0f2bdb2c6f96809",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2967,7 +2967,7 @@
                 "reference": "31d7e0e5f1f0d3982a4a3fd20325460561473de2",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3026,7 +3026,7 @@
                 "reference": "2d0666d61c0ab9c7080b1940be49ac2b0579e74c",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3071,7 +3071,7 @@
                 "reference": "8a4a1869bfb2b41c52e7b5ac595d31f940787771",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3130,7 +3130,7 @@
                 "reference": "302c260cb8df74314d84293c719bce75da1240cc",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3191,7 +3191,7 @@
                 "reference": "c32bcc3cb4a757314bb7494a87c57a63a5ec1ee6",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3256,7 +3256,7 @@
                 "reference": "cd129847513f9fa38e38eea8eeebb5ddf3d58722",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3319,7 +3319,7 @@
                 "reference": "802af1c4c88360868328989fa24e8f31bc9184f6",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3383,7 +3383,7 @@
                 "reference": "d3c82999d74d806d89fb60f2e3372991b152186d",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3455,7 +3455,7 @@
                 "reference": "0e83fcd7bf7b78908ffd30c74d9abc31ab058b5c",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3520,7 +3520,7 @@
                 "reference": "699718b724ff055e00dc933621a4bb164dc11168",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3581,7 +3581,7 @@
                 "reference": "154925789de669a310dff5eb1f8c265d8fd32fd7",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3647,7 +3647,7 @@
                 "reference": "bc18e5bf08c5994a0bcc4e9f3a50594bead13443",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3710,7 +3710,7 @@
                 "reference": "a1e88ed48eba4aa4990031d3c5fc66e7216e3268",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3755,7 +3755,7 @@
                 "reference": "7c575335bf97b43318347f795a431a02b0566875",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3821,7 +3821,7 @@
                 "reference": "500a5b6fe55dac8d908722d88b2c17a06c7451da",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3893,7 +3893,7 @@
                 "reference": "1774e059e83d8cf34ef6affddae3802bf9c1ae1a",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3953,7 +3953,7 @@
                 "reference": "8385b97687bbcf7a41e8b5fd976cdd2a4248b19f",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4012,7 +4012,7 @@
                 "reference": "b5e67fcf49c7a7c88e1a64d0818ffd2285c5818e",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4079,7 +4079,7 @@
                 "reference": "f503c090bc7fe1fd7248440907d93480d69cccf7",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4135,7 +4135,7 @@
                 "reference": "2b5e0575bdf4a2f87eb78a6172ddb31232757f21",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4193,7 +4193,7 @@
                 "reference": "a80f81228d9086fe020ac02ad13cb98c2485b45d",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4257,7 +4257,7 @@
                 "reference": "404721b89ec3d2ea782d5d346e744c617efd6245",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4302,7 +4302,7 @@
                 "reference": "eb13a52833f2badaaa2847446fb4a4e15464f743",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4355,7 +4355,7 @@
                 "reference": "053a469942eae575d5b968a7aae7a5accbc7d733",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4416,7 +4416,7 @@
                 "reference": "caba05092840cbe5a570af8dde2ff4ab11c12a22",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4478,7 +4478,7 @@
                 "reference": "e30b49348abb887efeef664d3231d4c2068f73b7",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4541,7 +4541,7 @@
                 "reference": "97bc4935315eda9ca62bb51db896495a0230dcb7",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4597,7 +4597,7 @@
                 "reference": "755ee2ea755f605e214b6f3d6881b88e29314b68",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4654,7 +4654,7 @@
                 "reference": "39a0fe6703b5c70e924991b6a4af87cbd2676ecf",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4719,7 +4719,7 @@
                 "reference": "2cb5cbf41d43f79ab1914a7f2cae499566af0557",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4774,7 +4774,7 @@
                 "reference": "822818f3beeb0aafae07f331a4d7598431050d04",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4834,7 +4834,7 @@
                 "reference": "dfa40547229f54ae481e32d1ceffabb1f21e5088",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4899,7 +4899,7 @@
                 "reference": "2656aec16ae825d0e4a685bb3965d2701c54c0ac",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4961,7 +4961,7 @@
                 "reference": "f97684e3762d402132a0bc21cc3d9edc27175cf0",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
@@ -8426,7 +8426,7 @@
                 "reference": "1ea56560532d681e91b4bc83ed2a190b1ce42405",
                 "mirrors": [
                     {
-                        "url": "git@code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
+                        "url": "https://code.spryker.com:/var/www/app/toran/web/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
                         "preferred": true
                     }
                 ]
