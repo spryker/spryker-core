@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Collector\Communication\Console;
 
+use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -19,6 +20,14 @@ class CollectorFileExportConsole extends AbstractCollectorConsole
 
     const COMMAND_NAME = 'collector:file:export';
     const COMMAND_DESCRIPTION = 'Collector export to file';
+
+    /**
+     * @return \Symfony\Component\Console\Helper\HelperSet
+     */
+    public function getHelperSet()
+    {
+        return new HelperSet();
+    }
 
     /**
      * @return void
