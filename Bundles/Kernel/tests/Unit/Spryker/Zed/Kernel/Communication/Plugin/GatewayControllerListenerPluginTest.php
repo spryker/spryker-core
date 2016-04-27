@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication\Plugin;
 
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
@@ -27,6 +28,29 @@ use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\TransferServer;
  */
 class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->unsetLocator();
+    }
+
+    /**
+     * We need to unset the Locator instance because we are using the Locator for Yves and for Zed
+     * When it first get instantiated by Yves it wont have the proper Proxies configured
+     *
+     * @return void
+     */
+    protected function unsetLocator()
+    {
+        $reflectionClass = new \ReflectionClass(AbstractLocatorLocator::class);
+        $reflectedProperty = $reflectionClass->getProperty('instance');
+        $reflectedProperty->setAccessible(true);
+        $reflectedProperty->setValue(null);
+    }
 
     /**
      * @return void

@@ -7,14 +7,15 @@
 
 namespace Spryker\Yves\Kernel;
 
-interface FactoryInterface
+class Container extends \Pimple
 {
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return $this
+     * @return \Generated\Client\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
      */
-    public function setContainer(Container $container);
+    public function getLocator()
+    {
+        return Locator::getInstance();
+    }
 
 }

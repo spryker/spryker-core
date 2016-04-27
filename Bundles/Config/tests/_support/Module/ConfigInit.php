@@ -65,7 +65,12 @@ class ConfigInit extends Module
      */
     private function getSourceDirectories()
     {
-        return APPLICATION_ROOT_DIR . '/../*/config/';
+        $configPaths = [
+            APPLICATION_ROOT_DIR . '/../*/config/',
+            APPLICATION_ROOT_DIR . '/../../../config/',
+        ];
+
+        return $configPaths;
     }
 
     /**

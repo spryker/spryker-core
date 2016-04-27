@@ -7,14 +7,14 @@
 
 namespace Spryker\Yves\Kernel;
 
-interface FactoryInterface
+interface BundleDependencyProviderInterface
 {
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return $this
+     * @return \Spryker\Yves\Kernel\Container
      */
-    public function setContainer(Container $container);
+    public function provideDependencies(Container $container);
 
 }

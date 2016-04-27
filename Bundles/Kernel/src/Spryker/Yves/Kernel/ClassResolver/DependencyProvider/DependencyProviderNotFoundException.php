@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\ClassResolver\DependencyProvider;
+namespace Spryker\Yves\Kernel\ClassResolver\DependencyProvider;
 
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 class DependencyProviderNotFoundException extends \Exception
 {
 
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
     public function __construct(ClassInfo $callerClassInfo)
     {
@@ -24,7 +24,7 @@ class DependencyProviderNotFoundException extends \Exception
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      *
      * @return string
      */
@@ -39,7 +39,7 @@ class DependencyProviderNotFoundException extends \Exception
         $message .= 'You can fix this by adding the missing DependencyProvider to your bundle.' . PHP_EOL;
 
         $message .= sprintf(
-            'E.g. %s\\Zed\\%2$s\\%2$sDependencyProvider',
+            'E.g. %s\\Yves\\%2$s\\%2$sDependencyProvider',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );

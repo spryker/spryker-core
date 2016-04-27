@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace YvesUnit\Spryker\Yves\Kernel;
+namespace Unit\Spryker\Yves\Kernel;
 
 use Spryker\Yves\Kernel\Controller\RouteNameResolver;
 
