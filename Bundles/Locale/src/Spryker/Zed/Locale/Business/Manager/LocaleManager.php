@@ -31,7 +31,7 @@ class LocaleManager
     /**
      * @var \Spryker\Shared\Library\Collection\CollectionInterface
      */
-    protected $localeCache;
+    protected static $localeCache;
     
     /**
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
@@ -174,11 +174,11 @@ class LocaleManager
      */
     protected function getLocaleCache()
     {
-        if ($this->localeCache === null) {
+        if (self::$localeCache === null) {
             $this->initLocaleCache();
         }
 
-        return $this->localeCache;
+        return self::$localeCache;
     }
 
     /**
@@ -188,6 +188,7 @@ class LocaleManager
      */
     protected function initLocaleCache()
     {
+        dump('initLocaleCache ');
         $availableLocales = Store::getInstance()->getLocales();
 
         $localeCollection = [];
@@ -196,7 +197,7 @@ class LocaleManager
             $localeCollection[$localeInfo->getLocaleName()] = $localeInfo;
         }
 
-        $this->localeCache = new Collection($localeCollection);
+        self::$localeCache = new Collection($localeCollection);
     }
 
 }

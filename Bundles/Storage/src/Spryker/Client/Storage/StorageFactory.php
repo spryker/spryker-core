@@ -37,6 +37,7 @@ class StorageFactory extends AbstractFactory
     public function createCachedService()
     {
         if (static::$storageService === null) {
+            dump('createCachedService ');
             static::$storageService = $this->createService();
         }
 
