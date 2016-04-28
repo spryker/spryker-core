@@ -47,7 +47,7 @@ trait QueryContainerResolverAwareTrait
      *
      * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
-    private function resolveQueryContainer()
+    protected function resolveQueryContainer()
     {
         return $this->getQueryContainerResolver()->resolve($this);
     }
@@ -55,7 +55,7 @@ trait QueryContainerResolverAwareTrait
     /**
      * @return \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver
      */
-    private function getQueryContainerResolver()
+    protected function getQueryContainerResolver()
     {
         return new QueryContainerResolver();
     }

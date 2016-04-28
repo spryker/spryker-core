@@ -23,4 +23,7 @@ interface KernelConstants
 
     const STORE_PREFIX = ApplicationConstants::STORE_PREFIX;
 
+    const DEPENDENCY_INJECTION_YVES = 'DEPENDENCY_INJECTION_YVES';
+    const DEPENDENCY_INJECTION_ZED = 'DEPENDENCY_INJECTION_ZED';
+
 }
