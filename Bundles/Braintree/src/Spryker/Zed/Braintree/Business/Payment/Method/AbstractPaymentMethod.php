@@ -44,68 +44,6 @@ abstract class AbstractPaymentMethod
     abstract public function getMethodType();
 
     /**
-     * @param int $grandTotal
-     * @param string $currency
-     * @param string $idOrder
-     *
-     * @return array
-     */
-    protected function getBaseTransactionRequest($grandTotal, $currency, $idOrder)
-    {
-        return [
-            ApiConstants::TRANSACTION_MODE => $this->getConfig()->getEnvironment(),
-            ApiConstants::PRESENTATION_AMOUNT => $this->getCurrencyManager()->convertCentToDecimal($grandTotal),
-            ApiConstants::PRESENTATION_USAGE => $idOrder,
-            ApiConstants::PRESENTATION_CURRENCY => $currency,
-            ApiConstants::IDENTIFICATION_TRANSACTIONID => $idOrder,
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
-     * @param string $paymentCode
-     * @param string $uniqueId
-     *
-     * @return array
-     */
-    protected function getBaseTransactionRequestForPayment(
-        OrderTransfer $orderTransfer,
-        SpyPaymentBraintree $paymentEntity,
-        $paymentCode,
-        $uniqueId
-    ) {
-        $requestData = $this->getBaseTransactionRequest(
-            $orderTransfer->getTotals()->getGrandTotal(),
-            $paymentEntity->getCurrencyIso3Code(),
-            $orderTransfer->getIdSalesOrder()
-        );
-
-        $this->addRequestData(
-            $requestData,
-            [
-                ApiConstants::PAYMENT_CODE => $paymentCode,
-                ApiConstants::IDENTIFICATION_REFERENCEID => $uniqueId,
-            ]
-        );
-
-        return $requestData;
-    }
-
-    /**
-     * @param array $requestData
-     * @param array $additionalData
-     *
-     * @return void
-     */
-    protected function addRequestData(&$requestData, $additionalData)
-    {
-        foreach ($additionalData as $fieldName => $value) {
-            $requestData[$fieldName] = $value;
-        }
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return string

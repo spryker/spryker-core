@@ -64,10 +64,19 @@ class TransactionStatusLog implements TransactionStatusLogInterface
      */
     public function isCaptureApproved(OrderTransfer $orderTransfer)
     {
-        return $this->hasTransactionLogStatus(
+        if ($this->hasTransactionLogStatus(
             $orderTransfer,
             ApiConstants::TRANSACTION_CODE_CAPTURE,
             ApiConstants::PAYMENT_CODE_CAPTURE,
+            ApiConstants::STATUS_REASON_CODE_SUCCESS
+        )) {
+            return true;
+        }
+
+        return $this->hasTransactionLogStatus(
+            $orderTransfer,
+            ApiConstants::TRANSACTION_CODE_CAPTURE,
+            ApiConstants::PAYMENT_CODE_CAPTURE_SUBMITTED,
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
