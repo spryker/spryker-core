@@ -23,6 +23,24 @@ interface CollectorFacadeInterface
     /**
      * @api
      *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportStorage(OutputInterface $output);
+
+    /**
+     * @api
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportFile(OutputInterface $output);
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
@@ -76,6 +94,16 @@ interface CollectorFacadeInterface
     /**
      * @api
      *
+     * @param string $type
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return string
+     */
+    public function getCsvFileName($type, LocaleTransfer $locale);
+
+    /**
+     * @api
+     *
      * @param array $keys
      *
      * @return bool
@@ -118,5 +146,19 @@ interface CollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getAllCollectorTypes();
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getEnabledCollectorTypes();
 
 }
