@@ -32,7 +32,7 @@ class LocaleManager
      * @var \Spryker\Shared\Library\Collection\CollectionInterface
      */
     protected static $localeCache;
-    
+
     /**
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Zed\Locale\Business\TransferGeneratorInterface $transferGenerator
@@ -188,16 +188,38 @@ class LocaleManager
      */
     protected function initLocaleCache()
     {
-        dump('initLocaleCache ');
         $availableLocales = Store::getInstance()->getLocales();
 
         $localeCollection = [];
         foreach ($availableLocales as $localeName) {
-            $localeInfo = $this->getLocale($localeName);
+            $localeInfo = $this->loadLocale($localeName);
             $localeCollection[$localeInfo->getLocaleName()] = $localeInfo;
         }
 
         self::$localeCache = new Collection($localeCollection);
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function loadLocale($localeName)
+    {
+        $localeQuery = $this->localeQueryContainer->queryLocaleByName($localeName);
+        $locale = $localeQuery->findOne();
+        if (!$locale) {
+            throw new MissingLocaleException(
+                sprintf(
+                    'Tried to retrieve locale %s, but it does not exist',
+                    $localeName
+                )
+            );
+        }
+
+        return $this->transferGenerator->convertLocale($locale);
     }
 
 }

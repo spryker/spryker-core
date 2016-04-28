@@ -122,11 +122,9 @@ class StorageInstanceBuilder
                     'protocol' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
                     'port' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PORT),
                     'host' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+                    'password' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD),
+                    'persistent' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION),
                 ];
-
-                if (Config::hasValue(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
-                    $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
-                }
                 break;
 
             case self::SEARCH_ELASTICA_ADAPTER:

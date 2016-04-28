@@ -37,7 +37,6 @@ class StorageFactory extends AbstractFactory
     public function createCachedService()
     {
         if (static::$storageService === null) {
-            dump('createCachedService ');
             static::$storageService = $this->createService();
         }
 
@@ -64,11 +63,8 @@ class StorageFactory extends AbstractFactory
             'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
             'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
             'password' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD),
+            'persistent' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION),
         ];
-
-/*        if (Config::hasValue(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
-            $config['password'] = Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
-        }*/
 
         return $config;
     }
