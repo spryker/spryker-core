@@ -82,15 +82,15 @@ class CsvWriter implements CsvWriterInterface
     }
 
     /**
-     * @param array $data_row
+     * @param array $dataRow
      *
      * @return void
      */
-    protected function initializeHeaderColumns(array $data_row)
+    protected function initializeHeaderColumns(array $dataRow)
     {
         if ($this->csvFile === null) {
             $this->csvFile = $this->createCsvFile($this->csvFilename);
-            $this->csvFile->fputcsv(array_keys($data_row));
+            $this->csvFile->fputcsv(array_keys($dataRow));
         }
     }
 

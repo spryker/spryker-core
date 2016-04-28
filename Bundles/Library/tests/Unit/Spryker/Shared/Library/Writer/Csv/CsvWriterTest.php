@@ -21,14 +21,14 @@ class CsvWriterTest extends \PHPUnit_Framework_TestCase
      */
     protected $fixtureDirectory;
 
-    protected $testData = [
+    const TEST_DATA = [
         ['first'=>1, 'second'=>2, 'third'=>3],
         ['first'=>'A string with "spaces"', 'second'=>null, 'third'=>9],
     ];
 
-    protected $testContents = "first,second,third\n1,2,3\n\"A string with \"\"spaces\"\"\",,9\n";
+    const TEST_CONTENTS = "first,second,third\n1,2,3\n\"A string with \"\"spaces\"\"\",,9\n";
 
-    protected $testContentsFormatted = "first|second|third\n1|2|3\n'A string with \"spaces\"'||9\n";
+    const TEST_CONTENTS_FORMATTED = "first|second|third\n1|2|3\n'A string with \"spaces\"'||9\n";
 
     /**
      * @return void
@@ -58,7 +58,7 @@ class CsvWriterTest extends \PHPUnit_Framework_TestCase
         $filename = $directory . DIRECTORY_SEPARATOR . 'bar';
 
         $writer = new CsvWriter($filename);
-        $writer->write($this->testData);
+        $writer->write(self::TEST_DATA);
 
         $this->assertFileExists($filename);
     }
@@ -72,9 +72,9 @@ class CsvWriterTest extends \PHPUnit_Framework_TestCase
         $filename = $directory . DIRECTORY_SEPARATOR . 'bar1';
 
         $writer = new CsvWriter($filename);
-        $writer->write($this->testData);
+        $writer->write(self::TEST_DATA);
 
-        $this->assertStringEqualsFile($filename, $this->testContents);
+        $this->assertStringEqualsFile($filename, self::TEST_CONTENTS);
     }
 
     /**
@@ -86,11 +86,11 @@ class CsvWriterTest extends \PHPUnit_Framework_TestCase
         $filename = $directory . DIRECTORY_SEPARATOR . 'bar2';
 
         $writer = new CsvWriter($filename);
-        foreach ($this->testData as $data) {
+        foreach (self::TEST_DATA as $data) {
             $writer->write([$data]);
         }
 
-        $this->assertStringEqualsFile($filename, $this->testContents);
+        $this->assertStringEqualsFile($filename, self::TEST_CONTENTS);
     }
 
     /**
@@ -103,9 +103,9 @@ class CsvWriterTest extends \PHPUnit_Framework_TestCase
 
         $writer = new CsvWriter($filename);
         $writer->setCsvFormat("|", "'");
-        $writer->write($this->testData);
+        $writer->write(self::TEST_DATA);
 
-        $this->assertStringEqualsFile($filename, $this->testContentsFormatted);
+        $this->assertStringEqualsFile($filename, self::TEST_CONTENTS_FORMATTED);
     }
 
 }
