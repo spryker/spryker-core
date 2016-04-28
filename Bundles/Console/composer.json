@@ -19,9 +19,9 @@
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
-  "bin": {
-    "0": "bin/console"
-  },
+  "bin": [
+    "bin/console"
+  ],
   "description": "console bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

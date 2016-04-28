@@ -173,7 +173,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     private function addForeignBundleLayer(array $dependencyInformation, $group)
     {
         $foreignBundleLayerNodeId = $this->getForeignBundleLayerNodeId($dependencyInformation);
-        $label = $dependencyInformation[DependencyTree::META_FOREIGN_BUNDLE]  . ' ' . $dependencyInformation[DependencyTree::META_FOREIGN_LAYER];
+        $label = $dependencyInformation[DependencyTree::META_FOREIGN_BUNDLE] . ' ' . $dependencyInformation[DependencyTree::META_FOREIGN_LAYER];
         $attributes = $this->layerAttributes;
         $attributes['label'] = $label;
         $this->graph->addNode($foreignBundleLayerNodeId, $attributes, $group);

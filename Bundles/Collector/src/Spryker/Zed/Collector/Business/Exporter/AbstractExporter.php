@@ -119,7 +119,7 @@ abstract class AbstractExporter implements ExporterInterface
         }
 
         $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
-        $this->marker->setLastExportMarkByTypeAndLocale($type, $locale, $this->createTimestamp());
+        $startTime = new \DateTime();
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $locale, $lastRunDatetime);
         $baseQuery->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID);
@@ -132,7 +132,7 @@ abstract class AbstractExporter implements ExporterInterface
         $this->finishExport(
             $result,
             $type,
-            $lastRunDatetime
+            $startTime
         );
 
         return $result;
@@ -141,17 +141,17 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param string $type
-     * @param \DateTime $lastRunDatetime
+     * @param \DateTime $startTime
      *
      * @return void
      */
-    protected function finishExport(BatchResultInterface $batchResult, $type, $lastRunDatetime)
+    protected function finishExport(BatchResultInterface $batchResult, $type, \DateTime $startTime)
     {
-        if ($batchResult->isFailed()) {
+        if (!$batchResult->isFailed()) {
             $this->marker->setLastExportMarkByTypeAndLocale(
                 $type,
                 $batchResult->getProcessedLocale(),
-                $this->createTimestamp($lastRunDatetime)
+                $this->createTimestamp($startTime)
             );
         }
     }

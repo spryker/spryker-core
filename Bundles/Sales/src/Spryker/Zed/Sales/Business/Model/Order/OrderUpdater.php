@@ -43,7 +43,7 @@ class OrderUpdater implements OrderUpdaterInterface
             return false;
         }
 
-        $this->hydrateOrderTransferFromEntity($orderTransfer, $orderEntity);
+        $this->hydrateEntityFromOrderTransfer($orderTransfer, $orderEntity);
 
         $orderEntity->save();
 
@@ -56,9 +56,9 @@ class OrderUpdater implements OrderUpdaterInterface
      *
      * @return void
      */
-    protected function hydrateOrderTransferFromEntity(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity)
+    protected function hydrateEntityFromOrderTransfer(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity)
     {
-        $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $orderEntity->fromArray($orderTransfer->modifiedToArray());
     }
 
 }

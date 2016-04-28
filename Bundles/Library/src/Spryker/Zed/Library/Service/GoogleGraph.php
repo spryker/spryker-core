@@ -93,7 +93,7 @@ class GoogleGraph
         $vars = get_object_vars($this);
         $form = '<form action="https://chart.googleapis.com/chart" method="POST" >';
         foreach ($vars as $k => $v) {
-            $form = $form . '<input type="hidden" name="' . $k .  '" value="' . $v . '"  />';
+            $form = $form . '<input type="hidden" name="' . $k . '" value="' . $v . '"  />';
         }
 
         $form = $form . '<input type="submit"  /></form>';

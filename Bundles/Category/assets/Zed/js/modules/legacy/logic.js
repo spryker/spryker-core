@@ -12,7 +12,7 @@ var categoryHelper = require('./helpers.js');
 $(document).ready(function() {
     var triggeredFirstEvent = false;
 
-    $('#root-node-table').on('click', 'tbody.tr', function(){
+    $('#root-node-table').on('click', 'tbody tr', function(){
         categoryHelper.showLoaderBar();
         var idCategoryNode = $(this).children('td:first').text();
         SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);

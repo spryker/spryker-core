@@ -1,5 +1,0 @@
-class_name: YvesUnitTester
-
-modules:
-    enabled:
-        - \Kernel\Module\YvesUnit
