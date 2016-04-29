@@ -9,7 +9,7 @@ namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Business\Model\FailedResultInterface;
@@ -46,7 +46,7 @@ class FileExporter extends AbstractExporter
      */
     public function __construct(
         TouchQueryContainerInterface $queryContainer,
-        FileWriterBuilder $fileWriterBuilder,
+        FileWriterBuilderInterface $fileWriterBuilder,
         MarkerInterface $marker,
         FailedResultInterface $failedResultPrototype,
         BatchResultInterface $batchResultPrototype,
