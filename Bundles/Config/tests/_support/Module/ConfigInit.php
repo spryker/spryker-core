@@ -67,8 +67,24 @@ class ConfigInit extends Module
     {
         $configPaths = [
             APPLICATION_ROOT_DIR . '/../*/config/',
-            APPLICATION_ROOT_DIR . '/../../../config/',
         ];
+
+        $configPaths = $this->addBundleToTestConfigDirectory($configPaths);
+
+        return $configPaths;
+    }
+
+    /**
+     * @param array $configPaths
+     *
+     * @return array
+     */
+    private function addBundleToTestConfigDirectory(array $configPaths)
+    {
+        $bundleToTestConfigDirectory = APPLICATION_ROOT_DIR . '/../../../config/';
+        if (is_dir($bundleToTestConfigDirectory)) {
+            $configPaths[] = $bundleToTestConfigDirectory;
+        }
 
         return $configPaths;
     }
