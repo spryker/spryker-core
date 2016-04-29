@@ -8,13 +8,17 @@
     "psr-4": {
       "Config\\Module\\": "tests/_support/Module"
     },
-    "files": {
-      "0": "src/Spryker/Shared/Config.php"
-    }
+    "files": [
+      "src/Spryker/Shared/Config.php"
+    ]
   },
   "require": {
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "0.3.1",
+    "spryker/testify": "^2.0.0"
   },
   "description": "config bundle",
   "license": "proprietary",
@@ -24,5 +28,11 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }
