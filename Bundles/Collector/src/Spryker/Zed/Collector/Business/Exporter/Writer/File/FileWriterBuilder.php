@@ -10,7 +10,7 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer\File;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\Library\Writer\Csv\CsvWriter;
 
-class FileWriterBuilder
+class FileWriterBuilder implements FileWriterBuilderInterface
 {
 
     /**
@@ -50,24 +50,24 @@ class FileWriterBuilder
 
     /**
      * @param string $type
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter
      */
-    public function build($type, LocaleTransfer $locale)
+    public function build($type, LocaleTransfer $localeTransfer)
     {
-        $writerAdapter = new CsvWriter($this->getFullExportPath($type, $locale));
+        $writerAdapter = new CsvWriter($this->getFullExportPath($type, $localeTransfer));
         $writerAdapter->setCsvFormat($this->delimiter, $this->enclosure, $this->escape);
         return new FileWriter($writerAdapter);
     }
 
     /**
      * @param string $type
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @return string
      */
-    public function getFullExportPath($type, LocaleTransfer $locale)
+    public function getFullExportPath($type, LocaleTransfer $localeTransfer)
     {
-        return $this->baseExportDirPath.'/'.$type.'_'.$locale->getLocaleName().'.csv';
+        return $this->baseExportDirPath.'/'.$type.'_'.$localeTransfer->getLocaleName().'.csv';
     }
 
 }
