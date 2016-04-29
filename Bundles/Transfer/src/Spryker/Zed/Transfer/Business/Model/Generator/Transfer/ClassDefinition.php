@@ -594,7 +594,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param $propertyName
      *
-     * @throws CamelCaseRequiredException
+     * @throws \Spryker\Zed\Transfer\Business\Exception\CamelCaseRequiredException
      * @return void
      */
     private function assertPropertyName($propertyName)
