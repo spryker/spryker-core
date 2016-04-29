@@ -1,4 +1,5 @@
 class_name: UnitTester
 modules:
     enabled:
-        - \Propel\Module\Unit
+        - \Testify\Module\Environment
+        - \Config\Module\ConfigInit
