@@ -592,7 +592,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param $propertyName
+     * @param string $propertyName
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\CamelCaseRequiredException
      * @return void
