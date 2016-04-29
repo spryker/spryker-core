@@ -257,7 +257,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private function getAddVar(array $property)
     {
         if ($this->isArray($property)) {
-            return 'array';
+            return 'mixed';
         }
 
         return str_replace('[]', '', $property['type']);
@@ -300,11 +300,10 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         if ($this->isCollection($property) || $this->isArray($property)) {
             $this->buildCollectionMethods($property);
-            $this->buildRequireMethod($property, true);
         } else {
             $this->buildGetterAndSetter($property);
-            $this->buildRequireMethod($property, false);
         }
+        $this->buildRequireMethod($property);
     }
 
     /**
@@ -563,11 +562,10 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $property
-     * @param bool $isCollection
      *
      * @return void
      */
-    private function buildRequireMethod(array $property, $isCollection)
+    private function buildRequireMethod(array $property)
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'require' . ucfirst($propertyName);
@@ -575,7 +573,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'isCollection' => $isCollection,
+            'isCollection' => $this->isCollection($property),
             'bundles' => $property['bundles'],
         ];
         $this->methods[$methodName] = $method;
