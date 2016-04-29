@@ -184,6 +184,8 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $normalizedProperties = [];
         foreach ($properties as $property) {
+            $this->assertProperty($property);
+
             $property['type_fully_qualified'] = $property['type'];
             $property['is_collection'] = false;
             $property['is_transfer'] = false;
@@ -361,10 +363,6 @@ class ClassDefinition implements ClassDefinitionInterface
     private function getPropertyConstantName(array $property)
     {
         $filter = new CamelCaseToUnderscore();
-
-        if (strpos($property['name'], '_') !== false) {
-            throw new CamelCaseRequiredException('Undescores are not allowed in camel-case properties: ' . $property['name']);
-        }
 
         return mb_strtoupper($filter->filter($property['name']));
     }
@@ -581,6 +579,35 @@ class ClassDefinition implements ClassDefinitionInterface
             'bundles' => $property['bundles'],
         ];
         $this->methods[$methodName] = $method;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\CamelCaseRequiredException
+     *
+     * @return void
+     */
+    private function assertProperty(array $property)
+    {
+        $this->assertPropertyName($property['name']);
+    }
+
+    /**
+     * @param $propertyName
+     *
+     * @throws CamelCaseRequiredException
+     * @return void
+     */
+    private function assertPropertyName($propertyName)
+    {
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $propertyName)) {
+            throw new CamelCaseRequiredException(sprintf(
+                'Transfer property "%s" needs to be camel-case formatted in "%s"!',
+                $propertyName,
+                $this->name
+            ));
+        }
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
+use Spryker\Zed\Transfer\Business\Exception\CamelCaseRequiredException;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
 
 /**
@@ -379,6 +380,24 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $method['parent'] = $parent;
 
         return $method;
+    }
+
+    /**
+     * @return void
+     */
+    public function testInvalidPropertyNameShouldThrowException()
+    {
+        $this->expectException(CamelCaseRequiredException::class);
+
+        $property = $this->getProperty('invalid_property_name', 'string');
+
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$property],
+        ];
+
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
     }
 
 }
