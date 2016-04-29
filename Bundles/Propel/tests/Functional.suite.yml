@@ -2,4 +2,8 @@ class_name: FunctionalTester
 modules:
     enabled:
         - \Testify\Module\Environment
+        - \Config\Module\ConfigInit
+        - \Propel\Module\PropelInstall
+        - \Transfer\Module\TransferGenerate
+        - \Propel\Module\Database
         - \Propel\Module\Functional
