@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4828cc03ef506ee1b7d4aa6f4947b1de",
-    "content-hash": "c06a598eda465609f1b577cacdf2e5c8",
+    "hash": "61bec9e0d57a63054985c419957ab817",
+    "content-hash": "b90df0be93b35584a5a696fb9ebd712c",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1784,11 +1784,11 @@
         },
         {
             "name": "spryker/config",
-            "version": "2.1.1",
+            "version": "dev-beta/config-init-fix",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Config.git",
-                "reference": "19bd8ecef91f3a2373238a232874dd118ead88eb",
+                "reference": "f3786049246658428f7a299f46bf92739e335f07",
                 "mirrors": [
                     {
                         "url": "https://code.spryker.com:/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
@@ -1798,8 +1798,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/Config/zipball/19bd8ecef91f3a2373238a232874dd118ead88eb",
-                "reference": "19bd8ecef91f3a2373238a232874dd118ead88eb",
+                "url": "https://api.github.com/repos/spryker/Config/zipball/f3786049246658428f7a299f46bf92739e335f07",
+                "reference": "f3786049246658428f7a299f46bf92739e335f07",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1836,9 +1836,9 @@
             ],
             "description": "config bundle",
             "support": {
-                "source": "https://github.com/spryker/Config/tree/master"
+                "source": "https://github.com/spryker/Config/tree/beta/config-init-fix"
             },
-            "time": "2016-04-27 07:29:17"
+            "time": "2016-04-29 08:23:11"
         },
         {
             "name": "spryker/console",
@@ -8847,9 +8847,18 @@
             "time": "2016-01-20 09:13:37"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "2.1.1",
+            "alias_normalized": "2.1.1.0",
+            "version": "dev-beta/config-init-fix",
+            "package": "spryker/config"
+        }
+    ],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "spryker/config": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
