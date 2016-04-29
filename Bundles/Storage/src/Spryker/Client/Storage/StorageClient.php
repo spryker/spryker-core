@@ -101,7 +101,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @param array $keys
      *
-     * @return array|null
+     * @return array
      */
     public function getMulti(array $keys)
     {

@@ -38,7 +38,6 @@ class ServiceTest extends Test
             ClientInterface::class,
             [
                 'keys',
-
                 'getProfile',
                 'getOptions',
                 'connect',
@@ -82,7 +81,7 @@ class ServiceTest extends Test
     {
         $requestedKeys = [];
 
-        $this->assertNull($this->redisService->getMulti($requestedKeys));
+        $this->assertSame($requestedKeys, $this->redisService->getMulti($requestedKeys));
     }
 
 }

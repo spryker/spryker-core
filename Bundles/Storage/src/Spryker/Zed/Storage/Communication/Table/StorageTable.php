@@ -65,9 +65,6 @@ class StorageTable extends AbstractTable
         }
 
         $values = $this->storageClient->getMulti($keys);
-        if ($values === null) {
-            return $result;
-        }
 
         foreach ($values as $key => $value) {
             $key = str_replace('kv:', '', $key);
