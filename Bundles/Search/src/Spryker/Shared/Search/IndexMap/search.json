@@ -16,6 +16,24 @@
             },
             "path_match": "search-result-data.*"
           }
+        },
+        {
+          "string_sort": {
+            "mapping": {
+              "analyzer": "lowercase_keyword_analyzer",
+              "type": "string"
+            },
+            "path_match": "string_sort.*"
+          }
+        },
+        {
+          "integer_sort": {
+            "mapping": {
+              "index": "not_analyzed",
+              "type": "integer"
+            },
+            "path_match": "integer_sort.*"
+          }
         }
       ],
       "properties": {
@@ -69,19 +87,6 @@
             }
           }
         },
-        "float-facet": {
-          "type": "nested",
-          "include_in_all": false,
-          "properties": {
-            "facet-name": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
-            "facet-value": {
-              "type": "float"
-            }
-          }
-        },
         "completion-terms": {
           "type": "string",
           "include_in_all": false
@@ -94,37 +99,14 @@
           "type": "object",
           "include_in_all": false,
           "properties": {
-            "name": {
-              "type": "string",
-              "index": "not_analyzed"
-            }
+
           }
         },
         "integer-sort": {
           "type": "object",
           "include_in_all": false,
           "properties": {
-            "name": {
-              "type": "integer"
-            }
-          }
-        },
-        "float-sort": {
-          "type": "object",
-          "include_in_all": false,
-          "properties": {
-            "name": {
-              "type": "float"
-            }
-          }
-        },
-        "bool-sort": {
-          "type": "object",
-          "include_in_all": false,
-          "properties": {
-            "name": {
-              "type": "boolean"
-            }
+
           }
         },
         "category": {

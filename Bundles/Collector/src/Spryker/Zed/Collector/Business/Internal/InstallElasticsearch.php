@@ -10,6 +10,7 @@ namespace Spryker\Zed\Collector\Business\Internal;
 use Elastica\Client;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 
+// TODO: remove this class
 class InstallElasticsearch extends AbstractInstaller
 {
 

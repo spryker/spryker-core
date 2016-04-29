@@ -61,4 +61,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
      */
     public function queryByProductAndLocale($idProduct, $idLocale);
 
+    /**
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMappingQuery
+     */
+    public function queryProductSearchAttributeMapping();
+
 }

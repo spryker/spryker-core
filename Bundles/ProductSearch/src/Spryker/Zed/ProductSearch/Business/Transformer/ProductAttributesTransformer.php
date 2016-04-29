@@ -11,6 +11,7 @@ use Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
+// TODO: refactor/remove
 class ProductAttributesTransformer implements ProductAttributesTransformerInterface
 {
 
@@ -70,35 +71,35 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                 $abstractLocalizedAttributes = json_decode($productData['abstract_localized_attributes'], true);
                 $abstractAttributes = array_merge($abstractAttributes, $abstractLocalizedAttributes);
 
-                $concreteAttributes = json_decode('[' . $productData['concrete_attributes'] . ']', true);
-                $concreteLocalizedAttributes = json_decode('[' . $productData['concrete_localized_attributes'] . ']', true);
-
-                $concreteSkus = explode(',', $productData['concrete_skus']);
-                $concreteNames = explode(',', $productData['concrete_names']);
-                $productData['product_concrete_collection'] = [];
-
-                $lastSku = '';
-                for ($i = 0, $l = count($concreteSkus); $i < $l; $i++) {
-                    if ($lastSku === $concreteSkus[$i]) {
-                        continue;
-                    }
-                    $encodedAttributes = $concreteAttributes[$i];
-                    $encodedLocalizedAttributes = $concreteLocalizedAttributes[$i];
-                    if ($encodedAttributes === null) {
-                        $encodedAttributes = [];
-                    }
-                    if ($encodedLocalizedAttributes === null) {
-                        $encodedLocalizedAttributes = [];
-                    }
-                    $mergedAttributes = array_merge($encodedAttributes, $encodedLocalizedAttributes);
-
-                    $lastSku = $concreteSkus[$i];
-                    $productData['product_concrete_collection'][] = [
-                        'sku' => $concreteSkus[$i],
-                        'attributes' => $mergedAttributes,
-                        'name' => $concreteNames[$i],
-                    ];
-                }
+//                $concreteAttributes = json_decode('[' . $productData['concrete_attributes'] . ']', true);
+//                $concreteLocalizedAttributes = json_decode('[' . $productData['concrete_localized_attributes'] . ']', true);
+//
+//                $concreteSkus = explode(',', $productData['concrete_skus']);
+//                $concreteNames = explode(',', $productData['concrete_names']);
+//                $productData['product_concrete_collection'] = [];
+//
+//                $lastSku = '';
+//                for ($i = 0, $l = count($concreteSkus); $i < $l; $i++) {
+//                    if ($lastSku === $concreteSkus[$i]) {
+//                        continue;
+//                    }
+//                    $encodedAttributes = $concreteAttributes[$i];
+//                    $encodedLocalizedAttributes = $concreteLocalizedAttributes[$i];
+//                    if ($encodedAttributes === null) {
+//                        $encodedAttributes = [];
+//                    }
+//                    if ($encodedLocalizedAttributes === null) {
+//                        $encodedLocalizedAttributes = [];
+//                    }
+//                    $mergedAttributes = array_merge($encodedAttributes, $encodedLocalizedAttributes);
+//
+//                    $lastSku = $concreteSkus[$i];
+//                    $productData['product_concrete_collection'][] = [
+//                        'sku' => $concreteSkus[$i],
+//                        'attributes' => $mergedAttributes,
+//                        'name' => $concreteNames[$i],
+//                    ];
+//                }
 
                 $attributes = $this->mapProductAttributes($abstractAttributes);
                 $searchableProducts[$index] = array_merge_recursive($searchableProducts[$index], $attributes);

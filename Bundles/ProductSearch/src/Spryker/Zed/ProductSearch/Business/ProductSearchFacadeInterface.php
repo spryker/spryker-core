@@ -7,31 +7,15 @@
 
 namespace Spryker\Zed\ProductSearch\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface ProductSearchFacadeInterface
 {
 
     /**
      * @api
      *
-     * @param array $productsRaw
-     * @param array $processedProducts
-     *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
      */
-    public function enrichProductsWithSearchAttributes(array $productsRaw, array $processedProducts);
-
-    /**
-     * @api
-     *
-     * @param array $productsRaw
-     * @param array $processedProducts
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return array
-     */
-    public function createSearchProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale);
+    public function getProductSearchAttributeMap();
 
     /**
      * @api

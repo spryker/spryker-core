@@ -3,10 +3,9 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="ElasticsearchIndexDefinition">
-        <property name="indexName" type="string" />
-        <property name="settings" type="array" />
-        <property name="mappings" type="array" />
+    <transfer name="ProductSearchAttributeMap">
+        <property name="attributeName" type="string" />
+        <property name="targetFields" type="array" />
     </transfer>
 
     <transfer name="FacetConfig">

@@ -12,6 +12,8 @@ use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
@@ -177,6 +179,22 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function createSearchKeysQuery($searchString)
     {
         return new SearchKeysQuery($searchString);
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapperInterface
+     */
+    public function createPageDataMapper()
+    {
+        return new PageDataMapper($this->createPageMapBuilder());
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface
+     */
+    protected function createPageMapBuilder()
+    {
+        return new PageMapBuilder();
     }
 
 }

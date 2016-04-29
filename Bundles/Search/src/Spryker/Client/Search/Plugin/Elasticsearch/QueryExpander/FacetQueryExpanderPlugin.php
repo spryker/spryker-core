@@ -102,7 +102,10 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         foreach ($facetConfig->getAll() as $facetConfigTransfer) {
             $aggregationFilterQuery = clone $boolQuery;
 
-            // TODO: use this for mixed aggregation filtering or remove it if not needed
+            // TODO: use this for mixed aggregation filtering or remove it if not needed.
+            // TODO: We need one aggregation for facet fields whithout any magic to get the filtered facet numbers,
+            // then we need to create one global aggregation per filtered item without the current item's filtering criteria,
+            // then we need to merge these results in php level.
 //            $this->setAggregationFilters($facetConfigTransfer, $aggregationFilterQuery, $facetFilters);
 
             $facetAggregation = $this

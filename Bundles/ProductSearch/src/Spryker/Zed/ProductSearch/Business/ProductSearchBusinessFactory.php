@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductSearch\Business;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
 use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;
+use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapCollector;
 use Spryker\Zed\ProductSearch\Business\Operation\AddToResult;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToField;
@@ -18,7 +18,6 @@ use Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField;
 use Spryker\Zed\ProductSearch\Business\Operation\DefaultOperation;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
 use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchMarker;
-use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
 use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
@@ -38,17 +37,6 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createOperationLocator(),
             $this->createDefaultOperation()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessorInterface
-     */
-    public function createProductSearchProcessor()
-    {
-        return new ProductSearchProcessor(
-            $this->createKeyBuilder(),
-            $this->getStoreName()
         );
     }
 
@@ -86,29 +74,11 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * TODO: move this to project level if possible
-     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface
-     */
-    protected function getLocaleFacade()
-    {
-        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * TODO: move this to project level if possible
      * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface
      */
     protected function getTouchFacade()
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_TOUCH);
-    }
-
-    /**
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
-     */
-    public function createKeyBuilder()
-    {
-        return new ProductResourceKeyBuilder();
     }
 
     /**
@@ -164,7 +134,6 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         return new CopyToMultiField();
     }
 
-
     /**
      * @return \Spryker\Zed\ProductSearch\Business\Processor\ProductSearchMarkerInterface
      */
@@ -174,6 +143,14 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapCollectorInterface
+     */
+    public function createSearchProductAttributeMapCollector()
+    {
+        return new SearchProductAttributeMapCollector($this->getQueryContainer());
     }
 
 }

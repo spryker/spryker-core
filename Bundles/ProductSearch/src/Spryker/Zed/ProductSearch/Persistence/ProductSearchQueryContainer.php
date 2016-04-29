@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributeMappingTableMap;
 use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributesOperationTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
@@ -100,6 +101,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * TODO: can be removed along with ProductSearchQueryExpander and others
      */
     public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
@@ -124,6 +126,20 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
             ->filterByFkLocale($idLocale);
 
         return $productSearchQuery;
+    }
+
+    /**
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMappingQuery
+     */
+    public function queryProductSearchAttributeMapping()
+    {
+        $productSearchAttributeMappingQuery = $this
+            ->getFactory()
+            ->createProductSearchAttributeMappingQuery()
+            ->joinWith('SpyProductAttributesMetadata')
+            ->addDescendingOrderByColumn(SpyProductSearchAttributeMappingTableMap::COL_WEIGHTING);
+
+        return $productSearchAttributeMappingQuery;
     }
 
 }

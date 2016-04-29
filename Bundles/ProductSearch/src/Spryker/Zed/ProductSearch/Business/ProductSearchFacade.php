@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductSearch\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchBusinessFactory getFactory()
@@ -18,33 +20,15 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * @api
-     *
-     * @param array $productsRaw
-     * @param array $processedProducts
-     *
-     * @return array
+     * 
+     * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
      */
-    public function enrichProductsWithSearchAttributes(array $productsRaw, array $processedProducts)
+    public function getProductSearchAttributeMap()
     {
-        return $this->getFactory()
-            ->createProductAttributesTransformer()
-            ->buildProductAttributes($productsRaw, $processedProducts);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $productsRaw
-     * @param array $processedProducts
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return array
-     */
-    public function createSearchProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale)
-    {
-        return $this->getFactory()
-            ->createProductSearchProcessor()
-            ->buildProducts($productsRaw, $processedProducts, $locale);
+        return $this
+            ->getFactory()
+            ->createSearchProductAttributeMapCollector()
+            ->getProductSearchAttributeMap();
     }
 
     /**
