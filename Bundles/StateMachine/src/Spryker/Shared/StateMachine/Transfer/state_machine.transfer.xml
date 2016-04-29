@@ -8,6 +8,7 @@
         <property name="idStateMachineProcess" type="string" />
         <property name="idItemState" type="string" />
         <property name="processName" type="string" />
+        <property name="stateMachineName" type="string" />
         <property name="stateName" type="string" />
         <property name="eventName" type="string" />
     </transfer>

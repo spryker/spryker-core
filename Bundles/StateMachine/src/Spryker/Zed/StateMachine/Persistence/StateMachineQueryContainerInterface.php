@@ -14,25 +14,19 @@ interface StateMachineQueryContainerInterface
      * @api
      *
      * @param int $idState
-     * @param int $idProcess
-     * @param string $name
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryStateByIdStateAndIdProcessAndName($idState, $idProcess, $name);
+    public function queryStateByIdState($idState);
 
     /**
      * @api
      *
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
-    public function queryItemsWithExistingHistory(
-        $stateMachineName,
-        StateMachineItemTransfer $stateMachineItemTransfer
-    );
+    public function queryItemsWithExistingHistory(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
      * @api

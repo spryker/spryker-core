@@ -51,7 +51,6 @@ class StateUpdater implements StateUpdaterInterface
     }
 
     /**
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
      * @param string[] $sourceStateBuffer
@@ -61,7 +60,6 @@ class StateUpdater implements StateUpdaterInterface
      * @return void
      */
     public function updateStateMachineItemState(
-        $stateMachineName,
         array $stateMachineItems,
         array $processes,
         array $sourceStateBuffer
@@ -75,6 +73,7 @@ class StateUpdater implements StateUpdaterInterface
 
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
             $stateMachineItemTransfer->requireProcessName()
+                ->requireStateMachineName()
                 ->requireIdentifier()
                 ->requireStateName();
 
@@ -94,7 +93,9 @@ class StateUpdater implements StateUpdaterInterface
                 $this->timeout->dropOldTimeout($process, $sourceState, $stateMachineItemTransfer);
                 $this->timeout->setNewTimeout($process, $stateMachineItemTransfer);
 
-                $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
+                $stateMachineHandler = $this->stateMachineHandlerResolver
+                    ->get($stateMachineItemTransfer->getStateMachineName());
+
                 $stateMachineHandler->itemStateUpdated($stateMachineItemTransfer);
 
                 $this->stateMachinePersistence->saveItemStateHistory($stateMachineItemTransfer);

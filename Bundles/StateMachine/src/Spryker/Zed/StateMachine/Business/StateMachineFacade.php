@@ -37,11 +37,11 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * {@inheritdoc}
      */
-    public function triggerEvent($eventName, $stateMachineName, StateMachineItemTransfer $stateMachineItemTransfer)
+    public function triggerEvent($eventName, StateMachineItemTransfer $stateMachineItemTransfer)
     {
         return $this->getFactory()
             ->createLockedStateMachineTrigger()
-            ->triggerEvent($eventName, $stateMachineName, [$stateMachineItemTransfer]);
+            ->triggerEvent($eventName, [$stateMachineItemTransfer]);
     }
 
     /**
@@ -49,11 +49,11 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * {@inheritdoc}
      */
-    public function triggerEventForItems($eventName, $stateMachineName, array $stateMachineItems)
+    public function triggerEventForItems($eventName, array $stateMachineItems)
     {
         return $this->getFactory()
             ->createLockedStateMachineTrigger()
-            ->triggerEvent($eventName, $stateMachineName, $stateMachineItems);
+            ->triggerEvent($eventName, $stateMachineItems);
     }
 
     /**
@@ -130,25 +130,11 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * {@inheritdoc}
      */
-    public function getManualEventsForStateMachineItem(
-        $stateMachineName,
-        StateMachineItemTransfer $stateMachineItemTransfer
-    ) {
-        return $this->getFactory()
-            ->createStateMachineFinder()
-            ->getManualEventsForStateMachineItem($stateMachineItemTransfer, $stateMachineName);
-    }
-
-    /**
-     * @api
-     *
-     * {@inheritdoc}
-     */
-    public function getManualEventsForStateMachineItems($stateMachineName, array $stateMachineItems)
+    public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer)
     {
         return $this->getFactory()
             ->createStateMachineFinder()
-            ->getManualEventsForStateMachineItems($stateMachineItems, $stateMachineName);
+            ->getManualEventsForStateMachineItem($stateMachineItemTransfer);
     }
 
     /**
@@ -156,13 +142,11 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * {@inheritdoc}
      */
-    public function getProcessedStateMachineItemTransfer(
-        $stateMachineName,
-        StateMachineItemTransfer $stateMachineItemTransfer
-    ) {
+    public function getManualEventsForStateMachineItems(array $stateMachineItems)
+    {
         return $this->getFactory()
-            ->createStateMachinePersistence()
-            ->getProcessedStateMachineItemTransfer($stateMachineName, $stateMachineItemTransfer);
+            ->createStateMachineFinder()
+            ->getManualEventsForStateMachineItems($stateMachineItems);
     }
 
     /**
@@ -170,11 +154,23 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * {@inheritdoc}
      */
-    public function getProcessedStateMachineItems($stateMachineName, array $stateMachineItems)
+    public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer)
     {
         return $this->getFactory()
             ->createStateMachinePersistence()
-            ->getProcessedStateMachineItems($stateMachineItems, $stateMachineName);
+            ->getProcessedStateMachineItemTransfer($stateMachineItemTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function getProcessedStateMachineItems(array $stateMachineItems)
+    {
+        return $this->getFactory()
+            ->createStateMachinePersistence()
+            ->getProcessedStateMachineItems($stateMachineItems);
     }
 
     /**

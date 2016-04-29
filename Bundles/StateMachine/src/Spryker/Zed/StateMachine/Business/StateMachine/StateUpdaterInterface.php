@@ -9,13 +9,12 @@ interface StateUpdaterInterface
 {
 
     /**
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
      * @param array $sourceStateBuffer
      *
      * @return void
      */
-    public function updateStateMachineItemState($stateMachineName, array $stateMachineItems, array $processes, array $sourceStateBuffer);
+    public function updateStateMachineItemState(array $stateMachineItems, array $processes, array $sourceStateBuffer);
 
 }

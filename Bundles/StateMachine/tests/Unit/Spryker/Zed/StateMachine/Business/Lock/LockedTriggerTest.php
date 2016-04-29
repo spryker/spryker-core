@@ -68,7 +68,7 @@ class LockedTriggerTest extends StateMachineMocks
         $propelConnectionMock->expects($this->once())->method('commit');
 
         $lockedTrigger = $this->createLockedTrigger($triggerMock, $itemLockMock, $propelConnectionMock);
-        $lockedTrigger->triggerEvent('event', 'sm name', []);
+        $lockedTrigger->triggerEvent('event', []);
     }
 
     /**

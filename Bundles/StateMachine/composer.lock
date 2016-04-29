@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "61bec9e0d57a63054985c419957ab817",
-    "content-hash": "b90df0be93b35584a5a696fb9ebd712c",
+    "hash": "8c79e2013bbce36902b462eace01839b",
+    "content-hash": "0448017d4675ace3a67a9ebb97b8cc85",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1521,7 +1521,7 @@
             "version": "2.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/Category.git",
+                "url": "git@github.com:spryker/Category.git",
                 "reference": "7c8e6b5f4fa41201589d76ed3173d2bdeb49f20a",
                 "mirrors": [
                     {
@@ -1575,9 +1575,6 @@
                 "proprietary"
             ],
             "description": "category bundle",
-            "support": {
-                "source": "https://github.com/spryker/Category/tree/master"
-            },
             "time": "2016-04-26 17:01:12"
         },
         {
@@ -1784,11 +1781,11 @@
         },
         {
             "name": "spryker/config",
-            "version": "dev-beta/config-init-fix",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Config.git",
-                "reference": "f3786049246658428f7a299f46bf92739e335f07",
+                "reference": "4b6b09b038100edb559e0f18196affdb08a14a0c",
                 "mirrors": [
                     {
                         "url": "https://code.spryker.com:/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
@@ -1798,8 +1795,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/Config/zipball/f3786049246658428f7a299f46bf92739e335f07",
-                "reference": "f3786049246658428f7a299f46bf92739e335f07",
+                "url": "https://api.github.com/repos/spryker/Config/zipball/4b6b09b038100edb559e0f18196affdb08a14a0c",
+                "reference": "4b6b09b038100edb559e0f18196affdb08a14a0c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1811,6 +1808,10 @@
             "require": {
                 "spryker/kernel": "^2.0.0",
                 "spryker/library": "^2.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "0.3.1",
+                "spryker/testify": "^2.0.0"
             },
             "type": "library",
             "extra": {
@@ -1836,9 +1837,9 @@
             ],
             "description": "config bundle",
             "support": {
-                "source": "https://github.com/spryker/Config/tree/beta/config-init-fix"
+                "source": "https://github.com/spryker/Config/tree/master"
             },
-            "time": "2016-04-29 08:23:11"
+            "time": "2016-04-29 09:36:05"
         },
         {
             "name": "spryker/console",
@@ -2089,7 +2090,7 @@
             "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/Discount.git",
+                "url": "git@github.com:spryker/Discount.git",
                 "reference": "7393354e443d557f6e94b3b177dad9c6bb4521e8",
                 "mirrors": [
                     {
@@ -2148,9 +2149,6 @@
                 "proprietary"
             ],
             "description": "discount bundle",
-            "support": {
-                "source": "https://github.com/spryker/Discount/tree/master"
-            },
             "time": "2016-04-04 15:24:01"
         },
         {
@@ -2667,7 +2665,7 @@
             "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/ItemGrouper.git",
+                "url": "git@github.com:spryker/ItemGrouper.git",
                 "reference": "00a09a172d9cdd3c86a8aac24d22fc6a2e25096c",
                 "mirrors": [
                     {
@@ -2712,9 +2710,6 @@
                 "proprietary"
             ],
             "description": "item grouper bundle",
-            "support": {
-                "source": "https://github.com/spryker/ItemGrouper/tree/master"
-            },
             "time": "2016-04-04 15:24:01"
         },
         {
@@ -2794,7 +2789,7 @@
             "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/Library.git",
+                "url": "git@github.com:spryker/Library.git",
                 "reference": "f663929971aca31aaaff46bdc5708b42b3ecc59b",
                 "mirrors": [
                     {
@@ -2855,9 +2850,6 @@
                 "proprietary"
             ],
             "description": "library bundle",
-            "support": {
-                "source": "https://github.com/spryker/Library/tree/master"
-            },
             "time": "2016-04-04 15:24:01"
         },
         {
@@ -3387,7 +3379,7 @@
             "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/Price.git",
+                "url": "git@github.com:spryker/Price.git",
                 "reference": "802af1c4c88360868328989fa24e8f31bc9184f6",
                 "mirrors": [
                     {
@@ -3441,9 +3433,6 @@
                 "proprietary"
             ],
             "description": "price bundle",
-            "support": {
-                "source": "https://github.com/spryker/Price/tree/master"
-            },
             "time": "2016-04-04 15:24:01"
         },
         {
@@ -4484,7 +4473,7 @@
             "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/Storage.git",
+                "url": "git@github.com:spryker/Storage.git",
                 "reference": "caba05092840cbe5a570af8dde2ff4ab11c12a22",
                 "mirrors": [
                     {
@@ -4536,9 +4525,6 @@
                 "proprietary"
             ],
             "description": "storage bundle",
-            "support": {
-                "source": "https://github.com/spryker/Storage/tree/master"
-            },
             "time": "2016-04-04 15:24:01"
         },
         {
@@ -8847,18 +8833,9 @@
             "time": "2016-01-20 09:13:37"
         }
     ],
-    "aliases": [
-        {
-            "alias": "2.1.1",
-            "alias_normalized": "2.1.1.0",
-            "version": "dev-beta/config-init-fix",
-            "package": "spryker/config"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "spryker/config": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],

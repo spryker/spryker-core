@@ -42,7 +42,7 @@ interface PersistenceInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function updateStateMachineItemsFromPersistence(array $stateMachineItems, $stateMachineName);
+    public function updateStateMachineItemsFromPersistence(array $stateMachineItems);
 
     /**
      * @param int $itemIdentifier
@@ -59,18 +59,15 @@ interface PersistenceInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    public function getProcessedStateMachineItemTransfer(
-        $stateMachineName,
-        StateMachineItemTransfer $stateMachineItemTransfer
+    public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer
     );
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @param string $stateMachineName
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getProcessedStateMachineItems(array $stateMachineItems, $stateMachineName);
+    public function getProcessedStateMachineItems(array $stateMachineItems);
 
     /**
      * @param string $processName

@@ -45,7 +45,6 @@ class ConditionTest extends StateMachineMocks
         $transitions[] = $transition;
 
         $processedTargetState = $condition->checkConditionForTransitions(
-            'Test',
             $transitions,
             new StateMachineItemTransfer(),
             new State(),
@@ -87,7 +86,6 @@ class ConditionTest extends StateMachineMocks
         $sourceState->setName('initial source');
 
         $processedTargetState = $condition->checkConditionForTransitions(
-            'Test',
             $transitions,
             new StateMachineItemTransfer(),
             $sourceState,

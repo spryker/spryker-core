@@ -24,20 +24,16 @@ interface FinderInterface
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param string $stateMachineName
      *
-     * @return array|string[]
+     * @return string[]
      */
-    public function getManualEventsForStateMachineItems(array $stateMachineItems, $stateMachineName);
+    public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     * @param string $stateMachineName
      *
      * @return string[]
      */
-    public function getManualEventsForStateMachineItem(
-        StateMachineItemTransfer $stateMachineItemTransfer,
-        $stateMachineName
-    );
+    public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -77,11 +73,10 @@ interface FinderInterface
     public function findProcessByStateMachineAndProcessName($stateMachineName, $processName);
 
     /**
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
      */
-    public function findProcessesForItems($stateMachineName, array $stateMachineItems);
+    public function findProcessesForItems(array $stateMachineItems);
 
 }

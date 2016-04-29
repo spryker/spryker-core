@@ -109,7 +109,6 @@ class TriggerTest extends StateMachineMocks
 
         $affectedItems = $trigger->triggerEvent(
             'event',
-            self::TESTING_STATE_MACHINE,
             $stateMachineItems
         );
 

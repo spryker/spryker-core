@@ -13,7 +13,6 @@ interface ConditionInterface
 {
 
     /**
-     * @param string $stateMachineName
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $transitions
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $sourceState
@@ -24,7 +23,6 @@ interface ConditionInterface
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
     public function checkConditionForTransitions(
-        $stateMachineName,
         array $transitions,
         StateMachineItemTransfer $stateMachineItemTransfer,
         StateInterface $sourceState,

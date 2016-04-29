@@ -69,12 +69,11 @@ class LockedTrigger implements TriggerInterface
 
     /**
      * @param string $eventName
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @return int
      * @throws \Spryker\Zed\StateMachine\Business\Exception\LockException
      */
-    public function triggerEvent($eventName, $stateMachineName, array $stateMachineItems)
+    public function triggerEvent($eventName, array $stateMachineItems)
     {
         $identifier = $this->buildIdentifierForMultipleItemLock($stateMachineItems);
 
@@ -86,11 +85,8 @@ class LockedTrigger implements TriggerInterface
         $this->itemLock->acquire($identifier);
         $this->propelConnection->commit();
 
-        $triggerEventResult = $this->stateMachineTrigger->triggerEvent(
-            $eventName,
-            $stateMachineName,
-            $stateMachineItems
-        );
+        $triggerEventResult = $this->stateMachineTrigger
+            ->triggerEvent($eventName, $stateMachineItems);
 
         $this->itemLock->release($identifier);
 

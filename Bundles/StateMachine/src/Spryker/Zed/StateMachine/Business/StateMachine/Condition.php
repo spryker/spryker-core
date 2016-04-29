@@ -72,7 +72,6 @@ class Condition implements ConditionInterface
     }
 
     /**
-     * @param string $stateMachineName
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $transitions
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $sourceState
@@ -84,7 +83,6 @@ class Condition implements ConditionInterface
      * @throws \Exception
      */
     public function checkConditionForTransitions(
-        $stateMachineName,
         array $transitions,
         StateMachineItemTransfer $stateMachineItemTransfer,
         StateInterface $sourceState,
@@ -94,7 +92,10 @@ class Condition implements ConditionInterface
         foreach ($transitions as $transition) {
             if ($transition->hasCondition()) {
                 $conditionName = $transition->getCondition();
-                $conditionPlugin = $this->getConditionPlugin($conditionName, $stateMachineName);
+                $conditionPlugin = $this->getConditionPlugin(
+                    $conditionName,
+                    $stateMachineItemTransfer->getStateMachineName()
+                );
 
                 try {
                     $conditionCheck = $conditionPlugin->check($stateMachineItemTransfer);
@@ -178,7 +179,6 @@ class Condition implements ConditionInterface
         $processes = [$process->getName() => $process];
 
         $this->stateUpdater->updateStateMachineItemState(
-            $stateMachineName,
             $stateMachineItems,
             $processes,
             $sourceStateBuffer
@@ -226,7 +226,6 @@ class Condition implements ConditionInterface
             $targetState = $sourceState;
             if (count($transitions) > 0) {
                 $targetState = $this->checkConditionForTransitions(
-                    $stateMachineName,
                     $transitions,
                     $stateMachineItemTransfer,
                     $sourceState,

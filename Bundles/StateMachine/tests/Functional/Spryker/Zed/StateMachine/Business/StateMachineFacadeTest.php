@@ -95,11 +95,7 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $triggerResult = $stateMachineFacade->triggerEvent(
-            'ship order',
-            self::TESTING_SM,
-            $stateMachineItemTransfer
-        );
+        $triggerResult = $stateMachineFacade->triggerEvent('ship order', $stateMachineItemTransfer);
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
@@ -176,10 +172,7 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItem(
-            self::TESTING_SM,
-            $stateMachineItemTransfer
-        );
+        $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItem($stateMachineItemTransfer);
 
         $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
         $this->assertCount(2, $manualEvents);
@@ -216,9 +209,9 @@ class StateMachineFacadeTest extends Test
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $secondItemIdentifier);
         $stateMachineItems[$secondItemIdentifier] = $stateMachineHandler->getItemStateUpdated();
 
-        $stateMachineFacade->triggerEvent('ship order', self::TESTING_SM, $stateMachineItems[$secondItemIdentifier]);
+        $stateMachineFacade->triggerEvent('ship order', $stateMachineItems[$secondItemIdentifier]);
 
-        $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItems(self::TESTING_SM, $stateMachineItems);
+        $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItems($stateMachineItems);
 
         $this->assertCount(2, $manualEvents);
 
@@ -264,10 +257,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         /* @var $updatedStateMachineItems StateMachineItemTransfer[]  */
-        $updatedStateMachineItems = $stateMachineFacade->getProcessedStateMachineItems(
-            self::TESTING_SM,
-            $stateMachineItems
-        );
+        $updatedStateMachineItems = $stateMachineFacade->getProcessedStateMachineItems($stateMachineItems);
 
         $this->assertCount(2, $updatedStateMachineItems);
 
@@ -339,10 +329,8 @@ class StateMachineFacadeTest extends Test
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
-        $updatedStateMachineItemTransfer = $stateMachineFacade->getProcessedStateMachineItemTransfer(
-            self::TESTING_SM,
-            $stateMachineItemTransfer
-        );
+        $updatedStateMachineItemTransfer = $stateMachineFacade
+            ->getProcessedStateMachineItemTransfer($stateMachineItemTransfer);
 
         $this->assertEquals(
             $updatedStateMachineItemTransfer->getIdItemState(),
@@ -507,7 +495,7 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $stateMachineFacade->triggerEvent('check with condition', self::TESTING_SM, $stateMachineItemTransfer);
+        $stateMachineFacade->triggerEvent('check with condition', $stateMachineItemTransfer);
 
         $stateMachineHandler->setStateMachineItemsByStateIds([$stateMachineItemTransfer]);
 
@@ -537,7 +525,7 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $stateMachineFacade->triggerEvent('ship order', self::TESTING_SM, $stateMachineItemTransfer);
+        $stateMachineFacade->triggerEvent('ship order', $stateMachineItemTransfer);
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 

@@ -46,12 +46,11 @@ interface StateMachineFacadeInterface
      * @api
      *
      * @param string $eventName
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return int
      */
-    public function triggerEvent($eventName, $stateMachineName, StateMachineItemTransfer $stateMachineItemTransfer);
+    public function triggerEvent($eventName, StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
      * Trigger event for multiple items. Must be already initialized with triggerForNewStateMachineItem
@@ -65,12 +64,11 @@ interface StateMachineFacadeInterface
      * @api
      *
      * @param string $eventName
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return int
      */
-    public function triggerEventForItems($eventName, $stateMachineName, array $stateMachineItems);
+    public function triggerEventForItems($eventName, array $stateMachineItems);
 
     /**
      * Return available state machine process list. Includes all state machine details: states transitions, events
@@ -153,12 +151,11 @@ interface StateMachineFacadeInterface
      *
      * @api
      *
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return string[]
      */
-    public function getManualEventsForStateMachineItem($stateMachineName, StateMachineItemTransfer $stateMachineItemTransfer);
+    public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
      * Specification:
@@ -168,12 +165,11 @@ interface StateMachineFacadeInterface
      *
      * @api
      *
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return string[]
      */
-    public function getManualEventsForStateMachineItems($stateMachineName, array $stateMachineItems);
+    public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
     /**
      *
@@ -182,12 +178,11 @@ interface StateMachineFacadeInterface
      *
      * @api
      *
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    public function getProcessedStateMachineItemTransfer($stateMachineName, StateMachineItemTransfer $stateMachineItemTransfer);
+    public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
      * Specification:
@@ -195,12 +190,11 @@ interface StateMachineFacadeInterface
      *
      * @api
      *
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getProcessedStateMachineItems($stateMachineName, array $stateMachineItems);
+    public function getProcessedStateMachineItems(array $stateMachineItems);
 
     /**
      * Specification:

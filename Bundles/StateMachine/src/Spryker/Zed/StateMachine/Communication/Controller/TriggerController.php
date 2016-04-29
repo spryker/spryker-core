@@ -36,18 +36,16 @@ class TriggerController extends AbstractController
     {
         $identifier = $this->castId($request->query->get(self::URL_PARAM_IDENTIFIER));
         $idState = $this->castId($request->query->get(self::URL_PARAM_ID_STATE));
-        $idProcess = $this->castId($request->query->get(self::URL_PARAM_ID_PROCESS));
 
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setIdentifier($identifier);
         $stateMachineItemTransfer->setIdItemState($idState);
-        $stateMachineItemTransfer->setIdStateMachineProcess($idProcess);
 
-        $stateMachineName = $request->query->get(self::URL_PARAM_STATE_MACHINE_NAME);
         $eventName = $request->query->get(self::URL_PARAM_EVENT);
-        $this->getFacade()->triggerEvent($eventName, $stateMachineName, $stateMachineItemTransfer);
+        $this->getFacade()->triggerEvent($eventName, $stateMachineItemTransfer);
 
         $redirect = $request->query->get(self::URL_PARAM_REDIRECT, self::DEFAULT_REDIRECT_URL);
+
         return $this->redirectResponse($redirect);
     }
 

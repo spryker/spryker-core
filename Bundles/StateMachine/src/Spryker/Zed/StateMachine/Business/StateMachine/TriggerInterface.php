@@ -30,7 +30,7 @@ interface TriggerInterface
      *
      * @return int
      */
-    public function triggerEvent($eventName, $stateMachineName, array $items);
+    public function triggerEvent($eventName, array $items);
 
     /**
      * @param string $stateMachineName
