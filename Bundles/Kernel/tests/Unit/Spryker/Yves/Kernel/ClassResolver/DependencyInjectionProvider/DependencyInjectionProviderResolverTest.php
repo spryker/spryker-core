@@ -7,8 +7,10 @@
 
 namespace Unit\Spryker\Yves\Kernel\ClassResolver\DependencyInjectionProvider;
 
-use Spryker\Yves\Kernel\ClassResolver\DependencyInjectionProvider\DependencyInjectionProviderResolver;
+use Spryker\Shared\Kernel\ContainerInterface;
+use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface;
 use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollectionInterface;
+use Spryker\Yves\Kernel\ClassResolver\DependencyInjectionProvider\DependencyInjectionProviderResolver;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -206,9 +208,9 @@ class DependencyInjectionProviderResolverTest extends \PHPUnit_Framework_TestCas
         $class = array_pop($classNameParts);
         $fileContent = '<?php'
             . PHP_EOL . 'namespace ' . implode('\\', $classNameParts) . ';'
-            . PHP_EOL . 'use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderInterface;'
-            . PHP_EOL . 'use Spryker\Shared\Kernel\ContainerInterface;'
-            . PHP_EOL . 'class ' . $class . ' implements DependencyInjectionProviderInterface'
+            . PHP_EOL . 'use ' . DependencyInjectionInterface::class . ';'
+            . PHP_EOL . 'use ' . ContainerInterface::class . ';'
+            . PHP_EOL . 'class ' . $class . ' implements DependencyInjectionInterface'
             . PHP_EOL . '{'
             . PHP_EOL . 'public function inject(ContainerInterface $container){}'
             . PHP_EOL . '}';

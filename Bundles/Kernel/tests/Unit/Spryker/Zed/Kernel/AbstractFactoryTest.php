@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Zed\Kernel;
 
+use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface;
 use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollection;
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjectionProvider\DependencyInjectionProviderResolver;
@@ -112,7 +112,7 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $container[self::CONTAINER_KEY] = self::CONTAINER_VALUE;
 
-        $dependencyInjectionProviderMock = $this->getMock(DependencyInjectionProviderInterface::class, ['inject']);
+        $dependencyInjectionProviderMock = $this->getMock(DependencyInjectionInterface::class, ['inject']);
         $dependencyInjectionProviderMock->expects($this->once())->method('inject')->willReturn($container);
 
         $dependencyInjectionProviderCollectionMock = $this->getMock(DependencyInjectionProviderCollection::class, ['getDependencyInjectionProvider']);

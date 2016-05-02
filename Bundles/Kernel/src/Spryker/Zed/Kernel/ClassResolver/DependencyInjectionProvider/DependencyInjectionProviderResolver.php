@@ -8,10 +8,9 @@
 namespace Spryker\Zed\Kernel\ClassResolver\DependencyInjectionProvider;
 
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollection;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollection;
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderInterface;
 
 class DependencyInjectionProviderResolver extends AbstractClassResolver
 {
@@ -31,7 +30,7 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $dependencyInjectionProviderCollection = new DependencyInjectionProviderCollection();
+        $dependencyInjectionProviderCollection = $this->getDependencyInjectionProviderCollection();
 
         $this->setCallerClass($callerClass);
         $injectToBundle = $this->getClassInfo()->getBundle();
@@ -47,14 +46,6 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
         }
 
         return $dependencyInjectionProviderCollection;
-    }
-
-    /**
-     * @return DependencyInjectionProviderInterface
-     */
-    protected function getResolvedClassInstance()
-    {
-        return parent::getResolvedClassInstance();
     }
 
     /**
@@ -103,11 +94,11 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
     protected function getInjectionBundles($injectToBundle)
     {
         $injectionConfiguration = $this->getDependencyInjectionConfiguration();
-        if (array_key_exists($injectToBundle, $injectionConfiguration)) {
-            return $injectionConfiguration[$injectToBundle];
+        if (!isset($injectionConfiguration[$injectToBundle])) {
+            return [];
         }
 
-        return [];
+        return $injectionConfiguration[$injectToBundle];
     }
 
     /**
@@ -116,6 +107,14 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
     protected function getDependencyInjectionConfiguration()
     {
         return Config::get(KernelConstants::DEPENDENCY_INJECTION_ZED, []);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollection
+     */
+    protected function getDependencyInjectionProviderCollection()
+    {
+        return new DependencyInjectionProviderCollection();
     }
 
 }

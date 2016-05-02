@@ -9,7 +9,7 @@ namespace Spryker\Shared\Kernel\Dependency\Injection;
 
 use Spryker\Shared\Kernel\ContainerInterface;
 
-interface DependencyInjectorInterface
+interface DependencyInjectionInterface
 {
 
     /**

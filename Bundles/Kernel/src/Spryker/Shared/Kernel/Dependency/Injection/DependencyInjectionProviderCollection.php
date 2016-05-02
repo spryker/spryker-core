@@ -11,16 +11,16 @@ class DependencyInjectionProviderCollection implements DependencyInjectionProvid
 {
 
     /**
-     * @var \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderInterface[]
+     * @var \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface[]
      */
     protected $dependencyInjectionProvider = [];
 
     /**
-     * @param \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderInterface $dependencyInjectorProvider
+     * @param \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface $dependencyInjectorProvider
      *
      * @return $this
      */
-    public function addDependencyInjectorProvider(DependencyInjectionProviderInterface $dependencyInjectorProvider)
+    public function addDependencyInjectorProvider(DependencyInjectionInterface $dependencyInjectorProvider)
     {
         $this->dependencyInjectionProvider[] = $dependencyInjectorProvider;
 
@@ -28,7 +28,7 @@ class DependencyInjectionProviderCollection implements DependencyInjectionProvid
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderInterface[]
+     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface[]
      */
     public function getDependencyInjectionProvider()
     {

@@ -16,5 +16,4 @@ namespace Unit\Spryker\Shared\Kernel\Dependency\Injection;
  */
 class DependencyInjectorTest extends \PHPUnit_Framework_TestCase
 {
-
 }

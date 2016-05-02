@@ -49,14 +49,6 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderInterface
-     */
-    protected function getResolvedClassInstance()
-    {
-        return parent::getResolvedClassInstance();
-    }
-
-    /**
      * @return string
      */
     public function getClassPattern()
@@ -102,11 +94,11 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
     protected function getInjectionBundles($injectToBundle)
     {
         $injectionConfiguration = $this->getDependencyInjectionConfiguration();
-        if (array_key_exists($injectToBundle, $injectionConfiguration)) {
-            return $injectionConfiguration[$injectToBundle];
+        if (!isset($injectionConfiguration[$injectToBundle])) {
+            return [];
         }
 
-        return [];
+        return $injectionConfiguration[$injectToBundle];
     }
 
     /**

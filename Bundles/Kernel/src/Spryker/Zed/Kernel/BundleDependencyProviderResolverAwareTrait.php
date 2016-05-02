@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Kernel;
 
+use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollectionInterface;
 use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjector;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjectionProvider\DependencyInjectionProviderResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
@@ -58,7 +59,8 @@ trait BundleDependencyProviderResolverAwareTrait
     protected function getContainerWithProvidedDependencies()
     {
         $container = $this->getContainer();
-        $dependencyInjector = $this->getDependencyInjector();
+        $dependencyInjectionProviderCollection = $this->resolveDependencyInjectionProvider();
+        $dependencyInjector = $this->getDependencyInjector($dependencyInjectionProviderCollection);
         $dependencyProvider = $this->resolveDependencyProvider();
 
         $this->provideExternalDependencies($dependencyProvider, $container);
@@ -68,14 +70,13 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollectionInterface $dependencyInjectionProviderCollection
+     *
      * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjector
      */
-    protected function getDependencyInjector()
+    protected function getDependencyInjector(DependencyInjectionProviderCollectionInterface $dependencyInjectionProviderCollection)
     {
-        $dependencyInjectionProviderCollection = $this->resolveDependencyInjectionProvider();
-        $dependencyInjector = new DependencyInjector($dependencyInjectionProviderCollection);
-
-        return $dependencyInjector;
+        return new DependencyInjector($dependencyInjectionProviderCollection);
     }
 
     /**

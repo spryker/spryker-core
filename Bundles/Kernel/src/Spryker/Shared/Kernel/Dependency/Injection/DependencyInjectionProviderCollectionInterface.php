@@ -11,14 +11,14 @@ interface DependencyInjectionProviderCollectionInterface extends \Countable
 {
 
     /**
-     * @param \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderInterface $dependencyInjectorProvider
+     * @param \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface $dependencyInjectorProvider
      *
      * @return $this
      */
-    public function addDependencyInjectorProvider(DependencyInjectionProviderInterface $dependencyInjectorProvider);
+    public function addDependencyInjectorProvider(DependencyInjectionInterface $dependencyInjectorProvider);
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderInterface[]
+     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface[]
      */
     public function getDependencyInjectionProvider();
 
