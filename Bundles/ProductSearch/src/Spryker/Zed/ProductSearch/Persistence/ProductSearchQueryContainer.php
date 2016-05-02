@@ -8,12 +8,9 @@
 namespace Spryker\Zed\ProductSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributeMappingTableMap;
-use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributesOperationTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -25,33 +22,12 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
-     */
-    public function queryFieldOperations()
-    {
-        $fieldOperations = $this->getFactory()->createProductSearchAttributesOperationQuery()
-            ->joinWith('SpyProductAttributesMetadata')
-            ->addAscendingOrderByColumn(
-                SpyProductSearchAttributesOperationTableMap::COL_SOURCE_ATTRIBUTE_ID
-            )
-            ->addAscendingOrderByColumn(
-                SpyProductSearchAttributesOperationTableMap::COL_WEIGHTING
-            );
-
-        return $fieldOperations;
-    }
-
-    /**
-     * @api
-     *
-     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
-     *
      * @param array $productIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function getExportableProductsByLocale(array $productIds, LocaleTransfer $locale)
+    public function queryExportableProductsByLocale(array $productIds, LocaleTransfer $locale)
     {
         $query = $this->getFactory()->createProductQuery();
         $query
@@ -79,40 +55,6 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
-     * @param int $idAttribute
-     * @param string $copyTarget
-     *
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
-     */
-    public function queryAttributeOperation($idAttribute, $copyTarget)
-    {
-        $query = $this->getFactory()->createProductSearchAttributesOperationQuery();
-        $query
-            ->filterBySourceAttributeId($idAttribute)
-            ->filterByTargetField($copyTarget);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     * TODO: can be removed along with ProductSearchQueryExpander and others
-     */
-    public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
-    {
-        $productSearchQueryExpander = $this->getFactory()->createProductSearchQueryExpander();
-
-        return $productSearchQueryExpander->expandProductQuery($expandableQuery, $locale);
-    }
-
-    /**
-     * @api
-     *
      * @param int $idProduct
      * @param int $idLocale
      *
@@ -129,17 +71,18 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMappingQuery
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
      */
-    public function queryProductSearchAttributeMapping()
+    public function queryProductSearchAttributeMap()
     {
-        $productSearchAttributeMappingQuery = $this
+        $productSearchAttributeMapQuery = $this
             ->getFactory()
-            ->createProductSearchAttributeMappingQuery()
-            ->joinWith('SpyProductAttributesMetadata')
-            ->addDescendingOrderByColumn(SpyProductSearchAttributeMappingTableMap::COL_WEIGHTING);
+            ->createProductSearchAttributeMapQuery()
+            ->joinWith('SpyProductAttributesMetadata');
 
-        return $productSearchAttributeMappingQuery;
+        return $productSearchAttributeMapQuery;
     }
 
 }

@@ -47,28 +47,28 @@ class SearchProductAttributeMapCollector implements SearchProductAttributeMapCol
     }
 
     /**
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapping[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getRawAttributeMap()
     {
-        $attributeMapping = $this
+        $attributeMap = $this
             ->productSearchQueryContainer
-            ->queryProductSearchAttributeMapping()
+            ->queryProductSearchAttributeMap()
             ->find();
 
-        return $attributeMapping;
+        return $attributeMap;
     }
 
     /**
-     * @param array $attributeMappings
+     * @param array $attributeMaps
      *
      * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
      */
-    protected function processRawMap(array $attributeMappings)
+    protected function processRawMap(array $attributeMaps)
     {
         $result = [];
 
-        foreach ($attributeMappings as $attributeName => $targetFields) {
+        foreach ($attributeMaps as $attributeName => $targetFields) {
             $result[] = (new ProductSearchAttributeMapTransfer())
                 ->setAttributeName($attributeName)
                 ->setTargetFields($targetFields);

@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Business;
 
-use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchBusinessFactory getFactory()

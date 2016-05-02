@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSearch\Business\Processor;
+namespace Spryker\Zed\ProductSearch\Business\Marker;
 
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
