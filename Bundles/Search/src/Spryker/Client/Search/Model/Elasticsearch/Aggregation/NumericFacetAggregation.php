@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
-use Elastica\Aggregation\Stats;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class NumericFacetAggregation extends AbstractFacetAggregation
@@ -19,11 +18,18 @@ class NumericFacetAggregation extends AbstractFacetAggregation
     protected $facetConfigTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @var \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer)
+    protected $aggregationBuilder;
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
+     */
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, AggregationBuilderInterface $aggregationBuilder)
     {
         $this->facetConfigTransfer = $facetConfigTransfer;
+        $this->aggregationBuilder = $aggregationBuilder;
     }
 
     /**
@@ -34,7 +40,10 @@ class NumericFacetAggregation extends AbstractFacetAggregation
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
         $prefixedFieldName = $this->addNestedFieldPrefix($fieldName, self::FACET_VALUE);
-        $facetValueStats = (new Stats($fieldName . '-stats'))
+
+        $facetValueStats = $this
+            ->aggregationBuilder
+            ->createStatsAggregation($fieldName . '-stats')
             ->setField($prefixedFieldName);
 
         $facetNameAgg = $this

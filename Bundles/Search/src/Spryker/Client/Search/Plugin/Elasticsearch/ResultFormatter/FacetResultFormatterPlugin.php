@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
+use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -56,10 +57,29 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
                 ->createAggregationExtractorFactory()
                 ->create($facetConfigTransfer);
 
-            $facetData[$facetName] = $extractor->extractDataFromAggregations($aggregations[$fieldName], $requestParameters);
+            $aggregation = $this->getAggregationRawData($aggregations, $fieldName);
+
+            $facetData[$facetName] = $extractor->extractDataFromAggregations($aggregation, $requestParameters);
         }
 
         return $facetData;
+    }
+
+    /**
+     * @param array $aggregations
+     * @param string $fieldName
+     *
+     * @return array
+     */
+    protected function getAggregationRawData(array $aggregations, $fieldName)
+    {
+        if (isset($aggregations[FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $fieldName])) {
+            $aggregation = $aggregations[FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $fieldName][FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME][$fieldName];
+        } else {
+            $aggregation = $aggregations[$fieldName];
+        }
+
+        return $aggregation;
     }
 
 }

@@ -9,8 +9,10 @@ namespace Spryker\Client\Search;
 
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorFactory;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactory;
+use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryFactory;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
@@ -95,7 +97,7 @@ class SearchFactory extends AbstractFactory
      */
     public function createFacetAggregationFactory()
     {
-        return new FacetAggregationFactory($this->createPageIndexMap());
+        return new FacetAggregationFactory($this->createPageIndexMap(), $this->createAggregationBuilder());
     }
 
     /**
@@ -125,9 +127,9 @@ class SearchFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryFactoryInterface
      */
-    public function createNestedQueryFactory()
+    public function createQueryFactory()
     {
-        return new QueryFactory();
+        return new QueryFactory($this->createQueryBuilder());
     }
 
     /**
@@ -144,6 +146,22 @@ class SearchFactory extends AbstractFactory
     protected function createPageIndexMap()
     {
         return new PageIndexMap();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder
+     */
+    public function createQueryBuilder()
+    {
+        return new QueryBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface
+     */
+    public function createAggregationBuilder()
+    {
+        return new AggregationBuilder();
     }
 
 }

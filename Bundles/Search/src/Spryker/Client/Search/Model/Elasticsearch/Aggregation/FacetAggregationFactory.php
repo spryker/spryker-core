@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
-use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Exception\MissingFacetAggregationException;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
@@ -22,11 +21,18 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
     protected $indexMap;
 
     /**
-     * @param \Spryker\Shared\Search\IndexMapInterface $indexMap
+     * @var \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface
      */
-    public function __construct(IndexMapInterface $indexMap)
+    protected $aggregationBuilder;
+
+    /**
+     * @param \Spryker\Shared\Search\IndexMapInterface $indexMap
+     * @param \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
+     */
+    public function __construct(IndexMapInterface $indexMap, AggregationBuilderInterface $aggregationBuilder)
     {
         $this->indexMap = $indexMap;
+        $this->aggregationBuilder = $aggregationBuilder;
     }
 
     /**
@@ -34,9 +40,9 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationInterface
      */
-    public function create(FacetConfigTransfer $facetConfigTransfer, BoolQuery $filters)
+    public function create(FacetConfigTransfer $facetConfigTransfer)
     {
-        return $this->createByFacetType($facetConfigTransfer, $filters);
+        return $this->createByFacetType($facetConfigTransfer);
     }
 
     /**
@@ -46,14 +52,14 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationInterface
      */
-    protected function createByFacetType(FacetConfigTransfer $facetConfigTransfer, $filters)
+    protected function createByFacetType(FacetConfigTransfer $facetConfigTransfer)
     {
         switch ($facetConfigTransfer->getType()) {
             case FacetConfigBuilder::TYPE_CATEGORY:
-                return $this->createCategoryFacetAggregation($facetConfigTransfer, $filters);
+                return $this->createCategoryFacetAggregation($facetConfigTransfer);
 
             default:
-                return $this->createByFacetValueType($facetConfigTransfer, $filters);
+                return $this->createByFacetValueType($facetConfigTransfer);
         }
     }
 
@@ -64,17 +70,17 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationInterface
      */
-    protected function createByFacetValueType(FacetConfigTransfer $facetConfigTransfer, $filters)
+    protected function createByFacetValueType(FacetConfigTransfer $facetConfigTransfer)
     {
         $type = $this->getFacetValueType($facetConfigTransfer);
 
         switch ($type) {
             case 'string':
-                return $this->createStringFacetAggregation($facetConfigTransfer, $filters);
+                return $this->createStringFacetAggregation($facetConfigTransfer);
 
             case 'integer':
             case 'float':
-                return $this->createNumericFacetAggregation($facetConfigTransfer, $filters);
+                return $this->createNumericFacetAggregation($facetConfigTransfer);
 
             default:
                 throw new MissingFacetAggregationException(sprintf(
@@ -104,9 +110,9 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationInterface
      */
-    protected function createCategoryFacetAggregation(FacetConfigTransfer $facetConfigTransfer, $filters)
+    protected function createCategoryFacetAggregation(FacetConfigTransfer $facetConfigTransfer)
     {
-        return new CategoryFacetAggregation($facetConfigTransfer, $filters);
+        return new CategoryFacetAggregation($facetConfigTransfer, $this->aggregationBuilder);
     }
 
     /**
@@ -114,9 +120,9 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationInterface
      */
-    protected function createStringFacetAggregation(FacetConfigTransfer $facetConfigTransfer, $filters)
+    protected function createStringFacetAggregation(FacetConfigTransfer $facetConfigTransfer)
     {
-        return new StringFacetAggregation($facetConfigTransfer, $filters);
+        return new StringFacetAggregation($facetConfigTransfer, $this->aggregationBuilder);
     }
 
     /**
@@ -124,9 +130,9 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationInterface
      */
-    protected function createNumericFacetAggregation(FacetConfigTransfer $facetConfigTransfer, $filters)
+    protected function createNumericFacetAggregation(FacetConfigTransfer $facetConfigTransfer)
     {
-        return new NumericFacetAggregation($facetConfigTransfer, $filters);
+        return new NumericFacetAggregation($facetConfigTransfer, $this->aggregationBuilder);
     }
 
 }

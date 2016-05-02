@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
+use Elastica\Aggregation\AbstractAggregation;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\FacetConfigTransfer;
@@ -21,6 +22,9 @@ use Spryker\Client\Search\Plugin\QueryExpanderPluginInterface;
  */
 class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    
+    const AGGREGATION_FILTER_NAME = 'filter';
+    const AGGREGATION_GLOBAL_PREFIX = 'global-';
 
     /**
      * @param \Spryker\Client\Search\Model\Query\QueryInterface $searchQuery
@@ -36,7 +40,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
         $facetFilters = $this->getFacetFilters($facetConfig, $requestParameters);
 
-        $this->addFacetAggregationToQuery($query, $facetConfig, $facetFilters);
+        $this->addFacetAggregationToQuery($query, $facetConfig, $facetFilters, $requestParameters);
         $this->addFacetFiltersToQuery($query, $facetFilters);
 
         return $searchQuery;
@@ -79,7 +83,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
         $query = $this
             ->getFactory()
-            ->createNestedQueryFactory()
+            ->createQueryFactory()
             ->create($facetConfigTransfer, $filterValue);
 
         return $query;
@@ -89,48 +93,29 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      * @param \Elastica\Query $query
      * @param \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface $facetConfig
      * @param \Elastica\Query\AbstractQuery[] $facetFilters
+     * @param array $requestParameters
      *
      * @return void
      */
-    protected function addFacetAggregationToQuery(Query $query, FacetConfigBuilderInterface $facetConfig, array $facetFilters)
+    protected function addFacetAggregationToQuery(Query $query, FacetConfigBuilderInterface $facetConfig, array $facetFilters, array $requestParameters)
     {
-        $boolQuery = $query->getQuery();
-        if (!$boolQuery instanceof BoolQuery) {
-            throw new \InvalidArgumentException(sprintf('Facet filters available only with %s, got: %s', BoolQuery::class, get_class($boolQuery)));
-        }
+        $boolQuery = $this->getBoolQuery($query);
+
+        $activeFilters = $facetConfig->getActiveParamNames($requestParameters);
 
         foreach ($facetConfig->getAll() as $facetConfigTransfer) {
-            $aggregationFilterQuery = clone $boolQuery;
-
-            // TODO: use this for mixed aggregation filtering or remove it if not needed.
-            // TODO: We need one aggregation for facet fields whithout any magic to get the filtered facet numbers,
-            // then we need to create one global aggregation per filtered item without the current item's filtering criteria,
-            // then we need to merge these results in php level.
-//            $this->setAggregationFilters($facetConfigTransfer, $aggregationFilterQuery, $facetFilters);
-
             $facetAggregation = $this
                 ->getFactory()
                 ->createFacetAggregationFactory()
-                ->create($facetConfigTransfer, $aggregationFilterQuery)
+                ->create($facetConfigTransfer)
                 ->createAggregation();
 
             $query->addAggregation($facetAggregation);
-        }
-    }
 
-    /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param \Elastica\Query\BoolQuery $aggregationFilterQuery
-     * @param \Elastica\Query\AbstractQuery[] $facetFilters
-     *
-     * @return void
-     */
-    protected function setAggregationFilters(FacetConfigTransfer $facetConfigTransfer, BoolQuery $aggregationFilterQuery, array $facetFilters)
-    {
-        // add filters for facet aggregation which is not related to the current facet
-        foreach ($facetFilters as $name => $query) {
-            if ($name !== $facetConfigTransfer->getName()) {
-                $aggregationFilterQuery->addFilter($query);
+            if (in_array($facetConfigTransfer->getName(), $activeFilters)) {
+                $globalAgg = $this->createGlobalAggregation($facetFilters, $facetConfigTransfer, $boolQuery, $facetAggregation);
+
+                $query->addAggregation($globalAgg);
             }
         }
     }
@@ -143,14 +128,79 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      */
     protected function addFacetFiltersToQuery(Query $query, array $facetFilters)
     {
+        $boolQuery = $this->getBoolQuery($query);
+
+        foreach ($facetFilters as $facetFilter) {
+            $boolQuery->addFilter($facetFilter);
+        }
+    }
+
+    /**
+     * @param \Elastica\Query\AbstractQuery[] $facetFilters
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param \Elastica\Query\BoolQuery $boolQuery
+     * @param \Elastica\Aggregation\AbstractAggregation $facetAggregation
+     *
+     * @return \Elastica\Aggregation\AbstractAggregation
+     */
+    protected function createGlobalAggregation(array $facetFilters, FacetConfigTransfer $facetConfigTransfer, BoolQuery $boolQuery, AbstractAggregation $facetAggregation)
+    {
+        $aggregationFilterQuery = $this->getGlobalAggregationFilters($facetConfigTransfer, $boolQuery, $facetFilters);
+
+        $filterAggregation = $this
+            ->getFactory()
+            ->createAggregationBuilder()
+            ->createFilterAggregation(self::AGGREGATION_FILTER_NAME);
+
+        $filterAggregation
+            ->setFilter($aggregationFilterQuery)
+            ->addAggregation($facetAggregation);
+
+        $globalAggregation = $this
+            ->getFactory()
+            ->createAggregationBuilder()
+            ->createGlobalAggregation(self::AGGREGATION_GLOBAL_PREFIX . $facetAggregation->getName());
+
+        $globalAggregation
+            ->addAggregation($filterAggregation);
+
+        return $globalAggregation;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param \Elastica\Query\BoolQuery $boolQuery
+     * @param \Elastica\Query\AbstractQuery[] $facetFilters
+     *
+     * @return \Elastica\Query\BoolQuery
+     */
+    protected function getGlobalAggregationFilters(FacetConfigTransfer $facetConfigTransfer, BoolQuery $boolQuery, array $facetFilters)
+    {
+        $aggregationFilterQuery = clone $boolQuery;
+
+        // add filters for facet aggregation which is not related to the current facet so we can get the right counts
+        foreach ($facetFilters as $name => $query) {
+            if ($name !== $facetConfigTransfer->getName()) {
+                $aggregationFilterQuery->addFilter($query);
+            }
+        }
+
+        return $aggregationFilterQuery;
+    }
+
+    /**
+     * @param \Elastica\Query $query
+     *
+     * @return \Elastica\Query\BoolQuery
+     */
+    protected function getBoolQuery(Query $query)
+    {
         $boolQuery = $query->getQuery();
         if (!$boolQuery instanceof BoolQuery) {
             throw new \InvalidArgumentException(sprintf('Facet filters available only with %s, got: %s', BoolQuery::class, get_class($boolQuery)));
         }
 
-        foreach ($facetFilters as $facetFilter) {
-            $boolQuery->addFilter($facetFilter);
-        }
+        return $boolQuery;
     }
 
 }

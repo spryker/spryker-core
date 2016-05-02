@@ -34,11 +34,10 @@ class CategoryExtractor implements AggregationExtractorInterface
     public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
-        $fieldName = $this->facetConfigTransfer->getFieldName();
 
         $result = [
             'name' => $parameterName,
-            'values' => $this->extractFacetData($aggregations, $fieldName),
+            'values' => $this->extractFacetData($aggregations),
         ];
 
         return $result;
@@ -46,15 +45,13 @@ class CategoryExtractor implements AggregationExtractorInterface
 
     /**
      * @param array $aggregation
-     * @param string $fieldName
      *
      * @return array
      */
-    protected function extractFacetData(array $aggregation, $fieldName)
+    protected function extractFacetData(array $aggregation)
     {
         $facetValues = [];
-        // TODO: use the commented code for mixed aggregation filtering or remove it if not needed
-        foreach ($aggregation/*[$fieldName][$fieldName]*/['buckets'] as $bucket) {
+        foreach ($aggregation['buckets'] as $bucket) {
             $facetValues[$bucket['key']] = $bucket['doc_count'];
         }
 

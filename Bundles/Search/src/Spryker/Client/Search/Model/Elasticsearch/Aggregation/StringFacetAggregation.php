@@ -19,11 +19,18 @@ class StringFacetAggregation extends AbstractFacetAggregation
     protected $facetConfigTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @var \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer)
+    protected $aggregationBuilder;
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
+     */
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, AggregationBuilderInterface $aggregationBuilder)
     {
         $this->facetConfigTransfer = $facetConfigTransfer;
+        $this->aggregationBuilder = $aggregationBuilder;
     }
 
     /**
@@ -33,10 +40,14 @@ class StringFacetAggregation extends AbstractFacetAggregation
     {
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
-        $facetValueAgg = (new Terms($fieldName . '-value'))
+        $facetValueAgg = $this
+            ->aggregationBuilder
+            ->createTermsAggregation($fieldName . '-value')
             ->setField($this->addNestedFieldPrefix($fieldName, self::FACET_VALUE));
-        $facetNameAgg = $this->createFacetNameAggregation($fieldName);
-        $facetNameAgg->addAggregation($facetValueAgg);
+
+        $facetNameAgg = $this
+            ->createFacetNameAggregation($fieldName)
+            ->addAggregation($facetValueAgg);
 
         return $this->createNestedFacetAggregation($fieldName, $facetNameAgg);
     }

@@ -7,10 +7,6 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
-use Elastica\Aggregation\Filter;
-use Elastica\Aggregation\GlobalAggregation;
-use Elastica\Aggregation\Terms;
-use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class CategoryFacetAggregation extends AbstractFacetAggregation
@@ -22,17 +18,18 @@ class CategoryFacetAggregation extends AbstractFacetAggregation
     protected $facetConfigTransfer;
 
     /**
-     * @var \Elastica\Query\BoolQuery
+     * @var \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface
      */
-    protected $filters;
+    protected $aggregationBuilder;
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, BoolQuery $filters)
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, AggregationBuilderInterface $aggregationBuilder)
     {
         $this->facetConfigTransfer = $facetConfigTransfer;
-//        $this->filters = $filters;
+        $this->aggregationBuilder = $aggregationBuilder;
     }
 
     /**
@@ -42,18 +39,10 @@ class CategoryFacetAggregation extends AbstractFacetAggregation
     {
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
-        return $facetAgg = (new Terms($fieldName))
+        return $this
+            ->aggregationBuilder
+            ->createTermsAggregation($fieldName)
             ->setField($fieldName);
-
-        // TODO: use this for partially filtered aggregation or remove it if not needed
-//        $filterAgg = (new Filter($fieldName))
-//            ->setFilter($this->filters)
-//            ->addAggregation($facetAgg);
-//
-//        $globalAgg = (new GlobalAggregation($fieldName))
-//            ->addAggregation($filterAgg);
-//
-//        return $globalAgg;
     }
 
 }

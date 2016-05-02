@@ -14,6 +14,19 @@ class QueryFactory implements QueryFactoryInterface
 {
 
     /**
+     * @var \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface
+     */
+    protected $queryBuilder;
+
+    /**
+     * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
+     */
+    public function __construct(QueryBuilderInterface $queryBuilder)
+    {
+        $this->queryBuilder = $queryBuilder;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param mixed $filterValue
      *
@@ -71,14 +84,6 @@ class QueryFactory implements QueryFactoryInterface
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface
-     */
-    protected function createQueryBuilder()
-    {
-        return new QueryBuilder();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param string $filterValue
      *
@@ -86,7 +91,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     protected function createNestedRangeQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        return new NestedRangeQuery($facetConfigTransfer, $filterValue, $this->createQueryBuilder());
+        return new NestedRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder);
     }
 
     /**
@@ -97,7 +102,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     protected function createNestedPriceRangeQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->createQueryBuilder());
+        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder);
     }
 
     /**
@@ -108,7 +113,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     protected function createNestedTermsQuery(FacetConfigTransfer $facetConfigTransfer, array $filterValues)
     {
-        return new NestedTermsQuery($facetConfigTransfer, $filterValues, $this->createQueryBuilder());
+        return new NestedTermsQuery($facetConfigTransfer, $filterValues, $this->queryBuilder);
     }
 
     /**
@@ -119,7 +124,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     protected function createNestedTermQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        return new NestedTermQuery($facetConfigTransfer, $filterValue, $this->createQueryBuilder());
+        return new NestedTermQuery($facetConfigTransfer, $filterValue, $this->queryBuilder);
     }
 
     /**
@@ -131,7 +136,7 @@ class QueryFactory implements QueryFactoryInterface
     protected function createTermQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
         return $this
-            ->createQueryBuilder()
+            ->queryBuilder
             ->createTermQuery($facetConfigTransfer->getFieldName(), $filterValue);
     }
 
