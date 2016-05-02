@@ -53,15 +53,6 @@ interface CollectorFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return void
-     */
-    public function install(MessengerInterface $messenger);
-
-    /**
-     * @api
-     *
      * @return string
      */
     public function getSearchIndexName();

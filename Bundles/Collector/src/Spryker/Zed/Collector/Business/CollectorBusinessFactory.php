@@ -24,14 +24,12 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Search\TouchUpdater as Search
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\RedisWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdater as StorageTouchUpdater;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-use Spryker\Zed\Collector\Business\Internal\InstallElasticsearch;
 use Spryker\Zed\Collector\Business\Manager\CollectorManager;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Collector\CollectorConfig getConfig()
@@ -344,25 +342,6 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     protected function createBulkTouchQueryBuilder()
     {
         return new BulkTouchQueryBuilder($this->getConfig());
-    }
-
-    /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return \Spryker\Zed\Collector\Business\Internal\InstallElasticsearch
-     */
-    public function createInstaller(MessengerInterface $messenger)
-    {
-        $installer = new InstallElasticsearch(
-            StorageInstanceBuilder::getElasticsearchInstance(),
-            $this->getConfig()->getSearchIndexName(),
-            $this->getConfig()->getNumberOfShards(),
-            $this->getConfig()->getNumberOfReplicas()
-        );
-
-        $installer->setMessenger($messenger);
-
-        return $installer;
     }
 
     /**

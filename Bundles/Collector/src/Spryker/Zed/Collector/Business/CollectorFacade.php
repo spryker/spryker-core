@@ -86,18 +86,6 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return void
-     */
-    public function install(MessengerInterface $messenger)
-    {
-        $this->getFactory()->createInstaller($messenger)->install();
-    }
-
-    /**
-     * @api
-     *
      * @return string
      */
     public function getSearchIndexName()
