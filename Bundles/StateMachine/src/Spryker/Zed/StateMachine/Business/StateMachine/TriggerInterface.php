@@ -25,7 +25,6 @@ interface TriggerInterface
 
     /**
      * @param string $eventName
-     * @param string $stateMachineName
      * @param array $items
      *
      * @return int

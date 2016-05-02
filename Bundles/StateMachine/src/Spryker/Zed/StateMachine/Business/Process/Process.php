@@ -305,7 +305,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function getManualEventsBySource()
     {

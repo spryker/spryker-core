@@ -85,7 +85,7 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return string[]
+     * @return array
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer)
     {

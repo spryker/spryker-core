@@ -38,7 +38,6 @@ interface PersistenceInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @param string $stateMachineName
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
@@ -54,7 +53,6 @@ interface PersistenceInterface
 
     /**
      *
-     * @param string $stateMachineName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer

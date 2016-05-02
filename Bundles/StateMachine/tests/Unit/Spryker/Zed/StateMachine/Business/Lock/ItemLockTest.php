@@ -39,7 +39,7 @@ class ItemLockTest extends StateMachineMocks
     {
         $stateMachineQueryContainerMock = $this->createStateMachineQueryContainerMock();
 
-        $itemLockQuery = $this->getMock(SpyStateMachineLockQuery::class);
+        $itemLockQuery = $this->createStateMachineQueryMock();
         $itemLockQuery->expects($this->once())
             ->method('count')
             ->willReturn(1);
@@ -62,7 +62,7 @@ class ItemLockTest extends StateMachineMocks
     {
         $stateMachineQueryContainerMock = $this->createStateMachineQueryContainerMock();
 
-        $itemLockQuery = $this->getMock(SpyStateMachineLockQuery::class);
+        $itemLockQuery = $this->createStateMachineQueryMock();
         $itemLockQuery
             ->expects($this->once())
             ->method('delete');
@@ -114,6 +114,14 @@ class ItemLockTest extends StateMachineMocks
         $stateMachineLockEntityMock = $this->getMock(SpyStateMachineLock::class);
 
         return $stateMachineLockEntityMock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineLockQuery
+     */
+    protected function createStateMachineQueryMock()
+    {
+        return $this->getMock(SpyStateMachineLockQuery::class);
     }
 
 }

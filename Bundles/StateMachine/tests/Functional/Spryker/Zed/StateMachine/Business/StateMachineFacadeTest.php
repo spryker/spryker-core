@@ -201,6 +201,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
+        $stateMachineItems = [];
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[$firstItemIdentifier] = $stateMachineHandler->getItemStateUpdated();
 
@@ -242,6 +243,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
+        $stateMachineItems = [];
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[] = $stateMachineHandler->getItemStateUpdated();
 

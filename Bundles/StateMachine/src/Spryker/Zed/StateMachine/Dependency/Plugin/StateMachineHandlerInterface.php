@@ -20,7 +20,7 @@ interface StateMachineHandlerInterface
      *   'Command/Plugin2' => new Command2(),
      * ]
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     * @return array
      */
     public function getCommandPlugins();
 
@@ -32,7 +32,7 @@ interface StateMachineHandlerInterface
      *   'Condition/Plugin2' => new Condition2(),
      * ]
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     * @return array
      */
     public function getConditionPlugins();
 

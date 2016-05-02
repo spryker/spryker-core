@@ -25,7 +25,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * List of command plugins for this state machine for all processes.
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     * @return array
      */
     public function getCommandPlugins()
     {
@@ -37,7 +37,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * List of condition plugins for this state machine for all processes.
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     * @return array
      */
     public function getConditionPlugins()
     {

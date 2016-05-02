@@ -23,14 +23,14 @@ interface FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return string[]
+     * @return array
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return string[]
+     * @return array
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 

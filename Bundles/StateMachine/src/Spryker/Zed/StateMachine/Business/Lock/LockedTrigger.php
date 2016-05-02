@@ -25,7 +25,7 @@ class LockedTrigger implements TriggerInterface
     protected $stateMachineTrigger;
 
     /**
-     * @var \Spryker\Zed\Propel\Communication\Plugin\Connection
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $propelConnection;
 

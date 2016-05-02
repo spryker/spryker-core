@@ -163,10 +163,8 @@ class Condition implements ConditionInterface
             return [];
         }
 
-        $stateMachineItems = $this->stateMachinePersistence->updateStateMachineItemsFromPersistence(
-            $stateMachineItems,
-            $stateMachineName
-        );
+        $stateMachineItems = $this->stateMachinePersistence
+            ->updateStateMachineItemsFromPersistence($stateMachineItems);
 
         if (count($stateMachineItems) === 0) {
             return [];
@@ -195,7 +193,7 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $stateMachineName
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $stateToTransitionsMap
+     * @param array $stateToTransitionsMap
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return array
@@ -246,7 +244,7 @@ class Condition implements ConditionInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $transitions
+     * @param array $transitions
      *
      * @return array
      */
