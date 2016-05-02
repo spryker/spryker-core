@@ -75,8 +75,7 @@ class CategorySearchQuery extends AbstractCatalogSearchQuery
         $termQuery = (new Term())->setParam(PageIndexMap::CATEGORY_ALL_PARENTS, (int)$this->idCategory);
 
         $boolQuery = (new BoolQuery())
-            ->addMust($termQuery)
-        ;
+            ->addMust($termQuery);
 
         if ($this->searchString !== null) {
             $matchQuery = $this->createFulltextSearchQuery($this->searchString);

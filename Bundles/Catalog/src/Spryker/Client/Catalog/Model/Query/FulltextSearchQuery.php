@@ -9,7 +9,6 @@ namespace Spryker\Client\Catalog\Model\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 
 class FulltextSearchQuery extends AbstractCatalogSearchQuery
