@@ -7,6 +7,6 @@
 
 namespace Spryker\Zed\Transfer\Business\Exception;
 
-class CamelCaseRequiredException extends \Exception
+class InvalidNameException extends \Exception
 {
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
-use Spryker\Zed\Transfer\Business\Exception\CamelCaseRequiredException;
+use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -355,8 +355,6 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
-     * @throws \Spryker\Zed\Transfer\Business\Exception\CamelCaseRequiredException
-     *
      * @return string
      */
     private function getPropertyConstantName(array $property)
@@ -582,8 +580,6 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
-     * @throws \Spryker\Zed\Transfer\Business\Exception\CamelCaseRequiredException
-     *
      * @return void
      */
     private function assertProperty(array $property)
@@ -594,14 +590,15 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param string $propertyName
      *
-     * @throws \Spryker\Zed\Transfer\Business\Exception\CamelCaseRequiredException
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
+     *
      * @return void
      */
     private function assertPropertyName($propertyName)
     {
-        if (!preg_match('/^[a-zA-Z0-9]+$/', $propertyName)) {
-            throw new CamelCaseRequiredException(sprintf(
-                'Transfer property "%s" needs to be camel-case formatted in "%s"!',
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9]+$/', $propertyName)) {
+            throw new InvalidNameException(sprintf(
+                'Transfer property "%s" needs to be alpha-numeric and camel-case formatted in "%s"!',
                 $propertyName,
                 $this->name
             ));
