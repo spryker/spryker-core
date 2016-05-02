@@ -91,7 +91,7 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
     {
         return [
             'facets' => [
-                
+
             ],
             'sorts' => [
 

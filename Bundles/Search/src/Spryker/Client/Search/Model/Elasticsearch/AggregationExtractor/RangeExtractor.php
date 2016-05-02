@@ -39,7 +39,7 @@ class RangeExtractor implements AggregationExtractorInterface
         $result = [
             'name' => $parameterName,
             'rangeValues' => $this->extractRangeData($aggregations, $parameterName, $fieldName),
-        ]; 
+        ];
 
         return $result;
     }

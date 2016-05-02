@@ -104,7 +104,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
 
     /**
      * @api
-     * 
+     *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapInterface $pageMap
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

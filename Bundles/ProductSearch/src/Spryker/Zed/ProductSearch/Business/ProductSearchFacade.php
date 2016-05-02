@@ -17,7 +17,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * @api
-     * 
+     *
      * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
      */
     public function getProductSearchAttributeMap()

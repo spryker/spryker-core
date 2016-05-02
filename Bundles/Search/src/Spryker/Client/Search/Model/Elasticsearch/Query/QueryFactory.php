@@ -128,7 +128,7 @@ class QueryFactory implements QueryFactoryInterface
     }
 
     /**
-     * @param FacetConfigTransfer $facetConfigTransfer
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param string $filterValue
      *
      * @return \Elastica\Query\Term

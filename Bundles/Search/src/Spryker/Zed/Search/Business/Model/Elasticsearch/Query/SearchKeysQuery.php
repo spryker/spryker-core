@@ -16,6 +16,7 @@ use Spryker\Client\Search\Model\Query\QueryInterface;
 
 class SearchKeysQuery implements QueryInterface
 {
+
     const PARAM_LIMIT = 'length';
     const PARAM_OFFSET = 'start';
 
