@@ -11,6 +11,7 @@
         <property name="stateMachineName" type="string" />
         <property name="stateName" type="string" />
         <property name="eventName" type="string" />
+        <property name="createdAt" type="string" />
     </transfer>
 
     <transfer name="StateMachineProcess">

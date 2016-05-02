@@ -56,10 +56,11 @@ class Persistence implements PersistenceInterface
 
         $stateMachineItems = [];
         foreach ($stateMachineHistoryItems as $stateMachineHistoryItemEntity) {
-            $itemStateEntity = $stateMachineHistoryItemEntity->getState();
-            $processEntity = $itemStateEntity->getProcess();
 
-            $stateMachineItemTransfer = $this->createItemTransferForStateHistory($itemIdentifier, $itemStateEntity, $processEntity);
+            $stateMachineItemTransfer = $this->createItemTransferForStateHistory(
+                $itemIdentifier,
+                $stateMachineHistoryItemEntity
+            );
 
             $stateMachineItems[] = $stateMachineItemTransfer;
         }
@@ -414,22 +415,25 @@ class Persistence implements PersistenceInterface
 
     /**
      * @param int $itemIdentifier
-     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState $itemStateEntity
-     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess $processEntity
+     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory $stateMachineItemHistoryEntity
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
     protected function createItemTransferForStateHistory(
         $itemIdentifier,
-        SpyStateMachineItemState $itemStateEntity,
-        SpyStateMachineProcess $processEntity
+        SpyStateMachineItemStateHistory $stateMachineItemHistoryEntity
     ) {
+
+        $itemStateEntity = $stateMachineItemHistoryEntity->getState();
+        $processEntity = $itemStateEntity->getProcess();
+
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setIdentifier($itemIdentifier);
         $stateMachineItemTransfer->setStateName($itemStateEntity->getName());
         $stateMachineItemTransfer->setIdItemState($itemStateEntity->getIdStateMachineItemState());
         $stateMachineItemTransfer->setIdStateMachineProcess($processEntity->getIdStateMachineProcess());
         $stateMachineItemTransfer->setStateMachineName($processEntity->getStateMachineName());
+        $stateMachineItemTransfer->setCreatedAt($stateMachineItemHistoryEntity->getCreatedAt());
 
         return $stateMachineItemTransfer;
     }
