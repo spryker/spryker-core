@@ -17,7 +17,7 @@ interface ContainerInterface extends \ArrayAccess
 
     /**
      * @param string $id
-     * @param callable $callable A service definition to extend the original
+     * @param callable $callable
      *
      * @return \Closure
      */
