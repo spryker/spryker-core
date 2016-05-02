@@ -22,7 +22,8 @@ class ItemLockTest extends StateMachineMocks
     public function testAcquireLockShouldCreateItemWithLockInPersistence()
     {
         $stateMachineLockEntityMock = $this->createStateMachineItemLockEntityMock();
-        $stateMachineLockEntityMock->method('save')->willReturn(1);
+        $stateMachineLockEntityMock->method('save')
+            ->willReturn(1);
 
         $itemLock = $this->createItemLock($stateMachineLockEntityMock);
 
@@ -39,7 +40,9 @@ class ItemLockTest extends StateMachineMocks
         $stateMachineQueryContainerMock = $this->createStateMachineQueryContainerMock();
 
         $itemLockQuery = $this->getMock(SpyStateMachineLockQuery::class);
-        $itemLockQuery->expects($this->once())->method('count')->willReturn(1);
+        $itemLockQuery->expects($this->once())
+            ->method('count')
+            ->willReturn(1);
 
         $stateMachineQueryContainerMock->expects($this->once())
             ->method('queryLockedItemsByIdentifierAndExpirationDate')
@@ -60,7 +63,9 @@ class ItemLockTest extends StateMachineMocks
         $stateMachineQueryContainerMock = $this->createStateMachineQueryContainerMock();
 
         $itemLockQuery = $this->getMock(SpyStateMachineLockQuery::class);
-        $itemLockQuery->expects($this->once())->method('delete');
+        $itemLockQuery
+            ->expects($this->once())
+            ->method('delete');
 
         $stateMachineQueryContainerMock->expects($this->once())
             ->method('queryLockItemsByIdentifier')

@@ -100,7 +100,8 @@ class Finder implements FinderInterface
             $processName
         );
 
-        $manualEvents = $processBuilder->createProcess($stateMachineProcessTransfer)->getManualEventsBySource();
+        $process = $processBuilder->createProcess($stateMachineProcessTransfer);
+        $manualEvents = $process->getManualEventsBySource();
 
         $stateName = $stateMachineItemTransfer->getStateName();
         if (isset($manualEvents[$stateName])) {

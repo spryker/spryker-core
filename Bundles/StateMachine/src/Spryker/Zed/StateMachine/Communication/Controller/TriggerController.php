@@ -25,29 +25,8 @@ class TriggerController extends AbstractController
     const URL_PARAM_PROCESS_NAME = 'process-name';
     const URL_PARAM_REDIRECT = 'redirect';
     const URL_PARAM_EVENT = 'event';
+
     const DEFAULT_REDIRECT_URL = '/state-machine/list';
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function triggerEventAction(Request $request)
-    {
-        $identifier = $this->castId($request->query->get(self::URL_PARAM_IDENTIFIER));
-        $idState = $this->castId($request->query->get(self::URL_PARAM_ID_STATE));
-
-        $stateMachineItemTransfer = new StateMachineItemTransfer();
-        $stateMachineItemTransfer->setIdentifier($identifier);
-        $stateMachineItemTransfer->setIdItemState($idState);
-
-        $eventName = $request->query->get(self::URL_PARAM_EVENT);
-        $this->getFacade()->triggerEvent($eventName, $stateMachineItemTransfer);
-
-        $redirect = $request->query->get(self::URL_PARAM_REDIRECT, self::DEFAULT_REDIRECT_URL);
-
-        return $this->redirectResponse($redirect);
-    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -68,7 +47,29 @@ class TriggerController extends AbstractController
 
         $redirect = $request->query->get(self::URL_PARAM_REDIRECT, self::DEFAULT_REDIRECT_URL);
 
-        return $this->redirectResponse($redirect);
+        return $this->redirectResponse(htmlentities($redirect));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function triggerEventAction(Request $request)
+    {
+        $identifier = $this->castId($request->query->get(self::URL_PARAM_IDENTIFIER));
+        $idState = $this->castId($request->query->get(self::URL_PARAM_ID_STATE));
+
+        $stateMachineItemTransfer = new StateMachineItemTransfer();
+        $stateMachineItemTransfer->setIdentifier($identifier);
+        $stateMachineItemTransfer->setIdItemState($idState);
+
+        $eventName = $request->query->get(self::URL_PARAM_EVENT);
+        $this->getFacade()->triggerEvent($eventName, $stateMachineItemTransfer);
+
+        $redirect = $request->query->get(self::URL_PARAM_REDIRECT, self::DEFAULT_REDIRECT_URL);
+
+        return $this->redirectResponse(htmlentities($redirect));
     }
 
 }

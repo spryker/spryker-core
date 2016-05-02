@@ -305,7 +305,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
+     * @return string[]
      */
     public function getManualEventsBySource()
     {

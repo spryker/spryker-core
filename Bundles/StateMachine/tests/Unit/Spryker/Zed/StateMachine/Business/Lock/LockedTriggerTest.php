@@ -6,8 +6,10 @@
 
 namespace Unit\Spryker\Zed\StateMachine\Business\Lock;
 
+use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\StateMachine\Business\Exception\LockException;
 use Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface;
 use Spryker\Zed\StateMachine\Business\Lock\LockedTrigger;
 use Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface;
@@ -43,6 +45,24 @@ class LockedTriggerTest extends StateMachineMocks
         $lockedTrigger->triggerForNewStateMachineItem(new StateMachineProcessTransfer(), 1);
     }
 
+    /**
+     * @return void
+     */
+    public function testTriggerForNewItemWhenLockedShouldThrowException()
+    {
+        $this->expectException(LockException::class);
+
+        $triggerMock = $this->createTriggerMock();
+
+        $itemLockMock = $this->createItemLockMock();
+        $itemLockMock->expects($this->once())
+            ->method('isLocked')
+            ->willReturn(true);
+
+        $lockedTrigger = $this->createLockedTrigger($triggerMock, $itemLockMock);
+        $lockedTrigger->triggerForNewStateMachineItem(new StateMachineProcessTransfer(), 1);
+    }
+
 
     /**
      * @return void
@@ -68,6 +88,32 @@ class LockedTriggerTest extends StateMachineMocks
         $propelConnectionMock->expects($this->once())->method('commit');
 
         $lockedTrigger = $this->createLockedTrigger($triggerMock, $itemLockMock, $propelConnectionMock);
+
+        $items = [];
+        $itemTransfer = new StateMachineItemTransfer();
+        $itemTransfer->setIdentifier(1);
+
+        $items[] = $itemTransfer;
+        $items[] = clone $itemTransfer;
+
+        $lockedTrigger->triggerEvent('event', $items);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerEventForNewItemWhenLockedShouldThrowException()
+    {
+        $this->expectException(LockException::class);
+
+        $triggerMock = $this->createTriggerMock();
+
+        $itemLockMock = $this->createItemLockMock();
+        $itemLockMock->expects($this->once())
+            ->method('isLocked')
+            ->willReturn(true);
+
+        $lockedTrigger = $this->createLockedTrigger($triggerMock, $itemLockMock);
         $lockedTrigger->triggerEvent('event', []);
     }
 

@@ -108,7 +108,7 @@ class LockedTrigger implements TriggerInterface
      *
      * @return string
      */
-    protected function buildIdentifierForMultipleItemLock($stateMachineItems)
+    protected function buildIdentifierForMultipleItemLock(array $stateMachineItems)
     {
         $identifier = '';
         foreach ($stateMachineItems as $stateMachineItemTransfer) {

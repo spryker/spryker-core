@@ -30,7 +30,7 @@ class GraphController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function drawAction(Request $request)
     {
@@ -80,7 +80,11 @@ class GraphController extends AbstractController
             echo $response;
         };
 
-        return $this->streamedResponse($callback, Response::HTTP_OK, $this->getStreamedResponseHeaders($format));
+        return $this->streamedResponse(
+            $callback,
+            Response::HTTP_OK,
+            $this->getStreamedResponseHeaders($format)
+        );
     }
 
     /**

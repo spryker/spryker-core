@@ -22,7 +22,7 @@ class Persistence implements PersistenceInterface
     /**
      * @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess[]
      */
-    protected static $processEntityBuffer = [];
+    protected $processEntityBuffer = [];
 
     /**
      * @var \Generated\Shared\Transfer\StateMachineItemTransfer[]
@@ -78,8 +78,8 @@ class Persistence implements PersistenceInterface
     {
         $stateMachineProcessTransfer->requireProcessName();
 
-        if (array_key_exists($stateMachineProcessTransfer->getProcessName(), self::$processEntityBuffer)) {
-            return self::$processEntityBuffer[$stateMachineProcessTransfer->getProcessName()]
+        if (array_key_exists($stateMachineProcessTransfer->getProcessName(), $this->processEntityBuffer)) {
+            return $this->processEntityBuffer[$stateMachineProcessTransfer->getProcessName()]
                 ->getIdStateMachineProcess();
         }
 
@@ -92,7 +92,7 @@ class Persistence implements PersistenceInterface
             $stateMachineProcessEntity = $this->saveStateMachineProcess($stateMachineProcessTransfer);
         }
 
-        $processBuffer[$stateMachineProcessTransfer->getProcessName()] = $stateMachineProcessEntity;
+        $this->processEntityBuffer[$stateMachineProcessTransfer->getProcessName()] = $stateMachineProcessEntity;
 
         return $stateMachineProcessEntity->getIdStateMachineProcess();
     }

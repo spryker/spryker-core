@@ -27,22 +27,45 @@ class Drawer implements DrawerInterface
     /**
      * @var array
      */
-    protected $attributesProcess = ['fontname' => 'Verdana', 'fillcolor' => '#cfcfcf', 'style' => 'filled', 'color' => '#ffffff', 'fontsize' => 12, 'fontcolor' => 'black'];
+    protected $attributesProcess = [
+        'fontname' => 'Verdana',
+        'fillcolor' => '#cfcfcf',
+        'style' => 'filled',
+        'color' => '#ffffff',
+        'fontsize' => 12,
+        'fontcolor' => 'black'
+    ];
 
     /**
      * @var array
      */
-    protected $attributesState = ['fontname' => 'Verdana', 'fontsize' => 14, 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
+    protected $attributesState = [
+        'fontname' => 'Verdana',
+        'fontsize' => 14,
+        'style' => 'filled',
+        'fillcolor' => '#f9f9f9'
+    ];
 
     /**
      * @var array
      */
-    protected $attributesDiamond = ['fontname' => 'Verdana', 'label' => '?', 'shape' => 'diamond', 'fontcolor' => 'white', 'fontsize' => '1', 'style' => 'filled', 'fillcolor' => '#f9f9f9'];
+    protected $attributesDiamond = [
+        'fontname' => 'Verdana',
+        'label' => '?',
+        'shape' => 'diamond',
+        'fontcolor' => 'white',
+        'fontsize' => '1',
+        'style' => 'filled',
+        'fillcolor' => '#f9f9f9'
+    ];
 
     /**
      * @var array
      */
-    protected $attributesTransition = ['fontname' => 'Verdana', 'fontsize' => 12];
+    protected $attributesTransition = [
+        'fontname' => 'Verdana',
+        'fontsize' => 12
+    ];
 
     /**
      * @var string
@@ -65,12 +88,12 @@ class Drawer implements DrawerInterface
     protected $format = 'svg';
 
     /**
-     * @var int|null
+     * @var int
      */
     protected $fontSizeBig = null;
 
     /**
-     * @var int|null
+     * @var int
      */
     protected $fontSizeSmall = null;
 

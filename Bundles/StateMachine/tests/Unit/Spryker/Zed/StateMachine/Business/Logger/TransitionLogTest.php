@@ -22,15 +22,11 @@ class TransitionLogTest extends StateMachineMocks
     public function testLoggerPersistsAllProvidedData()
     {
         $stateMachineTransitionLogEntityMock = $this->createTransitionLogEntityMock();
-        $stateMachineTransitionLogEntityMock->expects($this->once())->method('save');
+        $stateMachineTransitionLogEntityMock
+            ->expects($this->exactly(2))
+            ->method('save');
 
-        $stateMachineItemTransfer = new StateMachineItemTransfer();
-        $stateMachineItemTransfer->setIdentifier(1);
-        $stateMachineItemTransfer->setEventName('event');
-        $stateMachineItemTransfer->setIdItemState(1);
-        $stateMachineItemTransfer->setStateName('state');
-        $stateMachineItemTransfer->setProcessName('process');
-        $stateMachineItemTransfer->setIdStateMachineProcess(1);
+        $stateMachineItemTransfer = $this->createItemTransfer();
 
         $transitionLog = $this->createTransitionLog($stateMachineTransitionLogEntityMock);
         $transitionLog->init([$stateMachineItemTransfer]);
@@ -47,10 +43,14 @@ class TransitionLogTest extends StateMachineMocks
         $targetState = 'target state';
         $transitionLog->addTargetState($stateMachineItemTransfer, $targetState);
 
+        $transitionLog->setErrorMessage('Failure');
+        $transitionLog->setIsError(true);
+
         $event = new Event();
         $event->setName('Event');
 
         $transitionLog->setEvent($event);
+        $transitionLog->save($stateMachineItemTransfer);
         $transitionLog->saveAll();
 
         $this->assertEquals(get_class($commandMock), $stateMachineTransitionLogEntityMock->getCommand());
@@ -59,6 +59,25 @@ class TransitionLogTest extends StateMachineMocks
         $this->assertEquals($targetState, $stateMachineTransitionLogEntityMock->getTargetState());
         $this->assertEquals($event->getName(), $stateMachineTransitionLogEntityMock->getEvent());
     }
+
+    /**
+     * @return void
+     */
+    public function testWhenNonCliRequestUsedShouldExtractOutputParamsAndPersist()
+    {
+        $_SERVER[TransitionLog::QUERY_STRING] = 'one=1&two=2';
+        $stateMachineTransitionLogEntityMock = $this->createTransitionLogEntityMock();
+        $stateMachineItemTransfer = $this->createItemTransfer();
+
+        $transitionLog = $this->createTransitionLog($stateMachineTransitionLogEntityMock);
+        $transitionLog->init([$stateMachineItemTransfer]);
+
+        $storedParams = $stateMachineTransitionLogEntityMock->getParams();
+
+        $this->assertEquals('one=1', $storedParams[0]);
+        $this->assertEquals('two=2', $storedParams[1]);
+    }
+
 
 
     /**
@@ -82,6 +101,22 @@ class TransitionLogTest extends StateMachineMocks
     protected function createTransitionLogEntityMock()
     {
         return $this->getMock(SpyStateMachineTransitionLog::class, ['save']);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
+     */
+    protected function createItemTransfer()
+    {
+        $stateMachineItemTransfer = new StateMachineItemTransfer();
+        $stateMachineItemTransfer->setIdentifier(1);
+        $stateMachineItemTransfer->setEventName('event');
+        $stateMachineItemTransfer->setIdItemState(1);
+        $stateMachineItemTransfer->setStateName('state');
+        $stateMachineItemTransfer->setProcessName('process');
+        $stateMachineItemTransfer->setIdStateMachineProcess(1);
+
+        return $stateMachineItemTransfer;
     }
 
 }

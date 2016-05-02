@@ -67,8 +67,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     {
         return new ItemLock(
             $this->getQueryContainer(),
-            $this->getConfig(),
-            $this->getPropelConnection()
+            $this->getConfig()
         );
     }
 

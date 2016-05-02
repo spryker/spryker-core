@@ -22,7 +22,6 @@ interface FinderInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @param string $stateMachineName
      *
      * @return string[]
      */

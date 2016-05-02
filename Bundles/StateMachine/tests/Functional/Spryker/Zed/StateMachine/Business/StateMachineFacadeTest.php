@@ -177,11 +177,9 @@ class StateMachineFacadeTest extends Test
         $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
         $this->assertCount(2, $manualEvents);
 
-        /* @var $manualEvent EventInterface  */
         $manualEvent = array_pop($manualEvents);
         $this->assertEquals('check with condition', $manualEvent);
 
-        /* @var $manualEvent EventInterface  */
         $manualEvent = array_pop($manualEvents);
         $this->assertEquals('ship order', $manualEvent);
 
@@ -218,15 +216,12 @@ class StateMachineFacadeTest extends Test
         $firstItemManualEvents = $manualEvents[$firstItemIdentifier];
         $secondItemManualEvents = $manualEvents[$secondItemIdentifier];
 
-        /* @var $manualEvent EventInterface  */
         $manualEvent = array_pop($firstItemManualEvents);
         $this->assertEquals('check with condition', $manualEvent);
 
-        /* @var $manualEvent EventInterface  */
         $manualEvent = array_pop($firstItemManualEvents);
         $this->assertEquals('ship order', $manualEvent);
 
-        /* @var $manualEvent EventInterface  */
         $manualEvent = array_pop($secondItemManualEvents);
         $this->assertEquals('payment received', $manualEvent);
     }

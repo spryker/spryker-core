@@ -106,10 +106,7 @@ class Builder implements BuilderInterface
 
         $this->mergeSubProcessFiles($pathToXml);
 
-        /** @var \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processMap */
-        $processMap = [];
-
-        list($processMap, $mainProcess) = $this->createSubProcess($processMap);
+        list($processMap, $mainProcess) = $this->createSubProcess();
 
         $stateToProcessMap = $this->createStates($processMap);
 
@@ -262,14 +259,15 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processMap
-     *
      * @return array
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      */
-    protected function createSubProcess(array $processMap)
+    protected function createSubProcess()
     {
         $mainProcess = null;
         $xmlProcesses = $this->rootElement->children();
+        $processMap = [];
 
         /** @var \SimpleXMLElement $xmlProcess */
         foreach ($xmlProcesses as $xmlProcess) {
@@ -286,7 +284,7 @@ class Builder implements BuilderInterface
         }
 
         if ($mainProcess === null) {
-            throw new StateMachineException('Main process not found.');
+            throw new StateMachineException('Main process could not be created.');
         }
 
         return [$processMap, $mainProcess];
@@ -300,7 +298,7 @@ class Builder implements BuilderInterface
     protected function createSubProcesses(array $processMap)
     {
         foreach ($this->rootElement as $xmlProcess) {
-            $processName = $this->getAttributeString($xmlProcess, 'name');
+            $processName = $this->getAttributeString($xmlProcess, self::PROCESS_NAME_ATTRIBUTE);
 
             $process = $processMap[$processName];
 
@@ -335,6 +333,7 @@ class Builder implements BuilderInterface
             }
 
             $xmlStates = $xmlProcess->states->children();
+
             /** @var \SimpleXMLElement $xmlState */
             foreach ($xmlStates as $xmlState) {
                 $state = $this->createState($xmlState, $process);
@@ -408,7 +407,7 @@ class Builder implements BuilderInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $stateToProcessMap
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $eventMap
+     * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface[] $eventMap
      * @param \SimpleXMLElement $xmlTransition
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException

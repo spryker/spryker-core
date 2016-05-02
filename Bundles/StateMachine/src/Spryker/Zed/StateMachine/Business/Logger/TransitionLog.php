@@ -177,23 +177,6 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param array $params
-     * @param array &$result
-     *
-     * @return void
-     */
-    protected function getOutputParams(array $params, array &$result)
-    {
-        foreach ($params as $key => $value) {
-            if (is_array($value)) {
-                $this->getOutputParams($value, $result);
-            } else {
-                $result[] = $key . '=' . $value;
-            }
-        }
-    }
-
-    /**
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog
      */
     protected function createStateMachineTransitionLogEntity()
