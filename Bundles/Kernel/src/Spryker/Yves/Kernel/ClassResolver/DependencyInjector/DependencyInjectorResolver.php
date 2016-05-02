@@ -125,4 +125,13 @@ class DependencyInjectorResolver extends AbstractClassResolver
         return new DependencyInjectorCollection();
     }
 
+    /**
+     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollection
+     */
+    protected function getDependendencyInjectionProviderCollection()
+    {
+        $dependencyInjectionProviderCollection = new DependencyInjectionProviderCollection();
+        return $dependencyInjectionProviderCollection;
+    }
+
 }
