@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
+use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -183,6 +184,8 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $normalizedProperties = [];
         foreach ($properties as $property) {
+            $this->assertProperty($property);
+
             $property['type_fully_qualified'] = $property['type'];
             $property['is_collection'] = false;
             $property['is_transfer'] = false;
@@ -254,7 +257,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private function getAddVar(array $property)
     {
         if ($this->isArray($property)) {
-            return 'array';
+            return 'mixed';
         }
 
         return str_replace('[]', '', $property['type']);
@@ -297,11 +300,10 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         if ($this->isCollection($property) || $this->isArray($property)) {
             $this->buildCollectionMethods($property);
-            $this->buildRequireMethod($property, true);
         } else {
             $this->buildGetterAndSetter($property);
-            $this->buildRequireMethod($property, false);
         }
+        $this->buildRequireMethod($property);
     }
 
     /**
@@ -558,11 +560,10 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $property
-     * @param bool $isCollection
      *
      * @return void
      */
-    private function buildRequireMethod(array $property, $isCollection)
+    private function buildRequireMethod(array $property)
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'require' . ucfirst($propertyName);
@@ -570,10 +571,38 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'isCollection' => $isCollection,
+            'isCollection' => $this->isCollection($property),
             'bundles' => $property['bundles'],
         ];
         $this->methods[$methodName] = $method;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return void
+     */
+    private function assertProperty(array $property)
+    {
+        $this->assertPropertyName($property['name']);
+    }
+
+    /**
+     * @param string $propertyName
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
+     *
+     * @return void
+     */
+    private function assertPropertyName($propertyName)
+    {
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9]+$/', $propertyName)) {
+            throw new InvalidNameException(sprintf(
+                'Transfer property "%s" needs to be alpha-numeric and camel-case formatted in "%s"!',
+                $propertyName,
+                $this->name
+            ));
+        }
     }
 
 }

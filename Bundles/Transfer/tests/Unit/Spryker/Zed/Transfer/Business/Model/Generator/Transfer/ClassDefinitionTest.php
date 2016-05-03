@@ -381,4 +381,22 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         return $method;
     }
 
+    /**
+     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
+     *
+     * @return void
+     */
+    public function testInvalidPropertyNameShouldThrowException()
+    {
+        $property = $this->getProperty('invalid_property_name', 'string');
+
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$property],
+        ];
+
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+    }
+
 }
