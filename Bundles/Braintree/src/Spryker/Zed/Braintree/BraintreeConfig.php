@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Braintree;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 

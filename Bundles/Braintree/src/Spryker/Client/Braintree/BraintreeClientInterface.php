@@ -7,9 +7,6 @@
 
 namespace Spryker\Client\Braintree;
 
-use Generated\Shared\Transfer\BraintreeCalculationResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-
 interface BraintreeClientInterface
 {
 }

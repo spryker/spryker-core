@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Braintree\Business\Payment\Method;
 
-use Generated\Shared\Transfer\OrderTransfer;
-use Orm\Zed\Braintree\Persistence\SpyPaymentBraintree;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Braintree\BraintreeConfig;
 

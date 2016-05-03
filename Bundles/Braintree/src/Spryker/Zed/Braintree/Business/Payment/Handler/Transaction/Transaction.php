@@ -14,13 +14,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLog;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLog;
 use Pyz\Yves\Braintree\Handler\BraintreeHandler;
-use Spryker\Shared\Braintree\BraintreeConstants;
-use Spryker\Shared\Config\Config;
 use Spryker\Zed\Braintree\BraintreeConfig;
-use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Braintree\Business\Payment\Handler\AbstractPaymentHandler;
 use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Braintree\Persistence\BraintreeQueryContainerInterface;
+use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 
 class Transaction extends AbstractPaymentHandler implements TransactionInterface
 {
@@ -164,7 +162,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $this->logApiResponse($responseTransfer, $idPayment, $transaction->statusHistory);
 
         return $responseTransfer;
-
 
         /*
         $customerTransfer = $orderTransfer->getCustomer();

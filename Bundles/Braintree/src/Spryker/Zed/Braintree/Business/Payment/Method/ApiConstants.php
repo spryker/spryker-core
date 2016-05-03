@@ -39,5 +39,4 @@ interface ApiConstants
     const PAYMENT_CODE_AUTHORIZE_SUCCESS = '1000';
     const STATUS_REASON_CODE_SUCCESS = '1';
 
-
 }

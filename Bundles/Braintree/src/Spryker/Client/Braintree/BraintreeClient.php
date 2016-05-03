@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\Braintree;
 
-use Generated\Shared\Transfer\BraintreeCalculationResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**

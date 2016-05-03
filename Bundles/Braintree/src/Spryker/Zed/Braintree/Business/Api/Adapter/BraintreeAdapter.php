@@ -1,5 +1,12 @@
 <?php
-namespace Spryker\Zed\Braintree\Business\Api\Adapter;
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+ Spryker\Zed\Braintree\Business\Api\Adapter;
+
 /**
  * (c) Spryker Systems GmbH copyright protected.
  */
@@ -34,4 +41,5 @@ class BraintreeAdapter implements \Spryker\Zed\Payolution\Business\Api\Adapter\A
     {
         // TODO: Implement sendAuthorizedRequest() method.
     }
+
 }

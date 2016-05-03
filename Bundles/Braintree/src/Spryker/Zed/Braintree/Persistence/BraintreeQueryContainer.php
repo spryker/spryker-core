@@ -11,7 +11,6 @@ use Orm\Zed\Braintree\Persistence\Map\SpyPaymentBraintreeTransactionRequestLogTa
 use Orm\Zed\Braintree\Persistence\Map\SpyPaymentBraintreeTransactionStatusLogTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**

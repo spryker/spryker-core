@@ -24,6 +24,6 @@ interface BraintreeConstants
     const IS_3D_SECURE = 'BRAINTREE_IS_3D_SECURE';
     const IS_VAULTED = 'BRAINTREE_IS_VAULTED';
 
-    CONST METHOD_PAY_PAL = 'BRAINTREE_PAY_PAL';
+    const METHOD_PAY_PAL = 'BRAINTREE_PAY_PAL';
 
 }

@@ -15,10 +15,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Braintree\Business\BraintreeBusinessFactory getFactory()
  */
-class BraintreeFacade extends AbstractFacade
+class BraintreeFacade extends AbstractFacade implements BraintreeFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Saves order payment method data according to quote and checkout response transfer data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -35,6 +38,10 @@ class BraintreeFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     * - Sends pre-authorize payment request to Braintree gateway to retrieve transaction data.
+     * - Checks that form data matches transaction response data
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -52,6 +59,9 @@ class BraintreeFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     * - Processes payment confirmation request to Braintree gateway.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -68,6 +78,9 @@ class BraintreeFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     * - Processes cancel payment request to Braintree gateway.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -84,6 +97,9 @@ class BraintreeFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     * - Processes capture payment request to Braintree gateway.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -100,6 +116,9 @@ class BraintreeFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     * - Processes refund payment request to Braintree gateway.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -116,6 +135,9 @@ class BraintreeFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     * - Checks if pre-authorization API request got success response from Braintree gateway.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -131,6 +153,9 @@ class BraintreeFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     * - Checks if cancel API request got success response from Braintree gateway.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -146,6 +171,9 @@ class BraintreeFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     * - Checks if capture API request got success response from Braintree gateway.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -161,6 +189,9 @@ class BraintreeFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     * - Checks if refund API request got success response from Braintree gateway.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

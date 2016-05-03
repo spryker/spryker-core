@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Braintree\Business\Order;
 
-use Braintree\Exception;
 use Generated\Shared\Transfer\BraintreePaymentTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
