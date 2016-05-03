@@ -79,7 +79,6 @@ class BraintreeQueryContainer extends AbstractQueryContainer implements Braintre
         return $this
             ->queryTransactionStatusLog()
             ->filterByFkPaymentBraintree($idPayment);
-            //->filterByProcessingCode(BraintreeConstants::SUCCESSFUL_PRE_AUTHORIZATION_PROCESSING_CODE);
     }
 
     /**
