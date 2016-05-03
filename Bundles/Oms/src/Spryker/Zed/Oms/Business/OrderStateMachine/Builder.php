@@ -11,6 +11,7 @@ use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
+use Spryker\Zed\Oms\OmsConfig;
 use Symfony\Component\Finder\Finder;
 
 class Builder implements BuilderInterface
@@ -403,7 +404,7 @@ class Builder implements BuilderInterface
     {
         $processDefinitionLocation = $this->setDefaultIfNull($processDefinitionLocation);
 
-        $this->processDefinitionLocation = (array)$processDefinitionLocation;
+        $this->processDefinitionLocation = $processDefinitionLocation;
     }
 
     /**
@@ -419,7 +420,7 @@ class Builder implements BuilderInterface
             return $processDefinitionLocation;
         }
 
-        return $processDefinitionLocation = APPLICATION_ROOT_DIR . '/config/Zed/oms/';
+        return $processDefinitionLocation = OmsConfig::DEFAULT_PROCESS_LOCATION;
     }
 
     /**

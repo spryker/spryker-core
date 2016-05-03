@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d5fe8a61b88a5e17f1cbc8c1b818d68e",
-    "content-hash": "5274505116186539a09104892d77997f",
+    "hash": "48bb85cd6d9e3a36e5a10ab8a37cf7b0",
+    "content-hash": "83d5a553096788413102476cb6a355fc",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -4658,11 +4658,11 @@
         },
         {
             "name": "spryker/transfer",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/Transfer.git",
-                "reference": "39a0fe6703b5c70e924991b6a4af87cbd2676ecf",
+                "reference": "d56e1a95694c15c774653032d0d3184f38a52194",
                 "mirrors": [
                     {
                         "url": "https://code.spryker.com:/repo/private/mirrors/%package%/%normalizedUrl%.%type%",
@@ -4672,8 +4672,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/Transfer/zipball/39a0fe6703b5c70e924991b6a4af87cbd2676ecf",
-                "reference": "39a0fe6703b5c70e924991b6a4af87cbd2676ecf",
+                "url": "https://api.github.com/repos/spryker/Transfer/zipball/d56e1a95694c15c774653032d0d3184f38a52194",
+                "reference": "d56e1a95694c15c774653032d0d3184f38a52194",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4719,7 +4719,7 @@
             "support": {
                 "source": "https://github.com/spryker/Transfer/tree/master"
             },
-            "time": "2016-04-04 15:24:01"
+            "time": "2016-05-03 09:19:44"
         },
         {
             "name": "spryker/twig",
