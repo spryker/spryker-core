@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <search-and-filters>
-        <label>Search &amp; Filters</label>
-        <title>Search &amp; Filters</title>
+        <label>Search and Filters</label>
+        <title>Search and Filters</title>
         <bundle>search</bundle>
         <controller>filters</controller>
         <action>index</action>

@@ -1,8 +1,12 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Search &amp; Filters' %}
+{% set widget_title = 'Search and Filters' %}
 
-{% block head_title widget_title | trans | raw %}
+{% block head_title widget_title | trans %}
+
+{% block action %}
+    <a href="#" class="btn-sm"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
+{% endblock %}
 
 {% block content %}
 
@@ -10,7 +14,36 @@
 
         {% block widget_content %}
 
-            <p>content here</p>
+            {{ filtersTable | raw }}
+
+            {#
+            <table class="table table-bordered table-condensed">
+                <tr>
+                    <th>{{ 'Attribute Name' | trans }}</th>
+                    <th>{{ 'Type' | trans }}</th>
+                    <th>{{ 'Filter type' | trans }}</th>
+                    <th>{{ 'Include for Suggestions' | trans }}</th>
+                    <th>{{ 'Include for Sorting' | trans }}</th>
+                    <th>{{ 'Include for Full Text' | trans }}</th>
+                    <th>{{ 'Include for Text Boosted' | trans }}</th>
+                    <th>{{ 'Action' | trans }}</th>
+                </tr>
+                {% for i in 1..20 %}
+                <tr>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>asd</td>
+                    <td>
+                        <a class="btn btn-xs btn-outline btn-success" href="/customer/edit/?id-customer=1"><i class="fa fa-pencil-square-o"></i> {{ 'Edit' | trans }}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            #}
 
         {% endblock %}
 
