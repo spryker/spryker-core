@@ -54,18 +54,10 @@ class Saver implements SaverInterface
         ));
 
         $paymentEntity->fromArray($addressTransfer->toArray());
-        $paymentEntity->fromArray($paymentTransfer->toArray());
-
-        //FIXME: needed?
-        //$paymentEntity->setClientIp('123');
-        $paymentEntity->setGender('Male');
-
         $paymentEntity
             ->setStreet($formattedStreet)
             ->setCountryIso2Code($addressTransfer->getIso2Code())
             ->setFkSalesOrder($idSalesOrder);
-
-        $paymentEntity->save();
 
         $paymentEntity->save();
 
