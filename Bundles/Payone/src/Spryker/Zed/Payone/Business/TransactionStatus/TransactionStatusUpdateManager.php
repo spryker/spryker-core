@@ -362,7 +362,7 @@ class TransactionStatusUpdateManager
 
         $ids = [];
 
-        /* @var SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
         foreach ($transactionStatusLogs as $transactionStatusLog) {
             $ids[$transactionStatusLog->getIdPaymentPayoneTransactionStatusLog()] = $transactionStatusLog;
         }

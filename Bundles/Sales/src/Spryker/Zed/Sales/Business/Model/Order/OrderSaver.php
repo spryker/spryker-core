@@ -192,14 +192,7 @@ class OrderSaver implements OrderSaverInterface
     ) {
 
         $processName = $this->salesConfiguration->determineProcessForOrderItem($quoteTransfer, $itemTransfer);
-        if (empty($processName)) {
-            throw new \InvalidArgumentException('State machine process not provided.');
-        }
-
         $omsOrderProcessEntity = $this->omsFacade->getProcessEntity($processName);
-        if (empty($omsOrderProcessEntity)) {
-            throw new \InvalidArgumentException('State machine process not found.');
-        }
 
         $salesOrderItemEntity->fromArray($itemTransfer->toArray());
         $salesOrderItemEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());

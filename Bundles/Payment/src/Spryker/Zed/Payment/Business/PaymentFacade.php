@@ -14,10 +14,12 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Payment\Business\PaymentBusinessFactory getFactory()
  */
-class PaymentFacade extends AbstractFacade
+class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -31,6 +33,8 @@ class PaymentFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -44,6 +48,8 @@ class PaymentFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

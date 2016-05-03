@@ -223,6 +223,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

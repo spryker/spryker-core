@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\User\Persistence\SpyUser;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -25,10 +25,10 @@ class GroupUsersTable extends AbstractTable
     const COL_EMAIL = 'email';
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
-    const COL_OPTIONS = 'Options';
+    const ACTIONS = 'Actions';
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $aclQueryContainer;
 
@@ -38,10 +38,10 @@ class GroupUsersTable extends AbstractTable
     protected $idGroup;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $aclQueryContainer
      * @param int $idAclGroup
      */
-    public function __construct(AclQueryContainer $aclQueryContainer, $idAclGroup)
+    public function __construct(AclQueryContainerInterface $aclQueryContainer, $idAclGroup)
     {
         $this->aclQueryContainer = $aclQueryContainer;
         $this->idGroup = $idAclGroup;
@@ -63,8 +63,10 @@ class GroupUsersTable extends AbstractTable
             self::COL_FIRST_NAME => 'First Name',
             self::COL_LAST_NAME => 'Last Name',
             self::COL_EMAIL => 'Email',
-            self::COL_OPTIONS => 'Options',
+            self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
 
         return $config;
     }
@@ -88,7 +90,7 @@ class GroupUsersTable extends AbstractTable
                 self::COL_FIRST_NAME => $user->getFirstName(),
                 self::COL_LAST_NAME => $user->getLastName(),
                 self::COL_EMAIL => $user->getUsername(),
-                self::COL_OPTIONS => $this->getRemoveUrl($user),
+                self::ACTIONS => $this->getRemoveUrl($user),
             ];
         }
 
@@ -102,10 +104,9 @@ class GroupUsersTable extends AbstractTable
      */
     protected function getRemoveUrl(SpyUser $user)
     {
-        return $this->generateRemoveButton('#', 'Remove', [
-            'id' => sprintf('row-%d-%d', $user->getIdUser(), $this->idGroup),
-            'data-options' => sprintf('{"idUser": %d, "idGroup": %d}', $user->getIdUser(), $this->idGroup),
-            'class' => 'remove-user-from-group',
+        return $this->generateRemoveButton('/acl/group/delete-user-from-group', 'Delete', [
+            'id-user' => $user->getIdUser(),
+            'id-group' => $this->idGroup
         ]);
     }
 

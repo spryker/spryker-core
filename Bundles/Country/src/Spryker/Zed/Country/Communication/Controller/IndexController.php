@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Country\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Country\Communication\Table\CountryTable;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends AbstractController
 {

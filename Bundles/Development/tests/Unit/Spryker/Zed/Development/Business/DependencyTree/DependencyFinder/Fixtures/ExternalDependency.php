@@ -6,25 +6,58 @@
 
 namespace Unit\Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\Fixtures;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\DependencyFinder;
-use Company\Class as Something;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDependency as BaseExternalDependency;
+use Company\MyClass as Something;
 use Exception;
 
-class ExternalDependency
+abstract class ExternalDependency
 {
 
-    public function method()
+    /**
+     * @throws \Exception
+     * @throws \Symfony\Component\Finder\Finder
+     * @return void
+     */
+    public function exceptionA()
     {
         throw new \Exception();
-        throw new \Symfony\Component\Finder\Finder::class;
-        $class = new \Symfony\Component\Finder\Finder2();
-        $class = \Symfony\Component\Finder\Finder3::class;
-        $class = new \ZendAPI_Job();
-        $class = new DependencyFinder();
-        new \DateTime())->format(\DateTime::ATOM);
+    }
+
+    /**
+     * @throws \Exception
+     * @throws \Symfony\Component\Finder\Finder
+     * @return void
+     */
+    public function exceptionB()
+    {
+        $className = \Symfony\Component\Config\Definition\Exception\Exception::class;
+
+        throw new $className;
+    }
+
+    /**
+     * @throws \Exception
+     * @throws \Symfony\Component\Finder\Finder
+     * @return void
+     */
+    public function method()
+    {
+        new \Symfony\Component\Finder\Finder2();
+        \Symfony\Component\Finder\Finder3::class;
+        new \ZendAPI_Job('foo');
+        new BaseExternalDependency();
+        (new \DateTime())->format(\DateTime::ATOM);
+        $variable = [];
         $variable[\Company\SomeClassName::SOME_CONST][self::SOME_CONST];
     }
 
-    public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM);
+    /**
+     * @param int $row
+     * @param int $offset
+     * @param string $indexType
+     *
+     * @return void
+     */
+    abstract public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM);
 
 }

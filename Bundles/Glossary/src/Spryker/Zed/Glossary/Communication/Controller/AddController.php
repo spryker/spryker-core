@@ -23,7 +23,7 @@ class AddController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -39,8 +39,8 @@ class AddController extends AbstractController
             $keyTranslationTransfer = new KeyTranslationTransfer();
             $keyTranslationTransfer->fromArray($data, true);
 
-            $facade = $this->getFacade();
-            $facade->saveGlossaryKeyTranslations($keyTranslationTransfer);
+            $glossaryFacade = $this->getFacade();
+            $glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
 
             $this->addSuccessMessage('Saved entry to glossary.');
 

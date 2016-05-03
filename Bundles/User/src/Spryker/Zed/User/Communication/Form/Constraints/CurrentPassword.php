@@ -20,14 +20,14 @@ class CurrentPassword extends Constraint
     /**
      * @var \Spryker\Zed\User\Business\UserFacade
      */
-    protected $facadeUser;
+    protected $userFacade;
 
     /**
      * @return \Spryker\Zed\User\Business\UserFacade
      */
     public function getFacadeUser()
     {
-        return $this->facadeUser;
+        return $this->userFacade;
     }
 
     /**

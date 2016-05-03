@@ -11,6 +11,7 @@ use phpDocumentor\GraphViz\Edge;
 use phpDocumentor\GraphViz\Graph;
 use phpDocumentor\GraphViz\Node;
 use Spryker\Shared\Graph\GraphAdapterInterface;
+use Spryker\Zed\Library\Generator\StringGenerator;
 
 class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 {
@@ -141,8 +142,10 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      */
     public function render($type, $fileName = null)
     {
+        $generator = new StringGenerator();
+
         if ($fileName === null) {
-            $fileName = sys_get_temp_dir() . '/' . uniqid();
+            $fileName = sys_get_temp_dir() . '/' . $generator->generateRandomString();
         }
         $this->graph->export($type, $fileName);
 

@@ -57,14 +57,14 @@ interface PaymentMethodMapperInterface
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer
      */
     public function mapPaymentToDebit(SpyPaymentPayone $paymentEntity);
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer
      */
     public function mapPaymentToRefund(SpyPaymentPayone $paymentEntity);
 

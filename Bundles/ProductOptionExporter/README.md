@@ -8,4 +8,4 @@ composer require spryker/product-option-exporter
 
 ## Documentation
 
-[ProductOptionExporter Documentation](https://spryker.github.io/product-option-exporter/index.html)
+[ProductOptionExporter Documentation](http://spryker.github.io/core/bundles/product-option-exporter)

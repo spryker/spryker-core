@@ -8,20 +8,20 @@
 namespace Spryker\Zed\Cms\Communication\Form\DataProvider;
 
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsRedirectFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainer
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainer $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      */
-    public function __construct(CmsQueryContainer $cmsQueryContainer)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
     }
@@ -37,6 +37,7 @@ class CmsRedirectFormDataProvider
             return [];
         }
 
+        /** @var \Orm\Zed\Url\Persistence\SpyUrl|\Orm\Zed\Url\Persistence\SpyUrlRedirect $urlEntity */
         $urlEntity = $this
             ->cmsQueryContainer
             ->queryUrlByIdWithRedirect($idUrl)

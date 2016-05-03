@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -74,7 +73,7 @@ class IndexController extends AbstractController
      */
     public function nodeByNameAction(Request $request)
     {
-        $categoryName = $request->request->get('category-name'); // TODO FW Validation
+        $categoryName = $request->request->get('category-name');
 
         $idCategory = $this->getFacade()->getCategoryNodeIdentifier(
             trim($categoryName),

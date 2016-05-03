@@ -21,12 +21,12 @@ $(function(){
 
     $('#add-rules-container').click(function(e){
         e.preventDefault();
-        discount.loadCartRulesForm($(this), 'cart_rule');
+        discount.loadDecisionRuleForm($(this), 'cart_rule');
     });
 
     $('#add-rules-pool-container').click(function(e){
         e.preventDefault();
-        discount.loadCartRulesForm($(this), 'voucher_codes');
+        discount.loadDecisionRuleForm($(this), 'voucher_codes');
     });
 
     $('.table-data-codes').DataTable({

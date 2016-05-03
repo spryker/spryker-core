@@ -29,14 +29,14 @@ class PasswordResetTest extends \PHPUnit_Framework_TestCase
     public function testRequestToken()
     {
         $authQueryContainer = new AuthQueryContainer();
-        $facadeUser = $this->createFacadeUser();
+        $userFacade = $this->createFacadeUser();
         $authConfig = new AuthConfig();
 
-        $passwordReset = $this->createPasswordReset($authQueryContainer, $facadeUser, $authConfig);
+        $passwordReset = $this->createPasswordReset($authQueryContainer, $userFacade, $authConfig);
 
         $userTransfer = new UserTransfer();
 
-        $facadeUser->expects($this->once())
+        $userFacade->expects($this->once())
             ->method('getUserByUsername')
             ->will($this->returnValue($userTransfer));
 
@@ -53,28 +53,28 @@ class PasswordResetTest extends \PHPUnit_Framework_TestCase
      */
     protected function createFacadeUser()
     {
-        $facadeUser = $this->getMock(
+        $userFacade = $this->getMock(
             AuthToUserBridge::class,
             ['getUserByUsername'],
             [new UserFacade()]
         );
 
-        return $facadeUser;
+        return $userFacade;
     }
 
     /**
      * @param \Spryker\Zed\Auth\Persistence\AuthQueryContainer $authQueryContainer
-     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge $facadeUser
+     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge $userFacade
      * @param \Spryker\Zed\Auth\AuthConfig $authConfig
      *
      * @return \Spryker\Zed\Auth\Business\Model\PasswordReset|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function createPasswordReset($authQueryContainer, $facadeUser, $authConfig)
+    protected function createPasswordReset($authQueryContainer, $userFacade, $authConfig)
     {
         $passwordReset = $this->getMock(
             PasswordReset::class,
             ['persistResetPassword'],
-            [$authQueryContainer, $facadeUser, $authConfig]
+            [$authQueryContainer, $userFacade, $authConfig]
         );
 
         return $passwordReset;

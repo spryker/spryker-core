@@ -31,28 +31,28 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
     /**
      * @param \Silex\Application $app
      *
-     * @return string
+     * @return void
      */
     public function boot(Application $app)
     {
-        $facadeAcl = $this->getFacade();
+        $aclFacade = $this->getFacade();
         $config = $this->getFactory()->getConfig();
 
-        $app->before(function (Request $request) use ($app, $facadeAcl, $config) {
+        $app->before(function (Request $request) use ($app, $aclFacade, $config) {
             $bundle = $request->attributes->get('module');
             $controller = $request->attributes->get('controller');
             $action = $request->attributes->get('action');
 
-            if ($facadeAcl->isIgnorable($bundle, $controller, $action)) {
+            if ($aclFacade->isIgnorable($bundle, $controller, $action)) {
                 return true;
             }
 
-            if (!$facadeAcl->hasCurrentUser()) {
+            if (!$aclFacade->hasCurrentUser()) {
                 return $app->redirect($config->getAccessDeniedUri());
             }
 
-            $user = $facadeAcl->getCurrentUser();
-            if (!$facadeAcl->checkAccess($user, $bundle, $controller, $action)) {
+            $user = $aclFacade->getCurrentUser();
+            if (!$aclFacade->checkAccess($user, $bundle, $controller, $action)) {
                 return $app->redirect($config->getAccessDeniedUri());
             }
         });

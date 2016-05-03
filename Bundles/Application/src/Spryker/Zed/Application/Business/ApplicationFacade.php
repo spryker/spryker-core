@@ -25,7 +25,7 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
      */
     public function getCheckSteps(LoggerInterface $logger = null)
     {
-        return $this->getFactory()->createCheckSteps($logger);
+        return $this->getFactory()->getCheckSteps($logger);
     }
 
     /**
@@ -71,9 +71,9 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
      *
      * @return void
      */
-    public function runCheckStepExportKeyValue(LoggerInterface $logger = null)
+    public function runCheckStepExportStorage(LoggerInterface $logger = null)
     {
-        $this->getFactory()->createCheckStepExportKeyValue($logger)->run();
+        $this->getFactory()->createCheckStepStorageValue($logger)->run();
     }
 
     /**
@@ -95,9 +95,9 @@ class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInter
      *
      * @return void
      */
-    public function runCheckStepInstallDemoData(LoggerInterface $logger = null)
+    public function runCheckStepImportDemoData(LoggerInterface $logger = null)
     {
-        $this->getFactory()->createCheckStepInstallDemoData($logger)->run();
+        $this->getFactory()->createCheckStepImportDemoData($logger)->run();
     }
 
     /**

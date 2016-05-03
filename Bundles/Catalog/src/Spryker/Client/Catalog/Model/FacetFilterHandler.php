@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Catalog\Model;
 
-use Elastica\Filter;
 use Elastica\Filter\BoolAnd;
 use Elastica\Query;
 use Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface;
@@ -55,7 +54,7 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
             foreach ($filters as $filter) {
                 $facetConfig = $this->facetConfig->getFacetSetupFromParameter($filter);
                 $filterFacetName = $this->facetConfig->getFacetNameFromParameter($filter);
-                $filterValue = $request->query->get($filter); // TODO FW Validation
+                $filterValue = $request->query->get($filter);
 
                 if (trim($filterValue) === '') {
                     continue;

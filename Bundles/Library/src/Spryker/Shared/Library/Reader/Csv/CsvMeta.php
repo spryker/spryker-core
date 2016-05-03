@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\Library\Reader\Csv;
 
-use SplFileObject;
-
 class CsvMeta implements CsvMetaInterface
 {
 

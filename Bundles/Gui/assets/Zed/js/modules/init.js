@@ -6,22 +6,12 @@
 'use strict';
 
 var SprykerAjax = require('./legacy/SprykerAjax');
+var summernote = require('summernote');
+var editor = require('./editor');
 
 $(document).ready(function() {
     // editor
-    $('.html-editor').summernote({
-        maxHeight: 600,
-        focus: true,
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['picture', 'link', 'video', 'table', 'hr']],
-            ['misc', ['undo', 'redo']]
-        ]
-    });
+    $('.html-editor').summernote(editor.getConfig());
 
     /** Draw data tables */
     $('.gui-table-data').dataTable();

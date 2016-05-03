@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 
-use Orm\Zed\Touch\Persistence\SpyTouchSearch;
-use Orm\Zed\Touch\Persistence\SpyTouchStorage;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\CollectorConfig;
 
 abstract class AbstractTouchUpdater implements TouchUpdaterInterface
 {
+
+    const FK_TOUCH = 'fk_touch';
 
     /**
      * @var string
@@ -49,7 +49,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
         return sprintf(
             "DELETE FROM %s WHERE %s IN (%s); \n",
             $this->touchKeyTableName,
-            $this->touchKeyIdColumnName,
+            self::FK_TOUCH,
             $sql
         );
     }
@@ -80,7 +80,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      *
      * @return void
      */
-    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
+    public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
     {
         $updateSql = '';
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
@@ -89,7 +89,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
             if ($idKey !== null) {
                 $updateSql .= $this->getUpdateSql($idKey, $key);
             } else {
-                /* @var SpyTouchStorage|SpyTouchSearch $entity */
+                /** @var \Orm\Zed\Touch\Persistence\SpyTouchStorage|\Orm\Zed\Touch\Persistence\SpyTouchSearch $entity */
                 $entity = $this->createTouchKeyEntity();
                 $entity->setKey($key);
                 $entity->setFkTouch($touchData[CollectorConfig::COLLECTOR_TOUCH_ID]);
@@ -110,14 +110,14 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      *
      * @return void
      */
-    public function deleteMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
+    public function bulkDelete(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
     {
         $idsToDelete = '';
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
             $idTouch = $touchData[CollectorConfig::COLLECTOR_TOUCH_ID];
 
             if ($idTouch !== null) {
-                $idsToDelete[] = $idTouch;
+                $idsToDelete[$idTouch] = $idTouch;
             }
         }
 

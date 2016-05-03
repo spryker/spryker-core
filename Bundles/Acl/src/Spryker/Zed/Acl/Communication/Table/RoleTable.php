@@ -11,7 +11,7 @@ use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -24,7 +24,7 @@ class RoleTable extends AbstractTable
     const DELETE_ROLE_URL = '/acl/role/delete';
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $aclQueryContainer;
 
@@ -34,10 +34,10 @@ class RoleTable extends AbstractTable
     protected $dateFormatter;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $aclQueryContainer
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(AclQueryContainer $aclQueryContainer, DateFormatterInterface $dateFormatter)
+    public function __construct(AclQueryContainerInterface $aclQueryContainer, DateFormatterInterface $dateFormatter)
     {
         $this->aclQueryContainer = $aclQueryContainer;
         $this->dateFormatter = $dateFormatter;
@@ -55,6 +55,8 @@ class RoleTable extends AbstractTable
             SpyAclRoleTableMap::COL_NAME => 'Name',
             self::ACTION => self::ACTION,
         ]);
+
+        $config->addRawColumn(self::ACTION);
 
         $config->setSortable([
             SpyAclRoleTableMap::COL_CREATED_AT,
@@ -105,10 +107,9 @@ class RoleTable extends AbstractTable
         );
 
         if ($rule[SpyAclRoleTableMap::COL_NAME] !== AclConstants::ROOT_ROLE) {
-            $buttons[] = $this->generateRemoveButton(
-                Url::generate(self::DELETE_ROLE_URL, [self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]]),
-                'Delete'
-            );
+            $buttons[] = $this->generateRemoveButton(self::DELETE_ROLE_URL, 'Delete', [
+                self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]
+            ]);
         }
 
         return $buttons;

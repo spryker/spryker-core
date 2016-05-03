@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -17,7 +17,7 @@ class DiscountVoucherCodesTable extends AbstractTable
 {
 
     /**
-     * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
@@ -38,11 +38,11 @@ class DiscountVoucherCodesTable extends AbstractTable
 
     /**
      * @param \Generated\Shared\Transfer\DataTablesTransfer $dataTablesTransfer
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param int $idPool
      * @param int|null $batchValue
      */
-    public function __construct(DataTablesTransfer $dataTablesTransfer, DiscountQueryContainer $discountQueryContainer, $idPool, $batchValue = null)
+    public function __construct(DataTablesTransfer $dataTablesTransfer, DiscountQueryContainerInterface $discountQueryContainer, $idPool, $batchValue = null)
     {
         $this->dataTablesTransfer = $dataTablesTransfer;
         $this->discountQueryContainer = $discountQueryContainer;
@@ -57,7 +57,8 @@ class DiscountVoucherCodesTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setUrl('table/?id-pool=' . $this->idPool . '&batch=' . $this->batchValue);
+        //FIXME: Use Url class
+        $config->setUrl('table?id-pool=' . $this->idPool . '&batch=' . $this->batchValue);
         $this->tableClass = 'table-data-codes';
 
         $config->setHeader([

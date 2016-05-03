@@ -38,7 +38,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     protected function buildGroupKey(ItemTransfer $item)
     {
         $currentGroupKey = $item->getGroupKey();
-        if (empty($item->getProductOptions())) {
+        if (!$item->getProductOptions()) {
             return $currentGroupKey;
         }
 
@@ -78,7 +78,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     {
         $groupKeyPart = [];
         foreach ($sortedProductOptions as $option) {
-            if (empty($option->getIdOptionValueUsage())) {
+            if (!$option->getIdOptionValueUsage()) {
                 continue;
             }
             $groupKeyPart[] = $option->getIdOptionValueUsage();

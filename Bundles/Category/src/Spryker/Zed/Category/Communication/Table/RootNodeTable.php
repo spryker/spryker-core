@@ -63,6 +63,9 @@ class RootNodeTable extends AbstractTable
             SpyLocaleTableMap::COL_LOCALE_NAME => 'Locale',
             self::COL_REORDER => '',
         ]);
+
+        $config->addRawColumn(self::COL_REORDER);
+
         $config->setSortable([
             SpyLocaleTableMap::COL_LOCALE_NAME,
             SpyCategoryAttributeTableMap::COL_NAME,

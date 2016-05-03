@@ -26,11 +26,6 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @var array
      */
-    private $bundles = [];
-
-    /**
-     * @var array
-     */
     private $constants = [];
 
     /**
@@ -93,26 +88,6 @@ class ClassDefinition implements ClassDefinitionInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $bundle
-     *
-     * @return void
-     */
-    private function addBundle($bundle)
-    {
-        if (!in_array($bundle, $this->bundles)) {
-            $this->bundles[] = $bundle;
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getBundles()
-    {
-        return $this->bundles;
     }
 
     /**
@@ -214,7 +189,7 @@ class ClassDefinition implements ClassDefinitionInterface
             $property['propertyConst'] = $this->getPropertyConstantName($property);
             $property['name_underscore'] = mb_strtolower($property['propertyConst']);
 
-            if (!preg_match('/^int|integer|float|string|array|bool|boolean/', $property['type'])) {
+            if (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean/', $property['type'])) {
                 $property['is_transfer'] = true;
                 $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\';
                 if (preg_match('/\[\]$/', $property['type'])) {
@@ -424,7 +399,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function isCollection(array $property)
     {
-        return (bool)preg_match('/((.*?)\[\]|\[\])/', $property['type']);
+        return (bool)preg_match('/((.*?)\[\])/', $property['type']);
     }
 
     /**
@@ -493,11 +468,11 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param string $property
+     * @param array $property
      *
      * @return void
      */
-    private function buildSetMethod($property)
+    private function buildSetMethod(array $property)
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'set' . ucfirst($propertyName);
@@ -517,11 +492,11 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param string $property
+     * @param array $property
      *
      * @return void
      */
-    private function buildAddMethod($property)
+    private function buildAddMethod(array $property)
     {
         $parent = $this->getPropertyName($property);
         $propertyConstant = $this->getPropertyConstantName($property);

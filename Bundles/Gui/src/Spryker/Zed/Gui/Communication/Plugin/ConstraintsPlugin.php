@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin;
 
-use Spryker\Zed\Gui\Communication\GuiCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\All;

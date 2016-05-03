@@ -35,6 +35,9 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
 
+    const DECISION_RULE_FORM_CART_RULE = 'cart_rule';
+    const DECISION_RULE_FORM_VOUCHER_CODES = 'voucher_codes';
+
     /**
      * @param array $formData
      * @param array $formOptions
@@ -107,14 +110,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      * @param array $formData
      * @param array $formOptions
      *
-     * @return \Symfony\Component\Form\FormTypeInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCartRuleForm(array $formData = [], array $formOptions = [])
     {
         $cartRuleForm = new CartRuleForm(
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
-            $this->getDecisionRulePlugins(),
+            $this->getDecisionRulePlugins(self::DECISION_RULE_FORM_CART_RULE),
             $this->createDecisionRulesFormTransformer()
         );
 
@@ -132,15 +135,23 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Discount\Communication\Form\CollectorPluginForm
      */
-    public function createCollectorPluginForm()
+    public function createCollectorPluginFormType()
     {
-        $collectorPluginForm = new CollectorPluginForm(
+        return new CollectorPluginForm(
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
             $this->getDecisionRulePlugins()
         );
+    }
 
-        return $this->getFormFactory()->create($collectorPluginForm);
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCollectorPluginForm()
+    {
+        return $this->getFormFactory()->create(
+            $this->createCollectorPluginFormType()
+        );
     }
 
     /**
@@ -152,10 +163,12 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createVoucherCodesForm(array $formData = [], array $formOptions = [])
     {
         $voucherCodesForm = new VoucherCodesForm(
-            $this->createDecisionRulesFormTransformer(),
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
-            $this->getDecisionRulePlugins()
+            $this->getDecisionRulePlugins(),
+            $this->createDecisionRulesFormTransformer(),
+            $this->createCollectorPluginFormType(),
+            $this->createDecisionRuleFormType()
         );
 
         return $this->getFormFactory()->create($voucherCodesForm, $formData, $formOptions);
@@ -191,17 +204,27 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
+     * @param string $mainFormName
+     * @return \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm
      */
-    public function createDecisionRuleForm()
+    public function createDecisionRuleFormType($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
     {
-        $decisionRulesForm = new DecisionRuleForm(
+        return new DecisionRuleForm(
             $this->getCalculatorPlugins(),
             $this->getCollectorPlugins(),
-            $this->getDecisionRulePlugins()
+            $this->getDecisionRulePlugins($mainFormName)
         );
+    }
 
-        return $this->getFormFactory()->create($decisionRulesForm);
+    /**
+     * @param string $mainFormName
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDecisionRuleForm($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
+    {
+        return $this->getFormFactory()->create(
+            $this->createDecisionRuleFormType($mainFormName)
+        );
     }
 
     /**
@@ -280,10 +303,15 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param string $mainFormName
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
-    public function getDecisionRulePlugins()
+    protected function getDecisionRulePlugins($mainFormName = self::DECISION_RULE_FORM_VOUCHER_CODES)
     {
+        if ($mainFormName === self::DECISION_RULE_FORM_CART_RULE) {
+            return $this->getProvidedDependency(DiscountDependencyProvider::CART_DECISION_RULE_PLUGINS);
+        }
+
         return $this->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
     }
 

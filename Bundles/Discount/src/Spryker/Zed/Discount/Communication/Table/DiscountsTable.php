@@ -20,7 +20,7 @@ class DiscountsTable extends AbstractTable
 
     const COL_VALUE = 'Value';
     const COL_PERIOD = 'Period';
-    const COL_OPTIONS = 'Options';
+    const ACTIONS = 'Actions';
     const DATE_FORMAT = 'Y-m-d';
     const COL_DECISION_RULES = 'Cart Rules';
     const DECISION_RULE_PLUGIN = 'DecisionRulePlugin';
@@ -56,13 +56,15 @@ class DiscountsTable extends AbstractTable
             SpyDiscountTableMap::COL_IS_ACTIVE => 'Is Active',
             self::COL_PERIOD => self::COL_PERIOD,
             self::COL_DECISION_RULES => self::COL_DECISION_RULES,
-            self::COL_OPTIONS => self::COL_OPTIONS,
+            self::ACTIONS => self::ACTIONS,
         ]);
 
         $config->setSearchable([
             SpyDiscountTableMap::COL_DISPLAY_NAME,
             SpyDiscountTableMap::COL_DESCRIPTION,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
 
         return $config;
     }
@@ -93,7 +95,7 @@ class DiscountsTable extends AbstractTable
                 SpyDiscountTableMap::COL_IS_ACTIVE => $item->getIsActive(),
                 self::COL_PERIOD => $item->getValidFrom(self::DATE_FORMAT) . ' - ' . $item->getValidTo(self::DATE_FORMAT),
                 self::COL_DECISION_RULES => implode(', ', $chosenDecisionRules),
-                self::COL_OPTIONS => $this->getRowOptions($item),
+                self::ACTIONS => $this->getRowOptions($item),
             ];
         }
 

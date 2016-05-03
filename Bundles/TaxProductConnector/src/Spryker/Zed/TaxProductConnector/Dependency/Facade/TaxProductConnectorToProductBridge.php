@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\TaxProductConnector\Dependency\Facade;
 
-use Spryker\Zed\Product\Business\ProductFacade;
-
 class TaxProductConnectorToProductBridge implements TaxProductConnectorToProductInterface
 {
 

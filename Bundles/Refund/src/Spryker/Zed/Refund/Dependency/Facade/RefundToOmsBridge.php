@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Refund\Dependency\Facade;
 
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Oms\Business\OmsFacade;
 
 class RefundToOmsBridge implements RefundToOmsInterface
 {

@@ -8,4 +8,4 @@ composer require spryker/product-cart-connector
 
 ## Documentation
 
-[ProductCartConnector Documentation](https://spryker.github.io/product-cart-connector/index.html)
+[ProductCartConnector Documentation](http://spryker.github.io/core/bundles/product-cart-connector)

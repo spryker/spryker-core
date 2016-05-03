@@ -8,4 +8,4 @@ composer require spryker/csv
 
 ## Documentation
 
-[Csv Documentation](https://spryker.github.io/csv/index.html)
+[Csv Documentation](http://spryker.github.io/core/bundles/csv)

@@ -36,7 +36,7 @@ class GroupKeyExpander
     protected function buildGroupKey(ItemTransfer $cartItem)
     {
         $currentGroupKey = $cartItem->getGroupKey();
-        if (empty($cartItem->getProductOptions())) {
+        if (!$cartItem->getProductOptions()) {
             return $currentGroupKey;
         }
 
@@ -76,7 +76,7 @@ class GroupKeyExpander
     {
         $groupKeyPart = [];
         foreach ($sortedProductOptions as $option) {
-            if (empty($option->getIdOptionValueUsage())) {
+            if (!$option->getIdOptionValueUsage()) {
                 continue;
             }
             $groupKeyPart[] = $option->getIdOptionValueUsage();

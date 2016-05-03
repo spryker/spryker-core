@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\User\Dependency\Facade;
 
-use Spryker\Zed\Acl\Business\AclFacade;
-
 class UserToAclBridge implements UserToAclInterface
 {
 

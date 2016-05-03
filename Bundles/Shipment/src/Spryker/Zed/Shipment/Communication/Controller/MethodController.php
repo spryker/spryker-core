@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -82,22 +81,6 @@ class MethodController extends AbstractController
             return $this->viewResponse([
                 'form' => $form->createView(),
             ]);
-        }
-
-        return $this->redirectResponse('/shipment');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deleteAction(Request $request)
-    {
-        $idMethod = $this->castId($request->query->get(self::ID_METHOD_PARAMETER));
-
-        if ($this->getFacade()->hasMethod($idMethod)) {
-            $this->getFacade()->deleteMethod($idMethod);
         }
 
         return $this->redirectResponse('/shipment');

@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Storage\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -89,7 +87,7 @@ class MaintenanceController extends AbstractController
      */
     public function keyAction(Request $request)
     {
-        $key = $request->get('key'); // TODO FW Validation
+        $key = $request->get('key');
         $value = $this->getFacade()->get($key);
 
         return $this->viewResponse([

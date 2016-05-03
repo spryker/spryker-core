@@ -58,7 +58,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainer
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected function getSalesQueryContainer()
     {

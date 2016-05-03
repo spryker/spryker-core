@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Storage\Dependency\Facade;
 
-use Spryker\Zed\Collector\Business\CollectorFacade;
-
 class StorageToCollectorBridge implements StorageToCollectorInterface
 {
 

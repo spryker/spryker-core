@@ -5,10 +5,11 @@
 
 'use strict';
 
+var summernote = require('ZedGuiEditorConfiguration');
+
 const GLOSSARY_SELECT_MARGIN_TOP = 159;
 const GLOSSARY_SELECT_MARGIN_LEFT = 230;
 const GLOSSARY_SELECT_MARGIN_WIDTH = 25;
-
 
 var xhr = null;
 var keyList = null;
@@ -17,10 +18,16 @@ var itemList = null;
 var itemContainer = null;
 var successResponseCount = 0;
 
-function postForm( $form, id, successCallback ){
+String.prototype.formatString = function(){
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, index){
+        return args[index];
+    });
+};
 
+function postForm( $form, id, successCallback ){
     var values = {};
-    $.each( $form.serializeArray(), function(i, field) {
+    $.each($form.serializeArray(), function(i, field) {
         values[field.name] = field.value;
     });
 
@@ -32,10 +39,10 @@ function postForm( $form, id, successCallback ){
     }
 
     $.ajax({
-        type        : $form.attr( 'method' ),
-        url         : '?id-page=' + $('#idPage').val() +'&id-form=' + id,
-        data        : values,
-        success     : function(data) {
+        type: $form.attr( 'method' ),
+        url: '?id-page={0}&id-form={1}'.formatString($('#idPage').val(), id),
+        data: values,
+        success: function(data) {
             successCallback(data);
         }
     });
@@ -71,10 +78,12 @@ var ajaxifySubmmit = function(formId) {
 
         return false;
     });
-}
+};
 
-function showAutoComplete(formId, type) {
-    var listElement = '<div id="foundKeyListContainer" class="key-container"><select id="foundKeyList" size="10" class="key-list"></select></div>'
+function showAutoComplete(formId, searchType) {
+    var searchTypeGlossaryKey = 2;
+    var searchTypeFullText = 3;
+    var listElement = '<div id="foundKeyListContainer" class="key-container"><select id="foundKeyList" size="10" class="key-list"></select></div>';
     $('.keyListCanvas').empty();
     $('.keyListCanvas').append(listElement);
 
@@ -84,23 +93,26 @@ function showAutoComplete(formId, type) {
     var form = $('.form_class_' + formId);
 
     var keyInput = form.find('#cms_glossary_glossary_key');
-    var keyTranslation = form.find('#form_translation');
+    var keyTranslation = form.find('#cms_glossary_translation');
+    var keyFkLocale = form.find('#cms_glossary_fk_locale');
 
-    var ajaxUrl = '';
+    var ajaxUrl = 'glossary/search?{0}={1}&localeId={2}';
 
-    if (type == 2) {
-        ajaxUrl = 'search/?key=';
-    } else if(type == 3) {
-        ajaxUrl = 'search/?value=';
+    if (searchType == searchTypeGlossaryKey) {
+        ajaxUrl = ajaxUrl.formatString('key', keyInput.val(), keyFkLocale.val());
+    } else if(searchType == searchTypeFullText) {
+        ajaxUrl = ajaxUrl.formatString('value', keyInput.val(), keyFkLocale.val());
+    } else {
+        ajaxUrl = '';
     }
 
     keyList.find('option').remove();
     $('.loading-' + formId).show();
 
     xhr = $.ajax({
-        type        : 'GET',
-        url         : ajaxUrl + keyInput.val(),
-        success     : function(data) {
+        type: 'GET',
+        url: ajaxUrl,
+        success: function(data) {
             $('.loading-' + formId).hide();
 
             $.each(data, function (i, item) {
@@ -117,8 +129,12 @@ function showAutoComplete(formId, type) {
 
             keyList.css({ height :  data.length * 17 });
             keyList.on('change', function() {
-                keyTranslation.val(data[this.value].value);
+                var keyContent = data[this.value].value;
+                keyTranslation.val(keyContent);
+
                 keyInput.val(data[this.value].key);
+                $(keyInput.closest('.row').find('#cms_glossary_translation')).summernote('destroy');
+                $(keyInput.closest('.row').find('#cms_glossary_translation')).summernote(summernote.getConfig(keyContent));
             });
 
             keyList.on('keydown', function(e) {
@@ -135,7 +151,7 @@ function showAutoComplete(formId, type) {
                 keyInput.focus();
                 return false;
             });
-        },
+        }
     });
 }
 
@@ -179,7 +195,7 @@ var addKeySearchEvent = function(formId) {
             keyList.val(0).change();
         }
     });
-}
+};
 
 function showBlockAutoComplete(elementId, type) {
     var listElement = '<div id="foundItemListContainer" class="key-container"><select id="foundItemList" size="10" class="key-list"></select></div>'
@@ -192,7 +208,7 @@ function showBlockAutoComplete(elementId, type) {
     var elementInput = $(elementId);
 
     var blockValue = $('#cms_block_value');
-    var ajaxUrl = type == 'category' ? '/cms/block/search-category?term=' : '/cms/block/search-product?term=';
+    var ajaxUrl = (type == 'category') ? '/cms/block/search-category?term={0}' : '/cms/block/search-product?term={0}';
 
     itemList.find('option').remove();
 
@@ -201,15 +217,15 @@ function showBlockAutoComplete(elementId, type) {
     loadingBlock.show();
 
     xhr = $.ajax({
-        type        : 'GET',
-        url         : ajaxUrl + elementInput.val(),
-        success     : function(data) {
+        type: 'GET',
+        url: ajaxUrl.formatString(elementInput.val()),
+        success: function(data) {
             $('.block-loading').hide();
 
             $.each(data, function (i, item) {
                 itemList.append($('<option>', {
                     value: i,
-                    text : item.name + '  ->  ' + item.url,
+                    text: '{0} -> {1}'.formatString(item.name, item.url)
                 }));
 
                 itemContainer.css({ top: elementInput.offset().top - 108 });
@@ -235,7 +251,7 @@ function showBlockAutoComplete(elementId, type) {
                 elementInput.focus();
                 return false;
             });
-        },
+        }
     });
 }
 
@@ -280,7 +296,7 @@ var addAutoCompleteSearchEvent = function(elementId) {
             $('#cms_block_selectValue').removeAttr('disabled');
         }
     });
-}
+};
 
 var delay = (function(){
     var timer = 0;

@@ -28,6 +28,11 @@ class NavigationBuilder
     private $menuFormatter;
 
     /**
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface
+     */
+    private $pathExtractor;
+
+    /**
      * @param \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface $navigationCollector
      * @param \Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface $menuFormatter
      * @param \Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface $pathExtractor

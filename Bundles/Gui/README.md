@@ -8,4 +8,4 @@ composer require spryker/gui
 
 ## Documentation
 
-[Gui Documentation](https://spryker.github.io/gui/index.html)
+[Gui Documentation](http://spryker.github.io/core/bundles/gui)

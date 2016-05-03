@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Acl\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
@@ -27,8 +27,12 @@ class RulesetController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idRule = $this->castId($request->get('id-rule'));
-        $idRole = $request->get('id-role');
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $idRule = $this->castId($request->request->get('id-rule'));
+        $idRole = $this->castId($request->request->get('id-role'));
 
         if (empty($idRule)) {
             $this->addErrorMessage('Missing rule id!');

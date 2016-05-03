@@ -24,6 +24,6 @@ interface ProductSearchToTouchInterface
      *
      * @return bool
      */
-    public function touchInActive($itemType, $itemId);
+    public function touchInactive($itemType, $itemId);
 
 }

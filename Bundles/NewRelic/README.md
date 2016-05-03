@@ -8,4 +8,4 @@ composer require spryker/new-relic
 
 ## Documentation
 
-[NewRelic Documentation](https://spryker.github.io/new-relic/index.html)
+[NewRelic Documentation](http://spryker.github.io/core/bundles/new-relic)

@@ -58,7 +58,7 @@ class SessionHandlerFile implements \SessionHandlerInterface
     {
         $this->savePath = $savePath;
         if (!is_dir($this->savePath)) {
-            mkdir($this->savePath, 0777, true);
+            mkdir($this->savePath, 0775, true);
         }
 
         return true;

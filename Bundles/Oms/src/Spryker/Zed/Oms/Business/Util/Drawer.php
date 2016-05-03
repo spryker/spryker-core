@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Spryker\Shared\Graph\GraphInterface;
+use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
@@ -159,6 +160,16 @@ class Drawer implements DrawerInterface
     }
 
     /**
+     * @return string
+     */
+    protected function getDiamondId()
+    {
+        $generator = new StringGenerator();
+
+        return $generator->generateRandomString();
+    }
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @throws \Spryker\Zed\Oms\Business\Exception\StatemachineException
@@ -171,23 +182,22 @@ class Drawer implements DrawerInterface
         foreach ($events as $event) {
             $transitions = $state->getOutgoingTransitionsByEvent($event);
 
+            $currentTransition = current($transitions);
+            if (!$currentTransition) {
+                throw new StatemachineException('Transitions container seems to be empty.');
+            }
+
             if (count($transitions) > 1) {
-                $diamondId = uniqid();
+                $diamondId = $this->getDiamondId();
 
                 $this->graph->addNode($diamondId, $this->attributesDiamond, $state->getProcess()->getName());
-
-                $currentTransition = current($transitions);
-                if (!$currentTransition) {
-                    throw new StatemachineException('Transitions container seems to be empty.');
-                }
-
                 $this->addEdge($currentTransition, self::EDGE_UPPER_HALF, [], null, $diamondId);
 
                 foreach ($transitions as $transition) {
                     $this->addEdge($transition, self::EDGE_LOWER_HALF, [], $diamondId);
                 }
             } else {
-                $this->addEdge(current($transitions), self::EDGE_FULL);
+                $this->addEdge($currentTransition, self::EDGE_FULL);
             }
         }
     }

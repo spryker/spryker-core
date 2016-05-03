@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Country\Persistence;
 
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\Country\Persistence\SpyRegionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**

@@ -10,8 +10,6 @@ namespace Spryker\Zed\ProductOption\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
 use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionGrossPrice;
-use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionTax;
-use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\OrderTaxAmountWithProductOptions;
 use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;

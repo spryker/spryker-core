@@ -85,7 +85,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
     {
-        if (empty($keyTranslationTransfer->getGlossaryKey())) {
+        if (!$keyTranslationTransfer->getGlossaryKey()) {
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
@@ -601,7 +601,7 @@ class TranslationManager implements TranslationManagerInterface
     protected function doUpdateAndTouchTranslation(SpyGlossaryTranslation $translation)
     {
         if (!$translation->isModified()) {
-            return $translation;
+            return $this->convertEntityToTranslationTransfer($translation);
         }
 
         Propel::getConnection()

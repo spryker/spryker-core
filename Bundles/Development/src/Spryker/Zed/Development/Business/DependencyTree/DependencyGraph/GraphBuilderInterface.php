@@ -16,7 +16,7 @@ interface GraphBuilderInterface
     /**
      * @param array $dependencyTree
      *
-     * @return bool
+     * @return string
      */
     public function build(array $dependencyTree);
 

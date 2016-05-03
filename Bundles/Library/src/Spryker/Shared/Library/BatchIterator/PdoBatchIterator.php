@@ -7,14 +7,14 @@
 
 namespace Spryker\Shared\Library\BatchIterator;
 
-use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
+use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 class PdoBatchIterator implements CountableIteratorInterface
 {
 
     /**
-     * @var \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
+     * @var \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
 
@@ -39,7 +39,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     protected $batchData = [];
 
     /**
-     * @param \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
+     * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $connection
      * @param int $chunkSize
      */

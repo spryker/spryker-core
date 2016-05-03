@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oms\Business;
 
-use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
@@ -17,7 +16,6 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
 use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
-use Spryker\Zed\Oms\Business\Process\ProcessSelector;
 use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Business\Process\Transition;
 use Spryker\Zed\Oms\Business\Util\Drawer;
@@ -48,7 +46,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
      */
-    public function createOrderStateMachineOrderStateMachine(array $logContext = [])
+    public function createOrderStateMachine(array $logContext = [])
     {
         return new OrderStateMachine(
             $this->getQueryContainer(),
@@ -59,6 +57,20 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS)
         );
+    }
+
+    /**
+     * @deprecated Please use createOrderStateMachine() instead
+     *
+     * @param array $logContext
+     *
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
+     */
+    public function createOrderStateMachineOrderStateMachine(array $logContext = [])
+    {
+        trigger_error('Deprecated, please use createOrderStateMachine() instead', E_USER_DEPRECATED);
+
+        return $this->createOrderStateMachine($logContext);
     }
 
     /**

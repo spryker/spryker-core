@@ -23,6 +23,7 @@ use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPlu
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\Library\Generator\StringGenerator;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer
@@ -179,7 +180,9 @@ class Customer
      */
     protected function generateKey()
     {
-        return uniqid();
+        $generator = new StringGenerator();
+
+        return $generator->generateRandomString();
     }
 
     /**
@@ -359,15 +362,18 @@ class Customer
      */
     public function update(CustomerTransfer $customerTransfer)
     {
-        $customerTransfer = $this->encryptPassword($customerTransfer);
+        if (!empty($customerTransfer->getNewPassword())) {
+            $customerResponseTransfer = $this->updatePassword(clone $customerTransfer);
+            if ($customerResponseTransfer->getIsSuccess() === false) {
+                return $customerResponseTransfer;
+            }
+        }
 
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
 
         if (!$this->isEmailAvailableForCustomer($customerEntity)) {
-            $customerResponseTransfer = $this->createCustomerEmailAlreadyUsedResponse();
-
-            return $customerResponseTransfer;
+            return $this->createCustomerEmailAlreadyUsedResponse();
         }
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()

@@ -1,12 +1,10 @@
 {% extends '@Sales/Layout/layout.twig' %}
 
 {% block section_title %}
-    {{ 'Order ID:' | trans }} {{ order.idSalesOrder }} ({{ order.createdAt | date('Y-m-d G:i:s', false) }})
+    {{ 'Order ID:' | trans }} {{ order.idSalesOrder }} ({{ order.createdAt | formatDateTime }})
 {% endblock %}
 
 {% block content %}
-
-    {% include '@Sales/Detail/boxes/order-navigation.twig' %}
 
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
     <div id="items">{% include '@Sales/Detail/boxes/items.twig' %}</div>
@@ -19,3 +17,7 @@
 
 {% endblock %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-sales-main.css">
+{% endblock %}

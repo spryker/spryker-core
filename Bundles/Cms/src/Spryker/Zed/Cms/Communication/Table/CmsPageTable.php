@@ -46,6 +46,9 @@ class CmsPageTable extends AbstractTable
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
         ]);

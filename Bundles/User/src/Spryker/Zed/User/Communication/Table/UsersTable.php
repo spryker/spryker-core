@@ -12,7 +12,7 @@ use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 
 class UsersTable extends AbstractTable
 {
@@ -25,7 +25,7 @@ class UsersTable extends AbstractTable
     const PARAM_ID_USER = 'id-user';
 
     /**
-     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected $userQueryContainer;
 
@@ -35,10 +35,10 @@ class UsersTable extends AbstractTable
     protected $dateFormatter;
 
     /**
-     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $userQueryContainer
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $userQueryContainer
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(UserQueryContainer $userQueryContainer, DateFormatterInterface $dateFormatter)
+    public function __construct(UserQueryContainerInterface $userQueryContainer, DateFormatterInterface $dateFormatter)
     {
         $this->userQueryContainer = $userQueryContainer;
         $this->dateFormatter = $dateFormatter;
@@ -59,6 +59,8 @@ class UsersTable extends AbstractTable
             SpyUserTableMap::COL_STATUS => 'Status',
             self::ACTION => self::ACTION,
         ]);
+
+        $config->setRawColumns([SpyUserTableMap::COL_STATUS, self::ACTION]);
 
         $config->setSortable([
             SpyUserTableMap::COL_USERNAME,
@@ -117,13 +119,12 @@ class UsersTable extends AbstractTable
             ]),
             'Edit'
         );
+
         $urls[] = $this->createStatusButton($user);
-        $urls[] = $this->generateRemoveButton(
-            Url::generate(self::DELETE_USER_URL, [
-                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
-            ]),
-            'Delete'
-        );
+
+        $urls[] = $this->generateRemoveButton(self::DELETE_USER_URL, 'Delete', [
+            self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+        ]);
 
         return $urls;
     }

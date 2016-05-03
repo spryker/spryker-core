@@ -56,6 +56,8 @@ class MethodTable extends AbstractTable
         $this->configureSearchable($config);
         $this->configureUrl($config);
 
+        $config->addRawColumn(self::ACTIONS);
+
         return $config;
     }
 
@@ -115,6 +117,8 @@ class MethodTable extends AbstractTable
 
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(SpyShipmentMethodTableMap::COL_IS_ACTIVE);
     }
 
     /**
@@ -189,13 +193,6 @@ class MethodTable extends AbstractTable
                 self::ID_METHOD_PARAMETER => $idShipmentMethod,
             ]),
             'Edit'
-        );
-
-        $urls[] = $this->generateRemoveButton(
-            Url::generate('/shipment/method/delete', [
-                self::ID_METHOD_PARAMETER => $idShipmentMethod,
-            ]),
-            'Delete'
         );
 
         return $urls;

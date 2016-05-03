@@ -11,7 +11,6 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,7 +30,7 @@ class KeyController extends AbstractController
      */
     public function ajaxAction(Request $request)
     {
-        $term = $request->get(self::TERM); // TODO FW Validation needed
+        $term = $request->get(self::TERM);
 
         $key = $this->getQueryContainer()
             ->queryKey($term)
@@ -68,7 +67,7 @@ class KeyController extends AbstractController
      */
     public function suggestAction(Request $request)
     {
-        $term = $request->get(self::TERM); // TODO FW Validation needed
+        $term = $request->get(self::TERM);
 
         $keys = $this->getQueryContainer()
             ->queryByKey($term)->find();

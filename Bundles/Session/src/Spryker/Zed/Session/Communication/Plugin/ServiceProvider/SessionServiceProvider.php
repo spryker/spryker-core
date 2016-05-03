@@ -45,10 +45,11 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     public function register(Application $app)
     {
         $app['session.test'] = Config::get(SessionConstants::SESSION_IS_TEST, false);
-
         $app['session.storage.options'] = [
+            'name' => str_replace('.', '-', Config::get(ApplicationConstants::ZED_STORAGE_SESSION_COOKIE_NAME)),
             'cookie_lifetime' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_TIME_TO_LIVE),
-            'name' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_COOKIE_NAME),
+            'cookie_secure' => $this->secureCookie(),
+            'use_only_cookies' => true
         ];
 
         $this->client->setContainer($app['session']);
@@ -126,6 +127,24 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         }
 
         return $path;
+    }
+
+    /**
+     * Secure flag of cookies can only be set to true if SSL is enabled. If you set it to true
+     * without SSL enabled you will not get the same session in browsers like Firefox and Safari
+     *
+     * @throws \Exception
+     * @return bool
+     */
+    protected function secureCookie()
+    {
+        if (Config::get(ApplicationConstants::ZED_SSL_ENABLED, false)
+            && Config::get(ApplicationConstants::ZED_STORAGE_SESSION_COOKIE_SECURE, true)
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
 }

@@ -8,8 +8,7 @@
 namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
-use Spryker\Shared\Url\Url;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -19,10 +18,10 @@ class RulesetTable extends AbstractTable
     const PARAM_ID_RULE = 'id-rule';
     const PARAM_ID_ROLE = 'id-role';
     const REMOVE_ACL_RULESET_URL = '/acl/ruleset/delete';
-    const EMPTY_HEADER_NAME = 'empty';
+    const ACTIONS = 'actions';
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $aclQueryContainer;
 
@@ -32,10 +31,10 @@ class RulesetTable extends AbstractTable
     protected $idRole;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $aclQueryContainer
      * @param int $idRole
      */
-    public function __construct(AclQueryContainer $aclQueryContainer, $idRole)
+    public function __construct(AclQueryContainerInterface $aclQueryContainer, $idRole)
     {
         $this->aclQueryContainer = $aclQueryContainer;
         $this->idRole = $idRole;
@@ -53,7 +52,7 @@ class RulesetTable extends AbstractTable
             SpyAclRuleTableMap::COL_CONTROLLER => 'Controller',
             SpyAclRuleTableMap::COL_ACTION => 'Action',
             SpyAclRuleTableMap::COL_TYPE => 'Permission',
-            self::EMPTY_HEADER_NAME => '',
+            self::ACTIONS => 'Actions',
         ]);
 
         $config->setSortable([
@@ -68,6 +67,8 @@ class RulesetTable extends AbstractTable
             SpyAclRuleTableMap::COL_CONTROLLER,
             SpyAclRuleTableMap::COL_ACTION,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
 
         $config->setUrl(sprintf('ruleset-table?id-role=%d', $this->idRole));
 
@@ -91,7 +92,7 @@ class RulesetTable extends AbstractTable
                 SpyAclRuleTableMap::COL_CONTROLLER => $ruleset[SpyAclRuleTableMap::COL_CONTROLLER],
                 SpyAclRuleTableMap::COL_ACTION => $ruleset[SpyAclRuleTableMap::COL_ACTION],
                 SpyAclRuleTableMap::COL_TYPE => $ruleset[SpyAclRuleTableMap::COL_TYPE],
-                self::EMPTY_HEADER_NAME => implode(' ', $this->createTableActions($ruleset)),
+                self::ACTIONS => implode(' ', $this->createTableActions($ruleset)),
             ];
         }
 
@@ -106,13 +107,10 @@ class RulesetTable extends AbstractTable
     public function createTableActions(array $ruleset)
     {
         $buttons = [];
-        $buttons[] = $this->generateRemoveButton(
-            Url::generate(self::REMOVE_ACL_RULESET_URL, [
-                self::PARAM_ID_RULE => $ruleset[SpyAclRuleTableMap::COL_ID_ACL_RULE],
-                self::PARAM_ID_ROLE => $ruleset[SpyAclRuleTableMap::COL_FK_ACL_ROLE],
-            ]),
-            'Remove'
-        );
+        $buttons[] = $this->generateRemoveButton(self::REMOVE_ACL_RULESET_URL, 'Delete', [
+            self::PARAM_ID_RULE => $ruleset[SpyAclRuleTableMap::COL_ID_ACL_RULE],
+            self::PARAM_ID_ROLE => $ruleset[SpyAclRuleTableMap::COL_FK_ACL_ROLE],
+        ]);
 
         return $buttons;
     }

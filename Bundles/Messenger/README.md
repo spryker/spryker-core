@@ -8,4 +8,4 @@ composer require spryker/messenger
 
 ## Documentation
 
-[Messenger Documentation](https://spryker.github.io/messenger/index.html)
+[Messenger Documentation](http://spryker.github.io/core/bundles/messenger)

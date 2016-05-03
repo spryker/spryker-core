@@ -23,6 +23,14 @@ class IndexController extends AbstractController
     const DEFAULT_FONT_SIZE = '14';
 
     /**
+     * @var array
+     */
+    protected $formatContentTypes = [
+        'jpg' => 'image/jpeg',
+        'svg' => 'image/svg+xml',
+    ];
+
+    /**
      * @return array
      */
     public function indexAction()
@@ -39,14 +47,14 @@ class IndexController extends AbstractController
      */
     public function drawAction(Request $request)
     {
-        $processName = $request->query->get('process'); // TODO FW Validation
+        $processName = $request->query->get('process');
         if ($processName === null) {
             return $this->redirectResponse('/oms');
         }
 
-        $format = $request->query->get('format'); // TODO FW Validation
-        $fontSize = $request->query->getInt('font'); // TODO FW Validation
-        $highlightState = $request->query->get('state'); // TODO FW Validation
+        $format = $request->query->get('format');
+        $fontSize = $request->query->getInt('font');
+        $highlightState = $request->query->get('state');
 
         $reload = false;
         if ($format === null) {
@@ -59,7 +67,7 @@ class IndexController extends AbstractController
         }
 
         if ($reload) {
-            return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontSize.'&state='.$highlightState);
+            return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontSize . '&state=' . $highlightState);
         }
 
         $response = $this->getFacade()->drawProcess($processName, $highlightState, $format, $fontSize);
@@ -68,7 +76,7 @@ class IndexController extends AbstractController
             echo $response;
         };
 
-        return $this->streamedResponse($callback);
+        return $this->streamedResponse($callback, Response::HTTP_OK, $this->getStreamedResponseHeaders($format));
     }
 
     /**
@@ -80,8 +88,8 @@ class IndexController extends AbstractController
     {
         $id = $this->castId($request->query->get('id'));
 
-        $format = $request->query->get('format', self::DEFAULT_FORMAT); // TODO FW Validation
-        $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE); // TODO FW Validation
+        $format = $request->query->get('format', self::DEFAULT_FORMAT);
+        $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE);
 
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
@@ -98,7 +106,7 @@ class IndexController extends AbstractController
      */
     public function drawPreviewVersionAction(Request $request)
     {
-        $processName = $request->query->get('process'); // TODO FW Validation
+        $processName = $request->query->get('process');
         if ($processName === null) {
             return $this->redirectResponse('/oms');
         }
@@ -106,6 +114,22 @@ class IndexController extends AbstractController
         return $this->viewResponse([
             'processName' => $processName,
         ]);
+    }
+
+    /**
+     * @param string $format
+     *
+     * @return array
+     */
+    protected function getStreamedResponseHeaders($format)
+    {
+        $headers = [];
+
+        if (isset($this->formatContentTypes[$format])) {
+            $headers['content-type'] = $this->formatContentTypes[$format];
+        }
+
+        return $headers;
     }
 
 }

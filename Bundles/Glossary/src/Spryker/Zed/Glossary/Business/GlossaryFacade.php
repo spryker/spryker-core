@@ -366,6 +366,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $keyFragment
      *
      * @return array

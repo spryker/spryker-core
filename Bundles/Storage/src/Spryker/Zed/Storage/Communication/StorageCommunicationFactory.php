@@ -36,7 +36,7 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\CollectorFacade
+     * @return \Spryker\Zed\Storage\Dependency\Facade\StorageToCollectorInterface
      */
     public function getCollectorFacade()
     {

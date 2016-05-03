@@ -21,7 +21,6 @@ class Application extends \Silex\Application
     use TwigTrait;
     use UrlGeneratorTrait;
 
-    const COOKIES = 'cookies';
     const REQUEST = 'request';
     const ROUTERS = 'routers';
     const REQUEST_STACK = 'request_stack';
@@ -69,14 +68,6 @@ class Application extends \Silex\Application
     }
 
     /**
-     * @return \ArrayObject
-     */
-    public function getCookieBag()
-    {
-        return $this[self::COOKIES];
-    }
-
-    /**
      * Add a router to the list of routers.
      *
      * @param \Symfony\Component\Routing\RouterInterface $router The router
@@ -86,7 +77,7 @@ class Application extends \Silex\Application
      */
     public function addRouter(RouterInterface $router, $priority = 0)
     {
-        /* @var \Pimple $this */
+        /** @var \Pimple $this */
         $this[self::ROUTERS] = $this->share($this->extend(self::ROUTERS, function (ChainRouter $chainRouter) use ($router, $priority) {
             $chainRouter->add($router, $priority);
 

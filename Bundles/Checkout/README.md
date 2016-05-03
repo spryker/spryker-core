@@ -8,4 +8,4 @@ composer require spryker/checkout
 
 ## Documentation
 
-[Checkout Documentation](https://spryker.github.io/checkout/index.html)
+[Checkout Documentation](http://spryker.github.io/core/bundles/checkout)

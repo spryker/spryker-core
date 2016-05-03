@@ -36,6 +36,7 @@ class CmsGlossaryForm extends AbstractType
     const TYPE_FULLTEXT_SEARCH = 'Full text';
 
     const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
+    const FIELD_FK_LOCALE = 'fk_locale';
 
     /**
      * @var \Spryker\Zed\Cms\Business\CmsFacade
@@ -95,6 +96,7 @@ class CmsGlossaryForm extends AbstractType
             ->addPlaceholderField($builder)
             ->addSearchOptionField($builder)
             ->addGlossaryKeyField($builder)
+            ->addLocaleField($builder)
             ->addTranslationField($builder);
     }
 
@@ -178,6 +180,18 @@ class CmsGlossaryForm extends AbstractType
                 self::TYPE_FULLTEXT_SEARCH,
             ],
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    public function addLocaleField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_FK_LOCALE, 'hidden');
 
         return $this;
     }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Business\Model;
 
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
@@ -124,7 +123,7 @@ class Calculator implements CalculatorInterface
     protected function distributeDiscountAmount(array $calculatedDiscounts)
     {
         foreach ($calculatedDiscounts as $calculatedDiscount) {
-            /* @var $discountTransfer DiscountTransfer */
+            /** @var \Generated\Shared\Transfer\DiscountTransfer $discountTransfer */
             $discountTransfer = $calculatedDiscount[self::KEY_DISCOUNT_TRANSFER];
             $this->distributor->distribute(
                 $calculatedDiscount[self::KEY_DISCOUNTABLE_OBJECTS],
@@ -157,7 +156,10 @@ class Calculator implements CalculatorInterface
     protected function sortByDiscountAmountDesc(array $calculatedDiscounts)
     {
         usort($calculatedDiscounts, function ($a, $b) {
-            return $b[self::KEY_DISCOUNT_TRANSFER]->getAmount() - $a[self::KEY_DISCOUNT_TRANSFER]->getAmount();
+            $amountA = (int)$a[self::KEY_DISCOUNT_TRANSFER]->getAmount();
+            $amountB = (int)$b[self::KEY_DISCOUNT_TRANSFER]->getAmount();
+
+            return $amountB - $amountA;
         });
 
         return $calculatedDiscounts;

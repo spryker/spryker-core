@@ -10,7 +10,7 @@ namespace Spryker\Zed\Application\Business\Model\Navigation\Validator;
 class UrlUniqueException extends \Exception
 {
 
-    const ERROR_MESSAGE = 'The Url "%s" is already used in the Menu!';
+    const ERROR_MESSAGE = 'The URL "%s" is already used in the Menu!';
 
     /**
      * @param string $url

@@ -10,15 +10,14 @@ namespace Spryker\Zed\Cms\Communication\Controller;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
  */
 class PageController extends AbstractController
 {
@@ -57,23 +56,23 @@ class PageController extends AbstractController
      */
     public function addAction(Request $request)
     {
+        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
+
         $dataProvider = $this->getFactory()->createCmsPageFormDataProvider();
-        $form = $this
-            ->getFactory()
+        $form = $this->getFactory()
             ->createCmsPageForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
-
         if ($form->isValid()) {
             $data = $form->getData();
             $pageTransfer = $this->createPageTransfer($data);
 
             $this->getFacade()
-                ->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::FIELD_URL]);
+                ->savePageUrlAndTouch($pageTransfer);
+
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
@@ -93,7 +92,6 @@ class PageController extends AbstractController
     public function editAction(Request $request)
     {
         $idPage = $this->castId($request->query->get(CmsPageTable::REQUEST_ID_PAGE));
-
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $dataProvider = $this->getFactory()->createCmsPageFormDataProvider();
@@ -117,7 +115,7 @@ class PageController extends AbstractController
             }
 
             $urlTransfer = $this->createUrlTransfer($data['id_url'], $pageTransfer, $data);
-            $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
+            $this->getFactory()->getUrlFacade()->saveUrlAndTouch($urlTransfer);
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
@@ -131,23 +129,19 @@ class PageController extends AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\UrlFacade
-     */
-    private function getUrlFacade()
-    {
-        return $this->getFactory()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
-    }
-
-    /**
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    private function createPageTransfer($data)
+    protected function createPageTransfer(array $data)
     {
         $pageTransfer = new PageTransfer();
         $pageTransfer->fromArray($data, true);
+
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->fromArray($data, true);
+
+        $pageTransfer->setUrl($urlTransfer);
 
         return $pageTransfer;
     }
@@ -159,7 +153,7 @@ class PageController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    private function createUrlTransfer($idUrl, $pageTransfer, array $data)
+    protected function createUrlTransfer($idUrl, $pageTransfer, array $data)
     {
         $url = $this->getQueryContainer()
             ->queryUrlById($idUrl)

@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Catalog;
 
-use Elastica\Index;
 use Spryker\Client\Catalog\KeyBuilder\ProductResourceKeyBuilder;
 use Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilder;
 use Spryker\Client\Catalog\Model\Builder\FilterBuilder;

@@ -52,46 +52,6 @@ class CartRuleController extends AbstractController
      *
      * @return array
      */
-    public function decisionRuleAction(Request $request)
-    {
-        $elements = $this->castId($request->request->get(self::PARAM_CURRENT_ELEMENTS_COUNT));
-
-        $form = $this
-            ->getFactory()
-            ->createDecisionRuleForm()
-            ->handleRequest($request);
-
-        return [
-            'form' => $form->createView(),
-            'elementsCount' => $elements,
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function collectorPluginsAction(Request $request)
-    {
-        $elements = $this->castId($request->request->get(self::PARAM_CURRENT_ELEMENTS_COUNT));
-
-        $form = $this
-            ->getFactory()
-            ->createCollectorPluginForm()
-            ->handleRequest($request);
-
-        return [
-            'form' => $form->createView(),
-            'elementsCount' => $elements,
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
     public function createAction(Request $request)
     {
         $dataProvider = $this->getFactory()->createCartRuleFormDataProvider();

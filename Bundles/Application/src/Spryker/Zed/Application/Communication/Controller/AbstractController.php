@@ -230,6 +230,8 @@ abstract class AbstractController
     protected function addSuccessMessage($message, array $data = [])
     {
         $this->getMessengerFacade()->addSuccessMessage($this->createMessageTransfer($message, $data));
+
+        return $this;
     }
 
     /**

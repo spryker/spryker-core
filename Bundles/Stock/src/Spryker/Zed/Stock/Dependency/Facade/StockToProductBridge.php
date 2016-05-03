@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Stock\Dependency\Facade;
 
-use Spryker\Zed\Product\Business\ProductFacade;
-
 class StockToProductBridge implements StockToProductInterface
 {
 

@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -140,13 +139,15 @@ class CmsRedirectForm extends AbstractType
     {
         $builder->add(
             self::FIELD_STATUS,
-            'text',
+            'choice',
             [
                 'label' => 'Redirect status code',
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
-                    $this->createRedirectStatusCodeConstraint()
-                ]
+                    $this->createNotBlankConstraint()
+                ],
+                'choices' => [201 => 201, 301 => 301, 302 => 302, 303 => 303, 307 => 307, 308 => 308],
+                'placeholder' => 'Please select',
+                'empty_value' => null,
             ]
         );
 
@@ -164,7 +165,7 @@ class CmsRedirectForm extends AbstractType
             'methods' => [
                 function ($url, ExecutionContextInterface $context) {
                     if ($this->urlFacade->hasUrl($url)) {
-                        $context->addViolation('Url is already used');
+                        $context->addViolation('URL is already used');
                     }
                 },
             ],
@@ -183,6 +184,15 @@ class CmsRedirectForm extends AbstractType
             $this->createRequiredConstraint(),
             $this->createNotBlankConstraint(),
             $this->createLengthConstraint(self::MAX_COUNT_CHARACTERS_REDIRECT_URL),
+            new Callback([
+                'methods' => [
+                    function ($url, ExecutionContextInterface $context) {
+                        if ($url[0] !== '/') {
+                            $context->addViolation('URL must start with a slash');
+                        }
+                    },
+                ]
+            ])
         ];
     }
 
@@ -192,17 +202,6 @@ class CmsRedirectForm extends AbstractType
     protected function createNotBlankConstraint()
     {
         return new NotBlank();
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraints\Regex
-     */
-    protected function createRedirectStatusCodeConstraint()
-    {
-        return new Regex([
-            'pattern' => '/^\d{3}$/',
-            'message' => 'This field should contain exactly 3 digits.'
-        ]);
     }
 
     /**

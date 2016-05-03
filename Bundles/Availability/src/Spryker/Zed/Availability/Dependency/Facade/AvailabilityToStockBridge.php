@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-use Spryker\Zed\Stock\Business\StockFacade;
-
 class AvailabilityToStockBridge implements AvailabilityToStockInterface
 {
 

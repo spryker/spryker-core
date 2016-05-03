@@ -12,7 +12,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Library\DateFormatterInterface;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -31,7 +31,7 @@ class CustomerTable extends AbstractTable
     const COL_LAST_NAME = 'last_name';
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     protected $customerQueryContainer;
 
@@ -41,10 +41,10 @@ class CustomerTable extends AbstractTable
     protected $dateFormatter;
 
     /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(CustomerQueryContainer $customerQueryContainer, DateFormatterInterface $dateFormatter)
+    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, DateFormatterInterface $dateFormatter)
     {
         $this->customerQueryContainer = $customerQueryContainer;
         $this->dateFormatter = $dateFormatter;
@@ -68,6 +68,10 @@ class CustomerTable extends AbstractTable
             self::COL_FK_COUNTRY => 'Country',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
+        $config->addRawColumn(self::ACTIONS);
 
         $config->setSortable([
             self::COL_ID_CUSTOMER,

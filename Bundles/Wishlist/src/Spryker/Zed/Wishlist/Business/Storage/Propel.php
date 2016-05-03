@@ -187,7 +187,7 @@ class Propel implements StorageInterface
     protected function getWishlistItemEntity(ItemTransfer $wishlistItemTransfer, $idWishlist)
     {
         $wishlistItemEntity = null;
-        if (!empty($wishlistItemTransfer->getGroupKey())) {
+        if ($wishlistItemTransfer->getGroupKey()) {
             $wishlistItemEntity = $this->wishlistQueryContainer
                 ->queryCustomerWishlistByGroupKey($idWishlist, $wishlistItemTransfer->getGroupKey())
                 ->findOne();

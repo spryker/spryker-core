@@ -42,21 +42,6 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryTranslationById($id)
-    {
-        $query = $this->getFactory()->createUrlQuery();
-        $query->filterByIdUrl($id);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param int $id
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
     public function queryUrlById($id)
     {
         $query = $this->getFactory()->createUrlQuery();
@@ -162,6 +147,21 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         $query = $this->getFactory()->createUrlQuery();
         $query->filterByFkResourceCategorynode($idCategoryNode);
         $query->filterByFkLocale($idLocale);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeId($idCategoryNode)
+    {
+        $query = $this->getFactory()->createUrlQuery();
+        $query->filterByFkResourceCategorynode($idCategoryNode);
 
         return $query;
     }

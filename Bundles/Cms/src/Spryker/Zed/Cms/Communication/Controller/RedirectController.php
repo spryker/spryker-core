@@ -10,9 +10,9 @@ namespace Spryker\Zed\Cms\Communication\Controller;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
@@ -67,11 +67,11 @@ class RedirectController extends AbstractController
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $redirectTransfer = $this->getUrlFacade()
+            $redirectTransfer = $this->getFactory()->getUrlFacade()
                 ->createRedirectAndTouch($data[CmsRedirectForm::FIELD_TO_URL], $data[CmsRedirectForm::FIELD_STATUS]);
 
-            $this->getUrlFacade()
-                ->saveRedirectUrlAndTouch($data[CmsRedirectForm::FIELD_FROM_URL], $this->getLocaleFacade()
+            $this->getFactory()->getUrlFacade()
+                ->saveRedirectUrlAndTouch($data[CmsRedirectForm::FIELD_FROM_URL], $this->getFactory()->getLocaleFacade()
                     ->getCurrentLocale(), $redirectTransfer->getIdUrlRedirect());
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
@@ -104,14 +104,14 @@ class RedirectController extends AbstractController
 
             if ($url) {
                 $urlTransfer = $this->createUrlTransfer($url, $data);
-                $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
+                $this->getFactory()->getUrlFacade()->saveUrlAndTouch($urlTransfer);
 
                 $redirect = $this->getQueryContainer()
                     ->queryRedirectById($url->getFkResourceRedirect())
                     ->findOne();
                 $redirectTransfer = $this->createRedirectTransfer($redirect, $data);
 
-                $this->getUrlFacade()->saveRedirectAndTouch($redirectTransfer);
+                $this->getFactory()->getUrlFacade()->saveRedirectAndTouch($redirectTransfer);
             }
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
@@ -123,30 +123,12 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
-     */
-    private function getUrlFacade()
-    {
-        return $this->getFactory()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
-    }
-
-    /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
-     */
-    private function getLocaleFacade()
-    {
-        return $this->getFactory()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
      * @param \Orm\Zed\Url\Persistence\SpyUrl $url
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    private function createUrlTransfer($url, $data)
+    protected function createUrlTransfer($url, $data)
     {
         $urlTransfer = new UrlTransfer();
         $urlTransfer->fromArray($url->toArray(), true);
@@ -164,7 +146,7 @@ class RedirectController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    private function createRedirectTransfer($redirect, $data)
+    protected function createRedirectTransfer($redirect, $data)
     {
         $redirectTransfer = (new RedirectTransfer())->fromArray($redirect->toArray());
         $redirectTransfer->setToUrl($data[CmsRedirectForm::FIELD_TO_URL]);
@@ -180,7 +162,12 @@ class RedirectController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idUrlRedirect = $this->castId($request->query->get(self::REQUEST_ID_URL_REDIRECT));
+        if (!$request->isMethod(Request::METHOD_DELETE)) {
+            throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $idUrlRedirect = $this->castId($request->request->get(self::REQUEST_ID_URL_REDIRECT));
+
         if ($idUrlRedirect === 0) {
             $this->addErrorMessage('Id redirect url not set');
 
@@ -190,7 +177,7 @@ class RedirectController extends AbstractController
         $redirectTransfer = new RedirectTransfer();
         $redirectTransfer->setIdUrlRedirect($idUrlRedirect);
 
-        $this->getUrlFacade()->deleteUrlRedirect($redirectTransfer);
+        $this->getFactory()->getUrlFacade()->deleteUrlRedirect($redirectTransfer);
 
         return $this->redirectResponse('/cms/redirect');
     }

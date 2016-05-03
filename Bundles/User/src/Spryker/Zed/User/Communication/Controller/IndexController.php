@@ -8,7 +8,6 @@
 namespace Spryker\Zed\User\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()

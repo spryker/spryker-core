@@ -8,4 +8,4 @@ composer require spryker/cache
 
 ## Documentation
 
-[Cache Documentation](https://spryker.github.io/cache/index.html)
+[Cache Documentation](http://spryker.github.io/core/bundles/cache)

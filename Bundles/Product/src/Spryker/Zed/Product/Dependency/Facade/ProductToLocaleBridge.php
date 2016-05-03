@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
-use Spryker\Zed\Locale\Business\LocaleFacade;
-
 class ProductToLocaleBridge implements ProductToLocaleInterface
 {
 

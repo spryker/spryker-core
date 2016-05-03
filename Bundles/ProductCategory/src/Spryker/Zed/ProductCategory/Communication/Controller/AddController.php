@@ -11,8 +11,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -51,12 +50,17 @@ class AddController extends AbstractController
             $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
             $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
 
-            $idCategory = $this->getFacade()
-                ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
+            try {
+                $idCategory = $this
+                    ->getFacade()
+                    ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
 
-            $this->addSuccessMessage('The category was added successfully.');
+                $this->addSuccessMessage('The category was added successfully.');
 
-            return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
+                return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
+            } catch (CategoryUrlExistsException $e) {
+                $this->addErrorMessage($e->getMessage());
+            }
         }
 
         return $this->viewResponse([

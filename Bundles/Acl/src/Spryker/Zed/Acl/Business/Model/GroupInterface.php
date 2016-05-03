@@ -124,6 +124,13 @@ interface GroupInterface
     public function addRoleToGroup($idRole, $idGroup);
 
     /**
+     * @param int $idAclGroup
+     *
+     * @return void
+     */
+    public function removeRolesFromGroup($idAclGroup);
+
+    /**
      * @param int $idGroup
      * @param int $idUser
      *

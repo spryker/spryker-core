@@ -8,7 +8,8 @@
 namespace Spryker\Zed\Cms\Communication\Form\DataProvider;
 
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageFormDataProvider
 {
@@ -25,16 +26,23 @@ class CmsPageFormDataProvider
     const FIELD_IS_ACTIVE = 'is_active';
 
     /**
-     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainer
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainer $cmsQueryContainer
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
-    public function __construct(CmsQueryContainer $cmsQueryContainer)
+    protected $cmsToLocaleInterface;
+
+    /**
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface $cmsToLocaleInterface
+     */
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToLocaleInterface $cmsToLocaleInterface)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
+        $this->cmsToLocaleInterface = $cmsToLocaleInterface;
     }
 
     /**
@@ -56,10 +64,11 @@ class CmsPageFormDataProvider
         return [
             CmsPageForm::FIELD_ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
             CmsPageForm::FIELD_FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-            CmsPageForm::FIELD_URL => $pageUrlTemplate->getUrl(),
+            CmsPageForm::FIELD_URL => $pageUrlTemplate->getVirtualColumn('url'),
+            CmsPageForm::FIELD_FK_LOCALE => $pageUrlTemplate->getVirtualColumn('idLocale'),
             CmsPageForm::FIELD_CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
             CmsPageForm::FIELD_IS_ACTIVE => $pageUrlTemplate->getIsActive(),
-            CmsPageForm::FIELD_ID_URL => $pageUrlTemplate->getIdUrl(),
+            CmsPageForm::FIELD_ID_URL => $pageUrlTemplate->getVirtualColumn('idUrl'),
         ];
     }
 
@@ -70,7 +79,16 @@ class CmsPageFormDataProvider
     {
         return [
             CmsPageForm::OPTION_TEMPLATE_CHOICES => $this->getTemplateList(),
+            CmsPageForm::OPTION_LOCALES_CHOICES => $this->getAvailableLocales(),
         ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAvailableLocales()
+    {
+        return $this->cmsToLocaleInterface->getAvailableLocales();
     }
 
     /**
@@ -81,6 +99,8 @@ class CmsPageFormDataProvider
         $templates = $this->cmsQueryContainer->queryTemplates()->find();
 
         $result = [];
+
+        /** @var \Orm\Zed\Cms\Persistence\SpyCmsTemplate $template */
         foreach ($templates->getData() as $template) {
             $result[$template->getIdCmsTemplate()] = $template->getTemplateName();
         }

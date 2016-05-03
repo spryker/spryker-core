@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree;
 
-use Symfony\Component\Finder\Finder as SfFinder;
+use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Finder
 {
@@ -56,7 +56,7 @@ class Finder
     /**
      * @throws \Exception
      *
-     * @return \Symfony\Component\Finder\Finder
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function getFiles()
     {
@@ -68,10 +68,10 @@ class Finder
         }
 
         if (count($directories) === 0) {
-            throw new \Exception('Directories can not be resolved with glob. Maybe you have a wrong path pattern applied.');
+            return [];
         }
 
-        $finder = new SfFinder();
+        $finder = new SymfonyFinder();
         $finder->files()->in($directories);
 
         if ($this->name !== null) {

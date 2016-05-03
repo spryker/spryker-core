@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()

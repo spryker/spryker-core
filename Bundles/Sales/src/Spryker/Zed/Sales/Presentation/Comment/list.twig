@@ -2,7 +2,7 @@
 <div class="order-details-chat">
     {% for comment in comments %}
         <div class="chat">
-            <div class="chat-author"><span>{{ comment.username }} @ {{ comment.createdAt | date('Y-m-d G:i:s') }}</span></div>
+            <div class="chat-author"><span>{{ comment.username }} @ {{ comment.createdAt | formatDateTime }}</span></div>
             <div class="chat-body">{{ comment.message }}</div>
         </div>
     {% endfor %}

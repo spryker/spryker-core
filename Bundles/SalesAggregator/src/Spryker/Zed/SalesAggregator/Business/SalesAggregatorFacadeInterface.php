@@ -4,113 +4,124 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-
 namespace Spryker\Zed\SalesAggregator\Business;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CommentTransfer;
-use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @method \Spryker\Zed\SalesAggregator\Business\SalesAggregatorBusinessFactory getFactory()
+ */
 interface SalesAggregatorFacadeInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     * TODO FW Move to own bundle and add description
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer
-     */
-    public function saveComment(CommentTransfer $commentTransfer);
-
-    /**
-     * @param int $idOrder
+     * @api
      *
-     * @return array
-     */
-    public function getArrayWithManualEvents($idOrder);
-
-    /**
-     * @deprecated
-     *
-     * @param int $idOrderItem
-     *
-     * @return array
-     */
-    public function getOrderItemManualEvents($idOrderItem);
-
-    /**
-     * @param int $idSalesAggregatorOrder
+     * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderByIdSalesAggregatorOrder($idSalesAggregatorOrder);
+    public function getOrderTotalsByIdSalesOrder($idSalesOrder);
 
     /**
+     * TODO FW Move to own bundle and add description
+     *
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem);
+
+    /**
+     * TODO FW Move to own bundle and add description
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function saveOrder(OrderTransfer $orderTransfer);
+    public function getOrderTotalByOrderTransfer(OrderTransfer $orderTransfer);
 
     /**
-     * @param int $idSalesAggregatorOrderItem
-     * @param int $quantity
+     * TODO FW Move to own bundle and add description
      *
-     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
-     */
-    public function splitSalesAggregatorOrderItem($idSalesAggregatorOrderItem, $quantity);
-
-    /**
-     * @param int $idRefund
-     * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function updateOrderItemsAndExpensesAfterRefund($idRefund, OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer);
+    public function aggregateOrderExpenseAmounts(OrderTransfer $orderTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idOrder
+     * TODO FW Move to own bundle and add description
      *
-     * @return \Orm\Zed\SalesAggregator\Persistence\SpySalesAggregatorOrder
-     */
-    public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder);
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
-     * @param int $idAddress
+     * @api
      *
-     * @return mixed
-     */
-    public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
-
-    /**
-     * @param string $idOrder
-     *
-     * @return array
-     */
-    public function getPaymentLogs($idOrder);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function getOrders(OrderListTransfer $orderListTransfer);
-
-    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return void
      */
-    public function getOrderDetails(OrderTransfer $orderTransfer);
+    public function aggregateOrderGrandTotal(OrderTransfer $orderTransfer);
 
     /**
-     * @param int $idSalesAggregatorOrder
+     * TODO FW Move to own bundle and add description
      *
-     * @return \Generated\Shared\Transfer\RefundTransfer[]
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
-    public function getRefunds($idSalesAggregatorOrder);
+    public function aggregateOrderItemAmounts(OrderTransfer $orderTransfer);
+
+    /**
+     * TODO FW Move to own bundle and add description
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderSubtotal(OrderTransfer $orderTransfer);
+
+    /**
+     * TODO FW Move to own bundle and add description
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderItemTaxAmount(OrderTransfer $orderTransfer);
+
+    /**
+     * TODO FW Move to own bundle and add description
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer);
+
+    /**
+     * TODO FW Move to own bundle and add description
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderExpenseTaxAmountAggregator(OrderTransfer $orderTransfer);
 
 }

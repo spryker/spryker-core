@@ -17,16 +17,13 @@ use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
  * Class VoucherEngine
  */
 class VoucherEngine
 {
-
-    const MESSAGE_TYPE_SUCCESS = 'success';
-    const MESSAGE_TYPE_ERROR = 'error';
 
     /**
      * @var int|null
@@ -39,7 +36,7 @@ class VoucherEngine
     protected $settings;
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -55,13 +52,13 @@ class VoucherEngine
 
     /**
      * @param \Spryker\Zed\Discount\DiscountConfigInterface $settings
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         DiscountConfigInterface $settings,
-        DiscountQueryContainer $queryContainer,
+        DiscountQueryContainerInterface $queryContainer,
         DiscountToMessengerInterface $messengerFacade,
         ConnectionInterface $connection
     ) {
@@ -113,7 +110,7 @@ class VoucherEngine
      */
     protected function acceptVoucherCodesTransation(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
     {
-        if ($voucherCreateInfoInterface->getType() === self::MESSAGE_TYPE_SUCCESS) {
+        if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_SUCCESS) {
             $this->connection->commit();
 
             return $voucherCreateInfoInterface;
@@ -155,21 +152,21 @@ class VoucherEngine
         }
 
         if ($codeCollisions === 0) {
-            $messageCreateInfoTransfer->setType(self::MESSAGE_TYPE_SUCCESS);
+            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_SUCCESS);
             $messageCreateInfoTransfer->setMessage('Voucher codes successfully generated');
 
             return $messageCreateInfoTransfer;
         }
 
         if ($codeCollisions === $voucherTransfer->getQuantity()) {
-            $messageCreateInfoTransfer->setType(self::MESSAGE_TYPE_ERROR);
+            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
             $messageCreateInfoTransfer->setMessage('No available codes to generate');
 
             return $messageCreateInfoTransfer;
         }
 
         if ($codeCollisions === $this->remainingCodesToGenerate) {
-            $messageCreateInfoTransfer->setType(self::MESSAGE_TYPE_ERROR);
+            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
             $messageCreateInfoTransfer->setMessage('No available codes to generate. Select higher code length');
 
             return $messageCreateInfoTransfer;
@@ -216,14 +213,12 @@ class VoucherEngine
 
     /**
      * @param int $length
-     * @param bool $asMd5
      *
      * @return string
      */
-    protected function getRandomVoucherCode($length, $asMd5 = false)
+    protected function getRandomVoucherCode($length)
     {
         $allowedCharacters = $this->settings->getVoucherCodeCharacters();
-        srand((double)microtime() * 1000000);
 
         $consonants = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_CONSONANTS];
         $vowels = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_VOWELS];
@@ -233,20 +228,16 @@ class VoucherEngine
 
         while (strlen($code) < $length) {
             if (count($consonants)) {
-                $code .= $consonants[rand(0, count($consonants) - 1)];
+                $code .= $consonants[random_int(0, count($consonants) - 1)];
             }
 
             if (count($vowels)) {
-                $code .= $vowels[rand(0, count($vowels) - 1)];
+                $code .= $vowels[random_int(0, count($vowels) - 1)];
             }
 
             if (count($numbers)) {
-                $code .= $numbers[rand(0, count($numbers) - 1)];
+                $code .= $numbers[random_int(0, count($numbers) - 1)];
             }
-        }
-
-        if ($asMd5) {
-            return substr(md5($code), 0, $length);
         }
 
         return substr($code, 0, $length);

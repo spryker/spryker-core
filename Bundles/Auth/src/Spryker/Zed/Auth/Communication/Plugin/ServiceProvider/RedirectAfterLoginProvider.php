@@ -97,18 +97,18 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
      */
     protected function isAuthenticated(Request $request)
     {
-        $facadeAuth = $this->getFacade();
+        $authFacade = $this->getFacade();
         $token = null;
 
-        if ($facadeAuth->hasCurrentUser()) {
-            $token = $facadeAuth->getCurrentUserToken();
+        if ($authFacade->hasCurrentUser()) {
+            $token = $authFacade->getCurrentUserToken();
         }
 
         if ($request->headers->get(AuthConstants::AUTH_TOKEN)) {
             $token = $request->headers->get(AuthConstants::AUTH_TOKEN);
         }
 
-        if (!$facadeAuth->isAuthenticated($token)) {
+        if (!$authFacade->isAuthenticated($token)) {
             return false;
         }
 

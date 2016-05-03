@@ -16,7 +16,7 @@ interface NewsletterQueryContainerInterface
      * @param string $email
      * @param string $newsletterTypeName
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionByEmailAndNewsletterTypeName($email, $newsletterTypeName);
 
@@ -26,7 +26,7 @@ interface NewsletterQueryContainerInterface
      * @param string $subscriberKey
      * @param string $newsletterTypeName
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionBySubscriberKeyAndNewsletterTypeName($subscriberKey, $newsletterTypeName);
 
@@ -36,7 +36,7 @@ interface NewsletterQueryContainerInterface
      * @param int $idCustomer
      * @param string $newsletterTypeName
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionByIdCustomerAndNewsletterTypeName($idCustomer, $newsletterTypeName);
 
@@ -50,7 +50,7 @@ interface NewsletterQueryContainerInterface
     /**
      * @api
      *
-     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
      */
     public function querySubscription();
 

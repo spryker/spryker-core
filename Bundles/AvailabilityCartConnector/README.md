@@ -8,4 +8,4 @@ composer require spryker/availability-cart-connector
 
 ## Documentation
 
-[AvailabilityCartConnector Documentation](https://spryker.github.io/availability-cart-connector/index.html)
+[AvailabilityCartConnector Documentation](http://spryker.github.io/core/bundles/availability-cart-connector)

@@ -11,7 +11,7 @@ use Guzzle\Common\Exception\InvalidArgumentException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
+use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class Reader implements ReaderInterface
 {
@@ -20,7 +20,7 @@ class Reader implements ReaderInterface
     const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**
-     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -30,11 +30,11 @@ class Reader implements ReaderInterface
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainer $queryContainer
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface $productFacade
      */
     public function __construct(
-        StockQueryContainer $queryContainer,
+        StockQueryContainerInterface $queryContainer,
         StockToProductInterface $productFacade
     ) {
         $this->queryContainer = $queryContainer;

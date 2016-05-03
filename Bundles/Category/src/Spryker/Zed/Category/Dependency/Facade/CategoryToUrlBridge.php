@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Url\Business\UrlFacade;
 
 class CategoryToUrlBridge implements CategoryToUrlInterface
 {
@@ -35,8 +34,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -106,6 +104,16 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
     {
         return $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, $locale);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
+    {
+        return $this->urlFacade->getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
     }
 
     /**

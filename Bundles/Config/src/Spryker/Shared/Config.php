@@ -16,15 +16,11 @@ class Config extends SprykerConfig
 {
 
     /**
-     * @param \ArrayObject|null $config
-     *
      * @return void
      */
-    public static function getInstance(\ArrayObject $config = null)
+    public static function getInstance()
     {
-        trigger_error('Deprecated, use Spryker\Shared\Config\Config instead', E_USER_DEPRECATED);
-
-        parent::getInstance($config);
+        parent::getInstance();
     }
 
     /**
@@ -34,8 +30,6 @@ class Config extends SprykerConfig
      */
     public static function init($environment = null)
     {
-        trigger_error('Deprecated, use Spryker\Shared\Config\Config instead', E_USER_DEPRECATED);
-
         parent::init($environment);
     }
 

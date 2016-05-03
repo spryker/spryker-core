@@ -9,7 +9,7 @@ namespace Spryker\Zed\Refund\Communication\Form;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Gui\Communication\Form\AbstractForm;
-use Spryker\Zed\Refund\Business\RefundFacade;
+use Spryker\Zed\Refund\Business\RefundFacadeInterface;
 use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -32,7 +32,7 @@ class RefundForm extends AbstractForm
     protected $refundQuery;
 
     /**
-     * @var \Spryker\Zed\Refund\Business\RefundFacade
+     * @var \Spryker\Zed\Refund\Business\RefundFacadeInterface
      */
     protected $refundFacade;
 
@@ -47,11 +47,11 @@ class RefundForm extends AbstractForm
     protected $paymentDataPlugin;
 
     /**
-     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
+     * @param \Spryker\Zed\Refund\Business\RefundFacadeInterface $refundFacade
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface $paymentDataPlugin
      */
-    public function __construct(RefundFacade $refundFacade, OrderTransfer $orderTransfer, PaymentDataPluginInterface $paymentDataPlugin)
+    public function __construct(RefundFacadeInterface $refundFacade, OrderTransfer $orderTransfer, PaymentDataPluginInterface $paymentDataPlugin)
     {
         $this->refundFacade = $refundFacade;
         $this->orderTransfer = $orderTransfer;

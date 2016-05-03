@@ -4,7 +4,6 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-
 namespace Spryker\Zed\Payone\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -14,19 +13,23 @@ use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
+/**
+ * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
+ */
 interface PayoneFacadeInterface
 {
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function saveOrder(OrderTransfer $orderTransfer);
+    public function saveOrder(QuoteTransfer $quoteTransfer);
 
     /**
      * @api
@@ -272,12 +275,12 @@ interface PayoneFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
+    public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
      * @api

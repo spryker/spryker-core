@@ -73,9 +73,7 @@ class ApplicationIntegrationCheckConsole extends Console
      */
     protected function getCheckSteps()
     {
-        $steps = $this->getFacade()->getCheckSteps();
-
-        return $steps;
+        return $this->getFacade()->getCheckSteps();
     }
 
 }

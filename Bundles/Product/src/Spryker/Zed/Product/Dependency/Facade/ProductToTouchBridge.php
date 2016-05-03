@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
-use Spryker\Zed\Touch\Business\TouchFacade;
-
 class ProductToTouchBridge implements ProductToTouchInterface
 {
 

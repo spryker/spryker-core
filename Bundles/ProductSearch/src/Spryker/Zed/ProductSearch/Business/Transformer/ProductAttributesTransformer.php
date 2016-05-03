@@ -153,7 +153,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
      */
     protected function isInitialized()
     {
-        return (!empty($this->fieldOperations));
+        return (bool)$this->fieldOperations;
     }
 
     /**
@@ -164,10 +164,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
         foreach ($this->getFieldOperations() as $fieldOperation) {
             $operationName = $fieldOperation->getOperation();
 
-            if ($this->operationLocator->findOperationByName($operationName) !== null) {
-                $fieldName = $fieldOperation->getSpyProductAttributesMetadata()->getkey();
-                $this->fieldOperations[$fieldName][$operationName][] = $fieldOperation->getTargetField();
-            } else {
+            if ($this->operationLocator->findOperationByName($operationName) === null) {
                 throw new \RuntimeException(
                     sprintf(
                         'No operation with name %s found to map field %s',
@@ -176,6 +173,9 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     )
                 );
             }
+
+            $fieldName = $fieldOperation->getSpyProductAttributesMetadata()->getkey();
+            $this->fieldOperations[$fieldName][$operationName][] = $fieldOperation->getTargetField();
         }
     }
 

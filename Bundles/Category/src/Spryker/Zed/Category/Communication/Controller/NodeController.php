@@ -10,7 +10,6 @@ namespace Spryker\Zed\Category\Communication\Controller;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -64,7 +63,7 @@ class NodeController extends AbstractController
         $locale = $this->getFactory()
             ->getCurrentLocale();
 
-        $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true); // TODO FW Validation
+        $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true);
 
         $order = count($categoryNodesToReorder) - 1;
         foreach ($categoryNodesToReorder as $index => $nodeData) {

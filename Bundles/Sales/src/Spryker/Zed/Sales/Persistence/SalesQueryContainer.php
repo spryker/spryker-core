@@ -138,6 +138,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
@@ -200,6 +202,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
@@ -217,6 +221,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
      * @return void

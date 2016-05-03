@@ -19,8 +19,7 @@ interface CategoryToUrlInterface
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Category\Business\Exception\UrlExistsException
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -70,6 +69,13 @@ interface CategoryToUrlInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer

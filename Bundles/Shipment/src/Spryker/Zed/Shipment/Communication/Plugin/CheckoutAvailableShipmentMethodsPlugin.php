@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()

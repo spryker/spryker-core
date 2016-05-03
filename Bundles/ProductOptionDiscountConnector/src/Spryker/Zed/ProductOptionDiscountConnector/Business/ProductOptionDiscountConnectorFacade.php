@@ -13,10 +13,12 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ProductOptionDiscountConnector\Business\ProductOptionDiscountConnectorBusinessFactory getFactory()
  */
-class ProductOptionDiscountConnectorFacade extends AbstractFacade
+class ProductOptionDiscountConnectorFacade extends AbstractFacade implements ProductOptionDiscountConnectorFacadeInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -27,6 +29,8 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -37,6 +41,8 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -47,6 +53,8 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -57,6 +65,8 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void

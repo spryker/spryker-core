@@ -14,8 +14,6 @@ use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -131,7 +129,7 @@ class BlockController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    private function createPageTransfer(array $data)
+    protected function createPageTransfer(array $data)
     {
         $pageTransfer = new PageTransfer();
         $pageTransfer->fromArray($data, true);
@@ -160,7 +158,7 @@ class BlockController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    private function createBlockTransfer(array $data)
+    protected function createBlockTransfer(array $data)
     {
         $blockTransfer = new CmsBlockTransfer();
         $blockTransfer->fromArray($data, true);
@@ -172,21 +170,13 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @return \Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade
-     */
-    private function getLocaleFacade()
-    {
-        return $this->getFactory()->getLocaleFacade();
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function searchCategoryAction(Request $request)
     {
-        $term = $request->query->get('term'); // TODO FW Validation
+        $term = $request->query->get('term');
 
         $searchedItems = $this->getQueryContainer()
             ->queryNodeByCategoryName($term, $this->getCurrentIdLocale())
@@ -209,7 +199,8 @@ class BlockController extends AbstractController
      */
     protected function getCurrentIdLocale()
     {
-        return $this->getLocaleFacade()->getCurrentLocale()->getIdLocale();
+        $localeFacade = $this->getFactory()->getLocaleFacade();
+        return $localeFacade->getCurrentLocale()->getIdLocale();
     }
 
 }

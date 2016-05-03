@@ -13,11 +13,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\SalesAggregator\Business\SalesAggregatorBusinessFactory getFactory()
  */
-class SalesAggregatorFacade extends AbstractFacade
+class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFacadeInterface
 {
 
     /**
      * TODO FW Move to own bundle and add description
+     *
+     * @api
      *
      * @param int $idSalesOrder
      *
@@ -31,6 +33,8 @@ class SalesAggregatorFacade extends AbstractFacade
     /**
      * TODO FW Move to own bundle and add description
      *
+     * @api
+     *
      * @param int $idSalesOrderItem
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
@@ -42,6 +46,8 @@ class SalesAggregatorFacade extends AbstractFacade
 
     /**
      * TODO FW Move to own bundle and add description
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -55,6 +61,8 @@ class SalesAggregatorFacade extends AbstractFacade
     /**
      * TODO FW Move to own bundle and add description
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -66,6 +74,8 @@ class SalesAggregatorFacade extends AbstractFacade
 
     /**
      * TODO FW Move to own bundle and add description
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -79,6 +89,8 @@ class SalesAggregatorFacade extends AbstractFacade
     /**
      * TODO FW Move to own bundle and add description
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -90,6 +102,8 @@ class SalesAggregatorFacade extends AbstractFacade
 
     /**
      * TODO FW Move to own bundle and add description
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -103,6 +117,8 @@ class SalesAggregatorFacade extends AbstractFacade
     /**
      * TODO FW Move to own bundle and add description
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -115,6 +131,8 @@ class SalesAggregatorFacade extends AbstractFacade
     /**
      * TODO FW Move to own bundle and add description
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -126,6 +144,8 @@ class SalesAggregatorFacade extends AbstractFacade
 
     /**
      * TODO FW Move to own bundle and add description
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

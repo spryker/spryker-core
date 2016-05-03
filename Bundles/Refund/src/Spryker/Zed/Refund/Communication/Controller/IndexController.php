@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\RefundExpenseTransfer;
 use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

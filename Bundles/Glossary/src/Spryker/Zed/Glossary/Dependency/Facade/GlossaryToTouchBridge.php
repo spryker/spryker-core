@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Glossary\Dependency\Facade;
 
-use Spryker\Zed\Touch\Business\TouchFacade;
-
 class GlossaryToTouchBridge implements GlossaryToTouchInterface
 {
 

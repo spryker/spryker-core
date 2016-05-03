@@ -44,7 +44,7 @@ class ExpenseTax implements OrderAmountAggregatorInterface
     protected function addTaxAmountToTaxableItems(\ArrayObject $taxableItems)
     {
         foreach ($taxableItems as $item) {
-            if (empty($item->getTaxRate())) {
+            if (!$item->getTaxRate()) {
                 continue;
             }
             $item->requireUnitGrossPrice()->requireSumGrossPrice();

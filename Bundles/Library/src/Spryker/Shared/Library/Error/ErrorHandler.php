@@ -125,6 +125,7 @@ class ErrorHandler
     {
         if ($output) {
             $message = ErrorRenderer::renderException($exception);
+
             echo $message;
         }
     }

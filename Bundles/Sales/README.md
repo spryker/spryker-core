@@ -8,4 +8,4 @@ composer require spryker/sales
 
 ## Documentation
 
-[Sales Documentation](https://spryker.github.io/sales/index.html)
+[Sales Documentation](http://spryker.github.io/core/bundles/sales)

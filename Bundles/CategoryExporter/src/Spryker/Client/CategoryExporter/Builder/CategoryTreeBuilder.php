@@ -47,7 +47,6 @@ class CategoryTreeBuilder
     {
         $parents = array_slice(array_reverse($categoryNode[CategoryNodeKeyInterface::PARENTS]), 0, self::SUBTREE_DEPTH);
         $subtree = [];
-        $idCategoryCode = $categoryNode[CategoryNodeKeyInterface::NODE_ID];
 
         foreach ($parents as $parent) {
             $storageKey = $this->keyBuilder->generateKey(
@@ -55,10 +54,6 @@ class CategoryTreeBuilder
                 $locale
             );
             $parentCategory = $this->kvReader->get($storageKey);
-
-            if (isset($parentCategory[CategoryNodeKeyInterface::CHILDREN][$idCategoryCode])) {
-                $parentCategory[CategoryNodeKeyInterface::CHILDREN][$idCategoryCode] = $categoryNode;
-            }
 
             if (empty($subtree)) {
                 $subtree = $parentCategory;

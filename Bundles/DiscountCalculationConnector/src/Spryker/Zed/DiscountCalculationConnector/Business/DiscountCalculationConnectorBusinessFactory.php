@@ -11,7 +11,6 @@ use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountT
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator;
-use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**

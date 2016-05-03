@@ -14,7 +14,7 @@ use Orm\Zed\Refund\Persistence\SpyRefund;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplitInterface;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class Refund
 {
@@ -30,19 +30,19 @@ class Refund
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainer
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 
     /**
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplitInterface $salesSplitFacade
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface $omsFacade
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer $salesQueryContainer
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
     public function __construct(
         RefundToSalesSplitInterface $salesSplitFacade,
         RefundToOmsInterface $omsFacade,
-        SalesQueryContainer $salesQueryContainer
+        SalesQueryContainerInterface $salesQueryContainer
     ) {
         $this->salesSplitFacade = $salesSplitFacade;
         $this->omsFacade = $omsFacade;

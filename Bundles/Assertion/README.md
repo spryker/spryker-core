@@ -8,4 +8,4 @@ composer require spryker/assertion
 
 ## Documentation
 
-[Assertion Documentation](https://spryker.github.io/assertion/index.html)
+[Assertion Documentation](http://spryker.github.io/core/bundles/assertion)

@@ -121,7 +121,7 @@ class SalesAggregatorBusinessFactory extends AbstractBusinessFactory
      */
     protected function getSalesQueryContainer()
     {
-        return $this->getProvidedDependency(SalesAggregatorDependencyProvider::SALES_QUERY_CONTAINER);
+        return $this->getProvidedDependency(SalesAggregatorDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
 }

@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ItemGrouper\Business\ItemGrouperBusinessFactory getFactory()
  */
-class ItemGrouperFacade extends AbstractFacade
+class ItemGrouperFacade extends AbstractFacade implements ItemGrouperFacadeInterface
 {
 
     /**

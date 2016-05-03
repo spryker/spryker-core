@@ -19,21 +19,20 @@ use Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
 use Spryker\Zed\Acl\Business\Exception\GroupNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
-use Spryker\Zed\Library\Copy;
+use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 
 class Group implements GroupInterface
 {
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      */
-    public function __construct(AclQueryContainer $queryContainer)
+    public function __construct(AclQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }
@@ -87,7 +86,7 @@ class Group implements GroupInterface
         $entity->save();
 
         $transfer = new GroupTransfer();
-        $transfer = Copy::entityToTransfer($transfer, $entity);
+        $transfer->fromArray($entity->toArray(), true);
 
         return $transfer;
     }
@@ -228,7 +227,7 @@ class Group implements GroupInterface
     public function addUser($idGroup, $idUser)
     {
         if ($this->hasUser($idGroup, $idUser)) {
-            return;
+            return 0;
         }
 
         $entity = new SpyAclUserHasGroup();
@@ -266,18 +265,20 @@ class Group implements GroupInterface
      */
     public function getAllGroups()
     {
-        $collection = new GroupsTransfer();
+        $groupTransferCollection = new GroupsTransfer();
 
-        $results = $this->queryContainer
+        $groupCollection = $this->queryContainer
             ->queryGroup()
             ->find();
 
-        foreach ($results as $result) {
-            $transfer = new GroupTransfer();
-            $collection->addGroup(Copy::entityToTransfer($transfer, $result));
+        foreach ($groupCollection as $groupEntity) {
+            $groupTransfer = new GroupTransfer();
+            $groupTransfer->fromArray($groupEntity->toArray(), true);
+
+            $groupTransferCollection->addGroup($groupTransfer);
         }
 
-        return $collection;
+        return $groupTransferCollection;
     }
 
     /**
@@ -287,13 +288,12 @@ class Group implements GroupInterface
      */
     public function getByName($name)
     {
-        $entity = $this->queryContainer->queryGroupByName($name)->findOne();
+        $groupEntity = $this->queryContainer->queryGroupByName($name)->findOne();
 
-        $transfer = new GroupTransfer();
+        $groupTransfer = new GroupTransfer();
+        $groupTransfer->fromArray($groupEntity->toArray(), true);
 
-        $transfer = Copy::entityToTransfer($transfer, $entity);
-
-        return $transfer;
+        return $groupTransfer;
     }
 
     /**
@@ -305,13 +305,12 @@ class Group implements GroupInterface
      */
     public function getGroupById($id)
     {
-        $entity = $this->getGroupEntityById($id);
+        $groupEntity = $this->getGroupEntityById($id);
 
-        $transfer = new GroupTransfer();
+        $groupTransfer = new GroupTransfer();
+        $groupTransfer->fromArray($groupEntity->toArray(), true);
 
-        $transfer = Copy::entityToTransfer($transfer, $entity);
-
-        return $transfer;
+        return $groupTransfer;
     }
 
     /**
@@ -361,19 +360,19 @@ class Group implements GroupInterface
      */
     public function getRoles($idGroup)
     {
-        $results = $this->queryContainer
+        $roleCollection = $this->queryContainer
             ->queryGroupRoles($idGroup)
             ->find();
 
-        $collection = new RolesTransfer();
+        $roleTransferCollection = new RolesTransfer();
 
-        foreach ($results as $result) {
-            $transfer = new RoleTransfer();
-            Copy::entityToTransfer($transfer, $result);
-            $collection->addRole($transfer);
+        foreach ($roleCollection as $roleEntity) {
+            $roleTransfer = new RoleTransfer();
+            $roleTransfer->fromArray($roleEntity->toArray(), true);
+            $roleTransferCollection->addRole($roleTransfer);
         }
 
-        return $collection;
+        return $roleTransferCollection;
     }
 
     /**

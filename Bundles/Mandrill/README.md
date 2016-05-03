@@ -8,4 +8,4 @@ composer require spryker/mandrill
 
 ## Documentation
 
-[Mandrill Documentation](https://spryker.github.io/mandrill/index.html)
+[Mandrill Documentation](http://spryker.github.io/core/bundles/mandrill)

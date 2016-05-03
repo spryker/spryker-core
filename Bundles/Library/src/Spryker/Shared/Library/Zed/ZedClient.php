@@ -171,7 +171,7 @@ class ZedClient
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
 
-        $rawRequestBody = json_encode($requestTransfer->toArray(false));
+        $rawRequestBody = json_encode($requestTransfer->toArray());
 
         $request->setBody($rawRequestBody, 'application/json');
         //$request->setHeader('Host', System::getHostname());
@@ -200,13 +200,13 @@ class ZedClient
             }
             $request->addMetaTransfer($name, $metaTransfer);
         }
-        if (!empty($this->username)) {
+        if ($this->username) {
             $request->setUsername($this->username);
         }
-        if (!empty($this->password)) {
+        if ($this->password) {
             $request->setPassword($this->password);
         }
-        if (!empty($transferObject)) {
+        if ($transferObject) {
             $request->setTransfer($transferObject);
         }
 

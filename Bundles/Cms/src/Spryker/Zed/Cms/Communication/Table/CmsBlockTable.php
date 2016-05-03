@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Cms\Communication\Table;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -25,12 +25,12 @@ class CmsBlockTable extends AbstractTable
     const PARAM_CMS_BLOCK_EDIT = '/cms/block/edit';
 
     /**
-     * @var \Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     protected $cmsBlockQuery;
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery $cmsBlockQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery $cmsBlockQuery
      */
     public function __construct(SpyCmsBlockQuery $cmsBlockQuery)
     {
@@ -52,6 +52,9 @@ class CmsBlockTable extends AbstractTable
             SpyCmsBlockTableMap::COL_VALUE => 'Value',
             self::ACTIONS => self::ACTIONS,
         ]);
+
+        $config->addRawColumn(self::ACTIONS);
+
         $config->setSortable([
             SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
         ]);
@@ -64,6 +67,8 @@ class CmsBlockTable extends AbstractTable
             SpyCmsBlockTableMap::COL_NAME,
             SpyCategoryAttributeTableMap::COL_NAME,
         ]);
+
+        $config->addRawColumn(SpyCmsBlockTableMap::COL_VALUE);
 
         return $config;
     }

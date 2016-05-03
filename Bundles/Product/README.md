@@ -8,4 +8,4 @@ composer require spryker/product
 
 ## Documentation
 
-[Product Documentation](https://spryker.github.io/product/index.html)
+[Product Documentation](http://spryker.github.io/core/bundles/product)

@@ -84,7 +84,7 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $changedItems);
 
         $skuIndex = [];
-        /* @var ItemTransfer $cartItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $cartItem */
         foreach ($changedItems as $key => $changedItem) {
             $skuIndex[$changedItem->getId()] = $key;
         }

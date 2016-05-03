@@ -17,7 +17,7 @@ class Item implements CollectorInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer)
     {

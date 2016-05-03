@@ -19,6 +19,8 @@ class CalculationClient extends AbstractClient implements CalculationClientInter
     /**
      * Recalculates the given quote and returns an updated one.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

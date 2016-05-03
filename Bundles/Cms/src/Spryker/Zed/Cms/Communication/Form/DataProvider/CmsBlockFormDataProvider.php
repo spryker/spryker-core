@@ -8,20 +8,20 @@
 namespace Spryker\Zed\Cms\Communication\Form\DataProvider;
 
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsBlockFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainer
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainer $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      */
-    public function __construct(CmsQueryContainer $cmsQueryContainer)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
     }
@@ -74,6 +74,8 @@ class CmsBlockFormDataProvider
         $templates = $this->cmsQueryContainer->queryTemplates()->find();
 
         $result = [];
+
+        /** @var \Orm\Zed\Cms\Persistence\SpyCmsTemplate $template */
         foreach ($templates->getData() as $template) {
             $result[$template->getIdCmsTemplate()] = $template->getTemplateName();
         }

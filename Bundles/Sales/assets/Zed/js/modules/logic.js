@@ -85,9 +85,14 @@ $(document).ready(function() {
 
     $('.more-history').click(function(e){
         e.preventDefault();
-        var theID = $(this).data('id');
+        var idProductItem = $(this).data('id');
+        var $history = $('#history_details_' + idProductItem);
+        var $button = $('#history-btn-' + idProductItem);
+        var isHidden = $history.hasClass('hidden');
 
-        $('#history_details_' + theID).toggle();
+        $history.toggleClass('hidden', !isHidden);
+        $button.toggleClass('is-hidden', !isHidden);
+        $button.toggleClass('is-shown', isHidden);
     });
 
     $('.item-split').click(function(e){

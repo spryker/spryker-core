@@ -13,7 +13,7 @@ interface AuthQueryContainerInterface
     /**
      * @api
      *
-     * @return \Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery
+     * @return \Orm\Zed\Auth\Persistence\SpyResetPasswordQuery
      */
     public function queryResetPassword();
 
@@ -22,7 +22,7 @@ interface AuthQueryContainerInterface
      *
      * @param string $code
      *
-     * @return \Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery
+     * @return \Orm\Zed\Auth\Persistence\SpyResetPasswordQuery
      */
     public function queryForActiveCode($code);
 

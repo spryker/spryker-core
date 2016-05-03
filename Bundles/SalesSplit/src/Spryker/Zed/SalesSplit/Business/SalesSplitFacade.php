@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\SalesSplit\Business\SalesSplitBusinessFactory getFactory()
  */
-class SalesSplitFacade extends AbstractFacade
+class SalesSplitFacade extends AbstractFacade implements SalesSplitFacadeInterface
 {
 
     /**
@@ -30,6 +30,8 @@ class SalesSplitFacade extends AbstractFacade
      * - Create a copy of the given order item with given quantity
      * - Decrement the quantity of the original given order item (including all options)
      * - Return $response->getSuccess() === true
+     *
+     * @api
      *
      * @param int $idSalesOrderItem
      * @param int $quantity

@@ -15,7 +15,6 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
-use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
@@ -311,7 +310,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         }
 
         if (count($possibleTransitions) > 0) {
-            /* @var TransitionInterface $selectedTransition */
+            /** @var \Spryker\Zed\Oms\Business\Process\TransitionInterface $selectedTransition */
             $selectedTransition = array_shift($possibleTransitions);
             $targetState = $selectedTransition->getTarget();
         } else {

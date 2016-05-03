@@ -36,9 +36,7 @@ class Distributor implements DistributorInterface
             return;
         }
 
-        /*
-         * There should not be a discount that is higher than the total gross price of all discountable objects
-         */
+        // There should not be a discount that is higher than the total gross price of all discountable objects
         if ($totalDiscountAmount > $totalGrossAmount) {
             $totalDiscountAmount = $totalGrossAmount;
         }
@@ -46,7 +44,7 @@ class Distributor implements DistributorInterface
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);
 
         foreach ($discountableObjects as $discountableItemTransfer) {
-            $singleItemGrossAmountShare = $discountableItemTransfer->getUnitGrossPrice()  / $totalGrossAmount;
+            $singleItemGrossAmountShare = $discountableItemTransfer->getUnitGrossPrice() / $totalGrossAmount;
 
             $itemDiscountAmount = ($totalDiscountAmount * $singleItemGrossAmountShare) + $this->roundingError;
             $itemDiscountAmountRounded = round($itemDiscountAmount, 2);
@@ -84,7 +82,7 @@ class Distributor implements DistributorInterface
     protected function getDiscountableItemQuantity($discountableItemTransfer)
     {
         $quantity = 1;
-        if (!empty($discountableItemTransfer->getQuantity())) {
+        if ($discountableItemTransfer->getQuantity()) {
             $quantity = $discountableItemTransfer->getQuantity();
         }
 

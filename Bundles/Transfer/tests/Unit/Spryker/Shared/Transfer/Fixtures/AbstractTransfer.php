@@ -6,7 +6,6 @@
 
 namespace Unit\Spryker\Shared\Transfer\Fixtures;
 
-use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\Transfer\AbstractTransfer as ParentAbstractTransfer;
 
@@ -46,12 +45,12 @@ class AbstractTransfer extends ParentAbstractTransfer
     protected $array = [];
 
     /**
-     * @var TransferInterface
+     * @var \Spryker\Shared\Transfer\TransferInterface
      */
     protected $transfer;
 
     /**
-     * @var \ArrayObject|TransferInterface[]
+     * @var \ArrayObject|\Spryker\Shared\Transfer\TransferInterface[]
      */
     protected $transferCollection;
 
@@ -119,7 +118,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -152,7 +151,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -185,7 +184,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -231,7 +230,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -243,7 +242,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param TransferInterface|null $transfer
+     * @param \Spryker\Shared\Transfer\TransferInterface|null $transfer
      *
      * @return $this
      */
@@ -256,7 +255,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function getTransfer()
     {
@@ -264,7 +263,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -276,7 +275,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param \ArrayObject|TransferInterface[] $transferCollection
+     * @param \ArrayObject|\Spryker\Shared\Transfer\TransferInterface[] $transferCollection
      *
      * @return $this
      */
@@ -289,7 +288,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @return TransferInterface[]
+     * @return \Spryker\Shared\Transfer\TransferInterface[]
      */
     public function getTransferCollection()
     {
@@ -297,7 +296,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param TransferInterface $transferCollection
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferCollection
      *
      * @return $this
      */
@@ -310,7 +309,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */

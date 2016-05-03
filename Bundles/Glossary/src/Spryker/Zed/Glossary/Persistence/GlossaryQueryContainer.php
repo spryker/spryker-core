@@ -16,7 +16,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\ModelJoin;
-use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -341,7 +340,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
             ->addJoinObject($keyLocaleCrossJoin, 'spy_locale')
             ->addJoinObject($translationLeftJoin, 'spy_glossary_translation')
             ->addJoinCondition('spy_glossary_translation', 'spy_locale.id_locale = spy_glossary_translation.fk_locale')
-            ->addJoinCondition('spy_locale', 'spy_locale.locale_name  IN ('  . implode($quotedLocales, ', ') . ')');
+            ->addJoinCondition('spy_locale', 'spy_locale.locale_name  IN (' . implode($quotedLocales, ', ') . ')');
     }
 
     /**

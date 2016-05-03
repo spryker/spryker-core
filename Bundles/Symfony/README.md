@@ -8,4 +8,4 @@ composer require spryker/symfony
 
 ## Documentation
 
-[Symfony Documentation](https://spryker.github.io/symfony/index.html)
+[Symfony Documentation](http://spryker.github.io/core/bundles/symfony)

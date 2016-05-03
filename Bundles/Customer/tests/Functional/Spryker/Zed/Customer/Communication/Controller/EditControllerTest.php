@@ -10,8 +10,13 @@ namespace Functional\Spryker\Zed\Customer\Communication\Controller;
 use Codeception\TestCase\Test;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
+use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\Controller\EditController;
+use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,7 +57,54 @@ class EditControllerTest extends Test
 
         $this->customer = $customer;
 
-        $this->controller = new EditController();
+        $customerBusinessFactory = $this->getBusinessFactory();
+        $customerFacade = new CustomerFacade();
+        $customerFacade->setFactory($customerBusinessFactory);
+
+        $controllerMock = $this->getMock(EditController::class, ['getFactory', 'getFacade']);
+        $controllerMock->method('getFactory')->willReturn(new CustomerCommunicationFactory());
+        $controllerMock->method('getFacade')->willReturn($customerFacade);
+
+        $this->controller = $controllerMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerBusinessFactory
+     */
+    protected function getBusinessFactory()
+    {
+        $customerBusinessFactory = new CustomerBusinessFactory();
+        $customerBusinessFactory->setContainer($this->getContainer());
+
+        return $customerBusinessFactory;
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function getContainer()
+    {
+        $dependencyProvider = new CustomerDependencyProvider();
+        $container = new Container();
+
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $container[CustomerDependencyProvider::SENDER_PLUGINS] = $this->getSenderPlugins();
+
+        return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSenderPlugins()
+    {
+        $senderPlugins = [];
+
+        $senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] = [];
+        $senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORE_TOKEN_SENDERS] = [];
+        $senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORED_CONFIRMATION_SENDERS] = [];
+
+        return $senderPlugins;
     }
 
     /**

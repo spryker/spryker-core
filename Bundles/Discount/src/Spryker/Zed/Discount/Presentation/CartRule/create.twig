@@ -1,5 +1,10 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-discount-main.css" />
+{% endblock %}
+
 {% block action %}
     {{ backActionButton('/discount/cart-rule/', 'List Cart Rules' | trans) }}
 {% endblock %}
@@ -19,15 +24,18 @@
                 {{ form_row(form.amount) }}
                 {{ form_row(form.calculator_plugin) }}
 
-                <div class="row collection-form" id="collector-container">
-                    {% for rule in form.collector_plugins %}
-                        <div class="col-md-6">
-                            <div class="well well-sm">
-                                {{ form_row(rule) }}
-                            </div>
-                        </div>
+                {% macro prototype(content) %}
+                    <div class="col-md-6">
+                        <div class="well well-sm">{{ content|raw }}</div>
+                    </div>
+                {% endmacro %}
+
+                <div class="row collection-form" id="collector-container" data-prototype="{{ _self.prototype(form_widget(form.collector_plugins[0].parent.vars.prototype))|e }}">
+                    {% for collector in form.collector_plugins %}
+                        {{ _self.prototype(form_widget(collector)) }}
                     {% endfor %}
                 </div>
+
                 <div class="clearfix"></div>
                 <div class="load-cart-collector-plugins">
                     <a href="#" id="add-collector-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Collector Plugin' | trans }}</a>
@@ -39,18 +47,15 @@
                 {{ form_row(form.is_privileged) }}
                 {{ form_row(form.is_active) }}
 
-                <div class="row collection-form" id="rules-container">
-                {% for rule in form.decision_rules %}
-                    <div class="col-md-6">
-                        <div class="well well-sm">
-                            {{ form_row(rule) }}
-                        </div>
-                    </div>
-                {% endfor %}
+                <div class="row collection-form" id="rules-container" data-prototype="{{ _self.prototype(form_widget(form.decision_rules[0].parent.vars.prototype))|e }}">
+                    {% for rule in form.decision_rules %}
+                        {{ _self.prototype(form_widget(rule)) }}
+                    {% endfor %}
                 </div>
+
                 <div class="clearfix"></div>
                 <div class="load-cart-rules">
-                    <a href="#" id="add-rules-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add New Rule' | trans }}</a>
+                    <a href="#" id="add-rules-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Decision Rule' | trans }}</a>
                 </div>
 
                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>

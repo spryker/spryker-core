@@ -26,7 +26,7 @@
             <thead>
             <tr class="text-left">
                 <th><input type="checkbox" id="check-all-orders" /></th>
-                <th>{{ 'Product' | trans }}</th>
+                {#<th>{{ 'Product' | trans }}</th>#}
                 <th>{{ 'SKU' | trans }}</th>
                 <th>{{ 'Unit Price' | trans }}</th>
                 <th>{{ 'QTY' | trans }}</th>
@@ -45,37 +45,38 @@
             {% for orderItem in order.items %}
                 <tr>
                     <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
-                    <td>
-                        <a href="#" target="_blank">{{ 'Yves view' }}</a><br>
-                        <a href="#" target="_blank">{{ 'Zed View' }}</a>
-                    </td>
+                    {#<td>#}
+                        {#<a href="#" target="_blank">{{ 'Yves view' }}</a><br>#}
+                        {#<a href="#" target="_blank">{{ 'Zed View' }}</a>#}
+                    {#</td>#}
                     <td>{{ orderItem.Sku }}</td>
                     <td>{{ orderItem.unitGrossPriceWithProductOptions | currency }}</td>
-                    <td><a href="#" class="item-split" data-id="{{ orderItem.idSalesOrderItem }}">{{ orderItem.quantity }}</a></td>
+                    {#<td><a href="#" class="item-split" data-id="{{ orderItem.idSalesOrderItem }}">{{ orderItem.quantity }}</a></td>#}
+                    <td>{{ orderItem.quantity }}</td>{# remove this line and uncomment the above one #}
                     <td>{{ orderItem.sumGrossPriceWithProductOptions | currency }}</td>
                     <td>{{ orderItem.sumTaxAmountWithProductOptionAndDiscountAmounts | currency }}</td>
                     <td>{{ orderItem.taxRate|default(0) }} %</td>
                     <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | currency }} </td>
                     <td>{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | currency }} </td>
                     <td>
-                        <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}">
+                        <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">
                             {{ orderItem.process }}
                         </a>
                     </td>
                     <td>{{ orderItem.state.name }}</td>
                     <td>
                         {% for stateHistory in orderItem.stateHistory | slice(0, 3) %}
-                            <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
+                            <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
                         {% endfor %}
 
                         {% if orderItem.stateHistory | length > 3 %}
-                            <div id="history_details_{{ orderItem.IdSalesOrderItem }}" style="display: none">
+                            <div id="history_details_{{ orderItem.IdSalesOrderItem }}" class="hidden">
                                 {% for stateHistory in orderItem.stateHistory | slice(3) %}
-                                    <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | date('Y-m-d G:i:s', false) }})</div>
+                                    <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
                                 {% endfor %}
                             </div>
 
-                            <a class="btn btn-sm more-history" data-id="{{ orderItem.IdSalesOrderItem }}">{{ "Show more" | trans }}</a>
+                            <a id="history-btn-{{ orderItem.IdSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}"><span class="show-more">{{ 'Show more' | trans }}</span><span class="show-less">{{ 'Show less' | trans }}</span></a>
                         {% endif %}
                     </td>
                     <td>

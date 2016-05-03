@@ -38,12 +38,12 @@ class TransferGenerate extends Module
      */
     private function generateTransferObjects()
     {
-        $facade = $this->getFacade();
+        $transferFacade = $this->getFacade();
 
         $this->copyFromTestBundle();
 
-        $facade->deleteGeneratedTransferObjects();
-        $facade->generateTransferObjects(new NullLogger());
+        $transferFacade->deleteGeneratedTransferObjects();
+        $transferFacade->generateTransferObjects(new NullLogger());
     }
 
     /**
@@ -95,7 +95,7 @@ class TransferGenerate extends Module
         }
 
         if (!is_dir($pathForTransferSchemas)) {
-            mkdir($pathForTransferSchemas, 0777, true);
+            mkdir($pathForTransferSchemas, 0775, true);
         }
 
         return $pathForTransferSchemas;

@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\EventJournal\Model;
 
+use Spryker\Zed\Library\Generator\StringGenerator;
+
 class Event implements EventInterface
 {
 
@@ -27,7 +29,17 @@ class Event implements EventInterface
     public function __construct()
     {
         $this->setField(self::FIELD_NAME, null);
-        $this->setField(self::FIELD_EVENT_ID, uniqid('', true));
+        $this->setField(self::FIELD_EVENT_ID, $this->getRandomString());
+    }
+
+    /**
+     * @return string
+     */
+    private function getRandomString()
+    {
+        $generator = new StringGenerator();
+
+        return $generator->generateRandomString();
     }
 
     /**

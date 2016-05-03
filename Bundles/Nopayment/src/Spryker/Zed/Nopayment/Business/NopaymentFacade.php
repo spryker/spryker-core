@@ -21,7 +21,7 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      *
-     * @return array
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function setAsPaid(array $orderItems)
     {
@@ -33,7 +33,7 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @return array
+     * @return bool
      */
     public function isPaid(SpySalesOrderItem $orderItem)
     {

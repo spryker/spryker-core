@@ -170,17 +170,6 @@ interface AclFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed in 1.0.0.
-     *
-     * @param int $idUser
-     *
-     * @return \Generated\Shared\Transfer\GroupTransfer
-     */
-    public function getUserGroup($idUser);
-
-    /**
-     * @api
-     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer

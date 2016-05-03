@@ -158,6 +158,26 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
+    {
+        $urlManager = $this->getFactory()->createUrlManager();
+        $entities = $urlManager->getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
+
+        $result = [];
+        foreach ($entities as $urlEntity) {
+            $result[] = $urlManager->convertUrlEntityToTransfer($urlEntity);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @api
+     *
      * @param int $idUrl
      *
      * @return void

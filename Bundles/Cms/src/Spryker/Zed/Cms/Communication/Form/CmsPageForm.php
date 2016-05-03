@@ -30,7 +30,9 @@ class CmsPageForm extends AbstractType
     const FIELD_ID_URL = 'id_url';
 
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
+    const OPTION_LOCALES_CHOICES = 'locale_choices';
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+    const FIELD_FK_LOCALE = 'fk_locale';
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
@@ -63,6 +65,7 @@ class CmsPageForm extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::OPTION_TEMPLATE_CHOICES);
+        $resolver->setRequired(self::OPTION_LOCALES_CHOICES);
 
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -88,9 +91,10 @@ class CmsPageForm extends AbstractType
         $this
             ->addIdCmsPageField($builder)
             ->addIdUrlField($builder)
-            ->addCurrentTemplateField($builder, $options[self::OPTION_TEMPLATE_CHOICES])
-            ->addFkTemplateField($builder)
+            ->addCurrentTemplateField($builder)
+            ->addFkTemplateField($builder, $options[self::OPTION_TEMPLATE_CHOICES])
             ->addUrlField($builder)
+            ->addLocaleField($builder, $options[self::OPTION_LOCALES_CHOICES])
             ->addIsActiveField($builder);
     }
 
@@ -111,7 +115,7 @@ class CmsPageForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkTemplateField(FormBuilderInterface $builder)
+    protected function addIdUrlField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ID_URL, 'hidden');
 
@@ -123,7 +127,7 @@ class CmsPageForm extends AbstractType
      *
      * @return $this
      */
-    protected function addUrlField(FormBuilderInterface $builder)
+    protected function addCurrentTemplateField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CURRENT_TEMPLATE, 'hidden');
 
@@ -136,7 +140,7 @@ class CmsPageForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCurrentTemplateField(FormBuilderInterface $builder, array $choices)
+    protected function addFkTemplateField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(self::FIELD_FK_TEMPLATE, 'choice', [
             'label' => 'Template',
@@ -151,11 +155,27 @@ class CmsPageForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdUrlField(FormBuilderInterface $builder)
+    protected function addUrlField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_URL, 'text', [
             'label' => 'URL',
             'constraints' => $this->getUrlConstraints(),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $availableLocales
+     *
+     * @return $this
+     */
+    protected function addLocaleField(FormBuilderInterface $builder, array $availableLocales)
+    {
+        $builder->add(self::FIELD_FK_LOCALE, 'choice', [
+            'label' => 'Locale',
+            'choices' => $availableLocales,
         ]);
 
         return $this;
@@ -188,7 +208,10 @@ class CmsPageForm extends AbstractType
                 'methods' => [
                     function ($url, ExecutionContextInterface $context) {
                         if ($this->urlFacade->hasUrl($url)) {
-                            $context->addViolation('Url is already used');
+                            $context->addViolation('URL is already used');
+                        }
+                        if ($url[0] !== '/') {
+                            $context->addViolation('URL must start with a slash');
                         }
                     },
                 ],

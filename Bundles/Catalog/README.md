@@ -8,4 +8,4 @@ composer require spryker/catalog
 
 ## Documentation
 
-[Catalog Documentation](https://spryker.github.io/catalog/index.html)
+[Catalog Documentation](http://spryker.github.io/core/bundles/catalog)

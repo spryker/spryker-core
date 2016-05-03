@@ -259,6 +259,8 @@ interface GlossaryFacadeInterface
     public function install(MessengerInterface $messenger = null);
 
     /**
+     * @api
+     *
      * @param string $keyFragment
      *
      * @return array

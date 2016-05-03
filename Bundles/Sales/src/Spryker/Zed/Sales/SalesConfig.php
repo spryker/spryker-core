@@ -73,6 +73,8 @@ class SalesConfig extends AbstractBundleConfig
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
+     * @throws \BadMethodCallException
+     *
      * @return string
      */
     public function determineProcessForOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
@@ -82,7 +84,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * This method provides list of urls to render blocks inside order detail page.
-     * Url defines path to external bundle controller. For example: /discount/sales/list would call discount bundle, sales controller, list action.
+     * URL defines path to external bundle controller. For example: /discount/sales/list would call discount bundle, sales controller, list action.
      * Action should return return array or redirect response.
      *
      * example:

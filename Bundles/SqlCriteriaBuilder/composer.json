@@ -1,10 +1,15 @@
 {
   "name": "spryker/sql-criteria-builder",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
   "require": {
-    "everon/collection": "~1.0.2",
-    "everon/criteria-builder": "~1.0.2",
-    "everon/factory": "~1.0.2",
-    "everon/utils": "~1.0.2"
+    "everon/collection": "~1.0.3",
+    "everon/criteria-builder": "~1.1.5",
+    "everon/factory": "~1.1.4",
+    "everon/utils": "~1.0.4"
   },
   "description": "sql criteria builder bundle",
   "license": "proprietary",

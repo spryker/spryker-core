@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Zed\Kernel\ControllerResolver;
 
-use Silex\Application;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
 

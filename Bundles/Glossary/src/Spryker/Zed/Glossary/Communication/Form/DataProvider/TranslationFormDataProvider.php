@@ -16,7 +16,7 @@ class TranslationFormDataProvider
 {
 
     /**
-     * @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
     protected $glossaryQueryContainer;
 

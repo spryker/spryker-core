@@ -56,6 +56,13 @@ interface UserInterface
     public function hasUserByUsername($username);
 
     /**
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username);
+
+    /**
      * @param int $idUser
      *
      * @return bool

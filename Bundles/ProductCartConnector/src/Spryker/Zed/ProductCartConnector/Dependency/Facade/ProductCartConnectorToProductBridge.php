@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
-use Spryker\Zed\Product\Business\ProductFacade;
-
 class ProductCartConnectorToProductBridge implements ProductCartConnectorToProductInterface
 {
 

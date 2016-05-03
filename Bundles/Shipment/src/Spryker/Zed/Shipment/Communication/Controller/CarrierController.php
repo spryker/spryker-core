@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

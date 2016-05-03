@@ -43,7 +43,7 @@ interface RuleInterface
     /**
      * @param int $idRole
      *
-     * @return \Generated\Shared\Transfer\RuleTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function getRoleRules($idRole);
 
@@ -61,6 +61,17 @@ interface RuleInterface
         $controller = AclConstants::VALIDATOR_WILDCARD,
         $action = AclConstants::VALIDATOR_WILDCARD
     );
+
+    /**
+     * @param int $idAclRole
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
+     * @param int $type
+     *
+     * @return bool
+     */
+    public function existsRoleRule($idAclRole, $bundle, $controller, $action, $type);
 
     /**
      * @param int $idGroup

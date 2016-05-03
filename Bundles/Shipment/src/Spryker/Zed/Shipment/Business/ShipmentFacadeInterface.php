@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Business;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
-use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface ShipmentFacadeInterface
@@ -20,7 +19,7 @@ interface ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
+     * @return int
      */
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer);
 
@@ -29,16 +28,16 @@ interface ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
+     * @return int
      */
     public function createMethod(ShipmentMethodTransfer $methodTransfer);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 
@@ -74,7 +73,7 @@ interface ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
+     * @return int
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer);
 

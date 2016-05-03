@@ -314,7 +314,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $showEngineBundle
+     * @param bool $showEngineBundle
      * @param string|bool $bundleToView
      *
      * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilder
@@ -426,8 +426,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $adjacencyMatrixBuilder = new AdjacencyMatrixBuilder(
             $this->createDependencyManager()->collectAllBundles(),
             $this->createDependencyTreeReader(),
-            $this->createAdjacencyMatrixDependencyTreeFilter(),
-            $this->getEngineBundleList()
+            $this->createAdjacencyMatrixDependencyTreeFilter()
         );
 
         return $adjacencyMatrixBuilder;
@@ -591,16 +590,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in the next major version.
-     *
-     * @return array
-     */
-    public function createEngineBundleList()
-    {
-        return $this->getEngineBundleList();
-    }
-
-    /**
      * @return array
      */
     public function getEngineBundleList()
@@ -711,7 +700,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createComposerJsonBranchAliasUpdater()
     {
-        return new BranchAliasUpdater('1.0.x-dev');
+        return new BranchAliasUpdater('2.0.x-dev');
     }
 
     /**

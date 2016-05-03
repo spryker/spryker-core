@@ -12,9 +12,9 @@ use Spryker\Zed\Application\ApplicationDependencyProvider;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory;
-use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportKeyValue;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch;
-use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallDemoData;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportStorage;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ImportDemoData;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
@@ -39,15 +39,20 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep[]
      */
-    public function createCheckSteps(LoggerInterface $logger = null)
+    public function getCheckSteps(LoggerInterface $logger = null)
     {
         return [
             $this->createCheckStepDeleteDatabase($logger),
             $this->createCheckStepDeleteGeneratedDirectory($logger),
             $this->createCheckStepSetupInstall($logger),
             $this->createCheckStepCodeCeption($logger),
-            $this->createCheckStepInstallDemoData($logger),
-            $this->createCheckStepExportKeyValue($logger),
+
+            $this->createCheckStepDeleteGeneratedDirectory($logger),
+            $this->createCheckStepDeleteDatabase($logger),
+            $this->createCheckStepSetupInstall($logger),
+            $this->createCheckStepImportDemoData($logger),
+
+            $this->createCheckStepStorageValue($logger),
             $this->createCheckStepExportSearch($logger),
         ];
     }
@@ -100,11 +105,11 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Psr\Log\LoggerInterface|null $logger
      *
-     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallDemoData
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ImportDemoData
      */
-    public function createCheckStepInstallDemoData(LoggerInterface $logger = null)
+    public function createCheckStepImportDemoData(LoggerInterface $logger = null)
     {
-        $checkStep = new InstallDemoData();
+        $checkStep = new ImportDemoData();
         if ($logger !== null) {
             $checkStep->setLogger($logger);
         }
@@ -130,11 +135,11 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Psr\Log\LoggerInterface|null $logger
      *
-     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportKeyValue
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportStorage
      */
-    public function createCheckStepExportKeyValue(LoggerInterface $logger = null)
+    public function createCheckStepStorageValue(LoggerInterface $logger = null)
     {
-        $checkStep = new ExportKeyValue();
+        $checkStep = new ExportStorage();
         if ($logger !== null) {
             $checkStep->setLogger($logger);
         }

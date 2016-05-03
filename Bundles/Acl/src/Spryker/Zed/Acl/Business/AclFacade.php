@@ -261,22 +261,6 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
     /**
      * @api
      *
-     * @deprecated Will be removed in 1.0.0.
-     *
-     * @param int $idUser
-     *
-     * @return \Generated\Shared\Transfer\GroupTransfer
-     */
-    public function getUserGroup($idUser)
-    {
-        return $this->getFactory()
-            ->createGroupModel()
-            ->getUserGroup($idUser);
-    }
-
-    /**
-     * @api
-     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer
@@ -380,7 +364,7 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
      *
      * @param int $idUser
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getUserRoles($idUser)
     {

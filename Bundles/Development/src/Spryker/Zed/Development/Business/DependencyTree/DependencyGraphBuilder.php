@@ -35,7 +35,7 @@ class DependencyGraphBuilder
     }
 
     /**
-     * @return bool
+     * @return string
      */
     public function build()
     {

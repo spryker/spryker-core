@@ -8,4 +8,4 @@ composer require spryker/price-cart-connector
 
 ## Documentation
 
-[PriceCartConnector Documentation](https://spryker.github.io/price-cart-connector/index.html)
+[PriceCartConnector Documentation](http://spryker.github.io/core/bundles/price-cart-connector)

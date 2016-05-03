@@ -148,7 +148,7 @@ class SalesAggregatorCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToUserBridgeInterface
+     * @return \Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToUserInterface
      */
     public function getUserFacade()
     {

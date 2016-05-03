@@ -35,8 +35,11 @@ class PasswordController extends AbstractController
 
         if ($resetRequestForm->isValid()) {
             $formData = $resetRequestForm->getData();
-            $this->getFacade()->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL]);
-            $this->addSuccessMessage('Email sent. Please check your inbox for further instructions.');
+            if (!$this->getFacade()->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL])) {
+                $this->addErrorMessage('Email address is unknown.');
+            } else {
+                $this->addSuccessMessage('Email sent. Please check your inbox for further instructions.');
+            }
         }
 
         return $this->viewResponse([
@@ -51,7 +54,7 @@ class PasswordController extends AbstractController
      */
     public function resetAction(Request $request)
     {
-        $token = $request->query->get(self::PARAM_TOKEN); // TODO FW Validation
+        $token = $request->query->get(self::PARAM_TOKEN);
         if (empty($token)) {
             $this->addErrorMessage('Request token is missing!');
 

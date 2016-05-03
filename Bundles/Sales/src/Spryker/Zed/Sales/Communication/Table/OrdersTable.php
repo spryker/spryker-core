@@ -75,27 +75,11 @@ class OrdersTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeader([
-            SpySalesOrderTableMap::COL_ID_SALES_ORDER => 'Order Id',
-            SpySalesOrderTableMap::COL_CREATED_AT => 'Timestamp',
-            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Id',
-            SpySalesOrderTableMap::COL_EMAIL => 'Email',
-            SpySalesOrderTableMap::COL_FIRST_NAME => 'Billing Name',
-            self::GRAND_TOTAL => 'GrandTotal',
-            self::URL => 'Url',
-        ]);
+        $config->setHeader($this->getHeaderFields());
+        $config->setSearchable($this->getSearchableFields());
+        $config->setSortable($this->getSortableFields());
 
-        $config->setSearchable([
-            SpySalesOrderTableMap::COL_ID_SALES_ORDER,
-            SpySalesOrderTableMap::COL_CREATED_AT,
-            SpySalesOrderTableMap::COL_FK_CUSTOMER,
-            SpySalesOrderTableMap::COL_EMAIL,
-            SpySalesOrderTableMap::COL_FIRST_NAME,
-        ]);
-
-        $config->setSortable([
-            SpySalesOrderTableMap::COL_CREATED_AT,
-        ]);
+        $config->addRawColumn(self::URL);
 
         $this->persistFilters($config);
 
@@ -124,6 +108,8 @@ class OrdersTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->buildQuery();
+        $query->orderByIdSalesOrder(Criteria::DESC);
+
         $queryResults = $this->runQuery($query, $config);
         $results = [];
         foreach ($queryResults as $item) {
@@ -235,6 +221,46 @@ class OrdersTable extends AbstractTable
         $orderTransfer = $this->salesAggregatorFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
 
         return $orderTransfer->getTotals()->getGrandTotal();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getHeaderFields()
+    {
+        return [
+            SpySalesOrderTableMap::COL_ID_SALES_ORDER => 'Order Id',
+            SpySalesOrderTableMap::COL_CREATED_AT => 'Timestamp',
+            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Id',
+            SpySalesOrderTableMap::COL_EMAIL => 'Email',
+            SpySalesOrderTableMap::COL_FIRST_NAME => 'Billing Name',
+            self::GRAND_TOTAL => 'GrandTotal',
+            self::URL => 'Url',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSearchableFields()
+    {
+        return [
+            SpySalesOrderTableMap::COL_ID_SALES_ORDER,
+            SpySalesOrderTableMap::COL_CREATED_AT,
+            SpySalesOrderTableMap::COL_FK_CUSTOMER,
+            SpySalesOrderTableMap::COL_EMAIL,
+            SpySalesOrderTableMap::COL_FIRST_NAME,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSortableFields()
+    {
+        return [
+            SpySalesOrderTableMap::COL_CREATED_AT,
+        ];
     }
 
 }

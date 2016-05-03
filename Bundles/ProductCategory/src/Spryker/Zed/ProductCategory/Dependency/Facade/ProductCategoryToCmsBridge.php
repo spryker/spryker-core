@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
-use Spryker\Zed\Cms\Business\CmsFacade;
-
 class ProductCategoryToCmsBridge implements ProductCategoryToCmsInterface
 {
 

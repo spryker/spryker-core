@@ -9,7 +9,6 @@ namespace Spryker\Zed\Newsletter\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\SendMailResponsesTransfer;
-use Spryker\Zed\Mail\Business\MailFacade;
 
 class NewsletterToMailBridge implements NewsletterToMailInterface
 {
