@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
+    <search-and-filters>
+        <label>Search &amp; Filters</label>
+        <title>Search &amp; Filters</title>
+        <bundle>search</bundle>
+        <controller>filters</controller>
+        <action>index</action>
+        <icon>fa-search</icon>
+    </search-and-filters>
     <maintenance>
         <pages>
             <search>
