@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use LogicException;
-use SimpleXMLElement;
+use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
+use Symfony\Component\Finder\Finder;
 
 class Builder implements BuilderInterface
 {
@@ -47,29 +47,28 @@ class Builder implements BuilderInterface
     protected $process;
 
     /**
-     * @var string
+     * @var array
      */
-    protected $xmlFolder;
+    protected $processDefinitionLocation;
 
     /**
+     * @deprecated The optional argument `$processDefinitionLocation` will be mandatory in next major version.
+     * Define paths to your process definition in `OmsConfig::getProcessDefinitionLocation()`
+     *
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
-     * @param string|null $xmlFolder
+     * @param string|array|null $processDefinitionLocation
      */
-    public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, $process, $xmlFolder = null)
+    public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, $process, $processDefinitionLocation = null)
     {
         $this->event = $event;
         $this->state = $state;
         $this->transition = $transition;
         $this->process = $process;
-        if ($xmlFolder) {
-            $this->xmlFolder = $xmlFolder;
-        } else {
-            // TODO core-122 move to settings
-            $this->xmlFolder = APPLICATION_ROOT_DIR . '/config/Zed/oms/';
-        }
+
+        $this->setProcessDefinitionLocation($processDefinitionLocation);
     }
 
     /**
@@ -149,9 +148,23 @@ class Builder implements BuilderInterface
      */
     protected function loadXmlFromFileName($fileName)
     {
-        $xml = file_get_contents($this->xmlFolder . $fileName);
+        $definitionFile = $this->locateProcessDefinition($fileName);
 
-        return $this->loadXml($xml);
+        return $this->loadXml($definitionFile->getContents());
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @throws \Spryker\Zed\Oms\Business\Exception\StatemachineException
+     *
+     * @return \Symfony\Component\Finder\SplFileInfo
+     */
+    private function locateProcessDefinition($fileName)
+    {
+        $finder = $this->buildFinder($fileName);
+
+        return current(iterator_to_array($finder->getIterator()));
     }
 
     /**
@@ -171,7 +184,7 @@ class Builder implements BuilderInterface
      */
     protected function loadXml($xml)
     {
-        return new SimpleXMLElement($xml);
+        return new \SimpleXMLElement($xml);
     }
 
     /**
@@ -331,7 +344,7 @@ class Builder implements BuilderInterface
                     $targetName = (string)$xmlTransition->target;
 
                     if (!isset($stateToProcessMap[$targetName])) {
-                        throw new LogicException('Target: "' . $targetName . '" does not exist from source: "' . $sourceName . '"');
+                        throw new \LogicException('Target: "' . $targetName . '" does not exist from source: "' . $sourceName . '"');
                     }
                     $targetProcess = $stateToProcessMap[$targetName];
                     $targetState = $targetProcess->getState($targetName);
@@ -342,7 +355,7 @@ class Builder implements BuilderInterface
                         $eventId = (string)$xmlTransition->event;
 
                         if (!isset($eventMap[$eventId])) {
-                            throw new LogicException('Event: "' . $eventId . '" does not exist from source: "' . $sourceName . '"');
+                            throw new \LogicException('Event: "' . $eventId . '" does not exist from source: "' . $sourceName . '"');
                         }
 
                         $event = $eventMap[$eventId];
@@ -362,7 +375,7 @@ class Builder implements BuilderInterface
      *
      * @return string
      */
-    protected function getAttributeString(SimpleXMLElement $xmlElement, $attributeName)
+    protected function getAttributeString(\SimpleXMLElement $xmlElement, $attributeName)
     {
         $string = (string)$xmlElement->attributes()[$attributeName];
         $string = ($string === '') ? null : $string;
@@ -376,9 +389,87 @@ class Builder implements BuilderInterface
      *
      * @return bool
      */
-    protected function getAttributeBoolean(SimpleXMLElement $xmlElement, $attributeName)
+    protected function getAttributeBoolean(\SimpleXMLElement $xmlElement, $attributeName)
     {
         return (string)$xmlElement->attributes()[$attributeName] === 'true';
+    }
+
+    /**
+     * @param string|array|null $processDefinitionLocation
+     *
+     * @return void
+     */
+    private function setProcessDefinitionLocation($processDefinitionLocation)
+    {
+        $processDefinitionLocation = $this->setDefaultIfNull($processDefinitionLocation);
+
+        $this->processDefinitionLocation = (array)$processDefinitionLocation;
+    }
+
+    /**
+     * @deprecated This method can be removed when `$processDefinitionLocation` is mandatory
+     *
+     * @param string|array|null $processDefinitionLocation
+     *
+     * @return string|array
+     */
+    private function setDefaultIfNull($processDefinitionLocation)
+    {
+        if ($processDefinitionLocation !== null) {
+            return $processDefinitionLocation;
+        }
+
+        return $processDefinitionLocation = APPLICATION_ROOT_DIR . '/config/Zed/oms/';
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function buildFinder($fileName)
+    {
+        $finder = new Finder();
+        $finder->in($this->processDefinitionLocation);
+        if (strpos($fileName, '/') !== false) {
+            $finder->path(dirname($fileName));
+            $finder->name(basename($fileName));
+        } else {
+            $finder->name($fileName);
+        }
+
+        $this->validateFinder($finder, $fileName);
+
+        return $finder;
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\Finder $finder
+     * @param string $fileName
+     *
+     * @throws \Spryker\Zed\Oms\Business\Exception\StatemachineException
+     *
+     * @return void
+     */
+    protected function validateFinder(Finder $finder, $fileName)
+    {
+        if ($finder->count() > 1) {
+            throw new StatemachineException(
+                sprintf(
+                    '"%s" found in more then one location. Could not determine which one to choose. Please check your process definition location',
+                    $fileName
+                )
+            );
+        }
+
+        if ($finder->count() === 0) {
+            throw new StatemachineException(
+                sprintf(
+                    'Could not find "%s". Please check your process definition location',
+                    $fileName
+                )
+            );
+        }
     }
 
 }

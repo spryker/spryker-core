@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<statemachine
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="process.xsd"
+>
+    <process name="ProcessA" main="true">
+        <subprocesses>
+            <process>SubProcessA</process>
+        </subprocesses>
+
+        <states>
+            <state name="state a" reserved="true"/>
+        </states>
+
+        <transition>
+            <source>state a</source>
+            <target>state b</target>
+        </transition>
+
+    </process>
+
+    <process name="SubProcessA" file="SubProcesses/sub-process-a.xml"/>
+</statemachine>

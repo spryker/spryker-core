@@ -23,6 +23,11 @@
     "spryker/country": "^2.0.0",
     "spryker/customer": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "0.3.1",
+    "spryker/testify": "^2.0.0",
+    "spryker/config": "^2.1.0"
+  },
   "description": "oms bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -31,5 +36,11 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }

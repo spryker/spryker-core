@@ -11,7 +11,14 @@ interface OmsConstants
 {
 
     const INITIAL_STATUS = 'new';
+
+    /**
+     * @deprecated Please use OmsConfig to get default process location
+     */
     const DEFAULT_PROCESS_LOCATION = '/config/Zed/oms';
+
+    const PROCESS_LOCATIONS = 'PROCESS_LOCATIONS';
+
     const NAME_CREDIT_MEMO_REFERENCE = 'CreditMemoReference';
 
 }
