@@ -430,7 +430,7 @@ class Builder implements BuilderInterface
      */
     protected function buildFinder($fileName)
     {
-        $finder = new Finder();
+        $finder = $this->getFinder();
         $finder->in($this->processDefinitionLocation);
         if (strpos($fileName, '/') !== false) {
             $finder->path(dirname($fileName));
@@ -442,6 +442,14 @@ class Builder implements BuilderInterface
         $this->validateFinder($finder, $fileName);
 
         return $finder;
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function getFinder()
+    {
+        return new Finder();
     }
 
     /**
