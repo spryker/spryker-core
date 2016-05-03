@@ -53,12 +53,13 @@ class Saver implements SaverInterface
             $addressTransfer->getAddress3()
         ));
 
+        $paymentEntity->fromArray($paymentTransfer->toArray());
         $paymentEntity->fromArray($addressTransfer->toArray());
+
         $paymentEntity
             ->setStreet($formattedStreet)
             ->setCountryIso2Code($addressTransfer->getIso2Code())
             ->setFkSalesOrder($idSalesOrder);
-
         $paymentEntity->save();
 
         return $paymentEntity;

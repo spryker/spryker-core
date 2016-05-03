@@ -11,14 +11,8 @@
     <table name="spy_payment_braintree" phpName="SpyPaymentBraintree">
         <column name="id_payment_braintree" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" required="true" type="INTEGER"/>
-        <column name="account_brand" required="true" type="VARCHAR"/>
         <column name="payment_type" required="false" type="VARCHAR"/>
         <column name="client_ip" required="true" type="VARCHAR"/>
-        <column name="first_name" required="true" type="VARCHAR" size="100"/>
-        <column name="last_name" required="true" type="VARCHAR" size="100"/>
-        <column name="salutation" required="true" type="ENUM" valueSet="Mr, Mrs, Dr"/>
-        <column name="gender" required="true" type="ENUM" valueSet="Male, Female"/>
-        <column name="date_of_birth" type="DATE" default="NULL"/>
         <column name="country_iso2_code" required="true" type="CHAR" size="2"/>
         <column name="city" required="true" type="VARCHAR" size="255"/>
         <column name="street" required="true" type="VARCHAR" size="255"/>
