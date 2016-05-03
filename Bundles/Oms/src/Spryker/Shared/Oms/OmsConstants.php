@@ -17,7 +17,7 @@ interface OmsConstants
      */
     const DEFAULT_PROCESS_LOCATION = '/config/Zed/oms';
 
-    const PROCESS_LOCATIONS = 'PROCESS_LOCATIONS';
+    const PROCESS_LOCATION = 'PROCESS_LOCATION';
 
     const NAME_CREDIT_MEMO_REFERENCE = 'CreditMemoReference';
 

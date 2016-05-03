@@ -174,7 +174,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return string
      */
-    protected function getProcessLocationA()
+    private function getProcessLocationA()
     {
         return __DIR__ . '/Builder/Fixtures/DefinitionLocationA';
     }
@@ -182,7 +182,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return string
      */
-    protected function getProcessLocationB()
+    private function getProcessLocationB()
     {
         return __DIR__ . '/Builder/Fixtures/DefinitionLocationB';
     }

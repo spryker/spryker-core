@@ -5,7 +5,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Zed\Oms;
 
 use Spryker\Shared\Config\Config;
@@ -44,7 +43,7 @@ class OmsConfigTest extends \PHPUnit_Framework_TestCase
         $reflectionClass = new \ReflectionClass(Config::class);
         $reflectionProperty = $reflectionClass->getProperty('config');
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue([OmsConstants::PROCESS_LOCATIONS => APPLICATION_ROOT_DIR . '/configuredPaths']);
+        $reflectionProperty->setValue([OmsConstants::PROCESS_LOCATION => APPLICATION_ROOT_DIR . '/configuredPaths']);
 
         $this->assertSame(APPLICATION_ROOT_DIR . '/configuredPaths', $omsConfig->getProcessDefinitionLocation());
     }

@@ -20,7 +20,7 @@ class OmsConfig extends AbstractBundleConfig
      */
     public function getProcessDefinitionLocation()
     {
-        return $this->get(OmsConstants::PROCESS_LOCATIONS, self::DEFAULT_PROCESS_LOCATION);
+        return $this->get(OmsConstants::PROCESS_LOCATION, self::DEFAULT_PROCESS_LOCATION);
     }
 
     /**
