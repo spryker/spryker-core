@@ -57,14 +57,6 @@ class DependencyInjectorResolver extends AbstractClassResolver
     }
 
     /**
-     * @return DependencyInjectionInterface
-     */
-    protected function getResolvedClassInstance()
-    {
-        return parent::getResolvedClassInstance();
-    }
-
-    /**
      * @return string
      */
     public function getClassPattern()
