@@ -37,7 +37,7 @@ class CheckoutSubFormPluginCollection implements \Iterator, \Countable
      */
     public function current()
     {
-        return current($this->checkoutSubForm);
+        return $this->checkoutSubForm[$this->position];
     }
 
     /**
