@@ -1,24 +1,23 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Payolution\Dependency\Injection;
 
 use Generated\Shared\Transfer\PaymentTransfer;
+use Spryker\Shared\Kernel\ContainerInterface;
+use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
+use Spryker\Yves\Checkout\Dependency\Plugin\CheckoutStepHandlerPluginCollection;
+use Spryker\Yves\Checkout\Dependency\Plugin\CheckoutSubFormPluginCollection;
+use Spryker\Yves\Kernel\Dependency\Injection\AbstractDependencyInjector;
 use Spryker\Yves\Payolution\Plugin\PayolutionHandlerPlugin;
 use Spryker\Yves\Payolution\Plugin\PayolutionInstallmentSubFormPlugin;
 use Spryker\Yves\Payolution\Plugin\PayolutionInvoiceSubFormPlugin;
-use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface;
-use Spryker\Yves\Kernel\Dependency\Injection\AbstractDependencyInjector;
 
-/**
- * @method \Spryker\Yves\Payolution\PayolutionFactory getFactory()
- */
 class CheckoutDependencyInjector extends AbstractDependencyInjector implements DependencyInjectionInterface
 {
 
@@ -29,18 +28,18 @@ class CheckoutDependencyInjector extends AbstractDependencyInjector implements D
      */
     public function inject(ContainerInterface $container)
     {
-        $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (array $paymentSubForms) {
-            $paymentSubForms[] = new PayolutionInstallmentSubFormPlugin();
-            $paymentSubForms[] = new PayolutionInvoiceSubFormPlugin();
+        $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (CheckoutSubFormPluginCollection $paymentSubForms) {
+            $paymentSubForms->add(new PayolutionInstallmentSubFormPlugin());
+            $paymentSubForms->add(new PayolutionInvoiceSubFormPlugin());
 
             return $paymentSubForms;
         });
 
-        $container->extend(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER, function (array $paymentMethodHandler) {
+        $container->extend(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER, function (CheckoutStepHandlerPluginCollection $paymentMethodHandler) {
             $payolutionHandlerPlugin = new PayolutionHandlerPlugin();
 
-            $paymentMethodHandler[PaymentTransfer::PAYOLUTION_INVOICE] = $payolutionHandlerPlugin;
-            $paymentMethodHandler[PaymentTransfer::PAYOLUTION_INSTALLMENT] = $payolutionHandlerPlugin;
+            $paymentMethodHandler->add($payolutionHandlerPlugin, PaymentTransfer::PAYOLUTION_INVOICE);
+            $paymentMethodHandler->add($payolutionHandlerPlugin, PaymentTransfer::PAYOLUTION_INSTALLMENT);
 
             return $paymentMethodHandler;
         });
