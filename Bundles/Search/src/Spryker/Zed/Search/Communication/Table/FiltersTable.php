@@ -49,7 +49,7 @@ class FiltersTable extends AbstractTable
                 self::INCLUDE_FOR_FULL_TEXT => 'Include for Full Text',
                 self::INCLUDE_FOR_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
                 self::ACTION => $this->generateEditButton(
-                    '/customer/view/?id-filter=' . $i,
+                    '/search/filters/edit?id-filter=' . $i,
                     'Edit'
                 ),
             ];
@@ -81,13 +81,13 @@ class FiltersTable extends AbstractTable
     protected function getSearchableFields()
     {
         return [
-            self::NAME => 'Attribute name',
-            self::TYPE => 'Type',
-            self::FILTER_TYPE => 'Filter Type',
-            self::INCLUDE_FOR_SUGGESTION => 'Include for Suggestion',
-            self::INCLUDE_FOR_SORTING => 'Include for Sorting',
-            self::INCLUDE_FOR_FULL_TEXT => 'Include for Full Text',
-            self::INCLUDE_FOR_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
+            self::NAME,
+            self::TYPE,
+            self::FILTER_TYPE,
+            self::INCLUDE_FOR_SUGGESTION,
+            self::INCLUDE_FOR_SORTING,
+            self::INCLUDE_FOR_FULL_TEXT,
+            self::INCLUDE_FOR_FULL_TEXT_BOOSTED,
         ];
     }
 
@@ -97,13 +97,13 @@ class FiltersTable extends AbstractTable
     protected function getSortableFields()
     {
         return [
-            self::NAME => 'Attribute name',
-            self::TYPE => 'Type',
-            self::FILTER_TYPE => 'Filter Type',
-            self::INCLUDE_FOR_SUGGESTION => 'Include for Suggestion',
-            self::INCLUDE_FOR_SORTING => 'Include for Sorting',
-            self::INCLUDE_FOR_FULL_TEXT => 'Include for Full Text',
-            self::INCLUDE_FOR_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
+            self::NAME,
+            self::TYPE,
+            self::FILTER_TYPE,
+            self::INCLUDE_FOR_SUGGESTION,
+            self::INCLUDE_FOR_SORTING,
+            self::INCLUDE_FOR_FULL_TEXT,
+            self::INCLUDE_FOR_FULL_TEXT_BOOSTED,
         ];
     }
 }
