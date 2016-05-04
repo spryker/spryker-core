@@ -41,7 +41,7 @@ abstract class AbstractClassResolver
         $classNames = $this->buildClassNames();
 
         foreach ($classNames as $className) {
-            if (class_exists($className)) {
+            if ($this->classExists($className)) {
                 $this->resolvedClassName = $className;
 
                 return true;
@@ -49,6 +49,16 @@ abstract class AbstractClassResolver
         }
 
         return false;
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return bool
+     */
+    protected function classExists($className)
+    {
+        return class_exists($className);
     }
 
     /**
