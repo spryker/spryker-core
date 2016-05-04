@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\Dependency\Injection;
+namespace Spryker\Yves\Kernel\Dependency\Injector;
 
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
+use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 
-abstract class AbstractDependencyInjection implements DependencyInjectionInterface
+abstract class AbstractDependencyInjector implements DependencyInjectorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Kernel\AbstractFactory
+     * @var \Spryker\Yves\Kernel\FactoryInterface
      */
     private $factory;
 
     /**
-     * @return \Spryker\Zed\Kernel\AbstractFactory
+     * @return \Spryker\Yves\Kernel\FactoryInterface
      */
     protected function getFactory()
     {
@@ -31,9 +31,9 @@ abstract class AbstractDependencyInjection implements DependencyInjectionInterfa
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
+     * @throws \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return \Spryker\Zed\Kernel\AbstractFactory
+     * @return \Spryker\Yves\Kernel\AbstractFactory
      */
     private function resolveFactory()
     {
@@ -41,7 +41,7 @@ abstract class AbstractDependencyInjection implements DependencyInjectionInterfa
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {

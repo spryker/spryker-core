@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Kernel\ClassResolver\DependencyInjectionProvider;
+namespace Spryker\Yves\Kernel\ClassResolver\DependencyInjector;
 
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollection;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollection;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
-class DependencyInjectionProviderResolver extends AbstractClassResolver
+class DependencyInjectorResolver extends AbstractClassResolver
 {
 
-    const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\Dependency\\Injection\\%4$sDependencyInjector';
+    const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
     const KEY_FROM_BUNDLE = '%fromBundle%';
 
     /**
@@ -26,30 +26,30 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollectionInterface
+     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
     public function resolve($callerClass)
     {
-        $dependencyInjectionProviderCollection = $this->getDependencyInjectionProviderCollection();
+        $dependencyInjectorCollection = $this->getDependencyInjectorCollection();
 
         $this->setCallerClass($callerClass);
         $injectToBundle = $this->getClassInfo()->getBundle();
-        $injectFromBundles = $this->getInjectionBundles($injectToBundle);
+        $injectFromBundles = $this->getInjectorBundles($injectToBundle);
 
         foreach ($injectFromBundles as $injectFromBundle) {
             $this->fromBundle = $injectFromBundle;
 
             if ($this->canResolve()) {
-                $resolvedInjectionProvider = $this->getResolvedClassInstance();
-                $dependencyInjectionProviderCollection->addDependencyInjectorProvider($resolvedInjectionProvider);
+                $resolvedInjector = $this->getResolvedClassInstance();
+                $dependencyInjectorCollection->addDependencyInjector($resolvedInjector);
             }
         }
 
-        return $dependencyInjectionProviderCollection;
+        return $dependencyInjectorCollection;
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface
+     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface
      */
     protected function getResolvedClassInstance()
     {
@@ -99,30 +99,30 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
      *
      * @return array
      */
-    protected function getInjectionBundles($injectToBundle)
+    protected function getInjectorBundles($injectToBundle)
     {
-        $injectionConfiguration = $this->getDependencyInjectionConfiguration();
-        if (!isset($injectionConfiguration[$injectToBundle])) {
+        $injectorConfiguration = $this->getDependencyInjectorConfiguration();
+        if (!isset($injectorConfiguration[$injectToBundle])) {
             return [];
         }
 
-        return $injectionConfiguration[$injectToBundle];
+        return $injectorConfiguration[$injectToBundle];
     }
 
     /**
      * @return array
      */
-    protected function getDependencyInjectionConfiguration()
+    protected function getDependencyInjectorConfiguration()
     {
-        return Config::get(KernelConstants::DEPENDENCY_INJECTION_YVES, []);
+        return Config::get(KernelConstants::DEPENDENCY_INJECTOR_YVES, []);
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollection
+     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollection
      */
-    protected function getDependencyInjectionProviderCollection()
+    protected function getDependencyInjectorCollection()
     {
-        return new DependencyInjectionProviderCollection();
+        return new DependencyInjectorCollection();
     }
 
 }

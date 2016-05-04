@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Kernel\Dependency\Injection;
+namespace Spryker\Shared\Kernel\Dependency\Injector;
 
 use Spryker\Shared\Kernel\ContainerInterface;
 
-interface DependencyInjectionInterface
+interface DependencyInjectorInterface
 {
 
     /**

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Kernel\Dependency\Injection;
+namespace Unit\Spryker\Shared\Kernel\Dependency\Injector;
 
 /**
  * @group Spryker

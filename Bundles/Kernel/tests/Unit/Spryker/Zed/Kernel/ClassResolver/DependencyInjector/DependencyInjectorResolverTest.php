@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\ClassResolver\DependencyInjectionProvider;
+namespace Unit\Spryker\Zed\Kernel\ClassResolver\DependencyInjector;
 
 use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface;
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollectionInterface;
-use Spryker\Zed\Kernel\ClassResolver\DependencyInjectionProvider\DependencyInjectionProviderResolver;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
+use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -19,7 +19,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group Kernel
  * @group DependencyInjectionProviderResolver
  */
-class DependencyInjectionProviderResolverTest extends \PHPUnit_Framework_TestCase
+class DependencyInjectorResolverTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -39,22 +39,22 @@ class DependencyInjectionProviderResolverTest extends \PHPUnit_Framework_TestCas
     /**
      * @var string
      */
-    protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\FooInjectionProvider';
+    protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\FooInjectionProvider';
+    protected $projectClass = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\FooInjectionProvider';
+    protected $storeClass = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $classPattern = 'Unit\\%namespace%\\Zed\\%fromBundle%%store%\\ClassResolver\\Fixtures\\%bundle%InjectionProvider';
+    protected $classPattern = 'Unit\\%namespace%\\Zed\\%fromBundle%%store%\\ClassResolver\\Fixtures\\%bundle%DependencyInjector';
 
     /**
      * @var array
@@ -74,13 +74,13 @@ class DependencyInjectionProviderResolverTest extends \PHPUnit_Framework_TestCas
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyInjectionProvider\DependencyInjectionProviderResolver
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
     protected function getResolverMock(array $methods)
     {
-        $dependencyInjectionProviderResolverMock = $this->getMock(DependencyInjectionProviderResolver::class, $methods);
+        $dependencyInjectorResolverMock = $this->getMock(DependencyInjectorResolver::class, $methods);
 
-        return $dependencyInjectionProviderResolverMock;
+        return $dependencyInjectorResolverMock;
     }
 
     /**
@@ -92,14 +92,14 @@ class DependencyInjectionProviderResolverTest extends \PHPUnit_Framework_TestCas
         $resolverMock->method('canResolve')
             ->willReturn(false);
 
-        $dependencyInjectionProviderCollection = $resolverMock->resolve('CatFace');
+        $dependencyInjectorCollection = $resolverMock->resolve('CatFace');
 
         $this->assertInstanceOf(
-            DependencyInjectionProviderCollectionInterface::class,
-            $dependencyInjectionProviderCollection
+            DependencyInjectorCollectionInterface::class,
+            $dependencyInjectorCollection
         );
 
-        $this->assertCount(0, $dependencyInjectionProviderCollection);
+        $this->assertCount(0, $dependencyInjectorCollection);
     }
 
     /**
@@ -109,22 +109,22 @@ class DependencyInjectionProviderResolverTest extends \PHPUnit_Framework_TestCas
     {
         $this->createClass($this->coreClass);
 
-        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectionConfiguration']);
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectorConfiguration']);
         $resolverMock->method('getClassPattern')
             ->willReturn($this->classPattern);
 
-        $resolverMock->method('getDependencyInjectionConfiguration')
+        $resolverMock->method('getDependencyInjectorConfiguration')
             ->willReturn([$this->injectToBundle => [$this->injectFromBundle]]);
 
-        $dependencyInjectionProviderCollection = $resolverMock->resolve($this->injectToBundle);
+        $dependencyInjectorCollection = $resolverMock->resolve($this->injectToBundle);
 
         $this->assertInstanceOf(
-            DependencyInjectionProviderCollectionInterface::class,
-            $dependencyInjectionProviderCollection
+            DependencyInjectorCollectionInterface::class,
+            $dependencyInjectorCollection
         );
 
-        $resolvedDependencyInjectionProvider = current($dependencyInjectionProviderCollection->getDependencyInjectionProvider());
-        $this->assertInstanceOf($this->coreClass, $resolvedDependencyInjectionProvider);
+        $resolvedDependencyInjector = current($dependencyInjectorCollection->getDependencyInjector());
+        $this->assertInstanceOf($this->coreClass, $resolvedDependencyInjector);
     }
 
     /**
@@ -135,22 +135,22 @@ class DependencyInjectionProviderResolverTest extends \PHPUnit_Framework_TestCas
         $this->createClass($this->coreClass);
         $this->createClass($this->projectClass);
 
-        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectionConfiguration']);
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectorConfiguration']);
         $resolverMock->method('getClassPattern')
             ->willReturn($this->classPattern);
 
-        $resolverMock->method('getDependencyInjectionConfiguration')
+        $resolverMock->method('getDependencyInjectorConfiguration')
             ->willReturn([$this->injectToBundle => [$this->injectFromBundle]]);
 
-        $dependencyInjectionProviderCollection = $resolverMock->resolve($this->injectToBundle);
+        $dependencyInjectorCollection = $resolverMock->resolve($this->injectToBundle);
 
         $this->assertInstanceOf(
-            DependencyInjectionProviderCollectionInterface::class,
-            $dependencyInjectionProviderCollection
+            DependencyInjectorCollectionInterface::class,
+            $dependencyInjectorCollection
         );
 
-        $resolvedDependencyInjectionProvider = current($dependencyInjectionProviderCollection->getDependencyInjectionProvider());
-        $this->assertInstanceOf($this->projectClass, $resolvedDependencyInjectionProvider);
+        $resolvedDependencyInjector = current($dependencyInjectorCollection->getDependencyInjector());
+        $this->assertInstanceOf($this->projectClass, $resolvedDependencyInjector);
     }
 
     /**
@@ -161,22 +161,22 @@ class DependencyInjectionProviderResolverTest extends \PHPUnit_Framework_TestCas
         $this->createClass($this->projectClass);
         $this->createClass($this->storeClass);
 
-        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectionConfiguration']);
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectorConfiguration']);
         $resolverMock->method('getClassPattern')
             ->willReturn($this->classPattern);
 
-        $resolverMock->method('getDependencyInjectionConfiguration')
+        $resolverMock->method('getDependencyInjectorConfiguration')
             ->willReturn([$this->injectToBundle => [$this->injectFromBundle]]);
 
-        $dependencyInjectionProviderCollection = $resolverMock->resolve($this->injectToBundle);
+        $dependencyInjectorCollection = $resolverMock->resolve($this->injectToBundle);
 
         $this->assertInstanceOf(
-            DependencyInjectionProviderCollectionInterface::class,
-            $dependencyInjectionProviderCollection
+            DependencyInjectorCollectionInterface::class,
+            $dependencyInjectorCollection
         );
 
-        $resolvedDependencyInjectionProvider = current($dependencyInjectionProviderCollection->getDependencyInjectionProvider());
-        $this->assertInstanceOf($this->storeClass, $resolvedDependencyInjectionProvider);
+        $resolvedDependencyInjector = current($dependencyInjectorCollection->getDependencyInjector());
+        $this->assertInstanceOf($this->storeClass, $resolvedDependencyInjector);
     }
 
     /**
@@ -184,8 +184,8 @@ class DependencyInjectionProviderResolverTest extends \PHPUnit_Framework_TestCas
      */
     public function testGetClassPattern()
     {
-        $dependencyInjectionProviderResolver = new DependencyInjectionProviderResolver();
-        $this->assertSame('\%namespace%\Zed\%fromBundle%%store%\Dependency\Injection\%bundle%DependencyInjector', $dependencyInjectionProviderResolver->getClassPattern());
+        $dependencyInjectorResolver = new DependencyInjectorResolver();
+        $this->assertSame('\%namespace%\Zed\%fromBundle%%store%\Dependency\Injector\%bundle%DependencyInjector', $dependencyInjectorResolver->getClassPattern());
     }
 
     /**
@@ -208,9 +208,9 @@ class DependencyInjectionProviderResolverTest extends \PHPUnit_Framework_TestCas
         $class = array_pop($classNameParts);
         $fileContent = '<?php'
             . PHP_EOL . 'namespace ' . implode('\\', $classNameParts) . ';'
-            . PHP_EOL . 'use ' . DependencyInjectionInterface::class . ';'
+            . PHP_EOL . 'use ' . DependencyInjectorInterface::class . ';'
             . PHP_EOL . 'use ' . ContainerInterface::class . ';'
-            . PHP_EOL . 'class ' . $class . ' implements DependencyInjectionInterface'
+            . PHP_EOL . 'class ' . $class . ' implements DependencyInjectorInterface'
             . PHP_EOL . '{'
             . PHP_EOL . 'public function inject(ContainerInterface $container){}'
             . PHP_EOL . '}';

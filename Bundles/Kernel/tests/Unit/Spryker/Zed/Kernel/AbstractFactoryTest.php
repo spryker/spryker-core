@@ -7,11 +7,11 @@
 
 namespace Unit\Spryker\Zed\Kernel;
 
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface;
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollection;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollection;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
-use Spryker\Zed\Kernel\ClassResolver\DependencyInjectionProvider\DependencyInjectionProviderResolver;
+use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Unit\Spryker\Zed\Kernel\Fixtures\Factory;
@@ -94,9 +94,9 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetProvidedDependencyShouldGetInjectedData()
     {
-        $dependencyInjectionProviderResolver = $this->getDependencyInjectionProviderResolverMock();
-        $factoryMock = $this->getFactoryMock(['getDependencyInjectionProviderResolver', 'resolveDependencyProvider']);
-        $factoryMock->expects($this->once())->method('getDependencyInjectionProviderResolver')->willReturn($dependencyInjectionProviderResolver);
+        $dependencyInjectorResolver = $this->getDependencyInjectorResolverMock();
+        $factoryMock = $this->getFactoryMock(['getDependencyInjectorResolver', 'resolveDependencyProvider']);
+        $factoryMock->expects($this->once())->method('getDependencyInjectorResolver')->willReturn($dependencyInjectorResolver);
 
         $abstractBundleDependencyProviderMock = $this->getMockForAbstractClass(AbstractBundleDependencyProvider::class);
         $factoryMock->expects($this->once())->method('resolveDependencyProvider')->willReturn($abstractBundleDependencyProviderMock);
@@ -105,24 +105,24 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyInjectionProvider\DependencyInjectionProviderResolver
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
-    protected function getDependencyInjectionProviderResolverMock()
+    protected function getDependencyInjectorResolverMock()
     {
         $container = new Container();
         $container[self::CONTAINER_KEY] = self::CONTAINER_VALUE;
 
-        $dependencyInjectionProviderMock = $this->getMock(DependencyInjectionInterface::class, ['inject']);
-        $dependencyInjectionProviderMock->expects($this->once())->method('inject')->willReturn($container);
+        $dependencyInjectorMock = $this->getMock(DependencyInjectorInterface::class, ['inject']);
+        $dependencyInjectorMock->expects($this->once())->method('inject')->willReturn($container);
 
-        $dependencyInjectionProviderCollectionMock = $this->getMock(DependencyInjectionProviderCollection::class, ['getDependencyInjectionProvider']);
-        $dependencyInjectionProviderCollectionMock->expects($this->once())->method('getDependencyInjectionProvider')->willReturn(
-            [$dependencyInjectionProviderMock]
+        $dependencyInjectorCollectionMock = $this->getMock(DependencyInjectorCollection::class, ['getDependencyInjector']);
+        $dependencyInjectorCollectionMock->expects($this->once())->method('getDependencyInjector')->willReturn(
+            [$dependencyInjectorMock]
         );
-        $dependencyInjectionProviderResolverMock = $this->getMock(DependencyInjectionProviderResolver::class, ['resolve']);
-        $dependencyInjectionProviderResolverMock->expects($this->once())->method('resolve')->willReturn($dependencyInjectionProviderCollectionMock);
+        $dependencyInjectorResolverMock = $this->getMock(DependencyInjectorResolver::class, ['resolve']);
+        $dependencyInjectorResolverMock->expects($this->once())->method('resolve')->willReturn($dependencyInjectorCollectionMock);
 
-        return $dependencyInjectionProviderResolverMock;
+        return $dependencyInjectorResolverMock;
     }
 
     /**

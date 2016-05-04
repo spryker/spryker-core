@@ -9,9 +9,9 @@ namespace Spryker\Yves\Kernel;
 
 use Pyz\Yves\Application\Plugin\Pimple;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollectionInterface;
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjector;
-use Spryker\Yves\Kernel\ClassResolver\DependencyInjectionProvider\DependencyInjectionProviderResolver;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
+use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
@@ -122,8 +122,8 @@ abstract class AbstractFactory implements FactoryInterface
     protected function getContainerWithProvidedDependencies()
     {
         $container = $this->getContainer();
-        $dependencyInjectionProviderCollection = $this->resolveDependencyInjectionProviderCollection();
-        $dependencyInjector = $this->getDependencyInjector($dependencyInjectionProviderCollection);
+        $dependencyInjectorCollection = $this->resolveDependencyInjectorCollection();
+        $dependencyInjector = $this->getDependencyInjector($dependencyInjectorCollection);
         $dependencyProvider = $this->resolveDependencyProvider();
 
         $container = $this->provideDependencies($dependencyProvider, $container);
@@ -144,29 +144,29 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollectionInterface
+     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
-    protected function resolveDependencyInjectionProviderCollection()
+    protected function resolveDependencyInjectorCollection()
     {
-        return $this->getDependencyInjectionProviderResolver()->resolve($this);
+        return $this->getDependencyInjectorResolver()->resolve($this);
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollectionInterface $dependencyInjectionProviderCollection
+     * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
      *
-     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjector
+     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector
      */
-    protected function getDependencyInjector(DependencyInjectionProviderCollectionInterface $dependencyInjectionProviderCollection)
+    protected function getDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
     {
-        return new DependencyInjector($dependencyInjectionProviderCollection);
+        return new DependencyInjector($dependencyInjectorCollection);
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\ClassResolver\DependencyInjectionProvider\DependencyInjectionProviderResolver
+     * @return \Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
-    protected function getDependencyInjectionProviderResolver()
+    protected function getDependencyInjectorResolver()
     {
-        return new DependencyInjectionProviderResolver();
+        return new DependencyInjectorResolver();
     }
 
     /**
