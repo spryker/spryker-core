@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Kernel\Dependency\Injection;
 
-use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjector;
+use Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 
-abstract class AbstractDependencyInjector extends DependencyInjector
+abstract class AbstractDependencyInjection implements DependencyInjectionInterface
 {
 
     /**

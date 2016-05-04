@@ -49,6 +49,14 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
     }
 
     /**
+     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface
+     */
+    protected function getResolvedClassInstance()
+    {
+        return parent::getResolvedClassInstance();
+    }
+
+    /**
      * @return string
      */
     public function getClassPattern()

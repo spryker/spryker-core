@@ -30,7 +30,7 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $dependencyInjectionProviderCollection = new DependencyInjectionProviderCollection();
+        $dependencyInjectionProviderCollection = $this->getDependencyInjectionProviderCollection();
 
         $this->setCallerClass($callerClass);
         $injectToBundle = $this->getClassInfo()->getBundle();
@@ -46,6 +46,14 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
         }
 
         return $dependencyInjectionProviderCollection;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionInterface
+     */
+    protected function getResolvedClassInstance()
+    {
+        return parent::getResolvedClassInstance();
     }
 
     /**
@@ -107,6 +115,14 @@ class DependencyInjectionProviderResolver extends AbstractClassResolver
     protected function getDependencyInjectionConfiguration()
     {
         return Config::get(KernelConstants::DEPENDENCY_INJECTION_YVES, []);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Dependency\Injection\DependencyInjectionProviderCollection
+     */
+    protected function getDependencyInjectionProviderCollection()
+    {
+        return new DependencyInjectionProviderCollection();
     }
 
 }
