@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Checkout\Dependency\Plugin;
 
-class CheckoutStepHandlerPluginCollection implements \Iterator, \Countable, \ArrayAccess
+class CheckoutStepHandlerPluginCollection implements \Iterator, \Countable
 {
 
     /**
@@ -58,7 +58,7 @@ class CheckoutStepHandlerPluginCollection implements \Iterator, \Countable, \Arr
      */
     public function current()
     {
-        return current($this->checkoutStepHandler);
+        return $this->checkoutStepHandler[$this->position];
     }
 
     /**
@@ -99,47 +99,6 @@ class CheckoutStepHandlerPluginCollection implements \Iterator, \Countable, \Arr
     public function count()
     {
         return count($this->checkoutStepHandler);
-    }
-
-    /**
-     * @param string $offset
-     *
-     * @return bool
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->checkoutStepHandler[$offset]);
-    }
-
-    /**
-     * @param string $offset
-     *
-     * @return \Spryker\Yves\Checkout\Dependency\Plugin\CheckoutStepHandlerPluginInterface
-     */
-    public function offsetGet($offset)
-    {
-        return ($this->offsetExists($offset)) ? $this->checkoutStepHandler[$offset] : null;
-    }
-
-    /**
-     * @param string $offset
-     * @param \Spryker\Yves\Checkout\Dependency\Plugin\CheckoutStepHandlerPluginInterface $value
-     *
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->checkoutStepHandler[$offset] = $value;
-    }
-
-    /**
-     * @param string $offset
-     *
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->checkoutStepHandler[$offset]);
     }
 
 }
