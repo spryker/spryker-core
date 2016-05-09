@@ -9,10 +9,19 @@ namespace Spryker\Client\ZedRequest\Provider;
 
 use Spryker\Shared\ZedRequest\Provider\AbstractZedClientProvider;
 
+/**
+ * @deprecated Will be removed in the next major version. Please use ZedRequestFactory.
+ *
+ * Class ZedClientProvider
+ *
+ * @package Spryker\Client\ZedRequest\Provider
+ */
 class ZedClientProvider extends AbstractZedClientProvider
 {
 
     /**
+     * @deprecated Will be removed in the next major version. Please use ZedRequestFactory->createClient().
+     *
      * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClient
      */
     public function createZedClient()

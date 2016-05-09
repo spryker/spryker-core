@@ -28,7 +28,6 @@ class ZedRequestFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ZedRequest\Client\HttpClient
      *
-     * @todo remove Factory usage: https://spryker.atlassian.net/browse/CD-439
      */
     protected function createHttpClient()
     {
