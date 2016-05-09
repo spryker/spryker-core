@@ -9,6 +9,7 @@ namespace Spryker\Client\Search\Plugin\Config;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
 
 class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInterface
 {

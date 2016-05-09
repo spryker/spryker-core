@@ -12,10 +12,10 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Model\Query\QueryInterface;
-use Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface;
-use Spryker\Client\Search\Plugin\Config\SearchConfigInterface;
-use Spryker\Client\Search\Plugin\QueryExpanderPluginInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -27,11 +27,11 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     const AGGREGATION_GLOBAL_PREFIX = 'global-';
 
     /**
-     * @param \Spryker\Client\Search\Model\Query\QueryInterface $searchQuery
-     * @param \Spryker\Client\Search\Plugin\Config\SearchConfigInterface $searchConfig
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\Search\Model\Query\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, SearchConfigInterface $searchConfig, array $requestParameters = [])
     {
@@ -47,7 +47,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     }
 
     /**
-     * @param \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface $facetConfig
+     * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfig
      * @param array $requestParameters
      *
      * @return \Elastica\Query\AbstractQuery[]
@@ -76,7 +76,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     protected function createFacetFilterQuery(FacetConfigTransfer $facetConfigTransfer, array $requestParameters)
     {
         $filterValue = isset($requestParameters[$facetConfigTransfer->getParameterName()]) ? $requestParameters[$facetConfigTransfer->getParameterName()] : null;
-
+        
         if (trim($filterValue) === '') {
             return null;
         }
@@ -91,7 +91,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
     /**
      * @param \Elastica\Query $query
-     * @param \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface $facetConfig
+     * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfig
      * @param \Elastica\Query\AbstractQuery[] $facetFilters
      * @param array $requestParameters
      *
@@ -150,16 +150,14 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         $filterAggregation = $this
             ->getFactory()
             ->createAggregationBuilder()
-            ->createFilterAggregation(self::AGGREGATION_FILTER_NAME);
-
-        $filterAggregation
+            ->createFilterAggregation(self::AGGREGATION_FILTER_NAME)
             ->setFilter($aggregationFilterQuery)
             ->addAggregation($facetAggregation);
 
         $globalAggregation = $this
             ->getFactory()
             ->createAggregationBuilder()
-            ->createGlobalAggregation(self::AGGREGATION_GLOBAL_PREFIX . $facetAggregation->getName());
+            ->createGlobalAggregation(self::AGGREGATION_GLOBAL_PREFIX . $facetConfigTransfer->getName());
 
         $globalAggregation
             ->addAggregation($filterAggregation);

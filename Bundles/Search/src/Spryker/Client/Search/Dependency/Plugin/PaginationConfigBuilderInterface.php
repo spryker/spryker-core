@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin\Config;
+namespace Spryker\Client\Search\Dependency\Plugin;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 

@@ -57,7 +57,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
                 ->createAggregationExtractorFactory()
                 ->create($facetConfigTransfer);
 
-            $aggregation = $this->getAggregationRawData($aggregations, $fieldName);
+            $aggregation = $this->getAggregationRawData($aggregations, $fieldName, $facetConfigTransfer->getName());
 
             $facetData[$facetName] = $extractor->extractDataFromAggregations($aggregation, $requestParameters);
         }
@@ -68,13 +68,14 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
     /**
      * @param array $aggregations
      * @param string $fieldName
+     * @param string $facetName
      *
      * @return array
      */
-    protected function getAggregationRawData(array $aggregations, $fieldName)
+    protected function getAggregationRawData(array $aggregations, $fieldName, $facetName)
     {
-        if (isset($aggregations[FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $fieldName])) {
-            $aggregation = $aggregations[FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $fieldName][FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME][$fieldName];
+        if (isset($aggregations[FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $facetName])) {
+            $aggregation = $aggregations[FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $facetName][FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME][$fieldName];
         } else {
             $aggregation = $aggregations[$fieldName];
         }

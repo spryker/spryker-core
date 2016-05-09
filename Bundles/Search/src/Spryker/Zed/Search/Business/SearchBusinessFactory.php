@@ -174,7 +174,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string $searchString
      *
-     * @return \Spryker\Client\Search\Model\Query\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function createSearchKeysQuery($searchString)
     {

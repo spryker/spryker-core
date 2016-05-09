@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin\Config;
+namespace Spryker\Client\Search\Dependency\Plugin;
 
 interface SearchConfigInterface
 {
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface
      */
     public function getFacetConfigBuilder();
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\SortConfigBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface
      */
     public function getSortConfigBuilder();
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
      */
     public function getPaginationConfigBuilder();
 

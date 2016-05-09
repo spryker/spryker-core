@@ -9,7 +9,7 @@ namespace Spryker\Client\Search\Model\Handler;
 
 use Elastica\ResultSet;
 use Elastica\SearchableInterface;
-use Spryker\Client\Search\Model\Query\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class ElasticsearchSearchHandler implements SearchHandlerInterface
 {
@@ -28,8 +28,8 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
     }
 
     /**
-     * @param \Spryker\Client\Search\Model\Query\QueryInterface $searchQuery
-     * @param \Spryker\Client\Search\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
      * @return mixed
@@ -47,7 +47,7 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
     }
 
     /**
-     * @param \Spryker\Client\Search\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param \Elastica\ResultSet $rawSearchResult
      * @param array $requestParameters
      *

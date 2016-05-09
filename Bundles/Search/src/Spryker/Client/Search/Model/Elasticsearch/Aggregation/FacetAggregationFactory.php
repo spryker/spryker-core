@@ -72,9 +72,9 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      */
     protected function createByFacetValueType(FacetConfigTransfer $facetConfigTransfer)
     {
-        $type = $this->getFacetValueType($facetConfigTransfer);
+        $valueType = $this->getFacetValueType($facetConfigTransfer);
 
-        switch ($type) {
+        switch ($valueType) {
             case 'string':
                 return $this->createStringFacetAggregation($facetConfigTransfer);
 
@@ -85,7 +85,7 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
             default:
                 throw new MissingFacetAggregationException(sprintf(
                     'Missing facet aggregation for type "%s" in field "%s".',
-                    $type,
+                    $valueType,
                     $facetConfigTransfer->getFieldName()
                 ));
         }
@@ -98,10 +98,6 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      */
     protected function getFacetValueType(FacetConfigTransfer $facetConfigTransfer)
     {
-        if ($facetConfigTransfer->getFieldName() === 'category.all-parents') {
-            return 'string';
-        }
-
         return $this->indexMap->getType($facetConfigTransfer->getFieldName() . '.facet-value');
     }
 

@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin;
+namespace Spryker\Client\Search\Dependency\Plugin;
 
-use Spryker\Client\Search\Model\Query\QueryInterface;
-use Spryker\Client\Search\Plugin\Config\SearchConfigInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 
 interface QueryExpanderPluginInterface
 {
 
     /**
-     * @param \Spryker\Client\Search\Model\Query\QueryInterface $searchQuery
-     * @param \Spryker\Client\Search\Plugin\Config\SearchConfigInterface $searchConfig
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\Search\Model\Query\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, SearchConfigInterface $searchConfig, array $requestParameters = []);
 

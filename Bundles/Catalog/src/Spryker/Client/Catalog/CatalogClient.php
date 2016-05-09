@@ -15,63 +15,36 @@ use Spryker\Client\Kernel\AbstractClient;
 class CatalogClient extends AbstractClient implements CatalogClientInterface
 {
 
+    const DEFAULT_FULL_TEXT_BOOSTED_BOOSTING = 3;
+
     /**
      * @api
      *
-     * @param int $idCategory
      * @param string $searchString
-     * @param array $parameters
+     * @param array $requestParameters
+     * @param int $fullTextBoostedBoosting
      *
      * @return array
      */
-    public function categorySearch($idCategory, $searchString = null, array $parameters = [])
+    public function catalogSearch($searchString, array $requestParameters = [], $fullTextBoostedBoosting = self::DEFAULT_FULL_TEXT_BOOSTED_BOOSTING)
     {
         $searchQuery = $this
             ->getFactory()
-            ->createCategorySearchQuery($idCategory, $searchString);
+            ->createCatalogSearchQueryPlugin($searchString, $fullTextBoostedBoosting);
 
         $searchQuery = $this
             ->getFactory()
             ->getSearchClient()
-            ->expandQuery($searchQuery, $this->getFactory()->createCatalogSearchQueryExpanderPlugins(), $parameters);
+            ->expandQuery($searchQuery, $this->getFactory()->createCatalogSearchQueryExpanderPlugins(), $requestParameters);
 
-        $resultFormatter = $this
+        $resultFormatters = $this
             ->getFactory()
             ->createCatalogSearchResultFormatters();
 
         return $this
             ->getFactory()
             ->getSearchClient()
-            ->search($searchQuery, $resultFormatter, $parameters);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $searchString
-     * @param array $parameters
-     *
-     * @return array
-     */
-    public function fulltextSearch($searchString, array $parameters = [])
-    {
-        $searchQuery = $this
-            ->getFactory()
-            ->createFulltextSearchQuery($searchString);
-
-        $searchQuery = $this
-            ->getFactory()
-            ->getSearchClient()
-            ->expandQuery($searchQuery, $this->getFactory()->createCatalogSearchQueryExpanderPlugins(), $parameters);
-
-        $resultFormatter = $this
-            ->getFactory()
-            ->createCatalogSearchResultFormatters();
-
-        return $this
-            ->getFactory()
-            ->getSearchClient()
-            ->search($searchQuery, $resultFormatter, $parameters);
+            ->search($searchQuery, $resultFormatters, $requestParameters);
     }
 
 }

@@ -26,12 +26,12 @@ class SearchFactory extends AbstractFactory
 {
 
     /**
-     * @var \Spryker\Client\Search\Plugin\Config\SearchConfigInterface
+     * @var \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     protected static $searchConfigInstance;
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\SearchConfigInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     public function getSearchConfig()
     {
@@ -43,7 +43,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\SearchConfigInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     public function createSearchConfig()
     {
@@ -51,7 +51,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\SearchConfigBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface
      */
     public function getSearchConfigBuilder()
     {
@@ -101,7 +101,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface
      */
     public function createFacetConfigBuilder()
     {
@@ -109,7 +109,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\SortConfigBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface
      */
     public function createSortConfigBuilder()
     {
@@ -117,7 +117,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
      */
     public function createPaginationConfigBuilder()
     {

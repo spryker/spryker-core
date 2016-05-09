@@ -9,8 +9,7 @@ namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Catalog\KeyBuilder\ProductResourceKeyBuilder;
 use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
-use Spryker\Client\Catalog\Model\Query\CategorySearchQuery;
-use Spryker\Client\Catalog\Model\Query\FulltextSearchQuery;
+use Spryker\Client\Catalog\Plugin\Query\CatalogSearchQueryPlugin;
 use Spryker\Client\Catalog\Plugin\ResultFormatter\Elasticsearch\CatalogSearchResultFormatterPlugin;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Kernel\Store;
@@ -27,32 +26,20 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @param int $idCategory
      * @param string $searchString
+     * @param int $fullTextBoostedBoosting
      *
-     * @return \Spryker\Client\Search\Model\Query\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function createCategorySearchQuery($idCategory, $searchString = null)
+    public function createCatalogSearchQueryPlugin($searchString, $fullTextBoostedBoosting)
     {
-        $searchQuery = new CategorySearchQuery($idCategory, $searchString);
+        $searchQuery = new CatalogSearchQueryPlugin($searchString, $fullTextBoostedBoosting);
 
         return $searchQuery;
     }
 
     /**
-     * @param string $searchString
-     *
-     * @return \Spryker\Client\Search\Model\Query\QueryInterface
-     */
-    public function createFulltextSearchQuery($searchString)
-    {
-        $searchQuery = new FulltextSearchQuery($searchString);
-
-        return $searchQuery;
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     public function createCatalogSearchQueryExpanderPlugins()
     {
@@ -60,7 +47,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\ResultFormatterPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     public function createCatalogSearchResultFormatters()
     {

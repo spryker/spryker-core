@@ -5,13 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Catalog\Model\Query;
+namespace Spryker\Client\Catalog\Plugin\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
+use Elastica\Query\MatchAll;
+use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
-class FulltextSearchQuery extends AbstractCatalogSearchQuery
+class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface
 {
 
     /**
@@ -25,11 +29,18 @@ class FulltextSearchQuery extends AbstractCatalogSearchQuery
     protected $query;
 
     /**
-     * @param string $searchString
+     * @var int
      */
-    public function __construct($searchString)
+    protected $fullTextBoostedBoosting;
+
+    /**
+     * @param string $searchString
+     * @param int $fullTextBoostedBoosting
+     */
+    public function __construct($searchString, $fullTextBoostedBoosting)
     {
         $this->searchString = $searchString;
+        $this->fullTextBoostedBoosting = $fullTextBoostedBoosting;
         $this->query = $this->createSearchQuery();
     }
 
@@ -46,7 +57,7 @@ class FulltextSearchQuery extends AbstractCatalogSearchQuery
     /**
      * @return \Elastica\Query
      */
-    public function createSearchQuery()
+    protected function createSearchQuery()
     {
         $query = new Query();
         $query = $this->addFulltextSearchToQuery($query);
@@ -65,7 +76,7 @@ class FulltextSearchQuery extends AbstractCatalogSearchQuery
         if (!empty($this->searchString)) {
             $matchQuery = $this->createFulltextSearchQuery($this->searchString);
         } else {
-            $matchQuery = new Query\MatchAll();
+            $matchQuery = new MatchAll();
         }
 
         $boolQuery = (new BoolQuery())
@@ -74,6 +85,26 @@ class FulltextSearchQuery extends AbstractCatalogSearchQuery
         $baseQuery->setQuery($boolQuery);
 
         return $baseQuery;
+    }
+
+    /**
+     * @param string $searchString
+     *
+     * @return \Elastica\Query\AbstractQuery
+     */
+    protected function createFulltextSearchQuery($searchString)
+    {
+        $fields = [
+            PageIndexMap::FULL_TEXT,
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . $this->fullTextBoostedBoosting
+        ];
+
+        $matchQuery = (new MultiMatch())
+            ->setFields($fields)
+            ->setQuery($searchString)
+            ->setType(MultiMatch::TYPE_CROSS_FIELDS);
+
+        return $matchQuery;
     }
 
 }

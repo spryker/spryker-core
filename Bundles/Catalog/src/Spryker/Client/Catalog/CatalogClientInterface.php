@@ -13,22 +13,12 @@ interface CatalogClientInterface
     /**
      * @api
      *
-     * @param int $idCategory
      * @param string $searchString
-     * @param array $parameters
+     * @param array $requestParameters
+     * @param int $fullTextBoostedBoosting
      *
      * @return array
      */
-    public function categorySearch($idCategory, $searchString = null, array $parameters = []);
-
-    /**
-     * @api
-     *
-     * @param string $searchString
-     * @param array $parameters
-     *
-     * @return array
-     */
-    public function fulltextSearch($searchString, array $parameters = []);
+    public function catalogSearch($searchString, array $requestParameters, $fullTextBoostedBoosting);
 
 }

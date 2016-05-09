@@ -9,10 +9,10 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Model\Query\QueryInterface;
-use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface;
-use Spryker\Client\Search\Plugin\Config\SearchConfigInterface;
-use Spryker\Client\Search\Plugin\QueryExpanderPluginInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -21,11 +21,11 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
 {
 
     /**
-     * @param \Spryker\Client\Search\Model\Query\QueryInterface $searchQuery
-     * @param \Spryker\Client\Search\Plugin\Config\SearchConfigInterface $searchConfig
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\Search\Model\Query\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, SearchConfigInterface $searchConfig, array $requestParameters = [])
     {
@@ -37,7 +37,7 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
 
     /**
      * @param \Elastica\Query $query
-     * @param \Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface $paginationConfig
+     * @param \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface $paginationConfig
      * @param array $requestParameters
      *
      * @return void

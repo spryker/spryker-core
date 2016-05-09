@@ -8,8 +8,10 @@
 namespace Spryker\Client\Search\Plugin\Config;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 
-class PaginationConfigBuilder implements PaginationConfigBuilderInterface
+class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfigBuilderInterface
 {
 
     /**

@@ -10,6 +10,7 @@ namespace Spryker\Client\Search\Plugin\Config;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\SortConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -18,17 +19,17 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
 {
 
     /**
-     * @var \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface
+     * @var \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface
      */
     protected $facetConfigBuilder;
 
     /**
-     * @var \Spryker\Client\Search\Plugin\Config\SortConfigBuilderInterface
+     * @var \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface
      */
     protected $sortConfigBuilder;
 
     /**
-     * @var \Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface
+     * @var \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
      */
     protected $paginationConfigBuilder;
 
@@ -48,7 +49,7 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\FacetConfigBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface
      */
     public function getFacetConfigBuilder()
     {
@@ -56,7 +57,7 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\SortConfigBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface
      */
     public function getSortConfigBuilder()
     {
@@ -64,7 +65,7 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Config\PaginationConfigBuilderInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
      */
     public function getPaginationConfigBuilder()
     {

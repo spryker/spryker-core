@@ -12,7 +12,7 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
-use Spryker\Client\Search\Model\Query\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class SearchKeysQuery implements QueryInterface
 {

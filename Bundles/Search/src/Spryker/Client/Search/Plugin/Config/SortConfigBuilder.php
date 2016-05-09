@@ -9,6 +9,7 @@ namespace Spryker\Client\Search\Plugin\Config;
 
 use Generated\Shared\Transfer\SortConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
 
 class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
 {
@@ -16,13 +17,33 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     const DIRECTION_ASC = 'asc';
     const DIRECTION_DESC = 'desc';
 
-    const PARAM_SORT = 'sort';
-    const PARAM_SORT_DIRECTION = 'sort_order';
+    const DEFAULT_SORT_PARAM_KEY = 'sort';
+    const DEFAULT_SORT_DIRECTION_PARAM_KEY = 'sort_order';
 
     /**
      * @var \Generated\Shared\Transfer\SortConfigTransfer[]
      */
     protected $sortConfigTransfers = [];
+
+    /**
+     * @var string
+     */
+    protected $sortParamKey;
+
+    /**
+     * @var string
+     */
+    protected $sortDirectionParamKey;
+
+    /**
+     * @param string $sortParamName
+     * @param string $sortDirectionParamName
+     */
+    public function __construct($sortParamName = self::DEFAULT_SORT_PARAM_KEY, $sortDirectionParamName = self::DEFAULT_SORT_DIRECTION_PARAM_KEY)
+    {
+        $this->sortParamKey = $sortParamName;
+        $this->sortDirectionParamKey = $sortDirectionParamName;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\SortConfigTransfer $sortConfigTransfer
@@ -67,7 +88,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
      */
     public function getActiveParamName(array $requestParameters)
     {
-        $sortParamName = array_key_exists(self::PARAM_SORT, $requestParameters) ? $requestParameters[self::PARAM_SORT] : null;
+        $sortParamName = array_key_exists($this->sortParamKey, $requestParameters) ? $requestParameters[$this->sortParamKey] : null;
 
         return $sortParamName;
     }
@@ -79,7 +100,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
      */
     public function getActiveSortDirection($requestParameters)
     {
-        $direction = array_key_exists(self::PARAM_SORT_DIRECTION, $requestParameters) ? $requestParameters[self::PARAM_SORT_DIRECTION] : self::DIRECTION_ASC;
+        $direction = array_key_exists($this->sortDirectionParamKey, $requestParameters) ? $requestParameters[$this->sortDirectionParamKey] : self::DIRECTION_ASC;
 
         return $direction;
     }

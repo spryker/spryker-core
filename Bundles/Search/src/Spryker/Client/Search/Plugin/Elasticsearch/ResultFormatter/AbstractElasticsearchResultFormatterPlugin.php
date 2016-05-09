@@ -9,7 +9,7 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Plugin\ResultFormatterPluginInterface;
+use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
 
 abstract class AbstractElasticsearchResultFormatterPlugin extends AbstractPlugin implements ResultFormatterPluginInterface
 {
