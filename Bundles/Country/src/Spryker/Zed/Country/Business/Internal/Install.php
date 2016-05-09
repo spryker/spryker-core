@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Country\Business\Internal;
 
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\CountryManagerInterface;
 use Spryker\Zed\Country\Business\RegionManagerInterface;
@@ -75,12 +76,9 @@ class Install extends AbstractInstaller
      * @param \Spryker\Zed\Country\CountryConfig $countrySettings
      */
     public function __construct(
-        CountryManagerInterface $countryManager,
-        RegionManagerInterface $regionManager,
-        CldrDataProviderInterface $cldrDataProvider,
-        CldrDataProviderInterface $codeMappingsProvider,
-        CldrDataProviderInterface $postalCodeDataProvider,
-        CountryConfig $countrySettings
+        CountryManagerInterface $countryManager, RegionManagerInterface $regionManager,
+        CldrDataProviderInterface $cldrDataProvider, CldrDataProviderInterface $codeMappingsProvider,
+        CldrDataProviderInterface $postalCodeDataProvider, CountryConfig $countrySettings
     ) {
         //parent::__construct();
         $this->countrySettings = $countrySettings;
@@ -96,9 +94,22 @@ class Install extends AbstractInstaller
      */
     public function install()
     {
+        if ($this->isInstalled()) {
+            return;
+        }
+
         $this->init();
         $this->installCldrData();
         $this->installRegions();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isInstalled()
+    {
+        $query = new SpyCountryQuery();
+        return $query->count() > 0;
     }
 
     /**

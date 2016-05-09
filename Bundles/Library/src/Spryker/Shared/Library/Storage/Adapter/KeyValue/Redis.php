@@ -9,6 +9,8 @@ namespace Spryker\Shared\Library\Storage\Adapter\KeyValue;
 
 use Predis\Client;
 use Predis\Connection\ConnectionException;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 
 /**
  * @property \Predis\Client $resource
@@ -19,20 +21,14 @@ abstract class Redis extends AbstractKeyValue
 {
 
     /**
-     * @throws \MemcachedException
+     * @throws \Predis\Connection\ConnectionException
      *
      * @return void
      */
     public function connect()
     {
         if (!$this->resource) {
-            $resource = new Client(
-                [
-                    'protocol' => $this->config['protocol'],
-                    'host' => $this->config['host'],
-                    'port' => $this->config['port'],
-                ]
-            );
+            $resource = new Client($this->config);
 
             if (!$resource) {
                 throw new ConnectionException($resource, 'Could not connect to redis server');
@@ -47,7 +43,7 @@ abstract class Redis extends AbstractKeyValue
      */
     public function __destruct()
     {
-        if ($this->resource) {
+        if (!Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION) && $this->resource) {
             $this->resource->disconnect();
         }
     }

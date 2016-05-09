@@ -14,10 +14,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-class CreateDatabaseConsole extends Console
+class ResetDatabaseConsole extends Console
 {
 
-    const COMMAND_NAME = 'propel:database:create';
+    const COMMAND_NAME = 'propel:database:reset';
 
     /**
      * @return void
@@ -25,7 +25,7 @@ class CreateDatabaseConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Create database if it does not already exist');
+        $this->setDescription('Reset database');
 
         parent::configure();
     }
@@ -38,12 +38,12 @@ class CreateDatabaseConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Creating Database');
+        $this->info('Resetting Database');
 
         if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_PGSQL)) {
-            $this->createPostgresDatabaseIfNotExists();
+            $this->resetPostgresDatabase();
         } else {
-            $this->createMysqlDatabaseIfNotExists();
+            $this->resetMysqlDatabase();
         }
     }
 
@@ -52,7 +52,7 @@ class CreateDatabaseConsole extends Console
      *
      * @return void
      */
-    protected function createPostgresDatabaseIfNotExists()
+    protected function resetPostgresDatabase()
     {
         $databaseExists = $this->existsPostgresDatabase();
         if (!$databaseExists) {
@@ -62,12 +62,12 @@ class CreateDatabaseConsole extends Console
             ));
 
             $createDatabaseCommand = sprintf(
-                'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
+                'psql -h %s -p %s -U %s -w -c " make me " %s',
                 Config::get(PropelConstants::ZED_DB_HOST),
                 Config::get(PropelConstants::ZED_DB_PORT),
                 Config::get(PropelConstants::ZED_DB_USERNAME),
                 Config::get(PropelConstants::ZED_DB_DATABASE),
-                'postgres'
+                Config::get(PropelConstants::ZED_DB_DATABASE)
             );
 
             $process = new Process($createDatabaseCommand);
@@ -120,7 +120,7 @@ class CreateDatabaseConsole extends Console
      *
      * @return void
      */
-    private function createMysqlDatabaseIfNotExists()
+    private function resetMysqlDatabase()
     {
         $connection = new \PDO(
             Config::get(PropelConstants::ZED_DB_ENGINE)

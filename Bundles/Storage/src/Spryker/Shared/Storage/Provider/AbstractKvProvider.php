@@ -60,6 +60,8 @@ abstract class AbstractKvProvider extends AbstractClientProvider
                     'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
                     'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
                     'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+                    'password' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD),
+                    'persistent' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION),
                 ];
         }
         throw new \ErrorException('Missing implementation for adapter ' . $kvName);
