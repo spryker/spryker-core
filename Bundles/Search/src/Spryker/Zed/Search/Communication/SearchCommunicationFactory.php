@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Search\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Search\Communication\Form\FilterForm;
 use Spryker\Zed\Search\Communication\Table\FiltersTable;
 use Spryker\Zed\Search\Communication\Table\SearchTable;
 use Spryker\Zed\Search\SearchDependencyProvider;
@@ -58,6 +59,13 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     public function createFiltersTable()
     {
         return new FiltersTable();
+    }
+
+    public function createFilterForm(array $data = [], array $options = [])
+    {
+        $filterFormType = new FilterForm();
+
+        return $this->getFormFactory()->create($filterFormType, $data, $options);
     }
 
 }

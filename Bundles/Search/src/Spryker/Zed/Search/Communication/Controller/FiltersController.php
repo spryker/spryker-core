@@ -3,6 +3,7 @@
 namespace Spryker\Zed\Search\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
@@ -32,5 +33,23 @@ class FiltersController extends AbstractController
         return $this->jsonResponse(
             $table->fetchData()
         );
+    }
+
+    public function editAction(Request $request)
+    {
+        $form = $this->getFactory()
+            ->createFilterForm()
+            ->handleRequest($request);
+
+        return [
+            'form' => $form->createView(),
+        ];
+    }
+
+    public function preferencesAction(Request $request)
+    {
+        return [
+
+        ];
     }
 }
