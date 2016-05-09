@@ -42,7 +42,6 @@ class ZedBootstrap
     {
         $this->application['debug'] = Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
         $this->application['locale'] = Store::getInstance()->getCurrentLocale();
-        $authenticationType = Config::get(ApplicationConstants::APPLICATION_AUTH_TYPE);
 
         if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {
             $this->application['profiler.cache_dir'] = DataDirectory::getLocalStoreSpecificPath('cache/profiler');
@@ -51,14 +50,14 @@ class ZedBootstrap
         $this->optimizeApp();
         $this->enableHttpMethodParameterOverride();
 
-        if ($authenticationType !== 0 || !$this->isInternalRequest()) {
-            $this->registerServiceProvider();
-            $this->addVariablesToTwig();
+        if ($this->getAuthenticationType() === 0 && $this->isInternalRequest()) {
+            $this->registerServiceProviderForInternalRequest();
 
             return $this->application;
         }
 
-        $this->registerServiceProviderForInternalRequest();
+        $this->registerServiceProvider();
+        $this->addVariablesToTwig();
 
         return $this->application;
     }
@@ -184,6 +183,18 @@ class ZedBootstrap
     protected function isInternalRequest()
     {
         return array_key_exists('HTTP_X_INTERNAL_REQUEST', $_SERVER);
+    }
+
+    /**
+     * @return int|null
+     */
+    protected function getAuthenticationType()
+    {
+        if (Config::hasValue(ApplicationConstants::APPLICATION_ZED_AUTH_TYPE)) {
+            return Config::get(ApplicationConstants::APPLICATION_ZED_AUTH_TYPE);
+        }
+
+        return null;
     }
 
 }

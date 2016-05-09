@@ -14,8 +14,8 @@ interface ZedRequestConstants
 {
 
     const AUTH_DEFAULT_CREDENTIALS = AuthConstants::AUTH_DEFAULT_CREDENTIALS;
-    const AUTH_STATIC_CREDENTIAL = AuthConstants::AUTH_STATIC_CREDENTIAL;
-    const AUTH_TYPE = AuthConstants::AUTH_TYPE;
+    const ZED_AUTH_STATIC_CREDENTIAL = AuthConstants::ZED_AUTH_STATIC_CREDENTIAL;
+    const ZED_AUTH_TYPE = AuthConstants::ZED_AUTH_TYPE;
 
     const HOST_SSL_ZED_API = ApplicationConstants::HOST_SSL_ZED_API;
     const HOST_ZED_API = ApplicationConstants::HOST_ZED_API;

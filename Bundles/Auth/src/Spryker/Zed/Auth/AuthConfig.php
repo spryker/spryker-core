@@ -105,7 +105,7 @@ class AuthConfig extends AbstractBundleConfig
      */
     public function getStaticCredential()
     {
-        return $this->get(AuthConstants::AUTH_STATIC_CREDENTIAL);
+        return $this->get(AuthConstants::ZED_AUTH_STATIC_CREDENTIAL);
     }
 
     /**

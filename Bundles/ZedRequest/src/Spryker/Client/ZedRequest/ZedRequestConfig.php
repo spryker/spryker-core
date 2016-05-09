@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ZedRequest;
 
+use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
@@ -56,7 +57,11 @@ class ZedRequestConfig
      */
     public function getAuthenticationType()
     {
-        return $this->config->get(ZedRequestConstants::AUTH_TYPE);
+        if ($this->config->hasValue(ZedRequestConstants::ZED_AUTH_TYPE)) {
+            return $this->config->get(ZedRequestConstants::ZED_AUTH_TYPE);
+        }
+
+        return ZedRequestConstants::AUTHENTICATE_DYNAMIC;
     }
 
     /**
@@ -64,8 +69,8 @@ class ZedRequestConfig
      */
     public function getStaticCredential()
     {
-        if ($this->config->hasValue(ZedRequestConstants::AUTH_STATIC_CREDENTIAL)) {
-            return $this->config->get(ZedRequestConstants::AUTH_STATIC_CREDENTIAL);
+        if ($this->config->hasValue(ZedRequestConstants::ZED_AUTH_STATIC_CREDENTIAL)) {
+            return $this->config->get(ZedRequestConstants::ZED_AUTH_STATIC_CREDENTIAL);
         }
 
         return [];

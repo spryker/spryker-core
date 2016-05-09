@@ -56,20 +56,38 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
     {
         $headers = [];
 
+        $headers = $this->addAuthenticationHeaders($headers);
+
+        return $headers;
+    }
+
+    /**
+     * @param array $headers
+     *
+     * @return array
+     */
+    protected function addAuthenticationHeaders(array $headers)
+    {
+        if ($this->authenticationType === ZedRequestConstants::AUTHENTICATE_NONE) {
+            return $headers;
+        }
+
         if ($this->authenticationType === ZedRequestConstants::AUTHENTICATE_STATIC) {
             $headers = [
                 ZedRequestConstants::AUTH_STATIC_USERNAME_HEADER => $this->staticCredential['username'],
                 ZedRequestConstants::AUTH_STATIC_PASSWORD_HEADER => $this->staticCredential['password'],
-           ];
+            ];
+
+            return $headers;
         }
 
         if ($this->authenticationType === ZedRequestConstants::AUTHENTICATE_DYNAMIC) {
             $headers = [
                 'Auth-Token' => $this->authClient->generateToken($this->rawToken),
             ];
-        }
 
-        return $headers;
+            return $headers;
+        }
     }
 
 }
