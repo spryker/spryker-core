@@ -53,8 +53,9 @@ class Saver implements SaverInterface
             $addressTransfer->getAddress3()
         ));
 
-        $paymentEntity->fromArray($paymentTransfer->toArray());
         $paymentEntity->fromArray($addressTransfer->toArray());
+        $paymentEntity->fromArray($paymentTransfer->toArray());
+        //$paymentEntity->setEmail()
 
         $paymentEntity
             ->setStreet($formattedStreet)

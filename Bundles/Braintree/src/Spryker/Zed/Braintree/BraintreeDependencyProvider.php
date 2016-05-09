@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
 class BraintreeDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_MAIL = 'mail facade';
     const FACADE_GLOSSARY = 'glossary facade';
     const FACADE_SALES_AGGREGATOR = 'sales aggregor facade';
 

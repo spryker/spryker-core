@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
- Spryker\Zed\Braintree\Business\Api\Adapter;
+namespace Spryker\Zed\Braintree\Business\Api\Adapter;
 
 /**
  * (c) Spryker Systems GmbH copyright protected.
