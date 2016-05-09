@@ -1,0 +1,22 @@
+{
+  "name": "spryker/checkout-step-engine",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+    "spryker/checkout": "^2.0.0",
+    "spryker/kernel": "^2.0.0"
+  },
+  "description": "checkout step engine bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  }
+}

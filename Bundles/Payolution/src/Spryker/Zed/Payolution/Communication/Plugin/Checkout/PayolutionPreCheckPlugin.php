@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Payolution\PayolutionConstants;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\CheckoutStepEngine\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 
 /**

@@ -1,4 +1,4 @@
-namespace: Payolution
+namespace: CheckoutStepEngine
 actor: Tester
 paths:
     tests: tests

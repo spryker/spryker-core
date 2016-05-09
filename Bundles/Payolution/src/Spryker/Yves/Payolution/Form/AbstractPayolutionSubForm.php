@@ -7,14 +7,14 @@
 
 namespace Spryker\Yves\Payolution\Form;
 
-use Spryker\Yves\Checkout\Dependency\Form\CheckoutAbstractSubFormType;
-use Spryker\Yves\Checkout\Dependency\Form\SubFormInterface;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Form\AbstractSubFormType;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-abstract class AbstractPayolutionSubForm extends CheckoutAbstractSubFormType implements SubFormInterface
+abstract class AbstractPayolutionSubForm extends AbstractSubFormType implements SubFormInterface
 {
 
     const FIELD_DATE_OF_BIRTH = 'date_of_birth';

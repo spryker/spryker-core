@@ -73,7 +73,7 @@
       "Spryker\\Client\\CategoryExporter\\": "Bundles/CategoryExporter/src",
       "Spryker\\Shared\\CategoryExporter\\": "Bundles/CategoryExporter/src",
       "Spryker\\Client\\Checkout\\": "Bundles/Checkout/src",
-      "Spryker\\Yves\\Checkout\\": "Bundles/Checkout/src",
+      "Spryker\\Yves\\CheckoutStepEngine\\": "Bundles/CheckoutStepEngine/src",
       "Unit\\Spryker\\Client\\Checkout\\": "Bundles/Checkout/tests",
       "Functional\\Spryker\\Client\\Checkout\\": "Bundles/Checkout/tests",
       "Spryker\\Shared\\Checkout\\": "Bundles/Checkout/src",
