@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Payolution\Form\DataProvider;
@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\PayolutionCalculationPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Checkout\Dependency\DataProvider\DataProviderInterface;
-use Spryker\Yves\Payolution\Form\InstallmentSubForm;
 use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Yves\Checkout\Dependency\DataProvider\DataProviderInterface;
+use Spryker\Yves\Payolution\Form\InstallmentSubForm;
 
 class InstallmentDataProvider implements DataProviderInterface
 {

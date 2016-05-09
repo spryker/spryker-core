@@ -22,35 +22,35 @@ class CheckoutStepHandlerPluginCollection implements \Iterator, \Countable
 
     /**
      * @param \Spryker\Yves\Checkout\Dependency\Plugin\CheckoutStepHandlerPluginInterface $checkoutStepHandlerPlugin
-     * @param string $paymentMethod
+     * @param string $name
      *
      * @return $this
      */
-    public function add(CheckoutStepHandlerPluginInterface $checkoutStepHandlerPlugin, $paymentMethod)
+    public function add(CheckoutStepHandlerPluginInterface $checkoutStepHandlerPlugin, $name)
     {
-        $this->checkoutStepHandler[$paymentMethod] = $checkoutStepHandlerPlugin;
+        $this->checkoutStepHandler[$name] = $checkoutStepHandlerPlugin;
 
         return $this;
     }
 
     /**
-     * @param string $paymentMethod
+     * @param string $name
      *
      * @return \Spryker\Yves\Checkout\Dependency\Plugin\CheckoutStepHandlerPluginInterface
      */
-    public function get($paymentMethod)
+    public function get($name)
     {
-        return $this->checkoutStepHandler[$paymentMethod];
+        return $this->checkoutStepHandler[$name];
     }
 
     /**
-     * @param string $paymentMethod
+     * @param string $name
      *
      * @return bool
      */
-    public function has($paymentMethod)
+    public function has($name)
     {
-        return isset($this->checkoutStepHandler[$paymentMethod]);
+        return isset($this->checkoutStepHandler[$name]);
     }
 
     /**

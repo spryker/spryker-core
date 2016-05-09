@@ -13,7 +13,7 @@ class CheckoutSubFormPluginCollection implements \Iterator, \Countable
     /**
      * @var \Spryker\Yves\Checkout\Dependency\Plugin\CheckoutSubFormPluginInterface[]
      */
-    private $checkoutSubForm = [];
+    private $checkoutSubForms = [];
 
     /**
      * @var int
@@ -27,17 +27,18 @@ class CheckoutSubFormPluginCollection implements \Iterator, \Countable
      */
     public function add(CheckoutSubFormPluginInterface $checkoutSubForm)
     {
-        $this->checkoutSubForm[] = $checkoutSubForm;
+        $this->checkoutSubForms[] = $checkoutSubForm;
 
         return $this;
     }
 
     /**
+    /**
      * @return \Spryker\Yves\Checkout\Dependency\Plugin\CheckoutSubFormPluginInterface
      */
     public function current()
     {
-        return $this->checkoutSubForm[$this->position];
+        return $this->checkoutSubForms[$this->position];
     }
 
     /**
@@ -61,7 +62,7 @@ class CheckoutSubFormPluginCollection implements \Iterator, \Countable
      */
     public function valid()
     {
-        return isset($this->checkoutSubForm[$this->position]);
+        return isset($this->checkoutSubForms[$this->position]);
     }
 
     /**
@@ -77,7 +78,7 @@ class CheckoutSubFormPluginCollection implements \Iterator, \Countable
      */
     public function count()
     {
-        return count($this->checkoutSubForm);
+        return count($this->checkoutSubForms);
     }
 
 }

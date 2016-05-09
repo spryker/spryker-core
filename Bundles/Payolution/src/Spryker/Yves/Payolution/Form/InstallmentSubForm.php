@@ -1,14 +1,16 @@
 <?php
+
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Yves\Payolution\Form;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
-use Spryker\Yves\Checkout\Dependency\SubFormInterface;
 use Spryker\Shared\Payolution\PayolutionConstants;
+use Spryker\Yves\Checkout\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
