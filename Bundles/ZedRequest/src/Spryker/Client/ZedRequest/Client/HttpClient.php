@@ -9,7 +9,6 @@ namespace Spryker\Client\ZedRequest\Client;
 
 use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
-use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 class HttpClient extends AbstractHttpClient implements HttpClientInterface
 {
@@ -20,33 +19,25 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
     protected $rawToken;
 
     /**
-     * @var int
+     * @var bool
      */
-    protected $authenticationType;
-
-     /**
-     * @var array
-     */
-    protected $staticCredential;
+    protected $isAuthenticationEnabled;
 
     /**
      * @param \Spryker\Client\Auth\AuthClientInterface $authClient
      * @param string $baseUrl
      * @param string $rawToken
-     * @param int $authenticationType
-     * @param array $staticCredential
+     * @param bool $isAuthenticationEnabled
      */
     public function __construct(
         AuthClientInterface $authClient,
         $baseUrl,
         $rawToken,
-        $authenticationType,
-        array $staticCredential
+        $isAuthenticationEnabled = true
     ) {
         parent::__construct($authClient, $baseUrl);
         $this->rawToken = $rawToken;
-        $this->authenticationType = $authenticationType;
-        $this->staticCredential = $staticCredential;
+        $this->isAuthenticationEnabled = $isAuthenticationEnabled;
     }
 
     /**
@@ -56,38 +47,13 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
     {
         $headers = [];
 
-        $headers = $this->addAuthenticationHeaders($headers);
-
-        return $headers;
-    }
-
-    /**
-     * @param array $headers
-     *
-     * @return array
-     */
-    protected function addAuthenticationHeaders(array $headers)
-    {
-        if ($this->authenticationType === ZedRequestConstants::AUTHENTICATE_NONE) {
-            return $headers;
-        }
-
-        if ($this->authenticationType === ZedRequestConstants::AUTHENTICATE_STATIC) {
-            $headers = [
-                ZedRequestConstants::AUTH_STATIC_USERNAME_HEADER => $this->staticCredential['username'],
-                ZedRequestConstants::AUTH_STATIC_PASSWORD_HEADER => $this->staticCredential['password'],
-            ];
-
-            return $headers;
-        }
-
-        if ($this->authenticationType === ZedRequestConstants::AUTHENTICATE_DYNAMIC) {
+        if ($this->isAuthenticationEnabled) {
             $headers = [
                 'Auth-Token' => $this->authClient->generateToken($this->rawToken),
             ];
-
-            return $headers;
         }
+
+        return $headers;
     }
 
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Exception\UserNotLoggedException;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserInterface;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
-use Symfony\Component\HttpFoundation\Request;
 
 class Auth implements AuthInterface
 {
@@ -156,26 +155,6 @@ class Auth implements AuthInterface
         return $this->authorizeUserToken($token);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function isStaticAuthorized(Request $request)
-    {
-        if (!$request->headers->get(AuthConstants::AUTH_STATIC_USERNAME_HEADER)) {
-            return false;
-        }
-
-        if (!$this->checkStaticCredential($request)) {
-               return false;
-        }
-
-        $user = $this->createUserTransfer($request->headers->get(AuthConstants::AUTH_STATIC_USERNAME_HEADER));
-        $this->registerAuthorizedUser('', $user);
-
-        return true;
-    }
     /**
      * This is based on sessions so the token will only be valid during a session lifetime
      *
@@ -346,44 +325,6 @@ class Auth implements AuthInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param string $username
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    protected function createUserTransfer($username)
-    {
-        $user = new UserTransfer();
-        $user->setFirstName($username);
-        $user->setLastName($username);
-        $user->setUsername($username);
-        $user->setPassword($username);
-
-        return $user;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool
-     */
-    protected function checkStaticCredential($request)
-    {
-        $staticCredentialConfig = $this->authConfig->getStaticCredential();
-        $username = $request->headers->get(AuthConstants::AUTH_STATIC_USERNAME_HEADER);
-        $password = $request->headers->get(AuthConstants::AUTH_STATIC_PASSWORD_HEADER);
-
-        if ($username !== $staticCredentialConfig['username']) {
-            return false;
-        }
-
-        if ($password !== $staticCredentialConfig['password']) {
-            return false;
-        }
-
-        return true;
     }
 
 }

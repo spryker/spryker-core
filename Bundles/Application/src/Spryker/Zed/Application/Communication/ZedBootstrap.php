@@ -50,7 +50,7 @@ class ZedBootstrap
         $this->optimizeApp();
         $this->enableHttpMethodParameterOverride();
 
-        if ($this->getAuthenticationType() === 0 && $this->isInternalRequest()) {
+        if (!$this->isAuthenticationEnabled() && $this->isInternalRequest()) {
             $this->registerServiceProviderForInternalRequest();
 
             return $this->application;
@@ -186,15 +186,11 @@ class ZedBootstrap
     }
 
     /**
-     * @return int|null
+     * @return bool
      */
-    protected function getAuthenticationType()
+    protected function isAuthenticationEnabled()
     {
-        if (Config::hasValue(ApplicationConstants::APPLICATION_ZED_AUTH_TYPE)) {
-            return Config::get(ApplicationConstants::APPLICATION_ZED_AUTH_TYPE);
-        }
-
-        return null;
+        return Config::get(AuthConstants::AUTH_ZED_ENABLED, true);
     }
 
 }

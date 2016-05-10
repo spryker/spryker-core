@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\Application;
 
-use Spryker\Shared\Auth\AuthConstants;
-
 interface ApplicationConstants
 {
 
@@ -163,7 +161,5 @@ interface ApplicationConstants
     const ZED_SHOW_EXCEPTION_STACK_TRACE = 'ZED_SHOW_EXCEPTION_STACK_TRACE';
 
     const APPLICATION_SPRYKER_ROOT = 'APPLICATION_SPRYKER_ROOT';
-
-    const APPLICATION_ZED_AUTH_TYPE = AuthConstants::ZED_AUTH_TYPE;
 
 }
