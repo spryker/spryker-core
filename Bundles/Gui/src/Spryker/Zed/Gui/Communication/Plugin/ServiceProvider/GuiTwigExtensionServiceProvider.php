@@ -9,27 +9,17 @@ namespace Spryker\Zed\Gui\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPriceFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\BackActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\CreateActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\EditActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\ViewActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
-use Spryker\Zed\Library\Twig\TwigFilterInterface;
-use Spryker\Zed\Library\Twig\TwigFunction;
-use Spryker\Zed\Library\Twig\TwigFunctionInterface;
 
 class GuiTwigExtensionServiceProvider implements ServiceProviderInterface
 {
 
     /**
-     * @var TwigFunctionInterface[]
+     * @var \Spryker\Zed\Library\Twig\TwigFunctionInterface[]
      */
     protected $twigFunctions = [];
 
     /**
-     * @var TwigFilterInterface[]
+     * @var \Spryker\Zed\Library\Twig\TwigFilterInterface[]
      */
     protected $twigFilters = [];
 
