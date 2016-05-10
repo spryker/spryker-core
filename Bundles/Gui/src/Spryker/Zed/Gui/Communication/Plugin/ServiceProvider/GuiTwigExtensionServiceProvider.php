@@ -11,13 +11,13 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPriceFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ListGroupFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ModalFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\PanelFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\BackActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\CreateActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\EditActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\ViewActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 
 class GuiTwigExtensionServiceProvider implements ServiceProviderInterface

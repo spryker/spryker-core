@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
+namespace Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons;
 
-class EditActionButtonFunction extends AbstractActionButtonFunction
+class BackActionButtonFunction extends AbstractActionButtonFunction
 {
 
     /**
@@ -15,7 +15,7 @@ class EditActionButtonFunction extends AbstractActionButtonFunction
      */
     protected function getButtonClass()
     {
-        return 'btn-info';
+        return 'btn-primary';
     }
 
     /**
@@ -23,7 +23,7 @@ class EditActionButtonFunction extends AbstractActionButtonFunction
      */
     protected function getIcon()
     {
-        return '<i class="fa fa-pencil-square-o"></i> ';
+        return '<i class="fa fa-angle-double-left"></i> ';
     }
 
     /**
@@ -31,7 +31,7 @@ class EditActionButtonFunction extends AbstractActionButtonFunction
      */
     protected function getFunctionName()
     {
-        return 'editActionButton';
+        return 'backActionButton';
     }
 
 }
