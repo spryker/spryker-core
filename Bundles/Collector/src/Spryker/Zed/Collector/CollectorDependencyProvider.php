@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Collector;
 
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleBridge;
+use Spryker\Zed\Collector\Dependency\Facade\CollectorToPropelBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -28,13 +29,10 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->provideLocaleFacade($container);
+        $container = $this->providePropelFacade($container);
 
         $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
-
-        $container[self::FACADE_PROPEL] = function (Container $container) {
-            return $container->getLocator()->propel()->facade();
         };
 
         return $container;
@@ -61,6 +59,20 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_LOCALE] = function (Container $container) {
             return new CollectorToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    private function providePropelFacade(Container $container)
+    {
+        $container[self::FACADE_PROPEL] = function (Container $container) {
+            return new CollectorToPropelBridge($container->getLocator()->propel()->facade());
         };
 
         return $container;

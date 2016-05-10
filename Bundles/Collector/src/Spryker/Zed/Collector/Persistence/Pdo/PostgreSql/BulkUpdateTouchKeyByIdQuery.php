@@ -40,7 +40,7 @@ class BulkUpdateTouchKeyByIdQuery implements BulkUpdateTouchKeyByIdQueryInterfac
      * @param string $tableName
      * @param string $keyValue
      * @param string $idColumnName
-     * @param int    $idValue
+     * @param int $idValue
      *
      * @return $this
      */

@@ -313,7 +313,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
      */
@@ -334,7 +334,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
      */

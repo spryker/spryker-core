@@ -15,7 +15,7 @@ interface BulkDeleteTouchByIdQueryInterface
      *
      * @param string $tableName
      * @param string $idColumnName
-     * @param array  $idsToDelete
+     * @param array $idsToDelete
      *
      * @return $this
      */
