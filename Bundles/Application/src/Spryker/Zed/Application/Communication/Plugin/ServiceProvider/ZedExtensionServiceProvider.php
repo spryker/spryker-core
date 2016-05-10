@@ -10,6 +10,7 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Application\Business\Model\Twig\ZedExtension;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigExtensions;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -28,7 +29,10 @@ class ZedExtensionServiceProvider extends AbstractPlugin implements ServiceProvi
     {
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) {
-                $twig->addExtension(new ZedExtension());
+
+                foreach ($this->getBundlesTwigExtensions() as $extension) {
+                    $twig->addExtension($extension);
+                }
 
                 return $twig;
             })
@@ -42,6 +46,17 @@ class ZedExtensionServiceProvider extends AbstractPlugin implements ServiceProvi
      */
     public function boot(Application $app)
     {
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBundlesTwigExtensions()
+    {
+        return [
+            new GuiTwigExtensions(),
+            new ZedExtension(),
+        ];
     }
 
 }
