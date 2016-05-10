@@ -7,8 +7,13 @@
 
 namespace Unit\Spryker\Zed\Application\Business\Model\Request;
 
+use Silex\Application;
+use Silex\WebTestCase;
 use Spryker\Zed\Application\Business\Model\Request\SubRequestHandler;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Client;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
@@ -18,14 +23,14 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @group Business
  * @group SubRequestHandler
  */
-class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
+class SubRequestHandlerTest extends WebTestCase
 {
     const GET_PARAMS = ['banana', 'mango'];
     const POST_PARAMS = ['apple', 'orange'];
-    const ADDITIONAL_PARAMS = [];
-    const URL = '/sales/comment/add';
+    const URL_MASTER_REQUEST = '/';
+    const URL_SUB_REQUEST = '/sales/comment/add';
 
-    public function testHandleSubRequest()
+    public function testHandleSubRequestWithMocks()
     {
         $request = new Request();
         $request->query->add(self::GET_PARAMS);
@@ -33,10 +38,47 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
         $httpKernelMock = $this->getMock(HttpKernelInterface::class, ['handle']);
         $httpKernelMock->method('handle')->willReturn($request);
         $subRequestHandler = new SubRequestHandler($httpKernelMock);
-        $changedRequest = $subRequestHandler->handleSubRequest($request, self::URL);
+        $changedRequest = $subRequestHandler->handleSubRequest($request, self::URL_SUB_REQUEST);
 
         $this->assertEquals(self::GET_PARAMS, $changedRequest->query->all());
         $this->assertEquals(self::POST_PARAMS, $changedRequest->request->all());
     }
 
+    public function testHandleSubRequestWithGetParams()
+    {
+        $app = $this->createApplication();
+        $client = new Client($app);
+        $client->request('get', self::URL_MASTER_REQUEST, self::GET_PARAMS);
+        $this->assertTrue($client->getResponse() instanceof RedirectResponse);
+    }
+
+    public function testHandleSubRequestWithPostParams()
+    {
+        $app = $this->createApplication();
+        $client = new Client($app);
+        $client->request('post', self::URL_MASTER_REQUEST, self::POST_PARAMS);
+        $this->assertTrue($client->getResponse() instanceof RedirectResponse);
+    }
+
+    public function createApplication($authenticationMethod = 'form')
+    {
+        $app = new Application();
+        $app['debug'] = true;
+
+        $app->get(self::URL_MASTER_REQUEST, function () use ($app) {
+            $subRequestHandler = new SubRequestHandler($app);
+            return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
+        });
+
+        $app->post(self::URL_MASTER_REQUEST, function () use ($app) {
+            $subRequestHandler = new SubRequestHandler($app);
+            return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
+        });
+
+        $app->get(self::URL_SUB_REQUEST, function () use ($app) {
+            return new RedirectResponse(self::URL_SUB_REQUEST);
+        });
+
+        return $app;
+    }
 }
