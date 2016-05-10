@@ -90,8 +90,7 @@ class BaseStepTest extends \PHPUnit_Framework_TestCase
      */
     private function getBaseStepInstance()
     {
-        $baseStep = new BaseStep(self::STEP_ROUTE, self::ESCAPE_ROUTE);
-        return $baseStep;
+        return new BaseStep(self::STEP_ROUTE, self::ESCAPE_ROUTE);
     }
 
 }
