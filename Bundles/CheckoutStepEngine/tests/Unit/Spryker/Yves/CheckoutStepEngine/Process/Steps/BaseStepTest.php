@@ -21,6 +21,7 @@ use Unit\Spryker\Yves\CheckoutStepEngine\Process\Steps\Fixtures\BaseStep;
  */
 class BaseStepTest extends \PHPUnit_Framework_TestCase
 {
+
     const STEP_ROUTE = 'stepRoute';
     const ESCAPE_ROUTE = 'escapeRoute';
 
