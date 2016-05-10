@@ -14,15 +14,16 @@ use Elastica\Query\Nested;
 use Elastica\Query\Range;
 use Elastica\Query\Term;
 use Generated\Shared\Search\PageIndexMap;
+use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 
 /**
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
- * @group FacetQueryExpanderPluginTest
+ * @group FacetQueryExpanderPlugin
  */
-class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPluginTest
+class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQueryExpanderPluginAggregationTest
 {
 
     /**
@@ -51,8 +52,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
         $expectedAggregations = [
             $expectedStringFacetAggregation,
             // add global aggregation for "foo" filtered string facet
-            (new GlobalAggregation('global-foo'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'foo'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery()))
                     ->addAggregation($expectedStringFacetAggregation)),
         ];
@@ -75,8 +76,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
         $expectedAggregations = [
             $expectedStringFacetAggregation,
             // add global aggregation for "foo" filtered string facet
-            (new GlobalAggregation('global-foo'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'foo'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery())
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::STRING_FACET)
@@ -98,8 +99,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
                     ->addAggregation($expectedStringFacetAggregation)),
             $expectedStringFacetAggregation,
             // add global aggregation for "bar" filtered string facet
-            (new GlobalAggregation('global-bar'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'bar'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery())
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::STRING_FACET)
@@ -121,8 +122,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
                     ->addAggregation($expectedStringFacetAggregation)),
             $expectedStringFacetAggregation,
             // add global aggregation for "baz" filtered string facet
-            (new GlobalAggregation('global-baz'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'baz'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery())
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::STRING_FACET)
@@ -164,8 +165,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
         $expectedAggregations = [
             $expectedIntegerFacetAggregation,
             // add global aggregation for "foo" filtered integer facet
-            (new GlobalAggregation('global-foo'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'foo'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery()))
                     ->addAggregation($expectedIntegerFacetAggregation)),
         ];
@@ -188,8 +189,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
         $expectedAggregations = [
             $expectedIntegerFacetAggregation,
             // add global aggregation for "foo" filtered integer facet
-            (new GlobalAggregation('global-foo'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'foo'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery())
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::INTEGER_FACET)
@@ -215,8 +216,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
                     ->addAggregation($expectedIntegerFacetAggregation)),
             $expectedIntegerFacetAggregation,
             // add global aggregation for "bar" filtered integer facet
-            (new GlobalAggregation('global-bar'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'bar'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery())
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::INTEGER_FACET)
@@ -242,8 +243,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
                     ->addAggregation($expectedIntegerFacetAggregation)),
             $expectedIntegerFacetAggregation,
             // add global aggregation for "baz" filtered integer facet
-            (new GlobalAggregation('global-baz'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'baz'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery())
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::INTEGER_FACET)
@@ -284,8 +285,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
 
         $expectedAggregations = [
             $expectedCategoryFacetAggregation,
-            (new GlobalAggregation('global-foo'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'foo'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery()))
                     ->addAggregation($expectedCategoryFacetAggregation)),
         ];
@@ -311,8 +312,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
             // add aggregation for string-facet
             $expectedStringFacetAggregation,
             // add global aggregation for "foo" filtered string facet
-            (new GlobalAggregation('global-foo'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'foo'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery())
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::INTEGER_FACET)
@@ -329,8 +330,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
             // add aggregation for integer-facet
             $expectedIntegerFacetAggregation,
             // add global aggregation for "bar" filtered integer facet
-            (new GlobalAggregation('global-bar'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'bar'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery())
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::STRING_FACET)
@@ -347,8 +348,8 @@ class FilteredFacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPlu
             // add aggregation for category
             $expectedCategoryFacetAggregation,
             // add global aggregation for "baz" filtered category
-            (new GlobalAggregation('global-baz'))
-                ->addAggregation((new Filter('filter'))
+            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'baz'))
+                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
                     ->setFilter((new BoolQuery())
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::STRING_FACET)

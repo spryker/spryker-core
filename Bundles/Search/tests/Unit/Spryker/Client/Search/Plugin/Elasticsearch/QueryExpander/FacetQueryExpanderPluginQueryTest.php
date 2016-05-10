@@ -7,14 +7,20 @@
 
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
+use Elastica\Query;
+use Elastica\Query\BoolQuery;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
+use Spryker\Client\Search\Plugin\Config\SearchConfig;
+
 /**
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
- * @group FacetQueryExpanderPluginTest
+ * @group FacetQueryExpanderPlugin
  */
-class FacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPluginTest
+class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPluginQueryTest
 {
 
     /**
@@ -34,17 +40,49 @@ class FacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPluginTest
     }
 
     /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    protected function createQueryMock()
+    {
+        $baseQuery = new Query();
+        $baseQuery->setQuery(new BoolQuery());
+
+        $queryMock = $this->getMockBuilder(QueryInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $queryMock
+            ->method('getSearchQuery')
+            ->willReturn($baseQuery);
+
+        return $queryMock;
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
+     */
+    protected function createSearchConfigMock()
+    {
+        $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $searchConfigMock
+            ->method('getFacetConfigBuilder')
+            ->willReturn(new FacetConfigBuilder());
+
+        return $searchConfigMock;
+    }
+
+    /**
      * @return array
      */
     protected function createStringFacetData()
     {
         $searchConfig = $this->createStringSearchConfig();
+        $expectedQuery = new BoolQuery();
 
-        $expectedAggregations = [
-            $this->getExpectedStringFacetAggregation(),
-        ];
-
-        return [$searchConfig, $expectedAggregations];
+        return [$searchConfig, $expectedQuery];
     }
 
     /**
@@ -53,14 +91,9 @@ class FacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPluginTest
     protected function createMultiStringFacetData()
     {
         $searchConfig = $this->createMultiStringSearchConfig();
+        $expectedQuery = new BoolQuery();
 
-        $expectedAggregations = [
-            $this->getExpectedStringFacetAggregation(),
-            $this->getExpectedStringFacetAggregation(),
-            $this->getExpectedStringFacetAggregation(),
-        ];
-
-        return [$searchConfig, $expectedAggregations];
+        return [$searchConfig, $expectedQuery];
     }
 
     /**
@@ -69,12 +102,9 @@ class FacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPluginTest
     protected function createIntegerFacetData()
     {
         $searchConfig = $this->createIntegerSearchConfig();
+        $expectedQuery = new BoolQuery();
 
-        $expectedAggregations = [
-            $this->getExpectedIntegerFacetAggregation(),
-        ];
-
-        return [$searchConfig, $expectedAggregations];
+        return [$searchConfig, $expectedQuery];
     }
 
     /**
@@ -83,14 +113,9 @@ class FacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPluginTest
     protected function createMultiIntegerFacetData()
     {
         $searchConfig = $this->createMultiIntegerSearchConfig();
+        $expectedQuery = new BoolQuery();
 
-        $expectedAggregations = [
-            $this->getExpectedIntegerFacetAggregation(),
-            $this->getExpectedIntegerFacetAggregation(),
-            $this->getExpectedIntegerFacetAggregation(),
-        ];
-
-        return [$searchConfig, $expectedAggregations];
+        return [$searchConfig, $expectedQuery];
     }
 
     /**
@@ -99,12 +124,9 @@ class FacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPluginTest
     protected function createCategoryFacetData()
     {
         $searchConfig = $this->createCategorySearchConfig();
+        $expectedQuery = new BoolQuery();
 
-        $expectedAggregations = [
-            $this->getExpectedCategoryFacetAggregation(),
-        ];
-
-        return [$searchConfig, $expectedAggregations];
+        return [$searchConfig, $expectedQuery];
     }
 
     /**
@@ -113,14 +135,9 @@ class FacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPluginTest
     protected function createMultiCategoryFacetData()
     {
         $searchConfig = $this->createMultiCategorySearchConfig();
+        $expectedQuery = new BoolQuery();
 
-        $expectedAggregations = [
-            $this->getExpectedCategoryFacetAggregation(),
-            $this->getExpectedCategoryFacetAggregation(),
-            $this->getExpectedCategoryFacetAggregation(),
-        ];
-
-        return [$searchConfig, $expectedAggregations];
+        return [$searchConfig, $expectedQuery];
     }
 
     /**
@@ -129,14 +146,9 @@ class FacetQueryExpanderPluginTest extends AbstractFacetQueryExpanderPluginTest
     protected function createMixedFacetData()
     {
         $searchConfig = $this->createMixedSearchConfig();
+        $expectedQuery = new BoolQuery();
 
-        $expectedAggregations = [
-            $this->getExpectedStringFacetAggregation(),
-            $this->getExpectedIntegerFacetAggregation(),
-            $this->getExpectedCategoryFacetAggregation(),
-        ];
-
-        return [$searchConfig, $expectedAggregations];
+        return [$searchConfig, $expectedQuery];
     }
 
 }

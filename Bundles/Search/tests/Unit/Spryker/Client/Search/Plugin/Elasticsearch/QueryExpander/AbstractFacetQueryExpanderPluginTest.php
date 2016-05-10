@@ -24,30 +24,6 @@ abstract class AbstractFacetQueryExpanderPluginTest extends \PHPUnit_Framework_T
 {
 
     /**
-     * @dataProvider facetQueryExpanderDataProvider
-     *
-     * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
-     * @param array $expectedAggregations
-     * @param array $params
-     *
-     * @return void
-     */
-    public function testFacetQueryExpanderShouldCreateAggregationsBasedOnSearchConfig(SearchConfigInterface $searchConfig, array $expectedAggregations, array $params = [])
-    {
-        $queryExpander = new FacetQueryExpanderPlugin();
-        $query = $queryExpander->expandQuery($this->createQueryMock(), $searchConfig, $params);
-
-        $aggregations = $query->getSearchQuery($params)->getParam('aggs');
-
-        $this->assertEquals($expectedAggregations, $aggregations);
-    }
-
-    /**
-     * @return array
-     */
-    abstract public function facetQueryExpanderDataProvider();
-
-    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function createQueryMock()

@@ -58,10 +58,15 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         $activeFacetConfigTransfers = $facetConfig->getActive($requestParameters);
 
         foreach ($activeFacetConfigTransfers as $facetConfigTransfer) {
-            $query = $this->createFacetFilterQuery($facetConfigTransfer, $requestParameters);
-            if ($query !== null) {
-                $facetFilters[$facetConfigTransfer->getName()] = $query;
+            $filterValue = isset($requestParameters[$facetConfigTransfer->getParameterName()]) ? $requestParameters[$facetConfigTransfer->getParameterName()] : null;
+
+            if ($facetConfigTransfer->getIsMultiValued() === true) {
+                $query = $this->createMultiValuedFacetFilterQuery($facetConfigTransfer, $filterValue);
+            } else {
+                $query = $this->createFacetFilterQuery($facetConfigTransfer, $filterValue);
             }
+
+            $facetFilters[$facetConfigTransfer->getName()] = $query;
         }
 
         return $facetFilters;
@@ -69,15 +74,41 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param array $requestParameters
+     * @param mixed $filterValue
+     *
+     * @return \Elastica\Query\AbstractQuery
+     */
+    protected function createMultiValuedFacetFilterQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
+    {
+        $boolQuery = $this
+            ->getFactory()
+            ->createQueryBuilder()
+            ->createBoolQuery();
+
+        if (!is_array($filterValue)) {
+            $filterValue = [$filterValue];
+        }
+
+        foreach ($filterValue as $value) {
+            $query = $this->createFacetFilterQuery($facetConfigTransfer, $value);
+
+            if ($query !== null) {
+                $boolQuery->addShould($query);
+            }
+        }
+
+        return $boolQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param string $filterValue
      *
      * @return \Elastica\Query\AbstractQuery|null
      */
-    protected function createFacetFilterQuery(FacetConfigTransfer $facetConfigTransfer, array $requestParameters)
+    protected function createFacetFilterQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        $filterValue = isset($requestParameters[$facetConfigTransfer->getParameterName()]) ? $requestParameters[$facetConfigTransfer->getParameterName()] : null;
-        
-        if (trim($filterValue) === '') {
+        if (empty($filterValue)) {
             return null;
         }
 
