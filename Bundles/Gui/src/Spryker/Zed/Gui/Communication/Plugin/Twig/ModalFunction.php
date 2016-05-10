@@ -9,6 +9,9 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Spryker\Zed\Library\Twig\TwigFunction;
 
+/**
+ * @deprecated must be moved to setup bundle
+ */
 class ModalFunction extends TwigFunction
 {
 
