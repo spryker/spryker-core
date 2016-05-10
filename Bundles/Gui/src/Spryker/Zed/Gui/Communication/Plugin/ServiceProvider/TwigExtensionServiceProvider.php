@@ -20,7 +20,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\ModalFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\PanelFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 
-class TwigExtensionsServiceProvider implements ServiceProviderInterface
+class TwigExtensionServiceProvider implements ServiceProviderInterface
 {
 
     /**
