@@ -41,14 +41,6 @@ abstract class AbstractActionButtonFunction extends TwigFunction
     }
 
     /**
-     * @return string
-     */
-    protected function getDefaultTagClass()
-    {
-        return 'btn btn-sm btn-outline';
-    }
-
-    /**
      * @param array $options
      *
      * @return string
@@ -60,9 +52,7 @@ abstract class AbstractActionButtonFunction extends TwigFunction
             $extraClasses = ' ' . $options[self::PARAM_CLASS];
         }
 
-        return ' class="'
-            . $this->getDefaultTagClass()
-            . ' '
+        return ' class="btn btn-sm btn-outline '
             . $this->getButtonClass()
             . $extraClasses
             . '"';
