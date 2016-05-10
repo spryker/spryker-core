@@ -8,11 +8,8 @@
 namespace Unit\Spryker\Zed\Application\Business\Model\Request;
 
 use Silex\Application;
-use Silex\WebTestCase;
 use Spryker\Zed\Application\Business\Model\Request\SubRequestHandler;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Client;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
@@ -22,62 +19,34 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @group Business
  * @group SubRequestHandler
  */
-class SubRequestHandlerTest extends WebTestCase
+class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
 {
     const GET_PARAMS = ['banana', 'mango'];
     const POST_PARAMS = ['apple', 'orange'];
-    const URL_MASTER_REQUEST = '/';
     const URL_SUB_REQUEST = '/sales/comment/add';
 
-    public function testHandleSubRequestWithMocks()
+    public function testSubRequestIsSetupCorrectly()
     {
-        $request = new Request();
-        $request->query->add(self::GET_PARAMS);
-        $request->request->add(self::POST_PARAMS);
+        $mainRequest = new Request();
+        $mainRequest->query->add(self::GET_PARAMS);
+        $mainRequest->request->add(self::POST_PARAMS);
+        $subRequest = new Request();
+        
         $httpKernelMock = $this->getMock(HttpKernelInterface::class, ['handle']);
-        $httpKernelMock->method('handle')->willReturn($request);
-        $subRequestHandler = new SubRequestHandler($httpKernelMock);
-        $changedRequest = $subRequestHandler->handleSubRequest($request, self::URL_SUB_REQUEST);
+        $httpKernelMock
+            ->expects($this->once())
+            ->method('handle')
+            ->with($subRequest, HttpKernelInterface::SUB_REQUEST, true);
 
-        $this->assertEquals(self::GET_PARAMS, $changedRequest->query->all());
-        $this->assertEquals(self::POST_PARAMS, $changedRequest->request->all());
-    }
+        $subRequestHandlerPartialMock = $this->getMock(SubRequestHandler::class, ['createRequestObject'], [$httpKernelMock]);
+        $subRequestHandlerPartialMock
+            ->expects($this->once())
+            ->method('createRequestObject')
+            ->willReturn($subRequest);
 
-    public function testHandleSubRequestWithGetParams()
-    {
-        $app = $this->createApplication();
-        $client = new Client($app);
-        $client->request('get', self::URL_MASTER_REQUEST, self::GET_PARAMS);
-        $this->assertTrue($client->getResponse() instanceof RedirectResponse);
-    }
+        $subRequestHandlerPartialMock->handleSubRequest($mainRequest, self::URL_SUB_REQUEST);
 
-    public function testHandleSubRequestWithPostParams()
-    {
-        $app = $this->createApplication();
-        $client = new Client($app);
-        $client->request('post', self::URL_MASTER_REQUEST, self::POST_PARAMS);
-        $this->assertTrue($client->getResponse() instanceof RedirectResponse);
-    }
-
-    public function createApplication($authenticationMethod = 'form')
-    {
-        $app = new Application();
-        $app['debug'] = true;
-
-        $app->get(self::URL_MASTER_REQUEST, function () use ($app) {
-            $subRequestHandler = new SubRequestHandler($app);
-            return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
-        });
-
-        $app->post(self::URL_MASTER_REQUEST, function () use ($app) {
-            $subRequestHandler = new SubRequestHandler($app);
-            return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
-        });
-
-        $app->get(self::URL_SUB_REQUEST, function () use ($app) {
-            return new RedirectResponse(self::URL_SUB_REQUEST);
-        });
-
-        return $app;
+        $this->assertEquals($subRequest->query->all(), self::GET_PARAMS);
+        $this->assertEquals($subRequest->request->all(), self::POST_PARAMS);
     }
 }
