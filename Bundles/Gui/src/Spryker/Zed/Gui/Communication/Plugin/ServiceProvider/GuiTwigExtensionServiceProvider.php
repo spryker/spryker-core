@@ -16,15 +16,22 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\CreateActionButtonFu
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\EditActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\ViewActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
+use Spryker\Zed\Library\Twig\TwigFilterInterface;
 use Spryker\Zed\Library\Twig\TwigFunction;
+use Spryker\Zed\Library\Twig\TwigFunctionInterface;
 
 class GuiTwigExtensionServiceProvider implements ServiceProviderInterface
 {
 
     /**
-     * @var TwigFunction[]
+     * @var TwigFunctionInterface[]
      */
     protected $twigFunctions = [];
+
+    /**
+     * @var TwigFilterInterface[]
+     */
+    protected $twigFilters = [];
 
     /**
      * @param array $twigPlugins
@@ -44,16 +51,13 @@ class GuiTwigExtensionServiceProvider implements ServiceProviderInterface
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) {
 
-                foreach ($this->twigFunctions as $plugin) {
-                    $twig->addFunction($plugin);
+                foreach ($this->twigFunctions as $function) {
+                    $twig->addFunction($function);
                 }
-//                $twig->addFunction(new FormatPriceFunction());
-//                $twig->addFunction(new AssetsPathFunction());
-//                $twig->addFunction(new BackActionButtonFunction());
-//                $twig->addFunction(new CreateActionButtonFunction());
-//                $twig->addFunction(new ViewActionButtonFunction());
-//                $twig->addFunction(new EditActionButtonFunction());
-//                $twig->addFunction(new UrlFunction());
+
+                foreach ($this->twigFilters as $filter) {
+                    $twig->addFilter($filter);
+                }
 
                 return $twig;
             })

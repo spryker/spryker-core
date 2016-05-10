@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Library\Twig;
 
-abstract class TwigFilter extends \Twig_SimpleFilter
+abstract class TwigFilter extends \Twig_SimpleFilter implements TwigFilterInterface
 {
 
     public function __construct()

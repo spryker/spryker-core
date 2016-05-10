@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Library\Twig;
 
-abstract class TwigFunction extends \Twig_SimpleFunction
+abstract class TwigFunction extends \Twig_SimpleFunction implements TwigFunctionInterface
 {
 
     public function __construct()
