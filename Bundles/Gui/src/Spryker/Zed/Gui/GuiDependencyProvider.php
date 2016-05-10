@@ -11,5 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class GuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
 }

@@ -31,10 +31,7 @@ class ZedExtensionServiceProvider extends AbstractPlugin implements ServiceProvi
     {
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) {
-
-                foreach ($this->getBundlesTwigExtensions() as $extension) {
-                    $twig->addExtension($extension);
-                }
+                $twig->addExtension(new ZedExtension());
 
                 return $twig;
             })
@@ -48,17 +45,6 @@ class ZedExtensionServiceProvider extends AbstractPlugin implements ServiceProvi
      */
     public function boot(Application $app)
     {
-    }
-
-    /**
-     * @return array
-     */
-    protected function getBundlesTwigExtensions()
-    {
-        return [
-            new GuiTwigExtensions(),
-            new ZedExtension(),
-        ];
     }
 
 }
