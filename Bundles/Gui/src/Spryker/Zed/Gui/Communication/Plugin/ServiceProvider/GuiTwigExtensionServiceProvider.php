@@ -11,17 +11,28 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPriceFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ListGroupFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ModalFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\PanelFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\BackActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\CreateActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\EditActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\ViewActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
+use Spryker\Zed\Library\Twig\TwigFunction;
 
 class GuiTwigExtensionServiceProvider implements ServiceProviderInterface
 {
+
+    /**
+     * @var TwigFunction[]
+     */
+    protected $twigFunctions = [];
+
+    /**
+     * @param array $twigPlugins
+     */
+    public function __construct(array $twigPlugins)
+    {
+        $this->twigFunctions = $twigPlugins;
+    }
 
     /**
      * @param \Silex\Application $app
@@ -33,16 +44,16 @@ class GuiTwigExtensionServiceProvider implements ServiceProviderInterface
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) {
 
-                $twig->addFunction(new FormatPriceFunction());
-                $twig->addFunction(new ListGroupFunction());
-                $twig->addFunction(new ModalFunction());
-                $twig->addFunction(new PanelFunction());
-                $twig->addFunction(new AssetsPathFunction());
-                $twig->addFunction(new BackActionButtonFunction());
-                $twig->addFunction(new CreateActionButtonFunction());
-                $twig->addFunction(new ViewActionButtonFunction());
-                $twig->addFunction(new EditActionButtonFunction());
-                $twig->addFunction(new UrlFunction());
+                foreach ($this->twigFunctions as $plugin) {
+                    $twig->addFunction($plugin);
+                }
+//                $twig->addFunction(new FormatPriceFunction());
+//                $twig->addFunction(new AssetsPathFunction());
+//                $twig->addFunction(new BackActionButtonFunction());
+//                $twig->addFunction(new CreateActionButtonFunction());
+//                $twig->addFunction(new ViewActionButtonFunction());
+//                $twig->addFunction(new EditActionButtonFunction());
+//                $twig->addFunction(new UrlFunction());
 
                 return $twig;
             })
