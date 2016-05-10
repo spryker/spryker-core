@@ -7,15 +7,9 @@
 
 namespace Unit\Spryker\Zed\Application\Business\Model\Request;
 
-use Codeception\Util\Stub;
 use Spryker\Zed\Application\Business\Model\Request\SubRequestHandler;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\HttpKernel\Tests\Fixtures\KernelForTest;
 
 /**
  * @group Spryker
@@ -42,6 +36,7 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
         $changedRequest = $subRequestHandler->handleSubRequest($request, self::URL);
 
         $this->assertEquals(self::GET_PARAMS, $changedRequest->query->all());
+        $this->assertEquals(self::POST_PARAMS, $changedRequest->request->all());
     }
 
 }

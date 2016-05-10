@@ -36,10 +36,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
      */
     public function handleSubRequest(Request $request, $url, array $additionalSubRequestParameters = [])
     {
-        $urlParts = $this->extractUrlParts($url);
-        $this->validateUrlParts($urlParts);
         $subRequest = $this->createSubRequest($request, $url);
-        $this->setRouteAttributes($subRequest, $urlParts);
         $subRequestResponse = $this->httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST, true);
 
         return $subRequestResponse;
@@ -53,9 +50,13 @@ class SubRequestHandler implements SubRequestHandlerInterface
      */
     protected function createSubRequest(Request $request, $url)
     {
-        $subRequest = $this->createRequest($request, $url);
+        $subRequest = $this->createRequestObject($request, $url);
         $subRequest->query->add($request->query->all());
         $subRequest->request->add($request->request->all());
+
+        $urlParts = $this->extractUrlParts($url);
+        $this->validateUrlParts($urlParts);
+        $this->setRouteAttributes($subRequest, $urlParts);
 
         return $subRequest;
     }
@@ -101,7 +102,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
      * @param $url
      * @return Request
      */
-    protected function createRequest(Request $request, $url)
+    protected function createRequestObject(Request $request, $url)
     {
         return Request::create(
             $url,

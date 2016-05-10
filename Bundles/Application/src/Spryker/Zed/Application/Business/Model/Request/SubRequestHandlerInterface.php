@@ -16,7 +16,8 @@ interface SubRequestHandlerInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $url
      * @param array $additionalSubRequestParameters
-     *
+     * @deprecated optional argument $additionalSubRequestParameters will be removed in next major version
+     * 
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handleSubRequest(Request $request, $url, array $additionalSubRequestParameters = []);
