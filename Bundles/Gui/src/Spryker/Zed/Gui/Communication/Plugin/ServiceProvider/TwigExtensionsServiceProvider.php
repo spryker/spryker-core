@@ -30,7 +30,6 @@ class TwigExtensionsServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        // try if that works without share as well, maybe it's not needed and extend is enough
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) {
 
