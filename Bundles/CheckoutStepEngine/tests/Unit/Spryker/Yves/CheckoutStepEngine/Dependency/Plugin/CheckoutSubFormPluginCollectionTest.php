@@ -56,6 +56,17 @@ class CheckoutSubFormPluginCollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testCollectionIsCountable()
+    {
+        $checkoutSubFormPluginCollection = new CheckoutSubFormPluginCollection();
+        $checkoutSubFormPluginCollection->add($this->getCheckoutSubFormPlugin());
+
+        $this->assertCount(1, $checkoutSubFormPluginCollection);
+    }
+
+    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginInterface
      */
     private function getCheckoutSubFormPlugin()

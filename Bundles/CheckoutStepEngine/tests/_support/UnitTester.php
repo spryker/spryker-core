@@ -1,4 +1,5 @@
 <?php
+
 namespace CheckoutStepEngine;
 
 /**
@@ -15,12 +16,10 @@ namespace CheckoutStepEngine;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class UnitTester extends \Codeception\Actor
 {
+
     use _generated\UnitTesterActions;
 
-   /**
-    * Define custom actions here
-    */
 }

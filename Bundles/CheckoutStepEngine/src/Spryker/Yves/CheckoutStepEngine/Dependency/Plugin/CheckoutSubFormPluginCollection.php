@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\CheckoutStepEngine\Dependency\Plugin;
 
-class CheckoutSubFormPluginCollection implements \Iterator
+class CheckoutSubFormPluginCollection implements \Iterator, \Countable
 {
 
     /**
@@ -70,6 +70,14 @@ class CheckoutSubFormPluginCollection implements \Iterator
     public function rewind()
     {
         $this->position = 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->checkoutSubForms);
     }
 
 }

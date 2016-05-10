@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Yves\Payolution\Dependency\Injector;
 
+use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Yves\CheckoutStepEngine\CheckoutDependencyProvider;
 use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutStepHandlerPluginCollection;
 use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginCollection;
@@ -26,7 +26,7 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testInjectPaymentSubForms()
+    public function testInject()
     {
         $container = $this->getContainerToInjectTo();
 
@@ -35,20 +35,12 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
 
         $checkoutSubFormPluginCollection = $container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS];
         $this->assertCount(2, $checkoutSubFormPluginCollection);
-    }
-
-    /**
-     * @return void
-     */
-    public function testInjectStepHandler()
-    {
-        $container = $this->getContainerToInjectTo();
-
-        $checkoutDependencyInjector = new CheckoutDependencyInjector();
-        $checkoutDependencyInjector->inject($container);
 
         $checkoutStepHandlerPluginCollection = $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER];
-        $this->assertCount(2, $checkoutStepHandlerPluginCollection);
+//        $this->assertCount(2, $checkoutStepHandlerPluginCollection);
+
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYOLUTION_INVOICE));
+        $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYOLUTION_INSTALLMENT));
     }
 
     /**

@@ -8,6 +8,8 @@
 namespace Unit\Spryker\Yves\CheckoutStepEngine;
 
 use Spryker\Yves\CheckoutStepEngine\CheckoutDependencyProvider;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutStepHandlerPluginCollection;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginCollection;
 use Spryker\Yves\Kernel\Container;
 
 /**
@@ -29,9 +31,10 @@ class CheckoutDependencyProviderTest extends \PHPUnit_Framework_TestCase
         $checkoutDependencyProvider->provideDependencies($container);
 
         $this->assertArrayHasKey(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER, $container);
-//        $this->assertInstanceOf(Checko)
+        $this->assertInstanceOf(CheckoutStepHandlerPluginCollection::class, $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER]);
 
         $this->assertArrayHasKey(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, $container);
+        $this->assertInstanceOf(CheckoutSubFormPluginCollection::class, $container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS]);
     }
 
 }

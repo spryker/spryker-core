@@ -7,8 +7,14 @@
     }
   },
   "require": {
-    "spryker/checkout": "^2.0.0",
-    "spryker/kernel": "^2.0.0"
+    "spryker/symfony": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "0.3.1",
+    "spryker/config": "^2.0.0",
+    "spryker/console": "^2.0.1",
+    "spryker/testify": "^2.0.0",
+    "spryker/transfer": "^2.0.0"
   },
   "description": "checkout step engine bundle",
   "license": "proprietary",
@@ -18,5 +24,11 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }
