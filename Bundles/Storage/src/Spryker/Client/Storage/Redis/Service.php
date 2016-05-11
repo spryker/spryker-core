@@ -30,6 +30,11 @@ class Service implements ServiceInterface
     private $accessStats;
 
     /**
+     * @var array
+     */
+    private $config;
+
+    /**
      * @param \Predis\ClientInterface $client
      * @param bool $debug
      */
@@ -208,9 +213,13 @@ class Service implements ServiceInterface
      */
     public function getMulti(array $keys)
     {
+        if (count($keys) === 0) {
+            return $keys;
+        }
+
         $transformedKeys = [];
         foreach ($keys as $key) {
-            $transformedKeys[] = $this->getKeyName($key, self::KV_PREFIX);
+            $transformedKeys[] = $this->getKeyName($key);
         }
 
         $values = array_combine($transformedKeys, $this->client->mget($transformedKeys));
