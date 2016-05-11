@@ -23,6 +23,7 @@ use Symfony\Component\HttpKernel\Client;
  */
 class SubRequestHandlerTest extends WebTestCase
 {
+
     const GET_PARAMS = ['banana', 'mango'];
     const POST_PARAMS = ['apple', 'orange'];
     const URL_MASTER_REQUEST = '/';
@@ -65,4 +66,5 @@ class SubRequestHandlerTest extends WebTestCase
 
         return $app;
     }
+
 }

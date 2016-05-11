@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Zed\Application\Business\Model\Request;
 
-use Silex\Application;
 use Spryker\Zed\Application\Business\Model\Request\SubRequestHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -21,6 +20,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
 {
+
     const GET_PARAMS = ['banana', 'mango'];
     const POST_PARAMS = ['apple', 'orange'];
     const URL_SUB_REQUEST = '/sales/comment/add';
@@ -31,7 +31,7 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
         $mainRequest->query->add(self::GET_PARAMS);
         $mainRequest->request->add(self::POST_PARAMS);
         $subRequest = new Request();
-        
+
         $httpKernelMock = $this->getMock(HttpKernelInterface::class, ['handle']);
         $httpKernelMock
             ->expects($this->once())
@@ -49,4 +49,5 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($subRequest->query->all(), self::GET_PARAMS);
         $this->assertEquals($subRequest->request->all(), self::POST_PARAMS);
     }
+
 }

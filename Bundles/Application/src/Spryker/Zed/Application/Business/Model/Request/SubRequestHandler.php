@@ -98,9 +98,9 @@ class SubRequestHandler implements SubRequestHandlerInterface
     }
 
     /**
-     * @param Request $request
-     * @param $url
-     * @return Request
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $url
+     * @return \Symfony\Component\HttpFoundation\Request
      */
     protected function createRequestObject(Request $request, $url)
     {
