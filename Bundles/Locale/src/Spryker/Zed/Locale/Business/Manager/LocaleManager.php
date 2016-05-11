@@ -138,6 +138,10 @@ class LocaleManager
             ->queryLocaleByName($localeName)
             ->findOne();
 
+        if (!$locale) {
+            return true;
+        }
+
         $locale->setIsActive(false);
         $locale->save();
 
