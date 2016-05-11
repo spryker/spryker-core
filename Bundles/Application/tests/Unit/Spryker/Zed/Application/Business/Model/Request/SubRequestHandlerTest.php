@@ -25,6 +25,9 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
     const POST_PARAMS = ['apple', 'orange'];
     const URL_SUB_REQUEST = '/sales/comment/add';
 
+    /**
+     * @return void
+     */
     public function testSubRequestIsSetupCorrectly()
     {
         $mainRequest = new Request();
