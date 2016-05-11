@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector;
 
 use Spryker\Shared\Collector\CollectorConstants;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkDeleteTouchByIdQuery;
 use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkUpdateTouchKeyByIdQuery;
 use Spryker\Zed\Kernel\AbstractBundleConfig;

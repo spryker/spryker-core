@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Collector;
 
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleBridge;
-use Spryker\Zed\Collector\Dependency\Facade\CollectorToPropelBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
