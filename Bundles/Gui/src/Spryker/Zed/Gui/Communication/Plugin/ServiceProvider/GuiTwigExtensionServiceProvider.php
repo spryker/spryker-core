@@ -24,11 +24,13 @@ class GuiTwigExtensionServiceProvider implements ServiceProviderInterface
     protected $twigFilters = [];
 
     /**
-     * @param array $twigPlugins
+     * @param \Spryker\Zed\Library\Twig\TwigFunctionInterface[] $twigFunctions
+     * @param \Spryker\Zed\Library\Twig\TwigFilterInterface[] $twigFilters
      */
-    public function __construct(array $twigPlugins)
+    public function __construct(array $twigFunctions, array $twigFilters)
     {
-        $this->twigFunctions = $twigPlugins;
+        $this->twigFunctions = $twigFunctions;
+        $this->twigFilters = $twigFilters;
     }
 
     /**
