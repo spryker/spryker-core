@@ -12,7 +12,6 @@ use Silex\WebTestCase;
 use Spryker\Zed\Application\Business\Model\Request\SubRequestHandler;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Client;
 
 /**
  * @group Spryker
@@ -29,23 +28,30 @@ class SubRequestHandlerTest extends WebTestCase
     const URL_MASTER_REQUEST = '/';
     const URL_SUB_REQUEST = '/sales/comment/add';
 
+    /**
+     * @return void
+     */
     public function testHandleSubRequestWithGetParams()
     {
-        $app = $this->createApplication();
-        $client = new Client($app);
+        $client = $this->createClient();
         $client->request('get', self::URL_MASTER_REQUEST, self::GET_PARAMS);
         $this->assertTrue($client->getResponse() instanceof RedirectResponse);
     }
 
+    /**
+     * @return void
+     */
     public function testHandleSubRequestWithPostParams()
     {
-        $app = $this->createApplication();
-        $client = new Client($app);
+        $client = $this->createClient();
         $client->request('post', self::URL_MASTER_REQUEST, self::POST_PARAMS);
         $this->assertTrue($client->getResponse() instanceof RedirectResponse);
     }
 
-    public function createApplication($authenticationMethod = 'form')
+    /**
+     * @return \Silex\Application
+     */
+    public function createApplication()
     {
         $app = new Application();
         $app['debug'] = true;

@@ -36,7 +36,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
      */
     public function handleSubRequest(Request $request, $url, array $additionalSubRequestParameters = [])
     {
-        $subRequest = $this->createSubRequest($request, $url);
+        $subRequest = $this->createSubRequest($request, $url, $additionalSubRequestParameters);
         $subRequestResponse = $this->httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST, true);
 
         return $subRequestResponse;
@@ -46,11 +46,13 @@ class SubRequestHandler implements SubRequestHandlerInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $url
      *
+     * @param array $additionalSubRequestParameters
      * @return \Symfony\Component\HttpFoundation\Request
+     * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
      */
-    protected function createSubRequest(Request $request, $url)
+    protected function createSubRequest(Request $request, $url, array $additionalSubRequestParameters)
     {
-        $subRequest = $this->createRequestObject($request, $url);
+        $subRequest = $this->createRequestObject($request, $url, $additionalSubRequestParameters);
         $subRequest->query->add($request->query->all());
         $subRequest->request->add($request->request->all());
 
@@ -100,14 +102,15 @@ class SubRequestHandler implements SubRequestHandlerInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $url
+     * @param array $additionalSubRequestParameters
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function createRequestObject(Request $request, $url)
+    protected function createRequestObject(Request $request, $url, array $additionalSubRequestParameters)
     {
         return Request::create(
             $url,
             $request->getMethod(),
-            [],
+            $additionalSubRequestParameters,
             $request->cookies->all(),
             $request->files->all(),
             $request->server->all()
