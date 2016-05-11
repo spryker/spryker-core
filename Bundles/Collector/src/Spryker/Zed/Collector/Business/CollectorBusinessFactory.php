@@ -320,12 +320,9 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     protected function createBulkUpdateTouchQuery()
     {
         $className = CollectorConfig::COLLECTOR_BULK_UPDATE_QUERY_CLASS;
+        $classList = $this->getConfig()->getCurrentBulkQueryClassNames();
 
-        $classList = $this->getConfig()->getCollectorBulkQueryClassNames(
-            $this->getCurrentDatabaseEngineName()
-        );
-
-        if (!array_key_exists($className, $classList)) {
+        if (!isset($classList[$className])) {
             throw new \InvalidArgumentException('Invalid StoragePdoQueryAdapter name: ' . $className);
         }
 
@@ -341,33 +338,14 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     protected function createBulkDeleteTouchQuery()
     {
         $className = CollectorConfig::COLLECTOR_BULK_DELETE_QUERY_CLASS;
+        $classList = $this->getConfig()->getCurrentBulkQueryClassNames();
 
-        $classList = $this->getConfig()->getCollectorBulkQueryClassNames(
-            $this->getCurrentDatabaseEngineName()
-        );
-
-        if (!array_key_exists($className, $classList)) {
+        if (!isset($classList[$className])) {
             throw new \InvalidArgumentException('Invalid StoragePdoQueryAdapter name: ' . $className);
         }
 
         $bulkDeleteClassName = $classList[$className];
         return new $bulkDeleteClassName();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCurrentDatabaseEngineName()
-    {
-        return $this->getPropelFacade()->getCurrentDatabaseEngineName();
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\Business\PropelFacadeInterface
-     */
-    protected function getPropelFacade()
-    {
-        return $this->getProvidedDependency(CollectorDependencyProvider::FACADE_PROPEL);
     }
 
     /**

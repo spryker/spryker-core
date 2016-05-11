@@ -9,6 +9,7 @@ namespace Spryker\Zed\Collector;
 
 use Spryker\Shared\Collector\CollectorConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkDeleteTouchByIdQuery;
 use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkUpdateTouchKeyByIdQuery;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
@@ -47,6 +48,30 @@ class CollectorConfig extends AbstractBundleConfig
     public function getSearchDocumentType()
     {
         return Config::get(CollectorConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMysqlEngineName()
+    {
+        return Config::get(CollectorConstants::ZED_DB_ENGINE_MYSQL);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPgsqlEngineName()
+    {
+        return Config::get(CollectorConstants::ZED_DB_ENGINE_PGSQL);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentEngineName()
+    {
+        return Config::get(CollectorConstants::ZED_DB_ENGINE);
     }
 
     /**
@@ -101,19 +126,27 @@ class CollectorConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getCollectorBulkQueryClassNames($dbEngineName)
+    protected function getQueryToDbEngineClassMap()
     {
-        $data = [
-            'MySql' => [
+        return [
+            $this->getMysqlEngineName() => [
 
             ],
-            'PostgreSql' => [
+            $this->getPgsqlEngineName() => [
                 static::COLLECTOR_BULK_DELETE_QUERY_CLASS => BulkDeleteTouchByIdQuery::class,
                 static::COLLECTOR_BULK_UPDATE_QUERY_CLASS => BulkUpdateTouchKeyByIdQuery::class
             ]
         ];
+    }
 
-        return $data[$dbEngineName];
+    /**
+     * @return array
+     */
+    public function getCurrentBulkQueryClassNames()
+    {
+        $classMap = $this->getQueryToDbEngineClassMap();
+
+        return $classMap[$this->getCurrentEngineName()];
     }
 
 }
