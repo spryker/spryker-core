@@ -30,7 +30,7 @@ class MonologServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        if ((int) Config::get(ApplicationConstants::LOG_LEVEL) === 0 ) {
+        if ((int)Config::get(ApplicationConstants::LOG_LEVEL) === 0) {
             return;
         }
 
