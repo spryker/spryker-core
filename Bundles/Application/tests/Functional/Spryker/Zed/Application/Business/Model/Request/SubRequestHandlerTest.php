@@ -35,7 +35,7 @@ class SubRequestHandlerTest extends WebTestCase
     {
         $client = $this->createClient();
         $client->request('get', self::URL_MASTER_REQUEST, self::GET_PARAMS);
-        $this->assertTrue($client->getResponse() instanceof RedirectResponse);
+        $this->assertInstanceOf(RedirectResponse::class, $client->getResponse());
     }
 
     /**
@@ -45,7 +45,7 @@ class SubRequestHandlerTest extends WebTestCase
     {
         $client = $this->createClient();
         $client->request('post', self::URL_MASTER_REQUEST, self::POST_PARAMS);
-        $this->assertTrue($client->getResponse() instanceof RedirectResponse);
+        $this->assertInstanceOf(RedirectResponse::class, $client->getResponse());
     }
 
     /**
@@ -56,16 +56,13 @@ class SubRequestHandlerTest extends WebTestCase
         $app = new Application();
         $app['debug'] = true;
 
-        $app->get(self::URL_MASTER_REQUEST, function () use ($app) {
+        $callback = function () use ($app) {
             $subRequestHandler = new SubRequestHandler($app);
             return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
-        });
+        };
 
-        $app->post(self::URL_MASTER_REQUEST, function () use ($app) {
-            $subRequestHandler = new SubRequestHandler($app);
-            return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
-        });
-
+        $app->get(self::URL_MASTER_REQUEST, $callback);
+        $app->post(self::URL_MASTER_REQUEST, $callback);
         $app->get(self::URL_SUB_REQUEST, function () use ($app) {
             return new RedirectResponse(self::URL_SUB_REQUEST);
         });
