@@ -62,7 +62,6 @@ class LocaleManager
         return $this->transferGenerator->convertLocale($locale);
     }
 
-
     /**
      * @param string $localeCode
      *
