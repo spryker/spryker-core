@@ -9,13 +9,14 @@ namespace Spryker\Zed\Library\Twig;
 
 interface TwigFunctionInterface
 {
+
     /**
      * @return string
      */
     public function getName();
 
     /**
-     * @return Callable
+     * @return callable
      */
     public function getCallable();
 
@@ -55,4 +56,5 @@ interface TwigFunctionInterface
      * @return bool
      */
     public function isVariadic();
+
 }
