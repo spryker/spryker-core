@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Locale\Business\Internal\Install;
 
 use Orm\Zed\Locale\Persistence\SpyLocale;
-use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Propel\Runtime\Propel;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
@@ -40,20 +40,7 @@ class LocaleInstaller extends AbstractInstaller
      */
     public function install()
     {
-        if ($this->isInstalled()) {
-            return;
-        }
-
         $this->installLocales();
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isInstalled()
-    {
-        $query = new SpyLocaleQuery();
-        return $query->count() > 0;
     }
 
     /**
@@ -63,6 +50,9 @@ class LocaleInstaller extends AbstractInstaller
      */
     protected function installLocales()
     {
+        Propel::getConnection()
+            ->beginTransaction();
+
         $localeFile = fopen($this->localeFile, 'r');
 
         while (!feof($localeFile)) {
@@ -77,6 +67,9 @@ class LocaleInstaller extends AbstractInstaller
                 $entity->save();
             }
         }
+
+        Propel::getConnection()
+            ->commit();
     }
 
 }

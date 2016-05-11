@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Glossary\Business\Internal;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Glossary\Business\Key\KeyManagerInterface;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface;
@@ -53,10 +52,6 @@ class GlossaryInstaller extends AbstractInstaller
      */
     public function install()
     {
-        if ($this->isInstalled()) {
-            return [];
-        }
-
         $results = [];
 
         foreach ($this->paths as $filePath) {
@@ -66,15 +61,6 @@ class GlossaryInstaller extends AbstractInstaller
         }
 
         return $results;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isInstalled()
-    {
-        $query = new SpyGlossaryKeyQuery();
-        return $query->count() > 0;
     }
 
     /**
@@ -127,7 +113,6 @@ class GlossaryInstaller extends AbstractInstaller
             ->commit();
 
         return $results;
-
     }
 
 }
