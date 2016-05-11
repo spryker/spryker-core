@@ -11,7 +11,6 @@ use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
-use Silex\ServiceProviderInterface;
 use Spryker\Shared\Url\UrlBuilder;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
@@ -39,8 +38,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Library\Twig\TwigFilterInterface;
-use Spryker\Zed\Library\Twig\TwigFunctionInterface;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
@@ -66,7 +63,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @throws \Exception
-     * @return ServiceProviderInterface[]
+     * @return \Silex\ServiceProviderInterface[]
      */
     protected function getServiceProvider(Container $container)
     {
@@ -100,7 +97,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return TwigFunctionInterface[]
+     * @return \Spryker\Zed\Library\Twig\TwigFunctionInterface[]
      */
     protected function getTwigFunctions()
     {
@@ -116,7 +113,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return TwigFilterInterface[]
+     * @return \Spryker\Zed\Library\Twig\TwigFilterInterface[]
      */
     protected function getTwigFilters()
     {
@@ -134,4 +131,5 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 
         return $serviceProvider;
     }
+
 }
