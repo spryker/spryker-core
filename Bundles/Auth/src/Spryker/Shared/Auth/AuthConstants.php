@@ -11,6 +11,7 @@ interface AuthConstants
 {
 
     const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
+    const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
 
     const AUTH_SESSION_KEY = 'auth';
     const AUTH_CURRENT_USER_KEY = '%s:currentUser:%s';

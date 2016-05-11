@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ZedRequest;
 
+use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
@@ -49,6 +50,14 @@ class ZedRequestConfig
         } else {
             return 'http://' . $this->config->get(ZedRequestConstants::HOST_ZED_API);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAuthenticationEnabled()
+    {
+        return $this->config->get(AuthConstants::AUTH_ZED_ENABLED, true);
     }
 
 }

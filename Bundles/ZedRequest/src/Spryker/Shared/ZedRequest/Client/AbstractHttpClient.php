@@ -201,6 +201,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         /** @var \Guzzle\Http\Message\EntityEnclosingRequest $request */
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
+        $request->addHeader('X-Internal-Request', 1);
         foreach ($this->getHeaders() as $header => $value) {
             $request->addHeader($header, $value);
         }

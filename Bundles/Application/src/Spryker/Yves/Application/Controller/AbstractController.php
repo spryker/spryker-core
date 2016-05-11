@@ -259,6 +259,8 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Use DependencyProvider instead
+     *
      * @return \Generated\Client\Ide\AutoCompletion
      */
     protected function getLocator()
