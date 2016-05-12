@@ -50,7 +50,7 @@ class LocaleInstaller extends AbstractInstaller
      */
     protected function installLocales()
     {
-        Propel::getConnection()
+        $this->localeQueryContainer->getConnection()
             ->beginTransaction();
 
         $localeFile = fopen($this->localeFile, 'r');
@@ -68,7 +68,7 @@ class LocaleInstaller extends AbstractInstaller
             }
         }
 
-        Propel::getConnection()
+        $this->localeQueryContainer->getConnection()
             ->commit();
     }
 
