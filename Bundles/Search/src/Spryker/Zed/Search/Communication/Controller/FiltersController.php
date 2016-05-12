@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Search\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
@@ -11,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FiltersController extends AbstractController
 {
+
     /**
      * @return array
      */
@@ -52,4 +58,5 @@ class FiltersController extends AbstractController
 
         ];
     }
+
 }

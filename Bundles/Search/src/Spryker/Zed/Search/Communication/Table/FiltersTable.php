@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Search\Communication\Table;
 
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -7,6 +12,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class FiltersTable extends AbstractTable
 {
+
     const NAME = 'name';
     const TYPE = 'type';
     const FILTER_TYPE = 'filter_type';
@@ -17,8 +23,8 @@ class FiltersTable extends AbstractTable
     const ACTION = 'action';
 
     /**
-     * @param TableConfiguration $config
-     * @return TableConfiguration
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -32,7 +38,7 @@ class FiltersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @return array
      */
     protected function prepareData(TableConfiguration $config)
@@ -106,4 +112,5 @@ class FiltersTable extends AbstractTable
             self::INCLUDE_FOR_FULL_TEXT_BOOSTED,
         ];
     }
+
 }

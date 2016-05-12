@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Gui\Communication\Twig\Functions;
 
 use Spryker\Zed\Gui\Communication\Twig\ActionButtons\TableActionButton;
@@ -7,6 +12,7 @@ use Spryker\Zed\Library\Twig\TwigFunction;
 
 class TableEditActionButtonFunction extends TwigFunction
 {
+
     protected function getFunctionName()
     {
         return 'tableEditButton';
@@ -14,7 +20,7 @@ class TableEditActionButtonFunction extends TwigFunction
 
     protected function getFunction()
     {
-        return function($url, $title, array $options = []) {
+        return function ($url, $title, array $options = []) {
 
             return '-my link-';
 
@@ -30,4 +36,5 @@ class TableEditActionButtonFunction extends TwigFunction
 //            return $html;
         };
     }
+
 }
