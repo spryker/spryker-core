@@ -14,7 +14,7 @@ class FormFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginCollection
+     * @return \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginCollection
      */
     public function createPaymentMethodSubForms()
     {

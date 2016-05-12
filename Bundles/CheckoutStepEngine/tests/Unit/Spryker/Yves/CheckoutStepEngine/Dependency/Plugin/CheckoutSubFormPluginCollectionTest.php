@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Yves\CheckoutStepEngine\Dependency\Plugin;
 
-use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginCollection;
-use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginInterface;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginCollection;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface;
 
 /**
  * @group Spryker
@@ -67,7 +67,7 @@ class CheckoutSubFormPluginCollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface
      */
     private function getCheckoutSubFormPlugin()
     {

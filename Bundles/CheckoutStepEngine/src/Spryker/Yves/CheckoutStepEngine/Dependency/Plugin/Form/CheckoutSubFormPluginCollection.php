@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\CheckoutStepEngine\Dependency\Plugin;
+namespace Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form;
 
 class CheckoutSubFormPluginCollection implements \Iterator, \Countable
 {
 
     /**
-     * @var \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginInterface[]
+     * @var \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface[]
      */
     private $checkoutSubForms = [];
 
@@ -21,7 +21,7 @@ class CheckoutSubFormPluginCollection implements \Iterator, \Countable
     private $position = 0;
 
     /**
-     * @param \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginInterface $checkoutSubForm
+     * @param \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface $checkoutSubForm
      *
      * @return $this
      */
@@ -33,7 +33,7 @@ class CheckoutSubFormPluginCollection implements \Iterator, \Countable
     }
 
     /**
-     * @return \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginInterface
+     * @return \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface
      */
     public function current()
     {

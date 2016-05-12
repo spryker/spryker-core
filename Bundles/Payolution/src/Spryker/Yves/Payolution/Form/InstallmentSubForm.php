@@ -120,7 +120,7 @@ class InstallmentSubForm extends AbstractPayolutionSubForm
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Bank account holder',
+                    'placeholder' => 'payolution_installment.bank_account_holder',
                 ],
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -145,7 +145,7 @@ class InstallmentSubForm extends AbstractPayolutionSubForm
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Bank account IBAN',
+                    'placeholder' => 'payolution_installment.bank_account_iban',
                 ],
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -170,7 +170,7 @@ class InstallmentSubForm extends AbstractPayolutionSubForm
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Bank account BIC',
+                    'placeholder' => 'payolution_installment.bank_account_bic',
                 ],
                 'constraints' => [
                     $this->createNotBlankConstraint(),

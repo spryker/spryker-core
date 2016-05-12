@@ -7,18 +7,33 @@
 
 namespace Spryker\Yves\CheckoutStepEngine\Process;
 
+use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\CheckoutStepEngine\CheckoutDependencyProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class StepFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutStepHandlerPluginCollection
+     * @return \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginCollection
      */
     public function createPaymentMethodHandler()
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER);
+    }
+
+    /**
+     * @param array $steps
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
+     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param string $errorRoute
+     *
+     * @return \Spryker\Yves\CheckoutStepEngine\Process\StepProcess
+     */
+    public function createStepProcess(array $steps, UrlGeneratorInterface $urlGenerator, CartClientInterface $cartClient, $errorRoute)
+    {
+        return new StepProcess($steps, $urlGenerator, $cartClient, $errorRoute);
     }
 
 }

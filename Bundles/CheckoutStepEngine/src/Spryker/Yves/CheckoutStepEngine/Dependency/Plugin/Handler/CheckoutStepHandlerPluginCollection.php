@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\CheckoutStepEngine\Dependency\Plugin;
+namespace Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Handler;
 
 class CheckoutStepHandlerPluginCollection
 {
 
     /**
-     * @var \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutStepHandlerPluginInterface[]
+     * @var \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginInterface[]
      */
     private $checkoutStepHandler = [];
 
     /**
-     * @param \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutStepHandlerPluginInterface $checkoutStepHandlerPlugin
+     * @param \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginInterface $checkoutStepHandlerPlugin
      * @param string $name
      *
      * @return $this
@@ -31,7 +31,7 @@ class CheckoutStepHandlerPluginCollection
     /**
      * @param string $name
      *
-     * @return \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutStepHandlerPluginInterface
+     * @return \Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginInterface
      */
     public function get($name)
     {

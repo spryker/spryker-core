@@ -9,8 +9,8 @@ namespace Unit\Spryker\Yves\Payolution\Dependency\Injector;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Yves\CheckoutStepEngine\CheckoutDependencyProvider;
-use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutStepHandlerPluginCollection;
-use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginCollection;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginCollection;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginCollection;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Payolution\Dependency\Injector\CheckoutDependencyInjector;
 
@@ -37,7 +37,6 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $checkoutSubFormPluginCollection);
 
         $checkoutStepHandlerPluginCollection = $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER];
-//        $this->assertCount(2, $checkoutStepHandlerPluginCollection);
 
         $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYOLUTION_INVOICE));
         $this->assertTrue($checkoutStepHandlerPluginCollection->has(PaymentTransfer::PAYOLUTION_INSTALLMENT));

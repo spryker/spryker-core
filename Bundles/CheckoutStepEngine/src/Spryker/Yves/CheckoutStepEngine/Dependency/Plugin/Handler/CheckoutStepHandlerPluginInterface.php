@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\CheckoutStepEngine\Dependency\Plugin;
+namespace Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Handler;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\Request;

@@ -3,10 +3,16 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Unit": "tests/"
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/",
+      "YvesUnit": "tests/"
     }
   },
   "require": {
+    "spryker/cart": "^2.0.0",
+    "spryker/kernel": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
   "require-dev": {
@@ -22,7 +28,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "repositories": [

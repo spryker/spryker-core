@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Payolution\Plugin;
 
-use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginInterface;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**

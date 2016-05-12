@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Yves\CheckoutStepEngine;
 
 use Spryker\Yves\CheckoutStepEngine\CheckoutDependencyProvider;
-use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutStepHandlerPluginCollection;
-use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\CheckoutSubFormPluginCollection;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginCollection;
+use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginCollection;
 use Spryker\Yves\Kernel\Container;
 
 /**
