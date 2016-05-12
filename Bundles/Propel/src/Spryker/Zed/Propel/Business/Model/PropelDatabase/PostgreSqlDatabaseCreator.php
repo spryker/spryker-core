@@ -40,10 +40,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
      */
     protected function existsDatabase()
     {
-        putenv(sprintf(
-            'PGPASSWORD=%s',
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
-        ));
+        $this->exportPostgresPassword();
 
         return $this->runProcess($this->getExistsCommand());
     }
@@ -55,10 +52,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
      */
     protected function createDatabase()
     {
-        putenv(sprintf(
-            'PGPASSWORD=%s',
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
-        ));
+        $this->exportPostgresPassword();
 
         $this->runProcess($this->getCreateCommand());
     }
@@ -112,6 +106,16 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
+    }
+
+    /**
+     * @return void
+     */
+    protected function exportPostgresPassword()
+    {
+        putenv(sprintf(
+            'PGPASSWORD=%s', Config::get(PropelConstants::ZED_DB_PASSWORD
+        )));
     }
 
 }
