@@ -50,4 +50,15 @@ interface SearchClientInterface
      */
     public function getSearchConfig();
 
+    /**
+     * @api
+     *
+     * @param string $searchString
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return \Elastica\ResultSet
+     */
+    public function searchKeys($searchString, $limit = null, $offset = null);
+
 }

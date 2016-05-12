@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
+use Generated\Shared\Transfer\PaginationSearchResultTransfer;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -15,11 +16,21 @@ use Elastica\ResultSet;
 class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
 
+    const NAME = 'pagination';
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return self::NAME;
+    }
+
     /**
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return array
+     * @return mixed
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
@@ -28,17 +39,18 @@ class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatte
             ->getSearchConfig()
             ->getPaginationConfigBuilder();
 
-        $currentPage = $paginationConfig->getCurrentPage($requestParameters);
-        $itemsPerPage = $paginationConfig->get()->getItemsPerPage();
+        $itemsPerPage = $paginationConfig->getCurrentItemsPerPage($requestParameters);
+        $maxPage = ceil($searchResult->getTotalHits() / $itemsPerPage);
+        $currentPage = min($paginationConfig->getCurrentPage($requestParameters), $maxPage);
 
-        $result = [
-            'numFound' => $searchResult->getTotalHits(),
-            'currentPage' => $currentPage,
-            'maxPage' => ceil($searchResult->getTotalHits() / $itemsPerPage),
-            'currentItemsPerPage' => $itemsPerPage,
-        ];
+        $paginationSearchResultTransfer = new PaginationSearchResultTransfer();
+        $paginationSearchResultTransfer
+            ->setNumFound($searchResult->getTotalHits())
+            ->setCurrentPage($currentPage)
+            ->setMaxPage($maxPage)
+            ->setCurrentItemsPerPage($itemsPerPage);
 
-        return $result;
+        return $paginationSearchResultTransfer;
     }
 
 }

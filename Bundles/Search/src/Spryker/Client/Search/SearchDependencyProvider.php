@@ -9,8 +9,8 @@ namespace Spryker\Client\Search;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Search\Exception\MissingSearchConfigPluginException;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
+use Spryker\Client\Search\Exception\MissingSearchConfigPluginException;
 
 class SearchDependencyProvider extends AbstractDependencyProvider
 {

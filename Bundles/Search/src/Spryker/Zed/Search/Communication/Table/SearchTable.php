@@ -71,7 +71,7 @@ class SearchTable extends AbstractTable
 
         $results = $this
             ->searchFacade
-            ->searchKeys($searchString, $this->request->query->all());
+            ->searchKeys($searchString, $this->getLimit(), $this->getOffset());
 
         $this->setTotal($results->getTotalHits());
         $this->setFiltered($results->getTotalHits());

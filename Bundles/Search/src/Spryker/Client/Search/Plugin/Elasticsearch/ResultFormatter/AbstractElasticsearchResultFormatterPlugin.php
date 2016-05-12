@@ -18,7 +18,7 @@ abstract class AbstractElasticsearchResultFormatterPlugin extends AbstractPlugin
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return array
+     * @return mixed
      */
     public function formatResult($searchResult, array $requestParameters = [])
     {
@@ -47,7 +47,7 @@ abstract class AbstractElasticsearchResultFormatterPlugin extends AbstractPlugin
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return array
+     * @return mixed
      */
     abstract protected function formatSearchResult(ResultSet $searchResult, array $requestParameters);
 

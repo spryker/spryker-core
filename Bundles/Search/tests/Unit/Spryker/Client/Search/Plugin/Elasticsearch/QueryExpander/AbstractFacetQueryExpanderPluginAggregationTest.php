@@ -7,11 +7,10 @@
 
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
-use Elastica\Query;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 
-abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpanderPluginTest
+abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractQueryExpanderPluginTest
 {
 
     /**
@@ -26,9 +25,9 @@ abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractF
     public function testFacetQueryExpanderShouldCreateAggregationsBasedOnSearchConfig(SearchConfigInterface $searchConfig, array $expectedAggregations, array $params = [])
     {
         $queryExpander = new FacetQueryExpanderPlugin();
-        $query = $queryExpander->expandQuery($this->createQueryMock(), $searchConfig, $params);
+        $query = $queryExpander->expandQuery($this->createBaseQueryPlugin(), $searchConfig, $params);
 
-        $aggregations = $query->getSearchQuery($params)->getParam('aggs');
+        $aggregations = $query->getSearchQuery()->getParam('aggs');
 
         $this->assertEquals($expectedAggregations, $aggregations);
     }

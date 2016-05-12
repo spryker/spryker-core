@@ -16,26 +16,23 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderP
 class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
 
+    const NAME = 'facets';
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return self::NAME;
+    }
+
     /**
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return array
+     * @return mixed
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
-    {
-        return [
-            'facets' => $this->extractFacetDataFromResult($searchResult, $requestParameters),
-        ];
-    }
-
-    /**
-     * @param \Elastica\ResultSet $resultSet
-     * @param array $requestParameters
-     *
-     * @return array
-     */
-    protected function extractFacetDataFromResult(ResultSet $resultSet, array $requestParameters)
     {
         $facetData = [];
 
@@ -44,7 +41,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
             ->getSearchConfig()
             ->getFacetConfigBuilder();
 
-        $aggregations = $resultSet->getAggregations();
+        $aggregations = $searchResult->getAggregations();
 
         foreach ($facetConfig->getAll() as $facetName => $facetConfigTransfer) {
             $fieldName = $facetConfigTransfer->getFieldName();
@@ -57,7 +54,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
                 ->createAggregationExtractorFactory()
                 ->create($facetConfigTransfer);
 
-            $aggregation = $this->getAggregationRawData($aggregations, $fieldName, $facetConfigTransfer->getName());
+            $aggregation = $this->getAggregationRawData($aggregations, $facetConfigTransfer);
 
             $facetData[$facetName] = $extractor->extractDataFromAggregations($aggregation, $requestParameters);
         }
@@ -67,14 +64,16 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
 
     /**
      * @param array $aggregations
-     * @param string $fieldName
-     * @param string $facetName
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
      * @return array
      */
-    protected function getAggregationRawData(array $aggregations, $fieldName, $facetName)
+    protected function getAggregationRawData(array $aggregations, $facetConfigTransfer)
     {
-        if (isset($aggregations[FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $facetName])) {
+        $facetName = $facetConfigTransfer->getName();
+        $fieldName = $facetConfigTransfer->getFieldName();
+
+        if ($facetConfigTransfer->getIsMultiValued() === true) {
             $aggregation = $aggregations[FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $facetName][FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME][$fieldName];
         } else {
             $aggregation = $aggregations[$fieldName];

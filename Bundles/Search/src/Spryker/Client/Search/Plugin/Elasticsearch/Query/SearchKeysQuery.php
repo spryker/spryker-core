@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Query;
+namespace Spryker\Client\Search\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
@@ -17,9 +17,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 class SearchKeysQuery implements QueryInterface
 {
 
-    const PARAM_LIMIT = 'length';
-    const PARAM_OFFSET = 'start';
-
     const FULL_TEXT_BOOSTED_BOOSTING = 3;
 
     /**
@@ -28,19 +25,31 @@ class SearchKeysQuery implements QueryInterface
     protected $searchString;
 
     /**
-     * @param string $searchString
+     * @var int
      */
-    public function __construct($searchString)
+    protected $limit;
+
+    /**
+     * @var int
+     */
+    protected $offset;
+
+    /**
+     * @param string $searchString
+     * @param string $limit
+     * @param string $offset
+     */
+    public function __construct($searchString, $limit = null, $offset = null)
     {
         $this->searchString = $searchString;
+        $this->limit = $limit;
+        $this->offset = $offset;
     }
 
     /**
-     * @param array $requestParameters
-     *
      * @return \Elastica\Query\MatchAll
      */
-    public function getSearchQuery(array $requestParameters = [])
+    public function getSearchQuery()
     {
         $baseQuery = new Query();
 
@@ -52,8 +61,8 @@ class SearchKeysQuery implements QueryInterface
 
         $baseQuery->setQuery($query);
 
-        $this->setLimit($baseQuery, $requestParameters);
-        $this->setOffset($baseQuery, $requestParameters);
+        $this->setLimit($baseQuery);
+        $this->setOffset($baseQuery);
 
         $baseQuery->setExplain(true);
 
@@ -85,27 +94,25 @@ class SearchKeysQuery implements QueryInterface
 
     /**
      * @param \Elastica\Query $baseQuery
-     * @param array $requestParameters
      *
      * @return void
      */
-    protected function setLimit($baseQuery, array $requestParameters)
+    protected function setLimit($baseQuery)
     {
-        if ($requestParameters[self::PARAM_LIMIT]) {
-            $baseQuery->setSize($requestParameters[self::PARAM_LIMIT]);
+        if ($this->limit !== null) {
+            $baseQuery->setSize($this->limit);
         }
     }
 
     /**
      * @param \Elastica\Query $baseQuery
-     * @param array $requestParameters
      *
      * @return void
      */
-    protected function setOffset($baseQuery, array $requestParameters)
+    protected function setOffset($baseQuery)
     {
-        if (isset($requestParameters[self::PARAM_OFFSET])) {
-            $baseQuery->setFrom($requestParameters[self::PARAM_OFFSET]);
+        if ($this->offset !== null) {
+            $baseQuery->setFrom($this->offset);
         }
     }
 

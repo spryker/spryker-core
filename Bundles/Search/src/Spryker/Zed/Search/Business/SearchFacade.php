@@ -86,20 +86,17 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * @api
      *
      * @param string $searchString
-     * @param array $requestParameters
+     * @param int|null $limit
+     * @param int|null $offset
      *
      * @return \Elastica\ResultSet
      */
-    public function searchKeys($searchString, array $requestParameters = [])
+    public function searchKeys($searchString, $limit = null, $offset = null)
     {
-        $query = $this
-            ->getFactory()
-            ->createSearchKeysQuery($searchString);
-
         return $this
             ->getFactory()
             ->getSearchClient()
-            ->search($query, [], $requestParameters);
+            ->searchKeys($searchString, $limit, $offset);
     }
 
     /**

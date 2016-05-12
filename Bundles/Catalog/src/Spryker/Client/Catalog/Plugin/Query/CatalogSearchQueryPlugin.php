@@ -45,11 +45,9 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface
     }
 
     /**
-     * @param array $requestParameters
-     *
      * @return \Elastica\Query
      */
-    public function getSearchQuery(array $requestParameters = [])
+    public function getSearchQuery()
     {
         return $this->query;
     }

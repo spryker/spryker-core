@@ -18,7 +18,7 @@ interface AggregationExtractorInterface
      * @param array $aggregations
      * @param array $requestParameters
      *
-     * @return array
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function extractDataFromAggregations(array $aggregations, array $requestParameters);
 

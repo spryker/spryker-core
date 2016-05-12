@@ -44,9 +44,41 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
      */
     public function getCurrentPage(array $requestParameters)
     {
-        $paramName = $this->paginationConfigTransfer->getParameterName();
+        $paramName = $this->paginationConfigTransfer
+            ->requireParameterName()
+            ->getParameterName();
 
         return isset($requestParameters[$paramName]) ? max((int)$requestParameters[$paramName], 1) : 1;
+    }
+
+    /**
+     * @param array $requestParameters
+     *
+     * @return int
+     */
+    public function getCurrentItemsPerPage(array $requestParameters)
+    {
+        $paramName = $this->paginationConfigTransfer->getItemsPerPageParameterName();
+
+        if ($this->isValidItemsPerPage($paramName, $requestParameters)) {
+            return (int)$requestParameters[$paramName];
+        }
+
+        return $this->paginationConfigTransfer->getDefaultItemsPerPage();
+    }
+
+    /**
+     * @param string $paramName
+     * @param array $requestParameters
+     *
+     * @return bool
+     */
+    protected function isValidItemsPerPage($paramName, array $requestParameters)
+    {
+        return (
+            !empty($requestParameters[$paramName]) &&
+            in_array((int)$requestParameters[$paramName], (array)$this->paginationConfigTransfer->getValidItemsPerPageOptions())
+        );
     }
 
 }

@@ -17,6 +17,16 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 class CatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
 
+    const NAME = 'products';
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return self::NAME;
+    }
+
     /**
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
@@ -33,9 +43,7 @@ class CatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultForm
             $products = $catalogModel->getProductDataByIds($productIds);
         }
 
-        return [
-            'products' => $products,
-        ];
+        return $products;
     }
 
     /**

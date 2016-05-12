@@ -9,10 +9,10 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
-use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()

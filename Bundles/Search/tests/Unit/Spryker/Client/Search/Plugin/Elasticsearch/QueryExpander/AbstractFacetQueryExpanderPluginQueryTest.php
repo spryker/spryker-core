@@ -7,28 +7,28 @@
 
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
-use Elastica\Query;
+use Elastica\Query\BoolQuery;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 
-abstract class AbstractFacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPluginTest
+abstract class AbstractFacetQueryExpanderPluginQueryTest extends AbstractQueryExpanderPluginTest
 {
 
     /**
      * @dataProvider facetQueryExpanderDataProvider
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
-     * @param array $expectedQuery
+     * @param \Elastica\Query\BoolQuery $expectedQuery
      * @param array $params
      *
      * @return void
      */
-    public function testFacetQueryExpanderShouldCreateSearchQueryBasedOnSearchConfig(SearchConfigInterface $searchConfig, $expectedQuery, array $params = [])
+    public function testFacetQueryExpanderShouldCreateSearchQueryBasedOnSearchConfig(SearchConfigInterface $searchConfig, BoolQuery $expectedQuery, array $params = [])
     {
         $queryExpander = new FacetQueryExpanderPlugin();
-        $query = $queryExpander->expandQuery($this->createQueryMock(), $searchConfig, $params);
+        $query = $queryExpander->expandQuery($this->createBaseQueryPlugin(), $searchConfig, $params);
 
-        $query = $query->getSearchQuery($params)->getQuery();
+        $query = $query->getSearchQuery()->getQuery();
 
         $this->assertEquals($expectedQuery, $query);
     }

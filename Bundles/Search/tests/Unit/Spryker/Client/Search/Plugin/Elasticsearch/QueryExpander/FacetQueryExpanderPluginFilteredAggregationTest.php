@@ -85,17 +85,14 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'bar'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'qwer'))
-                            ))
+                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'qwer'))))
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::STRING_FACET)
                             ->setQuery((new BoolQuery())
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'baz'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'yxcv'))
-                            ))
-                    )
+                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'yxcv')))))
                     ->addAggregation($expectedStringFacetAggregation)),
             $expectedStringFacetAggregation,
             // add global aggregation for "bar" filtered string facet
@@ -108,17 +105,14 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))
-                            ))
+                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))))
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::STRING_FACET)
                             ->setQuery((new BoolQuery())
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'baz'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'yxcv'))
-                            ))
-                    )
+                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'yxcv')))))
                     ->addAggregation($expectedStringFacetAggregation)),
             $expectedStringFacetAggregation,
             // add global aggregation for "baz" filtered string facet
@@ -131,17 +125,14 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))
-                            ))
+                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))))
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::STRING_FACET)
                             ->setQuery((new BoolQuery())
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'bar'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'qwer'))
-                            ))
-                    )
+                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'qwer')))))
                     ->addAggregation($expectedStringFacetAggregation)),
         ];
 
@@ -198,8 +189,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456))
-                            ))
+                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456))))
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::INTEGER_FACET)
                             ->setQuery((new BoolQuery())
@@ -210,24 +200,21 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                     ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
                                         'gte' => 789,
                                         'lte' => 789,
-                                    ]))
-                            ))
-                    )
-                    ->addAggregation($expectedIntegerFacetAggregation)),
-            $expectedIntegerFacetAggregation,
+                                    ])))))
+                            ->addAggregation($expectedIntegerFacetAggregation)),
+                            $expectedIntegerFacetAggregation,
             // add global aggregation for "bar" filtered integer facet
-            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'bar'))
-                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
-                    ->setFilter((new BoolQuery())
-                        ->addFilter((new Nested())
+                            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'bar'))
+                            ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
+                            ->setFilter((new BoolQuery())
+                            ->addFilter((new Nested())
                             ->setPath(PageIndexMap::INTEGER_FACET)
                             ->setQuery((new BoolQuery())
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 123))
-                            ))
-                        ->addFilter((new Nested())
+                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 123))))
+                            ->addFilter((new Nested())
                             ->setPath(PageIndexMap::INTEGER_FACET)
                             ->setQuery((new BoolQuery())
                                 ->addFilter((new Term())
@@ -237,33 +224,28 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                     ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
                                         'gte' => 789,
                                         'lte' => 789,
-                                    ]))
-                            ))
-                    )
-                    ->addAggregation($expectedIntegerFacetAggregation)),
-            $expectedIntegerFacetAggregation,
+                                    ])))))
+                            ->addAggregation($expectedIntegerFacetAggregation)),
+                            $expectedIntegerFacetAggregation,
             // add global aggregation for "baz" filtered integer facet
-            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'baz'))
-                ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
-                    ->setFilter((new BoolQuery())
-                        ->addFilter((new Nested())
+                            (new GlobalAggregation(FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'baz'))
+                            ->addAggregation((new Filter(FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME))
+                            ->setFilter((new BoolQuery())
+                            ->addFilter((new Nested())
                             ->setPath(PageIndexMap::INTEGER_FACET)
                             ->setQuery((new BoolQuery())
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 123))
-                            ))
-                        ->addFilter((new Nested())
+                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 123))))
+                            ->addFilter((new Nested())
                             ->setPath(PageIndexMap::INTEGER_FACET)
                             ->setQuery((new BoolQuery())
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456))
-                            ))
-                    )
-                    ->addAggregation($expectedIntegerFacetAggregation)),
+                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456)))))
+                            ->addAggregation($expectedIntegerFacetAggregation)),
         ];
 
         $parameters = [
@@ -321,11 +303,9 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456))
-                            ))
+                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456))))
                         ->addFilter((new Term())
-                            ->setTerm(PageIndexMap::CATEGORY_ALL_PARENTS, 'c1'))
-                    )
+                            ->setTerm(PageIndexMap::CATEGORY_ALL_PARENTS, 'c1')))
                     ->addAggregation($expectedStringFacetAggregation)),
             // add aggregation for integer-facet
             $expectedIntegerFacetAggregation,
@@ -339,11 +319,9 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))
-                            ))
+                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))))
                         ->addFilter((new Term())
-                            ->setTerm(PageIndexMap::CATEGORY_ALL_PARENTS, 'c1'))
-                    )
+                            ->setTerm(PageIndexMap::CATEGORY_ALL_PARENTS, 'c1')))
                     ->addAggregation($expectedIntegerFacetAggregation)),
             // add aggregation for category
             $expectedCategoryFacetAggregation,
@@ -357,17 +335,14 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))
-                            ))
+                                    ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))))
                         ->addFilter((new Nested())
                             ->setPath(PageIndexMap::INTEGER_FACET)
                             ->setQuery((new BoolQuery())
                                 ->addFilter((new Term())
                                     ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
                                 ->addFilter((new Term())
-                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456))
-                            ))
-                    )
+                                    ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 456)))))
                     ->addAggregation($expectedCategoryFacetAggregation)),
         ];
 

@@ -15,10 +15,9 @@ interface CatalogClientInterface
      *
      * @param string $searchString
      * @param array $requestParameters
-     * @param int $fullTextBoostedBoosting
      *
      * @return array
      */
-    public function catalogSearch($searchString, array $requestParameters, $fullTextBoostedBoosting);
+    public function catalogSearch($searchString, array $requestParameters);
 
 }

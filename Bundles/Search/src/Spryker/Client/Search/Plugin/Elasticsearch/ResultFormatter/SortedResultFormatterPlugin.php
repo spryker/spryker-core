@@ -8,12 +8,23 @@
 namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
+use Generated\Shared\Transfer\SortSearchResultTransfer;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+
+    const NAME = 'sort';
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return self::NAME;
+    }
 
     /**
      * @param \Elastica\ResultSet $searchResult
@@ -28,13 +39,13 @@ class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPl
             ->getSearchConfig()
             ->getSortConfigBuilder();
 
-        $result = [
-            'sortNames' => array_keys($sortConfig->getAll()),
-            'currentSortParam' => $sortConfig->getActiveParamName($requestParameters),
-            'currentSortOrder' => $sortConfig->getActiveSortDirection($requestParameters),
-        ];
+        $sortSearchResultTransfer = new SortSearchResultTransfer();
+        $sortSearchResultTransfer
+            ->setSortNames(array_keys($sortConfig->getAll()))
+            ->setCurrentSortParam($sortConfig->getActiveParamName($requestParameters))
+            ->setCurrentSortOrder($sortConfig->getActiveSortDirection($requestParameters));
 
-        return $result;
+        return $sortSearchResultTransfer;
     }
 
 }

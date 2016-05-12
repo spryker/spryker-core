@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
-use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Nested;
 use Elastica\Query\Range;
@@ -121,8 +120,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     ->addFilter((new Term)
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
                     ->addFilter((new Terms)
-                        ->setTerms(PageIndexMap::STRING_FACET_FACET_VALUE, ['asdf', 'qwer']))))
-        ;
+                        ->setTerms(PageIndexMap::STRING_FACET_FACET_VALUE, ['asdf', 'qwer']))));
         $parameters = [
             'foo' => [
                 'asdf',
@@ -220,13 +218,15 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     ->setName('foo')
                     ->setParameterName('foo')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(FacetConfigBuilder::TYPE_PRICE_RANGE))
+                ->setType(FacetConfigBuilder::TYPE_PRICE_RANGE)
+            )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(FacetConfigBuilder::TYPE_PRICE_RANGE));
+                ->setType(FacetConfigBuilder::TYPE_PRICE_RANGE)
+            );
 
         $expectedQuery = (new BoolQuery())
             ->addFilter((new Nested())
@@ -239,7 +239,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                             'lte' => 12300,
                             'gte' => 12300,
                         ]))))
-            ->addFilter((new Nested())
+                ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
                     ->addFilter((new Term)
@@ -250,12 +250,12 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                             'gte' => 45600,
                         ]))));
 
-        $parameters = [
-            'foo' => 123, // simple value
-            'bar' => '456-789' // range value
-        ];
+                $parameters = [
+                'foo' => 123, // simple value
+                'bar' => '456-789' // range value
+                ];
 
-        return [$searchConfig, $expectedQuery, $parameters];
+                return [$searchConfig, $expectedQuery, $parameters];
     }
 
     /**
@@ -291,13 +291,13 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                             'gte' => 789,
                         ]))));
 
-        $parameters = [
-            'foo' => 123,
-            'bar' => 456,
-            'baz' => 789,
-        ];
+                $parameters = [
+                'foo' => 123,
+                'bar' => 456,
+                'baz' => 789,
+                ];
 
-        return [$searchConfig, $expectedQuery, $parameters];
+                return [$searchConfig, $expectedQuery, $parameters];
     }
 
     /**

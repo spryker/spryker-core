@@ -9,10 +9,10 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
-use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -45,7 +45,7 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
     protected function addPaginationToQuery(Query $query, PaginationConfigBuilderInterface $paginationConfig, array $requestParameters)
     {
         $currentPage = $paginationConfig->getCurrentPage($requestParameters);
-        $itemsPerPage = $paginationConfig->get()->getItemsPerPage();
+        $itemsPerPage = $paginationConfig->getCurrentItemsPerPage($requestParameters);
 
         $query->setFrom(($currentPage - 1) * $itemsPerPage);
         $query->setSize($itemsPerPage);

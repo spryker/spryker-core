@@ -26,7 +26,9 @@
 
     <transfer name="PaginationConfig">
         <property name="parameterName" type="string" />
-        <property name="itemsPerPage" type="integer" />
+        <property name="itemsPerPageParameterName" type="string" />
+        <property name="defaultItemsPerPage" type="integer" />
+        <property name="validItemsPerPageOptions" type="array" />
     </transfer>
 
     <transfer name="PageMap">
@@ -72,6 +74,36 @@
     <transfer name="CategoryMap">
         <property name="directParents" type="array" />
         <property name="allParents" type="array" />
+    </transfer>
+
+    <transfer name="FacetSearchResult">
+        <property name="name" type="string" />
+        <property name="values" type="FacetSearchResultValue[]" singular="value" />
+        <property name="activeValue" type="string" />
+    </transfer>
+
+    <transfer name="FacetSearchResultValue">
+        <property name="value" type="string" />
+        <property name="docCount" type="int" />
+    </transfer>
+
+    <transfer name="RangeSearchResult">
+        <property name="name" type="string" />
+        <property name="min" type="float" />
+        <property name="max" type="float" />
+    </transfer>
+
+    <transfer name="PaginationSearchResult">
+        <property name="numFound" type="integer" />
+        <property name="currentPage" type="integer" />
+        <property name="maxPage" type="integer" />
+        <property name="currentItemsPerPage" type="integer" />
+    </transfer>
+
+    <transfer name="SortSearchResult">
+        <property name="sortNames" type="array" />
+        <property name="currentSortParam" type="string" />
+        <property name="currentSortOrder" type="string" />
     </transfer>
 
 </transfers>

@@ -31,4 +31,11 @@ interface PaginationConfigBuilderInterface
      */
     public function getCurrentPage(array $requestParameters);
 
+    /**
+     * @param array $requestParameters
+     *
+     * @return int
+     */
+    public function getCurrentItemsPerPage(array $requestParameters);
+
 }

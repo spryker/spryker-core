@@ -20,7 +20,6 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexMapInstaller;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Query\SearchKeysQuery;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManager;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
 use Spryker\Zed\Search\SearchDependencyProvider;
@@ -169,16 +168,6 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function getSearchClient()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::CLIENT_SEARCH);
-    }
-
-    /**
-     * @param string $searchString
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
-     */
-    public function createSearchKeysQuery($searchString)
-    {
-        return new SearchKeysQuery($searchString);
     }
 
     /**

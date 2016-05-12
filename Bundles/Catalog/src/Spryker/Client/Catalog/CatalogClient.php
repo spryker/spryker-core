@@ -22,15 +22,14 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      *
      * @param string $searchString
      * @param array $requestParameters
-     * @param int $fullTextBoostedBoosting
      *
      * @return array
      */
-    public function catalogSearch($searchString, array $requestParameters = [], $fullTextBoostedBoosting = self::DEFAULT_FULL_TEXT_BOOSTED_BOOSTING)
+    public function catalogSearch($searchString, array $requestParameters = [])
     {
         $searchQuery = $this
             ->getFactory()
-            ->createCatalogSearchQueryPlugin($searchString, $fullTextBoostedBoosting);
+            ->createCatalogSearchQueryPlugin($searchString, self::DEFAULT_FULL_TEXT_BOOSTED_BOOSTING);
 
         $searchQuery = $this
             ->getFactory()

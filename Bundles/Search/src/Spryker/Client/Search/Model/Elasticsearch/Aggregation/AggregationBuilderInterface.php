@@ -20,7 +20,7 @@ interface AggregationBuilderInterface
     /**
      * @param string $name
      *
-     * @return \Elastica\Aggregation\Filter::__construct
+     * @return \Elastica\Aggregation\Filter
      */
     public function createFilterAggregation($name);
 

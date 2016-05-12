@@ -8,6 +8,8 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use Generated\Shared\Transfer\FacetSearchResultTransfer;
+use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 
 class CategoryExtractor implements AggregationExtractorInterface
 {
@@ -29,30 +31,41 @@ class CategoryExtractor implements AggregationExtractorInterface
      * @param array $aggregations
      * @param array $requestParameters
      *
-     * @return array
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
 
-        $result = [
-            'name' => $parameterName,
-            'values' => $this->extractFacetData($aggregations),
-        ];
+        $facetResultValueTransfers = $this->extractFacetData($aggregations);
 
-        return $result;
+        $facetResultTransfer = new FacetSearchResultTransfer();
+        $facetResultTransfer
+            ->setName($parameterName)
+            ->setValues($facetResultValueTransfers);
+
+        if (isset($requestParameters[$parameterName])) {
+            $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);
+        }
+
+        return $facetResultTransfer;
     }
 
     /**
      * @param array $aggregation
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function extractFacetData(array $aggregation)
     {
-        $facetValues = [];
+        $facetValues = new \ArrayObject();
         foreach ($aggregation['buckets'] as $bucket) {
-            $facetValues[$bucket['key']] = $bucket['doc_count'];
+            $facetResultValueTransfer = new FacetSearchResultValueTransfer();
+            $facetResultValueTransfer
+                ->setValue($bucket['key'])
+                ->setDocCount($bucket['doc_count']);
+
+            $facetValues->append($facetResultValueTransfer);
         }
 
         return $facetValues;

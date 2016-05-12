@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use Generated\Shared\Transfer\RangeSearchResultTransfer;
 
 class RangeExtractor implements AggregationExtractorInterface
 {
@@ -29,19 +30,22 @@ class RangeExtractor implements AggregationExtractorInterface
      * @param array $aggregations
      * @param array $requestParameters
      *
-     * @return array
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
-        $result = [
-            'name' => $parameterName,
-            'rangeValues' => $this->extractRangeData($aggregations, $parameterName, $fieldName),
-        ];
+        list($min, $max) = $this->extractRangeData($aggregations, $parameterName, $fieldName);
 
-        return $result;
+        $rangeResultTransfer = new RangeSearchResultTransfer();
+        $rangeResultTransfer
+            ->setName($parameterName)
+            ->setMin($min)
+            ->setMax($max);
+
+        return $rangeResultTransfer;
     }
 
     /**
@@ -53,22 +57,20 @@ class RangeExtractor implements AggregationExtractorInterface
      */
     protected function extractRangeData(array $aggregation, $parameterName, $fieldName)
     {
-        $ranges = [];
-
         foreach ($aggregation[$fieldName . '-name']['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {
                 continue;
             }
 
             if (isset($nameBucket[$fieldName . '-stats'])) {
-                $ranges['min'] = $nameBucket[$fieldName . '-stats']['min'];
-                $ranges['max'] = $nameBucket[$fieldName . '-stats']['max'];
+                return [
+                    $nameBucket[$fieldName . '-stats']['min'],
+                    $nameBucket[$fieldName . '-stats']['max']
+                ];
             }
-
-            break;
         }
 
-        return $ranges;
+        return [null, null];
     }
 
 }

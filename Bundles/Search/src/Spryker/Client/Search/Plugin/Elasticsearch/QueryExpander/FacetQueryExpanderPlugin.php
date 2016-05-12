@@ -12,10 +12,10 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
-use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()

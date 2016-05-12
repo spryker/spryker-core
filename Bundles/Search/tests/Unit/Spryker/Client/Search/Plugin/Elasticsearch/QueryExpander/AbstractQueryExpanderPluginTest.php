@@ -14,32 +14,32 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
+use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
-use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
+use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
+use Unit\Spryker\Client\Search\Plugin\Elasticsearch\Fixtures\BaseQueryPlugin;
 
-abstract class AbstractFacetQueryExpanderPluginTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractQueryExpanderPluginTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    protected function createQueryMock()
+    protected function createBaseQueryPlugin()
     {
-        $baseQuery = new Query();
-        $baseQuery->setQuery(new BoolQuery());
+        return new BaseQueryPlugin();
+    }
 
-        $queryMock = $this->getMockBuilder(QueryInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+    /**
+     * @return \Elastica\Query
+     */
+    protected function createBaseQuery()
+    {
+        $baseQuery = (new Query())
+            ->setQuery(new BoolQuery());
 
-        $queryMock
-            ->method('getSearchQuery')
-            ->willReturn($baseQuery);
-
-        return $queryMock;
+        return $baseQuery;
     }
 
     /**
@@ -49,11 +49,20 @@ abstract class AbstractFacetQueryExpanderPluginTest extends \PHPUnit_Framework_T
     {
         $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
             ->disableOriginalConstructor()
+            ->setMethods(['getFacetConfigBuilder', 'getSortConfigBuilder', 'getPaginationConfigBuilder'])
             ->getMock();
 
         $searchConfigMock
             ->method('getFacetConfigBuilder')
             ->willReturn(new FacetConfigBuilder());
+
+        $searchConfigMock
+            ->method('getSortConfigBuilder')
+            ->willReturn(new SortConfigBuilder());
+
+        $searchConfigMock
+            ->method('getPaginationConfigBuilder')
+            ->willReturn(new PaginationConfigBuilder());
 
         return $searchConfigMock;
     }

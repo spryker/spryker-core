@@ -32,12 +32,12 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
      * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return mixed
+     * @return array
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
-        $query = $searchQuery->getSearchQuery($requestParameters);
-        $rawSearchResult = $this->searchableInterface->search($query);
+        $query = $searchQuery->getSearchQuery();
+        $rawSearchResult = $this->executeQuery($query);
 
         if (!$resultFormatters) {
             return $rawSearchResult;
@@ -51,20 +51,29 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
      * @param \Elastica\ResultSet $rawSearchResult
      * @param array $requestParameters
      *
-     * @return mixed
+     * @return array
      */
     protected function formatSearchResults(array $resultFormatters, ResultSet $rawSearchResult, array $requestParameters)
     {
         $formattedSearchResult = [];
 
         foreach ($resultFormatters as $resultFormatter) {
-            $formattedSearchResult = array_merge(
-                $formattedSearchResult,
-                $resultFormatter->formatResult($rawSearchResult, $requestParameters)
-            );
+            $formattedSearchResult[$resultFormatter->getName()] = $resultFormatter->formatResult($rawSearchResult, $requestParameters);
         }
 
         return $formattedSearchResult;
+    }
+
+    /**
+     * @param \Elastica\Query $query
+     *
+     * @return \Elastica\ResultSet
+     */
+    protected function executeQuery($query)
+    {
+        $rawSearchResult = $this->searchableInterface->search($query);
+
+        return $rawSearchResult;
     }
 
 }

@@ -78,4 +78,22 @@ class SearchClient extends AbstractClient implements SearchClientInterface
         return $this->getFactory()->getSearchConfig();
     }
 
+    /**
+     * @api
+     *
+     * @param string $searchString
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return \Elastica\ResultSet
+     */
+    public function searchKeys($searchString, $limit = null, $offset = null)
+    {
+        $query = $this
+            ->getFactory()
+            ->createSearchKeysQuery($searchString, $limit, $offset);
+
+        return $this->search($query);
+    }
+
 }

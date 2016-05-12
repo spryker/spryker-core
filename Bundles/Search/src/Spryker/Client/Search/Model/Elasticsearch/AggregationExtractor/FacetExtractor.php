@@ -8,6 +8,8 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use Generated\Shared\Transfer\FacetSearchResultTransfer;
+use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 
 class FacetExtractor implements AggregationExtractorInterface
 {
@@ -29,23 +31,25 @@ class FacetExtractor implements AggregationExtractorInterface
      * @param array $aggregations
      * @param array $requestParameters
      *
-     * @return array
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
-        $result = [
-            'name' => $parameterName,
-            'values' => $this->extractFacetData($aggregations, $parameterName, $fieldName),
-        ];
+        $facetResultValueTransfers = $this->extractFacetData($aggregations, $parameterName, $fieldName);
+
+        $facetResultTransfer = new FacetSearchResultTransfer();
+        $facetResultTransfer
+            ->setName($parameterName)
+            ->setValues($facetResultValueTransfers);
 
         if (isset($requestParameters[$parameterName])) {
-            $result['activeValue'] = $requestParameters[$parameterName];
+            $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);
         }
 
-        return $result;
+        return $facetResultTransfer;
     }
 
     /**
@@ -53,24 +57,30 @@ class FacetExtractor implements AggregationExtractorInterface
      * @param string $parameterName
      * @param string $fieldName
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function extractFacetData(array $aggregation, $parameterName, $fieldName)
     {
-        $facetValues = [];
+        $facetResultValues = new \ArrayObject();
+
         foreach ($aggregation[$fieldName . '-name']['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {
                 continue;
             }
 
             foreach ($nameBucket[$fieldName . '-value']['buckets'] as $valueBucket) {
-                $facetValues[$valueBucket['key']] = $valueBucket['doc_count'];
+                $facetResultValueTransfer = new FacetSearchResultValueTransfer();
+                $facetResultValueTransfer
+                    ->setValue($valueBucket['key'])
+                    ->setDocCount($valueBucket['doc_count']);
+
+                $facetResultValues->append($facetResultValueTransfer);
             }
 
             break;
         }
 
-        return $facetValues;
+        return $facetResultValues;
     }
 
 }

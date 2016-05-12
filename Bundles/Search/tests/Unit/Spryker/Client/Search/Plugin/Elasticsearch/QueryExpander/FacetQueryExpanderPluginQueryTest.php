@@ -7,11 +7,7 @@
 
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
-use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
-use Spryker\Client\Search\Plugin\Config\SearchConfig;
 
 /**
  * @group Client
@@ -37,41 +33,6 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
             'multiple category facets' => $this->createMultiCategoryFacetData(),
             'mixed facets' => $this->createMixedFacetData(),
         ];
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
-     */
-    protected function createQueryMock()
-    {
-        $baseQuery = new Query();
-        $baseQuery->setQuery(new BoolQuery());
-
-        $queryMock = $this->getMockBuilder(QueryInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $queryMock
-            ->method('getSearchQuery')
-            ->willReturn($baseQuery);
-
-        return $queryMock;
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
-     */
-    protected function createSearchConfigMock()
-    {
-        $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $searchConfigMock
-            ->method('getFacetConfigBuilder')
-            ->willReturn(new FacetConfigBuilder());
-
-        return $searchConfigMock;
     }
 
     /**

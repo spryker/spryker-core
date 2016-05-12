@@ -11,10 +11,15 @@ interface ResultFormatterPluginInterface
 {
 
     /**
+     * @return string
+     */
+    public function getName();
+
+    /**
      * @param mixed $searchResult
      * @param array $requestParameters
      *
-     * @return array
+     * @return mixed
      */
     public function formatResult($searchResult, array $requestParameters = []);
 
