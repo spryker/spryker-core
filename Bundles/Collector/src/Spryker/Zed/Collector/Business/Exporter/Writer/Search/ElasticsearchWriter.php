@@ -118,7 +118,7 @@ class ElasticsearchWriter implements WriterInterface
     }
 
     /**
-     * Checks if the given array has any integer based (non-textual) keys *
+     * Checks if the given array has any integer based (non-textual) keys
      * @param array $array
      * @return bool
      */

@@ -18,6 +18,21 @@ class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * @var \Elastica\Client
+     */
+    protected $client;
+
+    /**
+     * @var \Elastica\Index
+     */
+    protected $index;
+
+    /**
+     * @var \Elastica\Type
+     */
+    protected $type;
+
+    /**
      * @return void
      */
     public function testWriteCreateDocumentsWithValidDataSet()
@@ -83,7 +98,7 @@ class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject | Client
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Elastica\Client
      */
     private function getMockClient()
     {
@@ -97,7 +112,7 @@ class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject | Index
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Elastica\Index
      */
     private function getMockIndex()
     {
@@ -112,7 +127,7 @@ class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject | Type
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Elastica\Type
      */
     private function getMockType()
     {
@@ -126,7 +141,7 @@ class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject | Response
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Elastica\Response
      */
     private function getResponse()
     {
@@ -137,20 +152,5 @@ class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
         $mockResponse->method('isOk')->willReturn(true);
         return $mockResponse;
     }
-
-    /**
-     * @var \Elastica\Client
-     */
-    protected $client;
-
-    /**
-     * @var \Elastica\Index
-     */
-    protected $index;
-
-    /**
-     * @var \Elastica\Type
-     */
-    protected $type;
 
 }
