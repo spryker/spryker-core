@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons;
+namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action;
 
-class BackActionButtonFunction extends AbstractActionButtonFunction
+class BackActionButtonFunction extends AbstractActionFunction
 {
 
     /**

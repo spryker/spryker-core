@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\CreateActionButtonFunction as NewCreateActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\CreateActionButtonFunction as NewCreateActionButtonFunction;
 
 /**
- * @deprecated use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\CreateActionButtonFunction
+ * @deprecated use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\CreateActionButtonFunction
  */
 class CreateActionButtonFunction extends NewCreateActionButtonFunction
 {

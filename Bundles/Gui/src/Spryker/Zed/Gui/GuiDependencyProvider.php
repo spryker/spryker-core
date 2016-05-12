@@ -7,11 +7,16 @@
 
 namespace Spryker\Zed\Gui;
 
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\BackActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\CreateActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\EditActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\ViewActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\BackActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\CreateActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\EditActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\ViewActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\BackTableButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\CreateTableButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\RemoveTableButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPriceFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -48,11 +53,18 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
         return [
             new FormatPriceFunction(),
             new AssetsPathFunction(),
+            new UrlFunction(),
+            // navigation buttons
             new BackActionButtonFunction(),
             new CreateActionButtonFunction(),
             new ViewActionButtonFunction(),
             new EditActionButtonFunction(),
-            new UrlFunction(),
+            // table row buttons
+            new EditTableButtonFunction(),
+            new BackTableButtonFunction(),
+            new CreateTableButtonFunction(),
+            new ViewTableButtonFunction(),
+            new RemoveTableButtonFunction(),
         ];
     }
 

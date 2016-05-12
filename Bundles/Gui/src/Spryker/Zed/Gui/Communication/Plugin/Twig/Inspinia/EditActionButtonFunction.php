@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\EditActionButtonFunction as NewEditActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\EditActionButtonFunction as NewEditActionButtonFunction;
 
 /**
- * @deprecated use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\EditActionButtonFunction
+ * @deprecated use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\EditActionButtonFunction
  */
 class EditActionButtonFunction extends NewEditActionButtonFunction
 {

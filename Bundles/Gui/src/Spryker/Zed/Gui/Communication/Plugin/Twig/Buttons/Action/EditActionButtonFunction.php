@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons;
+namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action;
 
-class ViewActionButtonFunction extends AbstractActionButtonFunction
+class EditActionButtonFunction extends AbstractActionFunction
 {
 
     /**
@@ -23,7 +23,7 @@ class ViewActionButtonFunction extends AbstractActionButtonFunction
      */
     protected function getIcon()
     {
-        return '<i class="fa fa-caret-right"></i> ';
+        return '<i class="fa fa-pencil-square-o"></i> ';
     }
 
     /**
@@ -31,7 +31,7 @@ class ViewActionButtonFunction extends AbstractActionButtonFunction
      */
     protected function getFunctionName()
     {
-        return 'viewActionButton';
+        return 'editActionButton';
     }
 
 }
