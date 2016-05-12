@@ -18,17 +18,17 @@ class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \Elastica\Client
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Elastica\Client
      */
     protected $client;
 
     /**
-     * @var \Elastica\Index
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Elastica\Index
      */
     protected $index;
 
     /**
-     * @var \Elastica\Type
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Elastica\Type
      */
     protected $type;
 
@@ -44,6 +44,7 @@ class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
+     *
      * @return void
      */
     public function testWriteCreateDocumentsWithInValidDataSet()
@@ -70,6 +71,7 @@ class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Returns the valid data-set of array having non-numeric keys
+     *
      * @return array
      */
     protected function getValidTestDataSet()
@@ -82,6 +84,7 @@ class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Returns the invalid data-set of array having numeric keys
+     *
      * @return array
      */
     protected function getInValidTestDataSet()
