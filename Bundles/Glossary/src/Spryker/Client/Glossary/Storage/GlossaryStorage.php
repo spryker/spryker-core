@@ -32,6 +32,11 @@ class GlossaryStorage implements GlossaryStorageInterface
      * @var array
      */
     protected $translations = [];
+    
+    /**
+     * @var array
+     */
+    protected $translationKeyMap = [];
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
@@ -57,7 +62,7 @@ class GlossaryStorage implements GlossaryStorageInterface
             return $keyName;
         }
 
-        if (!isset($this->translations[$keyName])) {
+        if (!isset($this->translationKeyMap[$keyName])) {
             $this->loadTranslation($keyName);
         }
 
