@@ -40,9 +40,8 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-
     /**
-     * @return \Spryker\Zed\Library\Twig\TwigFunctionInterface[]
+     * @return \Twig_SimpleFunction[]
      */
     protected function getTwigFunctions()
     {
@@ -58,7 +57,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Library\Twig\TwigFilterInterface[]
+     * @return \Twig_SimpleFilter[]
      */
     protected function getTwigFilters()
     {
