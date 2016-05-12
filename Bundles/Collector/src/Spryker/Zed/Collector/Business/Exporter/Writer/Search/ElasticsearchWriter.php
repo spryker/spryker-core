@@ -9,6 +9,7 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Elastica\Client;
 use Elastica\Document;
+use Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class ElasticsearchWriter implements WriterInterface
@@ -49,9 +50,14 @@ class ElasticsearchWriter implements WriterInterface
      */
     public function write(array $dataSet, $type = '')
     {
+        if ($this->hasIntegerKeys($dataSet)) {
+            throw new InvalidDataSetException();
+        }
+
         //@todo this is wrong, the touched type does not directly map to the processed type
         $type = $this->index->getType($this->type);
-        $type->addDocuments($this->createDocuments($dataSet));
+        $documents = $this->createDocuments($dataSet);
+        $type->addDocuments($documents);
         $response = $type->getIndex()->refresh();
 
         return $response->isOk();
@@ -64,8 +70,12 @@ class ElasticsearchWriter implements WriterInterface
      */
     public function delete(array $dataSet)
     {
+        if ($this->hasIntegerKeys($dataSet)) {
+            throw new InvalidDataSetException();
+        }
+
         $documents = [];
-        foreach ($dataSet as $key) {
+        foreach ($dataSet as $key => $value) {
             $documents[] = $this->index->getType($this->type)->getDocument($key);
         }
 
@@ -90,6 +100,10 @@ class ElasticsearchWriter implements WriterInterface
      */
     protected function createDocuments(array $dataSet)
     {
+        if ($this->hasIntegerKeys($dataSet)) {
+            throw new InvalidDataSetException();
+        }
+
         $documentPrototype = new Document();
         $documents = [];
 
@@ -101,6 +115,16 @@ class ElasticsearchWriter implements WriterInterface
         }
 
         return $documents;
+    }
+
+    /**
+     * Checks if the given array has any integer based (non-textual) keys *
+     * @param array $array
+     * @return bool
+     */
+    protected function hasIntegerKeys(array $array)
+    {
+        return count(array_filter(array_keys($array), 'is_int')) > 0;
     }
 
 }
