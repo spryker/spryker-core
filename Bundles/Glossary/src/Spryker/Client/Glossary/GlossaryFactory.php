@@ -48,7 +48,7 @@ class GlossaryFactory extends AbstractFactory
     }
 
     /**
-     * @param $localeName
+     * @param string $localeName
      *
      * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */
@@ -62,8 +62,8 @@ class GlossaryFactory extends AbstractFactory
     }
 
     /**
-     * @param $localeName
-     * @param $cacheKey
+     * @param string $localeName
+     * @param string $cacheKey
      *
      * @return \Spryker\Client\Glossary\Storage\CachedGlossaryStorageInterface
      */

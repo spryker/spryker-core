@@ -32,7 +32,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      * @var array
      */
     protected $translations = [];
-    
+
     /**
      * @var array
      */

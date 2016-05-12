@@ -22,6 +22,8 @@ interface GlossaryClientInterface
     public function translate($id, $localeName, array $parameters = []);
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $localeName
      * @param string $requestCacheKey
@@ -32,6 +34,8 @@ interface GlossaryClientInterface
     public function cachedTranslate($id, $localeName, $requestCacheKey, array $parameters = []);
 
     /**
+     * @api
+     *
      * @param string $localeName
      * @param string $requestCacheKey
      * @param int|null $ttl

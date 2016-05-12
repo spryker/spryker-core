@@ -35,6 +35,8 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $localeName
      * @param string $requestCacheKey
@@ -51,6 +53,8 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
     }
 
     /**
+     * @api
+     *
      * @param string $localeName
      * @param string $requestCacheKey
      * @param int|null $ttl
