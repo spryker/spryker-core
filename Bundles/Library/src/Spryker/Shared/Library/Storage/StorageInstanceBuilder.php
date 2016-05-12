@@ -136,7 +136,7 @@ class StorageInstanceBuilder
 
                 if (Config::hasValue(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
                     $config['headers'] = [
-                        'Authorization' => "Basic " . Config::get(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER),
+                        'Authorization' => 'Basic ' . Config::get(LibraryConstants::ELASTICA_PARAMETER__AUTH_HEADER),
                     ];
                 }
                 break;
