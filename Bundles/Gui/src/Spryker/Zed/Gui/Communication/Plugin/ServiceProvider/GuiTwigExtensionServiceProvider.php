@@ -9,8 +9,13 @@ namespace Spryker\Zed\Gui\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Zed\Gui\GuiDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class GuiTwigExtensionServiceProvider implements ServiceProviderInterface
+/**
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ */
+class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
@@ -23,14 +28,10 @@ class GuiTwigExtensionServiceProvider implements ServiceProviderInterface
      */
     protected $twigFilters = [];
 
-    /**
-     * @param \Spryker\Zed\Library\Twig\TwigFunctionInterface[] $twigFunctions
-     * @param \Spryker\Zed\Library\Twig\TwigFilterInterface[] $twigFilters
-     */
-    public function __construct(array $twigFunctions, array $twigFilters)
+    public function __construct()
     {
-        $this->twigFunctions = $twigFunctions;
-        $this->twigFilters = $twigFilters;
+        $this->twigFunctions = $this->getFactory()->getProvidedDependency(GuiDependencyProvider::GUI_TWIG_FUNCTIONS);
+        $this->twigFilters = $this->getFactory()->getProvidedDependency(GuiDependencyProvider::GUI_TWIG_FILTERS);
     }
 
     /**

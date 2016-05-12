@@ -27,13 +27,6 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorSer
 use Spryker\Zed\Auth\Communication\Plugin\Bootstrap\AuthBootstrapProvider;
 use Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
 use Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\BackActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\CreateActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\EditActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\ViewActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPriceFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
@@ -60,8 +53,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @throws \Exception
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array
      */
     protected function getServiceProvider()
     {
@@ -82,40 +74,13 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new HttpFragmentServiceProvider(),
             new HeaderServiceProvider(),
             new NavigationServiceProvider(),
-            new GuiTwigExtensionServiceProvider(
-                $this->getTwigFunctions(),
-                $this->getTwigFilters()
-            ),
+            new GuiTwigExtensionServiceProvider(),
             new DateFormatterServiceProvider(),
             new TranslationServiceProvider(),
             new SubRequestServiceProvider(),
         ];
 
         return $providers;
-    }
-
-    /**
-     * @return \Spryker\Zed\Library\Twig\TwigFunctionInterface[]
-     */
-    protected function getTwigFunctions()
-    {
-        return [
-            new FormatPriceFunction(),
-            new AssetsPathFunction(),
-            new BackActionButtonFunction(),
-            new CreateActionButtonFunction(),
-            new ViewActionButtonFunction(),
-            new EditActionButtonFunction(),
-            new UrlFunction(),
-        ];
-    }
-
-    /**
-     * @return \Spryker\Zed\Library\Twig\TwigFilterInterface[]
-     */
-    protected function getTwigFilters()
-    {
-        return [];
     }
 
     /**
