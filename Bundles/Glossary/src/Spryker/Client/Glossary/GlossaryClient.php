@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {
 
+    const DEFAULT_CACHE_TTL_IN_SECONDS = 3600;
+
     /**
      * @api
      *
@@ -30,6 +32,37 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
             ->getFactory()
             ->createTranslator($localeName)
             ->translate($id, $parameters);
+    }
+
+    /**
+     * @param string $id
+     * @param string $localeName
+     * @param string $requestCacheKey
+     * @param array $parameters
+     *
+     * @return string
+     */
+    public function cachedTranslate($id, $localeName, $requestCacheKey, array $parameters = [])
+    {
+        return $this
+            ->getFactory()
+            ->createCachedTranslator($localeName, $requestCacheKey)
+            ->translate($id, $parameters);
+    }
+
+    /**
+     * @param string $localeName
+     * @param string $requestCacheKey
+     * @param int|null $ttl
+     *
+     * @return void
+     */
+    public function saveCache($localeName, $requestCacheKey, $ttl = null)
+    {
+        $this
+            ->getFactory()
+            ->createCachedTranslator($localeName, $requestCacheKey)
+            ->saveCache($ttl);
     }
 
 }

@@ -222,7 +222,7 @@ class Service implements ServiceInterface
             $transformedKeys[] = $this->getKeyName($key);
         }
 
-        $values = array_combine($transformedKeys, $this->client->mget($transformedKeys));
+        $values = array_combine($keys, $this->client->mget($transformedKeys));
         $this->addMultiReadAccessStats($keys);
 
         return $values;
@@ -287,15 +287,22 @@ class Service implements ServiceInterface
     /**
      * @param string $key
      * @param mixed $value
+     * @param int $ttl
      *
      * @throws \Exception
      *
      * @return mixed
      */
-    public function set($key, $value)
+    public function set($key, $value, $ttl = null)
     {
         $key = $this->getKeyName($key);
-        $result = $this->client->set($key, $value);
+
+        if ($ttl === null) {
+            $result = $this->client->set($key, $value);
+        } else {
+            $result = $this->client->setex($key, $ttl, $value);
+        }
+
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new \Exception(

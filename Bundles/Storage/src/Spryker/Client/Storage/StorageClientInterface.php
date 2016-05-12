@@ -15,10 +15,11 @@ interface StorageClientInterface
      *
      * @param string $key
      * @param mixed $value
+     * @param int $ttl
      *
      * @return mixed
      */
-    public function set($key, $value);
+    public function set($key, $value, $ttl = null);
 
     /**
      * @api
