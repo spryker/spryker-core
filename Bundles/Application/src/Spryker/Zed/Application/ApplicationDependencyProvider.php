@@ -53,7 +53,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return \Silex\ServiceProviderInterface[]
      */
     protected function getServiceProvider()
     {
