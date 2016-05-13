@@ -10,7 +10,7 @@ namespace Spryker\Zed\Search\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapInterface;
+use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 /**
  * @method \Spryker\Zed\Search\Business\SearchBusinessFactory getFactory()
@@ -102,7 +102,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     /**
      * @api
      *
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapInterface $pageMap
+     * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

@@ -5,17 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSearch\Business;
+namespace Spryker\Zed\ProductSearch\Business\Map;
 
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
-interface ProductSearchFacadeInterface
+interface SearchProductAttributeMapperInterface
 {
 
     /**
-     * @api
-     *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param array $attributes
@@ -23,25 +21,5 @@ interface ProductSearchFacadeInterface
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
     public function mapDynamicProductAttributes(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
-     *
-     * @return void
-     */
-    public function activateProductSearch($idProduct, array $localeCollection);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
-     *
-     * @return void
-     */
-    public function deactivateProductSearch($idProduct, array $localeCollection);
 
 }

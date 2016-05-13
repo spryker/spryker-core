@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper;
+namespace Spryker\Zed\Search\Dependency\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 interface PageMapInterface
 {
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $productData
+     * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $locale);
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale);
 
 }

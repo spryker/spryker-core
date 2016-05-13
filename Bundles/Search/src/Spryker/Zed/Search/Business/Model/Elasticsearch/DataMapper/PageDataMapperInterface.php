@@ -8,12 +8,13 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 interface PageDataMapperInterface
 {
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapInterface $pageMap
+     * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

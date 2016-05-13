@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapCollector;
+use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapper;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
@@ -36,6 +37,14 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapperInterface
+     */
+    public function createSearchProductAttributeMapper()
+    {
+        return new SearchProductAttributeMapper($this->createSearchProductAttributeMapCollector());
     }
 
     /**

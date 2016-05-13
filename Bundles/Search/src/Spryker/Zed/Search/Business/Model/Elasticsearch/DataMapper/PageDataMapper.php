@@ -10,6 +10,7 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\CategoryMapTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 use Zend\Filter\Word\UnderscoreToDash;
 
 class PageDataMapper implements PageDataMapperInterface
@@ -40,7 +41,7 @@ class PageDataMapper implements PageDataMapperInterface
     }
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapInterface $pageMap
+     * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

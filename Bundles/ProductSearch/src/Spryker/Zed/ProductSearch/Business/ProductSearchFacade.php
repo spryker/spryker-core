@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductSearch\Business;
 
+use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchBusinessFactory getFactory()
@@ -17,21 +19,24 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * @api
+     * 
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param array $attributes
      *
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
+     * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function getProductSearchAttributeMap()
+    public function mapDynamicProductAttributes(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes)
     {
         return $this
             ->getFactory()
-            ->createSearchProductAttributeMapCollector()
-            ->getProductSearchAttributeMap();
+            ->createSearchProductAttributeMapper()
+            ->mapDynamicProductAttributes($pageMapBuilder, $pageMapTransfer, $attributes);
     }
 
     /**
      * @api
      *
-     * @param array|\Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param int $idProduct
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      *
