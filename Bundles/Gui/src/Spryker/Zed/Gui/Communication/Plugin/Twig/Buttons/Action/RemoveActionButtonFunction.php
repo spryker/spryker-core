@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action;
 
-class CreateActionButtonFunction extends AbstractActionFunction
+class RemoveActionButtonFunction extends AbstractActionFunction
 {
 
     /**
@@ -15,7 +15,7 @@ class CreateActionButtonFunction extends AbstractActionFunction
      */
     protected function getButtonClass()
     {
-        return 'btn-create';
+        return 'btn-remove';
     }
 
     /**
@@ -23,7 +23,7 @@ class CreateActionButtonFunction extends AbstractActionFunction
      */
     protected function getIcon()
     {
-        return '<i class="fa fa-plus"></i> ';
+        return '<i class="fa fa-trash"></i> ';
     }
 
     /**
@@ -31,7 +31,7 @@ class CreateActionButtonFunction extends AbstractActionFunction
      */
     protected function getFunctionName()
     {
-        return 'createActionButton';
+        return 'removeActionButton';
     }
 
 }

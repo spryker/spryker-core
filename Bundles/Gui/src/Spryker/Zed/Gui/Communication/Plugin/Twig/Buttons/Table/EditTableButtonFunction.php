@@ -9,7 +9,7 @@ class EditTableButtonFunction extends AbstractTableFunction
      */
     protected function getButtonClass()
     {
-        return 'btn-warning';
+        return 'btn-edit';
     }
 
     /**

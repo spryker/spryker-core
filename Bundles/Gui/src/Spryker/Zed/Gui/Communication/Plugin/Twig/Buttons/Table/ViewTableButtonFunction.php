@@ -9,7 +9,7 @@ class ViewTableButtonFunction extends AbstractTableFunction
      */
     protected function getButtonClass()
     {
-        return 'btn-info';
+        return 'btn-success';
     }
 
     /**

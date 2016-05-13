@@ -15,7 +15,7 @@ class EditActionButtonFunction extends AbstractActionFunction
      */
     protected function getButtonClass()
     {
-        return 'btn-info';
+        return 'btn-edit';
     }
 
     /**

@@ -15,7 +15,7 @@ class ViewActionButtonFunction extends AbstractActionFunction
      */
     protected function getButtonClass()
     {
-        return 'btn-info';
+        return 'btn-view';
     }
 
     /**

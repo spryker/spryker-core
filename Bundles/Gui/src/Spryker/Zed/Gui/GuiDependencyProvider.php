@@ -11,6 +11,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\BackActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\CreateActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\EditActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\RemoveActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\ViewActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\BackTableButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\CreateTableButtonFunction;
@@ -59,6 +60,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
             new CreateActionButtonFunction(),
             new ViewActionButtonFunction(),
             new EditActionButtonFunction(),
+            new RemoveActionButtonFunction(),
             // table row buttons
             new EditTableButtonFunction(),
             new BackTableButtonFunction(),

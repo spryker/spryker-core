@@ -15,7 +15,7 @@ class BackActionButtonFunction extends AbstractActionFunction
      */
     protected function getButtonClass()
     {
-        return 'btn-primary';
+        return 'btn-back';
     }
 
     /**

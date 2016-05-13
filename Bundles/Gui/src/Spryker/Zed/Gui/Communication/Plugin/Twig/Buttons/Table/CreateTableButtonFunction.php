@@ -9,7 +9,7 @@ class CreateTableButtonFunction extends AbstractTableFunction
      */
     protected function getButtonClass()
     {
-        return 'btn-success';
+        return 'btn-create';
     }
 
     /**

@@ -9,7 +9,7 @@ class RemoveTableButtonFunction extends AbstractTableFunction
      */
     protected function getButtonClass()
     {
-        return 'btn-danger';
+        return 'btn-remove';
     }
 
     /**

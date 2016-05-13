@@ -9,7 +9,7 @@ class BackTableButtonFunction extends AbstractTableFunction
      */
     protected function getButtonClass()
     {
-        return 'btn-default';
+        return 'btn-back';
     }
 
     /**
