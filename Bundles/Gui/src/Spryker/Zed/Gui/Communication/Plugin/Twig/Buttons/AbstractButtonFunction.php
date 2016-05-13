@@ -33,10 +33,22 @@ abstract class AbstractButtonFunction extends TwigFunction
             $options[ButtonUrlGenerator::BUTTON_CLASS] = $this->getButtonClass();
             $options[ButtonUrlGenerator::DEFAULT_CSS_CLASSES] = static::DEFAULT_CSS_CLASSES;
 
-            $button = new ButtonUrlGenerator($url, $title, $options);
+            $button = $this->createButtonUrlGeneratorObject($url, $title, $options);
 
             return $button->generate();
         };
+    }
+
+    /**
+     * @param string $url
+     * @param string $title
+     * @param array $options
+     * @return \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonUrlGenerator
+     */
+    protected function createButtonUrlGeneratorObject($url, $title, array $options)
+    {
+        $button = new ButtonUrlGenerator($url, $title, $options);
+        return $button;
     }
 
 }
