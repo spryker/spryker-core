@@ -11,6 +11,12 @@
 
 {% block content %}
 
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{ 'Preferences for Price and Category are defined by default. Those cannot be modified via this interface.' | trans }}
+        </div>
+    </div>
+
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
