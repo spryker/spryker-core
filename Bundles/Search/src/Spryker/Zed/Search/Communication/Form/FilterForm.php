@@ -29,8 +29,7 @@ class FilterForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addAttributeName($builder);
-        $this->addType($builder);
-        $this->addFilterType($builder);
+        $this->addAttributeType($builder);
         $this->addIncludeForSuggestion($builder);
         $this->addIncludeForSorting($builder);
         $this->addIncludeForFullText($builder);
@@ -52,24 +51,15 @@ class FilterForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return void
      */
-    protected function addType(FormBuilderInterface $builder)
+    protected function addAttributeType(FormBuilderInterface $builder)
     {
-        $builder->add('type');
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return void
-     */
-    protected function addFilterType(FormBuilderInterface $builder)
-    {
-        $builder->add('filter_type', 'choice', [
+        $builder->add('attribute_type', 'choice', [
             'label' => '',
             'placeholder' => 'Select one',
             'choices' => [
-                'multi_select' => 'Multi Select',
-                'single_select' => 'Single Select',
-                'range' => 'Range',
+                'string' => 'String',
+                'integer' => 'Integer',
+                'none' => 'None',
             ],
         ]);
     }
