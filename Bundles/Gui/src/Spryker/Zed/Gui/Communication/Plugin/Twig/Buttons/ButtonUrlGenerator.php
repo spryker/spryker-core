@@ -43,9 +43,12 @@ class ButtonUrlGenerator
         $this->options = $options;
     }
 
+    /**
+     * @return string
+     */
     public function generate()
     {
-        $html = $this->generateAnchor($this->url, $this->options);
+        $html = $this->generateAnchor();
         $html .= $this->options[self::ICON];
         $html .= $this->title;
         $html .= '</a>';
@@ -54,18 +57,15 @@ class ButtonUrlGenerator
     }
 
     /**
-     * @param array $options
-     *
      * @return string
      */
-    protected function getId(array $options)
+    protected function getId()
     {
-        $id = '';
-        if (array_key_exists(self::PARAM_ID, $options)) {
-            $id = ' id="' . $options[self::PARAM_ID] . '"';
+        if (array_key_exists(self::PARAM_ID, $this->options)) {
+            return ' id="' . $this->options[self::PARAM_ID] . '"';
         }
 
-        return $id;
+        return '';
     }
 
     /**
@@ -87,14 +87,11 @@ class ButtonUrlGenerator
     }
 
     /**
-     * @param string $url
-     * @param array $options
-     *
      * @return string
      */
-    protected function generateAnchor($url, array $options = [])
+    protected function generateAnchor()
     {
-        return '<a' . $this->getClass($options) . $this->getId($options) . ' href="' . $url . '">';
+        return '<a' . $this->getClass() . $this->getId() . ' href="' . $this->url . '">';
     }
 
 }
