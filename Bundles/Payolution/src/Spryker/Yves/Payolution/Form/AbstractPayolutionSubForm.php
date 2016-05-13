@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\Payolution\Form;
 
-use Spryker\Yves\CheckoutStepEngine\Dependency\Form\AbstractSubFormType;
-use Spryker\Yves\CheckoutStepEngine\Dependency\Form\SubFormInterface;
+use Spryker\Yves\StepEngine\Dependency\Form\AbstractSubFormType;
+use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;

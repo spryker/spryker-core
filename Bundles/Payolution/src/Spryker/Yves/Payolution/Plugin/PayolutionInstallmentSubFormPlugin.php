@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Payolution\Plugin;
 
-use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
@@ -25,7 +25,7 @@ class PayolutionInstallmentSubFormPlugin extends AbstractPlugin implements Check
     }
 
     /**
-     * @return \Spryker\Yves\CheckoutStepEngine\Dependency\DataProvider\DataProviderInterface
+     * @return \Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface
      */
     public function createSubFormDataProvider()
     {

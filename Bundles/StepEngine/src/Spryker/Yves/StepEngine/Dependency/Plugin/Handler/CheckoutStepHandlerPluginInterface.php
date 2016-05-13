@@ -5,22 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Calculation\Zed;
+namespace Spryker\Yves\StepEngine\Dependency\Plugin\Handler;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ZedRequest\Stub\BaseStub;
+use Symfony\Component\HttpFoundation\Request;
 
-class CalculationStub extends BaseStub
+interface CheckoutStepHandlerPluginInterface
 {
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
-    {
-        return $this->zedStub->call('/calculation/gateway/recalculate', $quoteTransfer, null, true);
-    }
+    public function addToQuote(Request $request, QuoteTransfer $quoteTransfer);
 
 }

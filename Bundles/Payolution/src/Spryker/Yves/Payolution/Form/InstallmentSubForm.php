@@ -10,7 +10,7 @@ namespace Spryker\Yves\Payolution\Form;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Spryker\Shared\Payolution\PayolutionConstants;
-use Spryker\Yves\CheckoutStepEngine\Dependency\Form\SubFormInterface;
+use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 

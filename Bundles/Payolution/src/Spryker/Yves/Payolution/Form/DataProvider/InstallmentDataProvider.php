@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Yves\CheckoutStepEngine\Dependency\DataProvider\DataProviderInterface;
 use Spryker\Yves\Payolution\Form\InstallmentSubForm;
+use Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface;
 
 class InstallmentDataProvider implements DataProviderInterface
 {

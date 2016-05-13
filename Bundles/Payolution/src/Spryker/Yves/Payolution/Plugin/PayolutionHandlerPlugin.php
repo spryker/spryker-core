@@ -8,7 +8,7 @@
 namespace Spryker\Yves\Payolution\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\CheckoutStepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginInterface;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
