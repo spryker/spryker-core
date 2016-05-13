@@ -86,12 +86,11 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $categoryUrl = $this->generateUrlFromPathTokens($path);
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
-
-        if (!$urlTransfer) {
+        if (!$this->urlFacade->hasResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer)) {
             $urlTransfer = new UrlTransfer();
             $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
         } else {
+            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
             $this->updateTransferUrl($urlTransfer, $categoryUrl);
         }
 
@@ -111,10 +110,10 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $children = $this->categoryTreeReader->getPathChildren($categoryNodeTransfer->getIdCategoryNode());
         foreach ($children as $child) {
             /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $child */
-            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $localeTransfer);
-            if (!$urlTransfer) {
+            if (!$this->urlFacade->hasResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $localeTransfer)) {
                 continue;
             }
+            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $localeTransfer);
 
             $childUrl = $this->generateChildUrl($child->getFkCategoryNodeDescendant(), $localeTransfer);
             $this->updateTransferUrl($urlTransfer, $childUrl, $child->getFkCategoryNodeDescendant(), $localeTransfer->getIdLocale());

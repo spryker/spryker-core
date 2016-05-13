@@ -72,6 +72,14 @@ interface CategoryToUrlInterface
 
     /**
      * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return bool
+     */
+    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
+
+    /**
+     * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
