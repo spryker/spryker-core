@@ -396,6 +396,7 @@
       "Spryker\\Zed\\Storage\\": "Bundles/Storage/src",
       "Unit\\Spryker\\Zed\\Storage\\": "Bundles/Storage/tests",
       "Functional\\Spryker\\Zed\\Storage\\": "Bundles/Storage/tests",
+      "Spryker\\Shared\\Symfony\\": "Bundles/Symfony/src",
       "Spryker\\Shared\\Tax\\": "Bundles/Tax/src",
       "Unit\\Spryker\\Shared\\Tax\\": "Bundles/Tax/tests",
       "Functional\\Spryker\\Shared\\Tax\\": "Bundles/Tax/tests",
