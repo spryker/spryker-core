@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\BackActionButtonFunction as NewBackActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\BackActionButtonFunction as BackActionButton;
 
 /**
  * @deprecated use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\BackActionButtonFunction
  */
-class BackActionButtonFunction extends NewBackActionButtonFunction
+class BackActionButtonFunction extends BackActionButton
 {
 }
