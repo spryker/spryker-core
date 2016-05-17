@@ -53,6 +53,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getServiceProvider(Container $container)
