@@ -58,7 +58,7 @@ class BraintreeConfig extends AbstractBundleConfig
      */
     public function getIs3DSecure()
     {
-        return $this->get(BraintreeConstants::IS_VAULTED, false);
+        return $this->get(BraintreeConstants::IS_3D_SECURE, false);
     }
 
 }
