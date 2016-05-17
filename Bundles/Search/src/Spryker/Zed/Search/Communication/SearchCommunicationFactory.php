@@ -60,6 +60,11 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
         return new FiltersTable();
     }
 
+    /**
+     * @param array $data
+     * @param array $options
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createFilterForm(array $data = [], array $options = [])
     {
         $filterFormType = new FilterForm();

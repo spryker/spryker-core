@@ -116,6 +116,9 @@ class FilterForm extends AbstractType
         ]);
     }
 
+    /**
+     * @return array
+     */
     protected function getYesNoChoices()
     {
         return [

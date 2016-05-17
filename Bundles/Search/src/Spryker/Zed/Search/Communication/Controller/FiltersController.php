@@ -41,6 +41,10 @@ class FiltersController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function editAction(Request $request)
     {
         $form = $this->getFactory()
@@ -52,6 +56,10 @@ class FiltersController extends AbstractController
         ];
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function preferencesAction(Request $request)
     {
         return [
