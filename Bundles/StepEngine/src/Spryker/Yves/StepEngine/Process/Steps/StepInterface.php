@@ -7,48 +7,48 @@
 
 namespace Spryker\Yves\StepEngine\Process\Steps;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 interface StepInterface
 {
 
     /**
+     * @return AbstractTransfer
+     */
+    public function getDataClass();
+
+    /**
      * Requirements for this step, return true when satisfied.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function preCondition(QuoteTransfer $quoteTransfer);
+    public function preCondition();
 
     /**
      * Require input, should we render view with form or just skip step after calling execute.
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return bool
      */
-    public function requireInput(QuoteTransfer $quoteTransfer);
+    public function requireInput();
 
     /**
      * Execute step logic, happens after form submit if provided, gets QuoteTransfer filled by data from form.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return void
      */
-    public function execute(Request $request, QuoteTransfer $quoteTransfer);
+    public function execute(Request $request, AbstractTransfer $transfer = null);
 
     /**
      * Conditions that should be met for this step to be marked as completed. returns true when satisfied.
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return bool
      */
-    public function postCondition(QuoteTransfer $quoteTransfer);
+    public function postCondition();
 
     /**
      * Current step route.

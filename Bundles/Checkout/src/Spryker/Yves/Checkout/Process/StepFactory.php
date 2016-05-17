@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\StepEngine\Process;
+namespace Spryker\Yves\Checkout\Process;
 
 use Spryker\Client\Cart\CartClientInterface;
-use Spryker\Yves\StepEngine\CheckoutDependencyProvider;
+use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\StepEngine\Process\StepProcess;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class StepFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginCollection
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection
      */
     public function createPaymentMethodHandler()
     {

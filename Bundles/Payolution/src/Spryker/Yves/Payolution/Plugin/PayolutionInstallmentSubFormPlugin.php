@@ -7,13 +7,13 @@
 
 namespace Spryker\Yves\Payolution\Plugin;
 
-use Spryker\Yves\StepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Yves\Payolution\PayolutionFactory getFactory()
  */
-class PayolutionInstallmentSubFormPlugin extends AbstractPlugin implements CheckoutSubFormPluginInterface
+class PayolutionInstallmentSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
 
     /**

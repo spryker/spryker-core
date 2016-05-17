@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\StepEngine;
+namespace Spryker\Yves\Checkout;
 
-use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginCollection;
-use Spryker\Yves\StepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginCollection;
+use Spryker\Yves\Checkout\Dependency\Plugin\Handler\CheckoutStepHandlerPluginCollection;
+use Spryker\Yves\Checkout\Dependency\Plugin\Form\CheckoutSubFormPluginCollection;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 

@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Form;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 interface FormCollectionHandlerInterface
@@ -33,10 +33,13 @@ interface FormCollectionHandlerInterface
     public function handleRequest(Request $request);
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return void
      */
-    public function provideDefaultFormData(QuoteTransfer $quoteTransfer);
+    public function provideDefaultFormData();
+
+    /**
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     */
+    public function getDataClass();
 
 }

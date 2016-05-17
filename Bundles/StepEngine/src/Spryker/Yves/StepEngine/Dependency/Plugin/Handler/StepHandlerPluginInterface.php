@@ -7,18 +7,18 @@
 
 namespace Spryker\Yves\StepEngine\Dependency\Plugin\Handler;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
-interface CheckoutStepHandlerPluginInterface
+interface StepHandlerPluginInterface
 {
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return AbstractTransfer
      */
-    public function addToQuote(Request $request, QuoteTransfer $quoteTransfer);
+    public function addToDataClass(Request $request, AbstractTransfer $dataTransfer);
 
 }

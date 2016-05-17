@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\StepEngine\Form;
+namespace Spryker\Yves\Checkout\Form;
 
-use Spryker\Yves\StepEngine\CheckoutDependencyProvider;
+use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class FormFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginCollection
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
     public function createPaymentMethodSubForms()
     {

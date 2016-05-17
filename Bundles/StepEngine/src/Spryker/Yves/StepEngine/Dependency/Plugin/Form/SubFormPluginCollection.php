@@ -7,13 +7,13 @@
 
 namespace Spryker\Yves\StepEngine\Dependency\Plugin\Form;
 
-class CheckoutSubFormPluginCollection implements \Iterator, \Countable
+class SubFormPluginCollection implements \Iterator, \Countable
 {
 
     /**
-     * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface[]
+     * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface[]
      */
-    private $checkoutSubForms = [];
+    private $subForms = [];
 
     /**
      * @var int
@@ -21,23 +21,23 @@ class CheckoutSubFormPluginCollection implements \Iterator, \Countable
     private $position = 0;
 
     /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface $checkoutSubForm
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface $subForm
      *
      * @return $this
      */
-    public function add(CheckoutSubFormPluginInterface $checkoutSubForm)
+    public function add(SubFormPluginInterface $subForm)
     {
-        $this->checkoutSubForms[] = $checkoutSubForm;
+        $this->subForms[] = $subForm;
 
         return $this;
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginInterface
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface
      */
     public function current()
     {
-        return $this->checkoutSubForms[$this->position];
+        return $this->subForms[$this->position];
     }
 
     /**
@@ -61,7 +61,7 @@ class CheckoutSubFormPluginCollection implements \Iterator, \Countable
      */
     public function valid()
     {
-        return isset($this->checkoutSubForms[$this->position]);
+        return isset($this->subForms[$this->position]);
     }
 
     /**
@@ -77,7 +77,7 @@ class CheckoutSubFormPluginCollection implements \Iterator, \Countable
      */
     public function count()
     {
-        return count($this->checkoutSubForms);
+        return count($this->subForms);
     }
 
 }

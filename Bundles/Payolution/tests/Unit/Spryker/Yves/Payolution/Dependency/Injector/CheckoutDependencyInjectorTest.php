@@ -8,9 +8,9 @@
 namespace Unit\Spryker\Yves\Payolution\Dependency\Injector;
 
 use Generated\Shared\Transfer\PaymentTransfer;
-use Spryker\Yves\StepEngine\CheckoutDependencyProvider;
-use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\CheckoutStepHandlerPluginCollection;
-use Spryker\Yves\StepEngine\Dependency\Plugin\Form\CheckoutSubFormPluginCollection;
+use Spryker\Yves\Checkout\CheckoutDependencyProvider;
+use Spryker\Yves\Checkout\Dependency\Plugin\Handler\CheckoutStepHandlerPluginCollection;
+use Spryker\Yves\Checkout\Dependency\Plugin\Form\CheckoutSubFormPluginCollection;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Payolution\Dependency\Injector\CheckoutDependencyInjector;
 

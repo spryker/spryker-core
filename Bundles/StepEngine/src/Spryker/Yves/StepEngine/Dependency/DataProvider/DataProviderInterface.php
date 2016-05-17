@@ -26,9 +26,4 @@ interface DataProviderInterface
      */
     public function getOptions(QuoteTransfer $quoteTransfer);
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getDataClass();
-
 }

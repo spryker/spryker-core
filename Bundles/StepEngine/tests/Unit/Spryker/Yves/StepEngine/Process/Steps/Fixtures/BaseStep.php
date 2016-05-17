@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Yves\StepEngine\Process\Steps\Fixtures;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Yves\StepEngine\Process\Steps\BaseStep as AbstractBaseStep;
 
@@ -15,42 +16,43 @@ class BaseStep extends AbstractBaseStep
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
+     * @return AbstractTransfer
+     */
+    public function getDataClass()
+    {
+        return new TestTransfer();
+    }
+
+    /**
      * @return bool
      */
-    public function preCondition(QuoteTransfer $quoteTransfer)
+    public function preCondition()
     {
         return true;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return bool
      */
-    public function requireInput(QuoteTransfer $quoteTransfer)
+    public function requireInput()
     {
         return true;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer|null $transfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return void
      */
-    public function execute(Request $request, QuoteTransfer $quoteTransfer)
+    public function execute(Request $request, AbstractTransfer $transfer = null)
     {
-        return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return bool
      */
-    public function postCondition(QuoteTransfer $quoteTransfer)
+    public function postCondition()
     {
         return true;
     }

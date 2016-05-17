@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Dependency\Plugin\Form;
 
-interface CheckoutSubFormPluginInterface
+interface SubFormPluginInterface
 {
 
     /**

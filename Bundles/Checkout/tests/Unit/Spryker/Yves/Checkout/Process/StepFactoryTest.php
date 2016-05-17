@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\StepEngine\Form;
+namespace Unit\Spryker\Yves\Checkout\Process;
 
 use Spryker\Client\Cart\CartClientInterface;
-use Spryker\Yves\StepEngine\CheckoutDependencyProvider;
-use Spryker\Yves\StepEngine\Process\StepFactory;
-use Spryker\Yves\StepEngine\Process\StepProcess;
+use Spryker\Yves\Checkout\CheckoutDependencyProvider;
+use Spryker\Yves\Checkout\Process\StepFactory;
 use Spryker\Yves\StepEngine\Process\StepProcessInterface;
 use Spryker\Yves\Kernel\Container;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

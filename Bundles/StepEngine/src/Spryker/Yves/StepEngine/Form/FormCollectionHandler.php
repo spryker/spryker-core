@@ -8,6 +8,7 @@
 namespace Spryker\Yves\StepEngine\Form;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -23,9 +24,9 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     protected $formFactory;
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
+     * @var CartClientInterface
      */
-    protected $quoteTransfer;
+    protected $cartClient;
 
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface
@@ -43,19 +44,19 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     protected $formTypes;
 
     /**
-     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param array $formTypes
+     * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
+     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
      * @param \Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface|null $dataProvider
      */
     public function __construct(
-        FormFactoryInterface $formFactory,
-        QuoteTransfer $quoteTransfer,
         array $formTypes = [],
+        FormFactoryInterface $formFactory,
+        CartClientInterface $cartClient,
         DataProviderInterface $dataProvider = null
     ) {
         $this->formFactory = $formFactory;
-        $this->quoteTransfer = clone $quoteTransfer;
+        $this->cartClient = $cartClient;
         $this->formTypes = $formTypes;
         $this->dataProvider = $dataProvider;
     }
@@ -66,22 +67,21 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     public function getForms()
     {
         if (empty($this->forms)) {
-            $this->forms = $this->createForms($this->formTypes, $this->quoteTransfer);
+            $this->forms = $this->createForms();
         }
 
         return $this->forms;
     }
 
     /**
-     * @param \Symfony\Component\Form\FormTypeInterface[] $formTypes
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return array
      */
-    protected function createForms(array $formTypes, QuoteTransfer $quoteTransfer)
+    protected function createForms()
     {
+        $quoteTransfer = $this->getDataClass();
+
         $forms = [];
-        foreach ($formTypes as $formType) {
+        foreach ($this->formTypes as $formType) {
             $forms[] = $this->createForm($formType, $quoteTransfer);
         }
 
@@ -132,9 +132,11 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
      */
     public function handleRequest(Request $request)
     {
+        $quoteTransfer = $this->getDataClass();
+
         foreach ($this->getForms() as $form) {
             if ($request->request->has($form->getName())) {
-                $form->setData($this->quoteTransfer);
+                $form->setData($quoteTransfer);
 
                 return $form->handleRequest($request);
             }
@@ -144,13 +146,11 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return void
      */
-    public function provideDefaultFormData(QuoteTransfer $quoteTransfer)
+    public function provideDefaultFormData()
     {
-        $formData = $this->getFormData($quoteTransfer);
+        $formData = $this->getFormData($this->getDataClass());
 
         foreach ($this->getForms() as $form) {
             $form->setData($formData);
@@ -169,6 +169,14 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getDataClass()
+    {
+        return $this->cartClient->getQuote();
     }
 
 }

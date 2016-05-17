@@ -50,13 +50,7 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
         $stepMock->expects($this->exactly(2))->method('postCondition')->willReturn(true);
         $stepMock->expects($this->exactly(4))->method('getStepRoute')->willReturn($stepRoute);
         $stepMock->expects($this->once())->method('requireInput')->willReturn(false);
-        $stepMock->expects($this->once())->method('execute')->willReturnCallback(
-            function (Request $request, QuoteTransfer $quoteTransfer) {
-                $quoteTransfer->addItem(new ItemTransfer()); //Modify quote transfer
-
-                return $quoteTransfer;
-            }
-        );
+        $stepMock->expects($this->once())->method('execute');
 
         $nextStepMock = $this->createStepMock();
         $nextStepMock->expects($this->exactly(1))->method('getStepRoute')->willReturn($nextStepRoute);
@@ -69,7 +63,6 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals($nextStepRoute, $response->getTargetUrl());
-        $this->assertCount(1, $quoteTransfer->getItems());
     }
 
     /**
@@ -135,7 +128,7 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
         $response = $stepProcess->process($request, $formCollectionHandlerMock);
 
         $this->assertArrayHasKey('previousStepUrl', $response);
-        $this->assertArrayHasKey('quoteTransfer', $response);
+        $this->assertArrayHasKey('dataClass', $response);
     }
 
     /**
@@ -168,7 +161,7 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
         $response = $stepProcess->process($request, $formCollectionHandlerMock);
 
         $this->assertArrayHasKey('previousStepUrl', $response);
-        $this->assertArrayHasKey('quoteTransfer', $response);
+        $this->assertArrayHasKey('dataClass', $response);
     }
 
     /**

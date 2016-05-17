@@ -7,8 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Process;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClientInterface;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
 use Spryker\Yves\StepEngine\Process\Steps\StepInterface;
 use Spryker\Yves\StepEngine\Process\Steps\StepWithExternalRedirectInterface;
@@ -30,11 +29,6 @@ class StepProcess implements StepProcessInterface
     protected $completedSteps = [];
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
-     */
-    protected $cartClient;
-
-    /**
      * @var string
      */
     protected $errorRoute;
@@ -47,24 +41,16 @@ class StepProcess implements StepProcessInterface
     /**
      * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface[] $steps
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
      * @param string $errorRoute
      */
     public function __construct(
         array $steps,
         UrlGeneratorInterface $urlGenerator,
-        CartClientInterface $cartClient,
         $errorRoute
     ) {
         $this->urlGenerator = $urlGenerator;
         $this->steps = $steps;
-        $this->cartClient = $cartClient;
         $this->errorRoute = $errorRoute;
-    }
-
-    public function newProcess(StepCollection $stepCollection, Request $request, FormCollectionHandlerInterface $formCollectionHandler)
-    {
-
     }
 
     /**
@@ -77,19 +63,19 @@ class StepProcess implements StepProcessInterface
     {
         $currentStep = $this->getCurrentStep($request);
 
-        if ($currentStep->preCondition($this->getQuoteTransfer()) === false) {
+        if (!$currentStep->preCondition()) {
             $escapeRoute = $this->getEscapeRoute($currentStep);
 
             return $this->createRedirectResponse($this->getUrlFromRoute($escapeRoute));
         }
 
-        if ($this->canAccessStep($request, $currentStep) === false) {
+        if (!$this->canAccessStep($request, $currentStep)) {
             $stepRoute = $currentStep->getStepRoute();
 
             return $this->createRedirectResponse($this->getUrlFromRoute($stepRoute));
         }
 
-        if ($currentStep->requireInput($this->getQuoteTransfer()) === false) {
+        if (!$currentStep->requireInput()) {
             $this->executeWithoutInput($currentStep, $request);
 
             return $this->createRedirectResponse($this->getNextRedirectUrl($currentStep));
@@ -103,7 +89,7 @@ class StepProcess implements StepProcessInterface
                     return $this->createRedirectResponse($this->getNextRedirectUrl($currentStep));
                 }
             } else {
-                $formCollection->provideDefaultFormData($this->getQuoteTransfer());
+                $formCollection->provideDefaultFormData();
             }
 
             return $this->getTemplateVariables($currentStep, $formCollection);
@@ -122,9 +108,8 @@ class StepProcess implements StepProcessInterface
     protected function getCurrentStep(Request $request)
     {
         $currentStep = null;
-        $quoteTransfer = $this->getQuoteTransfer();
         foreach ($this->steps as $step) {
-            if ($step->postCondition($quoteTransfer) === false || $request->get('_route') === $step->getStepRoute()) {
+            if (!$step->postCondition() || $request->get('_route') === $step->getStepRoute()) {
                 $currentStep = $step;
                 break;
             }
@@ -149,7 +134,7 @@ class StepProcess implements StepProcessInterface
      */
     protected function getNextStep(StepInterface $currentStep)
     {
-        if ($this->isLastStep() === true) {
+        if ($this->isLastStep()) {
             return $this->getLastStep();
         }
 
@@ -237,27 +222,26 @@ class StepProcess implements StepProcessInterface
             return $currentStep->getExternalRedirectUrl();
         }
 
-        $route = $this->getNextStepRoute($currentStep, $this->getQuoteTransfer());
+        $route = $this->getNextStepRoute($currentStep);
 
         return $this->getUrlFromRoute($route);
     }
 
     /**
      * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
-    protected function getNextStepRoute(StepInterface $currentStep, QuoteTransfer $quoteTransfer)
+    protected function getNextStepRoute(StepInterface $currentStep)
     {
-        if ($currentStep->postCondition($quoteTransfer) === true) {
+        if ($currentStep->postCondition()) {
             $nextStep = $this->getNextStep($currentStep);
             if ($nextStep !== null) {
                 return $nextStep->getStepRoute();
             }
         }
 
-        if ($currentStep->requireInput($quoteTransfer) === true) {
+        if ($currentStep->requireInput()) {
             return $currentStep->getStepRoute();
         } else {
             return $this->errorRoute;
@@ -270,7 +254,7 @@ class StepProcess implements StepProcessInterface
     protected function getPreviousStepRoute()
     {
         $step = $this->getPreviousStep();
-        if (empty($step) === false) {
+        if (!empty($step)) {
             return $this->getPreviousStep()->getStepRoute();
         }
 
@@ -310,27 +294,22 @@ class StepProcess implements StepProcessInterface
      */
     protected function executeWithoutInput(StepInterface $currentStep, Request $request)
     {
-        $quoteTransfer = $currentStep->execute($request, $this->getQuoteTransfer());
-        $this->cartClient->storeQuote($quoteTransfer);
+        $currentStep->execute($request);
     }
 
     /**
      * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $formQuoteTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $formTransfer
      *
      * @return void
      */
     protected function executeWithFormInput(
         StepInterface $currentStep,
         Request $request,
-        QuoteTransfer $formQuoteTransfer
+        AbstractTransfer $formTransfer
     ) {
-        $quoteTransfer = $this->getQuoteTransfer();
-        $quoteTransfer->fromArray($formQuoteTransfer->modifiedToArray());
-
-        $quoteTransfer = $currentStep->execute($request, $quoteTransfer);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $currentStep->execute($request, $formTransfer);
     }
 
     /**
@@ -344,14 +323,6 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function getQuoteTransfer()
-    {
-        return $this->cartClient->getQuote();
-    }
-
-    /**
      * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
@@ -361,7 +332,7 @@ class StepProcess implements StepProcessInterface
     {
         $templateVariables = [
             'previousStepUrl' => $this->getUrlFromRoute($this->getPreviousStepRoute()),
-            'quoteTransfer' => $this->getQuoteTransfer(),
+            'dataClass' => ($formCollection) ? $formCollection->getDataClass() : null,
         ];
         $templateVariables = array_merge($templateVariables, $currentStep->getTemplateVariables());
 
