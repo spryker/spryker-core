@@ -53,9 +53,11 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Silex\ServiceProviderInterface[]
      */
-    protected function getServiceProvider()
+    protected function getServiceProvider(Container $container)
     {
         $providers = [
             new RedirectAfterLoginProvider(),
