@@ -1,0 +1,53 @@
+@mixin coloredButton($backgroundColor, $color, $hoverColor:'') {
+  background-color: $backgroundColor;
+  border-color: $backgroundColor;
+  color: $color;
+
+  &.btn-outline {
+    background: transparent;
+    color: $backgroundColor;
+
+    &:hover {
+      background-color: $backgroundColor;
+      border-color: $backgroundColor;
+      @if $hoverColor == '' {
+        color: $color;
+      } @else {
+        color: $hoverColor;
+      }
+    }
+  }
+}
+
+.btn-back {
+  background-color: #c2c2c2;
+  border-color: #c2c2c2;
+  color: #fff;
+
+  &.btn-outline {
+    background: transparent;
+    color: #a2a2a2;
+
+    &:hover {
+      background-color: #c2c2c2;
+      border-color: #c2c2c2;
+      color: #fff;
+    }
+  }
+}
+
+.btn-view {
+  @include coloredButton(#1c84c6, #ffffff);
+}
+
+.btn-edit {
+  @include coloredButton(#d18d21, #ffffff);
+}
+
+.btn-create {
+  @include coloredButton(#108548, #ffffff);
+}
+
+.btn-remove {
+  @include coloredButton(#ed5565, #ffffff);
+}
