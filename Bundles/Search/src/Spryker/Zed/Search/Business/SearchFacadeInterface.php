@@ -76,4 +76,14 @@ interface SearchFacadeInterface
      */
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer[] $facetConfigTransfers
+     * @param \Generated\Shared\Transfer\SortConfigTransfer[] $sortConfigTransfers
+     *
+     * @return void
+     */
+    public function saveSearchConfigCache(array $facetConfigTransfers, array $sortConfigTransfers);
+
 }

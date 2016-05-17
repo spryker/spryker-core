@@ -15,6 +15,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CLIENT_SEARCH = 'search client';
+    const CLIENT_STORAGE = 'storage client';
     const FACADE_COLLECTOR = 'collector facade';
 
     /**
@@ -25,6 +26,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $this->addSearchClient($container);
+        $this->addStorageClient($container);
 
         return $container;
     }
@@ -51,6 +53,18 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_SEARCH] = function (Container $container) {
             return $container->getLocator()->search()->client();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addStorageClient(Container $container)
+    {
+        $container[self::CLIENT_STORAGE] = function (Container $container) {
+            return $container->getLocator()->storage()->client();
         };
     }
 

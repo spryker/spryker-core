@@ -106,4 +106,9 @@
         <property name="currentSortOrder" type="string" />
     </transfer>
 
+    <transfer name="SearchConfigCache">
+        <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig" />
+        <property name="sortConfigs" type="SortConfig[]" singular="sortConfig" />
+    </transfer>
+
 </transfers>

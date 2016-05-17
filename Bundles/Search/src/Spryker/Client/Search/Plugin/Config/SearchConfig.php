@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\Search\Plugin\Config;
 
-use Generated\Shared\Transfer\FacetConfigTransfer;
-use Generated\Shared\Transfer\SortConfigTransfer;
+use Generated\Shared\Transfer\SearchConfigCacheTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
+use Spryker\Shared\Search\SearchConstants;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -39,13 +39,7 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
         $this->sortConfigBuilder = $this->getFactory()->createSortConfigBuilder();
         $this->paginationConfigBuilder = $this->getFactory()->createPaginationConfigBuilder();
 
-        $searchConfigBuilder = $this->getFactory()->getSearchConfigBuilder();
-
-        $searchConfigBuilder->buildFacetConfig($this->facetConfigBuilder);
-        $searchConfigBuilder->buildSortConfig($this->sortConfigBuilder);
-        $searchConfigBuilder->buildPaginationConfig($this->paginationConfigBuilder);
-
-        $this->extendConfig();
+        $this->buildSearchConfig();
     }
 
     /**
@@ -75,65 +69,66 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
     /**
      * @return void
      */
+    protected function buildSearchConfig()
+    {
+        $searchConfigBuilder = $this
+            ->getFactory()
+            ->getSearchConfigBuilder();
+
+        $searchConfigBuilder->buildFacetConfig($this->facetConfigBuilder);
+        $searchConfigBuilder->buildSortConfig($this->sortConfigBuilder);
+        $searchConfigBuilder->buildPaginationConfig($this->paginationConfigBuilder);
+
+        $this->extendConfig();
+    }
+
+    /**
+     * @return void
+     */
     protected function extendConfig()
     {
-        $configData = $this->loadDynamicConfigData();
+        $searchConfigCacheTransfer = $this->getDynamicSearchConfig();
 
-        $this->setDynamicFacets($configData);
-        $this->setDynamicSorts($configData);
+        $this->setDynamicFacets($searchConfigCacheTransfer);
+        $this->setDynamicSorts($searchConfigCacheTransfer);
     }
 
     /**
-     * TODO: get real data from redis
-     *
-     * @return array
+     * @return \Generated\Shared\Transfer\SearchConfigCacheTransfer
      */
-    protected function loadDynamicConfigData()
+    protected function getDynamicSearchConfig()
     {
-        return [
-            'facets' => [
+        $cacheData = $this
+            ->getFactory()
+            ->getStorageClient()
+            ->get(SearchConstants::SEARCH_CONFIG_CACHE_KEY);
 
-            ],
-            'sorts' => [
+        $searchConfigCacheTransfer = new SearchConfigCacheTransfer();
+        $searchConfigCacheTransfer->fromArray($cacheData, true);
 
-            ],
-        ];
+        return $searchConfigCacheTransfer;
     }
 
     /**
-     * @param array $configData
+     * @param \Generated\Shared\Transfer\SearchConfigCacheTransfer $searchConfigCacheTransfer
      *
      * @return void
      */
-    protected function setDynamicFacets(array $configData)
+    protected function setDynamicFacets(SearchConfigCacheTransfer $searchConfigCacheTransfer)
     {
-        if (!isset($configData['facets'])) {
-            return;
-        }
-
-        foreach ($configData['facets'] as $facetData) {
-            $facetConfigTransfer = new FacetConfigTransfer();
-            $facetConfigTransfer->fromArray($facetData, true);
-
+        foreach ($searchConfigCacheTransfer->getFacetConfigs() as $facetConfigTransfer) {
             $this->facetConfigBuilder->addFacet($facetConfigTransfer);
         }
     }
 
     /**
-     * @param array $configData
+     * @param \Generated\Shared\Transfer\SearchConfigCacheTransfer $searchConfigCacheTransfer
      *
      * @return void
      */
-    protected function setDynamicSorts(array $configData)
+    protected function setDynamicSorts(SearchConfigCacheTransfer $searchConfigCacheTransfer)
     {
-        if (!isset($configData['sorts'])) {
-            return;
-        }
-
-        foreach ($configData['sorts'] as $sortData) {
-            $sortConfigTransfer = new SortConfigTransfer();
-            $sortConfigTransfer->fromArray($sortData, true);
-
+        foreach ($searchConfigCacheTransfer->getSortConfigs() as $sortConfigTransfer) {
             $this->sortConfigBuilder->addSort($sortConfigTransfer);
         }
     }

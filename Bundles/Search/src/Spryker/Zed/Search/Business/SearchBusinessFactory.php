@@ -12,6 +12,7 @@ use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Config\SearchConfigCacheSaver;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
@@ -184,6 +185,14 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     protected function createPageMapBuilder()
     {
         return new PageMapBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Config\SearchConfigCacheSaverInterface
+     */
+    public function createSearchConfigCacheSaver()
+    {
+        return new SearchConfigCacheSaver($this->getProvidedDependency(SearchDependencyProvider::CLIENT_STORAGE));
     }
 
 }
