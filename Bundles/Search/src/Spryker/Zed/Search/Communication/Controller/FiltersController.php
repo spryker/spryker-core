@@ -42,7 +42,7 @@ class FiltersController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
     public function editAction(Request $request)
@@ -57,7 +57,7 @@ class FiltersController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
     public function preferencesAction(Request $request)
