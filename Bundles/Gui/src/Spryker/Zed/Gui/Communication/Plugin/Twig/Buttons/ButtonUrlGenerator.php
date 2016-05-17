@@ -73,19 +73,25 @@ class ButtonUrlGenerator
      */
     protected function getClass()
     {
-        $extraClasses = '';
+        return ' class="' . $this->getButtonClasses() . '"';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getButtonClasses()
+    {
+        $class = [
+            'btn',
+            $this->options[self::DEFAULT_CSS_CLASSES],
+            $this->options[self::BUTTON_CLASS],
+        ];
+
         if (array_key_exists(self::PARAM_CLASS, $this->options)) {
-            $extraClasses = $this->options[self::PARAM_CLASS];
+            $class[] = $this->options[self::PARAM_CLASS];
         }
 
-        $attributes = [' '];
-        $attributes[] ='class="btn';
-        $attributes[] = $this->options[self::DEFAULT_CSS_CLASSES];
-        $attributes[] = $this->options[self::BUTTON_CLASS];
-        $attributes[] = $extraClasses;
-        $attributes[] = '"';
-
-        return implode(' ', $attributes);
+        return implode(' ', $class);
     }
 
     /**
