@@ -42,7 +42,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function registerTwigFunctions(\Twig_Environment $twig)
     {
-        foreach ($this->getProvidedTwigFunctions() as $function) {
+        foreach ($this->getTwigFunctions() as $function) {
             $twig->addFunction($function);
         }
     }
@@ -53,7 +53,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function registerTwigFilters(\Twig_Environment $twig)
     {
-        foreach ($this->getProvidedTwigFilters() as $filter) {
+        foreach ($this->getTwigFilters() as $filter) {
             $twig->addFilter($filter);
         }
     }
@@ -62,7 +62,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
      * @return \Twig_SimpleFunction[]
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    protected function getProvidedTwigFunctions()
+    protected function getTwigFunctions()
     {
         return $this->getFactory()
             ->getProvidedDependency(GuiDependencyProvider::GUI_TWIG_FUNCTIONS);
@@ -72,7 +72,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
      * @return \Twig_SimpleFilter[]
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    protected function getProvidedTwigFilters()
+    protected function getTwigFilters()
     {
         return $this->getFactory()
             ->getProvidedDependency(GuiDependencyProvider::GUI_TWIG_FILTERS);
