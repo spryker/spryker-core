@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action;
 
-class RemoveActionButtonFunction extends AbstractActionFunction
+class RemoveActionButtonFunction extends AbstractActionButtonFunction
 {
 
     /**
