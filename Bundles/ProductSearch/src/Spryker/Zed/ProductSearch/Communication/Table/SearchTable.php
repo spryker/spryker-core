@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Communication\Table;
+namespace Spryker\Zed\ProductSearch\Communication\Table;
 
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -78,7 +78,7 @@ class SearchTable extends AbstractTable
 
         foreach ($results as $result) {
             $tableData[] = [
-                self::COL_ID => '<a href="/search/maintenance/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
+                self::COL_ID => '<a href="/product-search/maintenance/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
                 self::COL_INDEX => $result->getIndex(),
                 self::COL_TYPE => $result->getType(),
                 self::COL_SCORE => $result->getScore(),

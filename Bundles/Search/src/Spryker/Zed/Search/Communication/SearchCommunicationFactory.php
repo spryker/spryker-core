@@ -21,14 +21,6 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\Storage\Communication\Table\StorageTable
-     */
-    public function createSearchTable()
-    {
-        return new SearchTable($this->getFacade());
-    }
-
-    /**
      * @return \Spryker\Client\Search\SearchClient
      */
     public function getSearchClient()
@@ -52,24 +44,6 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
         return $this->getConfig()->getElasticaDocumentType();
     }
 
-    /**
-     * @return \Spryker\Zed\Search\Communication\Table\FiltersTable
-     */
-    public function createFiltersTable()
-    {
-        return new FiltersTable();
-    }
 
-    /**
-     * @param array $data
-     * @param array $options
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createFilterForm(array $data = [], array $options = [])
-    {
-        $filterFormType = new FilterForm();
-
-        return $this->getFormFactory()->create($filterFormType, $data, $options);
-    }
 
 }

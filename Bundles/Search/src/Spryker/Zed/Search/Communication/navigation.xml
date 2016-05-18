@@ -1,29 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <search-and-filters>
-        <label>Search and Filters</label>
-        <title>Search and Filters</title>
-        <bundle>search</bundle>
-        <controller>filters</controller>
-        <action>index</action>
-        <icon>fa-search</icon>
-        <pages>
-            <search-preferences>
-                <label>Search Preferences</label>
-                <title>Search Preferences</title>
-                <bundle>search</bundle>
-                <controller>filters</controller>
-                <action>index</action>
-            </search-preferences>
-            <filter-preferences>
-                <label>Filter Preferences</label>
-                <title>Filter Preferences</title>
-                <bundle>search</bundle>
-                <controller>filters</controller>
-                <action>preferences</action>
-            </filter-preferences>
-        </pages>
-    </search-and-filters>
     <maintenance>
         <pages>
             <search>
