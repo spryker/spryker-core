@@ -56,14 +56,4 @@ abstract class AbstractPaymentMethod
         ));
     }
 
-    /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
-     *
-     * @todo: use currency/money bundle #989
-     */
-    protected function getCurrencyManager()
-    {
-        return CurrencyManager::getInstance();
-    }
-
 }

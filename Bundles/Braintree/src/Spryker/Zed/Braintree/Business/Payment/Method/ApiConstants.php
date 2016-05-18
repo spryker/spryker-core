@@ -17,10 +17,6 @@ interface ApiConstants
     const TRANSACTION_MODE_TEST = 'CONNECTOR_TEST';
     const TRANSACTION_MODE_LIVE = 'LIVE';
 
-    const PRESENTATION_AMOUNT = 'PRESENTATION.AMOUNT';
-    const PRESENTATION_USAGE = 'PRESENTATION.USAGE';
-    const PRESENTATION_CURRENCY = 'PRESENTATION.CURRENCY';
-
     const SALE = 'sale';
     const CREDIT = 'credit';
 

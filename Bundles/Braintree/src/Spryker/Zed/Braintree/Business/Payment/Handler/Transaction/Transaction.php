@@ -63,7 +63,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
             return $responseTransfer;
         }
 
-        $this->initializeBrainTree();
+        $this->initializeBraintree();
 
         $options = [
             \Braintree\Transaction::THREE_D_SECURE => [
@@ -131,9 +131,8 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     public function authorizePayment(OrderTransfer $orderTransfer, $idPayment)
     {
         $paymentEntity = $this->getPaymentEntity($idPayment);
-        //$methodMapper = $this->getMethodMapper($paymentEntity->getMethodType());
 
-        $this->initializeBrainTree();
+        $this->initializeBraintree();
         $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::SALE, ApiConstants::TRANSACTION_CODE_AUTHORIZE, $idPayment);
 
         $transaction = \Braintree\Transaction::find($paymentEntity->getTransactionId());
@@ -192,7 +191,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     {
         $paymentEntity = $this->getPaymentEntity($idPayment);
 
-        $this->initializeBrainTree();
+        $this->initializeBraintree();
         $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::CREDIT, ApiConstants::TRANSACTION_CODE_REVERSAL, $idPayment);
 
         // For status of authorized or submittedForSettlement
@@ -234,7 +233,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
 
         $transactionId = $paymentEntity->getTransactionId();
 
-        $this->initializeBrainTree();
+        $this->initializeBraintree();
         $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::SALE, ApiConstants::TRANSACTION_CODE_CAPTURE, $idPayment);
 
         $response = \Braintree\Transaction::submitForSettlement($transactionId);
@@ -275,7 +274,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
 
         $transactionId = $paymentEntity->getTransactionId();
 
-        $this->initializeBrainTree();
+        $this->initializeBraintree();
 
         $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::CREDIT, ApiConstants::TRANSACTION_CODE_REFUND, $idPayment);
 
@@ -381,7 +380,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @return void
      */
-    protected function initializeBrainTree()
+    protected function initializeBraintree()
     {
         \Braintree\Configuration::environment($this->config->getEnvironment());
         \Braintree\Configuration::merchantId($this->config->getMerchantId());
