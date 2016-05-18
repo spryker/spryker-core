@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * This file is part of the Spryker Demoshop.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Yves\Payolution\Form\DataProvider;
@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\PayolutionCalculationPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\Payolution\Form\InstallmentSubForm;
-use Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface;
+use Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface;
 
 class InstallmentDataProvider implements DataProviderInterface
 {
@@ -27,27 +27,20 @@ class InstallmentDataProvider implements DataProviderInterface
     protected $payolutionClient;
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
-     */
-    protected $cartClient;
-
-    /**
      * @param \Spryker\Client\Payolution\PayolutionClientInterface $payolutionClient
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
      */
-    public function __construct(PayolutionClientInterface $payolutionClient, CartClientInterface $cartClient)
+    public function __construct(PayolutionClientInterface $payolutionClient)
     {
         $this->payolutionClient = $payolutionClient;
-        $this->cartClient = $cartClient;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
-    public function getData()
+    public function getData(AbstractTransfer $quoteTransfer)
     {
-        $quoteTransfer = $this->getDataClass();
-
         if ($quoteTransfer->getPayment() === null) {
             $paymentTransfer = new PaymentTransfer();
             $paymentTransfer->setPayolution(new PayolutionPaymentTransfer());
@@ -59,31 +52,37 @@ class InstallmentDataProvider implements DataProviderInterface
     }
 
     /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(AbstractTransfer $quoteTransfer)
     {
         return [
-            InstallmentSubForm::OPTION_INSTALLMENT_PAYMENT_DETAIL => $this->getInstallmentPaymentChoices(),
+            InstallmentSubForm::OPTION_INSTALLMENT_PAYMENT_DETAIL => $this->getInstallmentPaymentChoices(
+                $quoteTransfer
+            ),
         ];
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return array
      */
-    protected function getInstallmentPaymentChoices()
+    protected function getInstallmentPaymentChoices(QuoteTransfer $quoteTransfer)
     {
-        $calculationResponseTransfer = $this->getInstallmentPayments();
-
+        $calculationResponseTransfer = $this->getInstallmentPayments($quoteTransfer);
         return $this->buildChoices($calculationResponseTransfer->getPaymentDetails());
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
-    protected function getInstallmentPayments()
+    protected function getInstallmentPayments(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer = $this->getDataClass();
         if ($this->payolutionClient->hasInstallmentPaymentsInSession()) {
             $calculationResponseTransfer = $this->payolutionClient->getInstallmentPaymentsFromSession();
 
@@ -93,7 +92,6 @@ class InstallmentDataProvider implements DataProviderInterface
         }
 
         $calculationResponseTransfer = $this->payolutionClient->calculateInstallmentPayments($quoteTransfer);
-
         return $this->payolutionClient->storeInstallmentPaymentsInSession($calculationResponseTransfer);
     }
 
@@ -154,14 +152,6 @@ class InstallmentDataProvider implements DataProviderInterface
     protected function convertCentToDecimal($amount)
     {
         return CurrencyManager::getInstance()->convertCentToDecimal($amount);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function getDataClass()
-    {
-        return $this->cartClient->getQuote();
     }
 
 }

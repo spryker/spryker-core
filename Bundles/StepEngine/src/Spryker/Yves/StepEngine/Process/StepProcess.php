@@ -8,6 +8,7 @@
 namespace Spryker\Yves\StepEngine\Process;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
 use Spryker\Yves\StepEngine\Process\Steps\StepInterface;
 use Spryker\Yves\StepEngine\Process\Steps\StepWithExternalRedirectInterface;
@@ -39,22 +40,25 @@ class StepProcess implements StepProcessInterface
     protected $urlGenerator;
 
     /**
-     * @var
+     * @var DataContainerInterface
      */
     protected $dataContainer;
 
     /**
-     * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface[] $steps
+     * @param array $steps
+     * @param \Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface $dataContainer
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     * @param string $errorRoute
+     * @param $errorRoute
      */
     public function __construct(
         array $steps,
+        DataContainerInterface $dataContainer,
         UrlGeneratorInterface $urlGenerator,
         $errorRoute
     ) {
-        $this->urlGenerator = $urlGenerator;
         $this->steps = $steps;
+        $this->dataContainer = $dataContainer;
+        $this->urlGenerator = $urlGenerator;
         $this->errorRoute = $errorRoute;
     }
 
@@ -66,10 +70,24 @@ class StepProcess implements StepProcessInterface
      */
     public function process(Request $request, FormCollectionHandlerInterface $formCollection = null)
     {
-//        $dataTransfer = $this->dataContainer->get();
-        $currentStep = $this->getCurrentStep($request);
+        $dataTransfer = $this->dataContainer->get();
+        $response = $this->runProcess($request, $dataTransfer, $formCollection);
 
-        if (!$currentStep->preCondition()) {
+        return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function runProcess(Request $request, AbstractTransfer $dataTransfer, FormCollectionHandlerInterface $formCollection = null)
+    {
+        $currentStep = $this->getCurrentStep($request, $dataTransfer);
+
+        if (!$currentStep->preCondition($dataTransfer)) {
             $escapeRoute = $this->getEscapeRoute($currentStep);
 
             return $this->createRedirectResponse($this->getUrlFromRoute($escapeRoute));
@@ -81,41 +99,43 @@ class StepProcess implements StepProcessInterface
             return $this->createRedirectResponse($this->getUrlFromRoute($stepRoute));
         }
 
-        if (!$currentStep->requireInput()) {
-            $this->executeWithoutInput($currentStep, $request);
+        if (!$currentStep->requireInput($dataTransfer)) {
+            $this->executeWithoutInput($currentStep, $request, $dataTransfer);
 
-            return $this->createRedirectResponse($this->getNextRedirectUrl($currentStep));
+            return $this->createRedirectResponse($this->getNextRedirectUrl($currentStep, $dataTransfer));
         }
 
         if (!$formCollection) {
-            $this->executeWithoutInput($currentStep, $request);
+            $this->executeWithoutInput($currentStep, $request, $dataTransfer);
 
-            return $this->getTemplateVariables($currentStep);
+            return $this->getTemplateVariables($currentStep, $dataTransfer);
         }
 
-        if ($formCollection->hasSubmittedForm($request)) {
-            $form = $formCollection->handleRequest($request);
+        if ($formCollection->hasSubmittedForm($request, $dataTransfer)) {
+            $form = $formCollection->handleRequest($request, $dataTransfer);
             if ($form->isValid()) {
-                $this->executeWithFormInput($currentStep, $request, $form->getData());
-                return $this->createRedirectResponse($this->getNextRedirectUrl($currentStep));
+                $this->executeWithFormInput($currentStep, $request, $dataTransfer, $form->getData());
+
+                return $this->createRedirectResponse($this->getNextRedirectUrl($currentStep, $dataTransfer));
             }
         } else {
-            $formCollection->provideDefaultFormData();
+            $formCollection->provideDefaultFormData($dataTransfer);
         }
 
-        return $this->getTemplateVariables($currentStep, $formCollection);
+        return $this->getTemplateVariables($currentStep, $dataTransfer, $formCollection);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Spryker\Yves\StepEngine\Process\Steps\StepInterface
      */
-    protected function getCurrentStep(Request $request)
+    protected function getCurrentStep(Request $request, AbstractTransfer $dataTransfer)
     {
         $currentStep = null;
         foreach ($this->steps as $step) {
-            if (!$step->postCondition() || $request->get('_route') === $step->getStepRoute()) {
+            if (!$step->postCondition($dataTransfer) || $request->get('_route') === $step->getStepRoute()) {
                 $currentStep = $step;
                 break;
             }
@@ -219,35 +239,37 @@ class StepProcess implements StepProcessInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return string
      */
-    protected function getNextRedirectUrl(StepInterface $currentStep)
+    protected function getNextRedirectUrl(StepInterface $currentStep, AbstractTransfer $dataTransfer)
     {
         if (($currentStep instanceof StepWithExternalRedirectInterface) && !empty($currentStep->getExternalRedirectUrl())) {
             return $currentStep->getExternalRedirectUrl();
         }
 
-        $route = $this->getNextStepRoute($currentStep);
+        $route = $this->getNextStepRoute($currentStep, $dataTransfer);
 
         return $this->getUrlFromRoute($route);
     }
 
     /**
      * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return string
      */
-    protected function getNextStepRoute(StepInterface $currentStep)
+    protected function getNextStepRoute(StepInterface $currentStep, AbstractTransfer $dataTransfer)
     {
-        if ($currentStep->postCondition()) {
+        if ($currentStep->postCondition($dataTransfer)) {
             $nextStep = $this->getNextStep($currentStep);
             if ($nextStep !== null) {
                 return $nextStep->getStepRoute();
             }
         }
 
-        if ($currentStep->requireInput()) {
+        if ($currentStep->requireInput($dataTransfer)) {
             return $currentStep->getStepRoute();
         } else {
             return $this->errorRoute;
@@ -295,17 +317,19 @@ class StepProcess implements StepProcessInterface
     /**
      * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return void
      */
-    protected function executeWithoutInput(StepInterface $currentStep, Request $request)
+    protected function executeWithoutInput(StepInterface $currentStep, Request $request, AbstractTransfer $dataTransfer)
     {
-        $currentStep->execute($request);
+        $currentStep->execute($request, $dataTransfer);
     }
 
     /**
      * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      * @param \Spryker\Shared\Transfer\AbstractTransfer $formTransfer
      *
      * @return void
@@ -313,9 +337,13 @@ class StepProcess implements StepProcessInterface
     protected function executeWithFormInput(
         StepInterface $currentStep,
         Request $request,
+        AbstractTransfer $dataTransfer,
         AbstractTransfer $formTransfer
     ) {
-        $currentStep->execute($request, $formTransfer);
+        $dataTransfer->fromArray($formTransfer->modifiedToArray());
+        $dataTransfer = $currentStep->execute($request, $formTransfer);
+
+        $this->dataContainer->set($dataTransfer);
     }
 
     /**
@@ -330,19 +358,20 @@ class StepProcess implements StepProcessInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
      * @return array
      */
-    protected function getTemplateVariables(StepInterface $currentStep, FormCollectionHandlerInterface $formCollection = null)
+    protected function getTemplateVariables(StepInterface $currentStep, AbstractTransfer $dataTransfer, FormCollectionHandlerInterface $formCollection = null)
     {
         $templateVariables = [
             'previousStepUrl' => $this->getUrlFromRoute($this->getPreviousStepRoute()),
         ];
-        $templateVariables = array_merge($templateVariables, $currentStep->getTemplateVariables());
+        $templateVariables = array_merge($templateVariables, $currentStep->getTemplateVariables($dataTransfer));
 
         if ($formCollection !== null) {
-            foreach ($formCollection->getForms() as $form) {
+            foreach ($formCollection->getForms($dataTransfer) as $form) {
                 $templateVariables[$form->getName()] = $form->createView();
             }
         }

@@ -17,7 +17,7 @@ interface SubFormPluginInterface
     public function createSubForm();
 
     /**
-     * @return \Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface
      */
     public function createSubFormDataProvider();
 

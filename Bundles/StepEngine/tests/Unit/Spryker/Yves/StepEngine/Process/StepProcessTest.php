@@ -1,14 +1,16 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Unit\Spryker\Yves\StepEngine\Process;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
 use Spryker\Client\Cart\CartClientInterface;
+use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
+use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
 use Spryker\Yves\StepEngine\Process\StepProcess;
 use Spryker\Yves\StepEngine\Process\Steps\StepInterface;
 use Symfony\Component\Form\FormInterface;
@@ -170,10 +172,13 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
      */
     protected function createStepProcess(array $steps, QuoteTransfer $quoteTransfer)
     {
+        $dataContainerMock = $this->getDataContainerMock();
+        $dataContainerMock->method('get')->willReturn($quoteTransfer);
+        
         return new StepProcess(
             $steps,
+            $dataContainerMock,
             $this->createUrlGeneratorMock(),
-            $this->createCartClientMock($quoteTransfer),
             'error_route'
         );
     }
@@ -240,6 +245,16 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
     protected function getFormCollectionHandlerMock()
     {
         return $this->getMock(FormCollectionHandlerInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
+     */
+    private function getDataContainerMock()
+    {
+        $dataContainerMock = $this->getMockBuilder(DataContainerInterface::class);
+
+        return $dataContainerMock->getMock();
     }
 
 }

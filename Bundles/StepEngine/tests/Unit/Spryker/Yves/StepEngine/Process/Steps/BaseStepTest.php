@@ -8,8 +8,7 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Process\Steps;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Process\Steps\StepInterface;
 use Unit\Spryker\Yves\StepEngine\Process\Steps\Fixtures\BaseStep;
 
@@ -59,30 +58,7 @@ class BaseStepTest extends \PHPUnit_Framework_TestCase
     public function testGetTemplateVariables()
     {
         $baseStep = $this->getBaseStepInstance();
-        $this->assertSame([], $baseStep->getTemplateVariables());
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsCartEmptyReturnTrue()
-    {
-        $baseStep = $this->getBaseStepInstance();
-
-        $this->assertTrue($baseStep->isCartEmpty(new QuoteTransfer()));
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsCartEmptyReturnFalse()
-    {
-        $baseStep = $this->getBaseStepInstance();
-
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->addItem(new ItemTransfer());
-
-        $this->assertFalse($baseStep->isCartEmpty($quoteTransfer));
+        $this->assertSame([], $baseStep->getTemplateVariables($this->getDataTransferMock()));
     }
 
     /**
@@ -91,6 +67,14 @@ class BaseStepTest extends \PHPUnit_Framework_TestCase
     private function getBaseStepInstance()
     {
         return new BaseStep(self::STEP_ROUTE, self::ESCAPE_ROUTE);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Transfer\AbstractTransfer
+     */
+    private function getDataTransferMock()
+    {
+        return $this->getMockBuilder(AbstractTransfer::class)->getMock();
     }
 
 }

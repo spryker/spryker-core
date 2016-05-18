@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Process\Steps\Fixtures;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Yves\StepEngine\Process\Steps\BaseStep as AbstractBaseStep;
@@ -16,55 +15,43 @@ class BaseStep extends AbstractBaseStep
 {
 
     /**
-     * @return AbstractTransfer
-     */
-    public function getDataClass()
-    {
-        return new TestTransfer();
-    }
-
-    /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
      * @return bool
      */
-    public function preCondition()
+    public function preCondition(AbstractTransfer $dataTransfer)
     {
         return true;
     }
 
     /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
      * @return bool
      */
-    public function requireInput()
+    public function requireInput(AbstractTransfer $dataTransfer)
     {
         return true;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Transfer\AbstractTransfer|null $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
      *
      * @return void
      */
-    public function execute(Request $request, AbstractTransfer $transfer = null)
+    public function execute(Request $request, AbstractTransfer $transfer)
     {
     }
 
     /**
-     * @return bool
-     */
-    public function postCondition()
-    {
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
-    public function isCartEmpty(QuoteTransfer $quoteTransfer)
+    public function postCondition(AbstractTransfer $dataTransfer)
     {
-        return parent::isCartEmpty($quoteTransfer);
+        return true;
     }
 
 }

@@ -7,33 +7,40 @@
 
 namespace Spryker\Yves\StepEngine\Form;
 
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 interface FormCollectionHandlerInterface
 {
 
     /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
      * @return \Symfony\Component\Form\FormInterface[]
      */
-    public function getForms();
+    public function getForms(AbstractTransfer $dataTransfer);
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
-    public function hasSubmittedForm(Request $request);
+    public function hasSubmittedForm(Request $request, AbstractTransfer $dataTransfer);
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface|null
      */
-    public function handleRequest(Request $request);
+    public function handleRequest(Request $request, AbstractTransfer $dataTransfer);
 
     /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
      * @return void
      */
-    public function provideDefaultFormData();
+    public function provideDefaultFormData(AbstractTransfer $dataTransfer);
 
 }

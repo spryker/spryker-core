@@ -38,7 +38,7 @@ class PayolutionFactory extends AbstractFactory
      */
     public function createInstallmentFormDataProvider()
     {
-        return new InstallmentDataProvider($this->getPayolutionClient(), $this->getCartClient());
+        return new InstallmentDataProvider($this->getPayolutionClient());
     }
 
     /**
@@ -46,7 +46,7 @@ class PayolutionFactory extends AbstractFactory
      */
     public function createInvoiceFormDataProvider()
     {
-        return new InvoiceDataProvider($this->getCartClient());
+        return new InvoiceDataProvider();
     }
 
     /**
@@ -63,14 +63,6 @@ class PayolutionFactory extends AbstractFactory
     public function getPayolutionClient()
     {
         return $this->getProvidedDependency(PayolutionDependencyProvider::CLIENT_PAYOLUTION);
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\CartClientInterface
-     */
-    public function getCartClient()
-    {
-        return $this->getProvidedDependency(PayolutionDependencyProvider::CLIENT_CART);
     }
 
 }

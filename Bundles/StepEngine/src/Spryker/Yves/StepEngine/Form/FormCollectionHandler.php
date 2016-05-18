@@ -9,7 +9,7 @@ namespace Spryker\Yves\StepEngine\Form;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
-use Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface;
+use Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +23,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     protected $formFactory;
 
     /**
-     * @var \Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface
+     * @var \Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface
      */
     protected $dataProvider;
 
@@ -40,7 +40,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     /**
      * @param array $formTypes
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface|null $dataProvider
+     * @param \Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface|null $dataProvider
      */
     public function __construct(
         array $formTypes = [],
@@ -53,57 +53,27 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface[]
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
+     * @return array|\Symfony\Component\Form\FormInterface[]
      */
-    public function getForms()
+    public function getForms(AbstractTransfer $dataTransfer)
     {
-        if (empty($this->forms)) {
-            $this->forms = $this->createForms();
+        if (!$this->forms) {
+            $this->forms = $this->createForms($dataTransfer);
         }
-
         return $this->forms;
     }
 
     /**
-     * @return array
-     */
-    protected function createForms()
-    {
-        $forms = [];
-        foreach ($this->formTypes as $formType) {
-            $forms[] = $this->createForm($formType);
-        }
-
-        return $forms;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormTypeInterface $formType
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function createForm(FormTypeInterface $formType)
-    {
-        $transfer = $this->getTransfer();
-        $formOptions = [
-            'data_class' => get_class($transfer)
-        ];
-
-        if ($this->dataProvider) {
-            $formOptions = array_merge($formOptions, $this->dataProvider->getOptions($transfer));
-        }
-
-        return $this->formFactory->create($formType, null, $formOptions);
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
-    public function hasSubmittedForm(Request $request)
+    public function hasSubmittedForm(Request $request, AbstractTransfer $dataTransfer)
     {
-        foreach ($this->getForms() as $form) {
+        foreach ($this->getForms($dataTransfer) as $form) {
             if ($request->request->has($form->getName())) {
                 return true;
             }
@@ -114,18 +84,17 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @throws \Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function handleRequest(Request $request)
+    public function handleRequest(Request $request, AbstractTransfer $dataTransfer)
     {
-        $transfer = $this->getTransfer();
-
-        foreach ($this->getForms() as $form) {
+        foreach ($this->getForms($dataTransfer) as $form) {
             if ($request->request->has($form->getName())) {
-                $form->setData($transfer);
+                $form->setData($dataTransfer);
 
                 return $form->handleRequest($request);
             }
@@ -135,22 +104,65 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
      * @return void
      */
-    public function provideDefaultFormData()
+    public function provideDefaultFormData(AbstractTransfer $dataTransfer)
     {
-        $transfer = $this->getTransfer();
+        $dataTransfer = $this->getFormData($dataTransfer);
 
-        foreach ($this->getForms() as $form) {
-            $form->setData($transfer);
+        foreach ($this->getForms($dataTransfer) as $form) {
+            $form->setData($dataTransfer);
         }
     }
 
     /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
      * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
-    protected function getTransfer()
+    protected function getFormData(AbstractTransfer $dataTransfer)
     {
-        return $this->dataProvider->getData();
+        if ($this->dataProvider !== null) {
+            return $this->dataProvider->getData($dataTransfer);
+        }
+
+        return $dataTransfer;
     }
+
+    /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
+     * @return array
+     */
+    protected function createForms(AbstractTransfer $dataTransfer)
+    {
+        $forms = [];
+        foreach ($this->formTypes as $formType) {
+            $forms[] = $this->createForm($formType, $dataTransfer);
+        }
+
+        return $forms;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormTypeInterface $formType
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function createForm(FormTypeInterface $formType, AbstractTransfer $dataTransfer)
+    {
+        $formOptions = [
+            'data_class' => get_class($dataTransfer)
+        ];
+
+        if ($this->dataProvider) {
+            $formOptions = array_merge($formOptions, $this->dataProvider->getOptions($dataTransfer));
+        }
+
+        return $this->formFactory->create($formType, null, $formOptions);
+    }
+
 }

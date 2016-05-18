@@ -25,7 +25,7 @@ class PayolutionInstallmentSubFormPlugin extends AbstractPlugin implements SubFo
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface
      */
     public function createSubFormDataProvider()
     {

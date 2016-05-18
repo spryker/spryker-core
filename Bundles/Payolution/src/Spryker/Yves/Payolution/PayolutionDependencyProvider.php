@@ -13,7 +13,6 @@ use Spryker\Yves\Kernel\Container;
 class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const CLIENT_CART = 'cart client';
     const CLIENT_PAYOLUTION = 'payolution client';
 
     /**
@@ -23,10 +22,6 @@ class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container[self::CLIENT_CART] = function (Container $container) {
-            return $container->getLocator()->cart()->client();
-        };
-        
         $container[self::CLIENT_PAYOLUTION] = function (Container $container) {
             return $container->getLocator()->payolution()->client();
         };

@@ -14,23 +14,22 @@ interface StepInterface
 {
 
     /**
-     * @return AbstractTransfer
-     */
-    public function getDataClass();
-
-    /**
      * Requirements for this step, return true when satisfied.
+     *
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
-    public function preCondition();
+    public function preCondition(AbstractTransfer $dataTransfer);
 
     /**
      * Require input, should we render view with form or just skip step after calling execute.
      *
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
      * @return bool
      */
-    public function requireInput();
+    public function requireInput(AbstractTransfer $dataTransfer);
 
     /**
      * Execute step logic, happens after form submit if provided, gets AbstractTransfer filled by form data.
@@ -38,16 +37,18 @@ interface StepInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
      *
-     * @return void
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
-    public function execute(Request $request, AbstractTransfer $transfer = null);
+    public function execute(Request $request, AbstractTransfer $transfer);
 
     /**
      * Conditions that should be met for this step to be marked as completed. returns true when satisfied.
      *
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
      * @return bool
      */
-    public function postCondition();
+    public function postCondition(AbstractTransfer $dataTransfer);
 
     /**
      * Current step route.
@@ -64,8 +65,10 @@ interface StepInterface
     public function getEscapeRoute();
 
     /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $quoteTransfer
+     *
      * @return array
      */
-    public function getTemplateVariables();
+    public function getTemplateVariables(AbstractTransfer $quoteTransfer);
 
 }

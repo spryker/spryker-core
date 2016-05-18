@@ -7,9 +7,8 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Form;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClientInterface;
-use Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface;
+use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
@@ -44,7 +43,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getDataProviderMock());
 
-        $this->assertInternalType('array', $formCollectionHandler->getForms());
+        $this->assertInternalType('array', $formCollectionHandler->getForms($this->getDataTransferMock()));
     }
 
     /**
@@ -61,7 +60,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
         $dataProviderMock->expects($this->once())->method('getOptions')->willReturn([]);
         $formCollectionHandler = new FormCollectionHandler([$formTypeMock], $formFactoryMock, $dataProviderMock);
 
-        $formCollectionHandler->getForms();
+        $formCollectionHandler->getForms($this->getDataTransferMock());
     }
 
     /**
@@ -78,7 +77,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
         $dataProviderMock->expects($this->once())->method('getOptions')->willReturn([]);
         $formCollectionHandler = new FormCollectionHandler([$formTypeMock], $formFactoryMock, $dataProviderMock);
 
-        $formCollectionHandler->getForms();
+        $formCollectionHandler->getForms($this->getDataTransferMock());
     }
 
     /**
@@ -90,7 +89,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
         $formCollectionHandlerMock->method('getForms')->willReturn($this->getForms());
 
         $request = new Request([], ['formA' => []]);
-        $this->assertTrue($formCollectionHandlerMock->hasSubmittedForm($request));
+        $this->assertTrue($formCollectionHandlerMock->hasSubmittedForm($request, $this->getDataTransferMock()));
     }
 
     /**
@@ -100,7 +99,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getDataProviderMock());
 
-        $this->assertFalse($formCollectionHandler->hasSubmittedForm(Request::createFromGlobals()));
+        $this->assertFalse($formCollectionHandler->hasSubmittedForm(Request::createFromGlobals(), $this->getDataTransferMock()));
     }
 
     /**
@@ -112,7 +111,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(InvalidFormHandleRequest::class);
 
-        $formCollectionHandler->handleRequest(Request::createFromGlobals());
+        $formCollectionHandler->handleRequest(Request::createFromGlobals(), $this->getDataTransferMock());
     }
 
     /**
@@ -130,7 +129,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
         $formCollectionHandlerMock->method('getForms')->willReturn($formMocks);
 
         $request = new Request([], ['formA' => []]);
-        $this->assertInstanceOf(FormInterface::class, $formCollectionHandlerMock->handleRequest($request));
+        $this->assertInstanceOf(FormInterface::class, $formCollectionHandlerMock->handleRequest($request, $this->getDataTransferMock()));
     }
 
     public function testProvideDefaultFormData()
@@ -143,7 +142,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
 
         $formCollectionHandlerMock->method('getForms')->willReturn($formMocks);
 
-        $formCollectionHandlerMock->provideDefaultFormData();
+        $formCollectionHandlerMock->provideDefaultFormData($this->getDataTransferMock());
     }
 
     /**
@@ -152,10 +151,29 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
     public function testProvideDefaultFormDataInvokesDataProvider()
     {
         $dataProviderMock = $this->getDataProviderMock();
-        $dataProviderMock->expects($this->once())->method('getData')->willReturn([]);
-        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(['create']), $dataProviderMock);
+        $dataProviderMock->expects($this->once())->method('getOptions')->willReturn([]);
 
-        $formCollectionHandler->provideDefaultFormData();
+        $formMock = $this->getMockForAbstractClass(FormInterface::class);
+        $formFactoryMock = $this->getFormFactoryMock(['create']);
+        $formFactoryMock->method('create')->willReturn($formMock);
+
+        $formTypeMock = $this->getMockForAbstractClass(FormTypeInterface::class);
+        $formCollectionHandler = new FormCollectionHandler([$formTypeMock], $formFactoryMock, $dataProviderMock);
+        $formCollectionHandler->provideDefaultFormData($this->getDataTransferMock());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProvideDefaultFormWithoutDataProvider()
+    {
+        $formMock = $this->getMockForAbstractClass(FormInterface::class);
+        $formFactoryMock = $this->getFormFactoryMock(['create']);
+        $formFactoryMock->method('create')->willReturn($formMock);
+
+        $formTypeMock = $this->getMockForAbstractClass(FormTypeInterface::class);
+        $formCollectionHandler = new FormCollectionHandler([$formTypeMock], $formFactoryMock);
+        $formCollectionHandler->provideDefaultFormData($this->getDataTransferMock());
     }
 
     /**
@@ -203,13 +221,24 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DataProviderInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface
      */
     private function getDataProviderMock()
     {
         $dataProviderMock = $this->getMock(DataProviderInterface::class);
+        $dataProviderMock->method('getData')->willReturnArgument(0);
 
         return $dataProviderMock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Transfer\AbstractTransfer
+     */
+    private function getDataTransferMock()
+    {
+        $dataTransferMock = $this->getMockBuilder(AbstractTransfer::class);
+
+        return $dataTransferMock->getMock();
     }
 
 }

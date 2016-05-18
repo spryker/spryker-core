@@ -1,40 +1,27 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * This file is part of the Spryker Demoshop.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Yves\Payolution\Form\DataProvider;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
-use Spryker\Client\Cart\CartClientInterface;
-use Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface;
+use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface;
 
 class InvoiceDataProvider implements DataProviderInterface
 {
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
+     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
-    protected $cartClient;
-
-    /**
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
-     */
-    public function __construct(CartClientInterface $cartClient)
+    public function getData(AbstractTransfer $quoteTransfer)
     {
-        $this->cartClient = $cartClient;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getData()
-    {
-        $quoteTransfer = $this->getDataClass();
-
         if ($quoteTransfer->getPayment() === null) {
             $paymentTransfer = new PaymentTransfer();
             $paymentTransfer->setPayolution(new PayolutionPaymentTransfer());
@@ -46,19 +33,13 @@ class InvoiceDataProvider implements DataProviderInterface
     }
 
     /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $quoteTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(AbstractTransfer $quoteTransfer)
     {
         return [];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function getDataClass()
-    {
-        return $this->cartClient->getQuote();
     }
 
 }

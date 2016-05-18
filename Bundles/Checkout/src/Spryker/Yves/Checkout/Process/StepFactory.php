@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\Checkout\Process;
 
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
+use Spryker\Yves\Checkout\DataContainer\DataContainer;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Process\StepProcess;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -27,14 +27,31 @@ class StepFactory extends AbstractFactory
     /**
      * @param array $steps
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
      * @param string $errorRoute
      *
      * @return \Spryker\Yves\StepEngine\Process\StepProcess
      */
-    public function createStepProcess(array $steps, UrlGeneratorInterface $urlGenerator, CartClientInterface $cartClient, $errorRoute)
+    public function createStepProcess(array $steps, UrlGeneratorInterface $urlGenerator, $errorRoute)
     {
-        return new StepProcess($steps, $urlGenerator, $cartClient, $errorRoute);
+        return new StepProcess($steps, $this->createDataContainer(), $urlGenerator, $errorRoute);
+    }
+
+    /**
+     * @return \Spryker\Yves\Checkout\DataContainer\DataContainer
+     */
+    protected function createDataContainer()
+    {
+        return new DataContainer($this->getCartClient());
+    }
+
+    /**
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return \Spryker\Client\Cart\CartClientInterface
+     */
+    protected function getCartClient()
+    {
+        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CART);
     }
 
 }

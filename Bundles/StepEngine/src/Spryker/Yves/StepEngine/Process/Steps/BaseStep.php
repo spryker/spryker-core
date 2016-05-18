@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Process\Steps;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 abstract class BaseStep implements StepInterface
 {
@@ -49,19 +49,11 @@ abstract class BaseStep implements StepInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return bool
-     */
-    protected function isCartEmpty(QuoteTransfer $quoteTransfer)
-    {
-        return count($quoteTransfer->getItems()) === 0;
-    }
-
-    /**
      * @return array
      */
-    public function getTemplateVariables()
+    public function getTemplateVariables(AbstractTransfer $dataTransfer)
     {
         return [];
     }
