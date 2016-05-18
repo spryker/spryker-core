@@ -31,7 +31,7 @@ class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
     {
         $customerEntity = $orderEntity->getCustomer();
         $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($customerEntity->toArray());
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         $orderTransfer = $this->getOrderTransfer($orderEntity);
         $orderTransfer->setCustomer($customerTransfer);

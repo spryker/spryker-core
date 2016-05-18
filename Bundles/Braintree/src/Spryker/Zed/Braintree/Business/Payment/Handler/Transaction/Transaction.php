@@ -382,7 +382,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         }
 
         $logEntity = new SpyPaymentBraintreeTransactionStatusLog();
-        $logEntity->fromArray($responseTransfer->toArray());
+        $logEntity->fromArray($responseTransfer->toArray(), true);
         $logEntity->setFkPaymentBraintree($idPayment);
         $logEntity->save();
     }
