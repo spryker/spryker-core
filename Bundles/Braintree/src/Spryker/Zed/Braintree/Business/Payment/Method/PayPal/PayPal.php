@@ -63,7 +63,7 @@ class PayPal extends AbstractPaymentMethod implements PayPalInterface
         return $this->getBaseTransactionRequestForPayment(
             $orderTransfer,
             $paymentEntity,
-            ApiConstants::PAYMENT_CODE_REVERSAL,
+            ApiConstants::STATUS_CODE_REVERSAL,
             $uniqueId
         );
     }
@@ -83,7 +83,7 @@ class PayPal extends AbstractPaymentMethod implements PayPalInterface
         return $this->getBaseTransactionRequestForPayment(
             $orderTransfer,
             $paymentEntity,
-            ApiConstants::PAYMENT_CODE_CAPTURE,
+            ApiConstants::STATUS_CODE_CAPTURE,
             $uniqueId
         );
     }
@@ -103,7 +103,7 @@ class PayPal extends AbstractPaymentMethod implements PayPalInterface
         return $this->getBaseTransactionRequestForPayment(
             $orderTransfer,
             $paymentEntity,
-            ApiConstants::PAYMENT_CODE_REFUND,
+            ApiConstants::STATUS_CODE_REFUND,
             $uniqueId
         );
     }

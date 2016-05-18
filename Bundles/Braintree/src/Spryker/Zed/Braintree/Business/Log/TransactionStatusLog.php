@@ -34,10 +34,10 @@ class TransactionStatusLog implements TransactionStatusLogInterface
      */
     public function isAuthorizationApproved(OrderTransfer $orderTransfer)
     {
-        return $this->hasTransactionLogStatus(
+        return $this->hasTransactionStatusLog(
             $orderTransfer,
             ApiConstants::TRANSACTION_CODE_AUTHORIZE,
-            ApiConstants::PAYMENT_CODE_AUTHORIZE,
+            ApiConstants::STATUS_CODE_AUTHORIZE,
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
@@ -49,10 +49,10 @@ class TransactionStatusLog implements TransactionStatusLogInterface
      */
     public function isReversalApproved(OrderTransfer $orderTransfer)
     {
-        return $this->hasTransactionLogStatus(
+        return $this->hasTransactionStatusLog(
             $orderTransfer,
             ApiConstants::TRANSACTION_CODE_REVERSAL,
-            ApiConstants::PAYMENT_CODE_REVERSAL,
+            ApiConstants::STATUS_CODE_REVERSAL,
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
@@ -64,19 +64,19 @@ class TransactionStatusLog implements TransactionStatusLogInterface
      */
     public function isCaptureApproved(OrderTransfer $orderTransfer)
     {
-        if ($this->hasTransactionLogStatus(
+        if ($this->hasTransactionStatusLog(
             $orderTransfer,
             ApiConstants::TRANSACTION_CODE_CAPTURE,
-            ApiConstants::PAYMENT_CODE_CAPTURE,
+            ApiConstants::STATUS_CODE_CAPTURE,
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         )) {
             return true;
         }
 
-        return $this->hasTransactionLogStatus(
+        return $this->hasTransactionStatusLog(
             $orderTransfer,
             ApiConstants::TRANSACTION_CODE_CAPTURE,
-            ApiConstants::PAYMENT_CODE_CAPTURE_SUBMITTED,
+            ApiConstants::STATUS_CODE_CAPTURE_SUBMITTED,
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
@@ -88,10 +88,10 @@ class TransactionStatusLog implements TransactionStatusLogInterface
      */
     public function isRefundApproved(OrderTransfer $orderTransfer)
     {
-        return $this->hasTransactionLogStatus(
+        return $this->hasTransactionStatusLog(
             $orderTransfer,
             ApiConstants::TRANSACTION_CODE_REFUND,
-            [ApiConstants::PAYMENT_CODE_REVERSAL, ApiConstants::PAYMENT_CODE_REFUND],
+            [ApiConstants::STATUS_CODE_REVERSAL, ApiConstants::STATUS_CODE_REFUND],
             ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
@@ -104,7 +104,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
      *
      * @return bool
      */
-    private function hasTransactionLogStatus(OrderTransfer $orderTransfer, $transactionCode, $statusCode, $expectedStatusReasonCode)
+    private function hasTransactionStatusLog(OrderTransfer $orderTransfer, $transactionCode, $statusCode, $expectedStatusReasonCode)
     {
         $idSalesOrder = $orderTransfer->getIdSalesOrder();
         $logEntity = $this
@@ -115,7 +115,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
             )
             ->filterByTransactionStatus($statusCode)
             ->findOne();
-        if (!$logEntity) {
+        if (!$logEntity) {dd($idSalesOrder);
             return false;
         }
 

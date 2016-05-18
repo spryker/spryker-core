@@ -137,7 +137,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::SALE, ApiConstants::TRANSACTION_CODE_AUTHORIZE, $idPayment);
 
         $transaction = \Braintree\Transaction::find($paymentEntity->getTransactionId());
-        file_put_contents('xxx_auth.log', print_r($transaction, true));
 
         $responseTransfer = new BraintreeTransactionResponseTransfer();
         $responseTransfer->setTransactionId($paymentEntity->getTransactionId());
@@ -173,7 +172,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         ]);
 
         $customerId = $customerId->customer->id;
-        file_put_contents('xxx3.log', print_r($customerId, true));
 
 
         $result = \Braintree\PaymentMethod::create([
@@ -181,8 +179,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
             'paymentMethodNonce' => $paymentEntity->getNonce()
         ]);
         $token = $result->paymentMethod->token;
-        file_put_contents('xxx4.log', print_r($token, true));
-
         */
     }
 
@@ -195,14 +191,12 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     public function revertPayment(OrderTransfer $orderTransfer, $idPayment)
     {
         $paymentEntity = $this->getPaymentEntity($idPayment);
-        //$statusLogEntity = $this->getLatestTransactionStatusLogItem($idPayment);
 
         $this->initializeBrainTree();
         $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::CREDIT, ApiConstants::TRANSACTION_CODE_REVERSAL, $idPayment);
 
         // For status of authorized or submittedForSettlement
         $response = \Braintree\Transaction::void($paymentEntity->getTransactionId());
-        file_put_contents('xxx_void.log', print_r($response, true));
 
         $responseTransfer = new BraintreeTransactionResponseTransfer();
         $responseTransfer->setTransactionId($paymentEntity->getTransactionId());
@@ -237,7 +231,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     public function capturePayment(OrderTransfer $orderTransfer, $idPayment)
     {
         $paymentEntity = $this->getPaymentEntity($idPayment);
-        //$statusLogEntity = $this->getLatestTransactionStatusLogItem($idPayment);
 
         $transactionId = $paymentEntity->getTransactionId();
 
@@ -245,7 +238,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $this->logApiRequest($paymentEntity->getTransactionId(), ApiConstants::SALE, ApiConstants::TRANSACTION_CODE_CAPTURE, $idPayment);
 
         $response = \Braintree\Transaction::submitForSettlement($transactionId);
-        file_put_contents('xxx_capture.log', print_r($response, true));
 
         $responseTransfer = new BraintreeTransactionResponseTransfer();
         $responseTransfer->setTransactionId($paymentEntity->getTransactionId());
@@ -280,7 +272,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     public function refundPayment(OrderTransfer $orderTransfer, $idPayment)
     {
         $paymentEntity = $this->getPaymentEntity($idPayment);
-        //$statusLogEntity = $this->getLatestTransactionStatusLogItem($idPayment);
 
         $transactionId = $paymentEntity->getTransactionId();
 
@@ -382,7 +373,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         }
 
         $logEntity = new SpyPaymentBraintreeTransactionStatusLog();
-        $logEntity->fromArray($responseTransfer->toArray(), true);
+        $logEntity->fromArray($responseTransfer->toArray());
         $logEntity->setFkPaymentBraintree($idPayment);
         $logEntity->save();
     }
