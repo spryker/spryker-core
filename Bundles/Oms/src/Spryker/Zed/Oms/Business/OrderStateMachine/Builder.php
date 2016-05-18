@@ -12,7 +12,7 @@ use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use Spryker\Zed\Oms\OmsConfig;
-use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Builder implements BuilderInterface
 {
@@ -449,7 +449,7 @@ class Builder implements BuilderInterface
      */
     protected function getFinder()
     {
-        return new Finder();
+        return new SymfonyFinder();
     }
 
     /**
@@ -460,7 +460,7 @@ class Builder implements BuilderInterface
      *
      * @return void
      */
-    protected function validateFinder(Finder $finder, $fileName)
+    protected function validateFinder(SymfonyFinder $finder, $fileName)
     {
         if ($finder->count() > 1) {
             throw new StatemachineException(
