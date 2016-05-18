@@ -63,7 +63,7 @@ function init(config) {
     function readyHandler() {
         $form.append('<input type="hidden" name="' + config.nonceInputName + '">');
 
-        $('.checkout-payment input[type="radio"]').on('change', function() {
+        $(config.paymentMethodSelector).on('change', function() {
             $form.find('input[name="' + config.nonceInputName + '"]').val('');
             $errorContainers.empty();
         });

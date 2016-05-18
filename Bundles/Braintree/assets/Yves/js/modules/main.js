@@ -11,7 +11,8 @@ var paymentMethod = require('./payment-method');
 $(document).ready(function() {
     paymentMethod.init({
         formSelector: '#payment-form',
-        currentPaymentMethodSelector: '#paymentForm_paymentSelection input:checked',
+        paymentMethodSelector: '#paymentForm_paymentSelection input[type="radio"]',
+        currentPaymentMethodSelector: '#paymentForm_paymentSelection input[type="radio"]:checked',
         nonceInputName: 'payment_method_nonce'
     });
 });
