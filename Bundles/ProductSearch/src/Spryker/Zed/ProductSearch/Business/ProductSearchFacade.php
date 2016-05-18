@@ -24,7 +24,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      * - The data of the returned page map represents a hydrated Elasticsearch document with all the necessary attribute values
      *
      * @api
-     * 
+     *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param array $attributes
