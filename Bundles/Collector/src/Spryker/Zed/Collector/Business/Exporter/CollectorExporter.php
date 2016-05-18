@@ -8,11 +8,16 @@
 namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Touch\Persistence\Base\SpyTouchQuery;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Exporter\Exception\UndefinedCollectorTypesException;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -41,21 +46,73 @@ class CollectorExporter
     protected $availableCollectorTypes;
 
     /**
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
+     */
+    protected $touchUpdater;
+
+    /**
+     * @var int
+     */
+    protected $chunkSize = 1000;
+
+    /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
      * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
      * @param array $availableCollectorTypes
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      */
     public function __construct(
         TouchQueryContainerInterface $touchQueryContainer,
         CollectorToLocaleInterface $localeFacade,
         ExporterInterface $exporter,
-        array $availableCollectorTypes
+        array $availableCollectorTypes,
+        TouchUpdaterInterface $touchUpdater
     ) {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->exporter = $exporter;
         $this->availableCollectorTypes = $availableCollectorTypes;
+        $this->touchUpdater = $touchUpdater;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @return bool
+     * @throws \Exception
+     */
+    public function cleanupTouchTablesByLocale(LocaleTransfer $locale)
+    {
+        $availableTypes = $this->getAvailableCollectorTypes();
+
+        // now that we have deleted from front-end storage, we should also clear the touch tables in Zed
+        $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
+        $this->touchQueryContainer->getConnection()->beginTransaction();
+        foreach ($availableTypes as $type) {
+            try {
+                $entityCollection = $this->getTouchCollectionToDelete($type);
+                $batchCount = count($entityCollection);
+
+                if ($batchCount > 0) {
+
+                    $this->touchUpdater->bulkDelete(
+                        $touchUpdaterSet,
+                        $locale->getIdLocale(),
+                        $this->touchQueryContainer->getConnection()
+                    );
+
+                    $this->bulkDeleteTouchEntities($entityCollection);
+                }
+            }
+            catch (\Exception $exception) {
+                $this->touchQueryContainer->getConnection()->rollBack();
+                throw $exception;
+            }
+        }
+        $this->touchQueryContainer->getConnection()->commit();
+
+        return true;
+
     }
 
     /**
@@ -95,6 +152,89 @@ class CollectorExporter
         }
 
         return $results;
+    }
+
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouch[] $entityCollection
+     *
+     * @return void
+     */
+    protected function bulkDeleteTouchEntities(array $entityCollection)
+    {
+        foreach ($entityCollection as $entity) {
+            $idList[] = $entity[CollectorConfig::COLLECTOR_TOUCH_ID];
+        }
+
+        if (empty($idList)) {
+            return;
+        }
+
+        $idListSql = rtrim(implode(',', $idList), ',');
+
+        $sql = sprintf(
+            'DELETE FROM %s WHERE %s IN (%s)',
+            SpyTouchTableMap::TABLE_NAME,
+            SpyTouchTableMap::COL_ID_TOUCH,
+            $idListSql
+        );
+        $this->touchQueryContainer->getConnection()->exec($sql);
+    }
+
+    /**
+     * @param string $itemType
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch[]
+     */
+    protected function getTouchCollectionToDelete($itemType)
+    {
+        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
+        $deleteQuery
+            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID)
+            ->withColumn('search.key', CollectorConfig::COLLECTOR_SEARCH_KEY)
+            ->withColumn('storage.key', CollectorConfig::COLLECTOR_STORAGE_KEY)
+            ->setLimit($this->chunkSize)
+            ->setFormatter(\Propel\Runtime\Formatter\StatementFormatter::class);
+
+        $params = [];
+        $sql = $deleteQuery->createSelectSql($params);
+        $params = $this->getTouchQueryParameters($deleteQuery);
+        $statement = $this->touchQueryContainer->getConnection()->prepare($sql);
+
+        $sqlParams = [];
+        $step = 1;
+        foreach ($params as $key => $value) {
+            $sqlParams['p' . $step] = $value;
+            $statement->bindParam(':p' . $step, $value);
+            $step++;
+        };
+
+        $statement->execute($sqlParams);
+
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+
+
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     *
+     * @return array
+     */
+    protected function getTouchQueryParameters(SpyTouchQuery $baseQuery)
+    {
+        $result = [];
+        $baseParameters = $baseQuery->getParams();
+
+        foreach ($baseParameters as $parameter) {
+            $key = sprintf('%s.%s', $parameter['table'], $parameter['column']);
+            $value = $parameter['value'];
+            if ($value instanceof \DateTime) {
+                $value = $value->format(\DateTime::ATOM);
+            }
+            $result[$key] = $value;
+        }
+
+        return $result;
     }
 
     /**

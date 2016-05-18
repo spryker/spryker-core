@@ -333,41 +333,25 @@ abstract class AbstractCollector
         $offset = 0;
         $deletedCount = 0;
 
-        $this->touchQueryContainer->getConnection()->beginTransaction();
-        try {
-            while ($batchCount > 0) {
-                $entityCollection = $this->getTouchCollectionToDelete($offset, $itemType);
-                $batchCount = count($entityCollection);
+        while ($batchCount > 0) {
+            $entityCollection = $this->getTouchCollectionToDelete($offset, $itemType);
+            $batchCount = count($entityCollection);
 
-                if ($batchCount > 0) {
-                    $deletedCount += $batchCount;
-                    $offset += $this->chunkSize;
+            if ($batchCount > 0) {
+                $deletedCount += $batchCount;
+                $offset += $this->chunkSize;
 
-                    $keysToDelete = $this->getKeysToDeleteAndUpdateTouchUpdaterSet(
-                        $entityCollection,
-                        $touchUpdater->getTouchKeyColumnName(),
-                        $touchUpdaterSet
-                    );
+                $keysToDelete = $this->getKeysToDeleteAndUpdateTouchUpdaterSet(
+                    $entityCollection,
+                    $touchUpdater->getTouchKeyColumnName(),
+                    $touchUpdaterSet
+                );
 
-                    if (!empty($keysToDelete)) {
-                        $touchUpdater->bulkDelete(
-                            $touchUpdaterSet,
-                            $locale->getIdLocale(),
-                            $this->touchQueryContainer->getConnection()
-                        );
-                        $dataWriter->delete($keysToDelete);
-                    }
-
-                    $this->bulkDeleteTouchEntities($entityCollection);
+                if (!empty($keysToDelete)) {
+                    $dataWriter->delete($keysToDelete);
                 }
             }
         }
-        catch (\Exception $exception) {
-            $this->touchQueryContainer->getConnection()->rollBack();
-            throw $exception;
-        }
-
-        $this->touchQueryContainer->getConnection()->commit();
 
         return $deletedCount;
     }
@@ -432,32 +416,6 @@ abstract class AbstractCollector
         }
 
         return $keysToDelete;
-    }
-
-    /**
-     * @param \Orm\Zed\Touch\Persistence\SpyTouch[] $entityCollection
-     *
-     * @return void
-     */
-    protected function bulkDeleteTouchEntities(array $entityCollection)
-    {
-        foreach ($entityCollection as $entity) {
-            $idList[] = $entity[CollectorConfig::COLLECTOR_TOUCH_ID];
-        }
-
-        if (empty($idList)) {
-            return;
-        }
-
-        $idListSql = rtrim(implode(',', $idList), ',');
-
-        $sql = sprintf(
-            'DELETE FROM %s WHERE %s IN (%s)',
-            SpyTouchTableMap::TABLE_NAME,
-            SpyTouchTableMap::COL_ID_TOUCH,
-            $idListSql
-        );
-        $this->touchQueryContainer->getConnection()->exec($sql);
     }
 
     /**
