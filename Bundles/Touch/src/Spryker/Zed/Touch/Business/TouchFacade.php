@@ -203,4 +203,17 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
         return $touchModel->getItemsByType($itemType);
     }
 
+    /**
+     * Removes all the rows from the touch table(s)
+     * which are marked as deleted (item_event = 2)
+     *
+     * @api
+     * @return int
+     */
+    public function removeTouchEntriesMarkedAsDeleted()
+    {
+        $touchRecordModel = $this->getFactory()->createTouchRecordModel();
+        return $touchRecordModel->removeTouchEntriesMarkedAsDeleted();
+    }
+
 }

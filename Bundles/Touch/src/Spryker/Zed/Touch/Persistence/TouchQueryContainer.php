@@ -173,4 +173,49 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         return $query;
     }
 
+    /**
+     * @api
+     *
+     * @param string $itemEvent
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchListByItemEvent($itemEvent)
+    {
+        $query = $this->getFactory()->createTouchQuery();
+        $query->filterByItemEvent($itemEvent);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $touchId
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchSearchByTouchId($touchId)
+    {
+        $query = $this->getFactory()->createTouchSearchQuery();
+        $query->filterByFkTouch($touchId);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $touchId
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchStorageByTouchId($touchId)
+    {
+        $query = $this->getFactory()->createTouchStorageQuery();
+        $query->filterByFkTouch($touchId);
+
+        return $query;
+    }
+
 }

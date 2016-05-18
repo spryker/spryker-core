@@ -80,19 +80,6 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return bool
-     */
-    public function cleanupTouchTablesByLocale(LocaleTransfer $locale)
-    {
-        $exporter = $this->getFactory()->createYvesSearchExporter();
-        return $exporter->cleanupTouchTablesByLocale($locale);
-    }
-
-    /**
-     * @api
-     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void

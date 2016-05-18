@@ -151,4 +151,41 @@ class TouchRecord implements TouchRecordInterface
         $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
     }
 
+    /**
+     * Removes all the rows from the touch table(s)
+     * which are marked as deleted (item_event = 2)
+     *
+     * @api
+     *
+     * @return int
+     *
+     * @throws \Exception
+     */
+    public function removeTouchEntriesMarkedAsDeleted()
+    {
+        $this->touchQueryContainer->getConnection()->beginTransaction();
+        try {
+            $deletedTouchEntries = $this->touchQueryContainer
+                ->queryTouchListByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+                ->find();
+
+            foreach ($deletedTouchEntries as $deletedTouchEntry) {
+                $this->touchQueryContainer->queryTouchSearchByTouchId($deletedTouchEntry->getIdTouch())->delete();
+                $this->touchQueryContainer->queryTouchStorageByTouchId($deletedTouchEntry->getIdTouch())->delete();
+            }
+
+            $deletedCount = $this->touchQueryContainer
+                ->queryTouchListByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+                ->delete();
+        }
+        catch (\Exception $exception) {
+            $this->touchQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        }
+
+        $this->touchQueryContainer->getConnection()->commit();
+
+        return $deletedCount;
+    }
+
 }
