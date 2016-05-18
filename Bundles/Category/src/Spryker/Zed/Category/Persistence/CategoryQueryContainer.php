@@ -898,6 +898,19 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @api
      *
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    public function queryCategoryAttributes($idCategory)
+    {
+        return $this->getFactory()->createCategoryAttributeQuery()
+            ->filterByFkCategory($idCategory);
+    }
+
+    /**
+     * @api
+     *
      * @param string $categoryName
      * @param int $idLocale
      *

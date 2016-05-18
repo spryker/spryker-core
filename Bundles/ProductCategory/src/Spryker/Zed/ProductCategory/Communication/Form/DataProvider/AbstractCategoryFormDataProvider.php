@@ -7,15 +7,19 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
+use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
 
 class AbstractCategoryFormDataProvider
 {
 
     const PK_CATEGORY = 'id_category';
+    const LOCALE_NAME = 'locale_name';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -23,18 +27,26 @@ class AbstractCategoryFormDataProvider
     protected $categoryQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected $locale;
+    protected $currentLocale;
 
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface $localeFacade
      */
-    public function __construct(CategoryQueryContainerInterface $categoryQueryContainer, LocaleTransfer $locale)
-    {
+    public function __construct(
+        CategoryQueryContainerInterface $categoryQueryContainer,
+        ProductCategoryToLocaleInterface $localeFacade
+    ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
-        $this->locale = $locale;
+        $this->localeFacade = $localeFacade;
+        $this->currentLocale = $localeFacade->getCurrentLocale();
     }
 
     /**
@@ -43,7 +55,7 @@ class AbstractCategoryFormDataProvider
     public function getOptions()
     {
         $formOptions = [
-            CategoryFormAdd::OPTION_PARENT_CATEGORY_NODE_CHOICES => $this->getCategoriesWithPaths($this->locale->getIdLocale()),
+            CategoryFormAdd::OPTION_PARENT_CATEGORY_NODE_CHOICES => $this->getCategoriesWithPaths($this->currentLocale->getIdLocale()),
         ];
 
         return $formOptions;
@@ -56,9 +68,7 @@ class AbstractCategoryFormDataProvider
      */
     protected function getCategoriesWithPaths($idLocale)
     {
-        $categoryEntityList = $this->categoryQueryContainer
-            ->queryCategory($idLocale)
-            ->find();
+        $categoryEntityList = $this->categoryQueryContainer->queryCategory($idLocale)->find();
 
         $categories = [];
         $pathCache = [];
@@ -66,7 +76,8 @@ class AbstractCategoryFormDataProvider
             foreach ($categoryEntity->getNodes() as $nodeEntity) {
                 if (!array_key_exists($nodeEntity->getFkParentCategoryNode(), $pathCache)) {
                     $path = $this->buildPath($nodeEntity);
-                } else {
+                }
+                else {
                     $path = $pathCache[$nodeEntity->getFkParentCategoryNode()];
                 }
 
@@ -106,7 +117,7 @@ class AbstractCategoryFormDataProvider
     protected function buildPath(SpyCategoryNode $node)
     {
         $pathTokens = $this->categoryQueryContainer
-            ->queryPath($node->getIdCategoryNode(), $this->locale->getIdLocale(), false, true)
+            ->queryPath($node->getIdCategoryNode(), $this->currentLocale->getIdLocale(), false, true)
             ->find();
 
         $formattedPath = [];
@@ -115,6 +126,55 @@ class AbstractCategoryFormDataProvider
         }
 
         return '/' . implode('/', $formattedPath);
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return array
+     */
+    public function getAttributes($idCategory)
+    {
+        $attributeCollection = $this->categoryQueryContainer
+            ->queryCategoryAttributes($idCategory)
+            ->innerJoinLocale()
+            ->clearSelectColumns()
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, CategoryFormEdit::FIELD_NAME)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_META_TITLE, CategoryFormEdit::FIELD_META_TITLE)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_META_DESCRIPTION, CategoryFormEdit::FIELD_META_DESCRIPTION)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_META_KEYWORDS, CategoryFormEdit::FIELD_META_KEYWORDS)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_CATEGORY_IMAGE_NAME, CategoryFormEdit::FIELD_CATEGORY_IMAGE_NAME)
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE_NAME)
+            ->find();
+
+        $localizedAttributes = [];
+        foreach ($attributeCollection as $attribute) {
+            $data = $attribute->toArray();
+            $localizedAttributes[$data[self::LOCALE_NAME]] = $data;
+        }
+
+        return $localizedAttributes;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributesDefaultFields()
+    {
+        $availableLocales = $this->localeFacade->getAvailableLocales();
+
+        $fields = [];
+        foreach ($availableLocales as $id => $code) {
+            $fields[$code] = [
+                CategoryFormEdit::FIELD_NAME => null,
+                CategoryFormEdit::FIELD_META_TITLE => null,
+                CategoryFormEdit::FIELD_META_DESCRIPTION => null,
+                CategoryFormEdit::FIELD_META_KEYWORDS => null,
+                CategoryFormEdit::FIELD_CATEGORY_IMAGE_NAME => null,
+            ];
+        }
+
+        return $fields;
     }
 
 }

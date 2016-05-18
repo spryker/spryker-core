@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Form\DataProvider;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 
@@ -33,13 +32,6 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
         /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
         $categoryEntity = $this->categoryQueryContainer
             ->queryCategoryById($idCategory)
-            ->innerJoinAttribute()
-            ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $this->locale->getIdLocale())
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, CategoryFormEdit::FIELD_NAME)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_META_TITLE, CategoryFormEdit::FIELD_META_TITLE)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_META_DESCRIPTION, CategoryFormEdit::FIELD_META_DESCRIPTION)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_META_KEYWORDS, CategoryFormEdit::FIELD_META_KEYWORDS)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_CATEGORY_IMAGE_NAME, CategoryFormEdit::FIELD_CATEGORY_IMAGE_NAME)
             ->innerJoinNode()
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, CategoryFormEdit::FIELD_FK_PARENT_CATEGORY_NODE)
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, CategoryFormEdit::FIELD_PK_CATEGORY_NODE)
@@ -65,24 +57,20 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
 
             $fields = [
                 self::PK_CATEGORY => $categoryEntity[self::PK_CATEGORY],
+                //node
                 CategoryFormEdit::FIELD_PK_CATEGORY_NODE => $categoryEntity[CategoryFormEdit::FIELD_PK_CATEGORY_NODE],
                 CategoryFormEdit::FIELD_FK_PARENT_CATEGORY_NODE => $categoryEntity[CategoryFormEdit::FIELD_FK_PARENT_CATEGORY_NODE],
                 CategoryFormEdit::FIELD_FK_NODE_CATEGORY => $categoryEntity[CategoryFormEdit::FIELD_FK_NODE_CATEGORY],
-                CategoryFormEdit::FIELD_NAME => $categoryEntity[CategoryFormEdit::FIELD_NAME],
                 CategoryFormEdit::FIELD_CATEGORY_KEY => $categoryEntity[CategoryFormEdit::FIELD_CATEGORY_KEY],
-                //meta
-                CategoryFormEdit::FIELD_META_TITLE => $categoryEntity[CategoryFormEdit::FIELD_META_TITLE],
-                CategoryFormEdit::FIELD_META_DESCRIPTION => $categoryEntity[CategoryFormEdit::FIELD_META_DESCRIPTION],
-                CategoryFormEdit::FIELD_META_KEYWORDS => $categoryEntity[CategoryFormEdit::FIELD_META_KEYWORDS],
-                //image
-                CategoryFormEdit::FIELD_CATEGORY_IMAGE_NAME => $categoryEntity[CategoryFormEdit::FIELD_CATEGORY_IMAGE_NAME],
                 //category
                 self::CATEGORY_IS_ACTIVE => $categoryEntity[self::CATEGORY_IS_ACTIVE],
                 self::CATEGORY_IS_IN_MENU => $categoryEntity[self::CATEGORY_IS_IN_MENU],
                 self::CATEGORY_IS_CLICKABLE => $categoryEntity[self::CATEGORY_IS_CLICKABLE],
                 self::CATEGORY_NODE_IS_MAIN => $categoryEntity[self::CATEGORY_NODE_IS_MAIN],
-
+                //parents
                 self::EXTRA_PARENTS => $nodeIds,
+                //attributes
+                CategoryFormEdit::LOCALIZED_ATTRIBUTES => $this->getAttributes($idCategory)
             ];
         }
 
@@ -94,18 +82,12 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
      */
     protected function getDefaultFormFields()
     {
-        return [
+        $fields = [
+            //node
             self::PK_CATEGORY => null,
             CategoryFormEdit::FIELD_PK_CATEGORY_NODE => null,
             CategoryFormEdit::FIELD_FK_PARENT_CATEGORY_NODE => null,
             CategoryFormEdit::FIELD_FK_NODE_CATEGORY => null,
-            CategoryFormEdit::FIELD_NAME => null,
-            //meta
-            CategoryFormEdit::FIELD_META_TITLE => null,
-            CategoryFormEdit::FIELD_META_DESCRIPTION => null,
-            CategoryFormEdit::FIELD_META_KEYWORDS => null,
-            //image
-            CategoryFormEdit::FIELD_CATEGORY_IMAGE_NAME => null,
             //category
             self::CATEGORY_IS_ACTIVE => null,
             self::CATEGORY_IS_IN_MENU => null,
@@ -114,6 +96,8 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
 
             self::EXTRA_PARENTS => null,
         ];
+
+        return array_merge($this->getAttributesDefaultFields(), $fields);
     }
 
 }

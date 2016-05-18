@@ -29,7 +29,7 @@ class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
             $categoryEntity = $this->categoryQueryContainer
                 ->queryCategoryById($idCategory)
                 ->innerJoinAttribute()
-                ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $this->locale->getIdLocale())
+                ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $this->currentLocale->getIdLocale())
                 ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, CategoryFormAdd::FIELD_NAME)
                 ->innerJoinNode()
                 ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE)

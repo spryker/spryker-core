@@ -15,4 +15,16 @@ interface ProductCategoryToLocaleInterface
      */
     public function getCurrentLocale();
 
+    /**
+     * @return array
+     */
+    public function getAvailableLocales();
+
+    /**
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocale($localeName);
+
 }

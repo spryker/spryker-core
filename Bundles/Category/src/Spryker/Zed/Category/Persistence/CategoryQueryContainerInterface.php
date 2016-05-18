@@ -330,6 +330,15 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    public function queryCategoryAttributes($idCategory);
+
+    /**
+     * @api
+     *
      * @param string $categoryName
      * @param int $idLocale
      *

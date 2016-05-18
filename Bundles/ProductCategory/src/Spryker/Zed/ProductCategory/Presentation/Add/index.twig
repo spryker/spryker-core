@@ -27,7 +27,22 @@
 
         {% block widget_content %}
 
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#foo" data-toggle="tab">foo</a></li>
+                <li><a href="#bar" data-toggle="tab">bar</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="foo" class="tab-pane active">foo</div>
+                <div id="bar" class="tab-pane">bar</div>
+            </div>
+        </div>
+
             {{ form_start(form) }}
+{#            {% for locale,localizedAttributes in form.localized_attributes %}
+                {{ form_row(localizedAttributes.name) }}
+            {% endfor %}#}
             {{ form_widget(form) }}
 
 {% if showProducts %}

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
+use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -64,26 +65,7 @@ class EditController extends AddController
 
             $data = $form->getData();
 
-            $currentCategoryTransfer = $this->updateCategory($locale, $data);
-            $currentCategoryNodeTransfer = $this->updateCategoryNode($locale, $data);
-            $this->updateProductCategoryMappings($currentCategoryTransfer, $data);
-
-            $parentIdList = $data['extra_parents'];
-            foreach ($parentIdList as $parentNodeId) {
-                $data['fk_parent_category_node'] = $parentNodeId;
-                $data['fk_category'] = $currentCategoryTransfer->getIdCategory();
-
-                $this->updateCategoryNodeChild($currentCategoryTransfer, $locale, $data);
-            }
-            $this->updateProductOrder($currentCategoryTransfer, (array)json_decode($data['product_order'], true));
-
-            $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
-            $parentIdList = array_flip($parentIdList);
-            $this->removeDeselectedCategoryAdditionalParents(
-                $currentCategoryTransfer,
-                $locale,
-                $parentIdList
-            );
+            $this->updateCategoryData($data);
 
             $this->addSuccessMessage('The category was saved successfully.');
 
@@ -215,6 +197,42 @@ class EditController extends AddController
     protected function updateProductCategoryPreconfig(CategoryTransfer $categoryTransfer, array $productPreConfig)
     {
         $this->getFacade()->updateProductCategoryPreConfig($categoryTransfer->getIdCategory(), $productPreConfig);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    protected function updateCategoryData(array $data)
+    {
+        $attributes = $data[CategoryFormEdit::LOCALIZED_ATTRIBUTES];
+        foreach ($attributes as $localeCode => $localizedAttributes) {
+            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
+
+            $categoryData = array_merge($attributes[$localeCode], $data);
+            $currentCategoryTransfer = $this->updateCategory($localeTransfer, $categoryData);
+
+            $currentCategoryNodeTransfer = $this->updateCategoryNode($localeTransfer, $data);
+            $this->updateProductCategoryMappings($currentCategoryTransfer, $data);
+
+            $parentIdList = $data['extra_parents'];
+            foreach ($parentIdList as $parentNodeId) {
+                $data['fk_parent_category_node'] = $parentNodeId;
+                $data['fk_category'] = $currentCategoryTransfer->getIdCategory();
+
+                $this->updateCategoryNodeChild($currentCategoryTransfer, $localeTransfer, $data);
+            }
+            $this->updateProductOrder($currentCategoryTransfer, (array)json_decode($data['product_order'], true));
+
+            $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
+            $parentIdList = array_flip($parentIdList);
+            $this->removeDeselectedCategoryAdditionalParents(
+                $currentCategoryTransfer,
+                $localeTransfer,
+                $parentIdList
+            );
+        }
     }
 
     /**

@@ -36,6 +36,16 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface
+     */
+    public function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @throws \ErrorException
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     public function getProductFacade()
@@ -95,7 +105,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryFormAddDataProvider(
             $this->getCategoryQueryContainer(),
-            $this->getCurrentLocale()
+            $this->getLocaleFacade()
         );
     }
 
@@ -119,7 +129,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryFormEditDataProvider(
             $this->getCategoryQueryContainer(),
-            $this->getCurrentLocale()
+            $this->getLocaleFacade()
         );
     }
 
@@ -143,7 +153,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryFormDeleteDataProvider(
             $this->getCategoryQueryContainer(),
-            $this->getCurrentLocale()
+            $this->getLocaleFacade()
         );
     }
 

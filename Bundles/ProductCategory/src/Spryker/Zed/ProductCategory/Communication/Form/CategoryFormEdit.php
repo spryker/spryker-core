@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategory\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryFormEdit extends CategoryFormAdd
@@ -28,6 +29,8 @@ class CategoryFormEdit extends CategoryFormAdd
 
     const EXTRA_PARENTS = 'extra_parents';
 
+    const LOCALIZED_ATTRIBUTES = 'localized_attributes';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -36,12 +39,10 @@ class CategoryFormEdit extends CategoryFormAdd
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add(self::LOCALIZED_ATTRIBUTES, 'collection', array('type' => new CategoryAttributeLocalizedForm()));
+
         $this
-            ->addNameField($builder)
             ->addCategoryKeyField($builder)
-            ->addMetaTitleField($builder)
-            ->addMetaDescriptionField($builder)
-            ->addMetaKeywordsField($builder)
             ->addCategoryIsActiveField($builder)
             ->addCategoryIsInMenuField($builder)
             ->addCategoryIsClickableField($builder)
