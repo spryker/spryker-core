@@ -14,6 +14,8 @@ use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Search\SearchConstants;
 
 class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface
 {
@@ -29,18 +31,11 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface
     protected $query;
 
     /**
-     * @var int
-     */
-    protected $fullTextBoostedBoosting;
-
-    /**
      * @param string $searchString
-     * @param int $fullTextBoostedBoosting
      */
-    public function __construct($searchString, $fullTextBoostedBoosting)
+    public function __construct($searchString)
     {
         $this->searchString = $searchString;
-        $this->fullTextBoostedBoosting = $fullTextBoostedBoosting;
         $this->query = $this->createSearchQuery();
     }
 
@@ -94,7 +89,7 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface
     {
         $fields = [
             PageIndexMap::FULL_TEXT,
-            PageIndexMap::FULL_TEXT_BOOSTED . '^' . $this->fullTextBoostedBoosting
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE),
         ];
 
         $matchQuery = (new MultiMatch())

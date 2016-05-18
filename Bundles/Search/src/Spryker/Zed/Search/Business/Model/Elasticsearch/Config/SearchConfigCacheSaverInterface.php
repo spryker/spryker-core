@@ -7,15 +7,16 @@
 
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Config;
 
+use Generated\Shared\Transfer\SearchConfigCacheTransfer;
+
 interface SearchConfigCacheSaverInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer[] $facetConfigTransfers
-     * @param \Generated\Shared\Transfer\SortConfigTransfer[] $sortConfigTransfers
+     * @param \Generated\Shared\Transfer\SearchConfigCacheTransfer $searchConfigCacheTransfer
      *
      * @return void
      */
-    public function save(array $facetConfigTransfers, array $sortConfigTransfers);
+    public function save(SearchConfigCacheTransfer $searchConfigCacheTransfer);
 
 }

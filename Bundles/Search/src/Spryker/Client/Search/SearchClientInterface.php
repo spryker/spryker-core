@@ -13,6 +13,10 @@ interface SearchClientInterface
 {
 
     /**
+     * Specification:
+     * - Connects to Elasticsearch client if possible
+     * - Throws exception if connection fails
+     *
      * @api
      *
      * @throws \Exception
@@ -22,17 +26,12 @@ interface SearchClientInterface
     public function checkConnection();
 
     /**
-     * @api
+     * Specification:
+     * - Expands the base search query with multiple query expanders
+     * - All expanders use the same search configuration provided by this client
+     * - The expanders use the given parameters to adapt to the request
+     * - Returns the expanded query
      *
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
-     * @param array $requestParameters
-     *
-     * @return mixed
-     */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
-
-    /**
      * @api
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
@@ -44,6 +43,27 @@ interface SearchClientInterface
     public function expandQuery(QueryInterface $searchQuery, array $searchQueryExpanders, array $requestParameters = []);
 
     /**
+     * Specification:
+     * - Runs the search query based on the search configuration provided by this client
+     * - If there's no result formatter given then the raw search result will be returned
+     * - The formatted search result will be an associative array where the keys are the name and the values are the formatted results
+     *
+     * @api
+     *
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param array $requestParameters
+     *
+     * @return mixed
+     */
+    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
+
+    /**
+     * Specification:
+     * - Returns a statically cached instance (for performance reasons) of the search configuration
+     * - The result is the union of the hard-coded and the dynamic configurations
+     * - Dynamic configuration is read from the storage cache
+     *
      * @api
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
@@ -51,6 +71,10 @@ interface SearchClientInterface
     public function getSearchConfig();
 
     /**
+     * Specification:
+     * - Runs a simple full text search for the given search string
+     * - Returns the raw result set ordered by relevance
+     *
      * @api
      *
      * @param string $searchString

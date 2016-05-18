@@ -10,6 +10,7 @@ namespace Spryker\Client\Search\Plugin\Config;
 use Generated\Shared\Transfer\SearchConfigCacheTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
 /**
@@ -98,13 +99,17 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
      */
     protected function getDynamicSearchConfig()
     {
+        $searchConfigCacheKey = $this->getSearchConfigCacheKey();
         $cacheData = $this
             ->getFactory()
             ->getStorageClient()
-            ->get(SearchConstants::SEARCH_CONFIG_CACHE_KEY);
+            ->get($searchConfigCacheKey);
 
         $searchConfigCacheTransfer = new SearchConfigCacheTransfer();
-        $searchConfigCacheTransfer->fromArray($cacheData, true);
+
+        if (is_array($cacheData)) {
+            $searchConfigCacheTransfer->fromArray($cacheData, true);
+        }
 
         return $searchConfigCacheTransfer;
     }
@@ -131,6 +136,14 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
         foreach ($searchConfigCacheTransfer->getSortConfigs() as $sortConfigTransfer) {
             $this->sortConfigBuilder->addSort($sortConfigTransfer);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSearchConfigCacheKey()
+    {
+        return Config::get(SearchConstants::SEARCH_CONFIG_CACHE_KEY);
     }
 
 }

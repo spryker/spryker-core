@@ -15,9 +15,12 @@ use Spryker\Client\Kernel\AbstractClient;
 class CatalogClient extends AbstractClient implements CatalogClientInterface
 {
 
-    const DEFAULT_FULL_TEXT_BOOSTED_BOOSTING = 3;
-
     /**
+     * Specification:
+     * - A query based on the given search string and request parameters will be executed
+     * - The query will also create facet aggregations, pagination and sorting based on the request parameters
+     * - The result is a formatted associative array where the used result formatters' name are the keys and their results are the values
+     * 
      * @api
      *
      * @param string $searchString
@@ -29,7 +32,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     {
         $searchQuery = $this
             ->getFactory()
-            ->createCatalogSearchQueryPlugin($searchString, self::DEFAULT_FULL_TEXT_BOOSTED_BOOSTING);
+            ->createCatalogSearchQueryPlugin($searchString);
 
         $searchQuery = $this
             ->getFactory()

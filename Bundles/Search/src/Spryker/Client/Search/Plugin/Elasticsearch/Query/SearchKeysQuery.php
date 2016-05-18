@@ -13,11 +13,11 @@ use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Search\SearchConstants;
 
 class SearchKeysQuery implements QueryInterface
 {
-
-    const FULL_TEXT_BOOSTED_BOOSTING = 3;
 
     /**
      * @var string
@@ -78,7 +78,7 @@ class SearchKeysQuery implements QueryInterface
     {
         $fields = [
             PageIndexMap::FULL_TEXT,
-            PageIndexMap::FULL_TEXT_BOOSTED . '^' . self::FULL_TEXT_BOOSTED_BOOSTING,
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE),
         ];
 
         $multiMatch = (new MultiMatch())

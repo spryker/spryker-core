@@ -27,13 +27,12 @@ class CatalogFactory extends AbstractFactory
 
     /**
      * @param string $searchString
-     * @param int $fullTextBoostedBoosting
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function createCatalogSearchQueryPlugin($searchString, $fullTextBoostedBoosting)
+    public function createCatalogSearchQueryPlugin($searchString)
     {
-        $searchQuery = new CatalogSearchQueryPlugin($searchString, $fullTextBoostedBoosting);
+        $searchQuery = new CatalogSearchQueryPlugin($searchString);
 
         return $searchQuery;
     }

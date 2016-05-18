@@ -10,6 +10,8 @@ namespace Spryker\Shared\Search;
 interface SearchConstants
 {
 
-    const SEARCH_CONFIG_CACHE_KEY = 'search_config_cache';
+    const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
+
+    const SEARCH_CONFIG_CACHE_KEY = 'SEARCH_CONFIG_CACHE_KEY';
 
 }

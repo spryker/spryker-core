@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Search\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\SearchConfigCacheTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
@@ -19,6 +20,15 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Loads index definition json files from the folders
+     * - Installs Elasticsearch indexes and mapping types based on the loaded index definitions if they not exists already
+     * - For each configured store a separated index will be created
+     * - The name of the index is automatically prefixed with the store name + underscore
+     * - Generates IndexMap class for each mapping type
+     * - The generated IndexMaps are not store specific and has the class name of the mapping types suffixed with "IndexMap"
+     * - The generated files will be removed and re-created always when  install runs
+     *
      * @api
      *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
@@ -27,20 +37,33 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      */
     public function install(MessengerInterface $messenger)
     {
-        $this->getFactory()->createSearchInstaller($messenger)->install();
+        $this
+            ->getFactory()
+            ->createSearchInstaller($messenger)
+            ->install();
     }
 
     /**
+     * Specification:
+     * - Returns the total number of documents in the current index
+     *
      * @api
      *
      * @return int
      */
     public function getTotalCount()
     {
-        return $this->getFactory()->createSearchIndexManager()->getTotalCount();
+        return $this
+            ->getFactory()
+            ->createSearchIndexManager()
+            ->getTotalCount();
     }
 
     /**
+     * Specification:
+     * - Returns the metadata information from the current index
+     * - Returns empty array if the index is not installed
+     *
      * @api
      *
      * @return array
@@ -54,6 +77,9 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Removes the current index
+     *
      * @api
      *
      * @return \Elastica\Response
@@ -67,6 +93,9 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns a document from the current index with the given key in the given mapping type
+     *
      * @api
      *
      * @param string $key
@@ -83,6 +112,10 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Runs a simple full text search for the given search string
+     * - Returns the raw result set ordered by relevance
+     *
      * @api
      *
      * @param string $searchString
@@ -100,6 +133,10 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Transforms a raw data array into an Elasticsearch "page" mapping type document
+     * - The transformation is based on the given page map what configures which data goes into which field
+     *
      * @api
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
@@ -116,18 +153,20 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Stores the given search cache configuration into the storage (Redis by default)
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer[] $facetConfigTransfers
-     * @param \Generated\Shared\Transfer\SortConfigTransfer[] $sortConfigTransfers
+     * @param \Generated\Shared\Transfer\SearchConfigCacheTransfer $searchConfigCacheTransfer
      *
      * @return void
      */
-    public function saveSearchConfigCache(array $facetConfigTransfers, array $sortConfigTransfers)
+    public function saveSearchConfigCache(SearchConfigCacheTransfer $searchConfigCacheTransfer)
     {
         $this->getFactory()
             ->createSearchConfigCacheSaver()
-            ->save($facetConfigTransfers, $sortConfigTransfers);
+            ->save($searchConfigCacheTransfer);
     }
 
 }

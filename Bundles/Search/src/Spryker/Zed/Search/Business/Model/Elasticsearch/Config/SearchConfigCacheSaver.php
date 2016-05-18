@@ -9,6 +9,7 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Config;
 
 use Generated\Shared\Transfer\SearchConfigCacheTransfer;
 use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
 class SearchConfigCacheSaver implements SearchConfigCacheSaverInterface
@@ -28,26 +29,24 @@ class SearchConfigCacheSaver implements SearchConfigCacheSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer[] $facetConfigTransfers
-     * @param \Generated\Shared\Transfer\SortConfigTransfer[] $sortConfigTransfers
+     * @param \Generated\Shared\Transfer\SearchConfigCacheTransfer $searchConfigCacheTransfer
      *
      * @return void
      */
-    public function save(array $facetConfigTransfers, array $sortConfigTransfers)
+    public function save(SearchConfigCacheTransfer $searchConfigCacheTransfer)
     {
-        $searchConfigCacheTransfer = new SearchConfigCacheTransfer();
-
-        foreach ($facetConfigTransfers as $facetConfigTransfer) {
-            $searchConfigCacheTransfer->addFacetConfig($facetConfigTransfer);
-        }
-
-        foreach ($sortConfigTransfers as $sortConfigTransfer) {
-            $searchConfigCacheTransfer->addSortConfig($sortConfigTransfer);
-        }
-
+        $searchConfigCacheKey = $this->getSearchConfigCacheKey();
         $this
             ->storageClient
-            ->set(SearchConstants::SEARCH_CONFIG_CACHE_KEY, $searchConfigCacheTransfer->toArray());
+            ->set($searchConfigCacheKey, $searchConfigCacheTransfer->toArray());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSearchConfigCacheKey()
+    {
+        return Config::get(SearchConstants::SEARCH_CONFIG_CACHE_KEY);
     }
 
 }
