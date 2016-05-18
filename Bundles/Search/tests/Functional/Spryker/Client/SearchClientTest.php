@@ -165,7 +165,7 @@ class SearchClientTest extends \PHPUnit_Framework_TestCase
     public function testSearchKeys()
     {
         $expectedQuery = new SearchKeysQuery('foo', 25, 100);
-
+        
         /** @var \Spryker\Client\Search\SearchClient|\PHPUnit_Framework_MockObject_MockObject $clientMock */
         $clientMock = $this->getMockBuilder(SearchClient::class)
             ->setMethods(['search'])
@@ -175,7 +175,7 @@ class SearchClientTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('search')
             ->with($expectedQuery);
-
+        
         $clientMock->setFactory(new SearchFactory());
 
         $clientMock->searchKeys('foo', 25, 100);

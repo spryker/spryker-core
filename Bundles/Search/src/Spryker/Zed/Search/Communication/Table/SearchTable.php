@@ -78,7 +78,7 @@ class SearchTable extends AbstractTable
 
         foreach ($results as $result) {
             $tableData[] = [
-                self::COL_ID => '<a href="/product-search/maintenance/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
+                self::COL_ID => '<a href="/search/maintenance/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
                 self::COL_INDEX => $result->getIndex(),
                 self::COL_TYPE => $result->getType(),
                 self::COL_SCORE => $result->getScore(),
