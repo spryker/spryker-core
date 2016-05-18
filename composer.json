@@ -16,6 +16,7 @@
     "use-include-path": true
   },
   "autoload": {
+  "autoload": {
     "psr-0": {
       "Spryker\\Shared\\Acl\\": "Bundles/Acl/src",
       "Functional\\Spryker\\Shared\\Acl\\": "Bundles/Acl/tests",
@@ -73,6 +74,7 @@
       "Spryker\\Client\\CategoryExporter\\": "Bundles/CategoryExporter/src",
       "Spryker\\Shared\\CategoryExporter\\": "Bundles/CategoryExporter/src",
       "Spryker\\Client\\Checkout\\": "Bundles/Checkout/src",
+      "Spryker\\Yves\\Checkout\\": "Bundles/Checkout/src",
       "Spryker\\Yves\\StepEngine\\": "Bundles/StepEngine/src",
       "Unit\\Spryker\\Yves\\StepEngine\\": "Bundles/StepEngine/tests",
       "Unit\\Spryker\\Client\\Checkout\\": "Bundles/Checkout/tests",

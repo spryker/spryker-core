@@ -9,36 +9,56 @@ namespace Spryker\Yves\Payolution\Form\DataProvider;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface;
 
 class InvoiceDataProvider implements DataProviderInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
+     * @var \Spryker\Client\Cart\CartClientInterface
+     */
+    protected $cartClient;
+
+    /**
+     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     */
+    public function __construct(CartClientInterface $cartClient)
+    {
+        $this->cartClient = $cartClient;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer)
+    public function getData()
     {
+        $quoteTransfer = $this->getDataClass();
+
         if ($quoteTransfer->getPayment() === null) {
             $paymentTransfer = new PaymentTransfer();
             $paymentTransfer->setPayolution(new PayolutionPaymentTransfer());
             $paymentTransfer->setPayolutionInvoice(new PayolutionPaymentTransfer());
             $quoteTransfer->setPayment($paymentTransfer);
         }
+
         return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return array
      */
-    public function getOptions(QuoteTransfer $quoteTransfer)
+    public function getOptions()
     {
         return [];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getDataClass()
+    {
+        return $this->cartClient->getQuote();
     }
 
 }

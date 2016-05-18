@@ -7,23 +7,19 @@
 
 namespace Spryker\Yves\StepEngine\Dependency\DataProvider;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 interface DataProviderInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return AbstractTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer);
+    public function getData();
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return array
      */
-    public function getOptions(QuoteTransfer $quoteTransfer);
+    public function getOptions();
 
 }

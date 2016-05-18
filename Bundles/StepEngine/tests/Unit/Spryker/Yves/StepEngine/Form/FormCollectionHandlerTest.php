@@ -32,7 +32,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetInstance()
     {
-        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getCartClientMock());
+        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getDataProviderMock());
 
         $this->assertInstanceOf(FormCollectionHandlerInterface::class, $formCollectionHandler);
     }
@@ -42,7 +42,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetForms()
     {
-        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getCartClientMock());
+        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getDataProviderMock());
 
         $this->assertInternalType('array', $formCollectionHandler->getForms());
     }
@@ -56,7 +56,10 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
         $formFactoryMock->expects($this->once())->method('create');
 
         $formTypeMock = $this->getMockForAbstractClass(FormTypeInterface::class);
-        $formCollectionHandler = new FormCollectionHandler([$formTypeMock], $formFactoryMock, $this->getCartClientMock());
+
+        $dataProviderMock = $this->getDataProviderMock();
+        $dataProviderMock->expects($this->once())->method('getOptions')->willReturn([]);
+        $formCollectionHandler = new FormCollectionHandler([$formTypeMock], $formFactoryMock, $dataProviderMock);
 
         $formCollectionHandler->getForms();
     }
@@ -71,9 +74,9 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
 
         $formTypeMock = $this->getMockForAbstractClass(FormTypeInterface::class);
 
-        $dataProviderMock = $this->getMock(DataProviderInterface::class, ['getData', 'getOptions']);
+        $dataProviderMock = $this->getDataProviderMock();
         $dataProviderMock->expects($this->once())->method('getOptions')->willReturn([]);
-        $formCollectionHandler = new FormCollectionHandler([$formTypeMock], $formFactoryMock, $this->getCartClientMock(), $dataProviderMock);
+        $formCollectionHandler = new FormCollectionHandler([$formTypeMock], $formFactoryMock, $dataProviderMock);
 
         $formCollectionHandler->getForms();
     }
@@ -95,7 +98,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHasSubmittedFormsReturnFalse()
     {
-        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getCartClientMock());
+        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getDataProviderMock());
 
         $this->assertFalse($formCollectionHandler->hasSubmittedForm(Request::createFromGlobals()));
     }
@@ -105,7 +108,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleRequestThrowsException()
     {
-        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getCartClientMock());
+        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getDataProviderMock());
 
         $this->setExpectedException(InvalidFormHandleRequest::class);
 
@@ -148,9 +151,9 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testProvideDefaultFormDataInvokesDataProvider()
     {
-        $dataProviderMock = $this->getMock(DataProviderInterface::class, ['getData', 'getOptions']);
+        $dataProviderMock = $this->getDataProviderMock();
         $dataProviderMock->expects($this->once())->method('getData')->willReturn([]);
-        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(['create']), $this->getCartClientMock(), $dataProviderMock);
+        $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(['create']), $dataProviderMock);
 
         $formCollectionHandler->provideDefaultFormData();
     }
@@ -181,7 +184,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
     private function getFormCollectionHandlerMock(array $formCollectionHandlerMethods = [], array $arguments = [])
     {
         if (empty($arguments)) {
-            $arguments = [[], $this->getFormFactoryMock(), $this->getCartClientMock()];
+            $arguments = [[], $this->getFormFactoryMock(), $this->getDataProviderMock()];
         }
 
         $formCollectionHandlerMock = $this->getMock(FormCollectionHandler::class, $formCollectionHandlerMethods, $arguments);
@@ -200,14 +203,13 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\CartClientInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|DataProviderInterface
      */
-    private function getCartClientMock()
+    private function getDataProviderMock()
     {
-        $cartClientMock = $this->getMock(CartClientInterface::class);
-        $cartClientMock->method('getQuote')->willReturn(new QuoteTransfer());
+        $dataProviderMock = $this->getMock(DataProviderInterface::class);
 
-        return $cartClientMock;
+        return $dataProviderMock;
     }
 
 }

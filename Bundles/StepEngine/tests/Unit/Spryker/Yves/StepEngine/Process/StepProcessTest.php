@@ -128,13 +128,12 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
         $response = $stepProcess->process($request, $formCollectionHandlerMock);
 
         $this->assertArrayHasKey('previousStepUrl', $response);
-        $this->assertArrayHasKey('dataClass', $response);
     }
 
     /**
      * @return void
      */
-    public function testStepProcessWhenFormUsedAndSubmitedaAndInvalidShouldRenderView()
+    public function testStepProcessWhenFormUsedAndSubmittedAndInvalidShouldRenderView()
     {
         $stepRoute = 'test';
         $quoteTransfer = new QuoteTransfer();
@@ -161,7 +160,6 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
         $response = $stepProcess->process($request, $formCollectionHandlerMock);
 
         $this->assertArrayHasKey('previousStepUrl', $response);
-        $this->assertArrayHasKey('dataClass', $response);
     }
 
     /**

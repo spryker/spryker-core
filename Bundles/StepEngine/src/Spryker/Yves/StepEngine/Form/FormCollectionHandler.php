@@ -7,8 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Form;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClientInterface;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -22,11 +21,6 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
      * @var \Symfony\Component\Form\FormFactoryInterface
      */
     protected $formFactory;
-
-    /**
-     * @var CartClientInterface
-     */
-    protected $cartClient;
 
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface
@@ -46,17 +40,14 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     /**
      * @param array $formTypes
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
      * @param \Spryker\Yves\StepEngine\Dependency\DataProvider\DataProviderInterface|null $dataProvider
      */
     public function __construct(
         array $formTypes = [],
         FormFactoryInterface $formFactory,
-        CartClientInterface $cartClient,
         DataProviderInterface $dataProvider = null
     ) {
         $this->formFactory = $formFactory;
-        $this->cartClient = $cartClient;
         $this->formTypes = $formTypes;
         $this->dataProvider = $dataProvider;
     }
@@ -78,11 +69,9 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
      */
     protected function createForms()
     {
-        $quoteTransfer = $this->getDataClass();
-
         $forms = [];
         foreach ($this->formTypes as $formType) {
-            $forms[] = $this->createForm($formType, $quoteTransfer);
+            $forms[] = $this->createForm($formType);
         }
 
         return $forms;
@@ -90,18 +79,18 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\Form\FormTypeInterface $formType
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createForm(FormTypeInterface $formType, QuoteTransfer $quoteTransfer)
+    protected function createForm(FormTypeInterface $formType)
     {
+        $transfer = $this->getTransfer();
         $formOptions = [
-            'data_class' => QuoteTransfer::class
+            'data_class' => get_class($transfer)
         ];
 
-        if ($this->dataProvider !== null) {
-            $formOptions = array_merge($formOptions, $this->dataProvider->getOptions($quoteTransfer));
+        if ($this->dataProvider) {
+            $formOptions = array_merge($formOptions, $this->dataProvider->getOptions($transfer));
         }
 
         return $this->formFactory->create($formType, null, $formOptions);
@@ -132,11 +121,11 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
      */
     public function handleRequest(Request $request)
     {
-        $quoteTransfer = $this->getDataClass();
+        $transfer = $this->getTransfer();
 
         foreach ($this->getForms() as $form) {
             if ($request->request->has($form->getName())) {
-                $form->setData($quoteTransfer);
+                $form->setData($transfer);
 
                 return $form->handleRequest($request);
             }
@@ -150,33 +139,18 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
      */
     public function provideDefaultFormData()
     {
-        $formData = $this->getFormData($this->getDataClass());
+        $transfer = $this->getTransfer();
 
         foreach ($this->getForms() as $form) {
-            $form->setData($formData);
+            $form->setData($transfer);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
-    protected function getFormData(QuoteTransfer $quoteTransfer)
+    protected function getTransfer()
     {
-        if ($this->dataProvider !== null) {
-            return $this->dataProvider->getData($quoteTransfer);
-        }
-
-        return $quoteTransfer;
+        return $this->dataProvider->getData();
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getDataClass()
-    {
-        return $this->cartClient->getQuote();
-    }
-
 }

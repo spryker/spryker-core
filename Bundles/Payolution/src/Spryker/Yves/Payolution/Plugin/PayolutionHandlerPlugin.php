@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Payolution\Plugin;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,11 +20,11 @@ class PayolutionHandlerPlugin extends AbstractPlugin implements StepHandlerPlugi
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|AbstractTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addToDataClass(Request $request, QuoteTransfer $quoteTransfer)
+    public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)
     {
         $this->getFactory()->createPayolutionHandler()->addPaymentToQuote($request, $quoteTransfer);
     }

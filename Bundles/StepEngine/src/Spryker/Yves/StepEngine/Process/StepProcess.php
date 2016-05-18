@@ -39,6 +39,11 @@ class StepProcess implements StepProcessInterface
     protected $urlGenerator;
 
     /**
+     * @var
+     */
+    protected $dataContainer;
+
+    /**
      * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface[] $steps
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param string $errorRoute
@@ -61,6 +66,7 @@ class StepProcess implements StepProcessInterface
      */
     public function process(Request $request, FormCollectionHandlerInterface $formCollection = null)
     {
+//        $dataTransfer = $this->dataContainer->get();
         $currentStep = $this->getCurrentStep($request);
 
         if (!$currentStep->preCondition()) {
@@ -81,23 +87,23 @@ class StepProcess implements StepProcessInterface
             return $this->createRedirectResponse($this->getNextRedirectUrl($currentStep));
         }
 
-        if ($formCollection !== null) {
-            if ($formCollection->hasSubmittedForm($request)) {
-                $form = $formCollection->handleRequest($request);
-                if ($form->isValid()) {
-                    $this->executeWithFormInput($currentStep, $request, $form->getData());
-                    return $this->createRedirectResponse($this->getNextRedirectUrl($currentStep));
-                }
-            } else {
-                $formCollection->provideDefaultFormData();
-            }
+        if (!$formCollection) {
+            $this->executeWithoutInput($currentStep, $request);
 
-            return $this->getTemplateVariables($currentStep, $formCollection);
+            return $this->getTemplateVariables($currentStep);
         }
 
-        $this->executeWithoutInput($currentStep, $request);
+        if ($formCollection->hasSubmittedForm($request)) {
+            $form = $formCollection->handleRequest($request);
+            if ($form->isValid()) {
+                $this->executeWithFormInput($currentStep, $request, $form->getData());
+                return $this->createRedirectResponse($this->getNextRedirectUrl($currentStep));
+            }
+        } else {
+            $formCollection->provideDefaultFormData();
+        }
 
-        return $this->getTemplateVariables($currentStep);
+        return $this->getTemplateVariables($currentStep, $formCollection);
     }
 
     /**
@@ -332,7 +338,6 @@ class StepProcess implements StepProcessInterface
     {
         $templateVariables = [
             'previousStepUrl' => $this->getUrlFromRoute($this->getPreviousStepRoute()),
-            'dataClass' => ($formCollection) ? $formCollection->getDataClass() : null,
         ];
         $templateVariables = array_merge($templateVariables, $currentStep->getTemplateVariables());
 

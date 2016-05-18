@@ -9,10 +9,10 @@ namespace Unit\Spryker\Yves\Payolution\Dependency\Injector;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
-use Spryker\Yves\Checkout\Dependency\Plugin\Handler\CheckoutStepHandlerPluginCollection;
-use Spryker\Yves\Checkout\Dependency\Plugin\Form\CheckoutSubFormPluginCollection;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Payolution\Dependency\Injector\CheckoutDependencyInjector;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 
 /**
  * @group Spryker
@@ -49,10 +49,10 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
     {
         $container = new Container();
         $container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS] = function () {
-            return new CheckoutSubFormPluginCollection();
+            return new SubFormPluginCollection();
         };
         $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER] = function () {
-            return new CheckoutStepHandlerPluginCollection();
+            return new StepHandlerPluginCollection();
         };
 
         return $container;

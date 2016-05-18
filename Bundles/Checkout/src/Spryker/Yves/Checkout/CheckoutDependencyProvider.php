@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\Checkout;
 
-use Spryker\Yves\Checkout\Dependency\Plugin\Handler\CheckoutStepHandlerPluginCollection;
-use Spryker\Yves\Checkout\Dependency\Plugin\Form\CheckoutSubFormPluginCollection;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
@@ -38,11 +38,11 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     protected function providePlugins(Container $container)
     {
         $container[self::PAYMENT_SUB_FORMS] = function () {
-            return new CheckoutSubFormPluginCollection();
+            return new SubFormPluginCollection();
         };
 
         $container[self::PAYMENT_METHOD_HANDLER] = function () {
-            return new CheckoutStepHandlerPluginCollection();
+            return new StepHandlerPluginCollection();
         };
 
         return $container;

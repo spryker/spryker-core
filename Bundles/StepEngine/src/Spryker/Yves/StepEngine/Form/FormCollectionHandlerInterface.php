@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\StepEngine\Form;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 interface FormCollectionHandlerInterface
@@ -36,10 +35,5 @@ interface FormCollectionHandlerInterface
      * @return void
      */
     public function provideDefaultFormData();
-
-    /**
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
-     */
-    public function getDataClass();
 
 }

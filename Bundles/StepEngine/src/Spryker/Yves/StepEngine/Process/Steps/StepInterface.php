@@ -33,9 +33,8 @@ interface StepInterface
     public function requireInput();
 
     /**
-     * Execute step logic, happens after form submit if provided, gets QuoteTransfer filled by data from form.
+     * Execute step logic, happens after form submit if provided, gets AbstractTransfer filled by form data.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
      *

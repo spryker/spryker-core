@@ -17,7 +17,7 @@ interface StepHandlerPluginInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     public function addToDataClass(Request $request, AbstractTransfer $dataTransfer);
 

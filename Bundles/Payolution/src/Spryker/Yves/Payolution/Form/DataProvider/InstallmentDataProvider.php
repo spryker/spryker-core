@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PayolutionCalculationPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Yves\Payolution\Form\InstallmentSubForm;
@@ -26,20 +27,27 @@ class InstallmentDataProvider implements DataProviderInterface
     protected $payolutionClient;
 
     /**
-     * @param \Spryker\Client\Payolution\PayolutionClientInterface $payolutionClient
+     * @var \Spryker\Client\Cart\CartClientInterface
      */
-    public function __construct(PayolutionClientInterface $payolutionClient)
+    protected $cartClient;
+
+    /**
+     * @param \Spryker\Client\Payolution\PayolutionClientInterface $payolutionClient
+     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     */
+    public function __construct(PayolutionClientInterface $payolutionClient, CartClientInterface $cartClient)
     {
         $this->payolutionClient = $payolutionClient;
+        $this->cartClient = $cartClient;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer)
+    public function getData()
     {
+        $quoteTransfer = $this->getDataClass();
+
         if ($quoteTransfer->getPayment() === null) {
             $paymentTransfer = new PaymentTransfer();
             $paymentTransfer->setPayolution(new PayolutionPaymentTransfer());
@@ -51,37 +59,31 @@ class InstallmentDataProvider implements DataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return array
      */
-    public function getOptions(QuoteTransfer $quoteTransfer)
+    public function getOptions()
     {
         return [
-            InstallmentSubForm::OPTION_INSTALLMENT_PAYMENT_DETAIL => $this->getInstallmentPaymentChoices(
-                $quoteTransfer
-            ),
+            InstallmentSubForm::OPTION_INSTALLMENT_PAYMENT_DETAIL => $this->getInstallmentPaymentChoices(),
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return array
      */
-    protected function getInstallmentPaymentChoices(QuoteTransfer $quoteTransfer)
+    protected function getInstallmentPaymentChoices()
     {
-        $calculationResponseTransfer = $this->getInstallmentPayments($quoteTransfer);
+        $calculationResponseTransfer = $this->getInstallmentPayments();
+
         return $this->buildChoices($calculationResponseTransfer->getPaymentDetails());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
-    protected function getInstallmentPayments(QuoteTransfer $quoteTransfer)
+    protected function getInstallmentPayments()
     {
+        $quoteTransfer = $this->getDataClass();
         if ($this->payolutionClient->hasInstallmentPaymentsInSession()) {
             $calculationResponseTransfer = $this->payolutionClient->getInstallmentPaymentsFromSession();
 
@@ -91,6 +93,7 @@ class InstallmentDataProvider implements DataProviderInterface
         }
 
         $calculationResponseTransfer = $this->payolutionClient->calculateInstallmentPayments($quoteTransfer);
+
         return $this->payolutionClient->storeInstallmentPaymentsInSession($calculationResponseTransfer);
     }
 
@@ -151,6 +154,14 @@ class InstallmentDataProvider implements DataProviderInterface
     protected function convertCentToDecimal($amount)
     {
         return CurrencyManager::getInstance()->convertCentToDecimal($amount);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getDataClass()
+    {
+        return $this->cartClient->getQuote();
     }
 
 }
