@@ -10,16 +10,13 @@ namespace Spryker\Zed\Discount;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
-use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\GrandtotalDecisionRulePlugin;
-use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
-use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubtotalDecisionRulePlugin;
-use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridge;
+use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
@@ -27,17 +24,15 @@ use Spryker\Zed\Propel\Communication\Plugin\Connection;
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const STORE_CONFIG = 'store_config';
-    const FACADE_MESSENGER = 'messenger facade';
-    const FACADE_TAX = 'tax facade';
+    const STORE_CONFIG = 'STORE_CONFIG';
+    const FACADE_MESSENGER = 'MESSENGER_FACADE';
+    const FACADE_TAX = 'TAX_FACADE';
+    const FACADE_ASSERTION = 'FACADE_ASSERTION';
 
-    const PLUGIN_PROPEL_CONNECTION = 'propel_connection_plugin';
+    const PLUGIN_PROPEL_CONNECTION = 'PROPEL_CONNECTION_PLUGIN';
 
     const PLUGIN_DECISION_RULE_VOUCHER = 'PLUGIN_DECISION_RULE_VOUCHER';
     const PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL = 'PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL';
-
-    const PLUGIN_DECISION_RULE_SUBTOTAL = 'subtotal';
-    const PLUGIN_DECISION_RULE_GRANDTOTAL = 'grandtotal';
 
     const PLUGIN_COLLECTOR_ITEM = 'PLUGIN_COLLECTOR_ITEM';
     const PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION = 'PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION';
@@ -52,6 +47,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
     const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
 
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -59,7 +55,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::STORE_CONFIG] = function (Container $container) {
+        $container[self::STORE_CONFIG] = function () {
             return Store::getInstance();
         };
 
@@ -67,24 +63,32 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             return new DiscountToMessengerBridge($container->getLocator()->messenger()->facade());
         };
 
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
             return (new Connection())->get();
         };
 
-        $container[self::DECISION_RULE_PLUGINS] = function (Container $container) {
-            return $this->getAvailableDecisionRulePlugins($container);
+        $container[self::CALCULATOR_PLUGINS] = function () {
+            return $this->getAvailableCalculatorPlugins();
         };
 
-        $container[self::CALCULATOR_PLUGINS] = function (Container $container) {
-            return $this->getAvailableCalculatorPlugins($container);
+        $container[self::DECISION_RULE_PLUGINS] = function () {
+            return $this->getDecisionRulePlugins();
         };
 
-        $container[self::COLLECTOR_PLUGINS] = function (Container $container) {
-            return $this->getAvailableCollectorPlugins($container);
+        $container[self::CALCULATOR_PLUGINS] = function () {
+            return $this->getAvailableCalculatorPlugins();
+        };
+
+        $container[self::COLLECTOR_PLUGINS] = function () {
+            return $this->getCollectorPlugins();
         };
 
         $container[self::FACADE_TAX] = function (Container $container) {
             return new DiscountToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
+        $container[self::FACADE_ASSERTION] = function (Container $container) {
+            return new DiscountToAssertionBridge($container->getLocator()->assertion()->facade());
         };
 
         return $container;
@@ -97,40 +101,29 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::STORE_CONFIG] = function (Container $container) {
+        $container[self::STORE_CONFIG] = function () {
             return Store::getInstance();
         };
 
-        $container[self::DECISION_RULE_PLUGINS] = function (Container $container) {
-            return $this->getAvailableDecisionRulePlugins($container);
+        $container[self::DECISION_RULE_PLUGINS] = function () {
+            return $this->getDecisionRulePlugins();
         };
 
-        $container[self::CALCULATOR_PLUGINS] = function (Container $container) {
-            return $this->getAvailableCalculatorPlugins($container);
+        $container[self::CALCULATOR_PLUGINS] = function () {
+            return $this->getAvailableCalculatorPlugins();
         };
 
-        $container[self::COLLECTOR_PLUGINS] = function (Container $container) {
-            return $this->getAvailableCollectorPlugins($container);
+        $container[self::COLLECTOR_PLUGINS] = function () {
+            return $this->getCollectorPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
-     */
-    /*public function getAvailableDecisionRulePlugins(Container $container)
-    {
-        return [
-            self::PLUGIN_DECISION_RULE_VOUCHER => new Voucher(),
-            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new MinimumCartSubtotal(),
-        ];
-    }*/
-
-    /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
-    public function getAvailableCalculatorPlugins(Container $container)
+    public function getAvailableCalculatorPlugins()
     {
         return [
             self::PLUGIN_CALCULATOR_PERCENTAGE => new Percentage(),
@@ -139,27 +132,22 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
+     * @return CollectorPluginInterface[]
      */
-    public function getAvailableCollectorPlugins(Container $container)
+    protected function getCollectorPlugins()
     {
         return [
-            self::PLUGIN_COLLECTOR_ITEM => new Item(),
-            self::PLUGIN_COLLECTOR_ORDER_EXPENSE => new OrderExpense(),
-            self::PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION => new ItemProductOption(),
-            self::PLUGIN_COLLECTOR_AGGREGATE => new Aggregate(),
+            new ItemBySkuCollectorPlugin()
         ];
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     * @return array|Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     * @return DecisionRulePluginInterface[]
      */
-    public function getAvailableDecisionRulePlugins(Container $container)
+    protected function getDecisionRulePlugins()
     {
         return [
-            self::PLUGIN_DECISION_RULE_SUBTOTAL => new SubtotalDecisionRulePlugin(),
-            self::PLUGIN_DECISION_RULE_GRANDTOTAL => new GrandtotalDecisionRulePlugin(),
+            new SkuDecisionRulePlugin(),
         ];
     }
 

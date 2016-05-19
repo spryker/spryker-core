@@ -28,24 +28,6 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idDiscount
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
-     */
-    public function queryDiscountCollectorByDiscountId($idDiscount);
-
-    /**
-     * @api
-     *
-     * @param int $idDiscount
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
-     */
-    public function queryDecisionRules($idDiscount);
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryActiveAndRunningDiscounts();
@@ -67,29 +49,6 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
-     */
-    public function queryDiscountCollector();
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
-     */
-    public function queryDiscountDecisionRule();
-
-    /**
-     * @api
-     *
-     * @param int $idDiscountCollector
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
-     */
-    public function queryDiscountCollectorById($idDiscountCollector);
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     public function queryDiscountVoucher();
@@ -104,25 +63,11 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
-     */
-    public function queryDiscountVoucherPoolJoinedVoucherPoolCategory();
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery
-     */
-    public function queryDiscountVoucherPoolCategory();
-
-    /**
-     * @api
-     *
-     * @param string[] $couponCodes
+     * @param string[] $voucherCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    public function queryCartRulesIncludingSpecifiedVouchers(array $couponCodes = []);
+    public function queryCartRulesIncludingSpecifiedVouchers(array $voucherCodes = []);
 
     /**
      * @api
@@ -143,28 +88,26 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryVoucherCodeByIdVoucherCode($idVoucherCode);
 
     /**
+     * @param int $idVoucherPool
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
+     */
+    public function queryVouchersByIdVoucherPool($idVoucherPool);
+
+    /**
      * @api
      *
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $pool
+     * @param int $idVoucher
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
-    public function queryDiscountCollectorBysByIdPool(SpyDiscountVoucherPool $pool);
+    public function queryVoucherByIdVoucher($idVoucher);
 
     /**
      * @api
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
      */
-    public function querySalesDisount();
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery
-     */
-    public function querySalesDisountCode();
+    public function querySalesDiscounts();
 
 }

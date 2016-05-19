@@ -88,7 +88,7 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
             ->willReturn($discountQueryMock);
 
         $discountQueryContainer->expects($this->once())
-            ->method('querySalesDisount')
+            ->method('querySalesDiscounts')
             ->willReturn($discountQueryMock);
 
         return new ItemDiscounts($discountQueryContainer);

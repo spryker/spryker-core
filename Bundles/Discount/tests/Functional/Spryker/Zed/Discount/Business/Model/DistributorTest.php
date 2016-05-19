@@ -8,6 +8,8 @@
 namespace Functional\Spryker\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
@@ -70,9 +72,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals($items[0]->getUnitGrossPrice(), current($items[0]->getCalculatedDiscounts())->getUnitGrossAmount());
-        $this->assertEquals($items[1]->getUnitGrossPrice(), current($items[1]->getCalculatedDiscounts())->getUnitGrossAmount());
-        $this->assertEquals($items[2]->getUnitGrossPrice(), current($items[2]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals($items[0]->getUnitGrossPrice(), current($items[0]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals($items[1]->getUnitGrossPrice(), current($items[1]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals($items[2]->getUnitGrossPrice(), current($items[2]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
     }
 
     /**
@@ -93,9 +95,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[0]->getCalculatedDiscounts())->getUnitGrossAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[1]->getCalculatedDiscounts())->getUnitGrossAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[2]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[0]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[1]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[2]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
     }
 
     /**
@@ -116,9 +118,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[0]->getCalculatedDiscounts())->getUnitGrossAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_13334, current($items[1]->getCalculatedDiscounts())->getUnitGrossAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[2]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[0]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_13334, current($items[1]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[2]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
     }
 
     /**
@@ -139,9 +141,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals(self::DISCOUNT_AMOUNT_100, current($items[0]->getCalculatedDiscounts())->getUnitGrossAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_200, current($items[1]->getCalculatedDiscounts())->getUnitGrossAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_400, current($items[2]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_100, current($items[0]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_200, current($items[1]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_400, current($items[2]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
     }
 
     /**
@@ -162,9 +164,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals(0, $items[0]->getCalculatedDiscounts()->count());
-        $this->assertEquals(0, $items[1]->getCalculatedDiscounts()->count());
-        $this->assertEquals(0, $items[2]->getCalculatedDiscounts()->count());
+        $this->assertEquals(0, $items[0]->getOriginalItemCalculatedDiscounts()->count());
+        $this->assertEquals(0, $items[1]->getOriginalItemCalculatedDiscounts()->count());
+        $this->assertEquals(0, $items[2]->getOriginalItemCalculatedDiscounts()->count());
     }
 
     /**
@@ -185,24 +187,26 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals(0, $items[0]->getCalculatedDiscounts()->count());
-        $this->assertEquals(0, $items[1]->getCalculatedDiscounts()->count());
-        $this->assertEquals(0, $items[2]->getCalculatedDiscounts()->count());
+        $this->assertEquals(0, $items[0]->getOriginalItemCalculatedDiscounts()->count());
+        $this->assertEquals(0, $items[1]->getOriginalItemCalculatedDiscounts()->count());
+        $this->assertEquals(0, $items[2]->getOriginalItemCalculatedDiscounts()->count());
     }
 
     /**
      * @param array $grossPrices
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     protected function getItems(array $grossPrices)
     {
         $items = [];
 
         foreach ($grossPrices as $grossPrice) {
-            $item = new ItemTransfer();
-            $item->setUnitGrossPrice($grossPrice);
-            $items[] = $item;
+            $discountableItems = new DiscountableItemTransfer();
+            $discountableItems->setUnitGrossPrice($grossPrice);
+            $discountableItems->setQuantity(1);
+            $discountableItems->setOriginalItemCalculatedDiscounts(new \ArrayObject());
+            $items[] = $discountableItems;
         }
 
         return $items;

@@ -7,20 +7,17 @@
 
 namespace Spryker\Zed\Discount\Business\Model;
 
-use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\Parser;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Shared\Library\Error\ErrorLogger;
+use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class Discount
 {
-
-    const KEY_DISCOUNTS = 'discounts';
-    const KEY_ERRORS = 'errors';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -33,95 +30,101 @@ class Discount
     protected $calculator;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\Parser
+     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
-    protected $decisionRuleQueryStringParser;
+    protected $decisionRuleBuilder;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
+     * @var VoucherValidator
+     */
+    protected $voucherValidator;
+
+    /**
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Business\Model\CalculatorInterface $calculator
-     * @param \Spryker\Zed\Discount\Business\QueryString\Parser $decisionRuleQueryStringParser
+     * @param SpecificationBuilder $decisionRuleBuilder
+     * @param VoucherValidator $voucherValidator
      */
     public function __construct(
-        DiscountQueryContainer $queryContainer,
+        DiscountQueryContainerInterface $queryContainer,
         CalculatorInterface $calculator,
-        Parser $decisionRuleQueryStringParser
+        SpecificationBuilder $decisionRuleBuilder,
+        VoucherValidator $voucherValidator
     ) {
         $this->queryContainer = $queryContainer;
         $this->calculator = $calculator;
-        $this->decisionRuleQueryStringParser = $decisionRuleQueryStringParser;
+        $this->decisionRuleBuilder = $decisionRuleBuilder;
+        $this->voucherValidator = $voucherValidator;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return array|\Generated\Shared\Transfer\QuoteTransfer[]
      */
     public function calculate(QuoteTransfer $quoteTransfer)
     {
-        $discountsToBeCalculated = $this->retrieveDiscountsToBeCalculated($quoteTransfer);
-        $calculatedDiscounts = $this->calculator->calculate($discountsToBeCalculated, $quoteTransfer);
-        $this->addCalculatedDiscountsToQuote($quoteTransfer, $calculatedDiscounts);
+        $applicableDiscounts = $this->getApplicableDiscounts($quoteTransfer);
+        $collectedDiscounts = $this->calculator->calculate($applicableDiscounts, $quoteTransfer);
+        $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
 
         return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $discounts
+     * @param CollectedDiscountTransfer[] $collectedDiscounts
      *
      * @return void
      */
-    protected function addCalculatedDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
+    protected function addDiscountsToQuote(QuoteTransfer $quoteTransfer, array $collectedDiscounts)
     {
         $quoteTransfer->setVoucherDiscounts(new \ArrayObject());
         $quoteTransfer->setCartRuleDiscounts(new \ArrayObject());
 
-        foreach ($discounts as $discount) {
-            /** @var \Generated\Shared\Transfer\DiscountTransfer $discountTransferCopy */
-            $discountTransferCopy = $discount[Calculator::KEY_DISCOUNT_TRANSFER];
-            if ($discountTransferCopy->getVoucherCode()) {
-                $quoteTransfer->addVoucherDiscount($discountTransferCopy);
+        foreach ($collectedDiscounts as $collectedDiscountTransfer) {
+            $discountTransfer = $collectedDiscountTransfer->getDiscount();
+            if ($discountTransfer->getVoucherCode()) {
+                $quoteTransfer->addVoucherDiscount($discountTransfer);
             } else {
-                $quoteTransfer->addCartRuleDiscount($discountTransferCopy);
+                $quoteTransfer->addCartRuleDiscount($discountTransfer);
             }
         }
     }
 
     /**
-     * @param string[] $couponCodes
+     * @param string[] $voucherCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
-    public function retrieveActiveCartAndVoucherDiscounts(array $couponCodes = [])
+    public function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes = [])
     {
-        return $this->queryContainer->queryCartRulesIncludingSpecifiedVouchers($couponCodes)->find();
+        return $this->queryContainer
+            ->queryCartRulesIncludingSpecifiedVouchers($voucherCodes)
+            ->find();
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return array|\Generated\Shared\Transfer\DiscountTransfer[]
      */
-    protected function retrieveDiscountsToBeCalculated(QuoteTransfer $quoteTransfer)
+    protected function getApplicableDiscounts(QuoteTransfer $quoteTransfer)
     {
-        $discounts = $this->retrieveActiveCartAndVoucherDiscounts($this->getVoucherCodes($quoteTransfer));
+        $discounts = $this->retrieveActiveCartAndVoucherDiscounts(
+            $this->getVoucherCodes($quoteTransfer)
+        );
 
-        $discountsToBeCalculated = [];
+        $applicableDiscounts = [];
         foreach ($discounts as $discountEntity) {
-            try {
-                $isSatisfied = $this->decisionRuleQueryStringParser->parse(
-                    $quoteTransfer,
-                    $discountEntity->getDecisionRuleQueryString()
-                );
-
-                if ($isSatisfied === true) {
-                    $discountsToBeCalculated[] = $this->hydrateDiscountTransfer($discountEntity);
-                }
-            } catch (QueryStringException $e) {
-               //@todo log exception
+            if ($this->isDiscountApplicable($quoteTransfer, $discountEntity) === false) {
+                continue;
             }
+
+            $applicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity);
         }
 
-        return $discountsToBeCalculated;
+        return $applicableDiscounts;
 
     }
 
@@ -156,17 +159,44 @@ class Discount
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->fromArray($discountEntity->toArray(), true);
 
-        if ($discountEntity->getUsedVoucherCode() !== null) {
-            $discountTransfer->setVoucherCode($discountEntity->getUsedVoucherCode());
-        }
-
-        foreach ($discountEntity->getDiscountCollectors() as $discountCollectorEntity) {
-            $discountCollectorTransfer = new DiscountCollectorTransfer();
-            $discountCollectorTransfer->fromArray($discountCollectorEntity->toArray(), false);
-            $discountTransfer->addDiscountCollectors($discountCollectorTransfer);
-        }
-
         return $discountTransfer;
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param SpyDiscount $discountEntity
+     *
+     * @return bool
+     */
+    protected function isDiscountApplicable(QuoteTransfer $quoteTransfer, SpyDiscount $discountEntity)
+    {
+        $voucherCode = $discountEntity->getUsedVoucherCode();
+        if ($voucherCode) {
+            if ($this->voucherValidator->isUsable($voucherCode) === false) {
+                return false;
+            }
+        }
+
+        $queryString = $discountEntity->getDecisionRuleQueryString();
+        if (!$queryString) {
+            return true;
+        }
+
+        try {
+            $compositeSpecification = $this->decisionRuleBuilder
+                ->buildFromQueryString($queryString);
+
+            foreach ($quoteTransfer->getItems() as $itemTransfer) {
+                if ($compositeSpecification->isSatisfiedBy($quoteTransfer, $itemTransfer) === true) {
+                    return true;
+                }
+            }
+
+        } catch (\Exception $e) {
+            ErrorLogger::log($e);
+        }
+
+        return false;
     }
 
 }

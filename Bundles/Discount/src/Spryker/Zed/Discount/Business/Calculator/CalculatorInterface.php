@@ -11,7 +11,7 @@ interface CalculatorInterface
 {
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableItemInterface[] $discountableObjects
      * @param float $value
      *
      * @return float

@@ -12,9 +12,10 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountCode;
+use Spryker\Zed\Discount\Business\Voucher\VoucherCodeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-class DiscountOrderSaver implements DiscountSaverInterface
+class DiscountOrderOrderSaver implements DiscountOrderSaverInterface
 {
 
     /**
@@ -28,13 +29,13 @@ class DiscountOrderSaver implements DiscountSaverInterface
     protected $voucherCodesUsed = [];
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Model\VoucherCodeInterface
+     * @var \Spryker\Zed\Discount\Business\Voucher\VoucherCodeInterface
      */
     protected $voucherCode;
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     * @param \Spryker\Zed\Discount\Business\Model\VoucherCodeInterface $voucherCode
+     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherCodeInterface $voucherCode
      */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,

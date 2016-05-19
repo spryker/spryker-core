@@ -7,25 +7,27 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
-class Fixed extends AbstractDiscountPlugin
+class Fixed extends AbstractDiscountPlugin implements DiscountCalculatorPluginInterface
 {
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
+     * @param DiscountableItemTransfer[] $discountableItems
      * @param int $number
      *
      * @return float
      */
-    public function calculate(array $discountableObjects, $number)
+    public function calculate(array $discountableItems, $number)
     {
-        return $this->getFacade()->calculateFixed($discountableObjects, $number);
+        return $this->getFacade()->calculateFixed($discountableItems, $number);
     }
 
     /**

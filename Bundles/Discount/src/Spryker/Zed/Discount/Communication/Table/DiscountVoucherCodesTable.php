@@ -9,12 +9,15 @@ namespace Spryker\Zed\Discount\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class DiscountVoucherCodesTable extends AbstractTable
 {
+    const HEADER_COL_ACTIONS = 'Actions';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -37,16 +40,28 @@ class DiscountVoucherCodesTable extends AbstractTable
     protected $batchValue;
 
     /**
+     * @var int
+     */
+    protected $idDiscount;
+
+    /**
      * @param \Generated\Shared\Transfer\DataTablesTransfer $dataTablesTransfer
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param int $idPool
+     * @param int $idDiscount
      * @param int|null $batchValue
      */
-    public function __construct(DataTablesTransfer $dataTablesTransfer, DiscountQueryContainerInterface $discountQueryContainer, $idPool, $batchValue = null)
-    {
+    public function __construct(
+        DataTablesTransfer $dataTablesTransfer,
+        DiscountQueryContainerInterface $discountQueryContainer,
+        $idPool,
+        $idDiscount,
+        $batchValue = null
+    ) {
         $this->dataTablesTransfer = $dataTablesTransfer;
         $this->discountQueryContainer = $discountQueryContainer;
         $this->idPool = $idPool;
+        $this->idDiscount = $idDiscount;
         $this->batchValue = $batchValue;
     }
 
@@ -57,29 +72,48 @@ class DiscountVoucherCodesTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        //FIXME: Use Url class
-        $config->setUrl('table?id-pool=' . $this->idPool . '&batch=' . $this->batchValue);
-        $this->tableClass = 'table-data-codes';
+        $url = Url::generate(
+            'table',
+            [
+                'id-pool' => $this->idPool,
+                'id-discount' => $this->idDiscount,
+                'batch' => $this->batchValue
+            ]
+        );
+
+        $config->setUrl($url->build());
+
+        $this->tableClass .= ' table-data-codes';
 
         $config->setHeader([
             SpyDiscountVoucherTableMap::COL_CODE => 'Voucher Code',
             SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => 'Used',
+            SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES => 'Max nr. of uses',
             SpyDiscountVoucherTableMap::COL_CREATED_AT => 'Created At',
             SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => 'Batch Value',
+            self::HEADER_COL_ACTIONS => self::HEADER_COL_ACTIONS
         ]);
 
         $config->setSortable([
             SpyDiscountVoucherTableMap::COL_CODE,
             SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES,
+            SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES,
             SpyDiscountVoucherTableMap::COL_CREATED_AT,
             SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH,
         ]);
 
-        $config->setFooterFromHeader();
+        $config->setDefaultSortColumnIndex(3);
+        $config->setDefaultSortDirection('DESC');
 
-        $config->setSearchable(
-            array_keys($config->getHeader())
-        );
+        $config->setSearchable([
+            SpyDiscountVoucherTableMap::COL_CODE,
+            SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES,
+            SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES,
+            SpyDiscountVoucherTableMap::COL_CREATED_AT,
+            SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH,
+        ]);
+
+        $config->addRawColumn(self::HEADER_COL_ACTIONS);
 
         return $config;
     }
@@ -95,7 +129,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             ->queryDiscountVoucher()
             ->filterByFkDiscountVoucherPool($this->idPool);
 
-        if ($this->batchValue !== '') {
+        if ($this->batchValue) {
             $generatedVoucherCodesQuery->filterByVoucherBatch($this->batchValue);
         }
 
@@ -103,17 +137,41 @@ class DiscountVoucherCodesTable extends AbstractTable
 
         $result = [];
 
-        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $code */
-        foreach ($collectionObject as $code) {
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity */
+        foreach ($collectionObject as $discountVoucherEntity) {
             $result[] = [
-                SpyDiscountVoucherTableMap::COL_CODE => $code->getCode(),
-                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => (int)$code->getNumberOfUses(),
-                SpyDiscountVoucherTableMap::COL_CREATED_AT => $code->getCreatedAt('Y-m-d'),
-                SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => $code->getVoucherBatch(),
+                SpyDiscountVoucherTableMap::COL_CODE => $discountVoucherEntity->getCode(),
+                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => (int)$discountVoucherEntity->getNumberOfUses(),
+                SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES => (int)$discountVoucherEntity->getMaxNumberOfUses(),
+                SpyDiscountVoucherTableMap::COL_CREATED_AT => $discountVoucherEntity->getCreatedAt('Y-m-d'),
+                SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => $discountVoucherEntity->getVoucherBatch(),
+                self::HEADER_COL_ACTIONS => $this->buildLinks($discountVoucherEntity),
             ];
         }
 
         return $result;
+    }
+
+    /**
+     * @param SpyDiscountVoucher $discountVoucherEntity
+     *
+     * @return string
+     */
+    protected function buildLinks(SpyDiscountVoucher $discountVoucherEntity)
+    {
+        $buttons = [];
+
+        $deleteVoucherCodeUrl = Url::generate(
+            '/discount/voucher/delete-voucher-code',
+            [
+                'id-discount' => $this->idDiscount,
+                'id-voucher' => $discountVoucherEntity->getIdDiscountVoucher()
+            ]
+        )->build();
+
+        $buttons[] = $this->generateRemoveButton($deleteVoucherCodeUrl, 'Delete');
+
+        return implode(' ', $buttons);
     }
 
 }

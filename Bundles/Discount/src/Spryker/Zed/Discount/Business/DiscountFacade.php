@@ -7,21 +7,18 @@
 
 namespace Spryker\Zed\Discount\Business;
 
-use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\DecisionRuleTransfer;
-use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\ClauseTransfer;
+use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\CartRuleTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\DecisionRuleTransfer;
-use Generated\Shared\Transfer\RuleConditionTransfer;
-use Generated\Shared\Transfer\VoucherCodesTransfer;
-use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
-use Generated\Shared\Transfer\VoucherPoolTransfer;
-use Generated\Shared\Transfer\VoucherTransfer;
+use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
+use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -31,7 +28,7 @@ class DiscountFacade extends AbstractFacade
 {
 
     /**
-     *  Calculate discounts based on provided quote transfer.
+     * Calculate discounts based on provided quote transfer.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -39,309 +36,219 @@ class DiscountFacade extends AbstractFacade
      */
     public function calculateDiscounts(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createDiscount()->calculate($quoteTransfer);
+        return $this->getFactory()
+            ->createDiscount()
+            ->calculate($quoteTransfer);
+    }
+
+    /**
+     *
+     * @param QuoteTransfer $quoteTransfer
+     * @param ItemTransfer $itemTransfer
+     * @param ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isItemSkuSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+        return $this->getFactory()
+            ->createSkuDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param ClauseTransfer $clauseTransfer
+     *
+     * @return array
+     */
+    public function collectBySku(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
+    {
+        return $this->getFactory()
+            ->createSkuCollector()
+            ->collect($quoteTransfer, $clauseTransfer);
     }
 
     /**
      * @api
      *
-     * @param string $code
+     * @param string $type
      *
-     * @return \Spryker\Zed\Kernel\Business\ModelResult
+     * @return array|string[]
      */
-    public function isVoucherUsable($code)
+    public function getQueryStringFieldsByType($type)
     {
-        return $this->getFactory()->getDecisionRuleVoucher()->isUsable($code);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RuleConditionTransfer $ruleConditionTransfer
-     *
-     * @return bool
-     */
-    public function isSubTotalDecisionRuleSatisfiedBy(RuleConditionTransfer $ruleConditionTransfer)
-    {
-        return $this->getFactory()->createSubTotalDecisionRuleRule()->isSatisfiedBy($ruleConditionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RuleConditionTransfer $ruleConditionTransfer
-     *
-     * @return bool
-     */
-    public function isGrandTotalDecisionRuleSatisfiedBy(RuleConditionTransfer $ruleConditionTransfer)
-    {
-        return $this->getFactory()->createGrandtotalDecisionRuleRule()->isSatisfiedBy($ruleConditionTransfer);
+        return $this->getFactory()
+            ->createQueryStringSpecificationMetaProviderFactory()
+            ->createMetaProviderByType($type)
+            ->getAvailableFields();
     }
 
     /**
      * @api
      *
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
+     * @param string $type
+     * @param string $fieldName
+     *
+     * @return array|string[]
+     */
+    public function getQueryStringFieldExpressionsForField($type, $fieldName)
+    {
+        return $this->getFactory()
+            ->createQueryStringSpecificationMetaProviderFactory()
+            ->createMetaProviderByType($type)
+            ->getAvailableOperatorExpressionsForField($fieldName);
+    }
+
+    /**
+     * @param string$type
+     *
+     * @return array|\string[]
+     */
+    public function getQueryStringLogicalComparators($type)
+    {
+        return $this->getFactory()
+            ->createQueryStringSpecificationMetaProviderFactory()
+            ->createMetaProviderByType($type)
+            ->getLogicalComparators();
+    }
+
+    /**
+     * @api
+     *
+     * @param ClauseTransfer $clauseTransfer
+     * @param string $compareWith
+     *
+     * @throws ComparatorException
+     *
+     * @return bool
+     */
+    public function queryStringCompare(ClauseTransfer $clauseTransfer, $compareWith)
+    {
+        return $this->getFactory()
+            ->createComparatorOperators()
+            ->compare($clauseTransfer, $compareWith);
+    }
+
+    /**
+     * @param string $type
+     * @param string $queryString
+     *
+     * @return array|string[]
+     */
+    public function validateQueryStringByType($type, $queryString)
+    {
+        return $this->getFactory()
+            ->createQueryStringValidator()
+            ->validateByType($type, $queryString);
+    }
+
+
+    /**
+     * @param DiscountConfiguratorTransfer $discountConfigurator
+     *
+     * @return int
+     */
+    public function saveDiscount(DiscountConfiguratorTransfer $discountConfigurator)
+    {
+        return $this->getFactory()
+            ->createDiscountPersist()
+            ->save($discountConfigurator);
+    }
+
+    /**
+     * @param DiscountConfiguratorTransfer $discountConfigurator
+     *
+     * @return bool
+     */
+    public function updateDiscount(DiscountConfiguratorTransfer $discountConfigurator)
+    {
+        return $this->getFactory()
+            ->createDiscountPersist()
+            ->update($discountConfigurator);
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return DiscountConfiguratorTransfer
+     */
+    public function getHydratedDiscountConfiguratorByIdDiscount($idDiscount)
+    {
+        return $this->getFactory()
+            ->createDiscountConfiguratorHydrate()
+            ->getByIdDiscount($idDiscount);
+    }
+
+    /**
+     * @param int $idDiscount
+     * @param bool $isActive
+     *
+     * @return bool
+     */
+    public function toggleDiscountVisibility($idDiscount, $isActive = false)
+    {
+        return $this->getFactory()
+            ->createDiscountPersist()
+            ->toggleDiscountVisibility($idDiscount, $isActive);
+    }
+
+
+    /**
+     * @param DiscountVoucherTransfer $discountVoucherTransfer
+     *
+     * @return VoucherCreateInfoTransfer
+     */
+    public function saveVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer)
+    {
+        return $this->getFactory()
+            ->createDiscountPersist()
+            ->saveVoucherCodes($discountVoucherTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param DiscountableItemTransfer[] $discountableObjects
      * @param float $percentage
      *
      * @return float
      */
     public function calculatePercentage(array $discountableObjects, $percentage)
     {
-        return $this->getFactory()->createCalculatorPercentage()->calculate($discountableObjects, $percentage);
+        return $this->getFactory()
+            ->createCalculatorPercentage()
+            ->calculate($discountableObjects, $percentage);
     }
 
     /**
      * @api
      *
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
+     * @param DiscountableItemTransfer[] $discountableObjects
      * @param float $amount
      *
      * @return float
      */
     public function calculateFixed(array $discountableObjects, $amount)
     {
-        return $this->getFactory()->createCalculatorFixed()->calculate($discountableObjects, $amount);
+        return $this->getFactory()
+            ->createCalculatorFixed()
+            ->calculate($discountableObjects, $amount);
     }
 
     /**
      * @api
      *
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param CollectedDiscountTransfer $collectedDiscountTransfer
      *
      * @return void
      */
-    public function distributeAmount(array $discountableObjects, DiscountTransfer $discountTransfer)
+    public function distributeAmount(CollectedDiscountTransfer $collectedDiscountTransfer)
     {
-        $this->getFactory()->createDistributor()->distribute($discountableObjects, $discountTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
-     *
-     * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
-     */
-    public function createVoucherCodes(VoucherTransfer $voucherTransfer)
-    {
-        return $this->getFactory()->createVoucherEngine()->createVoucherCodes($voucherTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
-     */
-    public function createVoucherCode(VoucherTransfer $voucherTransfer)
-    {
-        return $this->getFactory()->createVoucherEngine()->createVoucherCode($voucherTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
-     *
-     * @return \Generated\Shared\Transfer\VoucherPoolTransfer
-     */
-    public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
-    {
-        return $this->getFactory()->createVoucherCodesWriter()->saveVoucherCode($voucherCodesTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getDecisionRulePluginNames()
-    {
-        return $this->getFactory()->getDecisionRulePlugins();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
-     */
-    public function createDiscount(DiscountTransfer $discountTransfer)
-    {
-        return $this->getFactory()->createDiscountWriter()->create($discountTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
-     */
-    public function updateDiscount(DiscountTransfer $discountTransfer)
-    {
-        return $this->getFactory()->createDiscountWriter()->update($discountTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getVoucherPoolCategories()
-    {
-        return $this->getFactory()
-            ->createVoucherPoolCategory()
-            ->getAvailableVoucherPoolCategories();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $decisionRuleTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
-     */
-    public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
-    {
-        return $this->getFactory()->createDiscountDecisionRuleWriter()->saveDiscountDecisionRule($decisionRuleTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartRuleTransfer $cartRuleFormTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
-    public function saveCartRules(CartRuleTransfer $cartRuleFormTransfer)
-    {
-        return $this->getFactory()->createCartRule()->saveCartRule($cartRuleFormTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $discountDecisionRuleTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
-     */
-    public function createDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
-    {
-        return $this->getFactory()->createDiscountDecisionRuleWriter()->create($discountDecisionRuleTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idDiscount
-     *
-     * @return array
-     */
-    public function getCurrentCartRulesDetailsByIdDiscount($idDiscount)
-    {
-        return $this->getFactory()
-            ->createCartRule()
-            ->getCurrentCartRulesDetailsByIdDiscount($idDiscount);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $discountDecisionRuleTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
-     */
-    public function updateDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
-    {
-        return $this->getFactory()->createDiscountDecisionRuleWriter()->update($discountDecisionRuleTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\VoucherTransfer $discountVoucherTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
-     */
-    public function createDiscountVoucher(VoucherTransfer $discountVoucherTransfer)
-    {
-        return $this->getFactory()->createDiscountVoucherWriter()->create($discountVoucherTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\VoucherTransfer $discountVoucherTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
-     */
-    public function updateDiscountVoucher(VoucherTransfer $discountVoucherTransfer)
-    {
-        return $this->getFactory()->createDiscountVoucherWriter()->update($discountVoucherTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $discountVoucherPoolTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
-     */
-    public function createDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer)
-    {
-        return $this->getFactory()->createDiscountVoucherPoolWriter()->create($discountVoucherPoolTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $discountVoucherPoolTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
-     */
-    public function updateDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer)
-    {
-        return $this->getFactory()->createDiscountVoucherPoolWriter()->update($discountVoucherPoolTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
-     */
-    public function createDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
-    {
-        return $this->getFactory()->createDiscountVoucherPoolCategoryWriter()
-            ->create($discountVoucherPoolCategoryTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
-     */
-    public function updateDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
-    {
-        return $this->getFactory()->createDiscountVoucherPoolCategoryWriter()
-            ->update($discountVoucherPoolCategoryTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $poolCategoryName
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
-     */
-    public function getOrCreateDiscountVoucherPoolCategoryByName($poolCategoryName)
-    {
-        return $this->getFactory()->createDiscountVoucherPoolCategoryWriter()
-            ->getOrCreateByName($poolCategoryName);
+        $this->getFactory()->createDistributor()->distribute($collectedDiscountTransfer);
     }
 
     /**
@@ -353,94 +260,10 @@ class DiscountFacade extends AbstractFacade
      */
     public function getCalculatorPluginByName($pluginName)
     {
-        return $this->getFactory()->getCalculatorPlugins()[$pluginName];
+        return $this->getFactory()
+            ->getCalculatorPlugins()[$pluginName];
     }
 
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
-     *
-     * @return array
-     */
-    public function getDiscountableItems(
-        QuoteTransfer $quoteTransfer,
-        DiscountCollectorTransfer $discountCollectorTransfer
-    ) {
-        return $this
-            ->getFactory()
-            ->createItemCollector()
-            ->collect($quoteTransfer, $discountCollectorTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
-     */
-    public function getDiscountableOrderExpenses(
-        QuoteTransfer $quoteTransfer,
-        DiscountCollectorTransfer $discountCollectorTransfer
-    ) {
-        return $this->getFactory()->createOrderExpenseCollector()
-            ->collect($quoteTransfer, $discountCollectorTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
-     */
-    public function getDiscountableItemProductOptions(
-        QuoteTransfer $quoteTransfer,
-        DiscountCollectorTransfer $discountCollectorTransfer
-    ) {
-        return $this->getFactory()->createItemProductOptionCollector()
-            ->collect($quoteTransfer, $discountCollectorTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
-     */
-    public function getDiscountableItemsFromCollectorAggregate(
-        QuoteTransfer $quoteTransfer,
-        DiscountCollectorTransfer $discountCollectorTransfer
-    ) {
-        return $this->getFactory()->createAggregateCollector()
-            ->collect($quoteTransfer, $discountCollectorTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getDiscountCollectors()
-    {
-        return array_keys($this->getFactory()->getCollectorPlugins());
-    }
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getDiscountCalculators()
-    {
-        return array_keys($this->getFactory()->getCalculatorPlugins());
-    }
 
     /**
      * @api
@@ -451,7 +274,9 @@ class DiscountFacade extends AbstractFacade
      */
     public function releaseUsedVoucherCodes(array $codes)
     {
-        return $this->getFactory()->createVoucherCode()->releaseUsedCodes($codes);
+        return $this->getFactory()
+            ->createVoucherCode()
+            ->releaseUsedCodes($codes);
     }
 
     /**
@@ -463,7 +288,9 @@ class DiscountFacade extends AbstractFacade
      */
     public function useVoucherCodes(array $codes)
     {
-        return $this->getFactory()->createVoucherCode()->useCodes($codes);
+        return $this->getFactory()
+            ->createVoucherCode()
+            ->useCodes($codes);
     }
 
     /**
@@ -476,7 +303,9 @@ class DiscountFacade extends AbstractFacade
      */
     public function saveOrderDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFactory()->createDiscountSaver()->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
+        $this->getFactory()
+            ->createDiscountOrderSaver()
+            ->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -488,7 +317,9 @@ class DiscountFacade extends AbstractFacade
      */
     public function aggregateOrderTotalDiscountAmount(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createOrderDiscountTotalAmount()->aggregate($orderTransfer);
+        $this->getFactory()
+            ->createOrderDiscountTotalAmount()
+            ->aggregate($orderTransfer);
     }
 
     /**
@@ -500,7 +331,9 @@ class DiscountFacade extends AbstractFacade
      */
     public function aggregateOrderCalculatedDiscounts(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createSalesOrderTotalsAggregator()->aggregate($orderTransfer);
+        $this->getFactory()
+            ->createSalesOrderTotalsAggregator()
+            ->aggregate($orderTransfer);
     }
 
     /**
@@ -512,7 +345,9 @@ class DiscountFacade extends AbstractFacade
      */
     public function aggregateItemDiscounts(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createItemTotalOrderAggregator()->aggregate($orderTransfer);
+        $this->getFactory()
+            ->createItemTotalOrderAggregator()
+            ->aggregate($orderTransfer);
     }
 
     /**
@@ -524,7 +359,9 @@ class DiscountFacade extends AbstractFacade
      */
     public function aggregateGrandTotalWithDiscounts(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createSalesOrderGrandTotalAggregator()->aggregate($orderTransfer);
+        $this->getFactory()
+            ->createSalesOrderGrandTotalAggregator()
+            ->aggregate($orderTransfer);
     }
 
     /**
@@ -536,7 +373,9 @@ class DiscountFacade extends AbstractFacade
      */
     public function aggregateOrderExpenseTaxWithDiscounts(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createOrderExpenseTaxWithDiscountsAggregator()->aggregate($orderTransfer);
+        $this->getFactory()
+            ->createOrderExpenseTaxWithDiscountsAggregator()
+            ->aggregate($orderTransfer);
     }
 
     /**
@@ -548,7 +387,9 @@ class DiscountFacade extends AbstractFacade
      */
     public function aggregateOrderExpensesWithDiscounts(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createOrderExpenseWithDiscountsAggregator()->aggregate($orderTransfer);
+        $this->getFactory()
+            ->createOrderExpenseWithDiscountsAggregator()
+            ->aggregate($orderTransfer);
     }
 
 }

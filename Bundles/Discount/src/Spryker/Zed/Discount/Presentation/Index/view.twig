@@ -1,0 +1,84 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block action %}
+    {{ editActionButton(url('/discount/index/edit', {'id-discount' : discountConfigurator.discountGeneral.idDiscount}), 'edit' | trans, {'id': 'create-discount-button'}) }}
+    {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View' } %}
+
+        {% block widget_content %}
+           <h4>General Information</h4>
+           <table class="table">
+               <tr>
+                   <td>Discount Type: </td>
+                   <td></td>
+               </tr>
+               <tr>
+                   <td>Name:</td>
+                   <td>{{ discountConfigurator.discountGeneral.displayName }}</td>
+               </tr>
+               <tr>
+                   <td>Description:</td>
+                   <td>{{ discountConfigurator.discountGeneral.description }}</td>
+               </tr>
+
+               <tr>
+                   <td>Exclusive:</td>
+                   <td>
+                       {% if discountConfigurator.discountGeneral.isExclusive %}
+                           YES
+                       {% else %}
+                           NO
+                       {% endif %}
+                   </td>
+               </tr>
+               <tr>
+                   <td>Valid from:</td>
+                   <td>{{ discountConfigurator.discountGeneral.validFrom|date }}</td>
+               </tr>
+               <tr>
+                   <td>Valid until:</td>
+                   <td>{{ discountConfigurator.discountGeneral.validTo|date }}</td>
+               </tr>
+           </table>
+
+          <h4>Discount calculation</h4>
+          <table class="table">
+              <tr>
+                  <td>Type:</td>
+                  <td>{{ discountConfigurator.discountCalculator.calculatorPlugin }}</td>
+              </tr>
+              <tr>
+                  <td>Amount:</td>
+                  <td>{{ discountConfigurator.discountCalculator.amount }}</td>
+              </tr>
+              <tr>
+                  <td>Apply to:</td>
+                  <td>{{ discountConfigurator.discountCalculator.collectorQueryString }}</td>
+              </tr>
+          </table>
+
+          <h4>Conditions</h4>
+          <table class="table">
+              <tr>
+                  <td>
+                      {% if discountConfigurator.discountCondition.decisionRuleQueryString %}
+                        {{ discountConfigurator.discountCondition.decisionRuleQueryString }}
+                      {% else %}
+                          No conditions, discount always applied.
+                      {% endif %}
+                  </td>
+              </tr>
+          </table>
+
+          {{ voucherCodesTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+

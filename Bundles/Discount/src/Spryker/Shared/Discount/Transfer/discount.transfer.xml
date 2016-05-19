@@ -3,17 +3,6 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="Order">
-        <property name="items" type="Item[]"  singular="item" />
-        <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="totals" type="Totals" />
-        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
-    </transfer>
-
-    <transfer name="OrderItems">
-        <property name="orderItems" type="Item[]" singular="orderItem" />
-    </transfer>
-
     <transfer name="Discount">
         <property name="idDiscount" type="int" />
         <property name="fkDiscountVoucherPool" type="int" />
@@ -23,13 +12,12 @@
         <property name="amount" type="int" />
         <property name="voucherCode" type="string"/>
         <property name="calculatorPlugin" type="string" />
-        <property name="isPrivileged" type="string" />
+        <property name="isExclusive" type="string" />
         <property name="isActive" type="string" />
         <property name="validFrom" type="string" />
         <property name="validTo" type="string" />
-        <property name="collectorLogicalOperator" type="string" />
-        <property name="discountCollectors" type="DiscountCollector[]" />
-        <property name="type" type="string" />
+        <property name="collectorQueryString" type="string" />
+        <property name="decisionRuleQueryString" type="string" />
     </transfer>
 
     <transfer name="calculatedDiscount">
@@ -39,97 +27,6 @@
         <property name="unitGrossAmount" type="int" />
         <property name="sumGrossAmount" type="int" />
         <property name="quantity" type="int" />
-    </transfer>
-
-    <transfer name="DecisionRule">
-        <property name="idDiscountDecisionRule" type="int" />
-        <property name="fkDiscount" type="int" />
-        <property name="name" type="string" />
-        <property name="decisionRulePlugin" type="string" />
-        <property name="value" type="string" />
-    </transfer>
-
-    <transfer name="Voucher">
-        <property name="idDiscountVoucher" type="int" />
-        <property name="fkDiscountVoucherPool" type="int" />
-        <property name="code" type="string" />
-        <property name="isActive" type="string" />
-        <property name="maxNumberOfUses" type="int" />
-        <property name="voucherBatch" type="int"/>
-        <property name="quantity" type="int" />
-        <property name="includeTemplate" type="bool"/>
-        <property name="customCode" type="string"/>
-        <property name="codeLength" type="int"/>
-    </transfer>
-
-    <transfer name="VoucherCreateInfo">
-        <property name="type" type="string"/>
-        <property name="message" type="string"/>
-    </transfer>
-
-    <transfer name="VoucherPool">
-        <property name="idDiscountVoucherPool" type="int" />
-        <property name="fkDiscountVoucherPoolCategory" type="int" />
-        <property name="name" type="string" />
-        <property name="template" type="string" />
-        <property name="isActive" type="string" />
-    </transfer>
-
-    <transfer name="VoucherPoolCategory">
-        <property name="idDiscountVoucherPoolCategory" type="int" />
-        <property name="name" type="string" />
-    </transfer>
-
-    <transfer name="CalculableContainer">
-        <property name="couponCodes" type="array" singular="couponCode" />
-    </transfer>
-
-    <transfer name="CartRule">
-        <property name="idDiscount" type="int"/>
-        <property name="fkDiscountVoucherPool" type="int"/>
-        <property name="displayName" type="string"/>
-        <property name="description" type="string"/>
-        <property name="amount" type="int"/>
-        <property name="type" type="string"/>
-        <property name="calculatorPlugin" type="string"/>
-        <property name="isPrivileged" type="bool"/>
-        <property name="isActive" type="bool"/>
-        <property name="validFrom" type="string"/>
-        <property name="validTo" type="string"/>
-        <property name="createdAt" type="string"/>
-        <property name="updatedAt" type="string"/>
-        <property name="decisionRules" type="array"/>
-        <property name="collectorLogicalOperator" type="string" />
-        <property name="collectorPlugins" type="DiscountCollector[]"/>
-    </transfer>
-
-    <transfer name="VoucherCodes">
-        <property name="idDiscount" type="int"/>
-        <property name="idDiscountVoucherPool" type="int" />
-        <property name="fkDiscountVoucherPoolCategory" type="int"/>
-        <property name="name" type="string"/>
-        <property name="template" type="string"/>
-        <property name="isActive" type="bool"/>
-        <property name="voucherPoolCategory" type="string"/>
-        <property name="description" type="string"/>
-        <property name="amount" type="int"/>
-        <property name="type" type="string"/>
-        <property name="validFrom" type="string"/>
-        <property name="validTo" type="string"/>
-        <property name="isPrivileged" type="bool"/>
-        <property name="collectorLogicalOperator" type="string" />
-        <property name="calculatorPlugin" type="string"/>
-        <property name="decisionRules" type="array"/>
-        <property name="collectorPlugins" type="DiscountCollector[]"/>
-    </transfer>
-
-    <transfer name="DiscountCollector">
-        <property name="idDiscountCollector" type="int"/>
-        <property name="fkDiscount" type="int"/>
-        <property name="collectorPlugin" type="string"/>
-        <property name="value" type="string"/>
-        <property name="createdAt" type="string"/>
-        <property name="updatedAt" type="string"/>
     </transfer>
 
     <transfer name="Quote">
@@ -160,10 +57,78 @@
         <property name="sumTotalDiscountAmount" type="int" />
     </transfer>
 
-    <transfer name="RuleCondition">
-        <property name="quote" type="Quote" />
-        <property name="inputValue" type="string" />
-        <property name="comparator" type="string" />
+    <transfer name="DiscountableItem">
+        <property name="quantity" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
+    </transfer>
+
+    <transfer name="CollectedDiscount">
+        <property name="discountableItems" type="DiscountableItem[]"/>
+        <property name="discount" type="Discount"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]"  singular="item" />
+        <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="totals" type="Totals" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+    </transfer>
+
+    <transfer name="OrderItems">
+        <property name="orderItems" type="Item[]" singular="orderItem" />
+    </transfer>
+
+    <transfer name="Clause">
+        <property name="field" type="string" />
+        <property name="operator" type="string" />
+        <property name="value" type="string" />
+        <property name="acceptedTypes" type="array" />
+    </transfer>
+
+    <transfer name="VoucherCreateInfo">
+        <property name="type" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="DiscountConfigurator">
+        <property name="discountGeneral" type="DiscountGeneral" />
+        <property name="discountCalculator" type="DiscountCalculator" />
+        <property name="discountCondition" type="DiscountCondition" />
+        <property name="discountVoucher" type="DiscountVoucher" />
+    </transfer>
+
+    <transfer name="DiscountGeneral">
+        <property name="idDiscount" type="int" />
+        <property name="discountType" type="string" />
+        <property name="displayName" type="string" />
+        <property name="description" type="string" />
+        <property name="validFrom" type="string" />
+        <property name="validTo" type="string" />
+        <property name="isExclusive" type="bool" />
+        <property name="isActive" type="bool" />
+    </transfer>
+
+    <transfer name="DiscountCalculator">
+        <property name="amount" type="string" />
+        <property name="calculatorPlugin" type="string" />
+        <property name="collectorQueryString" type="string" />
+    </transfer>
+
+    <transfer name="DiscountCondition">
+        <property name="decisionRuleQueryString" type="string" />
+    </transfer>
+
+    <transfer name="DiscountVoucher">
+        <property name="idDiscount" type="int" />
+        <property name="fkDiscountVoucherPool" type="int" />
+        <property name="voucherBatch" type="int" />
+        <property name="includeTemplate" type="bool" />
+        <property name="quantity" type="int" />
+        <property name="customCode" type="string" />
+        <property name="code" type="string" />
+        <property name="randomGeneratedCodeLength" type="int" />
+        <property name="maxNumberOfUses" type="int" />
     </transfer>
 
 </transfers>

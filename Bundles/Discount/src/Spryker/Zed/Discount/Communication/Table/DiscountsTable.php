@@ -20,12 +20,14 @@ class DiscountsTable extends AbstractTable
 
     const COL_VALUE = 'Value';
     const COL_PERIOD = 'Period';
-    const ACTIONS = 'Actions';
     const DATE_FORMAT = 'Y-m-d';
     const COL_DECISION_RULES = 'Cart Rules';
     const DECISION_RULE_PLUGIN = 'DecisionRulePlugin';
 
-    const PARAM_ID_DISCOUNT = 'id-discount';
+    const URL_PARAM_ID_DISCOUNT = 'id-discount';
+    const TABLE_COL_ACTIONS = 'Actions';
+    const URL_PARAM_VISIBILITY = 'visibility';
+    const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
@@ -47,24 +49,25 @@ class DiscountsTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
+        $url = Url::generate('listTable')->build();
+        $config->setUrl($url);
+
         $config->setHeader([
-            SpyDiscountTableMap::COL_ID_DISCOUNT => 'ID',
-            SpyDiscountTableMap::COL_DISPLAY_NAME => 'Display Name',
-            SpyDiscountTableMap::COL_DESCRIPTION => 'Description',
-            self::COL_VALUE => self::COL_VALUE,
-            SpyDiscountTableMap::COL_IS_PRIVILEGED => 'Is Privileged',
-            SpyDiscountTableMap::COL_IS_ACTIVE => 'Is Active',
-            self::COL_PERIOD => self::COL_PERIOD,
-            self::COL_DECISION_RULES => self::COL_DECISION_RULES,
-            self::ACTIONS => self::ACTIONS,
+            SpyDiscountTableMap::COL_ID_DISCOUNT => 'Discount ID',
+            SpyDiscountTableMap::COL_DISPLAY_NAME => 'Name',
+            SpyDiscountTableMap::COL_AMOUNT => 'Amount',
+            'Type' => 'Type',
+            'Period' => self::COL_PERIOD,
+            SpyDiscountTableMap::COL_IS_ACTIVE => 'Status',
+            SpyDiscountTableMap::COL_IS_EXCLUSIVE => 'Exclusive',
+            self::TABLE_COL_ACTIONS => self::TABLE_COL_ACTIONS
         ]);
 
         $config->setSearchable([
-            SpyDiscountTableMap::COL_DISPLAY_NAME,
-            SpyDiscountTableMap::COL_DESCRIPTION,
+            SpyDiscountTableMap::COL_DISPLAY_NAME
         ]);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(self::TABLE_COL_ACTIONS);
 
         return $config;
     }
@@ -82,20 +85,19 @@ class DiscountsTable extends AbstractTable
             ->where('fk_discount_voucher_pool IS NULL');
 
         $queryResult = $this->runQuery($query, $config, true);
-        /** @var \Orm\Zed\Discount\Persistence\SpyDiscount $item */
-        foreach ($queryResult as $item) {
-            $chosenDecisionRules = array_column($item->getDecisionRules()->toArray(), self::DECISION_RULE_PLUGIN);
+
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity */
+        foreach ($queryResult as $discountEntity) {
 
             $result[] = [
-                SpyDiscountTableMap::COL_ID_DISCOUNT => $item->getIdDiscount(),
-                SpyDiscountTableMap::COL_DISPLAY_NAME => $item->getDisplayName(),
-                SpyDiscountTableMap::COL_DESCRIPTION => $item->getDescription(),
-                self::COL_VALUE => $this->getDiscountPrice($item),
-                SpyDiscountTableMap::COL_IS_PRIVILEGED => $item->getIsPrivileged(),
-                SpyDiscountTableMap::COL_IS_ACTIVE => $item->getIsActive(),
-                self::COL_PERIOD => $item->getValidFrom(self::DATE_FORMAT) . ' - ' . $item->getValidTo(self::DATE_FORMAT),
-                self::COL_DECISION_RULES => implode(', ', $chosenDecisionRules),
-                self::ACTIONS => $this->getRowOptions($item),
+                SpyDiscountTableMap::COL_ID_DISCOUNT => $discountEntity->getIdDiscount(),
+                SpyDiscountTableMap::COL_DISPLAY_NAME => $discountEntity->getDisplayName(),
+                SpyDiscountTableMap::COL_AMOUNT => $discountEntity->getAmount(),
+                'Type' => 'Type',
+                'Period' => $discountEntity->getValidFrom(self::DATE_FORMAT) . ' - ' . $discountEntity->getValidTo(self::DATE_FORMAT),
+                SpyDiscountTableMap::COL_IS_ACTIVE => $this->getStatus($discountEntity),
+                SpyDiscountTableMap::COL_IS_EXCLUSIVE => $discountEntity->getIsExclusive(),
+                self::TABLE_COL_ACTIONS => $this->getActionButtons($discountEntity),
             ];
         }
 
@@ -130,15 +132,58 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $item
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return string
      */
-    protected function getRowOptions(SpyDiscount $item)
+    protected function getActionButtons(SpyDiscount $discountEntity)
     {
-        $url = Url::generate('/discount/cart-rule/edit', [self::PARAM_ID_DISCOUNT => $item->getIdDiscount()]);
+        $editDiscountUrl = Url::generate(
+            '/discount/index/edit',
+            [
+                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount()
+            ]
+        );
 
-        return '<a class="btn btn-xs btn-info" href="' . $url->buildEscaped() . '">Edit</a>';
+        $buttons[] = $this->generateEditButton($editDiscountUrl, 'Edit');
+
+        $viewDiscountUrl = Url::generate(
+            '/discount/index/view',
+            [
+                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount()
+            ]
+        );
+
+        $buttons[] = $this->generateViewButton($viewDiscountUrl, 'View');
+
+        $visibility = 'activate';
+        if ($discountEntity->getIsActive()) {
+            $visibility = 'deactivate';
+        }
+
+        $viewDiscountUrl = Url::generate(
+            '/discount/index/toggle-discount-visibility',
+            [
+                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
+                self::URL_PARAM_VISIBILITY => $visibility,
+                self::URL_PARAM_REDIRECT_URL => '/discount/index/list'
+            ]
+        );
+
+        $buttons[] = $this->generateViewButton($viewDiscountUrl, $visibility);
+
+
+        return implode(' ', $buttons);
+    }
+
+    /**
+     * @param SpyDiscount $discountEntity
+     *
+     * @return string
+     */
+    protected function getStatus(SpyDiscount $discountEntity)
+    {
+         return $discountEntity->getIsActive() ? 'Active' : 'Inactive';
     }
 
 }

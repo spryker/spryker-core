@@ -31,14 +31,6 @@ class DiscountPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
-     */
-    public function createDiscountDecisionRuleQuery()
-    {
-        return SpyDiscountDecisionRuleQuery::create();
-    }
-
-    /**
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function createDiscountQuery()
@@ -53,21 +45,4 @@ class DiscountPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyDiscountVoucherPoolQuery::create();
     }
-
-    /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
-     */
-    public function createDiscountCollectorQuery()
-    {
-        return SpyDiscountCollectorQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery
-     */
-    public function createDiscountVoucherPoolCategoryQuery()
-    {
-        return SpyDiscountVoucherPoolCategoryQuery::create();
-    }
-
 }

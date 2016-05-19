@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\Discount\Business\Model;
 
+use Generated\Shared\Transfer\CollectedDiscountsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountCollection
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return mixed
+     * @return CollectedDiscountsTransfer[]
      */
-    public function calculate(array $discountCollection, QuoteTransfer $quoteTransfer);
+    public function calculate(array $discounts, QuoteTransfer $quoteTransfer);
 
 }

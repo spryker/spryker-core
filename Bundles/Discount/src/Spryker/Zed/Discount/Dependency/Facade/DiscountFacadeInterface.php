@@ -42,7 +42,7 @@ interface DiscountFacadeInterface
     public function isMinimumCartSubtotalReached(QuoteTransfer $quoteTransfer, DecisionRule $decisionRule);
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableItemInterface[] $discountableObjects
      * @param float $percentage
      *
      * @return float
@@ -50,7 +50,7 @@ interface DiscountFacadeInterface
     public function calculatePercentage(array $discountableObjects, $percentage);
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableItemInterface[] $discountableObjects
      * @param float $amount
      *
      * @return float
@@ -58,7 +58,7 @@ interface DiscountFacadeInterface
     public function calculateFixed(array $discountableObjects, $amount);
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableItemInterface[] $discountableObjects
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return void
@@ -165,7 +165,7 @@ interface DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return \Spryker\Zed\Discount\Business\Model\DiscountableInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\DiscountableItemInterface[]
      */
     public function getDiscountableItems(
         QuoteTransfer $quoteTransfer,
@@ -176,7 +176,7 @@ interface DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return \Spryker\Zed\Discount\Business\Model\DiscountableInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\DiscountableItemInterface[]
      */
     public function getDiscountableOrderExpenses(
         QuoteTransfer $quoteTransfer,

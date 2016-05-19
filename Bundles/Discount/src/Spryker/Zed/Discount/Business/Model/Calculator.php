@@ -7,17 +7,20 @@
 
 namespace Spryker\Zed\Discount\Business\Model;
 
+use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Library\Error\ErrorLogger;
+use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
+use Spryker\Zed\Discount\Business\Exception\CalculatorException;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class Calculator implements CalculatorInterface
 {
-
-    const KEY_DISCOUNT_TRANSFER = 'transfer';
-    const KEY_DISCOUNT_AMOUNT = 'amount';
-    const KEY_DISCOUNT_REASON = 'reason';
-    const KEY_DISCOUNTABLE_OBJECTS = 'discountableObjects';
     const DISCOUNT_SUCCESSFULLY_APPLIED_KEY = 'discount.successfully.applied';
 
     /**
@@ -26,9 +29,9 @@ class Calculator implements CalculatorInterface
     protected $calculatedDiscounts = [];
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Model\CollectorResolver
+     * @var SpecificationBuilder
      */
-    protected $collectorResolver;
+    protected $collectorBuilder;
 
     /**
      * @var array
@@ -41,162 +44,214 @@ class Calculator implements CalculatorInterface
     protected $messengerFacade;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\CollectorResolver $collectorResolver
+     * @var DistributorInterface
+     */
+    protected $distributor;
+
+    /**
+     * @param SpecificationBuilder $collectorBuilder
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
+     * @param DistributorInterface $distributor
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
     public function __construct(
-        CollectorResolver $collectorResolver,
-        DiscountToMessengerInterface  $messengerFacade,
+        SpecificationBuilder $collectorBuilder,
+        DiscountToMessengerInterface $messengerFacade,
+        DistributorInterface $distributor,
         array $calculatorPlugins
     ) {
 
-        $this->collectorResolver = $collectorResolver;
+        $this->collectorBuilder = $collectorBuilder;
         $this->calculatorPlugins = $calculatorPlugins;
         $this->messengerFacade = $messengerFacade;
+        $this->distributor = $distributor;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountCollection
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return CollectedDiscountTransfer[]
      */
-    public function calculate(array $discountCollection, QuoteTransfer $quoteTransfer)
+    public function calculate(array $discounts, QuoteTransfer $quoteTransfer)
     {
-        $calculatedDiscounts = $this->calculateDiscountAmount($discountCollection, $quoteTransfer);
-        $calculatedDiscounts = $this->filterOutNonPrivilegedDiscounts($calculatedDiscounts);
-        $this->distributeDiscountAmount($calculatedDiscounts);
+        $collectedDiscounts = $this->calculateDiscountAmount($discounts, $quoteTransfer);
+        $collectedDiscounts = $this->filterOutNonPrivilegedDiscounts($collectedDiscounts);
+        $this->distributeDiscountAmount($collectedDiscounts);
 
-        return $calculatedDiscounts;
+        return $collectedDiscounts;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountCollection
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return CollectedDiscountTransfer[]
      */
-    protected function calculateDiscountAmount(
-        array $discountCollection,
-        QuoteTransfer $quoteTransfer
-    ) {
-        $calculatedDiscounts = [];
-        foreach ($discountCollection as $discountTransfer) {
-            $discountableObjects = $this->collectorResolver->collectItems($quoteTransfer, $discountTransfer);
+    protected function calculateDiscountAmount(array $discounts, QuoteTransfer $quoteTransfer)
+    {
+        $collectedDiscounts = [];
+        foreach ($discounts as $discountTransfer) {
+            $discountableItems = $this->collectItems($quoteTransfer, $discountTransfer);
 
-            if (count($discountableObjects) === 0) {
+            if (count($discountableItems) === 0) {
                 continue;
             }
 
-            $calculatorPlugin = $this->calculatorPlugins[$discountTransfer->getCalculatorPlugin()];
-            $discountAmount = $calculatorPlugin->calculate($discountableObjects, $discountTransfer->getAmount());
+            $calculatorPlugin = $this->getCalculatorPlugin($discountTransfer);
+            $discountAmount = $calculatorPlugin->calculate($discountableItems, $discountTransfer->getAmount());
             $discountTransfer->setAmount($discountAmount);
 
-            $calculatedDiscounts[] = [
-                self::KEY_DISCOUNTABLE_OBJECTS => $discountableObjects,
-                self::KEY_DISCOUNT_TRANSFER => $discountTransfer,
-            ];
+            $collectedDiscounts[] = $this->createCollectedDiscountTransfer($discountTransfer, $discountableItems);
+
         }
 
-        return $calculatedDiscounts;
+        return $collectedDiscounts;
     }
 
     /**
-     * @param array $calculatedDiscounts
+     * @param CollectedDiscountTransfer[] $collectedDiscounts
      *
-     * @return array
+     * @return CollectedDiscountTransfer[]
      */
-    protected function filterOutNonPrivilegedDiscounts(array $calculatedDiscounts)
+    protected function filterOutNonPrivilegedDiscounts(array $collectedDiscounts)
     {
-        $calculatedDiscounts = $this->sortByDiscountAmountDesc($calculatedDiscounts);
-        $calculatedDiscounts = $this->filterOutUnprivileged($calculatedDiscounts);
+        $collectedDiscounts = $this->sortByDiscountAmountDescending($collectedDiscounts);
+        $collectedDiscounts = $this->filterOutUnprivileged($collectedDiscounts);
 
-        return $calculatedDiscounts;
+        return $collectedDiscounts;
     }
 
     /**
-     * @param array $calculatedDiscounts
+     * @param CollectedDiscountTransfer[] $collectedDiscountsTransfer
      *
      * @return void
      */
-    protected function distributeDiscountAmount(array $calculatedDiscounts)
+    protected function distributeDiscountAmount(array $collectedDiscountsTransfer)
     {
-        foreach ($calculatedDiscounts as $calculatedDiscount) {
-            /** @var \Generated\Shared\Transfer\DiscountTransfer $discountTransfer */
-            $discountTransfer = $calculatedDiscount[self::KEY_DISCOUNT_TRANSFER];
-            $this->distributor->distribute(
-                $calculatedDiscount[self::KEY_DISCOUNTABLE_OBJECTS],
-                $discountTransfer
-            );
-
-            $this->setSuccessfulDiscountAddMessage($discountTransfer->getDisplayName());
+        foreach ($collectedDiscountsTransfer as $collectedDiscountTransfer) {
+            $this->distributor->distribute($collectedDiscountTransfer);
+            $this->setSuccessfulDiscountAddMessage($collectedDiscountTransfer->getDiscount());
         }
     }
 
     /**
-     * @param string $discountDisplayName
+     * @param DiscountTransfer $discountTransfer
      *
      * @return void
      */
-    protected function setSuccessfulDiscountAddMessage($discountDisplayName)
+    protected function setSuccessfulDiscountAddMessage(DiscountTransfer $discountTransfer)
     {
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue(self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY);
-        $messageTransfer->setParameters(['display_name' => $discountDisplayName]);
+        $messageTransfer->setParameters([
+            'display_name' => $discountTransfer->getDisplayName()
+        ]);
 
         $this->messengerFacade->addSuccessMessage($messageTransfer);
     }
 
     /**
-     * @param array $calculatedDiscounts
+     * @param CollectedDiscountTransfer[] $collectedDiscountsTransfer
      *
-     * @return array
+     * @return CollectedDiscountTransfer[]
+     *
      */
-    protected function sortByDiscountAmountDesc(array $calculatedDiscounts)
+    protected function sortByDiscountAmountDescending(array $collectedDiscountsTransfer)
     {
-        usort($calculatedDiscounts, function ($a, $b) {
-            $amountA = (int)$a[self::KEY_DISCOUNT_TRANSFER]->getAmount();
-            $amountB = (int)$b[self::KEY_DISCOUNT_TRANSFER]->getAmount();
+        usort($collectedDiscountsTransfer, function (CollectedDiscountTransfer $a, CollectedDiscountTransfer $b) {
+            $amountA = (int)$a->getDiscount()->getAmount();
+            $amountB = (int)$b->getDiscount()->getAmount();
 
             return $amountB - $amountA;
         });
 
-        return $calculatedDiscounts;
+        return $collectedDiscountsTransfer;
     }
 
     /**
-     * @param array $calculatedDiscounts
+     * @param CollectedDiscountTransfer[] $collectedDiscounts
      *
-     * @return array
+     * @return CollectedDiscountTransfer[]
      */
-    protected function filterOutUnprivileged(array $calculatedDiscounts)
+    protected function filterOutUnprivileged(array $collectedDiscounts)
     {
         $removeOtherUnprivileged = false;
 
-        foreach ($calculatedDiscounts as $key => $discount) {
-            $discountEntity = $this->getDiscountEntity($discount);
-            if ($removeOtherUnprivileged && !$discountEntity->getIsPrivileged()) {
-                unset($calculatedDiscounts[$key]);
+        foreach ($collectedDiscounts as $key => $collectedDiscountTransfer) {
+            $discountTransfer = $collectedDiscountTransfer->getDiscount();
+            if ($removeOtherUnprivileged && !$discountTransfer->getIsPrivileged()) {
+                unset($collectedDiscounts[$key]);
                 continue;
             }
 
-            if (!$discountEntity->getIsPrivileged()) {
+            if (!$discountTransfer->getIsPrivileged()) {
                 $removeOtherUnprivileged = true;
             }
         }
 
-        return $calculatedDiscounts;
+        return $collectedDiscounts;
     }
 
     /**
-     * @param array $discount
+     * @param QuoteTransfer $quoteTransfer
+     * @param DiscountTransfer $discountTransfer
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
+     * @return DiscountableItemTransfer[]|array
      */
-    protected function getDiscountEntity(array $discount)
+    protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
-        return $discount[self::KEY_DISCOUNT_TRANSFER];
+        try {
+            $collectorQueryString = $discountTransfer->getCollectorQueryString();
+
+            $collectorComposite = $this->collectorBuilder
+                ->buildFromQueryString(
+                    $collectorQueryString
+                );
+
+            return $collectorComposite->collect($quoteTransfer);
+        } catch (\Exception $e) {
+            ErrorLogger::log($e);
+        }
+
+        return [];
+    }
+
+    /**
+     * @param DiscountTransfer $discountTransfer
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
+     *
+     * @throws CalculatorException
+     */
+    protected function getCalculatorPlugin(DiscountTransfer $discountTransfer)
+    {
+        if (!isset($this->calculatorPlugins[$discountTransfer->getCalculatorPlugin()])) {
+            throw new CalculatorException(
+                sprintf(
+                    'Calculator plugin with name "%s" not found. Did you forget to register it in "%s"::getAvailableCalculatorPlugins',
+                    $discountTransfer->getCalculatorPlugin(),
+                    DiscountDependencyProvider::class
+                )
+            );
+        }
+
+        return $this->calculatorPlugins[$discountTransfer->getCalculatorPlugin()];
+    }
+
+    /**
+     * @param DiscountTransfer $discountTransfer
+     * @param DiscountableItemTransfer[] $discountableItems
+     *
+     * @return CollectedDiscountTransfer
+     */
+    protected function createCollectedDiscountTransfer(DiscountTransfer $discountTransfer, array $discountableItems)
+    {
+        $calculatedDiscounts = new CollectedDiscountTransfer();
+        $calculatedDiscounts->setDiscount($discountTransfer);
+        $calculatedDiscounts->setDiscountableItems(new \ArrayObject($discountableItems));
+
+        return $calculatedDiscounts;
     }
 
 }

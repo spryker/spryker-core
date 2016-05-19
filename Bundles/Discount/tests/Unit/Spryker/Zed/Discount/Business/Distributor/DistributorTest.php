@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\DecisionRule;
 
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 
 class DistributorTest extends \PHPUnit_Framework_TestCase
@@ -39,23 +39,24 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
 
         $totalAmount = 0;
         foreach ($discountableObjects as $discountableObject) {
-            $totalAmount += $discountableObject->getCalculatedDiscounts()[0]->getUnitGrossAmount();
+            $totalAmount += $discountableObject->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
         }
 
         $this->assertEquals($discountAmount, $totalAmount);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     protected function createDiscountableObjects($items = [])
     {
         $discountableObjects = [];
-
         foreach ($items as $item) {
-            $itemTransfer = new ItemTransfer();
-            $itemTransfer->setUnitGrossPrice($item['unit_gross_price']);
-            $discountableObjects[] = $itemTransfer;
+            $discountableItems = new DiscountableItemTransfer();
+            $discountableItems->setUnitGrossPrice($item['unit_gross_price']);
+            $discountableItems->setQuantity(1);
+            $discountableItems->setOriginalItemCalculatedDiscounts(new \ArrayObject());
+            $discountableObjects[] = $discountableItems;
         }
 
         return $discountableObjects;

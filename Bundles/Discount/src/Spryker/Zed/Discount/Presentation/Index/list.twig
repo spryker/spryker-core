@@ -1,0 +1,17 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block action %}
+    {{ createActionButton(url('/discount/index/create'), 'create' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Discount List' } %}
+
+        {% block widget_content %}
+               {{ discountsTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

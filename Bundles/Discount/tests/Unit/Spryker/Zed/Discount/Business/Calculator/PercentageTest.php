@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\Calculator;
 
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Percentage;
 
@@ -102,7 +103,7 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array $grossPrices
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     protected function getItems(array $grossPrices)
     {
@@ -112,7 +113,13 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
             $item = new ItemTransfer();
             $item->setUnitGrossPrice($grossPrice);
             $item->setQuantity(1);
-            $items[] = $item;
+
+            $discountableItems = new DiscountableItemTransfer();
+            $discountableItems->setUnitGrossPrice($grossPrice);
+            $discountableItems->setQuantity(1);
+            $discountableItems->setOriginalItemCalculatedDiscounts(new \ArrayObject());
+
+            $items[] = $discountableItems;
         }
 
         return $items;

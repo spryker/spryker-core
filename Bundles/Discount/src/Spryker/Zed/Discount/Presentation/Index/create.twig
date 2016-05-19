@@ -1,0 +1,51 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block action %}
+    {{ createActionButton('#', 'Save' | trans, {'id': 'create-discount-button'}) }}
+    {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create new discount' } %}
+
+        {% block widget_content %}
+            {{ form_start(discountForm, {attr: {'id' : 'discount-form'}}) }}
+            <div class="tabs-container">
+                <div class="tabs-left">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> General information</a></li>
+                        <li><a data-toggle="tab" href="#tab-2" aria-expanded="true">Discount calculation</a></li>
+                        <li><a data-toggle="tab" href="#tab-3" aria-expanded="true">Conditions</a></li>
+                    </ul>
+                    <div class="tab-content ">
+                        <div id="tab-1" class="tab-pane active">
+                            <div class="panel-body">
+                                {% include '@Discount/Index/partial/general.twig' %}
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane">
+                            <div class="panel-body">
+                                {% include '@Discount/Index/partial/calculation.twig' %}
+                            </div>
+                        </div>
+                        <div id="tab-3" class="tab-pane">
+                            <div class="panel-body">
+                                {% include '@Discount/Index/partial/condition.twig' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ form_end(discountForm) }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-discount-main.js"></script>
+{% endblock %}
+

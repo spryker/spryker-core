@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use Spryker\Zed\Discount\Business\Model\DiscountOrderSaver;
-use Spryker\Zed\Discount\Business\Model\VoucherCode;
+use Spryker\Zed\Discount\Business\Model\DiscountOrderOrderSaver;
+use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 
 /**
  * @group Spryker
@@ -182,7 +182,7 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Model\VoucherCode
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Voucher\VoucherCode
      */
     private function getVoucherCodeMock()
     {
@@ -197,12 +197,12 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
      * @param array $discountSaverMethods
      * @param array $queryContainerMethods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Model\DiscountOrderSaver
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Model\DiscountOrderOrderSaver
      */
     private function getDiscountOrderSaverMock(array $discountSaverMethods = [], array $queryContainerMethods = [])
     {
         $discountSaverMock = $this->getMock(
-            DiscountOrderSaver::class,
+            DiscountOrderOrderSaver::class,
             $discountSaverMethods,
             [$this->getDiscountQueryContainerMock($queryContainerMethods), $this->getVoucherCodeMock()]
         );
