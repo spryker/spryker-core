@@ -63,12 +63,10 @@ class AddController extends AbstractController
             }
         }
 
-        dump($dataProvider->getErrorMessages($form));
-
         return $this->viewResponse([
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
-            'form_errors' => $dataProvider->getErrorMessages($form)
+            'errors' => $dataProvider->getErrorMessages($form)
         ]);
     }
 

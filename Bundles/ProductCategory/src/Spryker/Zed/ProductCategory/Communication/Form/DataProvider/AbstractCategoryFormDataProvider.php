@@ -186,11 +186,14 @@ class AbstractCategoryFormDataProvider
         if ($form->count() > 0) {
             foreach ($form->all() as $child) {
                 if (!$child->isValid()) {
-                    $errors[$child->getName()] = $this->getErrorMessages($child);
+                    $childErrors = $this->getErrorMessages($child);
+                    if (!empty($childErrors)) {
+                        $errors[$child->getName()] = $childErrors;
+                    }
                 }
             }
         } else {
-            foreach ($form->getErrors() as $key => $error) {
+            foreach ($form->getErrors(false) as $key => $error) {
                 $errors[] = $error->getMessage();
             }
         }

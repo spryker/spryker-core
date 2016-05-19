@@ -27,7 +27,7 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
      */
     public function getData($idCategory)
     {
-        $fields = $this->getDefaultFormFields();
+        $formData = $this->getDefaultFormFields();
 
         /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
         $categoryEntity = $this->categoryQueryContainer
@@ -55,7 +55,10 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
                 $nodeIds[] = $nodeEntity->getFkParentCategoryNode();
             }
 
-            $fields = [
+            $foo = $this->getAttributes($idCategory);
+            $bla = array_merge($this->getAttributesDefaultFields(), $foo);
+
+            $formData = [
                 self::PK_CATEGORY => $categoryEntity[self::PK_CATEGORY],
                 //node
                 CategoryFormEdit::FIELD_PK_CATEGORY_NODE => $categoryEntity[CategoryFormEdit::FIELD_PK_CATEGORY_NODE],
@@ -70,11 +73,11 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
                 //parents
                 self::EXTRA_PARENTS => $nodeIds,
                 //attributes
-                CategoryFormEdit::LOCALIZED_ATTRIBUTES => $this->getAttributes($idCategory)
+                CategoryFormEdit::LOCALIZED_ATTRIBUTES => $bla
             ];
         }
 
-        return $fields;
+        return $formData;
     }
 
     /**

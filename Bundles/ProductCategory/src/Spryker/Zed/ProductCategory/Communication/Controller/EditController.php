@@ -80,6 +80,8 @@ class EditController extends AddController
         $products = $this->getFactory()
             ->createProductTable($locale, $idCategory);
 
+        dump($dataProvider->getErrorMessages($form));
+
         return $this->viewResponse([
             'idCategory' => $idCategory,
             'form' => $form->createView(),
@@ -87,7 +89,8 @@ class EditController extends AddController
             'productsTable' => $products->render(),
             'showProducts' => true,
             'currentCategory' => $currentCategory->toArray(),
-            'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName()
+            'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
+            'errors' => $dataProvider->getErrorMessages($form)
         ]);
     }
 

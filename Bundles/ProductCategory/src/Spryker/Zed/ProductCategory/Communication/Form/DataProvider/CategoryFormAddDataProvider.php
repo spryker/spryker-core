@@ -22,7 +22,8 @@ class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
      */
     public function getData($idParentNode, $idCategory = null)
     {
-        $formData = $this->getDefaultFormFields($idParentNode);
+        $formData = [];
+        $fields = $this->getDefaultFormFields($idParentNode);
 
         if ($idCategory !== null) {
             /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
@@ -46,7 +47,7 @@ class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
             }
         }
 
-        return $formData;
+        return array_merge($formData, $fields);
     }
 
     /**

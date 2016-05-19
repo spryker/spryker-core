@@ -43,23 +43,31 @@
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
                     {% for locale,localizedAttributes in form.localized_attributes %}
-                        {% set active = '' %}
+                        {% set activeCss = '' %}
+                        {% set invalidCss = '' %}
+
                         {% if currentLocale == locale %}
-                            {% set active = 'active' %}
+                            {% set activeCss =  'active' %}
                         {% endif %}
 
-                        <li class="{{ active }} invalid-tab"><a href="#content_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
+                        {% if errors.localized_attributes is defined %}
+                            {% if locale in errors.localized_attributes|keys %}
+                                {% set invalidCss = 'invalid-tab' %}
+                            {% endif %}
+                        {% endif %}
+
+                        <li class="{{ activeCss }}  {{ invalidCss }}"><a href="#content_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
                     {% endfor %}
                 </ul>
 
                 <div class="tab-content">
                     {% for locale,localizedAttributes in form.localized_attributes %}
-                        {% set active = '' %}
+                        {% set cssStyle = '' %}
                         {% if currentLocale == locale %}
-                            {% set active = 'active' %}
+                            {% set cssStyle = 'active' %}
                         {% endif %}
 
-                        <div id="content_{{ locale }}" class="tab-pane {{ active }}">
+                        <div id="content_{{ locale }}" class="tab-pane {{ cssStyle }}">
                             <div class="panel-body">
                                 {{ form_row(localizedAttributes.name) }}
                                 {{ form_row(localizedAttributes.meta_title) }}
