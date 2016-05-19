@@ -126,7 +126,7 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      *
      * @param string $touchId
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearchQuery
      */
     public function queryTouchSearchByTouchId($touchId);
 
@@ -135,7 +135,7 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      *
      * @param string $touchId
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
      */
     public function queryTouchStorageByTouchId($touchId);
 

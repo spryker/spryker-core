@@ -193,7 +193,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @param string $touchId
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearchQuery
      */
     public function queryTouchSearchByTouchId($touchId)
     {
@@ -208,7 +208,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @param string $touchId
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
      */
     public function queryTouchStorageByTouchId($touchId)
     {
