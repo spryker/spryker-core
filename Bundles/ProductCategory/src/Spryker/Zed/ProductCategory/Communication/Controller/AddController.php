@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -61,6 +62,10 @@ class AddController extends AbstractController
             } catch (CategoryUrlExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
             }
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorMessage('Please make sure mandatory fields are properly filled in');
         }
 
         return $this->viewResponse([
@@ -128,6 +133,30 @@ class AddController extends AbstractController
     {
         return (new NodeTransfer())
             ->fromArray($data, true);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return int|null
+     */
+    protected function createCategoryData(array $data)
+    {
+        $idCategory = null;
+        $attributes = $data[CategoryFormAdd::LOCALIZED_ATTRIBUTES];
+
+        foreach ($attributes as $localeCode => $localizedAttributes) {
+            $localeTransfer = $this->getFactory()->getLocaleFacade()
+                ->getLocale($localeCode);
+
+            $categoryTransfer = $this->createCategoryTransferFromData($data);
+            $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($data);
+
+            $idCategory = $this->getFacade()
+                ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
+        }
+
+        return $idCategory;
     }
 
 }

@@ -74,13 +74,15 @@ class EditController extends AddController
             return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
         }
 
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorMessage('Please make sure required fields are properly filled in');
+        }
+
         $productCategories = $this->getFactory()
             ->createProductCategoryTable($locale, $idCategory);
 
         $products = $this->getFactory()
             ->createProductTable($locale, $idCategory);
-
-        dump($dataProvider->getErrorMessages($form));
 
         return $this->viewResponse([
             'idCategory' => $idCategory,

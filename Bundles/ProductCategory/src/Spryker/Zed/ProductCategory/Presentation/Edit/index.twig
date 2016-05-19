@@ -154,14 +154,15 @@
                     </div>
                 </div>
 
-                <br/>
-                <br/>
-                <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}"/>
-
             {% endblock %}
         {% endembed %}
 
     {% endif %}
+
+    <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}"/>
+    <br/>
+    <br/>
+
 
     {{ form_end(form) }}
 
