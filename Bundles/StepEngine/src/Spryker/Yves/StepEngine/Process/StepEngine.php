@@ -107,7 +107,9 @@ class StepEngine implements StepEngineInterface
      */
     protected function executeWithoutInput(StepInterface $currentStep, Request $request, AbstractTransfer $dataTransfer)
     {
-        $currentStep->execute($request, $dataTransfer);
+        $dataTransfer = $currentStep->execute($request, $dataTransfer);
+
+        $this->dataContainer->set($dataTransfer);
     }
 
     /**

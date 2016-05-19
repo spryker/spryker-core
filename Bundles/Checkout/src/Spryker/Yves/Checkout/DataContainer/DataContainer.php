@@ -45,13 +45,13 @@ class DataContainer implements DataContainerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return void
      */
     public function set(AbstractTransfer $dataTransfer)
     {
-        $this->cartClient->storeQuote($transfer);
+        $this->cartClient->storeQuote($dataTransfer);
     }
 
 }
