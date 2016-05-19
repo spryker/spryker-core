@@ -7,7 +7,9 @@
 
 namespace Spryker\Yves\Kernel;
 
-class Container extends \Pimple
+use Spryker\Shared\Kernel\ContainerInterface;
+
+class Container extends \Pimple implements ContainerInterface
 {
 
     /**

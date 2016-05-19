@@ -13,12 +13,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class OmsConfig extends AbstractBundleConfig
 {
 
+    const DEFAULT_PROCESS_LOCATION = APPLICATION_ROOT_DIR . '/config/Zed/oms';
+
     /**
      * @return string
      */
     public function getProcessDefinitionLocation()
     {
-        return APPLICATION_ROOT_DIR . OmsConstants::DEFAULT_PROCESS_LOCATION;
+        return $this->get(OmsConstants::PROCESS_LOCATION, self::DEFAULT_PROCESS_LOCATION);
     }
 
     /**

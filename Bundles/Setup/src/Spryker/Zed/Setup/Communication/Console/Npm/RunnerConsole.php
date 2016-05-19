@@ -90,13 +90,13 @@ EOM
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $command = $this->getCommand();
 
-        $this->runCommand($command);
+        return $this->runCommand($command);
     }
 
     /**
@@ -113,7 +113,7 @@ EOM
     /**
      * @param string $command
      *
-     * @return void
+     * @return int|null
      */
     protected function runCommand($command)
     {
@@ -123,6 +123,8 @@ EOM
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
+
+        return $process->getExitCode();
     }
 
     /**

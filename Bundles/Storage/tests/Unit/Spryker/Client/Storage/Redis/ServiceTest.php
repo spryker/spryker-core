@@ -38,7 +38,6 @@ class ServiceTest extends Test
             ClientInterface::class,
             [
                 'keys',
-
                 'getProfile',
                 'getOptions',
                 'connect',
@@ -73,6 +72,16 @@ class ServiceTest extends Test
         $this->clientMock->expects($this->once())->method('keys')->with($this->equalTo('kv:aPattern*'));
 
         $this->redisService->getKeys('aPattern*');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMultiWithEmptyKeys()
+    {
+        $requestedKeys = [];
+
+        $this->assertSame($requestedKeys, $this->redisService->getMulti($requestedKeys));
     }
 
 }

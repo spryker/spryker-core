@@ -136,6 +136,24 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * Specification:
+     * - check if a ResourceUrl by CategoryNode and Locale exist
+     *
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return bool
+     */
+    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
+    {
+        $urlManager = $this->getFactory()->createUrlManager();
+
+        return $urlManager->hasResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $locale->getIdLocale());
+    }
+
+    /**
      * @api
      *
      * @param int $idCategoryNode
@@ -146,13 +164,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
     {
         $urlManager = $this->getFactory()->createUrlManager();
-        $urlEntity = $urlManager->getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $locale->getIdLocale());
 
-        if (!$urlEntity) {
-            return null;
-        }
-
-        return $urlManager->convertUrlEntityToTransfer($urlEntity);
+        return $urlManager->getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $locale->getIdLocale());
     }
 
     /**
@@ -165,14 +178,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
     {
         $urlManager = $this->getFactory()->createUrlManager();
-        $entities = $urlManager->getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
 
-        $result = [];
-        foreach ($entities as $urlEntity) {
-            $result[] = $urlManager->convertUrlEntityToTransfer($urlEntity);
-        }
-
-        return $result;
+        return $urlManager->getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
     }
 
     /**

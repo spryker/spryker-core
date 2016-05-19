@@ -56,7 +56,7 @@ class Version
      */
     protected function extract($type)
     {
-        if (preg_match('~^' . $type . ': (.+)$~', self::getRevTxt(), $matches)) {
+        if (preg_match('~' . $type . ': (.+)~', self::getRevTxt(), $matches)) {
             return $matches[1];
         }
 

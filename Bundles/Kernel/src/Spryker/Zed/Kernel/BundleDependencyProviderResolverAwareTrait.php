@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Kernel;
 
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
+use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
@@ -40,10 +43,7 @@ trait BundleDependencyProviderResolverAwareTrait
     public function getProvidedDependency($key)
     {
         if ($this->container === null) {
-            $dependencyProvider = $this->resolveDependencyProvider();
-            $container = $this->getContainer();
-            $this->provideExternalDependencies($dependencyProvider, $container);
-            $this->container = $container;
+            $this->container = $this->getContainerWithProvidedDependencies();
         }
 
         if ($this->container->offsetExists($key) === false) {
@@ -51,6 +51,32 @@ trait BundleDependencyProviderResolverAwareTrait
         }
 
         return $this->container[$key];
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function getContainerWithProvidedDependencies()
+    {
+        $container = $this->getContainer();
+        $dependencyInjectorCollection = $this->resolveDependencyInjectorCollection();
+        $dependencyInjector = $this->getDependencyInjector($dependencyInjectorCollection);
+        $dependencyProvider = $this->resolveDependencyProvider();
+
+        $this->provideExternalDependencies($dependencyProvider, $container);
+        $container = $dependencyInjector->inject($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
+     *
+     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector
+     */
+    protected function getDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
+    {
+        return new DependencyInjector($dependencyInjectorCollection);
     }
 
     /**
@@ -75,7 +101,7 @@ trait BundleDependencyProviderResolverAwareTrait
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
     abstract protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
@@ -88,6 +114,22 @@ trait BundleDependencyProviderResolverAwareTrait
     protected function getContainer()
     {
         return new Container();
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
+     */
+    protected function resolveDependencyInjectorCollection()
+    {
+        return $this->getDependencyInjectorResolver()->resolve($this);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
+     */
+    protected function getDependencyInjectorResolver()
+    {
+        return new DependencyInjectorResolver();
     }
 
 }

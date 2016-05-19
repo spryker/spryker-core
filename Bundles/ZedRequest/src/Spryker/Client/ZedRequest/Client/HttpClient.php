@@ -19,17 +19,25 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
     protected $rawToken;
 
     /**
+     * @var bool
+     */
+    protected $isAuthenticationEnabled;
+
+    /**
      * @param \Spryker\Client\Auth\AuthClientInterface $authClient
      * @param string $baseUrl
      * @param string $rawToken
+     * @param bool $isAuthenticationEnabled
      */
     public function __construct(
         AuthClientInterface $authClient,
         $baseUrl,
-        $rawToken
+        $rawToken,
+        $isAuthenticationEnabled = true
     ) {
         parent::__construct($authClient, $baseUrl);
         $this->rawToken = $rawToken;
+        $this->isAuthenticationEnabled = $isAuthenticationEnabled;
     }
 
     /**
@@ -37,9 +45,13 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
      */
     public function getHeaders()
     {
-        $headers = [
-            'Auth-Token' => $this->authClient->generateToken($this->rawToken),
-        ];
+        $headers = [];
+
+        if ($this->isAuthenticationEnabled) {
+            $headers = [
+                'Auth-Token' => $this->authClient->generateToken($this->rawToken),
+            ];
+        }
 
         return $headers;
     }

@@ -93,6 +93,19 @@ interface UrlFacadeInterface
     public function getUrlById($idUrl);
 
     /**
+     * Specification:
+     * - check if a ResourceUrl by CategoryNode and Locale exist
+     *
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return bool
+     */
+    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
+
+    /**
      * @api
      *
      * @param int $idCategoryNode

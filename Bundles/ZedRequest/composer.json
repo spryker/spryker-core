@@ -12,7 +12,7 @@
   },
   "require": {
     "spryker/application": "^2.0.0",
-    "spryker/auth": "^2.0.0",
+    "spryker/auth": "^2.0.2",
     "spryker/event-journal": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",

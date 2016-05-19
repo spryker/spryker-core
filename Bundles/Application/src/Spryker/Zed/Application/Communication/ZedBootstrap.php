@@ -9,6 +9,7 @@ namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\DataDirectory;
@@ -48,8 +49,14 @@ class ZedBootstrap
 
         $this->optimizeApp();
         $this->enableHttpMethodParameterOverride();
-        $this->registerServiceProvider();
 
+        if (!$this->isAuthenticationEnabled() && $this->isInternalRequest()) {
+            $this->registerServiceProviderForInternalRequest();
+
+            return $this->application;
+        }
+
+        $this->registerServiceProvider();
         $this->addVariablesToTwig();
 
         return $this->application;
@@ -66,9 +73,27 @@ class ZedBootstrap
     }
 
     /**
+     * @return void
+     */
+    protected function registerServiceProviderForInternalRequest()
+    {
+        foreach ($this->getInternalCallServiceProvider() as $provider) {
+            $this->application->register($provider);
+        }
+    }
+
+    /**
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getServiceProvider()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getInternalCallServiceProvider()
     {
         return [];
     }
@@ -150,6 +175,22 @@ class ZedBootstrap
         $dependencyProvider->provideBusinessLayerDependencies($container);
         $dependencyProvider->provideCommunicationLayerDependencies($container);
         $dependencyProvider->providePersistenceLayerDependencies($container);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isInternalRequest()
+    {
+        return array_key_exists('HTTP_X_INTERNAL_REQUEST', $_SERVER);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isAuthenticationEnabled()
+    {
+        return Config::get(AuthConstants::AUTH_ZED_ENABLED, true);
     }
 
 }

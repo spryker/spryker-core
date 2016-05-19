@@ -87,6 +87,9 @@ class Catalog implements CatalogInterface
             $idKeys[] = $this->productKeyBuilder->generateKey($id, $this->locale);
         }
         $productsFromStorage = $this->storageReader->getMulti($idKeys);
+        if ($productsFromStorage === null) {
+            return [];
+        }
         foreach ($productsFromStorage as $key => $product) {
             $productsFromStorage[$key] = $this->mergeAttributes(json_decode($product, true));
         }
