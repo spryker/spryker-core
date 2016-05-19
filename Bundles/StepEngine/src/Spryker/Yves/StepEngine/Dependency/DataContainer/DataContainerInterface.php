@@ -18,10 +18,10 @@ interface DataContainerInterface
     public function get();
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return void
      */
-    public function set(AbstractTransfer $transfer);
+    public function set(AbstractTransfer $dataTransfer);
 
 }

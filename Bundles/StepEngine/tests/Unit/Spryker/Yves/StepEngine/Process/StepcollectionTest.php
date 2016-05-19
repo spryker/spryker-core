@@ -7,13 +7,8 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Process;
 
-use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Unit\Spryker\Yves\StepEngine\Process\Fixtures\StepMock;
 
 class StepCollectionTest extends AbstractStepEngineTest
 {

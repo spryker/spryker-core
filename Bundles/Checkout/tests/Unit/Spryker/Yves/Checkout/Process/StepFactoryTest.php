@@ -7,19 +7,18 @@
 
 namespace Unit\Spryker\Yves\Checkout\Process;
 
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Checkout\Process\StepFactory;
+use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use Spryker\Yves\StepEngine\Process\StepEngineInterface;
-use Spryker\Yves\Kernel\Container;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @group Spryker
  * @group Yves
- * @group StepEngine
+ * @group Checkout
  * @group StepFactory
  */
 class StepFactoryTest extends \PHPUnit_Framework_TestCase

@@ -35,11 +35,11 @@ interface StepInterface
      * Execute step logic, happens after form submit if provided, gets AbstractTransfer filled by form data.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
-    public function execute(Request $request, AbstractTransfer $transfer);
+    public function execute(Request $request, AbstractTransfer $dataTransfer);
 
     /**
      * Conditions that should be met for this step to be marked as completed. returns true when satisfied.
@@ -65,10 +65,10 @@ interface StepInterface
     public function getEscapeRoute();
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return array
      */
-    public function getTemplateVariables(AbstractTransfer $quoteTransfer);
+    public function getTemplateVariables(AbstractTransfer $dataTransfer);
 
 }

@@ -36,11 +36,11 @@ class BaseStep extends AbstractBaseStep
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return void
      */
-    public function execute(Request $request, AbstractTransfer $transfer)
+    public function execute(Request $request, AbstractTransfer $dataTransfer)
     {
     }
 

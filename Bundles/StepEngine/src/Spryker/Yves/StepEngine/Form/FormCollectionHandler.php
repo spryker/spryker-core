@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\StepEngine\Form;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface;
+use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +43,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
      * @param \Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface|null $dataProvider
      */
     public function __construct(
-        array $formTypes = [],
+        array $formTypes,
         FormFactoryInterface $formFactory,
         DataProviderInterface $dataProvider = null
     ) {

@@ -49,7 +49,7 @@ class DataContainer implements DataContainerInterface
      *
      * @return void
      */
-    public function set(AbstractTransfer $transfer)
+    public function set(AbstractTransfer $dataTransfer)
     {
         $this->cartClient->storeQuote($transfer);
     }

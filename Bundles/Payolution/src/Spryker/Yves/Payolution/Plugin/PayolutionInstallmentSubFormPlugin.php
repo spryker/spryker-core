@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\Payolution\Plugin;
 
-use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 
 /**
  * @method \Spryker\Yves\Payolution\PayolutionFactory getFactory()

@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Container;
 /**
  * @group Spryker
  * @group Yves
- * @group StepEngine
+ * @group Checkout
  * @group FormFactory
  */
 class FormFactoryTest extends \PHPUnit_Framework_TestCase

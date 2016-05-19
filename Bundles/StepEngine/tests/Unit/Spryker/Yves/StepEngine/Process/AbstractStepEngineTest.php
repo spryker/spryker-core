@@ -116,4 +116,5 @@ abstract class AbstractStepEngineTest extends \PHPUnit_Framework_TestCase
 
         return $stepMock;
     }
+
 }

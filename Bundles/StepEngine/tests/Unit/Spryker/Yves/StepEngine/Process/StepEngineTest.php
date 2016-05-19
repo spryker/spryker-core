@@ -7,21 +7,16 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Process;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
-use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
-use Spryker\Yves\StepEngine\Process\StepCollection;
 use Spryker\Yves\StepEngine\Process\StepEngine;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class StepEngineTest extends AbstractStepEngineTest
 {
+
     const FORM_NAME = 'formName';
 
     /**
@@ -104,7 +99,7 @@ class StepEngineTest extends AbstractStepEngineTest
         $formCollectionHandlerMock = $this->getFormCollectionHandlerMock();
         $formCollectionHandlerMock->method('hasSubmittedForm')->willReturn(false);
 
-        $formMock = $this->createFormMock();
+        $formMock = $this->getFormMock();
         $formMock->method('getName')->willReturn(self::FORM_NAME);
         $formMock->method('createView')->willReturn([]);
 
@@ -130,13 +125,17 @@ class StepEngineTest extends AbstractStepEngineTest
         $stepCollection->addStep($stepMockB);
 
         $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
+
         $formCollectionHandlerMock = $this->getFormCollectionHandlerMock();
         $formCollectionHandlerMock->method('hasSubmittedForm')->willReturn(true);
-        $formMock = $this->createFormMock();
-        $formMock->method('isValid')->willReturn(true);
+
         $dataTransferMock = $this->getDataTransferMock();
         $dataTransferMock->method('modifiedToArray')->willReturn([]);
+
+        $formMock = $this->getFormMock();
+        $formMock->method('isValid')->willReturn(true);
         $formMock->method('getData')->willReturn($dataTransferMock);
+
         $formCollectionHandlerMock->expects($this->once())->method('handleRequest')->willReturn($formMock);
 
         $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A), $formCollectionHandlerMock);
@@ -148,7 +147,7 @@ class StepEngineTest extends AbstractStepEngineTest
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Form\FormInterface
      */
-    protected function createFormMock()
+    protected function getFormMock()
     {
         return $this->getMock(FormInterface::class);
     }

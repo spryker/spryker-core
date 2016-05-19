@@ -13,17 +13,17 @@ interface DataProviderInterface
 {
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
-    public function getData(AbstractTransfer $transfer);
+    public function getData(AbstractTransfer $dataTransfer);
 
     /**
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return array
      */
-    public function getOptions(AbstractTransfer $transfer);
+    public function getOptions(AbstractTransfer $dataTransfer);
 
 }

@@ -9,8 +9,8 @@ namespace Spryker\Yves\StepEngine\Process;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
-use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
+use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,12 +18,12 @@ class StepEngine implements StepEngineInterface
 {
 
     /**
-     * @var StepCollectionInterface
+     * @var \Spryker\Yves\StepEngine\Process\StepCollectionInterface
      */
     protected $stepCollection;
 
     /**
-     * @var DataContainerInterface
+     * @var \Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
     protected $dataContainer;
 
@@ -92,7 +92,7 @@ class StepEngine implements StepEngineInterface
                 return $this->createRedirectResponse($this->stepCollection->getNextUrl($currentStep, $dataTransfer));
             }
         }
-        
+
         $formCollection->provideDefaultFormData($dataTransfer);
 
         return $this->getTemplateVariables($currentStep, $dataTransfer, $formCollection);

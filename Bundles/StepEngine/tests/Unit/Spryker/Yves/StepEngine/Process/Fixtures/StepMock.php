@@ -83,13 +83,13 @@ class StepMock implements StepInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
-    public function execute(Request $request, AbstractTransfer $transfer)
+    public function execute(Request $request, AbstractTransfer $dataTransfer)
     {
-        return $transfer;
+        return $dataTransfer;
     }
 
     /**

@@ -12,7 +12,6 @@ use Spryker\Yves\Checkout\DataContainer\DataContainer;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
 use Spryker\Yves\StepEngine\Process\StepEngine;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class StepFactory extends AbstractFactory
 {
