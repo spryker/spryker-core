@@ -25,8 +25,6 @@ class CategoryFormEdit extends CategoryFormAdd
 
     const EXTRA_PARENTS = 'extra_parents';
 
-    const LOCALIZED_ATTRIBUTES = 'localized_attributes';
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -243,19 +241,4 @@ class CategoryFormEdit extends CategoryFormAdd
         return $this;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addLocalizedAttributesForm(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(
-                self::LOCALIZED_ATTRIBUTES, 'collection', [
-                'type' => new CategoryAttributeLocalizedForm()
-            ]);
-
-        return $this;
-    }
 }

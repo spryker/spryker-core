@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Form\DataProvider;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
+use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 
 class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
 {
@@ -28,9 +28,6 @@ class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
             /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
             $categoryEntity = $this->categoryQueryContainer
                 ->queryCategoryById($idCategory)
-                ->innerJoinAttribute()
-                ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $this->currentLocale->getIdLocale())
-                ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, CategoryFormAdd::FIELD_NAME)
                 ->innerJoinNode()
                 ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE)
                 ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, CategoryFormAdd::FIELD_PK_CATEGORY_NODE)
@@ -44,7 +41,7 @@ class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
                     CategoryFormAdd::FIELD_PK_CATEGORY_NODE => $categoryEntity[CategoryFormAdd::FIELD_PK_CATEGORY_NODE],
                     CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE => $categoryEntity[CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE],
                     CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE => $categoryEntity[CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE],
-                    CategoryFormAdd::FIELD_NAME => $categoryEntity[CategoryFormAdd::FIELD_NAME],
+                    CategoryFormAdd::LOCALIZED_ATTRIBUTES => $this->getAttributes($idCategory)
                 ];
             }
         }
@@ -63,7 +60,7 @@ class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
             self::PK_CATEGORY => null,
             CategoryFormAdd::FIELD_PK_CATEGORY_NODE => null,
             CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE => $idParentNode,
-            CategoryFormAdd::FIELD_NAME => '',
+            CategoryFormEdit::LOCALIZED_ATTRIBUTES => $this->getAttributesDefaultFields()
         ];
     }
 

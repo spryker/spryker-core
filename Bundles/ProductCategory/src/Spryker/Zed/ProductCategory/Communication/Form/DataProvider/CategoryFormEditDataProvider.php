@@ -82,7 +82,7 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
      */
     protected function getDefaultFormFields()
     {
-        $fields = [
+        return [
             //node
             self::PK_CATEGORY => null,
             CategoryFormEdit::FIELD_PK_CATEGORY_NODE => null,
@@ -95,9 +95,8 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
             self::CATEGORY_NODE_IS_MAIN => null,
 
             self::EXTRA_PARENTS => null,
+            CategoryFormEdit::LOCALIZED_ATTRIBUTES => $this->getAttributesDefaultFields()
         ];
-
-        return array_merge($this->getAttributesDefaultFields(), $fields);
     }
 
 }

@@ -81,8 +81,7 @@ class AbstractCategoryFormDataProvider
                     $path = $pathCache[$nodeEntity->getFkParentCategoryNode()];
                 }
 
-                $categories[$path][$nodeEntity->getIdCategoryNode()] = $categoryEntity
-                    ->getLocalisedAttributes($idLocale)
+                $categories[$path][$nodeEntity->getIdCategoryNode()] = $categoryEntity->getLocalisedAttributes($idLocale)
                     ->getFirst()
                     ->getName();
             }
@@ -116,8 +115,7 @@ class AbstractCategoryFormDataProvider
      */
     protected function buildPath(SpyCategoryNode $node)
     {
-        $pathTokens = $this->categoryQueryContainer
-            ->queryPath($node->getIdCategoryNode(), $this->currentLocale->getIdLocale(), false, true)
+        $pathTokens = $this->categoryQueryContainer->queryPath($node->getIdCategoryNode(), $this->currentLocale->getIdLocale(), false, true)
             ->find();
 
         $formattedPath = [];
@@ -135,8 +133,7 @@ class AbstractCategoryFormDataProvider
      */
     public function getAttributes($idCategory)
     {
-        $attributeCollection = $this->categoryQueryContainer
-            ->queryCategoryAttributes($idCategory)
+        $attributeCollection = $this->categoryQueryContainer->queryCategoryAttributes($idCategory)
             ->innerJoinLocale()
             ->clearSelectColumns()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, CategoryFormEdit::FIELD_NAME)
@@ -175,6 +172,30 @@ class AbstractCategoryFormDataProvider
         }
 
         return $fields;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return array
+     */
+    public function getErrorMessages(\Symfony\Component\Form\FormInterface $form)
+    {
+        $errors = [];
+
+        if ($form->count() > 0) {
+            foreach ($form->all() as $child) {
+                if (!$child->isValid()) {
+                    $errors[$child->getName()] = $this->getErrorMessages($child);
+                }
+            }
+        } else {
+            foreach ($form->getErrors() as $key => $error) {
+                $errors[] = $error->getMessage();
+            }
+        }
+
+        return $errors;
     }
 
 }
