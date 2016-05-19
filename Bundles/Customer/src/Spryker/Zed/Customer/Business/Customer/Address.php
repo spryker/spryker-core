@@ -63,8 +63,9 @@ class Address
         $customerEntity = $this->getCustomerFromAddressTransfer($addressTransfer);
 
         $addressEntity = $this->createCustomerAddress($addressTransfer, $customerEntity);
+        $addressTransfer->setIdCustomerAddress($addressEntity->getIdCustomerAddress());
 
-        $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity, $addressEntity);
+        $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity);
 
         return $this->entityToAddressTransfer($addressEntity);
     }
@@ -484,9 +485,8 @@ class Address
         try {
             $customerEntity = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-            $addressEntity = $this->updateCustomerAddress($addressTransfer, $customerEntity);
-
-            $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity, $addressEntity);
+            $this->updateCustomerAddress($addressTransfer, $customerEntity);
+            $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity);
 
             $connection->commit();
         } catch (\Exception $e) {
@@ -516,8 +516,9 @@ class Address
             $customerEntity = $this->getCustomerFromAddressTransfer($addressTransfer);
 
             $addressEntity = $this->createCustomerAddress($addressTransfer, $customerEntity);
+            $addressTransfer->setIdCustomerAddress($addressEntity->getIdCustomerAddress());
 
-            $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity, $addressEntity);
+            $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity);
 
             $connection->commit();
         } catch (\Exception $e) {
@@ -593,18 +594,17 @@ class Address
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $entity
      *
      * @return void
      */
-    protected function updateCustomerDefaultAddresses(AddressTransfer $addressTransfer, SpyCustomer $customerEntity, SpyCustomerAddress $entity)
+    protected function updateCustomerDefaultAddresses(AddressTransfer $addressTransfer, SpyCustomer $customerEntity)
     {
         if ($customerEntity->getDefaultBillingAddress() === null || $addressTransfer->getIsDefaultBilling()) {
-            $customerEntity->setDefaultBillingAddress($entity->getIdCustomerAddress());
+            $customerEntity->setDefaultBillingAddress($addressTransfer->getIdCustomerAddress());
         }
 
         if ($customerEntity->getDefaultShippingAddress() === null || $addressTransfer->getIsDefaultShipping()) {
-            $customerEntity->setDefaultShippingAddress($entity->getIdCustomerAddress());
+            $customerEntity->setDefaultShippingAddress($addressTransfer->getIdCustomerAddress());
         }
 
         $customerEntity->save();
