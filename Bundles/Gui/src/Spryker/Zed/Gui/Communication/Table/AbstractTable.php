@@ -361,6 +361,22 @@ abstract class AbstractTable
             return $defaultSorting;
         }
 
+        $sorting = $this->createSortingParameters($orderParameter);
+
+        if (empty($sorting)) {
+            return $defaultSorting;
+        }
+
+        return $sorting;
+    }
+
+    /**
+     * @param array $orderParameter
+     *
+     * @return array
+     */
+    protected function createSortingParameters(array $orderParameter)
+    {
         $sorting = [];
         foreach ($orderParameter as $sortingRules) {
             if (!is_array($sortingRules)) {
@@ -370,10 +386,6 @@ abstract class AbstractTable
                 'column' => $this->getParameter($sortingRules, 'column', 0),
                 'dir' => $this->getParameter($sortingRules, 'dir', 'asc'),
             ];
-        }
-
-        if (empty($sorting)) {
-            return $defaultSorting;
         }
 
         return $sorting;
