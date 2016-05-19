@@ -12,13 +12,4 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class BraintreeFactory extends AbstractFactory
 {
-
-    /**
-     * @return \Spryker\Client\Braintree\Zed\BraintreeStubInterface
-     */
-    public function createBraintreeStub()
-    {
-        return new BraintreeStub($this->createZedRequestClient());
-    }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
 class BraintreeDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_GLOSSARY = 'glossary facade';
     const FACADE_SALES_AGGREGATOR = 'sales aggregor facade';
 
     /**
@@ -25,10 +24,6 @@ class BraintreeDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new BraintreeToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
-
         $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
             return new BraintreeToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
