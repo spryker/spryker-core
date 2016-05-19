@@ -464,13 +464,12 @@ abstract class AbstractTable
     protected function getOrderByColumn(ModelCriteria $query, TableConfiguration $config, array $order)
     {
         $columns = $this->getColumnsList($query, $config);
-        $columnIndex = $order[0]['column'];
 
-        if (!isset($columns[$columnIndex])) {
+        if (!isset($columns[$order[0]]) || !isset($columns[$order[0]['column']])) {
             return reset($columns);
         }
 
-        return $columns[$columnIndex];
+        return $columns[$order[0]['column']];
     }
 
     /**
