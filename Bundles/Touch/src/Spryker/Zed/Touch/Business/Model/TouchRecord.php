@@ -163,20 +163,30 @@ class TouchRecord implements TouchRecordInterface
      */
     public function removeTouchEntriesMarkedAsDeleted()
     {
+        $deletedCount = 0;
         $this->touchQueryContainer->getConnection()->beginTransaction();
         try {
-            $deletedTouchEntries = $this->touchQueryContainer
-                ->queryTouchListByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-                ->find();
 
-            foreach ($deletedTouchEntries as $deletedTouchEntry) {
-                $this->touchQueryContainer->queryTouchSearchByTouchId($deletedTouchEntry->getIdTouch())->delete();
-                $this->touchQueryContainer->queryTouchStorageByTouchId($deletedTouchEntry->getIdTouch())->delete();
-            }
+            $chunkSize = 10000;
+            $touchListQuery = $this->touchQueryContainer
+                ->queryTouchListByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
 
-            $deletedCount = $this->touchQueryContainer
-                ->queryTouchListByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-                ->delete();
+            do {
+
+                $touchIdsMarkedAsDeleted = $touchListQuery
+                    ->select(SpyTouchTableMap::COL_ID_TOUCH)
+                    ->limit($chunkSize)
+                    ->find()->toArray();
+
+                if (!empty($touchIdsMarkedAsDeleted)) {
+                    $this->touchQueryContainer->queryTouchSearchByTouchIds($touchIdsMarkedAsDeleted)->delete();
+                    $this->touchQueryContainer->queryTouchStorageByTouchIds($touchIdsMarkedAsDeleted)->delete();
+
+                    $deletedCount += $touchListQuery->filterByIdTouch($touchIdsMarkedAsDeleted)->delete();
+                }
+
+            } while (!empty($touchIdsMarkedAsDeleted));
+
         }
         catch (\Exception $exception) {
             $this->touchQueryContainer->getConnection()->rollBack();
