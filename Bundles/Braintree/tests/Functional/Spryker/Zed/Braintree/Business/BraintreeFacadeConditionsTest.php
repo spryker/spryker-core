@@ -7,8 +7,6 @@
 
 namespace Functional\Spryker\Zed\Braintree\Business;
 
-use Functional\Spryker\Zed\Braintree\Business\Api\Adapter\Http\CaptureAdapterMock;
-use Functional\Spryker\Zed\Braintree\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLog;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLog;
 use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;

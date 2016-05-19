@@ -125,6 +125,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $responseTransfer = new BraintreeTransactionResponseTransfer();
         $responseTransfer->setTransactionId($paymentEntity->getTransactionId());
         $responseTransfer->setTransactionCode(ApiConstants::TRANSACTION_CODE_AUTHORIZE);
+
         $isSuccess = $transaction && $transaction->processorResponseCode === ApiConstants::PAYMENT_CODE_AUTHORIZE_SUCCESS;
         $responseTransfer->setIsSuccess($isSuccess);
 
@@ -376,20 +377,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * For status of authorized or submittedForSettlement.
-     *
-     * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
-     *
-     * @return \Braintree\Result\Successful|\Braintree\Result\Error
-     */
-    protected function revert(SpyPaymentBraintree $paymentEntity)
-    {
-        $this->initializeBraintree();
-
-        return \Braintree\Transaction::void($paymentEntity->getTransactionId());
-    }
-
-    /**
      * @param SpyPaymentBraintree $paymentEntity
      *
      * @return \Braintree\Transaction|null
@@ -407,6 +394,25 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         return $transaction;
     }
 
+    /**
+     * For status of authorized or submittedForSettlement.
+     *
+     * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
+     *
+     * @return \Braintree\Result\Successful|\Braintree\Result\Error
+     */
+    protected function revert(SpyPaymentBraintree $paymentEntity)
+    {
+        $this->initializeBraintree();
+
+        return \Braintree\Transaction::void($paymentEntity->getTransactionId());
+    }
+
+    /**
+     * @param SpyPaymentBraintree $paymentEntity
+     *
+     * @return \Braintree\Result\Error|\Braintree\Result\Successful
+     */
     protected function capture(SpyPaymentBraintree $paymentEntity)
     {
         $this->initializeBraintree();
