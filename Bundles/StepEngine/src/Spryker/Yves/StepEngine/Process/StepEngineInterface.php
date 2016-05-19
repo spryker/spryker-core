@@ -9,7 +9,7 @@ namespace Spryker\Yves\StepEngine\Process;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-interface StepProcessInterface
+interface StepEngineInterface
 {
 
     /**

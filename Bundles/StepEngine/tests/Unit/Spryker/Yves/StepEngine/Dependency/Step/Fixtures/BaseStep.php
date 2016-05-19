@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\StepEngine\Process\Steps\Fixtures;
+namespace Unit\Spryker\Yves\StepEngine\Dependency\Step\Fixtures;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
-use Spryker\Yves\StepEngine\Process\Steps\BaseStep as AbstractBaseStep;
+use Spryker\Yves\StepEngine\Dependency\Step\BaseStep as AbstractBaseStep;
 
 class BaseStep extends AbstractBaseStep
 {

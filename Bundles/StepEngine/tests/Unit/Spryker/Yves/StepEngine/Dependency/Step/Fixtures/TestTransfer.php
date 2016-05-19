@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\StepEngine\Process\Steps\Fixtures;
+namespace Unit\Spryker\Yves\StepEngine\Dependencx\Step\Fixtures;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
 

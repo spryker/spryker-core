@@ -11,28 +11,28 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
-use Spryker\Yves\StepEngine\Process\StepProcess;
-use Spryker\Yves\StepEngine\Process\Steps\StepInterface;
+use Spryker\Yves\StepEngine\Process\StepEngine;
+use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class StepProcessTest extends \PHPUnit_Framework_TestCase
+class StepEngineTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
      * @return void
      */
-    public function testStepProcessPreCheckShouldReturnRedirectResponseWhenPreConditionReturnsFalse()
+    public function testStepEnginePreCheckShouldReturnRedirectResponseWhenPreConditionReturnsFalse()
     {
         $escapeRoute = 'escape_route';
         $stepMock = $this->createStepMock();
         $stepMock->expects($this->once())->method('preCondition')->willReturn(false);
         $stepMock->expects($this->once())->method('getEscapeRoute')->willReturn($escapeRoute);
 
-        $stepProcess = $this->createStepProcess([$stepMock], new QuoteTransfer());
-        $response = $stepProcess->process($this->createRequest());
+        $stepEngine = $this->createStepEngine([$stepMock], new QuoteTransfer());
+        $response = $stepEngine->process($this->createRequest());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals($escapeRoute, $response->getTargetUrl());
@@ -41,7 +41,7 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testStepProcessWhenRequireInputIsFalseShouldCallExecuteWithoutTriggeringFormHandling()
+    public function testStepEngineWhenRequireInputIsFalseShouldCallExecuteWithoutTriggeringFormHandling()
     {
         $stepRoute = 'test';
         $nextStepRoute = 'next_step_route';
@@ -57,11 +57,11 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
         $nextStepMock = $this->createStepMock();
         $nextStepMock->expects($this->exactly(1))->method('getStepRoute')->willReturn($nextStepRoute);
 
-        $stepProcess = $this->createStepProcess([$stepMock, $nextStepMock], $quoteTransfer);
+        $stepEngine = $this->createStepEngine([$stepMock, $nextStepMock], $quoteTransfer);
 
         $request = $this->createRequest();
         $request->attributes->set('_route', $stepRoute);
-        $response = $stepProcess->process($request);
+        $response = $stepEngine->process($request);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals($nextStepRoute, $response->getTargetUrl());
@@ -70,7 +70,7 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testStepProcessWhenFormUsedAndValidFormSubmitedShouldCallExecuteWithInput()
+    public function testStepEngineWhenFormUsedAndValidFormSubmitedShouldCallExecuteWithInput()
     {
         $stepRoute = 'test';
         $nextStepRoute = 'next_step_route';
@@ -94,11 +94,11 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
         $formCollectionHandlerMock->expects($this->once())->method('hasSubmittedForm')->willReturn(true);
         $formCollectionHandlerMock->expects($this->once())->method('handleRequest')->willReturn($formMock);
 
-        $stepProcess = $this->createStepProcess([$stepMock, $nextStepMock], $quoteTransfer);
+        $stepEngine = $this->createStepEngine([$stepMock, $nextStepMock], $quoteTransfer);
 
         $request = $this->createRequest();
         $request->attributes->set('_route', $stepRoute);
-        $response = $stepProcess->process($request, $formCollectionHandlerMock);
+        $response = $stepEngine->process($request, $formCollectionHandlerMock);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals($nextStepRoute, $response->getTargetUrl());
@@ -107,7 +107,7 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testStepProcessWhenFormUsedButNotSubmitedShoulSetDefaultDataToForm()
+    public function testStepEngineWhenFormUsedButNotSubmitedShoulSetDefaultDataToForm()
     {
         $stepRoute = 'test';
         $quoteTransfer = new QuoteTransfer();
@@ -123,11 +123,11 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
         $formCollectionHandlerMock->expects($this->once())->method('provideDefaultFormData');
         $formCollectionHandlerMock->expects($this->once())->method('getForms')->willReturn([]);
 
-        $stepProcess = $this->createStepProcess([$stepMock], $quoteTransfer);
+        $stepEngine = $this->createStepEngine([$stepMock], $quoteTransfer);
 
         $request = $this->createRequest();
         $request->attributes->set('_route', $stepRoute);
-        $response = $stepProcess->process($request, $formCollectionHandlerMock);
+        $response = $stepEngine->process($request, $formCollectionHandlerMock);
 
         $this->assertArrayHasKey('previousStepUrl', $response);
     }
@@ -135,7 +135,7 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testStepProcessWhenFormUsedAndSubmittedAndInvalidShouldRenderView()
+    public function testStepEngineWhenFormUsedAndSubmittedAndInvalidShouldRenderView()
     {
         $stepRoute = 'test';
         $quoteTransfer = new QuoteTransfer();
@@ -155,11 +155,11 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
 
         $formCollectionHandlerMock->expects($this->once())->method('handleRequest')->willReturn($formMock);
 
-        $stepProcess = $this->createStepProcess([$stepMock], $quoteTransfer);
+        $stepEngine = $this->createStepEngine([$stepMock], $quoteTransfer);
 
         $request = $this->createRequest();
         $request->attributes->set('_route', $stepRoute);
-        $response = $stepProcess->process($request, $formCollectionHandlerMock);
+        $response = $stepEngine->process($request, $formCollectionHandlerMock);
 
         $this->assertArrayHasKey('previousStepUrl', $response);
     }
@@ -168,14 +168,14 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
      * @param array $steps
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Yves\StepEngine\Process\StepProcess
+     * @return \Spryker\Yves\StepEngine\Process\StepEngine
      */
-    protected function createStepProcess(array $steps, QuoteTransfer $quoteTransfer)
+    protected function createStepEngine(array $steps, QuoteTransfer $quoteTransfer)
     {
         $dataContainerMock = $this->getDataContainerMock();
         $dataContainerMock->method('get')->willReturn($quoteTransfer);
-        
-        return new StepProcess(
+
+        return new StepEngine(
             $steps,
             $dataContainerMock,
             $this->createUrlGeneratorMock(),
@@ -184,7 +184,7 @@ class StepProcessTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Process\Steps\StepInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
     protected function createStepMock()
     {

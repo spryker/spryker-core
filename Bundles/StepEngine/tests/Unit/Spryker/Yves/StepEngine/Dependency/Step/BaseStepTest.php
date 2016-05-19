@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Yves\StepEngine\Process\Steps;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Yves\StepEngine\Process\Steps\StepInterface;
-use Unit\Spryker\Yves\StepEngine\Process\Steps\Fixtures\BaseStep;
+use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
+use Unit\Spryker\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
 
 /**
  * @group Spryker
@@ -62,7 +61,7 @@ class BaseStepTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Unit\Spryker\Yves\StepEngine\Process\Steps\Fixtures\BaseStep
+     * @return \Unit\Spryker\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep
      */
     private function getBaseStepInstance()
     {

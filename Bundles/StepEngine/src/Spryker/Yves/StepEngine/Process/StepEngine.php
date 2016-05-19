@@ -10,22 +10,22 @@ namespace Spryker\Yves\StepEngine\Process;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
-use Spryker\Yves\StepEngine\Process\Steps\StepInterface;
-use Spryker\Yves\StepEngine\Process\Steps\StepWithExternalRedirectInterface;
+use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
+use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class StepProcess implements StepProcessInterface
+class StepEngine implements StepEngineInterface
 {
 
     /**
-     * @var \Spryker\Yves\StepEngine\Process\Steps\StepInterface[]
+     * @var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
     protected $steps = [];
 
     /**
-     * @var \Spryker\Yves\StepEngine\Process\Steps\StepInterface[]
+     * @var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
     protected $completedSteps = [];
 
@@ -129,7 +129,7 @@ class StepProcess implements StepProcessInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Spryker\Yves\StepEngine\Process\Steps\StepInterface
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
     protected function getCurrentStep(Request $request, AbstractTransfer $dataTransfer)
     {
@@ -154,9 +154,9 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      *
-     * @return null|\Spryker\Yves\StepEngine\Process\Steps\StepInterface
+     * @return null|\Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
     protected function getNextStep(StepInterface $currentStep)
     {
@@ -174,7 +174,7 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Process\Steps\StepInterface
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
     protected function getPreviousStep()
     {
@@ -186,7 +186,7 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Process\Steps\StepInterface
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
     protected function getFirstStep()
     {
@@ -197,7 +197,7 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Process\Steps\StepInterface
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
     protected function getLastStep()
     {
@@ -218,7 +218,7 @@ class StepProcess implements StepProcessInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      *
      * @return bool
      */
@@ -238,7 +238,7 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return string
@@ -255,7 +255,7 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
      * @return string
@@ -290,7 +290,7 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      *
      * @return string
      */
@@ -315,7 +315,7 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
@@ -327,7 +327,7 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      * @param \Spryker\Shared\Transfer\AbstractTransfer $formTransfer
@@ -357,7 +357,7 @@ class StepProcess implements StepProcessInterface
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Process\Steps\StepInterface $currentStep
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
