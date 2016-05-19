@@ -29,6 +29,8 @@ abstract class AbstractTable
     const BUTTON_DEFAULT_CLASS = 'btn-default';
     const BUTTON_ICON = 'icon';
     const PARAMETER_VALUE = 'value';
+    const SORT_BY_COLUMN = 'column';
+    const SORT_BY_DIRECTION = 'dir';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -350,8 +352,8 @@ abstract class AbstractTable
     {
         $defaultSorting = [
             [
-                'column' => $config->getDefaultSortColumnIndex(),
-                'dir' => $config->getDefaultSortDirection(),
+                self::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),
+                self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
             ],
         ];
 
@@ -383,8 +385,8 @@ abstract class AbstractTable
                 continue;
             }
             $sorting[] = [
-                'column' => $this->getParameter($sortingRules, 'column', 0),
-                'dir' => $this->getParameter($sortingRules, 'dir', 'asc'),
+                self::SORT_BY_COLUMN => $this->getParameter($sortingRules, self::SORT_BY_COLUMN, 0),
+                self::SORT_BY_DIRECTION => $this->getParameter($sortingRules, self::SORT_BY_DIRECTION, 'asc'),
             ];
         }
 
@@ -477,11 +479,11 @@ abstract class AbstractTable
     {
         $columns = $this->getColumnsList($query, $config);
 
-        if (!isset($columns[$order[0]]) || !isset($columns[$order[0]['column']])) {
+        if (!isset($order[0]) || !isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
             return reset($columns);
         }
 
-        return $columns[$order[0]['column']];
+        return $columns[$order[0][self::SORT_BY_COLUMN]];
     }
 
     /**
@@ -517,7 +519,7 @@ abstract class AbstractTable
         $orderColumn = $this->getOrderByColumn($query, $config, $order);
 
         $this->total = $query->count();
-        $query->orderBy($orderColumn, $order[0]['dir']);
+        $query->orderBy($orderColumn, $order[0][self::SORT_BY_DIRECTION]);
         $searchTerm = $this->getSearchTerm();
 
         $isFirst = true;
