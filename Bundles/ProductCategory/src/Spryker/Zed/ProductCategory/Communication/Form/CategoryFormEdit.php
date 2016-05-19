@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductCategory\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryFormEdit extends CategoryFormAdd
@@ -18,9 +17,6 @@ class CategoryFormEdit extends CategoryFormAdd
     const FIELD_META_DESCRIPTION = 'meta_description';
     const FIELD_META_KEYWORDS = 'meta_keywords';
     const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
-    const FIELD_CATEGORY_ROBOTS = 'robots';
-    const FIELD_CATEGORY_CANONICAL = 'canonical';
-    const FIELD_CATEGORY_ALTERNATE_TAG = 'alternate_tag';
 
     const CATEGORY_IS_ACTIVE = 'is_active';
     const CATEGORY_IS_IN_MENU = 'is_in_menu';
@@ -39,8 +35,6 @@ class CategoryFormEdit extends CategoryFormAdd
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::LOCALIZED_ATTRIBUTES, 'collection', array('type' => new CategoryAttributeLocalizedForm()));
-
         $this
             ->addCategoryKeyField($builder)
             ->addCategoryIsActiveField($builder)
@@ -53,7 +47,8 @@ class CategoryFormEdit extends CategoryFormAdd
             ->addProductsToBeAssignedField($builder)
             ->addProductsToBeDeassignedField($builder)
             ->addProductsOrderField($builder)
-            ->addProductCategoryPreconfigField($builder);
+            ->addProductCategoryPreconfigField($builder)
+            ->addLocalizedAttributesForm($builder);
     }
 
     /**
@@ -248,4 +243,19 @@ class CategoryFormEdit extends CategoryFormAdd
         return $this;
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLocalizedAttributesForm(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(
+                self::LOCALIZED_ATTRIBUTES, 'collection', [
+                'type' => new CategoryAttributeLocalizedForm()
+            ]);
+
+        return $this;
+    }
 }

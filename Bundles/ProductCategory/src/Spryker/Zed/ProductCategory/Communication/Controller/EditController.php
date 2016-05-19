@@ -87,6 +87,7 @@ class EditController extends AddController
             'productsTable' => $products->render(),
             'showProducts' => true,
             'currentCategory' => $currentCategory->toArray(),
+            'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName()
         ]);
     }
 

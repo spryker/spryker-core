@@ -18,9 +18,6 @@ class CategoryAttributeLocalizedForm extends AbstractType
     const FIELD_META_TITLE = 'meta_title';
     const FIELD_META_DESCRIPTION = 'meta_description';
     const FIELD_META_KEYWORDS = 'meta_keywords';
-    const FIELD_CATEGORY_ROBOTS = 'robots';
-    const FIELD_CATEGORY_CANONICAL = 'canonical';
-    const FIELD_CATEGORY_ALTERNATE_TAG = 'alternate_tag';
 
     /**
      * @return string
