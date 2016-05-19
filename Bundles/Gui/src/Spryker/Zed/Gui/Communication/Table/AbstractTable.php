@@ -348,12 +348,51 @@ abstract class AbstractTable
      */
     public function getOrders(TableConfiguration $config)
     {
-        return $this->request->query->get('order', [
+        $defaultSorting = [
             [
                 'column' => $config->getDefaultSortColumnIndex(),
                 'dir' => $config->getDefaultSortDirection(),
             ],
-        ]);
+        ];
+
+        $orderParameter = $this->request->query->get('order');
+
+        if (!is_array($orderParameter)) {
+            return $defaultSorting;
+        }
+
+        $sorting = [];
+        foreach ($orderParameter as $sortingRules) {
+            if (!is_array($sortingRules)) {
+                continue;
+            }
+            $sorting[] = [
+                'column' => $this->getParameter($sortingRules, 'column', 0),
+                'dir' => $this->getParameter($sortingRules, 'dir', 'asc'),
+            ];
+        }
+
+        if (empty($sorting)) {
+            return $defaultSorting;
+        }
+
+        return $sorting;
+    }
+
+    /**
+     * @param array $dataArray
+     * @param string $key
+     * @param string $defaultValue
+     *
+     * @return string
+     */
+    protected function getParameter(array $dataArray, $key, $defaultValue)
+    {
+        if (array_key_exists($key, $dataArray)) {
+            return $dataArray[$key];
+        }
+
+        return $defaultValue;
     }
 
     /**
@@ -392,26 +431,28 @@ abstract class AbstractTable
      */
     public function prepareConfig()
     {
+        $configArray = [
+            'tableId' => $this->getTableIdentifier(),
+            'class' => $this->tableClass,
+            'url' => $this->defaultUrl,
+            'header' => [],
+        ];
+
         if ($this->getConfiguration() instanceof TableConfiguration) {
-            return [
-                'tableId' => $this->getTableIdentifier(),
-                'class' => $this->tableClass,
+            $configTableArray = [
+                'url' => ($this->config->getUrl() === null) ? $this->defaultUrl : $this->config->getUrl(),
                 'header' => $this->config->getHeader(),
                 'footer' => $this->config->getFooter(),
                 'order' => $this->getOrders($this->config),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
-                'url' => ($this->config->getUrl() === null) ? $this->defaultUrl : $this->config->getUrl(),
             ];
+
+            $configArray = array_merge($configArray, $configTableArray);
         }
 
-        return [
-            'tableId' => $this->getTableIdentifier(),
-            'class' => $this->tableClass,
-            'url' => $this->defaultUrl,
-            'header' => [],
-        ];
+        return $configArray;
     }
 
     /**
