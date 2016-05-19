@@ -16,7 +16,6 @@
     "use-include-path": true
   },
   "autoload": {
-  "autoload": {
     "psr-0": {
       "Spryker\\Shared\\Acl\\": "Bundles/Acl/src",
       "Functional\\Spryker\\Shared\\Acl\\": "Bundles/Acl/tests",
