@@ -105,9 +105,9 @@ class AbstractFacadeTest extends Test
     protected function createOrderTransfer()
     {
         $orderTransfer = new OrderTransfer();
-        $totalTransfer = new TotalsTransfer();
-        $totalTransfer->setGrandTotal(1000);
-        $orderTransfer->setTotals($totalTransfer);
+        $totalsTransfer = new TotalsTransfer();
+        $totalsTransfer->setGrandTotal(1000);
+        $orderTransfer->setTotals($totalsTransfer);
         $orderTransfer->setIdSalesOrder($this->orderEntity->getIdSalesOrder());
 
         return $orderTransfer;

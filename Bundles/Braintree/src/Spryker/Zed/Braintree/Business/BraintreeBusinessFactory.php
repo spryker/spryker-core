@@ -27,13 +27,8 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
     public function createPaymentTransactionHandler()
     {
         $paymentTransactionHandler = new Transaction(
-            $this->createAdapter(),
             $this->getQueryContainer(),
             $this->getConfig()
-        );
-
-        $paymentTransactionHandler->registerMethodMapper(
-            $this->createPayPal()
         );
 
         return $paymentTransactionHandler;
@@ -61,14 +56,6 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
     public function createTransactionStatusLog()
     {
         return new TransactionStatusLog($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Spryker\Zed\Braintree\Business\Payment\Method\PayPal\PayPalInterface
-     */
-    protected function createPayPal()
-    {
-        return new PayPal($this->getConfig());
     }
 
 }

@@ -15,29 +15,16 @@ abstract class AbstractPaymentHandler
 {
 
     /**
-     * @var \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface
-     */
-    protected $executionAdapter;
-
-    /**
      * @var \Spryker\Zed\Braintree\BraintreeConfig
      */
     protected $config;
 
     /**
-     * @var array
-     */
-    protected $methodMappers = [];
-
-    /**
-     * @param \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface $executionAdapter
      * @param \Spryker\Zed\Braintree\BraintreeConfig $config
      */
     public function __construct(
-        AdapterInterface $executionAdapter,
         BraintreeConfig $config
     ) {
-        $this->executionAdapter = $executionAdapter;
         $this->config = $config;
     }
 
@@ -47,32 +34,6 @@ abstract class AbstractPaymentHandler
     protected function getConfig()
     {
         return $this->config;
-    }
-
-    /**
-     * @param \Spryker\Zed\Braintree\Business\Payment\Method\PayPal\PaypalInterface $mapper
-     *
-     * @return void
-     */
-    public function registerMethodMapper($mapper)
-    {
-        $this->methodMappers[$mapper->getMethodType()] = $mapper;
-    }
-
-    /**
-     * @param string $accountBrand
-     *
-     * @throws \Spryker\Zed\Braintree\Business\Exception\NoMethodMapperException
-     *
-     * @return \Spryker\Zed\Braintree\Business\Payment\Method\PayPal\PayPalInterface
-     */
-    protected function getMethodMapper($accountBrand)
-    {
-        if (!isset($this->methodMappers[$accountBrand])) {
-            throw new NoMethodMapperException('The method mapper is not registered.');
-        }
-
-        return $this->methodMappers[$accountBrand];
     }
 
 }
