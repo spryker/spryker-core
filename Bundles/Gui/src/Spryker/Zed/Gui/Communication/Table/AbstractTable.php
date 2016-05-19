@@ -415,8 +415,8 @@ abstract class AbstractTable
     }
 
     /**
-     * @param ModelCriteria $query
-     * @param TableConfiguration $config
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param array $order
      * @return string
      */
@@ -433,8 +433,8 @@ abstract class AbstractTable
     }
 
     /**
-     * @param ModelCriteria $query
-     * @param TableConfiguration $config
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @return array
      */
     protected function getColumnsList(ModelCriteria $query, TableConfiguration $config)
