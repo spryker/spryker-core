@@ -393,7 +393,7 @@ abstract class AbstractTable
     public function prepareConfig()
     {
         if ($this->getConfiguration() instanceof TableConfiguration) {
-            $configArray = [
+            return [
                 'tableId' => $this->getTableIdentifier(),
                 'class' => $this->tableClass,
                 'header' => $this->config->getHeader(),
@@ -404,20 +404,51 @@ abstract class AbstractTable
                 'pageLength' => $this->config->getPageLength(),
                 'url' => ($this->config->getUrl() === null) ? $this->defaultUrl : $this->config->getUrl(),
             ];
-        } else {
-            $configArray = [
-                'tableId' => $this->getTableIdentifier(),
-                'class' => $this->tableClass,
-                'url' => $this->defaultUrl,
-                'header' => [],
-            ];
         }
 
-        return $configArray;
+        return [
+            'tableId' => $this->getTableIdentifier(),
+            'class' => $this->tableClass,
+            'url' => $this->defaultUrl,
+            'header' => [],
+        ];
+    }
+
+    /**
+     * @param ModelCriteria $query
+     * @param TableConfiguration $config
+     * @param array $order
+     * @return string
+     */
+    protected function getOrderByColumn(ModelCriteria $query, TableConfiguration $config, array $order)
+    {
+        $columns = $this->getColumnsList($query, $config);
+        $columnIndex = $order[0]['column'];
+
+        if (!isset($columns[$columnIndex])) {
+            return reset($columns);
+        }
+
+        return $columns[$columnIndex];
+    }
+
+    /**
+     * @param ModelCriteria $query
+     * @param TableConfiguration $config
+     * @return array
+     */
+    protected function getColumnsList(ModelCriteria $query, TableConfiguration $config)
+    {
+        if ($config->getHeader()) {
+            return array_keys($config->getHeader());
+        }
+
+        return array_keys($query->getTableMap()->getColumns());
     }
 
     /**
      * @todo CD-412 to be rafactored, does to many things and is hard to understand
+     * @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -427,17 +458,12 @@ abstract class AbstractTable
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config, $returnRawResults = false)
     {
-        //$limit = $config->getPageLength();
         $limit = $this->getLimit();
         $offset = $this->getOffset();
         $order = $this->getOrders($config);
-        // @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
-        if ($config->getHeader()) {
-            $columns = array_keys($config->getHeader());
-        } else {
-            $columns = array_keys($query->getTableMap()->getColumns());
-        }
-        $orderColumn = $columns[$order[0]['column']];
+
+        $orderColumn = $this->getOrderByColumn($query, $config, $order);
+
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0]['dir']);
         $searchTerm = $this->getSearchTerm();
