@@ -12,15 +12,15 @@
                 <label>Search Preferences</label>
                 <title>Search Preferences</title>
                 <bundle>product-search</bundle>
-                <controller>filters</controller>
+                <controller>search-preferences</controller>
                 <action>index</action>
             </search-preferences>
             <filter-preferences>
                 <label>Filter Preferences</label>
                 <title>Filter Preferences</title>
                 <bundle>product-search</bundle>
-                <controller>filters</controller>
-                <action>preferences</action>
+                <controller>filter-preferences</controller>
+                <action>index</action>
             </filter-preferences>
         </pages>
     </search-and-filters>

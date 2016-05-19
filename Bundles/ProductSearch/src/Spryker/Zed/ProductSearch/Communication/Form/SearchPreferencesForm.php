@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductSearch\Communication\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class FilterForm extends AbstractType
+class SearchPreferencesForm extends AbstractType
 {
 
     /**
@@ -18,7 +18,7 @@ class FilterForm extends AbstractType
      */
     public function getName()
     {
-        return 'filter';
+        return 'filterPreferences';
     }
 
     /**
@@ -28,28 +28,33 @@ class FilterForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addAttributeName($builder);
-        $this->addAttributeType($builder);
-        $this->addIncludeForSuggestion($builder);
-        $this->addIncludeForSorting($builder);
-        $this->addIncludeForFullText($builder);
-        $this->addIncludeForFullTextBoosted($builder);
+        $this
+            ->addAttributeName($builder)
+            ->addAttributeType($builder)
+            ->addIncludeForSuggestion($builder)
+            ->addIncludeForSorting($builder)
+            ->addIncludeForFullText($builder)
+            ->addIncludeForFullTextBoosted($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return void
+     *
+     * @return $this
      */
     protected function addAttributeName(FormBuilderInterface $builder)
     {
         $builder->add('attribute_name', 'text', [
             'disabled' => true,
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return void
+     *
+     * @return $this
      */
     protected function addAttributeType(FormBuilderInterface $builder)
     {
@@ -62,11 +67,14 @@ class FilterForm extends AbstractType
                 'none' => 'None',
             ],
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return void
+     *
+     * @return $this
      */
     protected function addIncludeForSuggestion(FormBuilderInterface $builder)
     {
@@ -75,11 +83,14 @@ class FilterForm extends AbstractType
             'placeholder' => 'Select one',
             'choices' => $this->getYesNoChoices(),
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return void
+     *
+     * @return $this
      */
     protected function addIncludeForSorting(FormBuilderInterface $builder)
     {
@@ -88,11 +99,14 @@ class FilterForm extends AbstractType
             'placeholder' => 'Select one',
             'choices' => $this->getYesNoChoices(),
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return void
+     *
+     * @return $this
      */
     protected function addIncludeForFullText(FormBuilderInterface $builder)
     {
@@ -101,11 +115,14 @@ class FilterForm extends AbstractType
             'placeholder' => 'Select one',
             'choices' => $this->getYesNoChoices(),
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return void
+     *
+     * @return $this
      */
     protected function addIncludeForFullTextBoosted(FormBuilderInterface $builder)
     {
@@ -114,6 +131,8 @@ class FilterForm extends AbstractType
             'placeholder' => 'Select one',
             'choices' => $this->getYesNoChoices(),
         ]);
+
+        return $this;
     }
 
     /**

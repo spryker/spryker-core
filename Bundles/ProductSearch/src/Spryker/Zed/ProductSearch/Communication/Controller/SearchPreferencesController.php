@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
  */
-class FiltersController extends AbstractController
+class SearchPreferencesController extends AbstractController
 {
 
     /**
@@ -22,11 +22,11 @@ class FiltersController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getFactory()->createFiltersTable();
+        $table = $this->getFactory()->createSearchPreferencesTable();
 
-        return [
+        return $this->viewResponse([
             'filtersTable' => $table->render(),
-        ];
+        ]);
     }
 
     /**
@@ -34,7 +34,7 @@ class FiltersController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getFactory()->createFiltersTable();
+        $table = $this->getFactory()->createSearchPreferencesTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -43,28 +43,18 @@ class FiltersController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * 
      * @return array
      */
     public function editAction(Request $request)
     {
         $form = $this->getFactory()
-            ->createFilterForm()
+            ->createSearchPreferencesForm()
             ->handleRequest($request);
 
-        return [
+        return $this->viewResponse([
             'form' => $form->createView(),
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return array
-     */
-    public function preferencesAction(Request $request)
-    {
-        return [
-
-        ];
+        ]);
     }
 
 }

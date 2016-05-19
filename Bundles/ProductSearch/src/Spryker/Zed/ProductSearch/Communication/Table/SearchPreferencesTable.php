@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductSearch\Communication\Table;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class FiltersTable extends AbstractTable
+class SearchPreferencesTable extends AbstractTable
 {
 
     const NAME = 'name';
@@ -55,7 +55,7 @@ class FiltersTable extends AbstractTable
                 self::INCLUDE_FOR_FULL_TEXT => 'Include for Full Text',
                 self::INCLUDE_FOR_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
                 self::ACTION => $this->generateEditButton(
-                    '/product-search/filters/edit?id-filter=' . $i,
+                    '/product-search/search-preferences/edit?id-filter=' . $i,
                     'Edit'
                 ),
             ];

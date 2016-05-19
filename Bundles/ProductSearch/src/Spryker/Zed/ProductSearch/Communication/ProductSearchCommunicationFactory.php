@@ -8,41 +8,34 @@
 namespace Spryker\Zed\ProductSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductSearch\Communication\Form\FilterForm;
-use Spryker\Zed\ProductSearch\Communication\Table\FiltersTable;
-use Spryker\Zed\ProductSearch\Communication\Table\SearchTable;
+use Spryker\Zed\ProductSearch\Communication\Form\SearchPreferencesForm;
+use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer getQueryContainer()
  * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
  */
 class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\Storage\Communication\Table\StorageTable
+     * @return \Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable
      */
-    public function createSearchTable()
+    public function createSearchPreferencesTable()
     {
-        return new SearchTable($this->getFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSearch\Communication\Table\FiltersTable
-     */
-    public function createFiltersTable()
-    {
-        return new FiltersTable();
+        return new SearchPreferencesTable();
     }
 
     /**
      * @param array $data
      * @param array $options
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createFilterForm(array $data = [], array $options = [])
+    public function createSearchPreferencesForm(array $data = [], array $options = [])
     {
-        $filterFormType = new FilterForm();
+        $filterFormType = new SearchPreferencesForm();
 
         return $this->getFormFactory()->create($filterFormType, $data, $options);
     }
