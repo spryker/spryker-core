@@ -187,8 +187,7 @@ class TouchRecord implements TouchRecordInterface
 
             } while (!empty($touchIdsMarkedAsDeleted));
 
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             $this->touchQueryContainer->getConnection()->rollBack();
             throw $exception;
         }
