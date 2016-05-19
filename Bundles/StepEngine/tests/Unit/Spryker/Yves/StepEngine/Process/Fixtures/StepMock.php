@@ -68,7 +68,7 @@ class StepMock implements StepInterface
      */
     public function preCondition(AbstractTransfer $dataTransfer)
     {
-        return $this->postCondition;
+        return $this->preCondition;
     }
 
     /**

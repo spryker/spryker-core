@@ -9,226 +9,140 @@ namespace Unit\Spryker\Yves\StepEngine\Process;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\CartClientInterface;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
-use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
-use Spryker\Yves\StepEngine\Process\StepEngine;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
+use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
+use Spryker\Yves\StepEngine\Process\StepCollection;
+use Spryker\Yves\StepEngine\Process\StepEngine;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class StepEngineTest extends \PHPUnit_Framework_TestCase
+class StepEngineTest extends AbstractStepEngineTest
 {
+    const FORM_NAME = 'formName';
 
     /**
      * @return void
      */
-    public function testStepEnginePreCheckShouldReturnRedirectResponseWhenPreConditionReturnsFalse()
+    public function testProcessReturnRedirectResponseWithEscapeUrlOfCurrentStepWhenPreConditionNotFulfilled()
     {
-        $escapeRoute = 'escape_route';
-        $stepMock = $this->createStepMock();
-        $stepMock->expects($this->once())->method('preCondition')->willReturn(false);
-        $stepMock->expects($this->once())->method('getEscapeRoute')->willReturn($escapeRoute);
+        $stepCollection = $this->getStepCollection();
+        $stepMock = $this->getStepMock(false, false, false, '', self::ESCAPE_ROUTE);
+        $stepCollection->addStep($stepMock);
 
-        $stepEngine = $this->createStepEngine([$stepMock], new QuoteTransfer());
-        $response = $stepEngine->process($this->createRequest());
+        $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
+        $response = $stepEngine->process($this->getRequest());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals($escapeRoute, $response->getTargetUrl());
+        $this->assertEquals(self::ESCAPE_URL, $response->getTargetUrl());
     }
 
     /**
      * @return void
      */
-    public function testStepEngineWhenRequireInputIsFalseShouldCallExecuteWithoutTriggeringFormHandling()
+    public function testProcessReturnRedirectResponseWithUrlOfCurrentStepWhenStepCanNotAccessed()
     {
-        $stepRoute = 'test';
-        $nextStepRoute = 'next_step_route';
-        $quoteTransfer = new QuoteTransfer();
+        $stepCollection = $this->getStepCollection();
+        $stepMock = $this->getStepMock(true, false, false, self::STEP_ROUTE_A, self::ESCAPE_ROUTE);
+        $stepCollection->addStep($stepMock);
 
-        $stepMock = $this->createStepMock();
-        $stepMock->expects($this->once())->method('preCondition')->willReturn(true);
-        $stepMock->expects($this->exactly(2))->method('postCondition')->willReturn(true);
-        $stepMock->expects($this->exactly(4))->method('getStepRoute')->willReturn($stepRoute);
-        $stepMock->expects($this->once())->method('requireInput')->willReturn(false);
-        $stepMock->expects($this->once())->method('execute');
-
-        $nextStepMock = $this->createStepMock();
-        $nextStepMock->expects($this->exactly(1))->method('getStepRoute')->willReturn($nextStepRoute);
-
-        $stepEngine = $this->createStepEngine([$stepMock, $nextStepMock], $quoteTransfer);
-
-        $request = $this->createRequest();
-        $request->attributes->set('_route', $stepRoute);
-        $response = $stepEngine->process($request);
+        $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
+        $response = $stepEngine->process($this->getRequest());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals($nextStepRoute, $response->getTargetUrl());
+        $this->assertEquals(self::STEP_URL_A, $response->getTargetUrl());
     }
 
     /**
      * @return void
      */
-    public function testStepEngineWhenFormUsedAndValidFormSubmitedShouldCallExecuteWithInput()
+    public function testProcessReturnRedirectResponseWithUrlOfNextStepWhenStepNeedNoInput()
     {
-        $stepRoute = 'test';
-        $nextStepRoute = 'next_step_route';
-        $quoteTransfer = new QuoteTransfer();
+        $stepCollection = $this->getStepCollection();
+        $stepMockA = $this->getStepMock(true, true, false, self::STEP_ROUTE_A, self::ESCAPE_ROUTE);
+        $stepCollection->addStep($stepMockA);
 
-        $stepMock = $this->createStepMock();
-        $stepMock->expects($this->once())->method('preCondition')->willReturn(true);
-        $stepMock->expects($this->exactly(2))->method('postCondition')->willReturn(true);
-        $stepMock->expects($this->exactly(4))->method('getStepRoute')->willReturn($stepRoute);
-        $stepMock->expects($this->once())->method('requireInput')->willReturn(true);
-        $stepMock->expects($this->once())->method('execute')->willReturn($quoteTransfer);
+        $stepMockB = $this->getStepMock(true, false, false, self::STEP_ROUTE_B, self::ESCAPE_ROUTE);
+        $stepCollection->addStep($stepMockB);
 
-        $nextStepMock = $this->createStepMock();
-        $nextStepMock->expects($this->exactly(1))->method('getStepRoute')->willReturn($nextStepRoute);
-
-        $formMock = $this->createFormMock();
-        $formMock->expects($this->once())->method('isValid')->willReturn(true);
-        $formMock->expects($this->once())->method('getData')->willReturn($quoteTransfer);
-
-        $formCollectionHandlerMock = $this->getFormCollectionHandlerMock();
-        $formCollectionHandlerMock->expects($this->once())->method('hasSubmittedForm')->willReturn(true);
-        $formCollectionHandlerMock->expects($this->once())->method('handleRequest')->willReturn($formMock);
-
-        $stepEngine = $this->createStepEngine([$stepMock, $nextStepMock], $quoteTransfer);
-
-        $request = $this->createRequest();
-        $request->attributes->set('_route', $stepRoute);
-        $response = $stepEngine->process($request, $formCollectionHandlerMock);
+        $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
+        $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A));
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals($nextStepRoute, $response->getTargetUrl());
+        $this->assertEquals(self::STEP_URL_B, $response->getTargetUrl());
     }
 
     /**
      * @return void
      */
-    public function testStepEngineWhenFormUsedButNotSubmitedShoulSetDefaultDataToForm()
+    public function testProcessReturnViewDataWhenNoFormHandlerGiven()
     {
-        $stepRoute = 'test';
-        $quoteTransfer = new QuoteTransfer();
+        $stepCollection = $this->getStepCollection();
+        $stepMockA = $this->getStepMock(true, true, true, self::STEP_ROUTE_A);
+        $stepCollection->addStep($stepMockA);
 
-        $stepMock = $this->createStepMock();
-        $stepMock->expects($this->once())->method('preCondition')->willReturn(true);
-        $stepMock->expects($this->exactly(1))->method('postCondition')->willReturn(true);
-        $stepMock->expects($this->exactly(2))->method('getStepRoute')->willReturn($stepRoute);
-        $stepMock->expects($this->once())->method('requireInput')->willReturn(true);
+        $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
+        $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A));
 
-        $formCollectionHandlerMock = $this->getFormCollectionHandlerMock();
-        $formCollectionHandlerMock->expects($this->once())->method('hasSubmittedForm')->willReturn(false);
-        $formCollectionHandlerMock->expects($this->once())->method('provideDefaultFormData');
-        $formCollectionHandlerMock->expects($this->once())->method('getForms')->willReturn([]);
-
-        $stepEngine = $this->createStepEngine([$stepMock], $quoteTransfer);
-
-        $request = $this->createRequest();
-        $request->attributes->set('_route', $stepRoute);
-        $response = $stepEngine->process($request, $formCollectionHandlerMock);
-
+        $this->assertInternalType('array', $response);
         $this->assertArrayHasKey('previousStepUrl', $response);
     }
 
     /**
      * @return void
      */
-    public function testStepEngineWhenFormUsedAndSubmittedAndInvalidShouldRenderView()
+    public function testProcessReturnViewDataWhenFormCollectionHasNoSubmittedForm()
     {
-        $stepRoute = 'test';
-        $quoteTransfer = new QuoteTransfer();
+        $stepCollection = $this->getStepCollection();
+        $stepMockA = $this->getStepMock(true, true, true, self::STEP_ROUTE_A);
+        $stepCollection->addStep($stepMockA);
 
-        $stepMock = $this->createStepMock();
-        $stepMock->expects($this->once())->method('preCondition')->willReturn(true);
-        $stepMock->expects($this->exactly(1))->method('postCondition')->willReturn(true);
-        $stepMock->expects($this->exactly(2))->method('getStepRoute')->willReturn($stepRoute);
-        $stepMock->expects($this->once())->method('requireInput')->willReturn(true);
+        $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
+        $formCollectionHandlerMock = $this->getFormCollectionHandlerMock();
+        $formCollectionHandlerMock->method('hasSubmittedForm')->willReturn(false);
 
         $formMock = $this->createFormMock();
-        $formMock->expects($this->once())->method('isValid')->willReturn(false);
+        $formMock->method('getName')->willReturn(self::FORM_NAME);
+        $formMock->method('createView')->willReturn([]);
 
+        $formCollectionHandlerMock->method('getForms')->willReturn([$formMock]);
+
+        $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A), $formCollectionHandlerMock);
+
+        $this->assertInternalType('array', $response);
+        $this->assertArrayHasKey('previousStepUrl', $response);
+        $this->assertArrayHasKey(self::FORM_NAME, $response);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProcessReturnRedirectResponseWithUrlToNextStepWhenFormValid()
+    {
+        $stepCollection = $this->getStepCollection();
+        $stepMockA = $this->getStepMock(true, true, true, self::STEP_ROUTE_A);
+        $stepCollection->addStep($stepMockA);
+
+        $stepMockB = $this->getStepMock(true, true, true, self::STEP_ROUTE_B);
+        $stepCollection->addStep($stepMockB);
+
+        $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
         $formCollectionHandlerMock = $this->getFormCollectionHandlerMock();
-        $formCollectionHandlerMock->expects($this->once())->method('hasSubmittedForm')->willReturn(true);
-        $formCollectionHandlerMock->expects($this->once())->method('getForms')->willReturn([]);
-
+        $formCollectionHandlerMock->method('hasSubmittedForm')->willReturn(true);
+        $formMock = $this->createFormMock();
+        $formMock->method('isValid')->willReturn(true);
+        $dataTransferMock = $this->getDataTransferMock();
+        $dataTransferMock->method('modifiedToArray')->willReturn([]);
+        $formMock->method('getData')->willReturn($dataTransferMock);
         $formCollectionHandlerMock->expects($this->once())->method('handleRequest')->willReturn($formMock);
 
-        $stepEngine = $this->createStepEngine([$stepMock], $quoteTransfer);
+        $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A), $formCollectionHandlerMock);
 
-        $request = $this->createRequest();
-        $request->attributes->set('_route', $stepRoute);
-        $response = $stepEngine->process($request, $formCollectionHandlerMock);
-
-        $this->assertArrayHasKey('previousStepUrl', $response);
-    }
-
-    /**
-     * @param array $steps
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Spryker\Yves\StepEngine\Process\StepEngine
-     */
-    protected function createStepEngine(array $steps, QuoteTransfer $quoteTransfer)
-    {
-        $dataContainerMock = $this->getDataContainerMock();
-        $dataContainerMock->method('get')->willReturn($quoteTransfer);
-
-        return new StepEngine(
-            $steps,
-            $dataContainerMock,
-            $this->createUrlGeneratorMock(),
-            'error_route'
-        );
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Step\StepInterface
-     */
-    protected function createStepMock()
-    {
-        $stepMock = $this->getMock(StepInterface::class);
-        $stepMock->method('getTemplateVariables')->willReturn([]);
-
-        return $stepMock;
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
-    protected function createUrlGeneratorMock()
-    {
-        $urlGeneratorMock = $this->getMock(UrlGeneratorInterface::class);
-
-        $urlGeneratorMock->method('generate')->willReturnCallback(
-            function ($escapeRoute) {
-                return $escapeRoute;
-            }
-        );
-
-        return $urlGeneratorMock;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\CartClientInterface
-     */
-    protected function createCartClientMock(QuoteTransfer $quoteTransfer)
-    {
-        $cartClientMock = $this->getMock(CartClientInterface::class);
-        $cartClientMock->method('getQuote')->willReturn($quoteTransfer);
-
-        return $cartClientMock;
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    protected function createRequest()
-    {
-        return Request::createFromGlobals();
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertEquals(self::STEP_URL_B, $response->getTargetUrl());
     }
 
     /**
@@ -248,13 +162,21 @@ class StepEngineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer|null $dataTransfer
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
-    private function getDataContainerMock()
+    private function getDataContainerMock(AbstractTransfer $dataTransfer = null)
     {
-        $dataContainerMock = $this->getMockBuilder(DataContainerInterface::class);
+        $dataContainerMock = $this->getMockBuilder(DataContainerInterface::class)->getMock();
 
-        return $dataContainerMock->getMock();
+        if ($dataTransfer) {
+            $dataContainerMock->method('get')->willReturn($dataTransfer);
+        } else {
+            $dataContainerMock->method('get')->willReturn($this->getDataTransferMock());
+        }
+
+        return $dataContainerMock;
     }
 
 }

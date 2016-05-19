@@ -15,25 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Unit\Spryker\Yves\StepEngine\Process\Fixtures\StepMock;
 
-class StepCollectionTest extends \PHPUnit_Framework_TestCase
+class StepCollectionTest extends AbstractStepEngineTest
 {
-
-    const ERROR_ROUTE = 'error-route';
-    const ERROR_URL = '/error/url';
-
-    const ESCAPE_ROUTE = 'escape-route';
-    const ESCAPE_URL = '/escape/url';
-
-    const STEP_ROUTE_A = 'step-route-a';
-    const STEP_URL_A = '/step/url/a';
-
-    const STEP_ROUTE_B = 'step-route-b';
-    const STEP_URL_B = '/step/url/b';
-
-    const STEP_ROUTE_C = 'step-route-c';
-    const STEP_URL_C = '/step/url/c';
-
-    const EXTERNAL_URL = 'http://external.de';
 
     /**
      * @return void
@@ -52,6 +35,48 @@ class StepCollectionTest extends \PHPUnit_Framework_TestCase
         $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
         $stepCollection = $stepCollection->addStep($this->getStepMock());
         $this->assertInstanceOf(StepCollectionInterface::class, $stepCollection);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanAccessStepReturnTrue()
+    {
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepMock = $this->getStepMock(false, false, false, self::STEP_ROUTE_A);
+        $stepCollection = $stepCollection->addStep($stepMock);
+
+        $this->assertTrue($stepCollection->canAccessStep($stepMock, $this->getRequest(self::STEP_ROUTE_A), $this->getDataTransferMock()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanAccessStepReturnTrueForFulfilledStep()
+    {
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepMockA = $this->getStepMock(false, true, false, self::STEP_ROUTE_A);
+        $stepCollection->addStep($stepMockA);
+
+        $stepMockB = $this->getStepMock(false, true, false, self::STEP_ROUTE_B);
+        $stepCollection->addStep($stepMockB);
+
+        $this->assertTrue($stepCollection->canAccessStep($stepMockB, $this->getRequest(self::STEP_ROUTE_A), $this->getDataTransferMock()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanAccessStepReturnFalse()
+    {
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepMockA = $this->getStepMock(false, false, false, self::STEP_ROUTE_A);
+        $stepCollection->addStep($stepMockA);
+
+        $stepMockB = $this->getStepMock(false, true, false, self::STEP_ROUTE_B);
+        $stepCollection->addStep($stepMockB);
+
+        $this->assertFalse($stepCollection->canAccessStep($stepMockB, $this->getRequest(self::STEP_ROUTE_A), $this->getDataTransferMock()));
     }
 
     /**
@@ -177,6 +202,17 @@ class StepCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testGetCurrentUrl()
+    {
+        $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        $stepMock = $this->getStepMock(false, false, false, self::STEP_ROUTE_A);
+
+        $this->assertSame(self::STEP_URL_A, $stepCollection->getCurrentUrl($stepMock));
+    }
+
+    /**
+     * @return void
+     */
     public function testGetNextUrlShouldReturnExternalRedirectUrl()
     {
         $stepCollection = new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
@@ -289,81 +325,6 @@ class StepCollectionTest extends \PHPUnit_Framework_TestCase
         $stepCollection->addStep($stepMockB);
 
         $this->assertSame(self::STEP_URL_A, $stepCollection->getEscapeUrl($stepMockB));
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
-    private function getUrlGeneratorMock()
-    {
-        $urlGeneratorMock = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
-        $urlGeneratorMock->method('generate')->will($this->returnCallback([$this, 'urlGeneratorCallBack']));
-
-        return $urlGeneratorMock;
-    }
-
-    /**
-     * @param string $input
-     *
-     * @return string
-     */
-    public function urlGeneratorCallBack($input)
-    {
-        $map = [
-            self::ERROR_ROUTE => self::ERROR_URL,
-            self::ESCAPE_ROUTE => self::ESCAPE_URL,
-            self::STEP_ROUTE_A => self::STEP_URL_A,
-            self::STEP_ROUTE_B => self::STEP_URL_B,
-            self::STEP_ROUTE_C => self::STEP_URL_C,
-        ];
-
-        return $map[$input];
-    }
-
-    /**
-     * @param bool $preCondition
-     * @param bool $postCondition
-     * @param bool $requireInput
-     * @param string $stepRoute
-     * @param string $escapeRoute
-     *
-     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
-     */
-    private function getStepMock($preCondition = true, $postCondition = true, $requireInput = true, $stepRoute = '', $escapeRoute = '')
-    {
-        return new StepMock($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
-    }
-
-    /**
-     * @param string $route
-     *
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    private function getRequest($route = '')
-    {
-        $request = Request::createFromGlobals();
-        $request->request->set('_route', $route);
-
-        return $request;
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Transfer\AbstractTransfer
-     */
-    private function getDataTransferMock()
-    {
-        return $this->getMockBuilder(AbstractTransfer::class)->getMock();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface
-     */
-    protected function getStepWithExternalRedirectUrl()
-    {
-        $stepMock = $this->getMock(StepWithExternalRedirectInterface::class);
-        $stepMock->method('getExternalRedirectUrl')->willReturn(self::EXTERNAL_URL);
-
-        return $stepMock;
     }
 
 }

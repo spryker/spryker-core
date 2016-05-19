@@ -22,6 +22,15 @@ interface StepCollectionInterface
     public function addStep(StepInterface $step);
 
     /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $step
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
+     * @return mixed
+     */
+    public function canAccessStep(StepInterface $step, Request $request, AbstractTransfer $dataTransfer);
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
@@ -42,6 +51,13 @@ interface StepCollectionInterface
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
     public function getPreviousStep(StepInterface $currentStep);
+
+    /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
+     *
+     * @return string
+     */
+    public function getCurrentUrl(StepInterface $currentStep);
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep

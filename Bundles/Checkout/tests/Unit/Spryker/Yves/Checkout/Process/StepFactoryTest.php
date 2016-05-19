@@ -10,6 +10,8 @@ namespace Unit\Spryker\Yves\Checkout\Process;
 use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Checkout\Process\StepFactory;
+use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
+use Spryker\Yves\StepEngine\Process\StepCollection;
 use Spryker\Yves\StepEngine\Process\StepEngineInterface;
 use Spryker\Yves\Kernel\Container;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -42,14 +44,11 @@ class StepFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testCreateStepProcess()
+    public function testCreateStepEngine()
     {
         $stepFactory = new StepFactory();
-        $stepProcess = $stepFactory->createStepProcess(
-            [],
-            $this->getUrlGeneratorMock(),
-            $this->getCartClientMock(),
-            'errorRoute'
+        $stepProcess = $stepFactory->createStepEngine(
+            new StepCollection($this->getUrlGeneratorMock(), 'escape-route')
         );
 
         $this->assertInstanceOf(StepEngineInterface::class, $stepProcess);
@@ -66,9 +65,9 @@ class StepFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\CartClientInterface
      */
-    private function getCartClientMock()
+    private function getDataContainerMock()
     {
-        return $this->getMock(CartClientInterface::class);
+        return $this->getMock(DataContainerInterface::class);
     }
 
 }

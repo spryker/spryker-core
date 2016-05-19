@@ -59,6 +59,45 @@ class StepCollection implements StepCollectionInterface
     }
 
     /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
+     * @return bool
+     */
+    public function canAccessStep(StepInterface $currentStep, Request $request, AbstractTransfer $dataTransfer)
+    {
+        if ($request->get('_route') === $currentStep->getStepRoute()) {
+            return true;
+        }
+
+        foreach ($this->getCompletedSteps($dataTransfer) as $step) {
+            if ($step->getStepRoute() === $request->get('_route')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
+     *
+     * @return array
+     */
+    protected function getCompletedSteps(AbstractTransfer $dataTransfer)
+    {
+        $completedSteps = [];
+        foreach ($this->steps as $step) {
+            if ($step->postCondition($dataTransfer)) {
+                $completedSteps[] = $step;
+            }
+        }
+
+        return $completedSteps;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
@@ -114,6 +153,16 @@ class StepCollection implements StepCollectionInterface
         }
 
         return $previousStep;
+    }
+
+    /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
+     *
+     * @return string
+     */
+    public function getCurrentUrl(StepInterface $currentStep)
+    {
+        return $this->urlGenerator->generate($currentStep->getStepRoute());
     }
 
     /**
