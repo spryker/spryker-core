@@ -46,7 +46,7 @@ class TouchCleanUpConsole extends Console
         $output->writeln('Cleaning up the touch table(s)');
         $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
         $output->writeln('');
-        $output->writeln("<fg=white>Removed $deleteCount rows</fg=white>");
+        $output->writeln("<fg=white>Removed $deleteCount Touch table entries (along with related touch data)</fg=white>");
         $output->writeln('');
         $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
         $output->writeln('Finished. All Done.');

@@ -11,6 +11,7 @@ use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Shared\Library\BatchIterator\PropelBatchIterator;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface
@@ -169,23 +170,17 @@ class TouchRecord implements TouchRecordInterface
 
             $chunkSize = 10000;
             $touchListQuery = $this->touchQueryContainer
-                ->queryTouchListByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
+                ->queryTouchListByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+                ->select(SpyTouchTableMap::COL_ID_TOUCH);
+            $chunks = new PropelBatchIterator($touchListQuery, $chunkSize);
 
-            do {
-
-                $touchIdsMarkedAsDeleted = $touchListQuery
-                    ->select(SpyTouchTableMap::COL_ID_TOUCH)
-                    ->limit($chunkSize)
-                    ->find()->toArray();
-
-                if (!empty($touchIdsMarkedAsDeleted)) {
-                    $this->touchQueryContainer->queryTouchSearchByTouchIds($touchIdsMarkedAsDeleted)->delete();
-                    $this->touchQueryContainer->queryTouchStorageByTouchIds($touchIdsMarkedAsDeleted)->delete();
-
-                    $deletedCount += $touchListQuery->filterByIdTouch($touchIdsMarkedAsDeleted)->delete();
-                }
-
-            } while (!empty($touchIdsMarkedAsDeleted));
+            /* @var $chunk \Propel\Runtime\Collection\ArrayCollection */
+            foreach ($chunks as $chunk) {
+                $touchIdsMarkedAsDeleted = $chunk->toArray();
+                $this->touchQueryContainer->queryTouchSearchByTouchIds($touchIdsMarkedAsDeleted)->delete();
+                $this->touchQueryContainer->queryTouchStorageByTouchIds($touchIdsMarkedAsDeleted)->delete();
+                $deletedCount += $touchListQuery->filterByIdTouch($touchIdsMarkedAsDeleted)->delete();
+            }
 
         } catch (\Exception $exception) {
             $this->touchQueryContainer->getConnection()->rollBack();
