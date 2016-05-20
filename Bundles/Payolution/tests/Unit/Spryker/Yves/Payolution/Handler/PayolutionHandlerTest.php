@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Yves\Payolution\Dependency\Injector;
 
-use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
