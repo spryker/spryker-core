@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Business;
 
 use Generated\Shared\Transfer\PageMapTransfer;
+use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
@@ -75,6 +76,24 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
         $this->getFactory()
             ->createProductSearchMarker()
             ->deactivateProductSearch($idProduct, $localeCollection);
+    }
+
+    /**
+     * Specification:
+     * - For the given product attribute the search preferences will be updated
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     *
+     * @return void
+     */
+    public function saveProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
+    {
+        $this
+            ->getFactory()
+            ->createSearchPreferencesSaver()
+            ->save($productSearchPreferencesTransfer);
     }
 
 }

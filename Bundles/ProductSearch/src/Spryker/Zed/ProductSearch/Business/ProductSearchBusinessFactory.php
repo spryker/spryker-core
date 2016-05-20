@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapCollector;
 use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapper;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
+use Spryker\Zed\ProductSearch\Business\Saver\SearchPreferencesSaver;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
@@ -53,6 +54,14 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     public function createSearchProductAttributeMapCollector()
     {
         return new SearchProductAttributeMapCollector($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Saver\SearchPreferencesSaverInterface
+     */
+    public function createSearchPreferencesSaver()
+    {
+        return new SearchPreferencesSaver($this->getQueryContainer());
     }
 
 }

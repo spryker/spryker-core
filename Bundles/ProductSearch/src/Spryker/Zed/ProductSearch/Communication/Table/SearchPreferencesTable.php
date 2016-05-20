@@ -7,23 +7,39 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Table;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributesMetadataTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductSearch\Communication\Controller\SearchPreferencesController;
+use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class SearchPreferencesTable extends AbstractTable
 {
 
-    const NAME = 'name';
-    const TYPE = 'type';
-    const FILTER_TYPE = 'filter_type';
-    const INCLUDE_FOR_SUGGESTION = 'include_for_suggestion';
-    const INCLUDE_FOR_SORTING = 'include_for_sorting';
-    const INCLUDE_FOR_FULL_TEXT = 'include_for_full_text';
-    const INCLUDE_FOR_FULL_TEXT_BOOSTED = 'include_for_full_text_boosted';
+    const COL_NAME = SpyProductAttributesMetadataTableMap::COL_KEY;
+    const COL_PROPERTY_TYPE = 'type';
+    const COL_SUGGESTION_TERMS = 'suggestionTerms';
+    const COL_COMPLETION_TERMS = 'completionTerms';
+    const COL_FULL_TEXT = 'fullText';
+    const COL_FULL_TEXT_BOOSTED = 'fullTextBoosted';
     const ACTION = 'action';
 
     /**
+     * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
+     */
+    protected $productSearchQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQueryContainer
+     */
+    public function __construct(ProductSearchQueryContainerInterface $productSearchQueryContainer)
+    {
+        $this->productSearchQueryContainer = $productSearchQueryContainer;
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
@@ -38,45 +54,17 @@ class SearchPreferencesTable extends AbstractTable
     }
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     * @return array
-     */
-    protected function prepareData(TableConfiguration $config)
-    {
-        $data = [];
-
-        for ($i=1; $i<=25; $i++) {
-            $data[] = [
-                self::NAME => 'Attribute name ' . $i,
-                self::TYPE => 'Type ' . $i,
-                self::FILTER_TYPE => 'Filter Type',
-                self::INCLUDE_FOR_SUGGESTION => 'Include for Suggestion',
-                self::INCLUDE_FOR_SORTING => 'Include for Sorting',
-                self::INCLUDE_FOR_FULL_TEXT => 'Include for Full Text',
-                self::INCLUDE_FOR_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
-                self::ACTION => $this->generateEditButton(
-                    '/product-search/search-preferences/edit?id-filter=' . $i,
-                    'Edit'
-                ),
-            ];
-        }
-
-        return $data;
-    }
-
-    /**
      * @return array
      */
     protected function getHeaderFields()
     {
         return [
-            self::NAME => 'Attribute name',
-            self::TYPE => 'Type',
-            self::FILTER_TYPE => 'Filter Type',
-            self::INCLUDE_FOR_SUGGESTION => 'Include for Suggestion',
-            self::INCLUDE_FOR_SORTING => 'Include for Sorting',
-            self::INCLUDE_FOR_FULL_TEXT => 'Include for Full Text',
-            self::INCLUDE_FOR_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
+            self::COL_NAME => 'Attribute name',
+            self::COL_PROPERTY_TYPE => 'Type',
+            self::COL_FULL_TEXT => 'Include for Full Text',
+            self::COL_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
+            self::COL_SUGGESTION_TERMS => 'Include for Suggestion',
+            self::COL_COMPLETION_TERMS=> 'Include for Suggestion',
             self::ACTION => 'Action',
         ];
     }
@@ -87,13 +75,7 @@ class SearchPreferencesTable extends AbstractTable
     protected function getSearchableFields()
     {
         return [
-            self::NAME,
-            self::TYPE,
-            self::FILTER_TYPE,
-            self::INCLUDE_FOR_SUGGESTION,
-            self::INCLUDE_FOR_SORTING,
-            self::INCLUDE_FOR_FULL_TEXT,
-            self::INCLUDE_FOR_FULL_TEXT_BOOSTED,
+            self::COL_NAME,
         ];
     }
 
@@ -103,14 +85,72 @@ class SearchPreferencesTable extends AbstractTable
     protected function getSortableFields()
     {
         return [
-            self::NAME,
-            self::TYPE,
-            self::FILTER_TYPE,
-            self::INCLUDE_FOR_SUGGESTION,
-            self::INCLUDE_FOR_SORTING,
-            self::INCLUDE_FOR_FULL_TEXT,
-            self::INCLUDE_FOR_FULL_TEXT_BOOSTED,
+            self::COL_NAME,
+            self::COL_PROPERTY_TYPE,
+            self::COL_FULL_TEXT,
+            self::COL_FULL_TEXT_BOOSTED,
+            self::COL_SUGGESTION_TERMS,
+            self::COL_COMPLETION_TERMS,
         ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return array
+     */
+    protected function prepareData(TableConfiguration $config)
+    {
+        $result = [];
+
+        $productAttributesMetadata = $this->getProductAttributesMetadata($config);
+
+        foreach ($productAttributesMetadata as $productAttributesMetadataEntity) {
+            $result[] = [
+                self::COL_NAME => $productAttributesMetadataEntity->getKey(),
+                self::COL_PROPERTY_TYPE => $productAttributesMetadataEntity->getSpyProductAttributeType()->getName(),
+                self::COL_FULL_TEXT => $this->boolToString($productAttributesMetadataEntity->getVirtualColumn(self::COL_FULL_TEXT)),
+                self::COL_FULL_TEXT_BOOSTED => $this->boolToString($productAttributesMetadataEntity->getVirtualColumn(self::COL_FULL_TEXT_BOOSTED)),
+                self::COL_SUGGESTION_TERMS => $this->boolToString($productAttributesMetadataEntity->getVirtualColumn(self::COL_SUGGESTION_TERMS)),
+                self::COL_COMPLETION_TERMS => $this->boolToString($productAttributesMetadataEntity->getVirtualColumn(self::COL_COMPLETION_TERMS)),
+                self::ACTION => $this->generateEditButton(
+                    sprintf(
+                        '/product-search/search-preferences/edit?%s=%d',
+                        SearchPreferencesController::PARAM_ID,
+                        $productAttributesMetadataEntity->getIdProductAttributesMetadata()
+                    ),
+                    'Edit'
+                ),
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadata[]
+     */
+    protected function getProductAttributesMetadata(TableConfiguration $config)
+    {
+        $query = $this
+            ->productSearchQueryContainer
+            ->querySearchPreferencesTable();
+
+        $productAttributesMetadata = $this->runQuery($query, $config, true);
+
+        return $productAttributesMetadata;
+    }
+
+    /**
+     * @param bool $boolValue
+     *
+     * @return string
+     */
+    protected function boolToString($boolValue)
+    {
+        return $boolValue ? 'yes' : 'no';
     }
 
 }

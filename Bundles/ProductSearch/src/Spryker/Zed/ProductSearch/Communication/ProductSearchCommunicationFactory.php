@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductSearch\Communication\Form\DataProvider\SearchPreferencesDataProvider;
 use Spryker\Zed\ProductSearch\Communication\Form\SearchPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
 
@@ -24,7 +25,7 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSearchPreferencesTable()
     {
-        return new SearchPreferencesTable();
+        return new SearchPreferencesTable($this->getQueryContainer());
     }
 
     /**
@@ -38,6 +39,14 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
         $filterFormType = new SearchPreferencesForm();
 
         return $this->getFormFactory()->create($filterFormType, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Communication\Form\DataProvider\SearchPreferencesDataProvider
+     */
+    public function createSearchPreferencesDataProvider()
+    {
+        return new SearchPreferencesDataProvider($this->getQueryContainer());
     }
 
 }

@@ -8,10 +8,18 @@
 namespace Spryker\Zed\ProductSearch\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class SearchPreferencesForm extends AbstractType
 {
+
+    const FIELD_ATTRIBUTE_NAME = 'attributeName';
+    const FIELD_ATTRIBUTE_TYPE = 'attributeType';
+    const FIELD_FULL_TEXT = 'fullText';
+    const FIELD_FULL_TEXT_BOOSTED = 'fullTextBoosted';
+    const FIELD_SUGGESTION_TERMS = 'suggestionTerms';
+    const FIELD_COMPLETION_TERMS = 'completionTerms';
 
     /**
      * @return string
@@ -24,6 +32,7 @@ class SearchPreferencesForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -31,10 +40,10 @@ class SearchPreferencesForm extends AbstractType
         $this
             ->addAttributeName($builder)
             ->addAttributeType($builder)
-            ->addIncludeForSuggestion($builder)
-            ->addIncludeForSorting($builder)
-            ->addIncludeForFullText($builder)
-            ->addIncludeForFullTextBoosted($builder);
+            ->addFullTextField($builder)
+            ->addFullTextBoostedField($builder)
+            ->addSuggestionTermsField($builder)
+            ->addCompletionTermsField($builder);
     }
 
     /**
@@ -44,7 +53,7 @@ class SearchPreferencesForm extends AbstractType
      */
     protected function addAttributeName(FormBuilderInterface $builder)
     {
-        $builder->add('attribute_name', 'text', [
+        $builder->add(self::FIELD_ATTRIBUTE_NAME, 'text', [
             'disabled' => true,
         ]);
 
@@ -58,14 +67,8 @@ class SearchPreferencesForm extends AbstractType
      */
     protected function addAttributeType(FormBuilderInterface $builder)
     {
-        $builder->add('attribute_type', 'choice', [
-            'label' => '',
-            'placeholder' => 'Select one',
-            'choices' => [
-                'string' => 'String',
-                'integer' => 'Integer',
-                'none' => 'None',
-            ],
+        $builder->add(self::FIELD_ATTRIBUTE_TYPE, 'text', [
+            'disabled' => true,
         ]);
 
         return $this;
@@ -76,13 +79,13 @@ class SearchPreferencesForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIncludeForSuggestion(FormBuilderInterface $builder)
+    protected function addFullTextField(FormBuilderInterface $builder)
     {
-        $builder->add('include_for_suggestion', 'choice', [
-            'label' => '',
-            'placeholder' => 'Select one',
+        $builder->add(self::FIELD_FULL_TEXT, 'choice', [
             'choices' => $this->getYesNoChoices(),
         ]);
+
+        $this->addBoolModelTransformer($builder, self::FIELD_FULL_TEXT);
 
         return $this;
     }
@@ -92,13 +95,13 @@ class SearchPreferencesForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIncludeForSorting(FormBuilderInterface $builder)
+    protected function addFullTextBoostedField(FormBuilderInterface $builder)
     {
-        $builder->add('include_for_sorting', 'choice', [
-            'label' => '',
-            'placeholder' => 'Select one',
+        $builder->add(self::FIELD_FULL_TEXT_BOOSTED, 'choice', [
             'choices' => $this->getYesNoChoices(),
         ]);
+
+        $this->addBoolModelTransformer($builder, self::FIELD_FULL_TEXT_BOOSTED);
 
         return $this;
     }
@@ -108,13 +111,13 @@ class SearchPreferencesForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIncludeForFullText(FormBuilderInterface $builder)
+    protected function addSuggestionTermsField(FormBuilderInterface $builder)
     {
-        $builder->add('include_for_full_text', 'choice', [
-            'label' => '',
-            'placeholder' => 'Select one',
+        $builder->add(self::FIELD_SUGGESTION_TERMS, 'choice', [
             'choices' => $this->getYesNoChoices(),
         ]);
+
+        $this->addBoolModelTransformer($builder, self::FIELD_SUGGESTION_TERMS);
 
         return $this;
     }
@@ -124,13 +127,13 @@ class SearchPreferencesForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIncludeForFullTextBoosted(FormBuilderInterface $builder)
+    protected function addCompletionTermsField(FormBuilderInterface $builder)
     {
-        $builder->add('include_for_full_text_boosted', 'choice', [
-            'label' => '',
-            'placeholder' => 'Select one',
+        $builder->add(self::FIELD_COMPLETION_TERMS, 'choice', [
             'choices' => $this->getYesNoChoices(),
         ]);
+
+        $this->addBoolModelTransformer($builder, self::FIELD_COMPLETION_TERMS);
 
         return $this;
     }
@@ -141,9 +144,27 @@ class SearchPreferencesForm extends AbstractType
     protected function getYesNoChoices()
     {
         return [
-            'yes' => 'Yes',
             'no' => 'No',
+            'yes' => 'Yes',
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $fieldName
+     *
+     * @return void
+     */
+    protected function addBoolModelTransformer(FormBuilderInterface $builder, $fieldName)
+    {
+        $builder->get($fieldName)->addModelTransformer(new CallbackTransformer(
+            function ($originalValue) {
+                return $originalValue ? 'yes' : 'no';
+            },
+            function ($submittedValue) {
+                return $submittedValue === 'yes' ? true : false;
+            }
+        ));
     }
 
 }
