@@ -15,10 +15,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Yves\Payolution\Exception\InstallmentNotFoundException;
 use Spryker\Yves\Payolution\Form\InstallmentSubForm;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
-class InstallmentDataProvider implements StepEngineFormDataProviderInterface
+class InstallmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
 
     /**
@@ -137,15 +138,19 @@ class InstallmentDataProvider implements StepEngineFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\PayolutionCalculationPaymentDetailTransfer $paymentDetail
      *
-     * @return string
+     * @throws \Spryker\Yves\Payolution\Exception\InstallmentNotFoundException
      *
-     * @todo: optimize format choices and add a Type for an installment choice
+     * @return string
      */
     protected function buildChoice(PayolutionCalculationPaymentDetailTransfer $paymentDetail)
     {
+        $installment = $paymentDetail->getInstallments()[0];
+        if (!$installment) {
+            throw new InstallmentNotFoundException('Could not get installment');
+        }
         $choice =
             $paymentDetail->getCurrency() .
-            $this->convertCentToDecimal($paymentDetail->getInstallments()[0]->getAmount()) .
+            $this->convertCentToDecimal($installment->getAmount()) .
             $paymentDetail->getDuration();
 
         return $choice;

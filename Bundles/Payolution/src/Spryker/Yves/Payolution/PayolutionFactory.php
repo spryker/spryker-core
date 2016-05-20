@@ -9,8 +9,8 @@ namespace Spryker\Yves\Payolution;
 
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Payolution\Form\DataProvider\InstallmentDataProvider;
-use Spryker\Yves\Payolution\Form\DataProvider\InvoiceDataProvider;
+use Spryker\Yves\Payolution\Form\DataProvider\InstallmentFormDataProvider;
+use Spryker\Yves\Payolution\Form\DataProvider\InvoiceFormDataProvider;
 use Spryker\Yves\Payolution\Form\InstallmentSubForm;
 use Spryker\Yves\Payolution\Form\InvoiceSubForm;
 use Spryker\Yves\Payolution\Handler\PayolutionHandler;
@@ -35,11 +35,11 @@ class PayolutionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Payolution\Form\DataProvider\InstallmentDataProvider
+     * @return \Spryker\Yves\Payolution\Form\DataProvider\InstallmentFormDataProvider
      */
     public function createInstallmentFormDataProvider()
     {
-        return new InstallmentDataProvider($this->getPayolutionClient(), $this->createCurrencyManager());
+        return new InstallmentFormDataProvider($this->getPayolutionClient(), $this->createCurrencyManager());
     }
 
     /**
@@ -51,11 +51,11 @@ class PayolutionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Payolution\Form\DataProvider\InvoiceDataProvider
+     * @return \Spryker\Yves\Payolution\Form\DataProvider\InvoiceFormDataProvider
      */
     public function createInvoiceFormDataProvider()
     {
-        return new InvoiceDataProvider();
+        return new InvoiceFormDataProvider();
     }
 
     /**

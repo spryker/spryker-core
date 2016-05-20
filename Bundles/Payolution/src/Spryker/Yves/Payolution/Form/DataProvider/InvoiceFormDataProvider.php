@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
-class InvoiceDataProvider implements StepEngineFormDataProviderInterface
+class InvoiceFormDataProvider implements StepEngineFormDataProviderInterface
 {
 
     /**

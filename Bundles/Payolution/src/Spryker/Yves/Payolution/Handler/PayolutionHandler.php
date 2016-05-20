@@ -155,7 +155,7 @@ class PayolutionHandler
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param $paymentSelection
+     * @param string $paymentSelection
      *
      * @throws \Spryker\Yves\Payolution\Exception\PaymentMethodNotFoundException
      *
