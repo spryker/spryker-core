@@ -9,7 +9,7 @@ namespace Unit\Spryker\Yves\StepEngine\Dependency\Step\Fixtures;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
-use Spryker\Yves\StepEngine\Dependency\Step\BaseStep as AbstractBaseStep;
+use Spryker\Yves\StepEngine\Dependency\Step\AbstractBaseStep as AbstractBaseStep;
 
 class BaseStep extends AbstractBaseStep
 {

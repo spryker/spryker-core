@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Payolution\PayolutionConstants;
+use Spryker\Yves\Payolution\Exception\PaymentMethodNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
 class PayolutionHandler
@@ -50,11 +51,18 @@ class PayolutionHandler
     protected $payolutionClient;
 
     /**
-     * @param \Spryker\Client\Payolution\PayolutionClientInterface $payolutionClient
+     * @var \Spryker\Shared\Library\Currency\CurrencyManager
      */
-    public function __construct(PayolutionClientInterface $payolutionClient)
+    protected $currencyManager;
+
+    /**
+     * @param \Spryker\Client\Payolution\PayolutionClientInterface $payolutionClient
+     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     */
+    public function __construct(PayolutionClientInterface $payolutionClient, CurrencyManager $currencyManager)
     {
         $this->payolutionClient = $payolutionClient;
+        $this->currencyManager = $currencyManager;
     }
 
     /**
@@ -142,18 +150,25 @@ class PayolutionHandler
      */
     protected function getCurrency()
     {
-        return CurrencyManager::getInstance()->getDefaultCurrency()->getIsoCode();
+        return $this->currencyManager->getDefaultCurrency()->getIsoCode();
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $paymentSelection
+     * @param $paymentSelection
+     *
+     * @throws \Spryker\Yves\Payolution\Exception\PaymentMethodNotFoundException
      *
      * @return \Generated\Shared\Transfer\PayolutionPaymentTransfer
      */
     protected function getPayolutionPaymentTransfer(QuoteTransfer $quoteTransfer, $paymentSelection)
     {
-        $method = 'get' . ucfirst($paymentSelection);
+        $paymentMethod = ucfirst($paymentSelection);
+        $method = 'get' . $paymentMethod;
+        $paymentTransfer = $quoteTransfer->getPayment();
+        if (!method_exists($paymentTransfer, $method) || ($quoteTransfer->getPayment()->$method() === null)) {
+            throw new PaymentMethodNotFoundException(sprintf('Selected payment method "%s" not found in PaymentTransfer', $paymentMethod));
+        }
         $payolutionPaymentTransfer = $quoteTransfer->getPayment()->$method();
 
         return $payolutionPaymentTransfer;

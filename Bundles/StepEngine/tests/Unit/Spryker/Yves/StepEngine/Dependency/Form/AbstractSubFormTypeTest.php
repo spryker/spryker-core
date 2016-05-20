@@ -25,7 +25,7 @@ class AbstractSubFormTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testBuildView()
+    public function testBuildViewVarsContainExpectedPathToTemplate()
     {
         $abstractSubFormTypeMock = $this->getAbstractSubFormTypeMock();
 

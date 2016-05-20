@@ -27,11 +27,18 @@ class InstallmentDataProvider implements DataProviderInterface
     protected $payolutionClient;
 
     /**
-     * @param \Spryker\Client\Payolution\PayolutionClientInterface $payolutionClient
+     * @var \Spryker\Shared\Library\Currency\CurrencyManager
      */
-    public function __construct(PayolutionClientInterface $payolutionClient)
+    protected $currencyManager;
+
+    /**
+     * @param \Spryker\Client\Payolution\PayolutionClientInterface $payolutionClient
+     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     */
+    public function __construct(PayolutionClientInterface $payolutionClient, CurrencyManager $currencyManager)
     {
         $this->payolutionClient = $payolutionClient;
+        $this->currencyManager = $currencyManager;
     }
 
     /**
@@ -151,7 +158,7 @@ class InstallmentDataProvider implements DataProviderInterface
      */
     protected function convertCentToDecimal($amount)
     {
-        return CurrencyManager::getInstance()->convertCentToDecimal($amount);
+        return $this->currencyManager->convertCentToDecimal($amount);
     }
 
 }

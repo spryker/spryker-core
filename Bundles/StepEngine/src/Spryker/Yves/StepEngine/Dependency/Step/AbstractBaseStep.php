@@ -9,7 +9,7 @@ namespace Spryker\Yves\StepEngine\Dependency\Step;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
 
-abstract class BaseStep implements StepInterface
+abstract class AbstractBaseStep implements StepInterface
 {
 
     /**

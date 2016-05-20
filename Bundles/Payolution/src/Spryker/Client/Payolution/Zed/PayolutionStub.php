@@ -33,7 +33,7 @@ class PayolutionStub implements PayolutionStubInterface
      */
     public function calculateInstallmentPayments(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedRequestClient->call('/payolution/gateway/calculate-installment-payments', $quoteTransfer, null, true);
+        return $this->zedRequestClient->call('/payolution/gateway/calculate-installment-payments', $quoteTransfer);
     }
 
 }

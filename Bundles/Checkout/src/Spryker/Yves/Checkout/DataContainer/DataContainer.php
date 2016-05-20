@@ -17,12 +17,12 @@ class DataContainer implements DataContainerInterface
     /**
      * @var \Spryker\Client\Cart\CartClientInterface
      */
-    private $cartClient;
+    protected $cartClient;
 
     /**
      * @var \Generated\Shared\Transfer\QuoteTransfer
      */
-    private $quoteTransfer;
+    protected $quoteTransfer;
 
     /**
      * @param \Spryker\Client\Cart\CartClientInterface $cartClient

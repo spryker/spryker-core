@@ -38,7 +38,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     protected $formTypes;
 
     /**
-     * @param array $formTypes
+     * @param \Symfony\Component\Form\FormTypeInterface[] $formTypes
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface|null $dataProvider
      */
@@ -47,8 +47,8 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
         FormFactoryInterface $formFactory,
         DataProviderInterface $dataProvider = null
     ) {
-        $this->formFactory = $formFactory;
         $this->formTypes = $formTypes;
+        $this->formFactory = $formFactory;
         $this->dataProvider = $dataProvider;
     }
 

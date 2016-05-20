@@ -27,6 +27,19 @@ class CheckoutDependencyInjector extends AbstractDependencyInjector
      */
     public function inject(ContainerInterface $container)
     {
+        $container = $this->injectPaymentSubForms($container);
+        $container = $this->injectPaymentMethodHandler($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\ContainerInterface $container
+     *
+     * @return \Spryker\Shared\Kernel\ContainerInterface
+     */
+    protected function injectPaymentSubForms(ContainerInterface $container)
+    {
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
             $paymentSubForms->add(new PayolutionInstallmentSubFormPlugin());
             $paymentSubForms->add(new PayolutionInvoiceSubFormPlugin());
@@ -34,6 +47,16 @@ class CheckoutDependencyInjector extends AbstractDependencyInjector
             return $paymentSubForms;
         });
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\ContainerInterface $container
+     *
+     * @return \Spryker\Shared\Kernel\ContainerInterface
+     */
+    protected function injectPaymentMethodHandler(ContainerInterface $container)
+    {
         $container->extend(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER, function (StepHandlerPluginCollection $paymentMethodHandler) {
             $payolutionHandlerPlugin = new PayolutionHandlerPlugin();
 

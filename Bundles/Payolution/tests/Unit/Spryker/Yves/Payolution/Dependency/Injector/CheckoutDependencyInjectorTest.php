@@ -26,7 +26,7 @@ class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testInject()
+    public function testInjectInjectsPaymentSubFormAndHandler()
     {
         $container = $this->getContainerToInjectTo();
 
