@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
+use Spryker\Shared\Library\Json;
 use Spryker\Zed\Application\Business\Exception\NavigationCacheEmptyException;
 use Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException;
-use Spryker\Shared\Library\Json;
 
 class NavigationCache implements NavigationCacheInterface
 {

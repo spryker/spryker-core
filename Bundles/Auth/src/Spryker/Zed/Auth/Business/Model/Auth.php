@@ -118,6 +118,7 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @return void
      */
     protected function registerAuthorizedUser($token, UserTransfer $userTransfer)
     {
