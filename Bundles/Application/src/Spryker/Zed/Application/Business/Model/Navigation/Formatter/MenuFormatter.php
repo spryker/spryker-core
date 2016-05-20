@@ -182,7 +182,7 @@ class MenuFormatter implements MenuFormatterInterface
             (
                 self::INDEX !== $page[self::CONTROLLER] || $action !== null
             )
-        ){
+        ) {
             $res = $page[self::CONTROLLER];
         }
 
