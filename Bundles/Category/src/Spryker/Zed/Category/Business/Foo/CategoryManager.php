@@ -92,4 +92,24 @@ class CategoryManager
     {
         return $this->queryContainer->queryCategoryById($idCategory)->findOne();
     }
+
+    protected function persistCategoryEntity(CategoryTransfer $categoryTransfer)
+    {
+        $this->connection->beginTransaction();
+
+        $categoryTransfer->setIsActive(true);
+        $categoryTransfer->setIsInMenu(true);
+        $categoryTransfer->setIsClickable(true);
+
+        $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $localeTransfer);
+
+        $categoryNodeTransfer->setFkCategory($idCategory);
+        $categoryNodeTransfer->setIsMain(true);
+
+        $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $localeTransfer);
+
+        $this->connection->commit();
+
+        return $idCategory;
+    }
 }

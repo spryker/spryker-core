@@ -85,7 +85,7 @@ class FooTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testCreateCategory()
+    public function test_create_should_add_category_node_with_url_and_attributes()
     {
         $categoryTransfer = (new CategoryTransfer())->fromArray(
             $this->getCategoryFixtureData()['de_DE']
@@ -98,8 +98,9 @@ class FooTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($categoryTransfer->getUrl(), '/de/foo-de');
     }
 
-    public function testCreateCategoryWithMultipleLocales()
+    public function test_create_with_multiple_locales_should_add_category_node_with_localized_urls_and_attributes()
     {
+        //DE
         $categoryTransfer = (new CategoryTransfer())->fromArray(
             $this->getCategoryFixtureData()['de_DE']
         );
@@ -110,7 +111,7 @@ class FooTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($categoryTransfer->getName(), 'Foo DE');
         $this->assertEquals($categoryTransfer->getUrl(), '/de/foo-de');
 
-
+        //EN
         $categoryTransfer = (new CategoryTransfer())->fromArray(
             $this->getCategoryFixtureData()['en_US']
         );
