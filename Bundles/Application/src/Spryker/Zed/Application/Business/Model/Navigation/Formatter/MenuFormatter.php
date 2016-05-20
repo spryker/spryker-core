@@ -123,11 +123,14 @@ class MenuFormatter implements MenuFormatterInterface
         if (isset($page[self::URI]) && !empty($page[self::URI])) {
             return $page[self::URI];
         }
+        $action = (isset($page[self::ACTION]) && self::INDEX !== $page[self::ACTION]) ? $page[self::ACTION] : null;
+
         $controller = (
             isset($page[self::CONTROLLER]) &&
-            self::INDEX !== $page[self::CONTROLLER]) ? $page[self::CONTROLLER] : null;
-
-        $action = (isset($page[self::ACTION]) && self::INDEX !== $page[self::ACTION]) ? $page[self::ACTION] : null;
+            (
+                self::INDEX !== $page[self::CONTROLLER]) ||
+                $action !== null
+            ) ? $page[self::CONTROLLER] : null;
 
         return $this->urlBuilder->build($page[self::BUNDLE], $controller, $action);
     }
