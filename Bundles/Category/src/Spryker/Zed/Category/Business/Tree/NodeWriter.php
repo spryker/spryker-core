@@ -15,8 +15,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 class NodeWriter implements NodeWriterInterface
 {
 
-    const CATEGORY_URL_IDENTIFIER_LENGTH = 4;
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */

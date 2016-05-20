@@ -82,6 +82,35 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idNode
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     */
+    public function queryClosureTableParentEntries($idNode);
+
+    /**
+     * @api
+     *
+     * @param int $idNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     */
+    public function queryClosureTableFilterByIdNode($idNode);
+
+    /**
+     * @api
+     *
+     * @param int $idNodeDescendant
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     */
+    public function queryClosureTableFilterByIdNodeDescendant($idNodeDescendant);
+
+    /**
+     * @api
+     *
+     * @param int $idNode
      * @param string $idLocale
      * @param bool $onlyOneLevel
      * @param bool $excludeStartNode

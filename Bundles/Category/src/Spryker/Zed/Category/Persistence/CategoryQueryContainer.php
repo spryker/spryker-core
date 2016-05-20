@@ -260,7 +260,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @param int $idNode
      *
-     * @return $this|\Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function queryClosureTableFilterByIdNode($idNode)
     {
@@ -273,7 +273,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @param int $idNodeDescendant
      *
-     * @return $this|\Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function queryClosureTableFilterByIdNodeDescendant($idNodeDescendant)
     {
