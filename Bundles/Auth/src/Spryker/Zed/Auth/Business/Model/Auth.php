@@ -88,8 +88,9 @@ class Auth implements AuthInterface
 
         $this->registerAuthorizedUser($token, $userTransfer);
 
-        $userTransfer->setPassword(null);
-        $this->userFacade->updateUser($userTransfer);
+        $updateUserTransfer = clone $userTransfer;
+        $updateUserTransfer->setPassword(null);
+        $this->userFacade->updateUser($updateUserTransfer);
 
         return true;
     }
@@ -117,17 +118,13 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return string
      */
     protected function registerAuthorizedUser($token, UserTransfer $userTransfer)
     {
         $key = $this->getSessionKey($token);
-        $this->session->set($key, serialize($userTransfer));
+        $this->session->set($key, $userTransfer);
 
         $this->userFacade->setCurrentUser($userTransfer);
-
-        return unserialize($this->session->get($key));
     }
 
     /**
@@ -268,7 +265,7 @@ class Auth implements AuthInterface
      */
     public function getCurrentUser($token)
     {
-        $user = $this->unserializeUserFromSession($token);
+        $user = $this->getUserFromSession($token);
 
         return $user;
     }
@@ -280,16 +277,30 @@ class Auth implements AuthInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function unserializeUserFromSession($token)
+    public function getUserFromSession($token)
     {
         $key = $this->getSessionKey($token);
-        $user = unserialize($this->session->get($key));
+        $user = $this->session->get($key);
 
-        if ($user === false) {
+        if ($user === null) {
             throw new UserNotLoggedException();
         }
 
-        return $user;
+        return clone $user;
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param string $token
+     *
+     * @throws \Spryker\Zed\Auth\Business\Exception\UserNotLoggedException
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function unserializeUserFromSession($token)
+    {
+        return $this->getUserFromSession($token);
     }
 
     /**
@@ -300,9 +311,9 @@ class Auth implements AuthInterface
     public function userTokenIsValid($token)
     {
         $key = $this->getSessionKey($token);
-        $user = unserialize($this->session->get($key));
+        $user = $this->session->get($key);
 
-        return $user !== false;
+        return $user !== null;
     }
 
     /**
