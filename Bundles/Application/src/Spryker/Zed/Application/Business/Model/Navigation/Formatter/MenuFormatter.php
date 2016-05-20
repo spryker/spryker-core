@@ -160,13 +160,12 @@ class MenuFormatter implements MenuFormatterInterface
      */
     protected function getPageAction(array $page)
     {
-        $res = null;
-
+        $pageAction = null;
         if (isset($page[self::ACTION]) && self::INDEX !== $page[self::ACTION]) {
-            $res = $page[self::ACTION];
+            $pageAction = $page[self::ACTION];
         }
 
-        return $res;
+        return $pageAction;
     }
 
     /**
@@ -176,17 +175,16 @@ class MenuFormatter implements MenuFormatterInterface
      */
     protected function getPageController(array $page, $action)
     {
-        $res = null;
-
+        $pageController = null;
         if (isset($page[self::CONTROLLER]) &&
             (
                 self::INDEX !== $page[self::CONTROLLER] || $action !== null
             )
         ) {
-            $res = $page[self::CONTROLLER];
+            $pageController = $page[self::CONTROLLER];
         }
 
-        return $res;
+        return $pageController;
     }
 
 }
