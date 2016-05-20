@@ -9,7 +9,7 @@ namespace Spryker\Yves\StepEngine\Dependency\Form;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
 
-interface DataProviderInterface
+interface StepEngineFormDataProviderInterface
 {
 
     /**

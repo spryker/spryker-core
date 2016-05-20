@@ -8,7 +8,7 @@
 namespace Unit\Spryker\Yves\StepEngine\Form;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface;
+use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
@@ -221,11 +221,11 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     private function getDataProviderMock()
     {
-        $dataProviderMock = $this->getMock(DataProviderInterface::class);
+        $dataProviderMock = $this->getMock(StepEngineFormDataProviderInterface::class);
         $dataProviderMock->method('getData')->willReturnArgument(0);
 
         return $dataProviderMock;

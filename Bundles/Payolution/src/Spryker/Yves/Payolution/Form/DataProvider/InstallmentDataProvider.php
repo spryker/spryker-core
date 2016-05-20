@@ -16,9 +16,9 @@ use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\Payolution\Form\InstallmentSubForm;
-use Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface;
+use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
-class InstallmentDataProvider implements DataProviderInterface
+class InstallmentDataProvider implements StepEngineFormDataProviderInterface
 {
 
     /**

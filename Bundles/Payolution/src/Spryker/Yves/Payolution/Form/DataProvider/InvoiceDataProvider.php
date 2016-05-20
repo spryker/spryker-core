@@ -10,9 +10,9 @@ namespace Spryker\Yves\Payolution\Form\DataProvider;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface;
+use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
-class InvoiceDataProvider implements DataProviderInterface
+class InvoiceDataProvider implements StepEngineFormDataProviderInterface
 {
 
     /**

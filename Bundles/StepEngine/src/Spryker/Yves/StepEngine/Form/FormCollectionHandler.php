@@ -8,7 +8,7 @@
 namespace Spryker\Yves\StepEngine\Form;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface;
+use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -23,7 +23,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     protected $formFactory;
 
     /**
-     * @var \Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface
+     * @var \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     protected $dataProvider;
 
@@ -40,12 +40,12 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     /**
      * @param \Symfony\Component\Form\FormTypeInterface[] $formTypes
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Spryker\Yves\StepEngine\Dependency\Form\DataProviderInterface|null $dataProvider
+     * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null $dataProvider
      */
     public function __construct(
         array $formTypes,
         FormFactoryInterface $formFactory,
-        DataProviderInterface $dataProvider = null
+        StepEngineFormDataProviderInterface $dataProvider = null
     ) {
         $this->formTypes = $formTypes;
         $this->formFactory = $formFactory;
