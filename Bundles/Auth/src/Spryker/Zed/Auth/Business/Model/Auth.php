@@ -88,9 +88,7 @@ class Auth implements AuthInterface
 
         $this->registerAuthorizedUser($token, $userTransfer);
 
-        $updateUserTransfer = clone $userTransfer;
-        $updateUserTransfer->setPassword(null);
-        $this->userFacade->updateUser($updateUserTransfer);
+        $this->userFacade->updateUser(clone $userTransfer);
 
         return true;
     }
@@ -118,7 +116,8 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @return void
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function registerAuthorizedUser($token, UserTransfer $userTransfer)
     {
@@ -126,6 +125,8 @@ class Auth implements AuthInterface
         $this->session->set($key, $userTransfer);
 
         $this->userFacade->setCurrentUser($userTransfer);
+
+        return $userTransfer;
     }
 
     /**
@@ -291,7 +292,7 @@ class Auth implements AuthInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Deprecated since v2.0.2. Will be removed in the next major release.
      *
      * @param string $token
      *
