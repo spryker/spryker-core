@@ -196,15 +196,15 @@ class TouchRecord implements TouchRecordInterface
     protected function removeTouchEntries(SpyTouchQuery $query)
     {
         $deletedCount = 0;
-        $touchIdsMarkedAsDeletedQuery = $query->select(SpyTouchTableMap::COL_ID_TOUCH);
-        $batchCollection = $this->batchIteratorBuilder->buildPropelBatchIterator($touchIdsMarkedAsDeletedQuery);
+        $touchIdsToRemoveQuery = $query->select(SpyTouchTableMap::COL_ID_TOUCH);
+        $batchCollection = $this->batchIteratorBuilder->buildPropelBatchIterator($touchIdsToRemoveQuery);
 
         /* @var $batch \Propel\Runtime\Collection\ArrayCollection */
         foreach ($batchCollection as $batch) {
-            $touchIdsMarkedAsDeleted = $batch->toArray();
-            $this->touchQueryContainer->queryTouchSearchByTouchIds($touchIdsMarkedAsDeleted)->delete();
-            $this->touchQueryContainer->queryTouchStorageByTouchIds($touchIdsMarkedAsDeleted)->delete();
-            $deletedCount += $query->filterByIdTouch($touchIdsMarkedAsDeleted)->delete();
+            $touchIdsToRemove = $batch->toArray();
+            $this->touchQueryContainer->queryTouchSearchByTouchIds($touchIdsToRemove)->delete();
+            $this->touchQueryContainer->queryTouchStorageByTouchIds($touchIdsToRemove)->delete();
+            $deletedCount += $query->filterByIdTouch($touchIdsToRemove)->delete();
         }
 
         return $deletedCount;
