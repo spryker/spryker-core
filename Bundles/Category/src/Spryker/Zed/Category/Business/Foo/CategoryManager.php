@@ -125,11 +125,8 @@ class CategoryManager
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function persistUrl(
-        CategoryLocalizedTransfer $CategoryLocalizedTransfer,
-        NodeTransfer $nodeTransfer,
-        LocaleTransfer $localeTransfer
-    ) {
+    protected function persistUrl(CategoryLocalizedTransfer $CategoryLocalizedTransfer, NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer)
+    {
         $urlTransfer = new UrlTransfer();
         return $urlTransfer;
     }
@@ -181,10 +178,8 @@ class CategoryManager
         return $idCategory;
     }
 
-    protected function persistNodeEntity(
-        NodeTransfer $nodeTransfer,
-        CategoryLocalizedTransfer $categoryLocalizedTransfer
-    ) {
+    protected function persistNodeEntity(NodeTransfer $nodeTransfer, CategoryLocalizedTransfer $categoryLocalizedTransfer)
+    {
         $this->queryContainer->getConnection()->beginTransaction();
 
         $idNode = $this->nodeWriter->create($nodeTransfer);
