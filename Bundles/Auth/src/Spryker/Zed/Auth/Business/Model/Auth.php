@@ -91,6 +91,8 @@ class Auth implements AuthInterface
         $userTransfer->setPassword(null);
         $this->userFacade->updateUser($userTransfer);
 
+        $this->session->migrate();
+
         return true;
     }
 
@@ -139,6 +141,7 @@ class Auth implements AuthInterface
         $key = $this->getSessionKey($token);
 
         $this->session->remove($key);
+        $this->session->migrate();
     }
 
     /**
