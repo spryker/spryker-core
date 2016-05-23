@@ -193,21 +193,50 @@ class TouchRecord implements TouchRecordInterface
         return $this->touchQueryContainer->getConnection()->commit() ? $deletedCount : 0;
     }
 
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $query
+     *
+     * @return int
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
     protected function removeTouchEntries(SpyTouchQuery $query)
     {
         $deletedCount = 0;
-        $touchIdsToRemoveQuery = $query->select(SpyTouchTableMap::COL_ID_TOUCH);
-        $batchCollection = $this->batchIteratorBuilder->buildPropelBatchIterator($touchIdsToRemoveQuery);
+        $batchCollection = $this->getTouchIdsToRemove($query);
 
         /* @var $batch \Propel\Runtime\Collection\ArrayCollection */
         foreach ($batchCollection as $batch) {
             $touchIdsToRemove = $batch->toArray();
-            $this->touchQueryContainer->queryTouchSearchByTouchIds($touchIdsToRemove)->delete();
-            $this->touchQueryContainer->queryTouchStorageByTouchIds($touchIdsToRemove)->delete();
+            $this->removeTouchDataForCollectors($touchIdsToRemove);
             $deletedCount += $query->filterByIdTouch($touchIdsToRemove)->delete();
         }
 
         return $deletedCount;
+    }
+
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $query
+     *
+     * @return \Spryker\Shared\Library\BatchIterator\PropelBatchIterator
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    protected function getTouchIdsToRemove(SpyTouchQuery $query)
+    {
+        $touchIdsToRemoveQuery = $query->select(SpyTouchTableMap::COL_ID_TOUCH);
+        return $this->batchIteratorBuilder->buildPropelBatchIterator($touchIdsToRemoveQuery);
+    }
+
+    /**
+     * @param array $touchIds
+     *
+     * @return void
+     */
+    protected function removeTouchDataForCollectors(array $touchIds)
+    {
+        $this->touchQueryContainer->queryTouchSearchByTouchIds($touchIds)->delete();
+        $this->touchQueryContainer->queryTouchStorageByTouchIds($touchIds)->delete();
     }
 
 }
