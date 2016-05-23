@@ -38,7 +38,7 @@ class ComparatorOperators
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
-        if ($this->isMatchAllValue($withValue)) {
+        if ($this->isMatchAllValue($clauseTransfer->getValue())) {
             return true;
         }
 
@@ -128,6 +128,6 @@ class ComparatorOperators
             return true;
         }
 
-        return true;
+        return false;
     }
 }

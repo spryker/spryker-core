@@ -11,11 +11,27 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DiscountFacadeCalculateTest extends Test
 {
+
+    /**
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $discounts = SpyDiscountQuery::create()->find();
+        foreach ($discounts as $discountEntity) {
+            $discountEntity->setIsActive(false);
+            $discountEntity->save();
+        }
+    }
+
     /**
      * @throws \Propel\Runtime\Exception\PropelException
      *

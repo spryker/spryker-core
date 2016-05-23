@@ -9,13 +9,13 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
-class Percentage extends AbstractDiscountPlugin implements DiscountCalculatorPluginInterface
+class Percentage extends AbstractPlugin implements DiscountCalculatorPluginInterface
 {
 
     /**

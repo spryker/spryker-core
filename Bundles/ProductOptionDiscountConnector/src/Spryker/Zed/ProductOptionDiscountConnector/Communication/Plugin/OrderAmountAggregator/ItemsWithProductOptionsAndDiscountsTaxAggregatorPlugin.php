@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ProductOptionDiscountConnector\Communication\Plugin\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductOptionDiscountConnector\Business\ProductOptionDiscountConnectorFacade getFacade()
  */
-class ItemsWithProductOptionsAndDiscountsTaxAggregatorPlugin extends AbstractDiscountPlugin implements OrderTotalsAggregatePluginInterface
+class ItemsWithProductOptionsAndDiscountsTaxAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
 {
 
     /**

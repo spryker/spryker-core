@@ -10,12 +10,11 @@ namespace Spryker\Zed\Discount\Business\Voucher;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
-use Spryker\Zed\Discount\DiscountConfigInterface;
+use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
@@ -24,17 +23,13 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 class VoucherEngine
 {
 
-    const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';
-    const KEY_VOUCHER_CODE_VOWELS = 'vowels';
-    const KEY_VOUCHER_CODE_NUMBERS = 'numbers';
-
     /**
      * @var int|null
      */
     protected $remainingCodesToGenerate = null;
 
     /**
-     * @var \Spryker\Zed\Discount\DiscountConfigInterface
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $settings;
 
@@ -54,13 +49,13 @@ class VoucherEngine
     protected $connection;
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfigInterface $settings
+     * @param \Spryker\Zed\Discount\DiscountConfig $settings
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
-        DiscountConfigInterface $settings,
+        DiscountConfig $settings,
         DiscountQueryContainerInterface $queryContainer,
         DiscountToMessengerInterface $messengerFacade,
         ConnectionInterface $connection
@@ -174,7 +169,7 @@ class VoucherEngine
     protected function generateCodes(DiscountVoucherTransfer $discountVoucherTransfer, $quantity)
     {
         $codeCollisions = 0;
-        for ($i = 0; $i < $discountVoucherTransfer->getQuantity(); $i++) {
+        for ($i = 0; $i < $quantity; $i++) {
             $code = $this->getRandomVoucherCode($discountVoucherTransfer->getRandomGeneratedCodeLength());
 
             if ($discountVoucherTransfer->getCustomCode()) {
@@ -236,9 +231,9 @@ class VoucherEngine
     {
         $allowedCharacters = $this->settings->getVoucherCodeCharacters();
 
-        $consonants = $allowedCharacters[self::KEY_VOUCHER_CODE_CONSONANTS];
-        $vowels = $allowedCharacters[self::KEY_VOUCHER_CODE_VOWELS];
-        $numbers = $allowedCharacters[self::KEY_VOUCHER_CODE_NUMBERS];
+        $consonants = $allowedCharacters[DiscountConfig::KEY_VOUCHER_CODE_CONSONANTS];
+        $vowels = $allowedCharacters[DiscountConfig::KEY_VOUCHER_CODE_VOWELS];
+        $numbers = $allowedCharacters[DiscountConfig::KEY_VOUCHER_CODE_NUMBERS];
 
         $code = '';
 

@@ -7,22 +7,22 @@
 
 namespace Spryker\Zed\Discount\Business;
 
-use Spryker\Zed\Discount\Business\Calculator\Fixed;
-use Spryker\Zed\Discount\Business\Calculator\Percentage;
+use Spryker\Zed\Discount\Business\Calculator\Calculator;
+use Spryker\Zed\Discount\Business\Calculator\Discount;
+use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
+use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
 use Spryker\Zed\Discount\Business\Collector\SkuCollector;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
-use Spryker\Zed\Discount\Business\Model\Calculator;
-use Spryker\Zed\Discount\Business\Model\Discount;
-use Spryker\Zed\Discount\Business\Model\DiscountConfiguratorHydrate;
-use Spryker\Zed\Discount\Business\Model\DiscountOrderSaver;
-use Spryker\Zed\Discount\Business\Model\DiscountPersist;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpensesWithDiscounts;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts;
+use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
+use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
+use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
+use Spryker\Zed\Discount\Business\SalesAggregator\DiscountTotalAmount;
+use Spryker\Zed\Discount\Business\SalesAggregator\GrandTotalWithDiscounts;
+use Spryker\Zed\Discount\Business\SalesAggregator\ItemDiscounts;
+use Spryker\Zed\Discount\Business\SalesAggregator\OrderDiscounts;
+use Spryker\Zed\Discount\Business\SalesAggregator\OrderExpensesWithDiscounts;
+use Spryker\Zed\Discount\Business\SalesAggregator\OrderExpenseTaxWithDiscounts;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
@@ -47,7 +47,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\Discount
+     * @return \Spryker\Zed\Discount\Business\Calculator\Discount
      */
     public function createDiscount()
     {
@@ -71,7 +71,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Calculator\Percentage
+     * @return \Spryker\Zed\Discount\Business\Calculator\Type\Percentage
      */
     public function createCalculatorPercentage()
     {
@@ -79,7 +79,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Calculator\Fixed
+     * @return \Spryker\Zed\Discount\Business\Calculator\Type\Fixed
      */
     public function createCalculatorFixed()
     {
@@ -87,7 +87,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\Calculator
+     * @return \Spryker\Zed\Discount\Business\Calculator\Calculator
      */
     protected function createCalculator()
     {
@@ -137,7 +137,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\DiscountOrderSaverInterface
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaverInterface
      */
     public function createDiscountOrderSaver()
     {
@@ -193,7 +193,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount
+     * @return \Spryker\Zed\Discount\Business\SalesAggregator\DiscountTotalAmount
      */
     public function createOrderDiscountTotalAmount()
     {
@@ -201,7 +201,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts
+     * @return \Spryker\Zed\Discount\Business\SalesAggregator\ItemDiscounts
      */
     public function createItemTotalOrderAggregator()
     {
@@ -209,7 +209,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts
+     * @return \Spryker\Zed\Discount\Business\SalesAggregator\OrderDiscounts
      */
     public function createSalesOrderTotalsAggregator()
     {
@@ -217,7 +217,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts
+     * @return \Spryker\Zed\Discount\Business\SalesAggregator\GrandTotalWithDiscounts
      */
     public function createSalesOrderGrandTotalAggregator()
     {
@@ -225,7 +225,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts
+     * @return \Spryker\Zed\Discount\Business\SalesAggregator\OrderExpenseTaxWithDiscounts
      */
     public function createOrderExpenseTaxWithDiscountsAggregator()
     {
@@ -235,7 +235,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpensesWithDiscounts
+     * @return \Spryker\Zed\Discount\Business\SalesAggregator\OrderExpensesWithDiscounts
      */
     public function createOrderExpenseWithDiscountsAggregator()
     {

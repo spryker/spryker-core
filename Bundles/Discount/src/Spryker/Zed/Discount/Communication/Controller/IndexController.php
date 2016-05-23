@@ -105,19 +105,6 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return array
-     */
-    protected function getQueryStringMetData()
-    {
-        return [
-            'collectorTypes' => $this->getFacade()->getQueryStringFieldsByType(SpecificationBuilder::TYPE_COLLECTOR),
-            'decisionRuleTypes' => $this->getFacade()->getQueryStringFieldsByType(SpecificationBuilder::TYPE_DECISION_RULE),
-            'booleanComparators' => $this->getFacade()->getQueryStringLogicalComparators(SpecificationBuilder::TYPE_COLLECTOR),
-            'comparatorExpressions' => $this->getFacade()->getQueryStringComparatorExpressions(SpecificationBuilder::TYPE_COLLECTOR),
-        ];
-    }
-
-    /**
      * @param Request $request
      *
      * @return array
@@ -134,6 +121,19 @@ class IndexController extends AbstractController
         return [
             'discountConfigurator' => $discountConfiguratorTransfer,
             'voucherCodesTable' => $voucherCodesTable,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getQueryStringMetData()
+    {
+        return [
+            'collectorTypes' => $this->getFacade()->getQueryStringFieldsByType(SpecificationBuilder::TYPE_COLLECTOR),
+            'decisionRuleTypes' => $this->getFacade()->getQueryStringFieldsByType(SpecificationBuilder::TYPE_DECISION_RULE),
+            'booleanComparators' => $this->getFacade()->getQueryStringLogicalComparators(SpecificationBuilder::TYPE_COLLECTOR),
+            'comparatorExpressions' => $this->getFacade()->getQueryStringComparatorExpressions(SpecificationBuilder::TYPE_COLLECTOR),
         ];
     }
 

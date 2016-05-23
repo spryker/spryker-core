@@ -66,7 +66,9 @@ class VoucherController extends AbstractController
         $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
         $idVoucher = $this->castId($request->query->get(self::URL_PARAM_ID_VOUCHER));
 
-        $voucherEntity = $this->getQueryContainer()->queryVoucherByIdVoucher($idVoucher);
+        $voucherEntity = $this->getQueryContainer()
+            ->queryVoucherByIdVoucher($idVoucher);
+
         $affectedRows = $voucherEntity->delete();
 
         if ($affectedRows > 0) {

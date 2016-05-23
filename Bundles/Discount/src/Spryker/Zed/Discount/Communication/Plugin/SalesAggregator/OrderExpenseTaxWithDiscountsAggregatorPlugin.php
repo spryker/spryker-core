@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOptionDiscountConnector\Communication\Plugin\OrderAmountAggregator;
+namespace Spryker\Zed\Discount\Communication\Plugin\SalesAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductOptionDiscountConnector\Business\ProductOptionDiscountConnectorFacade getFacade()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class OrderTaxAmountWithProductOptionsAndDiscountsAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
+class OrderExpenseTaxWithDiscountsAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
 {
 
     /**
@@ -24,7 +25,7 @@ class OrderTaxAmountWithProductOptionsAndDiscountsAggregatorPlugin extends Abstr
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $this->getFacade()->aggregateOrderTotalTaxAmountWithDiscounts($orderTransfer);
+        $this->getFacade()->aggregateOrderExpenseTaxWithDiscounts($orderTransfer);
     }
 
 }

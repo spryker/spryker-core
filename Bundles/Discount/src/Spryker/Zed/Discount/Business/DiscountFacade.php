@@ -118,9 +118,9 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param string$type
+     * @param string $type
      *
-     * @return array|\string[]
+     * @return array|string[]
      */
     public function getQueryStringLogicalComparators($type)
     {

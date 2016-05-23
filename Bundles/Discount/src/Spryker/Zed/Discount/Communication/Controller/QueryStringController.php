@@ -24,6 +24,7 @@ class QueryStringController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function ruleFieldsAction(Request $request)
@@ -69,6 +70,7 @@ class QueryStringController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      *
      */
