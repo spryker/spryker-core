@@ -60,8 +60,12 @@ class TouchRecord implements TouchRecordInterface
      *
      * @return bool
      */
-    public function saveTouchRecord($itemType, $itemEvent, $idItem, $keyChange = false)
-    {
+    public function saveTouchRecord(
+        $itemType,
+        $itemEvent,
+        $idItem,
+        $keyChange = false
+    ) {
         $this->connection->beginTransaction();
 
         if ($keyChange) {
@@ -70,7 +74,12 @@ class TouchRecord implements TouchRecordInterface
 
         if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_DELETED) {
             if (!$this->deleteKeyChangeActiveRecord($itemType, $idItem)) {
-                $this->insertTouchRecord($itemType, $itemEvent, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+                $this->insertTouchRecord(
+                    $itemType,
+                    $itemEvent,
+                    $idItem,
+                    SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+                );
             }
         } else {
             $this->insertTouchRecord($itemType, $itemEvent, $idItem);
@@ -89,8 +98,12 @@ class TouchRecord implements TouchRecordInterface
      *
      * @return void
      */
-    protected function saveTouchEntity($itemType, $idItem, $itemEvent, SpyTouch $touchEntity)
-    {
+    protected function saveTouchEntity(
+        $itemType,
+        $idItem,
+        $itemEvent,
+        SpyTouch $touchEntity
+    ) {
         $touchEntity->setItemType($itemType)
             ->setItemEvent($itemEvent)
             ->setItemId($idItem)
@@ -107,7 +120,11 @@ class TouchRecord implements TouchRecordInterface
     protected function deleteKeyChangeActiveRecord($itemType, $idItem)
     {
         $touchDeletedEntity = $this->touchQueryContainer
-            ->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+            ->queryUpdateTouchEntry(
+                $itemType,
+                $idItem,
+                SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+            )
             ->findOne();
 
         if ($touchDeletedEntity === null) {
@@ -115,7 +132,11 @@ class TouchRecord implements TouchRecordInterface
         }
 
         $touchActiveEntity = $this->touchQueryContainer
-            ->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
+            ->queryUpdateTouchEntry(
+                $itemType,
+                $idItem,
+                SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+            )
             ->findOne();
 
         if ($touchActiveEntity !== null) {
@@ -133,16 +154,33 @@ class TouchRecord implements TouchRecordInterface
      */
     protected function insertKeyChangeRecord($itemType, $idItem)
     {
-        $touchOldEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
+        $touchOldEntity = $this->touchQueryContainer
+            ->queryUpdateTouchEntry(
+                $itemType,
+                $idItem,
+                SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+            )
             ->findOne();
+
         if ($touchOldEntity === null) {
             return;
         }
 
-        $touchDeletedEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+        $touchDeletedEntity = $this->touchQueryContainer
+            ->queryUpdateTouchEntry(
+                $itemType,
+                $idItem,
+                SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+            )
             ->findOne();
+
         if ($touchDeletedEntity === null) {
-            $this->saveTouchEntity($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $touchOldEntity);
+            $this->saveTouchEntity(
+                $itemType,
+                $idItem,
+                SpyTouchTableMap::COL_ITEM_EVENT_DELETED,
+                $touchOldEntity
+            );
         }
     }
 
@@ -154,12 +192,21 @@ class TouchRecord implements TouchRecordInterface
      *
      * @return void
      */
-    protected function insertTouchRecord($itemType, $itemEvent, $idItem, $type = null)
-    {
+    protected function insertTouchRecord(
+        $itemType,
+        $itemEvent,
+        $idItem,
+        $type = null
+    ) {
         if ($type === null) {
             $type = $itemEvent;
         }
-        $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, $type)
+        $touchEntity = $this->touchQueryContainer
+            ->queryUpdateTouchEntry(
+                $itemType,
+                $idItem,
+                $type
+            )
             ->findOneOrCreate();
         $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
     }
@@ -181,9 +228,10 @@ class TouchRecord implements TouchRecordInterface
 
         try {
 
-            $touchListQuery = $this->touchQueryContainer->queryTouchListByItemEvent(
-                SpyTouchTableMap::COL_ITEM_EVENT_DELETED
-            );
+            $touchListQuery = $this->touchQueryContainer
+                ->queryTouchListByItemEvent(
+                    SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+                );
             $deletedCount = $this->removeTouchEntries($touchListQuery);
 
         } catch (\Exception $exception) {
@@ -229,8 +277,11 @@ class TouchRecord implements TouchRecordInterface
      */
     protected function getTouchIdsToRemoveBatchCollection(SpyTouchQuery $query)
     {
-        $touchIdsToRemoveQuery = $query->select(SpyTouchTableMap::COL_ID_TOUCH);
-        return $this->batchIteratorBuilder->buildPropelBatchIterator($touchIdsToRemoveQuery);
+        $touchIdsToRemoveQuery = $query
+            ->select(SpyTouchTableMap::COL_ID_TOUCH);
+
+        return $this->batchIteratorBuilder
+            ->buildPropelBatchIterator($touchIdsToRemoveQuery);
     }
 
     /**
@@ -244,8 +295,13 @@ class TouchRecord implements TouchRecordInterface
      */
     protected function removeTouchDataForCollectors(array $touchIds)
     {
-        $this->touchQueryContainer->queryTouchSearchByTouchIds($touchIds)->delete();
-        $this->touchQueryContainer->queryTouchStorageByTouchIds($touchIds)->delete();
+        $this->touchQueryContainer
+            ->queryTouchSearchByTouchIds($touchIds)
+            ->delete();
+
+        $this->touchQueryContainer
+            ->queryTouchStorageByTouchIds($touchIds)
+            ->delete();
     }
 
 }
