@@ -11,6 +11,7 @@ use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Shared\Library\BatchIterator\Builder\BatchIteratorBuilderInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface
@@ -27,13 +28,24 @@ class TouchRecord implements TouchRecordInterface
     protected $connection;
 
     /**
+     * @var \Spryker\Shared\Library\BatchIterator\Builder\BatchIteratorBuilderInterface
+     */
+    protected $batchIteratorBuilder;
+
+    /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     * @param \Spryker\Shared\Library\BatchIterator\Builder\BatchIteratorBuilderInterface $batchIteratorBuilder
      */
-    public function __construct(TouchQueryContainerInterface $queryContainer, ConnectionInterface $connection)
-    {
+    public function __construct(
+        TouchQueryContainerInterface $queryContainer,
+        ConnectionInterface $connection,
+        BatchIteratorBuilderInterface $batchIteratorBuilder
+    ) {
+
         $this->touchQueryContainer = $queryContainer;
         $this->connection = $connection;
+        $this->batchIteratorBuilder = $batchIteratorBuilder;
     }
 
     /**
@@ -165,27 +177,22 @@ class TouchRecord implements TouchRecordInterface
     {
         $deletedCount = 0;
         $this->touchQueryContainer->getConnection()->beginTransaction();
+
         try {
 
-            $chunkSize = 10000;
             $touchListQuery = $this->touchQueryContainer
                 ->queryTouchListByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
 
-            do {
+            $touchIdsMarkedAsDeletedQuery = $touchListQuery->select(SpyTouchTableMap::COL_ID_TOUCH);
+            $batchCollection = $this->batchIteratorBuilder->buildPropelBatchIterator($touchIdsMarkedAsDeletedQuery);
 
-                $touchIdsMarkedAsDeleted = $touchListQuery
-                    ->select(SpyTouchTableMap::COL_ID_TOUCH)
-                    ->limit($chunkSize)
-                    ->find()->toArray();
-
-                if (!empty($touchIdsMarkedAsDeleted)) {
-                    $this->touchQueryContainer->queryTouchSearchByTouchIds($touchIdsMarkedAsDeleted)->delete();
-                    $this->touchQueryContainer->queryTouchStorageByTouchIds($touchIdsMarkedAsDeleted)->delete();
-
-                    $deletedCount += $touchListQuery->filterByIdTouch($touchIdsMarkedAsDeleted)->delete();
-                }
-
-            } while (!empty($touchIdsMarkedAsDeleted));
+            /* @var $batch \Propel\Runtime\Collection\ArrayCollection */
+            foreach ($batchCollection as $batch) {
+                $touchIdsMarkedAsDeleted = $batch->toArray();
+                $this->touchQueryContainer->queryTouchSearchByTouchIds($touchIdsMarkedAsDeleted)->delete();
+                $this->touchQueryContainer->queryTouchStorageByTouchIds($touchIdsMarkedAsDeleted)->delete();
+                $deletedCount += $touchListQuery->filterByIdTouch($touchIdsMarkedAsDeleted)->delete();
+            }
 
         } catch (\Exception $exception) {
             $this->touchQueryContainer->getConnection()->rollBack();
