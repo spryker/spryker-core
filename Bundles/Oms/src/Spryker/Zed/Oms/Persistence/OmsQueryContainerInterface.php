@@ -147,4 +147,32 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      */
     public function querySalesOrderItemsByIdSalesOrder($idOrder);
 
+    /**
+     * @api
+     *
+     * @param string $identifier
+     * @param \DateTime $expirationDate
+     *
+     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate);
+
+    /**
+     * @api
+     *
+     * @param \DateTime $expirationDate
+     *
+     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockedItemsByExpirationDate(\DateTime $expirationDate);
+
+    /**
+     * @api
+     *
+     * @param string $identifier
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockItemsByIdentifier($identifier);
+
 }

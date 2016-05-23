@@ -266,4 +266,48 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $query;
     }
 
+    /**
+     * @api
+     *
+     * @param string $identifier
+     * @param \DateTime $expirationDate
+     *
+     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate)
+    {
+        return $this->getFactory()
+            ->createOmsStateMachineLockQuery()
+            ->filterByIdentifier($identifier)
+            ->filterByExpires(['min' => $expirationDate]);
+    }
+
+    /**
+     * @api
+     *
+     * @param \DateTime $expirationDate
+     *
+     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockedItemsByExpirationDate(\DateTime $expirationDate)
+    {
+        return $this->getFactory()
+            ->createOmsStateMachineLockQuery()
+            ->filterByExpires(['max' => $expirationDate]);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $identifier
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockItemsByIdentifier($identifier)
+    {
+        return $this->getFactory()
+            ->createOmsStateMachineLockQuery()
+            ->filterByIdentifier($identifier);
+    }
+
 }
