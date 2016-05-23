@@ -11,8 +11,6 @@ interface BulkDeleteTouchByIdQueryInterface
 {
 
     /**
-     * Adds a delete touch query to the list
-     *
      * @param string $tableName
      * @param string $idColumnName
      * @param array $idsToDelete
@@ -22,12 +20,13 @@ interface BulkDeleteTouchByIdQueryInterface
     public function addQuery($tableName, $idColumnName, $idsToDelete);
 
     /**
-     * Generates and returns the bulk SQL-query string for execution
-     *
-     * @param boolean $cleanup
-     *
      * @return string
      */
-    public function getRawSqlString($cleanup = true);
+    public function getRawSqlString();
+
+    /**
+     * @return void
+     */
+    public function flushQueries();
 
 }

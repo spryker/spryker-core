@@ -56,19 +56,20 @@ class BulkDeleteTouchByIdQuery implements BulkDeleteTouchByIdQueryInterface
     }
 
     /**
-     * @param boolean $cleanup
-     *
      * @return string
      */
-    public function getRawSqlString($cleanup = true)
+    public function getRawSqlString()
     {
         $queryString = implode(static::QUERY_GLUE, $this->queries);
-
-        if ($cleanup) {
-            $this->queries = [];
-        }
-
         return $queryString;
+    }
+
+    /**
+     * @return void
+     */
+    public function flushQueries()
+    {
+        $this->queries = [];
     }
 
 }

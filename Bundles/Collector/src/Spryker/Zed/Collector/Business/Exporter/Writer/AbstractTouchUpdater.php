@@ -92,6 +92,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
         }
 
         $updateSql = $this->bulkTouchUpdateQuery->getRawSqlString();
+        $this->bulkTouchUpdateQuery->flushQueries();
         if (trim($updateSql) !== '' && $connection !== null) {
             $connection->exec($updateSql);
         }
@@ -123,7 +124,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
                     $idsToDelete
                 )
                 ->getRawSqlString();
-
+            $this->bulkTouchDeleteQuery->flushQueries();
             $connection->exec($sql);
         }
     }

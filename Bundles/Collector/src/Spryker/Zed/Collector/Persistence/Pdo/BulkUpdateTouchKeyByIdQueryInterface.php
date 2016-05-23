@@ -11,8 +11,6 @@ interface BulkUpdateTouchKeyByIdQueryInterface
 {
 
     /**
-     * Adds an update touch query to the list of queries
-     *
      * @param string $tableName
      * @param string $keyValue
      * @param string $idColumnName
@@ -23,12 +21,13 @@ interface BulkUpdateTouchKeyByIdQueryInterface
     public function addQuery($tableName, $keyValue, $idColumnName, $idValue);
 
     /**
-     * Generates and returns the bulk SQL-query string for execution
-     *
-     * @param boolean $cleanup
-     *
      * @return string
      */
-    public function getRawSqlString($cleanup = true);
+    public function getRawSqlString();
+
+    /**
+     * @return void
+     */
+    public function flushQueries();
 
 }
