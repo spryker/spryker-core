@@ -191,7 +191,9 @@ class TouchRecord implements TouchRecordInterface
             throw $exception;
         }
 
-        return $this->touchQueryContainer->getConnection()->commit() ? $deletedCount : 0;
+        $this->touchQueryContainer->getConnection()->commit();
+
+        return $deletedCount;
     }
 
     /**
@@ -204,7 +206,7 @@ class TouchRecord implements TouchRecordInterface
     protected function removeTouchEntries(SpyTouchQuery $query)
     {
         $deletedCount = 0;
-        $batchCollection = $this->getTouchIdsToRemove($query);
+        $batchCollection = $this->getTouchIdsToRemoveBatchCollection($query);
 
         /* @var $batch \Propel\Runtime\Collection\ArrayCollection */
         foreach ($batchCollection as $batch) {
@@ -223,7 +225,7 @@ class TouchRecord implements TouchRecordInterface
      *
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    protected function getTouchIdsToRemove(SpyTouchQuery $query)
+    protected function getTouchIdsToRemoveBatchCollection(SpyTouchQuery $query)
     {
         $touchIdsToRemoveQuery = $query->select(SpyTouchTableMap::COL_ID_TOUCH);
         return $this->batchIteratorBuilder->buildPropelBatchIterator($touchIdsToRemoveQuery);
