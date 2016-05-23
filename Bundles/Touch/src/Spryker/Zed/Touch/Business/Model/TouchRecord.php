@@ -212,7 +212,9 @@ class TouchRecord implements TouchRecordInterface
         foreach ($batchCollection as $batch) {
             $touchIdsToRemove = $batch->toArray();
             $this->removeTouchDataForCollectors($touchIdsToRemove);
-            $deletedCount += $query->filterByIdTouch($touchIdsToRemove)->delete();
+            $deletedCount += $query
+                ->filterByIdTouch($touchIdsToRemove)
+                ->delete();
         }
 
         return $deletedCount;
