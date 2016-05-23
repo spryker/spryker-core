@@ -14,7 +14,7 @@ interface BatchIteratorBuilderInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * 
+     *
      * @return \Spryker\Shared\Library\BatchIterator\PropelBatchIterator
      */
     public function buildPropelBatchIterator(ModelCriteria $query);

@@ -229,6 +229,10 @@ class TouchRecord implements TouchRecordInterface
     }
 
     /**
+     * Removes Touch data in any of the database tables for Collectors
+     * If a different Collector table is added to the system, this code should
+     * be updated or overridden to include covering that table as well
+     *
      * @param array $touchIds
      *
      * @return void
