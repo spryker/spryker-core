@@ -25,6 +25,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdater as Stora
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Internal\InstallElasticsearch;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
+use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
@@ -313,39 +314,29 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \InvalidArgumentException
-     *
      * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
      */
     protected function createBulkUpdateTouchQuery()
     {
-        $className = CollectorConfig::COLLECTOR_BULK_UPDATE_QUERY_CLASS;
-        $classList = $this->getConfig()->getCurrentBulkQueryClassNames();
-
-        if (!isset($classList[$className])) {
-            throw new \InvalidArgumentException('Invalid StoragePdoQueryAdapter name: ' . $className);
-        }
-
-        $bulkUpdateClassName = $classList[$className];
-        return new $bulkUpdateClassName();
+        return $this->createBulkTouchQueryBuilder()
+            ->createBulkTouchUpdateQuery();
     }
 
     /**
-     * @throws \InvalidArgumentException
-     *
      * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
      */
     protected function createBulkDeleteTouchQuery()
     {
-        $className = CollectorConfig::COLLECTOR_BULK_DELETE_QUERY_CLASS;
-        $classList = $this->getConfig()->getCurrentBulkQueryClassNames();
+        return $this->createBulkTouchQueryBuilder()
+            ->createBulkTouchDeleteQuery();
+    }
 
-        if (!isset($classList[$className])) {
-            throw new \InvalidArgumentException('Invalid StoragePdoQueryAdapter name: ' . $className);
-        }
-
-        $bulkDeleteClassName = $classList[$className];
-        return new $bulkDeleteClassName();
+    /**
+     * @return \Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder
+     */
+    protected function createBulkTouchQueryBuilder()
+    {
+        return new BulkTouchQueryBuilder($this->getConfig());
     }
 
     /**
