@@ -426,7 +426,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      */
     public function clearLocks()
     {
-        $this->getFactory()->createItemLock()->clearLocks();
+        $this->getFactory()->createTriggerLocker()->clearLocks();
     }
 
 }

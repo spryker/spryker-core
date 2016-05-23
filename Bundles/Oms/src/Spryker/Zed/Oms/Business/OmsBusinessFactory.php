@@ -224,7 +224,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Business\Lock\TriggerLocker
      */
-    protected function createTriggerLocker()
+    public function createTriggerLocker()
     {
         return new TriggerLocker(
             $this->getQueryContainer(),
