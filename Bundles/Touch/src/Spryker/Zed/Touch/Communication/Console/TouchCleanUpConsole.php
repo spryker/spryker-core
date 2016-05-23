@@ -18,7 +18,7 @@ class TouchCleanUpConsole extends Console
 {
 
     const COMMAND_NAME = 'touch:cleanup';
-    const COMMAND_DESCRIPTION = 'Cleans up the Touch tables by removing outdated / unneeded data';
+    const COMMAND_DESCRIPTION = 'Cleans up the Touch tables by removing Obsolete touch data';
 
     /**
      * @return void
