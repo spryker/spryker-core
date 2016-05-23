@@ -35,7 +35,6 @@
     <table name="spy_discount_voucher_pool" phpName="SpyDiscountVoucherPool">
         <column name="id_discount_voucher_pool" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="template" type="VARCHAR" size="255" required="false"/>
         <column name="is_active" type="BOOLEAN" default="false"/>
 
         <behavior name="timestampable"/>

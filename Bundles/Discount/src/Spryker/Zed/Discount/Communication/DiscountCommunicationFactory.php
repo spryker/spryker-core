@@ -8,7 +8,6 @@ namespace Spryker\Zed\Discount\Communication;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
-use Generated\Shared\Transfer\DiscountSaveTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
@@ -24,6 +23,11 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ */
 class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -52,7 +56,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createGeneralFormType()
     {
-        return new GeneralForm();
+        return new GeneralForm($this->getQueryContainer());
     }
 
     /**

@@ -22,11 +22,11 @@
             <div class="tabs-container">
                 <div class="tabs-left">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> General information</a></li>
-                        <li><a data-toggle="tab" href="#tab-2" aria-expanded="true">Discount calculation</a></li>
-                        <li><a data-toggle="tab" href="#tab-3" aria-expanded="true">Conditions</a></li>
-                        {% if discountConfigurator.getDiscountGeneral.getDiscountType == 'voucher' %}
-                           <li><a data-toggle="tab" href="#tab-4" aria-expanded="true">Voucher codes</a></li>
+                        <li class="active"><a data-toggle="tab" href="#tab-1"> General information</a></li>
+                        <li><a data-toggle="tab" href="#tab-2">Discount calculation</a></li>
+                        <li><a data-toggle="tab" href="#tab-3">Conditions</a></li>
+                        {% if discountConfigurator.getDiscountVoucher and discountConfigurator.getDiscountVoucher.fkDiscountVoucherPool %}
+                           <li><a data-toggle="tab" href="#tab-4">Voucher codes</a></li>
                         {% endif %}
                     </ul>
 
@@ -50,7 +50,7 @@
                             </div>
                         </div>
 
-                        {% if discountConfigurator.getDiscountGeneral.getDiscountType == 'voucher' %}
+                        {% if discountConfigurator.getDiscountVoucher and discountConfigurator.getDiscountVoucher.fkDiscountVoucherPool %}
                         <div id="tab-4" class="tab-pane">
                             <div class="panel-body">
                                 {% include '@Discount/Index/partial/voucher.twig' %}
@@ -66,6 +66,11 @@
 
     {% endembed %}
 
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link href="/assets/css/spryker-zed-discount-main.css" type="text/css" rel="stylesheet"/>
 {% endblock %}
 
 {% block footer_js %}

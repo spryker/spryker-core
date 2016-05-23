@@ -62,7 +62,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
         }
 
         return $this->discountQueryContainer
-            ->querySalesDiscounts()
+            ->querySalesDiscount()
             ->filterByFkSalesOrderItem($saleOrderItemIds)
             ->find();
     }

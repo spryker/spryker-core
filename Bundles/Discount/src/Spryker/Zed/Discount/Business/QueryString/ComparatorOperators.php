@@ -38,6 +38,10 @@ class ComparatorOperators
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
+        if ($this->isMatchAllValue($withValue)) {
+            return true;
+        }
+
         foreach ($this->operators as $operator) {
             if (!$operator->accept($clauseTransfer)) {
                  continue;
@@ -111,5 +115,19 @@ class ComparatorOperators
             $comparatorExpressions[] = $operator->getExpression();
         }
         return $comparatorExpressions;
+    }
+
+    /**
+     * @param string $withValue
+     *
+     * @return bool
+     */
+    protected function isMatchAllValue($withValue)
+    {
+        if ($withValue === '*') {
+            return true;
+        }
+
+        return true;
     }
 }

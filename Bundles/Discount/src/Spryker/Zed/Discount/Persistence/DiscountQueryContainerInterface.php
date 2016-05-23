@@ -106,8 +106,17 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param string $discountName
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryDiscountName($discountName);
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
      */
-    public function querySalesDiscounts();
+    public function querySalesDiscount();
 
 }

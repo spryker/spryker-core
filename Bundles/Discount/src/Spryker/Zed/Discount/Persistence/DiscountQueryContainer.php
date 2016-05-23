@@ -23,7 +23,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     const ALIAS_COL_AMOUNT = 'amount';
     const ALIAS_COL_TYPE = 'type';
     const ALIAS_COL_DESCRIPTION = 'description';
-    const ALIAS_COL_USED_VOUCHER_CODE = 'UsedVoucherCode';
+    const ALIAS_COL_VOUCHER_CODE = 'VoucherCode';
     const ALIAS_VOUCHER_POOL_NAME = 'voucher_pool';
 
     /**
@@ -79,7 +79,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
         return $this->queryActiveAndRunningDiscounts()
             ->useVoucherPoolQuery()
                 ->useDiscountVoucherQuery()
-                    ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_USED_VOUCHER_CODE)
+                    ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_VOUCHER_CODE)
                     ->filterByCode(array_unique($voucherCodes))
                 ->endUse()
             ->endUse()
@@ -192,12 +192,25 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->filterByIdDiscountVoucher($idVoucher);
     }
 
+
+    /**
+     * @param string $discountName
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryDiscountName($discountName)
+    {
+       return $this->getFactory()
+           ->createDiscountQuery()
+           ->filterByDisplayName($discountName);
+    }
+
     /**
      * @api
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
      */
-    public function querySalesDiscounts()
+    public function querySalesDiscount()
     {
         return new SpySalesDiscountQuery();
     }

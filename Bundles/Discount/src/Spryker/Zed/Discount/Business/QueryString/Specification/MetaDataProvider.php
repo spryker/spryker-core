@@ -86,6 +86,14 @@ class MetaDataProvider
     /**
      * @return array|string[]
      */
+    public function getAvailableComparatorExpressions()
+    {
+        return $this->comparatorOperators->getAvailableComparatorExpressions();
+    }
+
+    /**
+     * @return array|string[]
+     */
     public function getLogicalComparators()
     {
         return $this->logicalComparators->getLogicalOperators();

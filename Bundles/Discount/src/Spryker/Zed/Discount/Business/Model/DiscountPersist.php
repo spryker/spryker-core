@@ -12,6 +12,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Shared\Discount\DiscountConstants;
 
 class DiscountPersist
 {
@@ -47,7 +48,7 @@ class DiscountPersist
         $this->hydrateDiscountEntity($discountConfiguratorTransfer, $discountEntity);
         $discountEntity->save();
 
-        if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() == 'voucher') {
+        if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
             $this->saveVoucherPool($discountEntity);
         }
 
@@ -75,7 +76,7 @@ class DiscountPersist
 
         $this->hydrateDiscountEntity($discountConfiguratorTransfer, $discountEntity);
 
-        if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() == 'voucher') {
+        if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
             $this->saveVoucherPool($discountEntity);
         }
 

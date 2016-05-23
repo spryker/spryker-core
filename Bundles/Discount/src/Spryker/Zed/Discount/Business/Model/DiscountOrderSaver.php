@@ -15,7 +15,7 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscountCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCodeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-class DiscountOrderOrderSaver implements DiscountOrderSaverInterface
+class DiscountOrderSaver implements DiscountOrderSaverInterface
 {
 
     /**

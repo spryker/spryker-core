@@ -24,6 +24,10 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 class VoucherEngine
 {
 
+    const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';
+    const KEY_VOUCHER_CODE_VOWELS = 'vowels';
+    const KEY_VOUCHER_CODE_NUMBERS = 'numbers';
+
     /**
      * @var int|null
      */
@@ -74,31 +78,21 @@ class VoucherEngine
      */
     public function createVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer)
     {
-        $voucherPoolEntity = $this->queryContainer
-            ->queryVoucherPool()
-            ->findPk($discountVoucherTransfer->getFkDiscountVoucherPool());
-
         $nextVoucherBatchValue = $this->getNextBatchValueForVouchers($discountVoucherTransfer);
-
         $discountVoucherTransfer->setVoucherBatch($nextVoucherBatchValue);
-        $discountVoucherTransfer->setIncludeTemplate(true);
 
-        $voucherPoolEntity->setTemplate($discountVoucherTransfer->getCustomCode());
-
-        return $this->saveBatchVoucherCodes($voucherPoolEntity, $discountVoucherTransfer);
+        return $this->saveBatchVoucherCodes($discountVoucherTransfer);
     }
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $voucherPoolEntity
      * @param DiscountVoucherTransfer $discountVoucherTransfer
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
-    protected function saveBatchVoucherCodes(SpyDiscountVoucherPool $voucherPoolEntity, DiscountVoucherTransfer $discountVoucherTransfer)
+    protected function saveBatchVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer)
     {
         $this->connection->beginTransaction();
         $voucherCodesAreValid = $this->generateAndSaveVoucherCodes(
-            $voucherPoolEntity,
             $discountVoucherTransfer,
             $discountVoucherTransfer->getQuantity()
         );
@@ -125,23 +119,66 @@ class VoucherEngine
     }
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool
      * @param DiscountVoucherTransfer $discountVoucherTransfer
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
-    protected function generateAndSaveVoucherCodes(SpyDiscountVoucherPool $discountVoucherPool, DiscountVoucherTransfer $discountVoucherTransfer, $quantity)
+    protected function generateAndSaveVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer, $quantity)
     {
         $length = $discountVoucherTransfer->getRandomGeneratedCodeLength();
-        $codeCollisions = 0;
+
         $messageCreateInfoTransfer = new VoucherCreateInfoTransfer();
 
-        for ($i = 0; $i < $quantity; $i++) {
-            $code = $this->getRandomVoucherCode($length);
+        if (!$length && !$discountVoucherTransfer->getCustomCode()) {
+            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
+            $messageCreateInfoTransfer->setMessage('You must provide length or custom code values.');
 
-            if ($discountVoucherTransfer->getIncludeTemplate()) {
-                $code = $this->getCodeWithTemplate($discountVoucherPool, $code);
+            return $messageCreateInfoTransfer;
+        }
+
+        $codeCollisions = $this->generateCodes($discountVoucherTransfer, $quantity);
+
+        if ($codeCollisions === 0) {
+            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_SUCCESS);
+            $messageCreateInfoTransfer->setMessage('Voucher codes successfully generated.');
+
+            return $messageCreateInfoTransfer;
+        }
+
+        if ($codeCollisions === $discountVoucherTransfer->getQuantity()) {
+            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
+            $messageCreateInfoTransfer->setMessage('No available codes to generate.');
+
+            return $messageCreateInfoTransfer;
+        }
+
+        if ($codeCollisions === $this->remainingCodesToGenerate) {
+            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
+            $messageCreateInfoTransfer->setMessage('No available codes to generate. Select higher code length.');
+
+            return $messageCreateInfoTransfer;
+        }
+
+        $this->remainingCodesToGenerate = $codeCollisions;
+
+        return $this->generateAndSaveVoucherCodes($discountVoucherTransfer, $codeCollisions);
+    }
+
+    /**
+     * @param DiscountVoucherTransfer $discountVoucherTransfer
+     * @param int $quantity
+     *
+     * @return int
+     */
+    protected function generateCodes(DiscountVoucherTransfer $discountVoucherTransfer, $quantity)
+    {
+        $codeCollisions = 0;
+        for ($i = 0; $i < $discountVoucherTransfer->getQuantity(); $i++) {
+            $code = $this->getRandomVoucherCode($discountVoucherTransfer->getRandomGeneratedCodeLength());
+
+            if ($discountVoucherTransfer->getCustomCode()) {
+                $code = $this->addCustomCodeToGenerated($discountVoucherTransfer, $code);
             }
 
             if ($this->voucherCodeExists($code) === true) {
@@ -153,31 +190,7 @@ class VoucherEngine
 
             $this->createVoucherCode($discountVoucherTransfer);
         }
-
-        if ($codeCollisions === 0) {
-            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_SUCCESS);
-            $messageCreateInfoTransfer->setMessage('Voucher codes successfully generated');
-
-            return $messageCreateInfoTransfer;
-        }
-
-        if ($codeCollisions === $discountVoucherTransfer->getQuantity()) {
-            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
-            $messageCreateInfoTransfer->setMessage('No available codes to generate');
-
-            return $messageCreateInfoTransfer;
-        }
-
-        if ($codeCollisions === $this->remainingCodesToGenerate) {
-            $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_ERROR);
-            $messageCreateInfoTransfer->setMessage('No available codes to generate. Select higher code length');
-
-            return $messageCreateInfoTransfer;
-        }
-
-        $this->remainingCodesToGenerate = $codeCollisions;
-
-        return $this->generateAndSaveVoucherCodes($discountVoucherPool, $discountVoucherTransfer, $codeCollisions);
+        return $codeCollisions;
     }
 
     /**
@@ -223,9 +236,9 @@ class VoucherEngine
     {
         $allowedCharacters = $this->settings->getVoucherCodeCharacters();
 
-        $consonants = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_CONSONANTS];
-        $vowels = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_VOWELS];
-        $numbers = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_NUMBERS];
+        $consonants = $allowedCharacters[self::KEY_VOUCHER_CODE_CONSONANTS];
+        $vowels = $allowedCharacters[self::KEY_VOUCHER_CODE_VOWELS];
+        $numbers = $allowedCharacters[self::KEY_VOUCHER_CODE_NUMBERS];
 
         $code = '';
 
@@ -247,25 +260,25 @@ class VoucherEngine
     }
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $voucherPoolEntity
+     * @param DiscountVoucherTransfer $discountVoucherTransfer
      * @param string $code
      *
      * @return string
      */
-    protected function getCodeWithTemplate(SpyDiscountVoucherPool $voucherPoolEntity, $code)
+    protected function addCustomCodeToGenerated(DiscountVoucherTransfer $discountVoucherTransfer, $code)
     {
-        $template = $voucherPoolEntity->getTemplate();
+        $customCode = $discountVoucherTransfer->getCustomCode();
         $replacementString = $this->settings->getVoucherPoolTemplateReplacementString();
 
-        if (!$template) {
+        if (!$customCode) {
             return $code;
         }
 
-        if (!strstr($template, $replacementString)) {
-            return $voucherPoolEntity->getTemplate() . $code;
+        if (!strstr($customCode, $replacementString)) {
+            return $customCode . $code;
         }
 
-        return str_replace($this->settings->getVoucherPoolTemplateReplacementString(), $code, $template);
+        return str_replace($this->settings->getVoucherPoolTemplateReplacementString(), $code, $customCode);
     }
 
     /**

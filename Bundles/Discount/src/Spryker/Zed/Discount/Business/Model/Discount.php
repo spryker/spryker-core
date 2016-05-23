@@ -170,7 +170,7 @@ class Discount
      */
     protected function isDiscountApplicable(QuoteTransfer $quoteTransfer, SpyDiscount $discountEntity)
     {
-        $voucherCode = $discountEntity->getUsedVoucherCode();
+        $voucherCode = $discountEntity->getVoucherCode();
         if ($voucherCode) {
             if ($this->voucherValidator->isUsable($voucherCode) === false) {
                 return false;

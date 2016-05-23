@@ -14,7 +14,13 @@
            <table class="table">
                <tr>
                    <td>Discount Type: </td>
-                   <td></td>
+                   <td>
+                       {% if discountConfigurator.discountVoucher %}
+                           Voucher code
+                       {% else %}
+                           Cart rule
+                       {% endif %}
+                   </td>
                </tr>
                <tr>
                    <td>Name:</td>
@@ -29,9 +35,9 @@
                    <td>Exclusive:</td>
                    <td>
                        {% if discountConfigurator.discountGeneral.isExclusive %}
-                           YES
+                           Yes
                        {% else %}
-                           NO
+                           No
                        {% endif %}
                    </td>
                </tr>

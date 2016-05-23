@@ -15,7 +15,7 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Discount\Business\Model\Discount;
 use Spryker\Zed\Discount\Business\Model\DiscountConfiguratorHydrate;
-use Spryker\Zed\Discount\Business\Model\DiscountOrderOrderSaver;
+use Spryker\Zed\Discount\Business\Model\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Model\DiscountPersist;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts;
@@ -141,7 +141,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountOrderSaver()
     {
-        return new DiscountOrderOrderSaver($this->getQueryContainer(), $this->createVoucherCode());
+        return new DiscountOrderSaver($this->getQueryContainer(), $this->createVoucherCode());
     }
 
     /**

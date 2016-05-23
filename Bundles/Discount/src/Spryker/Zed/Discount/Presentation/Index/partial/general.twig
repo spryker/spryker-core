@@ -1,2 +1,44 @@
 <h3>General</h3>
-{{ form_row(discountForm.discountGeneral) }}
+<hr />
+
+{{ form_row(discountForm.discountGeneral.discount_type) }}
+
+{{ form_row(discountForm.discountGeneral.display_name) }}
+
+{{ form_row(discountForm.discountGeneral.description) }}
+
+{{ form_row(discountForm.discountGeneral.is_exclusive) }}
+
+
+{{ form_label(discountForm.discountGeneral.valid_from) }}
+<div class="row">
+    <div class="col-xs-2">
+        {{ form_widget(discountForm.discountGeneral.valid_from.year) }}
+    </div>
+    <div class="col-xs-2">
+        {{ form_widget(discountForm.discountGeneral.valid_from.month) }}
+    </div>
+    <div class="col-xs-2">
+        {{ form_widget(discountForm.discountGeneral.valid_from.day) }}
+    </div>
+</div>
+
+{{ form_label(discountForm.discountGeneral.valid_to) }}
+<div class="row">
+    <div class="col-xs-2">
+        {{ form_widget(discountForm.discountGeneral.valid_to.year) }}
+    </div>
+    <div class="col-xs-2">
+        {{ form_widget(discountForm.discountGeneral.valid_to.month) }}
+    </div>
+    <div class="col-xs-2">
+        {{ form_widget(discountForm.discountGeneral.valid_to.day) }}
+    </div>
+</div>
+
+
+
+
+
+
+

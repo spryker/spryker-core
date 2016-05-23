@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,9 +50,9 @@ class IndexController extends AbstractController
             );
         }
 
-        return [
+        return array_merge([
             'discountForm' => $discountForm->createView(),
-        ];
+        ], $this->getQueryStringMetData());
     }
 
     /**
@@ -94,12 +95,25 @@ class IndexController extends AbstractController
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);
 
-        return [
+        return array_merge([
             'discountForm' => $discountForm->createView(),
             'idDiscount' => $idDiscount,
             'voucherCodesTable' => $voucherCodesTable,
             'voucherForm' => $voucherForm->createView(),
-            'discountConfigurator' => $discountConfiguratorTransfer
+            'discountConfigurator' => $discountConfiguratorTransfer,
+        ], $this->getQueryStringMetData());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getQueryStringMetData()
+    {
+        return [
+            'collectorTypes' => $this->getFacade()->getQueryStringFieldsByType(SpecificationBuilder::TYPE_COLLECTOR),
+            'decisionRuleTypes' => $this->getFacade()->getQueryStringFieldsByType(SpecificationBuilder::TYPE_DECISION_RULE),
+            'booleanComparators' => $this->getFacade()->getQueryStringLogicalComparators(SpecificationBuilder::TYPE_COLLECTOR),
+            'comparatorExpressions' => $this->getFacade()->getQueryStringComparatorExpressions(SpecificationBuilder::TYPE_COLLECTOR),
         ];
     }
 
@@ -252,13 +266,13 @@ class IndexController extends AbstractController
      * @param Request $request
      * @param DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
-     * @return null|string
+     * @return string
      */
     protected function renderVoucherCodeTable(
         Request $request,
         DiscountConfiguratorTransfer $discountConfiguratorTransfer
     ) {
-        $voucherCodesTable = null;
+        $voucherCodesTable = '';
         if ($discountConfiguratorTransfer->getDiscountVoucher()) {
             $voucherCodesTable = $this->getGeneratedCodesTable(
                 $request,

@@ -1,2 +1,31 @@
 <h3>Calculation</h3>
+<hr />
 {{ form_row(discountForm.discountCalculator) }}
+
+<p>
+    {{ 'discount.edit.calculation.how_to' | trans }}
+</p>
+
+Available collectors:
+<ul>
+    {% for collector in collectorTypes %}
+        <li>{{ collector }}</li>
+    {% endfor %}
+</ul>
+Collector with value "*" matches all items. <br />
+
+Boolean comparators:
+<ul>
+    {% for comparator in booleanComparators %}
+        <li>{{ comparator }}</li>
+    {% endfor %}
+</ul>
+Comparator expressions:
+<ul>
+    {% for comparatorExpression in comparatorExpressions %}
+        <li>{{ comparatorExpression }}</li>
+    {% endfor %}
+</ul>
+
+
+

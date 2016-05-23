@@ -16,6 +16,8 @@ class Tokenizer
     /**
      * @param string $queryString
      *
+     * @throws QueryStringException
+     *
      * @return array|string[]
      */
     public function tokenizeQueryString($queryString)

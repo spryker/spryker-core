@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -101,6 +100,21 @@ class DiscountFacade extends AbstractFacade
             ->createQueryStringSpecificationMetaProviderFactory()
             ->createMetaProviderByType($type)
             ->getAvailableOperatorExpressionsForField($fieldName);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $type
+     *
+     * @return array|string[]
+     */
+    public function getQueryStringComparatorExpressions($type)
+    {
+        return $this->getFactory()
+            ->createQueryStringSpecificationMetaProviderFactory()
+            ->createMetaProviderByType($type)
+            ->getAvailableComparatorExpressions();
     }
 
     /**

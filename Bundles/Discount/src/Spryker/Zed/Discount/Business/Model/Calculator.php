@@ -76,7 +76,7 @@ class Calculator implements CalculatorInterface
     public function calculate(array $discounts, QuoteTransfer $quoteTransfer)
     {
         $collectedDiscounts = $this->calculateDiscountAmount($discounts, $quoteTransfer);
-        $collectedDiscounts = $this->filterOutNonPrivilegedDiscounts($collectedDiscounts);
+        $collectedDiscounts = $this->filterExclusiveDiscounts($collectedDiscounts);
         $this->distributeDiscountAmount($collectedDiscounts);
 
         return $collectedDiscounts;
@@ -114,10 +114,15 @@ class Calculator implements CalculatorInterface
      *
      * @return CollectedDiscountTransfer[]
      */
-    protected function filterOutNonPrivilegedDiscounts(array $collectedDiscounts)
+    protected function filterExclusiveDiscounts(array $collectedDiscounts)
     {
         $collectedDiscounts = $this->sortByDiscountAmountDescending($collectedDiscounts);
-        $collectedDiscounts = $this->filterOutUnprivileged($collectedDiscounts);
+        foreach ($collectedDiscounts as $collectedDiscountTransfer) {
+            $discountTransfer = $collectedDiscountTransfer->getDiscount();
+            if ($discountTransfer->getIsExclusive()) {
+                return [$collectedDiscountTransfer];
+            }
+        }
 
         return $collectedDiscounts;
     }
@@ -167,30 +172,6 @@ class Calculator implements CalculatorInterface
         });
 
         return $collectedDiscountsTransfer;
-    }
-
-    /**
-     * @param CollectedDiscountTransfer[] $collectedDiscounts
-     *
-     * @return CollectedDiscountTransfer[]
-     */
-    protected function filterOutUnprivileged(array $collectedDiscounts)
-    {
-        $removeOtherUnprivileged = false;
-
-        foreach ($collectedDiscounts as $key => $collectedDiscountTransfer) {
-            $discountTransfer = $collectedDiscountTransfer->getDiscount();
-            if ($removeOtherUnprivileged && !$discountTransfer->getIsPrivileged()) {
-                unset($collectedDiscounts[$key]);
-                continue;
-            }
-
-            if (!$discountTransfer->getIsPrivileged()) {
-                $removeOtherUnprivileged = true;
-            }
-        }
-
-        return $collectedDiscounts;
     }
 
     /**

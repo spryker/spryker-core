@@ -264,7 +264,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
         }
 
         return $this->discountQueryContainer
-            ->querySalesDisount()
+            ->querySalesDiscount()
             ->filterByFkSalesOrderItem($saleOrderItemIds)
             ->where(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM_OPTION . ' IS NOT NULL')
             ->find();

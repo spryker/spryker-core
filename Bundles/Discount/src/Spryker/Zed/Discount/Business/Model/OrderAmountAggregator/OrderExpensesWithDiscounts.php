@@ -57,7 +57,7 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
     protected function getSalesOrderDiscounts(OrderTransfer $orderTransfer)
     {
         return $this->discountQueryContainer
-            ->querySalesDisount()
+            ->querySalesDiscount()
             ->where(SpySalesDiscountTableMap::COL_FK_SALES_EXPENSE . ' IS NOT NULL')
             ->findByFkSalesOrder($orderTransfer->getIdSalesOrder());
     }

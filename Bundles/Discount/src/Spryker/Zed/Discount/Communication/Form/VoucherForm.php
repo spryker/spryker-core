@@ -59,7 +59,13 @@ class VoucherForm extends AbstractType
      */
     protected function addCustomCodeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CUSTOM_CODE, 'text');
+        $builder->add(
+            self::FIELD_CUSTOM_CODE,
+            'text',
+            [
+                'required' => false
+            ]
+        );
 
         return $this;
 
@@ -78,7 +84,8 @@ class VoucherForm extends AbstractType
             [
                 'label' => 'Random generated code length',
                 'placeholder' => 'No additional random characters',
-                'choices' => range(3, 10)
+                'required' => false,
+                'choices' => $this->createCodeLengthRangeList()
             ]
         );
 
@@ -138,6 +145,15 @@ class VoucherForm extends AbstractType
     public function getName()
     {
         return 'discount_voucher';
+    }
+
+    /**
+     * @return array|int[]
+     */
+    protected function createCodeLengthRangeList()
+    {
+        $range = range(3, 10);
+        return array_combine(array_values($range), $range);
     }
 
 

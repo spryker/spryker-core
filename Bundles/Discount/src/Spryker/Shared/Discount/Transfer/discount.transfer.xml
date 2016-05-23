@@ -123,7 +123,6 @@
         <property name="idDiscount" type="int" />
         <property name="fkDiscountVoucherPool" type="int" />
         <property name="voucherBatch" type="int" />
-        <property name="includeTemplate" type="bool" />
         <property name="quantity" type="int" />
         <property name="customCode" type="string" />
         <property name="code" type="string" />

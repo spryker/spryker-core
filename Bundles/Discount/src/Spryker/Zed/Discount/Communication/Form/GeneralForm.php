@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -19,6 +22,19 @@ class GeneralForm extends AbstractType
     const FIELD_VALID_FROM = 'valid_from';
     const FIELD_VALID_TO = 'valid_to';
     const FIELD_IS_EXCLUSIVE = 'is_exclusive';
+
+    /**
+     * @var DiscountQueryContainerInterface
+     */
+    protected $discountQueryContainer;
+
+    /**
+     * @param DiscountQueryContainerInterface $discountQueryContainer
+     */
+    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
+    {
+        $this->discountQueryContainer = $discountQueryContainer;
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -61,8 +77,8 @@ class GeneralForm extends AbstractType
     protected function getVoucherChoices()
     {
         return [
-            'cart_rule' => 'Cart rule',
-            'voucher' => 'Voucher codes'
+            DiscountConstants::TYPE_CART_RULE => 'Cart rule',
+            DiscountConstants::TYPE_VOUCHER => 'Voucher codes'
         ];
     }
 
@@ -77,6 +93,9 @@ class GeneralForm extends AbstractType
             'label' => 'Name*',
             'constraints' => [
                 new NotBlank(),
+                new UniqueDiscountName([
+                    UniqueDiscountName::OPTION_DISCOUNT_QUERY_CONTAINER => $this->discountQueryContainer
+                ])
             ],
         ]);
 
