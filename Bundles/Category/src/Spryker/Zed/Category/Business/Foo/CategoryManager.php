@@ -9,9 +9,9 @@ namespace Spryker\Zed\Category\Business\Foo;
 
 use Generated\Shared\Transfer\CategoryLocalizedTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Category\Persistence\SpyCategory;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Business\Tree\NodeWriterInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
@@ -64,11 +64,11 @@ class CategoryManager
     public function create(CategoryLocalizedTransfer $categoryLocalizedTransfer)
     {
         $categoryLocalizedTransfer = $this->persistCategory($categoryLocalizedTransfer);
-/*        $nodeTransfer = $this->persistNode($categoryLocalizedTransfer);
-        $urlTransfer = $this->persistUrl($categoryLocalizedTransfer, $nodeTransfer, $localeTransfer);
+        $nodeTransfer = $this->persistNode($categoryLocalizedTransfer);
+        $urlTransfer = $this->persistUrl($categoryLocalizedTransfer, $nodeTransfer);
 
         $this->touchNavigationActive();
-        $this->touchCategoryActiveRecursive($nodeTransfer);*/
+        $this->touchCategoryActiveRecursive($nodeTransfer);
 
         return $categoryLocalizedTransfer;
     }
@@ -91,8 +91,7 @@ class CategoryManager
     protected function persistNode(CategoryLocalizedTransfer $CategoryLocalizedTransfer)
     {
         $nodeTransfer = (new NodeTransfer())
-            ->setFkCategory($CategoryLocalizedTransfer->requireIdCategory()
-            ->getIdCategory())
+            ->setFkCategory($CategoryLocalizedTransfer->requireIdCategory()->getIdCategory())
             ->setIsMain(true);
 
         $idNode = $this->persistNodeEntity($nodeTransfer, $CategoryLocalizedTransfer);
@@ -120,12 +119,12 @@ class CategoryManager
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryLocalizedTransfer $CategoryLocalizedTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param CategoryLocalizedTransfer $CategoryLocalizedTransfer
+     * @param NodeTransfer $nodeTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return UrlTransfer
      */
-    protected function persistUrl(CategoryLocalizedTransfer $CategoryLocalizedTransfer, NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer)
+    protected function persistUrl(CategoryLocalizedTransfer $CategoryLocalizedTransfer, NodeTransfer $nodeTransfer)
     {
         $urlTransfer = new UrlTransfer();
         return $urlTransfer;
@@ -152,28 +151,24 @@ class CategoryManager
         $localeTransfer = $categoryLocalizedTransfer->requireLocale()->getLocale();
 
         $data = $categoryLocalizedTransfer->toArray();
+        unset($data['id_category']);
         unset($data['locale']);
-        
+
         $categoryTransfer = (new CategoryTransfer())->fromArray(
             $data
         );
 
-        $category = $this->queryContainer
-            ->queryCategoryByKey($categoryLocalizedTransfer->requireCategoryKey()->getCategoryKey())
-            ->findOne();
 
-        if ($category) {
-            $attributesQuery = $this->queryContainer
-                ->queryAttributeByCategoryIdAndLocale($category->getIdCategory(), $localeTransfer->getIdLocale())
-                ->find();
+        dump($data, $categoryTransfer->toArray());
 
-            if (!$attributesQuery) {
-                $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $localeTransfer);
-            }
-        }
-        else {
-            $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $localeTransfer);
-        }
+        //$idCategory = $this->categoryFacade->createCategory($categoryTransfer, $localeTransfer);
+
+        $categoryEntity = new SpyCategory();
+        $categoryEntity->setCategoryKey('shit2222');
+        $categoryEntity->setIsActive(true);
+        $categoryEntity->setIsClickable(true);
+        $categoryEntity->save();
+
 
         return $idCategory;
     }

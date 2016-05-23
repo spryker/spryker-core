@@ -8,6 +8,7 @@ namespace Unit\Spryker\Zed\Category\Business\Foo\Fixtures\Input;
 
 class CategoryManagerInput
 {
+
     /**
      * @return array
      */
@@ -20,7 +21,7 @@ class CategoryManagerInput
                 'is_in_menu' => true,
                 'is_clickable' => true,
                 'name' => 'Foo DE',
-                'url' => 'MAKEME:/de/foo-de',
+                'url' => null,
                 'meta_title' => 'foo DE title',
                 'meta_keywords' => 'foo DE meta',
                 'category_image_name' => 'foo DE image',
@@ -31,7 +32,7 @@ class CategoryManagerInput
                 'is_in_menu' => true,
                 'is_clickable' => true,
                 'name' => 'Foo EN',
-                'url' => 'MAKEME:/en/foo-en',
+                'url' => null,
                 'meta_title' => 'foo EN title',
                 'meta_keywords' => 'foo EN meta',
                 'category_image_name' => 'foo EN image',

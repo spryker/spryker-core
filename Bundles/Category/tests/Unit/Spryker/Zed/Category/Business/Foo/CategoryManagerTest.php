@@ -7,9 +7,7 @@
 
 namespace Unit\Spryker\Zed\Category\Business\Foo;
 
-use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Category\Business\Foo\CategoryManager;
@@ -78,7 +76,7 @@ class FooTest extends \PHPUnit_Framework_TestCase
         $this->input = new CategoryManagerInput();
     }
 
-    public function test_create_should_add_category_node_with_url_and_attributes()
+    public function test_create_category_should_add_category_with_url_and_node()
     {
         $CategoryLocalizedTransfer = (new CategoryLocalizedTransfer())->fromArray(
             $this->input->getCategoryData()['de_DE']
