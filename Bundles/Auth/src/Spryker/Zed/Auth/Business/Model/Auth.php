@@ -267,7 +267,7 @@ class Auth implements AuthInterface
      */
     public function getCurrentUser($token)
     {
-        $user = $this->getUserFromSession($token);
+        $user = $this->readUserFromSession($token);
 
         return $user;
     }
@@ -281,8 +281,7 @@ class Auth implements AuthInterface
      */
     public function getUserFromSession($token)
     {
-        $key = $this->getSessionKey($token);
-        $user = $this->session->get($key);
+        $user = $user = $this->readUserFromSession($token);
 
         if ($user === null) {
             throw new UserNotLoggedException();
@@ -308,12 +307,23 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function readUserFromSession($token)
+    {
+        $key = $this->getSessionKey($token);
+
+        return $this->session->get($key);
+    }
+
+    /**
+     * @param string $token
+     *
      * @return bool
      */
     public function userTokenIsValid($token)
     {
-        $key = $this->getSessionKey($token);
-        $user = $this->session->get($key);
+        $user = $this->readUserFromSession($token);
 
         return $user !== null;
     }
