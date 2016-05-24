@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
+use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Business\Tree\NodeWriterInterface;
@@ -55,6 +57,11 @@ class CategoryManager
      */
     protected $urlFacade;
 
+    /**
+     * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
+     */
+    protected $touchFacade;
+
 
     public function __construct(
         $categoryFacade,
@@ -63,7 +70,8 @@ class CategoryManager
         NodeWriterInterface $nodeWriter,
         ClosureTableWriterInterface $closureTableWriter,
         NodeUrlManagerInterface $nodeUrlManager,
-        $urlFacade
+        $urlFacade,
+        $touchFacade
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->nodeWriter = $nodeWriter;
@@ -72,6 +80,7 @@ class CategoryManager
         $this->queryContainer = $queryContainer;
         $this->nodeUrlManager = $nodeUrlManager;
         $this->urlFacade = $urlFacade;
+        $this->touchFacade = $touchFacade;
     }
 
     public function create(CategoryLocalizedTransfer $categoryLocalizedTransfer, NodeTransfer $nodeTransfer)
@@ -235,24 +244,6 @@ class CategoryManager
     }
 
     /**
-     * @return void
-     */
-    protected function touchNavigationActive()
-    {
-
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
-     *
-     * @return void
-     */
-    protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
-    {
-
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -289,5 +280,83 @@ class CategoryManager
 
         $categoryAttributeEntity->save();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     *
+     * @return void
+     */
+    protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
+    {
+        $closureQuery= new SpyCategoryClosureTableQuery();
+        $nodes = $closureQuery->findByFkCategoryNode($categoryNode->getIdCategoryNode());
+
+        foreach ($nodes as $node) {
+            $this->touchCategoryActive($node->getFkCategoryNodeDescendant());
+        }
+
+        $this->touchCategoryActive($categoryNode->getIdCategoryNode());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     *
+     * @return void
+     */
+    protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
+    {
+        $closureQuery= new SpyCategoryClosureTableQuery();
+        $nodes = $closureQuery->findByFkCategoryNode($categoryNode->getIdCategoryNode());
+
+        foreach ($nodes as $node) {
+            $this->touchCategoryDeleted($node->getFkCategoryNodeDescendant());
+        }
+
+        $this->touchCategoryDeleted($categoryNode->getIdCategoryNode());
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    protected function touchCategoryActive($idCategoryNode)
+    {
+        $this->touchFacade->touchActive(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    protected function touchCategoryDeleted($idCategoryNode)
+    {
+        $this->touchFacade->touchDeleted(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+    }
+
+    /**
+     * @return void
+     */
+    protected function touchNavigationActive()
+    {
+        $navigationItems = $this->touchFacade->getItemsByType(CategoryConstants::RESOURCE_TYPE_NAVIGATION);
+
+        $itemIds = [];
+        foreach ($navigationItems as $touchTransfer) {
+            $itemIds[] = $touchTransfer->getItemId();
+        }
+
+        $this->touchFacade->bulkTouchSetActive(CategoryConstants::RESOURCE_TYPE_NAVIGATION, $itemIds);
+    }
+
+    /**
+     * @return void
+     */
+    protected function touchNavigationUpdated()
+    {
+        $this->touchNavigationActive();
+    }
+
 
 }

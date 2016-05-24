@@ -29,6 +29,7 @@ use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleBridge;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
+use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
@@ -212,6 +213,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
         $closureTableWriter = $this->createClosureTableWriter($categoryQueryContainer);
         $nodeUrlManager = $this->createNodeUrlManager();
         $urlFacade = $this->getUrlFacade();
+        $touchFacade = new TouchFacade();
 
         return new CategoryManager(
             $productCategoryFacade,
@@ -220,7 +222,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
             $nodeWriter,
             $closureTableWriter,
             $nodeUrlManager,
-            $urlFacade
+            $urlFacade,
+            $touchFacade
         );
     }
 
