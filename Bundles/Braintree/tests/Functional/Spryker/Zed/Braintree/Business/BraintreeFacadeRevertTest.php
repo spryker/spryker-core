@@ -39,9 +39,9 @@ class BraintreeFacadeRevertTest extends AbstractFacadeTest
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|BraintreeFacade
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\BraintreeFacade
      */
     private function getFacadeMockAuthorize(OrderTransfer $orderTransfer)
     {

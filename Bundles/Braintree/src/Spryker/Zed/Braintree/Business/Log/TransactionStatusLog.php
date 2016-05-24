@@ -115,7 +115,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
             )
             ->filterByTransactionStatus($statusCode)
             ->findOne();
-        if (!$logEntity) {dd($idSalesOrder);
+        if (!$logEntity) {
             return false;
         }
 

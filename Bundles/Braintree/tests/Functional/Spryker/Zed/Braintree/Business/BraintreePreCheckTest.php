@@ -50,9 +50,9 @@ class BraintreeFacadePreCheckTest extends AbstractFacadeTest
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|BraintreeFacade
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\BraintreeFacade
      */
     private function getFacadeMockPreCheck(QuoteTransfer $quoteTransfer)
     {

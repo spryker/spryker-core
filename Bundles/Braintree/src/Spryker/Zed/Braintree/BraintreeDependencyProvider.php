@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Braintree;
 
-use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToGlossaryBridge;
 use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToSalesAggregatorBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;

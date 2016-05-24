@@ -11,7 +11,6 @@ use Spryker\Zed\Braintree\Business\Api\Adapter\BraintreeAdapter;
 use Spryker\Zed\Braintree\Business\Log\TransactionStatusLog;
 use Spryker\Zed\Braintree\Business\Order\Saver;
 use Spryker\Zed\Braintree\Business\Payment\Handler\Transaction\Transaction;
-use Spryker\Zed\Braintree\Business\Payment\Method\PayPal\PayPal;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**

@@ -12,7 +12,6 @@ use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Braintree\Business\BraintreeBusinessFactory;
 use Spryker\Zed\Braintree\Business\BraintreeFacade;
 use Spryker\Zed\Braintree\Business\Payment\Handler\Transaction\Transaction;
-use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Braintree\Persistence\BraintreeQueryContainer;
 
 /**
@@ -53,9 +52,9 @@ class BraintreeFacadeCaptureTest extends AbstractFacadeTest
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|BraintreeFacade
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\BraintreeFacade
      */
     private function getFacadeMockCapture(OrderTransfer $orderTransfer)
     {
@@ -96,9 +95,9 @@ class BraintreeFacadeCaptureTest extends AbstractFacadeTest
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|BraintreeFacade
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\BraintreeFacade
      */
     private function getFacadeMockCaptureFail(OrderTransfer $orderTransfer)
     {

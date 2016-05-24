@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Braintree\Business\Payment\Handler;
 
 use Spryker\Zed\Braintree\BraintreeConfig;
-use Spryker\Zed\Braintree\Business\Exception\NoMethodMapperException;
-use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 
 abstract class AbstractPaymentHandler
 {

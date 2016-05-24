@@ -8,13 +8,10 @@
 namespace Functional\Spryker\Zed\Braintree\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\BraintreeTransactionResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\Braintree\Persistence\Map\SpyPaymentBraintreeTableMap;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintree;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLogQuery;
-use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLog;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLogQuery;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
@@ -22,8 +19,6 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Shared\Braintree\BraintreeConstants;
-use Spryker\Zed\Braintree\Business\Api\Adapter\AdapterInterface;
-use Spryker\Zed\Braintree\Business\Api\Converter\Converter as ResponseConverter;
 use Spryker\Zed\Braintree\Business\BraintreeFacade;
 
 class AbstractFacadeTest extends Test
@@ -185,7 +180,9 @@ class AbstractFacadeTest extends Test
             ->findByFkPaymentBraintree($this->getPaymentEntity()->getIdPaymentBraintree());
     }
 
-    protected function getFacade() {
+    protected function getFacade()
+    {
         return new BraintreeFacade();
     }
+
 }

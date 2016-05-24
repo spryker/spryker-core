@@ -21,12 +21,12 @@ class BraintreeFacadeConditionsTest extends AbstractFacadeTest
 {
 
     /**
-     * @var SpyPaymentBraintreeTransactionStatusLog
+     * @var \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLog
      */
     protected $transactionStatusLogEntity;
 
     /**
-     * @var SpyPaymentBraintreeTransactionRequestLog
+     * @var \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLog
      */
     protected $transactionRequestLogEntity;
 

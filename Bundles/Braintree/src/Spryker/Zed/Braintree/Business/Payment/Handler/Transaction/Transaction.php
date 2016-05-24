@@ -377,7 +377,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param SpyPaymentBraintree $paymentEntity
+     * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
      *
      * @return \Braintree\Transaction|null
      */
@@ -409,7 +409,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param SpyPaymentBraintree $paymentEntity
+     * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
      *
      * @return \Braintree\Result\Error|\Braintree\Result\Successful
      */
@@ -421,7 +421,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param SpyPaymentBraintree $paymentEntity
+     * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
      *
      * @return \Braintree\Result\Error|\Braintree\Result\Successful
      */
@@ -442,7 +442,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Braintree\Result\Error|\Braintree\Result\Successful
      */

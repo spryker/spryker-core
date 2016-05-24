@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Braintree;
 
-use Spryker\Client\Braintree\Zed\BraintreeStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class BraintreeFactory extends AbstractFactory
