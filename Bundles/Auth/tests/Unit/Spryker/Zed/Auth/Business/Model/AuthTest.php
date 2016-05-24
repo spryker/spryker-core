@@ -142,6 +142,8 @@ class AuthTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param \PHPUnit_Framework_MockObject_MockObject $sessionClient
+     *
+     * @return void
      */
     protected function checkMigrateIsCalled(\PHPUnit_Framework_MockObject_MockObject $sessionClient)
     {
