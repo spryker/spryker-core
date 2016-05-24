@@ -56,7 +56,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $userModel->setCurrentUser($userTransfer);
     }
 
-
     /**
      * @return void
      */
@@ -82,6 +81,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertNotSame($userTransfer, $userFromSession);
     }
 
+    /**
+     * @return void
+     */
     public function testHasCurrentUserReturnsFalseOnNull()
     {
         $sessionClient = $this->createSessionClient();
