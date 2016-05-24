@@ -26,7 +26,7 @@
     "spryker/customer": "^2.0.0",
     "spryker/sales": "^2.0.0",
     "spryker/url": "^2.0.0",
-    "braintree/braintree_php" : "~3.9.0"
+    "braintree/braintree_php" : "~3.13.0"
   },
   "description": "braintree bundle",
   "license": "proprietary",
