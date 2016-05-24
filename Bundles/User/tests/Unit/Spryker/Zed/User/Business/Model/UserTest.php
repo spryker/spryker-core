@@ -114,7 +114,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClient
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Session\SessionClient
      */
     protected function createSessionClient()
     {
@@ -127,7 +127,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\User\Persistence\UserQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected function createQueryContainer()
     {
