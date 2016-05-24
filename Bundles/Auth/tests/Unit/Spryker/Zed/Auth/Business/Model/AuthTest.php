@@ -70,7 +70,13 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     protected function createUserTransfer($userName)
     {
         $userTransfer = new UserTransfer();
-        $userTransfer->setPassword('test')->setIdUser(1)->setFirstName('test')->setLastName('test')->setLastLogin('test')->setUsername($userName);
+        $userTransfer
+            ->setPassword('test')
+            ->setIdUser(1)
+            ->setFirstName('test')
+            ->setLastName('test')
+            ->setLastLogin('test')
+            ->setUsername($userName);
         return $userTransfer;
     }
 
