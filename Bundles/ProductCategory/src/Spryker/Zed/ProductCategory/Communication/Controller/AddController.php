@@ -112,11 +112,11 @@ class AddController extends AbstractController
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     protected function createCategoryTransferFromData(array $data)
     {
-        return (new CategoryLocalizedTransfer())
+        return (new CategoryTransfer())
             ->fromArray($data, true);
     }
 
@@ -140,7 +140,7 @@ class AddController extends AbstractController
      */
     protected function createCategoryData(array $data)
     {
-        Propel::getConnection()->beginTransaction();
+        $this->getFactory()->getPropelConnection()->beginTransaction();
 
         $idCategory = null;
         $nodeTransfer = $this->createCategoryNodeTransferFromData($data);
@@ -166,7 +166,7 @@ class AddController extends AbstractController
                 ->create($CategoryLocalizedTransfer, $nodeTransfer);
         }
 
-        Propel::getConnection()->commit();
+        $this->getFactory()->getPropelConnection()->commit();
 
         return $idCategory;
     }

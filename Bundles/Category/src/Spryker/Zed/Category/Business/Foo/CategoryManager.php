@@ -138,7 +138,19 @@ class CategoryManager
      */
     protected function getCategoryEntity($idCategory)
     {
-        return $this->queryContainer->queryCategoryById($idCategory)->findOne();
+        return $this->queryContainer->queryCategoryById($idCategory)
+            ->findOne();
+    }
+
+    /**
+     * @param int $idNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategory
+     */
+    protected function getNodeEntity($idNode)
+    {
+        return $this->queryContainer->queryCategoryById($idNode)
+            ->findOne();
     }
 
     /**
@@ -182,7 +194,14 @@ class CategoryManager
         $idNode = $this->nodeWriter->create($nodeTransfer);
         $nodeTransfer->setIdCategoryNode($idNode);
 
-        $this->closureTableWriter->create($nodeTransfer);
+        $nodeEntity = $this->getNodeEntity($idNode);
+
+        if (!$nodeEntity) {
+            $this->closureTableWriter->create($nodeTransfer);
+        }
+        else {
+            $this->closureTableWriter->moveNode($nodeTransfer);
+        }
 
         $this->queryContainer->getConnection()->commit();
 

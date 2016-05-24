@@ -39,14 +39,15 @@ class EditController extends AddController
             ->queryCategoryById($idCategory)
             ->findOne();
 
+        //dump($currentCategory);die;
+
         if (!$currentCategory) {
             $this->addErrorMessage(sprintf('The category you are trying to edit %s does not exist.', $idCategory));
 
             return new RedirectResponse('/category');
         }
 
-        $locale = $this->getFactory()
-            ->getCurrentLocale();
+        $localeTransfer = $this->getFactory()->getCurrentLocale();
 
         $dataProvider = $this->getFactory()->createCategoryFormEditDataProvider();
         $form = $this
@@ -58,18 +59,8 @@ class EditController extends AddController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $connection = $this->getFactory()
-                ->getPropelConnection();
-
-            $connection->beginTransaction();
-
-            $data = $form->getData();
-
-            $this->updateCategoryData($data);
-
+            $this->updateCategoryData($form->getData());
             $this->addSuccessMessage('The category was saved successfully.');
-
-            $connection->commit();
 
             return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
         }
@@ -79,10 +70,10 @@ class EditController extends AddController
         }
 
         $productCategories = $this->getFactory()
-            ->createProductCategoryTable($locale, $idCategory);
+            ->createProductCategoryTable($localeTransfer, $idCategory);
 
         $products = $this->getFactory()
-            ->createProductTable($locale, $idCategory);
+            ->createProductTable($localeTransfer, $idCategory);
 
         return $this->viewResponse([
             'idCategory' => $idCategory,
@@ -212,6 +203,8 @@ class EditController extends AddController
      */
     protected function updateCategoryData(array $data)
     {
+        $this->getFactory()->getPropelConnection()->beginTransaction();
+
         $attributes = $data[CategoryFormEdit::LOCALIZED_ATTRIBUTES];
         foreach ($attributes as $localeCode => $localizedAttributes) {
             $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
@@ -239,6 +232,8 @@ class EditController extends AddController
                 $parentIdList
             );
         }
+
+        $this->getFactory()->getPropelConnection()->commit();
     }
 
     /**

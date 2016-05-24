@@ -47,8 +47,8 @@ class DeleteController extends EditController
 
         if ($form->isValid()) {
             $data = $form->getData();
-            $localeTransfer = $this->getFactory()
-                ->getCurrentLocale();
+            $localeTransfer = $this->getFactory()->getCurrentLocale();
+            
             $this->getFacade()->deleteCategory(
                 $data['id_category_node'],
                 $data['fk_parent_category_node'],
