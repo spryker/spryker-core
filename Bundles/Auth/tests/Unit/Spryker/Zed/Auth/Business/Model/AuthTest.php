@@ -115,6 +115,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
             ->setLastName('test')
             ->setLastLogin('test')
             ->setUsername($userName);
+
         return $userTransfer;
     }
 
