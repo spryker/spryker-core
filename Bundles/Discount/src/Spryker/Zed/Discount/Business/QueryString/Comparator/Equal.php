@@ -28,7 +28,7 @@ class Equal implements ComparatorInterface
             throw new ComparatorException('Only scalar value can be used together with "=" comparator.');
         }
 
-        return $clauseTransfer->getValue() === $withValue;
+        return strcasecmp($clauseTransfer->getValue(), $withValue) === 0;
     }
 
     /**

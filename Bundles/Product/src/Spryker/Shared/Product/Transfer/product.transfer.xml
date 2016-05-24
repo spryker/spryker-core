@@ -31,5 +31,12 @@
         <property name="attributes" type="array" singular="attribute" />
     </transfer>
 
+    <transfer name="ProductVariant">
+        <property name="localeName" type="string" />
+        <property name="name" type="string" />
+        <property name="sku" type="string" />
+        <property name="attributes" type="array" singular="attribute" />
+    </transfer>
+
 </transfers>
 

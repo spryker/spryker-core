@@ -59,6 +59,59 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
+     *
+     * @param QuoteTransfer $quoteTransfer
+     * @param ItemTransfer $itemTransfer
+     * @param ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteGrandTotalSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+        return $this->getFactory()
+            ->createGrandTotalDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param ItemTransfer $itemTransfer
+     * @param ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isTotalQuantitySatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+        return $this->getFactory()
+            ->createTotalQuantityDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer , $clauseTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param ItemTransfer $itemTransfer
+     * @param ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isSubTotalSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    )
+    {
+        return $this->getFactory()
+            ->createSubTotalDecisionRule()
+            ->isSatisfiedBy($quoteTransfer,$itemTransfer , $clauseTransfer);
+    }
+
+    /**
      * @param QuoteTransfer $quoteTransfer
      * @param ClauseTransfer $clauseTransfer
      *

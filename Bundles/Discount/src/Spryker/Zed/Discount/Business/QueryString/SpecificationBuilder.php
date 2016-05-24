@@ -179,14 +179,8 @@ class SpecificationBuilder
             $token = $this->cleanToken($tokens[$currentTokenIndex]);
 
             if (!$fieldName) {
-                $this->assertionFacade->assertAlphaNumeric(
-                    $token,
-                    sprintf(
-                        'Field "%s" not alpha numeric value.',
-                        $token
-                    )
-                );
                 $fieldName = $token;
+                $this->validateField($fieldName);
                 $currentTokenIndex++;
                 continue;
             }
@@ -269,6 +263,12 @@ class SpecificationBuilder
     protected function createClauseTransfer($fieldName, $comparatorOperator, $value)
     {
         $clauseTransfer = new ClauseTransfer();
+
+        if (strpos($fieldName, '.') !== false) {
+            list($fieldName, $attribute) = explode('.', $fieldName);
+            $clauseTransfer->setAttribute($attribute);
+        }
+
         $clauseTransfer->setField(trim($fieldName));
         $clauseTransfer->setOperator(trim($comparatorOperator));
         $clauseTransfer->setValue(trim($value));
@@ -297,6 +297,26 @@ class SpecificationBuilder
             'does',
             'contain',
         ];
+    }
+
+    /**
+     * @param string $fieldName
+     *
+     * @throws QueryStringException
+     */
+    protected function validateField($fieldName)
+    {
+        $matches = preg_match('/^[a-z0-9\.]+$/i', $fieldName);
+
+        if ($matches === 0) {
+            throw new QueryStringException(
+                sprintf(
+                    'Invalid "%s" field name',
+                    $fieldName
+                )
+            );
+        }
+
     }
 
 

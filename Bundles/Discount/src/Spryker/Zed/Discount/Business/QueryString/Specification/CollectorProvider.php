@@ -63,7 +63,13 @@ class CollectorProvider implements SpecificationProviderInterface
     public function getSpecificationContext(ClauseTransfer $clauseTransfer)
     {
         foreach ($this->collectorPlugins as $collectorPlugin) {
-            if (strcasecmp($collectorPlugin->getFieldName(), $clauseTransfer->getField()) === 0) {
+
+            $clauseFieldName = $clauseTransfer->getField();
+            if ($clauseTransfer->getAttribute()) {
+                $clauseFieldName = $clauseTransfer->getField() . '.*';
+            }
+
+            if (strcasecmp($collectorPlugin->getFieldName(), $clauseFieldName) === 0) {
                 return new CollectorContext($collectorPlugin, $clauseTransfer);
             }
         }

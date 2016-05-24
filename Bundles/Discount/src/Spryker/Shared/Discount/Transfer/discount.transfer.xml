@@ -81,6 +81,7 @@
 
     <transfer name="Clause">
         <property name="field" type="string" />
+        <property name="attribute" type="string" />
         <property name="operator" type="string" />
         <property name="value" type="string" />
         <property name="acceptedTypes" type="array" />

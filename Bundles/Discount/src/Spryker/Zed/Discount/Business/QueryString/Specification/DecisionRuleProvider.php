@@ -61,7 +61,13 @@ class DecisionRuleProvider implements SpecificationProviderInterface
     public function getSpecificationContext(ClauseTransfer $clauseTransfer)
     {
         foreach ($this->decisionRulePlugins as $decisionRulePlugin) {
-            if (strcasecmp($decisionRulePlugin->getFieldName(), $clauseTransfer->getField()) === 0) {
+
+            $clauseFieldName = $clauseTransfer->getField();
+            if ($clauseTransfer->getAttribute()) {
+                $clauseFieldName = $clauseTransfer->getField() . '.*';
+            }
+
+            if (strcasecmp($decisionRulePlugin->getFieldName(), $clauseFieldName) === 0) {
                 return new DecisionRuleContext($decisionRulePlugin, $clauseTransfer);
             }
         }

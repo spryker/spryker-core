@@ -12,7 +12,11 @@ use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
 use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
 use Spryker\Zed\Discount\Business\Collector\SkuCollector;
+use Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\ProductAttribute;
+use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
@@ -251,6 +255,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return ItemSkuDecisionRule
+     */
+    public function createProductAttributeDecisionRule()
+    {
+        return new ProductAttribute($this->createComparatorOperators());
+    }
+
+    /**
      * @return SkuCollector
      */
     public function createSkuCollector()
@@ -365,6 +377,30 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createDiscountPersist()
     {
         return new DiscountPersist($this->createVoucherEngine(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return GrandTotalDecisionRule
+     */
+    public function createGrandTotalDecisionRule()
+    {
+        return new GrandTotalDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return TotalQuantityDecisionRule
+     */
+    public function createTotalQuantityDecisionRule()
+    {
+        return new TotalQuantityDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return SubTotalDecisionRule
+     */
+    public function createSubTotalDecisionRule()
+    {
+        return new SubTotalDecisionRule($this->createComparatorOperators());
     }
 }
 

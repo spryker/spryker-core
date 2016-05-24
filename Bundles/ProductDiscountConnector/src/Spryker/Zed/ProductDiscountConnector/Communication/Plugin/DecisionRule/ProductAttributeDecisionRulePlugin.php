@@ -1,12 +1,10 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
-namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
+namespace Spryker\Zed\ProductDiscountConnector\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -16,9 +14,9 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade getFacade()
  */
-class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
+class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
 
     /**
@@ -28,10 +26,14 @@ class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugin
      *
      * @return bool
      */
-    public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
+    public function isSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    )
     {
         return $this->getFacade()
-            ->isItemSkuSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+            ->isProductAttributeSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
@@ -41,10 +43,12 @@ class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugin
      */
     public function getFieldName()
     {
-        return 'sku';
+        return 'attribute.*';
     }
 
     /**
+     * Data types used by this field. (string, integer, list)
+     *
      * @return array
      */
     public function acceptedDataTypes()
@@ -54,5 +58,4 @@ class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugin
             ComparatorOperators::TYPE_LIST,
         ];
     }
-
 }

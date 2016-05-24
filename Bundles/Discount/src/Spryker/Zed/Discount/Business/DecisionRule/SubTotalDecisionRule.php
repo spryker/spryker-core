@@ -9,9 +9,22 @@ namespace Spryker\Zed\Discount\Business\DecisionRule;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
-class ProductAttribute implements DecisionRuleInterface
+class SubTotalDecisionRule implements DecisionRuleInterface
 {
+    /**
+     * @var ComparatorOperators
+     */
+    protected $comparators;
+
+    /**
+     * @param ComparatorOperators $comparators
+     */
+    public function __construct(ComparatorOperators $comparators)
+    {
+        $this->comparators = $comparators;
+    }
 
     /**
      * @param QuoteTransfer $quoteTransfer
@@ -28,6 +41,6 @@ class ProductAttribute implements DecisionRuleInterface
         ClauseTransfer $clauseTransfer
     )
     {
-
+        return $this->comparators->compare($clauseTransfer, $quoteTransfer->getTotals()->getSubtotal());
     }
 }

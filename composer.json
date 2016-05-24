@@ -443,7 +443,10 @@
       "Functional\\Spryker\\Shared\\ZedRequest\\": "Bundles/ZedRequest/tests",
       "Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/src",
       "Unit\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
-      "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests"
+      "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
+      "Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/src",
+      "Unit\\Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/tests",
+      "Functional\\Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/tests"
     },
     "psr-4": {
       "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",

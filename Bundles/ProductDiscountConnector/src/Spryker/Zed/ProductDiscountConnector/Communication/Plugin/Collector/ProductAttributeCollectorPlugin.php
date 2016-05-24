@@ -5,33 +5,29 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
-namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
+namespace Spryker\Zed\ProductDiscountConnector\Communication\Plugin\Collector;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
-use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade getFacade()
  */
-class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
+class ProductAttributeCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param ClauseTransfer $clauseTransfer
      *
-     * @return bool
+     * @return array
      */
-    public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
+    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
-        return $this->getFacade()
-            ->isItemSkuSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+        return $this->getFacade()->collectByProductAttribute($quoteTransfer, $clauseTransfer);
     }
 
     /**
@@ -41,10 +37,12 @@ class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugin
      */
     public function getFieldName()
     {
-        return 'sku';
+        return 'attribute.*';
     }
 
     /**
+     * Data types used by this field. (string, integer, list)
+     *
      * @return array
      */
     public function acceptedDataTypes()
@@ -54,5 +52,4 @@ class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugin
             ComparatorOperators::TYPE_LIST,
         ];
     }
-
 }

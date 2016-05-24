@@ -17,7 +17,7 @@ interface DecisionRulePluginInterface
      * @param ItemTransfer $itemTransfer
      * @param ClauseTransfer $clauseTransfer
      *
-     * @return mixed
+     * @return bool
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,

@@ -17,16 +17,17 @@ class NotEqual implements ComparatorInterface
      * @param ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
+     * @throws ComparatorException
+     *
      * @return bool
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
-
         if (!is_numeric($withValue)) {
             throw new ComparatorException('Only scalar value allowed for "!=" operator.');
         }
 
-        return $clauseTransfer->getValue() != $withValue;
+        return strcasecmp($clauseTransfer->getValue(), $withValue) !== 0;
     }
 
     /**
