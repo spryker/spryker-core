@@ -56,7 +56,7 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
             }
 
             $foo = $this->getAttributes($idCategory);
-            $bla = array_merge($this->getAttributesDefaultFields(), $foo);
+            $localizedAttributes = array_merge($this->getAttributesDefaultFields(), $foo);
 
             $formData = [
                 self::PK_CATEGORY => $categoryEntity[self::PK_CATEGORY],
@@ -73,7 +73,7 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
                 //parents
                 self::EXTRA_PARENTS => $nodeIds,
                 //attributes
-                CategoryFormEdit::LOCALIZED_ATTRIBUTES => $bla
+                CategoryFormEdit::LOCALIZED_ATTRIBUTES => $localizedAttributes
             ];
         }
 
