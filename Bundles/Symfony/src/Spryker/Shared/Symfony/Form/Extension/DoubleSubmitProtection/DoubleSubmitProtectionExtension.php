@@ -9,6 +9,7 @@ namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection;
 
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\StorageInterface;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
+use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\Type\DoubleSubmitFormType;
 use Symfony\Component\Form\AbstractExtension;
 
 class DoubleSubmitProtectionExtension extends AbstractExtension
@@ -58,7 +59,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
     protected function loadTypeExtensions()
     {
         return [
-            new Type\DoubleSubmitFormType(
+            new DoubleSubmitFormType(
                 $this->tokenGenerator,
                 $this->tokenStorage,
                 $this->translator,

@@ -102,17 +102,18 @@ class DoubleSubmitFormType extends AbstractTypeExtension
         if (!$view->parent && $form->isRoot()) {
             $factory = $form->getConfig()->getFormFactory();
             $token = $this->tokenGenerator->generateToken();
+            $fieldName = $options[static::OPTION_KEY_TOKEN_FIELD_NAME];
             $formName = $form->getName() ?: get_class($form->getConfig()->getType()->getInnerType());
             $this->storage->setToken($formName, $token);
 
             $tokenForm = $factory->createNamed(
-                $options[static::OPTION_KEY_TOKEN_FIELD_NAME],
+                $fieldName,
                 'hidden',
                 $token,
                 ['mapped' => false]
             );
 
-            $view->children[$this->fieldName] = $tokenForm->createView($view);
+            $view->children[$fieldName] = $tokenForm->createView($view);
         }
     }
 

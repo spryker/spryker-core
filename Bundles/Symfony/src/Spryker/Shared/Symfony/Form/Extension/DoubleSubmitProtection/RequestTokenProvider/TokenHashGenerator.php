@@ -30,7 +30,7 @@ class TokenHashGenerator implements TokenGeneratorInterface
      */
     public function generateToken()
     {
-        return hash($this->algorithm, microtime());
+        return hash($this->algorithm, microtime() . mt_rand());
     }
 
     /**
