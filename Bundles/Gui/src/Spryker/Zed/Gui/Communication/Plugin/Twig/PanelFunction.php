@@ -55,7 +55,7 @@ class PanelFunction extends TwigFunction
 
             if ($title) {
                 $html .= '<header class="panel-heading" data-collapse-trigger>';
-                $html .= '<h1 class="panel-title">' . __($title) . '</h1>';
+                $html .= '<h1 class="panel-title">' . $title . '</h1>';
                 $html .= '</header>';
             }
 
