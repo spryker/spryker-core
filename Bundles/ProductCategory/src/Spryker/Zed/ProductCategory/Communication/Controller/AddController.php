@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
+use Generated\Shared\Transfer\CategoryLocalizedTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Propel\Runtime\Propel;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
@@ -45,20 +47,14 @@ class AddController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $localeTransfer = $this->getFactory()
-                ->getCurrentLocale();
-
-            $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
-            $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
+            $data = $form->getData();
 
             try {
-                $idCategory = $this
-                    ->getFacade()
-                    ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
+                $categoryTransfer = $this->createCategoryData($data);
 
                 $this->addSuccessMessage('The category was added successfully.');
 
-                return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
+                return $this->redirectResponse('/product-category/edit?id-category=' . $categoryTransfer);
             } catch (CategoryUrlExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
             }
@@ -116,11 +112,11 @@ class AddController extends AbstractController
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryLocalizedTransfer
      */
     protected function createCategoryTransferFromData(array $data)
     {
-        return (new CategoryTransfer())
+        return (new CategoryLocalizedTransfer())
             ->fromArray($data, true);
     }
 
@@ -132,7 +128,9 @@ class AddController extends AbstractController
     protected function createCategoryNodeTransferFromData(array $data)
     {
         return (new NodeTransfer())
-            ->fromArray($data, true);
+            ->fromArray($data, true)
+            ->setIsMain(true)
+            ->setIsRoot(false);
     }
 
     /**
@@ -142,19 +140,33 @@ class AddController extends AbstractController
      */
     protected function createCategoryData(array $data)
     {
+        Propel::getConnection()->beginTransaction();
+
         $idCategory = null;
+        $nodeTransfer = $this->createCategoryNodeTransferFromData($data);
         $attributes = $data[CategoryFormAdd::LOCALIZED_ATTRIBUTES];
 
         foreach ($attributes as $localeCode => $localizedAttributes) {
-            $localeTransfer = $this->getFactory()->getLocaleFacade()
-                ->getLocale($localeCode);
+            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
 
-            $categoryTransfer = $this->createCategoryTransferFromData($data);
-            $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($data);
+            $a = array_merge($data, $localizedAttributes);
 
-            $idCategory = $this->getFacade()
-                ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
+            $CategoryLocalizedTransfer = (new CategoryLocalizedTransfer())
+                ->fromArray($a, true)
+                ->setLocale($localeTransfer)
+                ->setIsActive(true)
+                ->setIsClickable(true)
+                ->setIsInMenu(true);
+
+            //dump($CategoryLocalizedTransfer->toArray(), $nodeTransfer->toArray(), $data);die;
+
+            $idCategory = $this
+                ->getFactory()
+                ->createCategoryManagerFoo()
+                ->create($CategoryLocalizedTransfer, $nodeTransfer);
         }
+
+        Propel::getConnection()->commit();
 
         return $idCategory;
     }

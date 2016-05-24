@@ -8,6 +8,10 @@
 namespace Spryker\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Category\Business\Foo\CategoryManager;
+use Spryker\Zed\Category\Business\Tree\ClosureTableWriter;
+use Spryker\Zed\Category\Business\Tree\NodeWriter;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
@@ -17,6 +21,8 @@ use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormDele
 use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormEditDataProvider;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleBridge;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
@@ -193,6 +199,52 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Foo\CategoryManager
+     */
+    public function createCategoryManagerFoo()
+    {
+        $localeFacade = $this->getLocaleFacade();
+        $localeFacade = $this->createProductCategoryToLocaleBridge($localeFacade);
+        $productCategoryFacade = $this->getCategoryFacade();
+        $categoryQueryContainer = $this->getCategoryQueryContainer();
+        $nodeWriter = $this->createNodeWriter($categoryQueryContainer);
+        $closureTableWriter = $this->createClosureTableWriter($categoryQueryContainer);
+
+        return new CategoryManager(
+            $productCategoryFacade,
+            $localeFacade,
+            $categoryQueryContainer,
+            $nodeWriter,
+            $closureTableWriter
+        );
+    }
+
+    /**
+     * @param $localeFacade
+     *
+     * @return CategoryToLocaleBridge
+     */
+    protected function createProductCategoryToLocaleBridge($localeFacade)
+    {
+        return new ProductCategoryToLocaleBridge($localeFacade);
+    }
+
+    protected function createProductCategoryToCategoryBridge($categoryFacade)
+    {
+        return new ProductCategoryToCategoryBridge($categoryFacade);
+    }
+
+    protected function createNodeWriter($categoryQueryContainer)
+    {
+        return new NodeWriter($categoryQueryContainer);
+    }
+
+    protected function createClosureTableWriter($categoryQueryContainer)
+    {
+        return new ClosureTableWriter($categoryQueryContainer);
     }
 
 }

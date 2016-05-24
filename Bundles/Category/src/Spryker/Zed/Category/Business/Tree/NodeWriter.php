@@ -35,10 +35,10 @@ class NodeWriter implements NodeWriterInterface
     public function create(NodeTransfer $categoryNode)
     {
         $nodeEntity = $this->queryContainer
-            ->queryMainNodesByCategoryId($categoryNode->getIdCategoryNode())
+            ->queryMainNodesByCategoryId($categoryNode->requireFkCategory()->getFkCategory())
             ->findOneOrCreate();
 
-        $nodeEntity->fromArray($categoryNode->toArray());
+        $nodeEntity->fromArray($categoryNode->modifiedToArray());
         $nodeEntity->save();
 
         $nodeId = $nodeEntity->getIdCategoryNode();

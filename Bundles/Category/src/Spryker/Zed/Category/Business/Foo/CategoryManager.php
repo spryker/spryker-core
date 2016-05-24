@@ -9,14 +9,14 @@ namespace Spryker\Zed\Category\Business\Foo;
 
 use Generated\Shared\Transfer\CategoryLocalizedTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
+use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Business\Tree\NodeWriterInterface;
-use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 
 class CategoryManager
 {
@@ -48,8 +48,8 @@ class CategoryManager
 
 
     public function __construct(
-        ProductCategoryToCategoryInterface $categoryFacade,
-        CategoryToLocaleInterface $localeFacade,
+        $categoryFacade,
+        $localeFacade,
         CategoryQueryContainerInterface $queryContainer,
         NodeWriterInterface $nodeWriter,
         ClosureTableWriterInterface $closureTableWriter
@@ -61,16 +61,21 @@ class CategoryManager
         $this->queryContainer = $queryContainer;
     }
 
-    public function create(CategoryLocalizedTransfer $categoryLocalizedTransfer)
+    public function create(CategoryLocalizedTransfer $categoryLocalizedTransfer, NodeTransfer $nodeTransfer)
     {
+        $this->queryContainer->getConnection()->beginTransaction();
+
         $categoryLocalizedTransfer = $this->persistCategory($categoryLocalizedTransfer);
-        $nodeTransfer = $this->persistNode($categoryLocalizedTransfer);
+        $nodeTransfer = $this->persistNode($categoryLocalizedTransfer, $nodeTransfer);
+
         $urlTransfer = $this->persistUrl($categoryLocalizedTransfer, $nodeTransfer);
 
         $this->touchNavigationActive();
         $this->touchCategoryActiveRecursive($nodeTransfer);
 
-        return $categoryLocalizedTransfer;
+        $this->queryContainer->getConnection()->commit();
+
+        return $categoryLocalizedTransfer->getIdCategory();
     }
 
     public function update()
@@ -84,45 +89,41 @@ class CategoryManager
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryLocalizedTransfer $CategoryLocalizedTransfer
+     * @param \Generated\Shared\Transfer\CategoryLocalizedTransfer $categoryLocalizedTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryLocalizedTransfer
+     */
+    protected function persistCategory(CategoryLocalizedTransfer $categoryLocalizedTransfer)
+    {
+        $categoryTransfer = $this->persistCategoryEntity($categoryLocalizedTransfer);
+        $categoryLocalizedTransfer->setIdCategory($categoryTransfer->getIdCategory());
+
+        return $categoryLocalizedTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryLocalizedTransfer $categoryLocalizedTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
      */
-    protected function persistNode(CategoryLocalizedTransfer $CategoryLocalizedTransfer)
+    protected function persistNode(CategoryLocalizedTransfer $categoryLocalizedTransfer, NodeTransfer $nodeTransfer)
     {
-        $nodeTransfer = (new NodeTransfer())
-            ->setFkCategory($CategoryLocalizedTransfer->requireIdCategory()->getIdCategory())
+        $idCategory = $categoryLocalizedTransfer->requireIdCategory()->getIdCategory();
+
+        $nodeTransfer
+            ->setFkCategory($idCategory)
             ->setIsMain(true);
 
-        $idNode = $this->persistNodeEntity($nodeTransfer, $CategoryLocalizedTransfer);
-
-        $nodeTransfer->setIdCategoryNode($idNode);
+        $nodeTransfer = $this->persistNodeEntity($nodeTransfer);
 
         return $nodeTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CategoryLocalizedTransfer $CategoryLocalizedTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedTransfer
-     */
-    protected function persistCategory(CategoryLocalizedTransfer $CategoryLocalizedTransfer)
-    {
-        $CategoryLocalizedTransfer->setIsActive(true);
-        $CategoryLocalizedTransfer->setIsInMenu(true);
-        $CategoryLocalizedTransfer->setIsClickable(true);
-
-        $idCategory = $this->persistCategoryEntity($CategoryLocalizedTransfer);
-        $CategoryLocalizedTransfer->setIdCategory($idCategory);
-
-        return $CategoryLocalizedTransfer;
-    }
-
-    /**
-     * @param CategoryLocalizedTransfer $CategoryLocalizedTransfer
-     * @param NodeTransfer $nodeTransfer
-     *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     protected function persistUrl(CategoryLocalizedTransfer $CategoryLocalizedTransfer, NodeTransfer $nodeTransfer)
     {
@@ -143,7 +144,7 @@ class CategoryManager
     /**
      * @param CategoryLocalizedTransfer $categoryLocalizedTransfer
      *
-     * @return int
+     * @return CategoryLocalizedTransfer
      */
     protected function persistCategoryEntity(CategoryLocalizedTransfer $categoryLocalizedTransfer)
     {
@@ -151,29 +152,30 @@ class CategoryManager
         $localeTransfer = $categoryLocalizedTransfer->requireLocale()->getLocale();
 
         $data = $categoryLocalizedTransfer->toArray();
-        unset($data['id_category']);
         unset($data['locale']);
 
         $categoryTransfer = (new CategoryTransfer())->fromArray(
             $data
         );
 
+        $categoryEntity = $this->queryContainer->queryCategoryByKey(
+            $categoryLocalizedTransfer->requireCategoryKey()->getCategoryKey()
+        )->findOne();
 
-        dump($data, $categoryTransfer->toArray());
+        if (!$categoryEntity) {
+            $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $localeTransfer);
+            $categoryTransfer->setIdCategory($idCategory);
+        }
+        else {
+            $idCategory = $categoryEntity->getIdCategory();
+            $categoryTransfer->setIdCategory($idCategory);
+            $this->persistCategoryAttribute($categoryTransfer, $localeTransfer);
+        }
 
-        //$idCategory = $this->categoryFacade->createCategory($categoryTransfer, $localeTransfer);
-
-        $categoryEntity = new SpyCategory();
-        $categoryEntity->setCategoryKey('shit2222');
-        $categoryEntity->setIsActive(true);
-        $categoryEntity->setIsClickable(true);
-        $categoryEntity->save();
-
-
-        return $idCategory;
+        return $categoryTransfer;
     }
 
-    protected function persistNodeEntity(NodeTransfer $nodeTransfer, CategoryLocalizedTransfer $categoryLocalizedTransfer)
+    protected function persistNodeEntity(NodeTransfer $nodeTransfer)
     {
         $this->queryContainer->getConnection()->beginTransaction();
 
@@ -184,7 +186,7 @@ class CategoryManager
 
         $this->queryContainer->getConnection()->commit();
 
-        return $idNode;
+        return $nodeTransfer;
     }
 
     /**
@@ -203,6 +205,44 @@ class CategoryManager
     protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
     {
 
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    protected function persistCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale)
+    {
+        $categoryAttributeEntity = $this->queryContainer
+            ->queryAttributeByCategoryId($category->requireIdCategory()->getIdCategory())
+            ->filterByFkLocale($locale->requireIdLocale()->getIdLocale())
+            ->findOneOrCreate();
+
+        $this->saveCategoryAttribute($category, $locale, $categoryAttributeEntity);
+    }
+
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
+     *
+     * @return void
+     */
+    protected function saveCategoryAttribute(
+        CategoryTransfer $category,
+        LocaleTransfer $locale,
+        SpyCategoryAttribute $categoryAttributeEntity
+    ) {
+        $categoryAttributeEntity->fromArray($category->toArray());
+        $categoryAttributeEntity->setFkCategory($category->getIdCategory());
+        $categoryAttributeEntity->setFkLocale($locale->getIdLocale());
+
+        $categoryAttributeEntity->save();
     }
 
 }
