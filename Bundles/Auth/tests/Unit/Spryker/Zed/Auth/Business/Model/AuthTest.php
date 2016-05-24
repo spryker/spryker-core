@@ -135,12 +135,19 @@ class AuthTest extends \PHPUnit_Framework_TestCase
             $this->createStaticTokenClient()
         );
 
-        // Check that migrate is called.
+        $this->checkMigrateIsCalled($sessionClient);
+
+        return $authModel;
+    }
+
+    /**
+     * @param \PHPUnit_Framework_MockObject_MockObject $sessionClient
+     */
+    protected function checkMigrateIsCalled(\PHPUnit_Framework_MockObject_MockObject $sessionClient)
+    {
         $sessionClient->expects($this->once())
             ->method('migrate')
             ->will($this->returnValue(true));
-
-        return $authModel;
     }
 
 }
