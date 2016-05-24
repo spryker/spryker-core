@@ -281,7 +281,7 @@ class Auth implements AuthInterface
      */
     public function getUserFromSession($token)
     {
-        $user = $user = $this->readUserFromSession($token);
+        $user = $this->readUserFromSession($token);
 
         if ($user === null) {
             throw new UserNotLoggedException();
