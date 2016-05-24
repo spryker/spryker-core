@@ -11,9 +11,8 @@ use Generated\Shared\Transfer\CategoryLocalizedTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
-use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
+use Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Business\Tree\NodeWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -42,9 +41,19 @@ class CategoryManager
     protected $closureTableWriter;
 
     /**
-     * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
+     * @var \Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface
+     */
+    protected $nodeUrlManager;
+
+    /**
+     * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface
      */
     protected $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
+     */
+    protected $urlFacade;
 
 
     public function __construct(
@@ -52,13 +61,17 @@ class CategoryManager
         $localeFacade,
         CategoryQueryContainerInterface $queryContainer,
         NodeWriterInterface $nodeWriter,
-        ClosureTableWriterInterface $closureTableWriter
+        ClosureTableWriterInterface $closureTableWriter,
+        NodeUrlManagerInterface $nodeUrlManager,
+        $urlFacade
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->nodeWriter = $nodeWriter;
         $this->closureTableWriter = $closureTableWriter;
         $this->localeFacade = $localeFacade;
         $this->queryContainer = $queryContainer;
+        $this->nodeUrlManager = $nodeUrlManager;
+        $this->urlFacade = $urlFacade;
     }
 
     public function create(CategoryLocalizedTransfer $categoryLocalizedTransfer, NodeTransfer $nodeTransfer)
@@ -67,8 +80,7 @@ class CategoryManager
 
         $categoryLocalizedTransfer = $this->persistCategory($categoryLocalizedTransfer);
         $nodeTransfer = $this->persistNode($categoryLocalizedTransfer, $nodeTransfer);
-
-        $urlTransfer = $this->persistUrl($categoryLocalizedTransfer, $nodeTransfer);
+        $this->persistUrl($categoryLocalizedTransfer, $nodeTransfer);
 
         $this->touchNavigationActive();
         $this->touchCategoryActiveRecursive($nodeTransfer);
@@ -123,12 +135,26 @@ class CategoryManager
      * @param \Generated\Shared\Transfer\CategoryLocalizedTransfer $CategoryLocalizedTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return void
      */
     protected function persistUrl(CategoryLocalizedTransfer $CategoryLocalizedTransfer, NodeTransfer $nodeTransfer)
     {
-        $urlTransfer = new UrlTransfer();
-        return $urlTransfer;
+        $localeTransfer = $CategoryLocalizedTransfer->requireLocale()->getLocale();
+
+        $idCategoryNode = $nodeTransfer->requireIdCategoryNode()->getIdCategoryNode();
+
+        if (!$this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, $localeTransfer)) {
+            $this->nodeUrlManager->createUrl(
+                $nodeTransfer,
+                $localeTransfer
+            );
+        }
+        else {
+            $this->nodeUrlManager->updateUrl(
+                $nodeTransfer,
+                $localeTransfer
+            );
+        }
     }
 
     /**
@@ -149,7 +175,7 @@ class CategoryManager
      */
     protected function getNodeEntity($idNode)
     {
-        return $this->queryContainer->queryCategoryById($idNode)
+        return $this->queryContainer->queryCategoryNodeByNodeId($idNode)
             ->findOne();
     }
 

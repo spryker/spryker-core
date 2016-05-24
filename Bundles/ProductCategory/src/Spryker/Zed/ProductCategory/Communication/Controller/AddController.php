@@ -46,28 +46,29 @@ class AddController extends AbstractController
             )
             ->handleRequest($request);
 
+        $localeTransfer = $this->getFactory()->getCurrentLocale();
+
         if ($form->isValid()) {
-            $data = $form->getData();
+            $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
+            $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
 
             try {
-                $categoryTransfer = $this->createCategoryData($data);
+                $idCategory = $this
+                    ->getFacade()
+                    ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
 
                 $this->addSuccessMessage('The category was added successfully.');
 
-                return $this->redirectResponse('/product-category/edit?id-category=' . $categoryTransfer);
+                return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
             } catch (CategoryUrlExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
             }
         }
 
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorMessage('Please make sure mandatory fields are properly filled in');
-        }
-
         return $this->viewResponse([
             'form' => $form->createView(),
-            'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
-            'errors' => $dataProvider->getErrorMessages($form)
+            'currentLocale' => $localeTransfer,
+            'showProducts' => false,
         ]);
     }
 

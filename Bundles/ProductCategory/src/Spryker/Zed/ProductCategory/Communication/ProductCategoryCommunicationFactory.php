@@ -9,9 +9,14 @@ namespace Spryker\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Business\Foo\CategoryManager;
+use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
+use Spryker\Zed\Category\Business\Manager\NodeUrlManager;
+use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriter;
+use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Spryker\Zed\Category\Business\Tree\NodeWriter;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
@@ -24,6 +29,7 @@ use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleBridge;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
+use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
@@ -194,14 +200,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
-     */
-    protected function getLocaleFacade()
-    {
-        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
      * @return \Spryker\Zed\Category\Business\Foo\CategoryManager
      */
     public function createCategoryManagerFoo()
@@ -212,13 +210,17 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
         $categoryQueryContainer = $this->getCategoryQueryContainer();
         $nodeWriter = $this->createNodeWriter($categoryQueryContainer);
         $closureTableWriter = $this->createClosureTableWriter($categoryQueryContainer);
+        $nodeUrlManager = $this->createNodeUrlManager();
+        $urlFacade = $this->getUrlFacade();
 
         return new CategoryManager(
             $productCategoryFacade,
             $localeFacade,
             $categoryQueryContainer,
             $nodeWriter,
-            $closureTableWriter
+            $closureTableWriter,
+            $nodeUrlManager,
+            $urlFacade
         );
     }
 
@@ -245,6 +247,53 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     protected function createClosureTableWriter($categoryQueryContainer)
     {
         return new ClosureTableWriter($categoryQueryContainer);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Manager\NodeUrlManager
+     */
+    protected function createNodeUrlManager()
+    {
+        return new NodeUrlManager(
+            $this->createCategoryTreeReader(),
+            $this->createUrlPathGenerator(),
+            new CategoryToUrlBridge(new UrlFacade())
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface
+     */
+    protected function getUrlFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface
+     */
+    public function createUrlPathGenerator()
+    {
+        return new UrlPathGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Tree\CategoryTreeReader
+     */
+    public function createCategoryTreeReader()
+    {
+        return new CategoryTreeReader(
+            $this->getCategoryQueryContainer(),
+            $this->createCategoryTreeFormatter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter
+     */
+    protected function createCategoryTreeFormatter()
+    {
+        return new CategoryTreeFormatter();
     }
 
 }
