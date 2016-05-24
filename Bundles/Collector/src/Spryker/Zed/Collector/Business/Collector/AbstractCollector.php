@@ -347,7 +347,7 @@ abstract class AbstractCollector
                     $touchUpdaterSet
                 );
 
-                if (!empty($keysToDelete)) {
+                if ($keysToDelete) {
                     $dataWriter->delete($keysToDelete);
                 }
             }

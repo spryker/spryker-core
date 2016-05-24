@@ -213,7 +213,7 @@ class TouchRecord implements TouchRecordInterface
 
     /**
      * Removes all the rows from the touch table(s)
-     * which are marked as deleted (item_event = 2).
+     * which are marked as deleted (SpyTouchTableMap::COL_ITEM_EVENT_DELETED).
      * Returns the number of Touch entries deleted.
      *
      * @api
