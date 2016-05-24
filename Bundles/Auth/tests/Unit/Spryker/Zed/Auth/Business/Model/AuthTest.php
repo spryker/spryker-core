@@ -75,7 +75,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
      */
     protected function createFacadeUser()
     {
@@ -89,7 +89,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClient
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Session\SessionClient
      */
     protected function createSessionClient()
     {
@@ -102,7 +102,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Auth\Business\Client\StaticToken
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Auth\Business\Client\StaticToken
      */
     protected function createStaticTokenClient()
     {
