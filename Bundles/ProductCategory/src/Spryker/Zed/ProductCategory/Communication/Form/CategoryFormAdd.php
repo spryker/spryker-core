@@ -24,8 +24,6 @@ class CategoryFormAdd extends AbstractType
     const FIELD_FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
     const FIELD_FK_NODE_CATEGORY = 'fk_category';
 
-    const LOCALIZED_ATTRIBUTES = 'localized_attributes';
-
     /**
      * @return string
      */
@@ -55,10 +53,27 @@ class CategoryFormAdd extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
+            ->addNameField($builder)
             ->addCategoryKeyField($builder)
             ->addCategoryNodeField($builder, $options[self::OPTION_PARENT_CATEGORY_NODE_CHOICES])
-            ->addPkCategoryNodeField($builder)
-            ->addLocalizedAttributesForm($builder);
+            ->addPkCategoryNodeField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addNameField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_NAME, 'text', [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
+
+        return $this;
     }
 
     /**
@@ -70,9 +85,9 @@ class CategoryFormAdd extends AbstractType
     {
         $builder
             ->add(self::FIELD_CATEGORY_KEY, 'text', [
-            'constraints' => [
-                new NotBlank(),
-            ],
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ]);
 
         return $this;
@@ -106,21 +121,6 @@ class CategoryFormAdd extends AbstractType
     protected function addPkCategoryNodeField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_PK_CATEGORY_NODE, 'hidden');
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addLocalizedAttributesForm(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::LOCALIZED_ATTRIBUTES, 'collection', [
-                'type' => new CategoryAttributeLocalizedForm()
-            ]);
 
         return $this;
     }

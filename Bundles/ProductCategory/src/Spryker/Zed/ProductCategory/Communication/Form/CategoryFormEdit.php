@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCategory\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryFormEdit extends CategoryFormAdd
 {
@@ -24,6 +25,7 @@ class CategoryFormEdit extends CategoryFormAdd
     const CATEGORY_NODE_IS_MAIN = 'is_main';
 
     const EXTRA_PARENTS = 'extra_parents';
+    const LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -240,5 +242,70 @@ class CategoryFormEdit extends CategoryFormAdd
 
         return $this;
     }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCategoryKeyField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_CATEGORY_KEY, 'text', [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return $this
+     */
+    protected function addCategoryNodeField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder
+            ->add(self::FIELD_FK_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
+                'label' => 'Parent',
+                'choices' => $choices,
+                'constraints' => [
+                    new NotBlank(),
+                ]
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPkCategoryNodeField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_PK_CATEGORY_NODE, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLocalizedAttributesForm(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::LOCALIZED_ATTRIBUTES, 'collection', [
+                'type' => new CategoryAttributeLocalizedForm()
+            ]);
+
+        return $this;
+    }
+
 
 }
