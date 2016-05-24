@@ -82,6 +82,24 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertNotSame($userTransfer, $userFromSession);
     }
 
+    public function testHasCurrentUserReturnsFalseOnNull()
+    {
+        $sessionClient = $this->createSessionClient();
+
+        $userModel = new User(
+            $this->createQueryContainer(),
+            $sessionClient,
+            new UserConfig()
+        );
+
+        $sessionClient->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(null));
+
+        $hasCurrentUser = $userModel->hasCurrentUser();
+        $this->assertFalse($hasCurrentUser);
+    }
+
     /**
      * @param string $userName
      * @return \Generated\Shared\Transfer\UserTransfer
