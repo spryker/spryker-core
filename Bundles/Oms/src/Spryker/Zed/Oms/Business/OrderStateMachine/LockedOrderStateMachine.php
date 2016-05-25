@@ -50,8 +50,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
         }
 
         $this->triggerLocker->acquire($identifier);
-        $triggerEventResult = $this->stateMachine->triggerEvent($eventId, $orderItems, $data);
-        $this->triggerLocker->release($identifier);
+        try {
+            $triggerEventResult = $this->stateMachine->triggerEvent($eventId, $orderItems, $data);
+        } finally {
+            $this->triggerLocker->release($identifier);
+        }
 
         return $triggerEventResult;
     }
@@ -72,8 +75,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
         }
 
         $this->triggerLocker->acquire($identifier);
-        $triggerEventResult = $this->stateMachine->triggerEventForNewItem($orderItems, $data);
-        $this->triggerLocker->release($identifier);
+        try {
+            $triggerEventResult = $this->stateMachine->triggerEventForNewItem($orderItems, $data);
+        } finally {
+            $this->triggerLocker->release($identifier);
+        }
 
         return $triggerEventResult;
     }
@@ -104,8 +110,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
         }
 
         $this->triggerLocker->acquire($identifier);
-        $triggerEventResult = $this->stateMachine->triggerEventForNewOrderItems($orderItemIds, $data);
-        $this->triggerLocker->release($identifier);
+        try {
+            $triggerEventResult = $this->stateMachine->triggerEventForNewOrderItems($orderItemIds, $data);
+        } finally {
+            $this->triggerLocker->release($identifier);
+        }
 
         return $triggerEventResult;
     }
@@ -127,8 +136,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
         }
 
         $this->triggerLocker->acquire($identifier);
-        $triggerEventResult = $this->stateMachine->triggerEventForOneOrderItem($eventId, $orderItemId, $data);
-        $this->triggerLocker->release($identifier);
+        try {
+            $triggerEventResult = $this->stateMachine->triggerEventForOneOrderItem($eventId, $orderItemId, $data);
+        } finally {
+            $this->triggerLocker->release($identifier);
+        }
 
         return $triggerEventResult;
     }
@@ -150,8 +162,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
         }
 
         $this->triggerLocker->acquire($identifier);
-        $triggerEventResult = $this->stateMachine->triggerEventForOrderItems($eventId, $orderItemIds, $data);
-        $this->triggerLocker->release($identifier);
+        try {
+            $triggerEventResult = $this->stateMachine->triggerEventForOrderItems($eventId, $orderItemIds, $data);
+        } finally {
+            $this->triggerLocker->release($identifier);
+        }
 
         return $triggerEventResult;
     }
