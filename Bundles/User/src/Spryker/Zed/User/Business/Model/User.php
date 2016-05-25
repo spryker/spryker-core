@@ -284,7 +284,7 @@ class User implements UserInterface
     {
         $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
 
-        return $this->session->set($key, serialize($user));
+        return $this->session->set($key, clone $user);
     }
 
     /**
@@ -292,10 +292,19 @@ class User implements UserInterface
      */
     public function hasCurrentUser()
     {
-        $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
-        $user = unserialize($this->session->get($key));
+        $user = $this->readUserFromSession();
 
-        return $user !== false;
+        return $user !== null;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function readUserFromSession()
+    {
+        $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
+
+        return $this->session->get($key);
     }
 
     /**
@@ -342,14 +351,13 @@ class User implements UserInterface
      */
     public function getCurrentUser()
     {
-        $key = sprintf('%s:currentUser', self::USER_BUNDLE_SESSION_KEY);
-        $user = unserialize($this->session->get($key));
+        $user = $this->readUserFromSession();
 
-        if ($user === false) {
+        if ($user === null) {
             throw new UserNotFoundException();
         }
 
-        return $user;
+        return clone $user;
     }
 
     /**
