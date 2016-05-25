@@ -27,23 +27,23 @@ class IndexController extends AbstractController
             $developmentLinks[] = [
                 'href' => '/setup/transfer/repeat',
                 'target' => '_blank',
-                'label' => __('Repeat last Yves-request'),
+                'label' => 'Repeat last Yves-request',
             ];
             $developmentLinks[] = [
                 'href' => '/glossary/dump',
                 'target' => '_blank',
-                'label' => __('Dump glossary data to file'),
+                'label' => 'Dump glossary data to file',
             ];
         }
         $developmentLinks[] = [
             'href' => '/setup/phpinfo',
             'target' => '_blank',
-            'label' => __('Show PHP-Info'),
+            'label' => 'Show PHP-Info',
         ];
         if (Environment::isNotDevelopment()) {
             $developmentLinks[] = [
                 'href' => '#',
-                'label' => __('Show Elasticsearch' . ' <span class="icon-info"></span>'),
+                'label' => 'Show Elasticsearch' . ' <span class="icon-info"></span>',
                 'extras' => [
                     'data-toggle' => 'modal',
                     'data-target' => '#elastic',
@@ -53,13 +53,13 @@ class IndexController extends AbstractController
             $developmentLinks[] = [
                 'href' => 'http://' . Config::get(ApplicationConstants::HOST_ZED_GUI) . ':9200',
                 'target' => '_blank',
-                'label' => __('Show Elasticsearch'),
+                'label' => 'Show Elasticsearch',
             ];
         }
         if (Environment::isNotDevelopment()) {
             $developmentLinks[] = [
                 'href' => '#',
-                'label' => __('Show Elasticsearch Head (9200/_plugin/head)' . ' <span class="icon-info"></span>'),
+                'label' => 'Show Elasticsearch Head (9200/_plugin/head)' . ' <span class="icon-info"></span>',
                 'extras' => [
                     'data-toggle' => 'modal',
                     'data-target' => '#elasticHead',
@@ -69,14 +69,14 @@ class IndexController extends AbstractController
             $developmentLinks[] = [
                 'href' => 'http://' . Config::get(ApplicationConstants::HOST_ZED_GUI) . ':9200/_plugin/head',
                 'target' => '_blank',
-                'label' => __('Show Elasticsearch Head'),
+                'label' => 'Show Elasticsearch Head',
             ];
         }
 
         if (Environment::isNotDevelopment()) {
             $developmentLinks[] = [
                 'href' => '#',
-                'label' => __('Show Elasticsearch Bigdesk (9200/_plugin/bigdesk)' . ' <span class="icon-info"></span>'),
+                'label' => 'Show Elasticsearch Bigdesk (9200/_plugin/bigdesk)' . ' <span class="icon-info"></span>',
                 'extras' => [
                     'data-toggle' => 'modal',
                     'data-target' => '#elasticBigdeskModal',
@@ -86,13 +86,13 @@ class IndexController extends AbstractController
             $developmentLinks[] = [
                 'href' => 'http://' . Config::get(ApplicationConstants::HOST_ZED_GUI) . ':9200/_plugin/bigdesk',
                 'target' => '_blank',
-                'label' => __('Show Elasticsearch Bigdesk'),
+                'label' => 'Show Elasticsearch Bigdesk',
             ];
         }
         if (Environment::isNotDevelopment()) {
             $developmentLinks[] = [
                 'href' => '#',
-                'label' => __('Show Couchbase' . ' <span class="icon-info"></span>'),
+                'label' => 'Show Couchbase' . ' <span class="icon-info"></span>',
                 'extras' => [
                     'data-toggle' => 'modal',
                     'data-target' => '#couchbaseModal',
@@ -102,14 +102,14 @@ class IndexController extends AbstractController
             $developmentLinks[] = [
                 'href' => 'http://' . Config::get(ApplicationConstants::HOST_ZED_GUI) . ':8091',
                 'target' => '_blank',
-                'label' => __('Show Couchbase'),
+                'label' => 'Show Couchbase',
             ];
         }
 
         if (Environment::isNotDevelopment()) {
             $developmentLinks[] = [
                 'href' => '#',
-                'label' => __('Show Jenkins' . ' <span class="icon-info"></span>'),
+                'label' => 'Show Jenkins' . ' <span class="icon-info"></span>',
                 'extras' => [
                     'data-toggle' => 'modal',
                     'data-target' => '#jenkinsModal',
@@ -119,14 +119,14 @@ class IndexController extends AbstractController
             $developmentLinks[] = [
                 'href' => Config::get(ApplicationConstants::JENKINS_BASE_URL),
                 'target' => '_blank',
-                'label' => __('Jenkins'),
+                'label' => 'Jenkins',
             ];
         }
 
         $developmentLinks[] = [
             'href' => 'URL IS MISSING',
             'target' => '_blank',
-            'label' => __('Install / Update Cronjobs'),
+            'label' => 'Install / Update Cronjobs',
         ];
 
         return $this->viewResponse([

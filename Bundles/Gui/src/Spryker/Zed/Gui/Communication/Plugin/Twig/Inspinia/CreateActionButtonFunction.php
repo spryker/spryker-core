@@ -7,31 +7,11 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
-class CreateActionButtonFunction extends AbstractActionButtonFunction
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\CreateActionButtonFunction as CreateActionButton;
+
+/**
+ * @deprecated use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\CreateActionButtonFunction
+ */
+class CreateActionButtonFunction extends CreateActionButton
 {
-
-    /**
-     * @return string
-     */
-    protected function getButtonClass()
-    {
-        return 'btn-success';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getIcon()
-    {
-        return '<i class="fa fa-plus"></i> ';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getFunctionName()
-    {
-        return 'createActionButton';
-    }
-
 }

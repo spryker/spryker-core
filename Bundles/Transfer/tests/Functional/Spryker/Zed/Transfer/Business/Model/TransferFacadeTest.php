@@ -45,7 +45,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
     {
         $this->getFacade()->deleteGeneratedTransferObjects();
 
-        $this->assertFalse(is_dir($this->getConfig()->getGeneratedTargetDirectory()));
+        $this->assertFalse(is_dir($this->getConfig()->getClassTargetDirectory()));
     }
 
     /**
@@ -58,7 +58,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
         $this->getFacade()->generateTransferObjects($this->getMessenger());
 
         $finder = new Finder();
-        $finder->in($this->getConfig()->getGeneratedTargetDirectory())->name('*Transfer.php');
+        $finder->in($this->getConfig()->getClassTargetDirectory())->name('*Transfer.php');
 
         $this->assertTrue($finder->count() > 0);
     }

@@ -68,12 +68,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderStateMachineOrderStateMachine(array $logContext = [])
     {
-        trigger_error('Deprecated, please use createOrderStateMachine() instead', E_USER_DEPRECATED);
-
         return $this->createOrderStateMachine($logContext);
     }
 
     /**
+     * @deprecated The optional argument `$xmlFolder` will be removed in next major version.
+     * Define paths to your process definition in `OmsConfig::getProcessDefinitionLocation()`
+     *
      * @param string|null $xmlFolder
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
@@ -85,7 +86,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createProcessState(),
             $this->createProcessTransition(),
             $this->createProcessProcess(),
-            $xmlFolder
+            $xmlFolder ?: $this->getConfig()->getProcessDefinitionLocation()
         );
     }
 

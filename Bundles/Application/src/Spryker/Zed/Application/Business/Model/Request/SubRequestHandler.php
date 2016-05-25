@@ -36,55 +36,29 @@ class SubRequestHandler implements SubRequestHandlerInterface
      */
     public function handleSubRequest(Request $request, $url, array $additionalSubRequestParameters = [])
     {
-        $urlParts = $this->extractUrlParts($url);
+        $subRequest = $this->createSubRequest($request, $url, $additionalSubRequestParameters);
+        $subRequestResponse = $this->httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST, true);
 
-        $this->validateUrlParts($urlParts);
-
-        $subRequestParameters = $this->mergeRequestArguments($request, $additionalSubRequestParameters);
-        $subRequest = $this->createSubRequest($request, $url, $subRequestParameters);
-
-        $this->setRouteAttributes($subRequest, $urlParts);
-
-        return $this->httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST, true);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $parameters
-     * @return array
-     */
-    protected function mergeRequestArguments(Request $request, array $parameters)
-    {
-        $subRequestParameters = array_merge(
-            $parameters,
-            $request->query->all(),
-            $request->attributes->all()
-        );
-
-        if ($request->getMethod() === Request::METHOD_POST) {
-            $subRequestParameters = array_merge($subRequestParameters, $request->request->all());
-        }
-
-        return $subRequestParameters;
+        return $subRequestResponse;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $url
-     * @param array $subRequestParameters
      *
+     * @param array $additionalSubRequestParameters
      * @return \Symfony\Component\HttpFoundation\Request
+     * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
      */
-    protected function createSubRequest(Request $request, $url, array $subRequestParameters)
+    protected function createSubRequest(Request $request, $url, array $additionalSubRequestParameters)
     {
-        $subRequest = Request::create(
-            $url,
-            $request->getMethod(),
-            $subRequestParameters,
-            $request->cookies->all(),
-            $request->files->all(),
-            $request->server->all()
-        );
+        $subRequest = $this->createRequestObject($request, $url, $additionalSubRequestParameters);
+        $subRequest->query->add($request->query->all());
+        $subRequest->request->add($request->request->all());
+
+        $urlParts = $this->extractUrlParts($url);
+        $this->validateUrlParts($urlParts);
+        $this->setRouteAttributes($subRequest, $urlParts);
 
         return $subRequest;
     }
@@ -123,6 +97,24 @@ class SubRequestHandler implements SubRequestHandlerInterface
         $subRequest->attributes->set('module', $urlParts[0]);
         $subRequest->attributes->set('controller', $urlParts[1]);
         $subRequest->attributes->set('action', $urlParts[2]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $url
+     * @param array $additionalSubRequestParameters
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function createRequestObject(Request $request, $url, array $additionalSubRequestParameters)
+    {
+        return Request::create(
+            $url,
+            $request->getMethod(),
+            $additionalSubRequestParameters,
+            $request->cookies->all(),
+            $request->files->all(),
+            $request->server->all()
+        );
     }
 
 }

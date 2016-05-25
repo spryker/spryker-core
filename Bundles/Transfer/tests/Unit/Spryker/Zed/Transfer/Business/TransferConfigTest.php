@@ -34,7 +34,7 @@ class TransferConfigTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetGeneratedTargetDirectoryShouldReturnString()
     {
-        $this->assertTrue(is_string($this->getConfig()->getGeneratedTargetDirectory()));
+        $this->assertTrue(is_string($this->getConfig()->getClassTargetDirectory()));
     }
 
     /**

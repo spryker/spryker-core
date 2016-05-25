@@ -27,15 +27,14 @@ class ZedRequestFactory extends AbstractFactory
 
     /**
      * @return \Spryker\Client\ZedRequest\Client\HttpClient
-     *
-     * @todo remove Factory usage: https://spryker.atlassian.net/browse/CD-439
      */
     protected function createHttpClient()
     {
         $httpClient = new HttpClient(
             $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_AUTH),
             $this->getConfig()->getZedRequestBaseUrl(),
-            $this->getConfig()->getRawToken()
+            $this->getConfig()->getRawToken(),
+            $this->getConfig()->isAuthenticationEnabled()
         );
 
         return $httpClient;

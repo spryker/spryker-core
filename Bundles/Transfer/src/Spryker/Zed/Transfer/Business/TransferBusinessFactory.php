@@ -77,7 +77,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     public function createTransferCleaner()
     {
         return new TransferCleaner(
-            $this->getConfig()->getGeneratedTargetDirectory()
+            $this->getConfig()->getClassTargetDirectory()
         );
     }
 
