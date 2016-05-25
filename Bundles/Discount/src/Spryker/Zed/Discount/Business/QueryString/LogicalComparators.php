@@ -8,6 +8,7 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 class LogicalComparators
 {
+
     const COMPARATOR_AND = 'and';
     const COMPARATOR_OR = 'or';
 
@@ -21,4 +22,5 @@ class LogicalComparators
             self::COMPARATOR_OR
         ];
     }
+
 }

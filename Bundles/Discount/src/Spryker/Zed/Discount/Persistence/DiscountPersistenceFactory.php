@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
-use Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -45,4 +42,5 @@ class DiscountPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyDiscountVoucherPoolQuery::create();
     }
+
 }

@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
-use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
 class Fixed extends AbstractPlugin implements DiscountCalculatorPluginInterface
 {
 
     /**
-     * @param DiscountableItemTransfer[] $discountableItems
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      * @param int $number
      *
      * @return float

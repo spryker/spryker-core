@@ -14,10 +14,10 @@ class NotEqual implements ComparatorInterface
 {
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
-     * @throws ComparatorException
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
      */
@@ -31,7 +31,7 @@ class NotEqual implements ComparatorInterface
     }
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -58,4 +58,5 @@ class NotEqual implements ComparatorInterface
             ComparatorOperators::TYPE_STRING,
         ];
     }
+
 }

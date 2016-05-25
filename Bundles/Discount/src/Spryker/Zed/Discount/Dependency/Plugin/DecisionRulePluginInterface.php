@@ -12,10 +12,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DecisionRulePluginInterface
 {
+
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -39,4 +40,5 @@ interface DecisionRulePluginInterface
      * @return array
      */
     public function acceptedDataTypes();
+
 }

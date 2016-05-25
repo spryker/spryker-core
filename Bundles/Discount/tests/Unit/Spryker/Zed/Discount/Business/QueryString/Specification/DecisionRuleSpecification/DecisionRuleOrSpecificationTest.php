@@ -13,6 +13,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
 
 class DecisionRuleOrSpecificationTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -58,21 +59,22 @@ class DecisionRuleOrSpecificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $leftMock
-     * @param $rightMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $leftMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $rightMock
      *
-     * @return DecisionRuleOrSpecification
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification
      */
-    protected function createDecisionRuleOrSpecification($leftMock, $rightMock)
+    protected function createDecisionRuleOrSpecification(DecisionRuleSpecificationInterface $leftMock, DecisionRuleSpecificationInterface $rightMock)
     {
         return new DecisionRuleOrSpecification($leftMock, $rightMock);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DecisionRuleSpecificationInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected function createDecisionRuleSpecificationMock()
     {
         return $this->getMock(DecisionRuleSpecificationInterface::class);
     }
+
 }

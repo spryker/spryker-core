@@ -22,9 +22,10 @@ class Distributor implements DistributorInterface
     protected $roundingError = 0.0;
 
     /**
-     * @param CollectedDiscountTransfer $collectedDiscountTransfer
-     * @throws DistributorException
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
+     * @throws \Spryker\Zed\Discount\Business\Exception\DistributorException
      *
+     * @return void
      */
     public function distribute(CollectedDiscountTransfer $collectedDiscountTransfer)
     {
@@ -45,7 +46,7 @@ class Distributor implements DistributorInterface
 
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($collectedDiscountTransfer->getDiscount());
 
-        foreach ( $collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
+        foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
             if (!$this->isOriginalItemCalculatedDiscountsProvided($discountableItemTransfer)) {
                 continue;
             }
@@ -64,11 +65,11 @@ class Distributor implements DistributorInterface
     }
 
     /**
-     * @param DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
      *
      * @return bool
      *
-     * @throws DistributorException
+     * @throws \Spryker\Zed\Discount\Business\Exception\DistributorException
      */
     protected function isOriginalItemCalculatedDiscountsProvided(DiscountableItemTransfer $discountableItemTransfer)
     {
@@ -88,7 +89,7 @@ class Distributor implements DistributorInterface
     }
 
     /**
-     * @param CollectedDiscountTransfer $collectedDiscountTransfer
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
      *
      * @return int
      */
@@ -104,7 +105,7 @@ class Distributor implements DistributorInterface
     }
 
     /**
-     * @param DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
      *
      * @return int
      */

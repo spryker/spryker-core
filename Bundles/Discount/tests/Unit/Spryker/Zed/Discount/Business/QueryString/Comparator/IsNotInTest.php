@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
 
 class IsNotInTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -72,10 +73,11 @@ class IsNotInTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return IsNotIn
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn
      */
     protected function createIsNotIn()
     {
         return new IsNotIn();
     }
+
 }

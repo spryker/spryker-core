@@ -12,8 +12,9 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class LessEqual implements ComparatorInterface
 {
+
     /**
-     * @param ClauseTransfer $compareWithValue
+     * @param \Generated\Shared\Transfer\ClauseTransfer $compareWithValue
      * @param string $withValue
      *
      * @return bool
@@ -30,7 +31,7 @@ class LessEqual implements ComparatorInterface
     }
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -56,4 +57,5 @@ class LessEqual implements ComparatorInterface
             ComparatorOperators::TYPE_INTEGER,
         ];
     }
+
 }

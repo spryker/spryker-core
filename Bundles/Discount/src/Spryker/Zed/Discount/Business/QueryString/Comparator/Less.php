@@ -12,12 +12,13 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class Less implements ComparatorInterface
 {
+
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
      * @return bool
-     * @throws ComparatorException
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
@@ -29,7 +30,7 @@ class Less implements ComparatorInterface
     }
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -55,4 +56,5 @@ class Less implements ComparatorInterface
             ComparatorOperators::TYPE_INTEGER,
         ];
     }
+
 }

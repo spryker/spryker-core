@@ -6,24 +6,24 @@
 
 namespace Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification;
 
-use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class CollectorOrSpecification implements CollectorSpecificationInterface
 {
+
     /**
-     * @var CollectorSpecificationInterface
+     * @var \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     protected $left;
 
     /**
-     * @var CollectorSpecificationInterface
+     * @var \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     protected $right;
 
     /**
-     * @param CollectorSpecificationInterface $left
-     * @param CollectorSpecificationInterface $right
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $left
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $right
      */
     public function __construct(
         CollectorSpecificationInterface $left,
@@ -47,8 +47,8 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
     }
 
     /**
-     * @param DiscountableItemTransfer[] $leftArray
-     * @param DiscountableItemTransfer[] $rightArray
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $leftArray
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $rightArray
      *
      * @return array
      */
@@ -69,4 +69,5 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
 
         return $merged;
     }
+
 }

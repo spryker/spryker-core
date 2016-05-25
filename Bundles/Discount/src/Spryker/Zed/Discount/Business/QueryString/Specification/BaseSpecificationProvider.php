@@ -10,8 +10,9 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 class BaseSpecificationProvider
 {
+
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return string
      */
@@ -23,4 +24,5 @@ class BaseSpecificationProvider
         }
         return $clauseFieldName;
     }
+
 }

@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
-use Generated\Shared\Transfer\DiscountableItemTransfer;
-
 class Fixed implements CalculatorInterface
 {
 
     /**
-     * @param DiscountableItemTransfer[] $discountableItems
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      * @param float $percentage
      *
      * @return float

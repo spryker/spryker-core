@@ -12,20 +12,18 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorOrSpecification;
-use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class CollectorProvider extends BaseSpecificationProvider implements SpecificationProviderInterface
 {
 
     /**
-     * @var CollectorPluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
      */
     protected $collectorPlugins = [];
 
     /**
-     * @param CollectorPluginInterface[] $collectorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[] $collectorPlugins
      */
     public function __construct(array $collectorPlugins)
     {
@@ -33,10 +31,10 @@ class CollectorProvider extends BaseSpecificationProvider implements Specificati
     }
 
     /**
-     * @param CollectorSpecificationInterface $left
-     * @param CollectorSpecificationInterface $right
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $left
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $right
      *
-     * @return CollectorAndSpecification
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification
      */
     public function createAnd($left, $right)
     {
@@ -44,10 +42,10 @@ class CollectorProvider extends BaseSpecificationProvider implements Specificati
     }
 
     /**
-     * @param CollectorSpecificationInterface $left
-     * @param CollectorSpecificationInterface $right
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $left
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $right
      *
-     * @return CollectorAndSpecification
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification
      */
     public function createOr($left, $right)
     {
@@ -55,11 +53,11 @@ class CollectorProvider extends BaseSpecificationProvider implements Specificati
     }
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return CollectorSpecificationInterface
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      *
-     * @throws QueryStringException
+     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      */
     public function getSpecificationContext(ClauseTransfer $clauseTransfer)
     {
@@ -80,4 +78,5 @@ class CollectorProvider extends BaseSpecificationProvider implements Specificati
             )
         );
     }
+
 }

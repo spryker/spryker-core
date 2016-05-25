@@ -7,15 +7,13 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 use Spryker\Zed\Discount\Business\QueryString\Validator;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleBuilder;
-use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
-use Spryker\Zed\Discount\Business\QueryString\Specification\AbstractSpecificationBuilder;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -76,10 +74,10 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param SpecificationBuilder|null $decisionRuleMock
-     * @param SpecificationBuilder|null $collectorMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder|null $decisionRuleMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder|null $collectorMock
      *
-     * @return Validator
+     * @return \Spryker\Zed\Discount\Business\QueryString\Validator
      */
     protected function createValidator(
         SpecificationBuilder $decisionRuleMock = null,
@@ -101,7 +99,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpecificationBuilder
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
     protected function createSpecificationBuilderMock()
     {
@@ -111,10 +109,11 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DecisionRuleSpecificationInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected function createDecisionRuleSpecificationMock()
     {
-       return $this->getMock(DecisionRuleSpecificationInterface::class);
+        return $this->getMock(DecisionRuleSpecificationInterface::class);
     }
+
 }

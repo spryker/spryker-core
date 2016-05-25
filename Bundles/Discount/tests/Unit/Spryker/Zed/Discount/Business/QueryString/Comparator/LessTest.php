@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Less;
 
 class LessTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -72,10 +73,11 @@ class LessTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Less
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Less
      */
     protected function createLess()
     {
         return new Less();
     }
+
 }

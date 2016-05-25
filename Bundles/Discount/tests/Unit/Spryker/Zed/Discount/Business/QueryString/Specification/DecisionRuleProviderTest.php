@@ -9,9 +9,9 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString\Specification;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification;
+use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
@@ -88,8 +88,9 @@ class DecisionRuleProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $decisionRulePluginMock
-     * @return DecisionRuleProvider
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface $decisionRulePluginMock
+     *
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider
      */
     protected function createDecisionRuleProvider($decisionRulePluginMock = null)
     {
@@ -101,7 +102,7 @@ class DecisionRuleProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DecisionRulePluginInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
      */
     protected function createDecisionRulePluginMock()
     {
@@ -109,10 +110,11 @@ class DecisionRuleProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DecisionRuleSpecificationInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected function createDecisionRuleSpecificationMock()
     {
         return $this->getMock(DecisionRuleSpecificationInterface::class);
     }
+
 }

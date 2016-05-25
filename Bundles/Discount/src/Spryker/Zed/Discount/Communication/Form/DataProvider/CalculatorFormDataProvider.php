@@ -11,6 +11,7 @@ use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 
 class CalculatorFormDataProvider
 {
+
     /**
      * @var array
      */
@@ -58,4 +59,5 @@ class CalculatorFormDataProvider
 
         return $calculatorPlugins;
     }
+
 }

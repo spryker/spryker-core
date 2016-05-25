@@ -8,39 +8,37 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface;
 
 class SpecificationBuilder
 {
+
     const OPEN_PARENTHESIS = '(';
     const CLOSE_PARENTHESIS = ')';
 
     const TYPE_COLLECTOR = 'collector';
     const TYPE_DECISION_RULE = 'decision-rule';
 
-
     /**
-     * @var Tokenizer
+     * @var \Spryker\Zed\Discount\Business\QueryString\Tokenizer
      */
     protected $tokenizer;
 
     /**
-     * @var DiscountToAssertionInterface
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface
      */
     protected $assertionFacade;
 
     /**
-     * @var SpecificationProviderInterface
+     * @var \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface
      */
     protected $specificationProvider;
 
     /**
-     * @param Tokenizer $tokenizer
-     * @param DiscountToAssertionInterface $assertionFacade
-     * @param SpecificationProviderInterface $specificationProvider
+     * @param \Spryker\Zed\Discount\Business\QueryString\Tokenizer $tokenizer
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface $assertionFacade
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProvider
      */
     public function __construct(
         Tokenizer $tokenizer,
@@ -55,7 +53,7 @@ class SpecificationBuilder
     /**
      * @param string $queryString
      *
-     * @return CollectorSpecificationInterface|DecisionRuleSpecificationInterface
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     public function buildFromQueryString($queryString)
     {
@@ -69,9 +67,9 @@ class SpecificationBuilder
      * @param string[] $tokens
      * @param int $currentTokenIndex
      *
-     * @throws QueryStringException
+     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
-     * @return CollectorSpecificationInterface|DecisionRuleSpecificationInterface
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected function build(array $tokens, &$currentTokenIndex = 0)
     {
@@ -113,7 +111,6 @@ class SpecificationBuilder
                     }
 
                     return $compositeSpecification;
-                    break;
 
                 case LogicalComparators::COMPARATOR_AND:
                     $lastConditional = $token;
@@ -124,7 +121,6 @@ class SpecificationBuilder
                     break;
 
                 default:
-
                     $clauseTransfer = $this->buildClause($tokens, $currentTokenIndex);
 
                     if ($parentLeftSpecification === null) {
@@ -161,9 +157,9 @@ class SpecificationBuilder
      * @param array $tokens
      * @param int $currentTokenIndex
      *
-     * @throws QueryStringException
+     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
-     * @return ClauseTransfer
+     * @return \Generated\Shared\Transfer\ClauseTransfer
      */
     protected function buildClause($tokens, &$currentTokenIndex)
     {
@@ -214,11 +210,11 @@ class SpecificationBuilder
 
     /**
      * @param string $conditional
-     * @param CollectorSpecificationInterface|DecisionRuleSpecificationInterface $parentLeftSpecification
-     * @param CollectorSpecificationInterface|DecisionRuleSpecificationInterface $parentRightSpecification
-     * @param CollectorSpecificationInterface|DecisionRuleSpecificationInterface $compositeSpecification
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $parentLeftSpecification
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $parentRightSpecification
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $compositeSpecification
      *
-     * @return CollectorSpecificationInterface|DecisionRuleSpecificationInterface
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected function createComposite(
         $conditional,
@@ -236,7 +232,7 @@ class SpecificationBuilder
 
         if ($conditional === LogicalComparators::COMPARATOR_AND) {
             $compositeSpecification = $this->specificationProvider->createAnd($parentLeftSpecification, $parentRightSpecification);
-        } else if ($conditional === LogicalComparators::COMPARATOR_OR) {
+        } elseif ($conditional === LogicalComparators::COMPARATOR_OR) {
             $compositeSpecification = $this->specificationProvider->createOr($parentLeftSpecification, $parentRightSpecification);
         }
 
@@ -258,7 +254,7 @@ class SpecificationBuilder
      * @param string $comparatorOperator
      * @param string $value
      *
-     * @return ClauseTransfer
+     * @return \Generated\Shared\Transfer\ClauseTransfer
      */
     protected function createClauseTransfer($fieldName, $comparatorOperator, $value)
     {
@@ -272,7 +268,8 @@ class SpecificationBuilder
 
     /**
      * @param string $fieldName
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     * @return void
      */
     protected function setClauseField($fieldName, ClauseTransfer $clauseTransfer)
     {
@@ -311,7 +308,8 @@ class SpecificationBuilder
     /**
      * @param string $fieldName
      *
-     * @throws QueryStringException
+     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
+     * @return void
      */
     protected function validateField($fieldName)
     {

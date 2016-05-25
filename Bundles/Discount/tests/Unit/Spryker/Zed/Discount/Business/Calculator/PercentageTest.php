@@ -9,7 +9,7 @@ namespace Unit\Spryker\Zed\Discount\Business\Calculator;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Discount\Business\Calculator\Percentage;
+use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
 
 /**
  * Class PercentageTest

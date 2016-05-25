@@ -7,38 +7,39 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
+use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 
 class CalculatorForm extends AbstractType
 {
+
     const FIELD_AMOUNT = 'amount';
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_QUERY_STRING = 'collector_query_string';
 
     /**
-     * @var CalculatorFormDataProvider
+     * @var \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider
      */
     protected $calculatorFormDataProvider;
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @param CalculatorFormDataProvider $calculatorFormDataProvider
-     * @param DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider $calculatorFormDataProvider
+     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      */
     public function __construct(
         CalculatorFormDataProvider $calculatorFormDataProvider,
         DiscountFacade $discountFacade
-    )
-    {
+    ) {
+
         $this->calculatorFormDataProvider = $calculatorFormDataProvider;
         $this->discountFacade = $discountFacade;
     }
@@ -123,5 +124,5 @@ class CalculatorForm extends AbstractType
     {
         return 'discount_calculator';
     }
-}
 
+}

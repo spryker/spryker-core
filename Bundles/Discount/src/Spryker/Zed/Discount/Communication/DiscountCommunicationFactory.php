@@ -21,7 +21,6 @@ use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
@@ -30,9 +29,10 @@ use Symfony\Component\Form\FormInterface;
  */
 class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
+
     /**
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createDiscountForm()
     {
@@ -52,7 +52,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return GeneralForm
+     * @return \Spryker\Zed\Discount\Communication\Form\GeneralForm
      */
     public function createGeneralFormType()
     {
@@ -60,7 +60,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CalculatorForm
+     * @return \Spryker\Zed\Discount\Communication\Form\CalculatorForm
      */
     public function createCalculatorFormType()
     {
@@ -70,7 +70,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ConditionsForm
+     * @return \Spryker\Zed\Discount\Communication\Form\ConditionsForm
      */
     public function createConditionsFormType()
     {
@@ -78,18 +78,18 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return VoucherForm
+     * @return \Spryker\Zed\Discount\Communication\Form\VoucherForm
      */
     public function createVoucherFormType()
     {
-       return new VoucherForm();
+        return new VoucherForm();
     }
 
     /**
      *
-     * @param DiscountVoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createVoucherForm(DiscountVoucherTransfer $discountVoucherTransfer)
     {
@@ -115,15 +115,15 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CalculatorFormDataProvider
+     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider
      */
     public function createCalculatorFormDataProvider()
     {
-       return new CalculatorFormDataProvider($this->getCalculatorPlugins());
+        return new CalculatorFormDataProvider($this->getCalculatorPlugins());
     }
 
     /**
-     * @return VoucherFormDataProvider
+     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider
      */
     public function createVoucherFormDataProvider()
     {
@@ -136,7 +136,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      * @param int $idDiscount
      * @param int $batchValue
      *
-     * @return DiscountVoucherCodesTable
+     * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable
      */
     public function createDiscountVoucherCodesTable(DataTablesTransfer $dataTablesTransfer, $idPool, $idDiscount, $batchValue)
     {
@@ -164,4 +164,5 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
     }
+
 }

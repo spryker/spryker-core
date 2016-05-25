@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Equal;
 
 class EqualTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -72,10 +73,11 @@ class EqualTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Equal
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Equal
      */
     protected function createEqual()
     {
         return new Equal();
     }
+
 }

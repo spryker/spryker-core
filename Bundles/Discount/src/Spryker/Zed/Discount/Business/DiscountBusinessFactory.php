@@ -20,6 +20,15 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
+use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
+use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaProviderFactory;
+use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
+use Spryker\Zed\Discount\Business\QueryString\Validator;
 use Spryker\Zed\Discount\Business\SalesAggregator\DiscountTotalAmount;
 use Spryker\Zed\Discount\Business\SalesAggregator\GrandTotalWithDiscounts;
 use Spryker\Zed\Discount\Business\SalesAggregator\ItemDiscounts;
@@ -28,17 +37,7 @@ use Spryker\Zed\Discount\Business\SalesAggregator\OrderExpensesWithDiscounts;
 use Spryker\Zed\Discount\Business\SalesAggregator\OrderExpenseTaxWithDiscounts;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
-use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
-use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
-use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
-use Spryker\Zed\Discount\Business\QueryString\Specification\MetaProviderFactory;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
-use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
-use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
-use Spryker\Zed\Discount\Business\QueryString\Validator;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -118,8 +117,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
         return new VoucherEngine(
             $this->getConfig(),
             $this->getQueryContainer(),
-            $this->getMessengerFacade(),
-            $this->getPropelConnection()
+            $this->getMessengerFacade()
         );
     }
 
@@ -172,14 +170,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected function getPropelConnection()
-    {
-        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_PROPEL_CONNECTION);
-    }
-
-    /**
      * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStoreConfig()
@@ -188,7 +178,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountToAssertionInterface
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface
      */
     protected function getAssertionFacade()
     {
@@ -246,7 +236,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemSkuDecisionRule
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
      */
     public function createSkuDecisionRule()
     {
@@ -254,7 +244,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SkuCollector
+     * @return \Spryker\Zed\Discount\Business\Collector\SkuCollector
      */
     public function createSkuCollector()
     {
@@ -262,7 +252,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ComparatorOperators
+     * @return \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
     public function createComparatorOperators()
     {
@@ -272,7 +262,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\OperatorProvider
      */
     protected function createComparatorProvider()
     {
@@ -280,7 +270,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CollectorProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider
      */
     protected function createCollectorProvider()
     {
@@ -288,7 +278,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DecisionRuleProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider
      */
     protected function createDecisionRuleProvider()
     {
@@ -296,19 +286,19 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SpecificationBuilder
+     * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
     protected function createDecisionRuleBuilder()
     {
         return new SpecificationBuilder(
-             $this->createTokenizer(),
-             $this->getAssertionFacade(),
-             $this->createDecisionRuleProvider()
+            $this->createTokenizer(),
+            $this->getAssertionFacade(),
+            $this->createDecisionRuleProvider()
         );
     }
 
     /**
-     * @return SpecificationBuilder
+     * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
     protected function createCollectorBuilder()
     {
@@ -320,7 +310,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Tokenizer
+     * @return \Spryker\Zed\Discount\Business\QueryString\Tokenizer
      */
     protected function createTokenizer()
     {
@@ -328,7 +318,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MetaProviderFactory
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaProviderFactory
      */
     public function createQueryStringSpecificationMetaProviderFactory()
     {
@@ -336,7 +326,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return LogicalComparators
+     * @return \Spryker\Zed\Discount\Business\QueryString\LogicalComparators
      */
     public function createLogicalComparators()
     {
@@ -344,7 +334,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Validator
+     * @return \Spryker\Zed\Discount\Business\QueryString\Validator
      */
     public function createQueryStringValidator()
     {
@@ -363,7 +353,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountPersist
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountPersist
      */
     public function createDiscountPersist()
     {
@@ -371,7 +361,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GrandTotalDecisionRule
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule
      */
     public function createGrandTotalDecisionRule()
     {
@@ -379,7 +369,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TotalQuantityDecisionRule
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule
      */
     public function createTotalQuantityDecisionRule()
     {
@@ -387,11 +377,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubTotalDecisionRule
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule
      */
     public function createSubTotalDecisionRule()
     {
         return new SubTotalDecisionRule($this->createComparatorOperators());
     }
-}
 
+}

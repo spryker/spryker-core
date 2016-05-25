@@ -11,19 +11,18 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DecisionRuleProvider extends BaseSpecificationProvider implements SpecificationProviderInterface
 {
+
     /**
-     * @var DecisionRulePluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
      */
     protected $decisionRulePlugins = [];
 
     /**
-     * @param DecisionRulePluginInterface[] $collectorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[] $collectorPlugins
      */
     public function __construct(array $collectorPlugins)
     {
@@ -31,10 +30,10 @@ class DecisionRuleProvider extends BaseSpecificationProvider implements Specific
     }
 
     /**
-     * @param DecisionRuleSpecificationInterface $left
-     * @param DecisionRuleSpecificationInterface $right
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $left
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $right
      *
-     * @return DecisionRuleSpecificationInterface
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     public function createAnd($left, $right)
     {
@@ -42,10 +41,10 @@ class DecisionRuleProvider extends BaseSpecificationProvider implements Specific
     }
 
     /**
-     * @param DecisionRuleSpecificationInterface $left
-     * @param DecisionRuleSpecificationInterface $right
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $left
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $right
      *
-     * @return DecisionRuleSpecificationInterface
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     public function createOr($left, $right)
     {
@@ -53,11 +52,11 @@ class DecisionRuleProvider extends BaseSpecificationProvider implements Specific
     }
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return DecisionRuleSpecificationInterface
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      *
-     * @throws QueryStringException
+     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      */
     public function getSpecificationContext(ClauseTransfer $clauseTransfer)
     {
@@ -78,6 +77,5 @@ class DecisionRuleProvider extends BaseSpecificationProvider implements Specific
             )
         );
     }
-
 
 }

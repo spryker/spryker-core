@@ -194,13 +194,15 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
 
 
     /**
+     * @api
+     *
      * @param string $discountName
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryDiscountName($discountName)
     {
-       return $this->getFactory()
+        return $this->getFactory()
            ->createDiscountQuery()
            ->filterByDisplayName($discountName);
     }

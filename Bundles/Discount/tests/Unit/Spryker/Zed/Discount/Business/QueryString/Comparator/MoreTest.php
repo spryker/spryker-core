@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\More;
 
 class MoreTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -72,10 +73,11 @@ class MoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return More
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\More
      */
     protected function createMore()
     {
         return new More();
     }
+
 }

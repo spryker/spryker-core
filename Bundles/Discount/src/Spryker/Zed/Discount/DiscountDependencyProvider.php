@@ -12,17 +12,14 @@ use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\GrandTotalDecisionRulePlugin;
-use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridge;
-use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -54,10 +51,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_MESSENGER] = function (Container $container) {
             return new DiscountToMessengerBridge($container->getLocator()->messenger()->facade());
-        };
-
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
-            return (new Connection())->get();
         };
 
         $container[self::CALCULATOR_PLUGINS] = function () {
@@ -125,7 +118,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return CollectorPluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
      */
     protected function getCollectorPlugins()
     {
@@ -135,7 +128,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return DecisionRulePluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
      */
     protected function getDecisionRulePlugins()
     {

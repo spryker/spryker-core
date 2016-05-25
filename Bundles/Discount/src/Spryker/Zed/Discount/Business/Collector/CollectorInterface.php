@@ -6,16 +6,17 @@
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CollectorInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return DiscountableItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
+
 }

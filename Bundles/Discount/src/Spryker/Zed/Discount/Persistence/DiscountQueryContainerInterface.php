@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 /**
@@ -88,6 +87,8 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryVoucherCodeByIdVoucherCode($idVoucherCode);
 
     /**
+     * @api
+     *
      * @param int $idVoucherPool
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery

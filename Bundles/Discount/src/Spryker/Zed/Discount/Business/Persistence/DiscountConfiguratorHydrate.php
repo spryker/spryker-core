@@ -17,8 +17,9 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountConfiguratorHydrate
 {
+
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
@@ -33,7 +34,7 @@ class DiscountConfiguratorHydrate
     /**
      * @param int $idDiscount
      *
-     * @return DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function getByIdDiscount($idDiscount)
     {
@@ -59,9 +60,9 @@ class DiscountConfiguratorHydrate
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
-     * @return DiscountGeneralTransfer
+     * @return \Generated\Shared\Transfer\DiscountGeneralTransfer
      */
     protected function hydrateGeneralDiscount(SpyDiscount $discountEntity)
     {
@@ -77,9 +78,9 @@ class DiscountConfiguratorHydrate
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
-     * @return DiscountCalculatorTransfer
+     * @return \Generated\Shared\Transfer\DiscountCalculatorTransfer
      */
     protected function hydrateDiscountCalculator(SpyDiscount $discountEntity)
     {
@@ -89,21 +90,22 @@ class DiscountConfiguratorHydrate
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
-     * @return DiscountConditionTransfer
+     * @return \Generated\Shared\Transfer\DiscountConditionTransfer
      */
     protected function hydrateDiscountCondition(SpyDiscount $discountEntity)
     {
         $discountConditionTransfer = new DiscountConditionTransfer();
         $discountConditionTransfer->fromArray($discountEntity->toArray(), true);
+
         return $discountConditionTransfer;
     }
 
     /**
-     * @param $idDiscount
-     * @param SpyDiscount $discountEntity
-     * @param DiscountConfiguratorTransfer $discountConfigurator
+     * @param integer $idDiscount
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
      *
      * @return void
      */
@@ -122,7 +124,7 @@ class DiscountConfiguratorHydrate
     }
 
     /**
-     * @return DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     protected function createDiscountConfiguratorTransfer()
     {
@@ -130,7 +132,7 @@ class DiscountConfiguratorHydrate
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return string
      */
@@ -143,4 +145,5 @@ class DiscountConfiguratorHydrate
 
         return $voucherType;
     }
+
 }

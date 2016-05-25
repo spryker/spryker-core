@@ -10,14 +10,11 @@ namespace Spryker\Zed\Discount\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
-use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
-use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -28,6 +25,8 @@ class DiscountFacade extends AbstractFacade
 
     /**
      * Calculate discounts based on provided quote transfer.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -42,9 +41,11 @@ class DiscountFacade extends AbstractFacade
 
     /**
      *
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -60,9 +61,11 @@ class DiscountFacade extends AbstractFacade
 
     /**
      *
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -77,9 +80,11 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -90,13 +95,15 @@ class DiscountFacade extends AbstractFacade
     ) {
         return $this->getFactory()
             ->createTotalQuantityDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer , $clauseTransfer);
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -104,16 +111,18 @@ class DiscountFacade extends AbstractFacade
         QuoteTransfer $quoteTransfer,
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
-    )
-    {
+    ) {
+
         return $this->getFactory()
             ->createSubTotalDecisionRule()
-            ->isSatisfiedBy($quoteTransfer,$itemTransfer , $clauseTransfer);
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return array
      */
@@ -171,6 +180,8 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param string $type
      *
      * @return array|string[]
@@ -186,10 +197,10 @@ class DiscountFacade extends AbstractFacade
     /**
      * @api
      *
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $compareWith
      *
-     * @throws ComparatorException
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
      */
@@ -201,6 +212,8 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param string $type
      * @param string $queryString
      *
@@ -215,7 +228,9 @@ class DiscountFacade extends AbstractFacade
 
 
     /**
-     * @param DiscountConfiguratorTransfer $discountConfigurator
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
      *
      * @return int
      */
@@ -227,7 +242,9 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param DiscountConfiguratorTransfer $discountConfigurator
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
      *
      * @return bool
      */
@@ -239,9 +256,11 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param int $idDiscount
      *
-     * @return DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function getHydratedDiscountConfiguratorByIdDiscount($idDiscount)
     {
@@ -251,6 +270,8 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @param int $idDiscount
      * @param bool $isActive
      *
@@ -265,9 +286,11 @@ class DiscountFacade extends AbstractFacade
 
 
     /**
-     * @param DiscountVoucherTransfer $discountVoucherTransfer
+     * @api
      *
-     * @return VoucherCreateInfoTransfer
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     *
+     * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
     public function saveVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer)
     {
@@ -279,7 +302,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @api
      *
-     * @param DiscountableItemTransfer[] $discountableObjects
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
      * @param float $percentage
      *
      * @return float
@@ -294,7 +317,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @api
      *
-     * @param DiscountableItemTransfer[] $discountableObjects
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
      * @param float $amount
      *
      * @return float
@@ -309,7 +332,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @api
      *
-     * @param CollectedDiscountTransfer $collectedDiscountTransfer
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
      *
      * @return void
      */

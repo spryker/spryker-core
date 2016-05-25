@@ -8,8 +8,8 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
-use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 
 class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
 {
@@ -172,20 +172,21 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array|ComparatorInterface[] $comparators
+     * @param array|\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[] $comparators
      *
-     * @return ComparatorOperators
+     * @return \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
     protected function createComparatorOperators(array $comparators)
     {
-       return new ComparatorOperators($comparators);
+        return new ComparatorOperators($comparators);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ComparatorInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface
      */
     protected function createComparatorMock()
     {
         return $this->getMock(ComparatorInterface::class);
     }
+
 }

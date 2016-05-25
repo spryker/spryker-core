@@ -101,7 +101,7 @@ class DiscountFacadeCalculateTest extends Test
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer()
     {
@@ -126,7 +126,7 @@ class DiscountFacadeCalculateTest extends Test
     /**
      * @param string $decisionRuleQueryString
      * @param string $collectorQueryString
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      *
      * @throws \Propel\Runtime\Exception\PropelException
      */
@@ -147,4 +147,5 @@ class DiscountFacadeCalculateTest extends Test
 
         return $discountEntity;
     }
+
 }

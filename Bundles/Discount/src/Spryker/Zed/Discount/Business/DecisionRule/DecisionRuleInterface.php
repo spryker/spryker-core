@@ -11,10 +11,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DecisionRuleInterface
 {
+
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $currentItemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      *
@@ -25,4 +26,5 @@ interface DecisionRuleInterface
         ItemTransfer $currentItemTransfer,
         ClauseTransfer $clauseTransfer
     );
+
 }

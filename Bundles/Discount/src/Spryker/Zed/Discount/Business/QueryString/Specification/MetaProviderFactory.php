@@ -11,13 +11,14 @@ use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 
 class MetaProviderFactory
 {
+
     /**
-     * @var DiscountBusinessFactory
+     * @var \Spryker\Zed\Discount\Business\DiscountBusinessFactory
      */
     protected $discountBusinessFactory;
 
     /**
-     * @param DiscountBusinessFactory $discountBusinessFactory
+     * @param \Spryker\Zed\Discount\Business\DiscountBusinessFactory $discountBusinessFactory
      */
     public function __construct(DiscountBusinessFactory $discountBusinessFactory)
     {
@@ -25,19 +26,17 @@ class MetaProviderFactory
     }
 
     /**
-     * @param $type
+     * @param string $type
      *
-     * @return MetaDataProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaDataProvider
      */
     public function createMetaProviderByType($type)
     {
         switch (strtolower($type)) {
             case SpecificationBuilder::TYPE_DECISION_RULE:
                 return $this->createDecisionRuleMetaProvider();
-                break;
             case SpecificationBuilder::TYPE_COLLECTOR:
                 return $this->createCollectorMetaProvider();
-                break;
 
         }
 
@@ -50,7 +49,7 @@ class MetaProviderFactory
     }
 
     /**
-     * @return MetaDataProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaDataProvider
      */
     protected function createDecisionRuleMetaProvider()
     {
@@ -62,7 +61,7 @@ class MetaProviderFactory
     }
 
     /**
-     * @return MetaDataProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaDataProvider
      */
     protected function createCollectorMetaProvider()
     {
@@ -72,4 +71,5 @@ class MetaProviderFactory
             $this->discountBusinessFactory->createLogicalComparators()
         );
     }
+
 }

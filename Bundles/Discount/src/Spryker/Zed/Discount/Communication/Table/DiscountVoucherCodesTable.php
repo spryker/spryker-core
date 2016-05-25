@@ -17,6 +17,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class DiscountVoucherCodesTable extends AbstractTable
 {
+
     const HEADER_COL_ACTIONS = 'Actions';
 
     /**
@@ -153,7 +154,7 @@ class DiscountVoucherCodesTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscountVoucher $discountVoucherEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
      *
      * @return string
      */

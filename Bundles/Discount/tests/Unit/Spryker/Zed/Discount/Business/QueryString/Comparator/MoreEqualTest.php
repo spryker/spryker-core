@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\MoreEqual;
 
 class MoreEqualTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -87,10 +88,11 @@ class MoreEqualTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return MoreEqual
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\MoreEqual
      */
     protected function createMoreEqual()
     {
         return new MoreEqual();
     }
+
 }

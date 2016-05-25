@@ -8,10 +8,10 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
-use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 
 class ComparatorOperators
 {
+
     const TYPE_INTEGER  = 'integer';
     const TYPE_STRING  = 'string';
     const TYPE_LIST = 'list';
@@ -22,7 +22,7 @@ class ComparatorOperators
     protected $operators = [];
 
     /**
-     * @param ComparatorInterface[] $operators
+     * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[] $operators
      */
     public function __construct(array $operators)
     {
@@ -30,11 +30,11 @@ class ComparatorOperators
     }
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param mixed $withValue
      *
      * @return bool
-     * @throws ComparatorException
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
@@ -54,14 +54,13 @@ class ComparatorOperators
             $withTypes = $clauseTransfer->getAcceptedTypes();
             if ($this->isTypeAccepted($withTypes, $operator->getAcceptedTypes()) === false) {
                 throw new ComparatorException(
-                   sprintf(
-                       '""%s" operator does not accept any of "%s" types',
-                       get_class($operator),
-                       implode(',', $withTypes)
-                   )
+                    sprintf(
+                        '""%s" operator does not accept any of "%s" types',
+                        get_class($operator),
+                        implode(',', $withTypes)
+                    )
                 );
             }
-
 
             return $operator->compare($clauseTransfer, $withValue);
         }
@@ -134,4 +133,5 @@ class ComparatorOperators
 
         return false;
     }
+
 }

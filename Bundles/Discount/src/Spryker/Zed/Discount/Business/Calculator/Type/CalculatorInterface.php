@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
-use Generated\Shared\Transfer\DiscountableItemTransfer;
-
 interface CalculatorInterface
 {
 
     /**
-     * @param DiscountableItemTransfer[] $discountableObjects
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
      * @param float $value
      *
      * @return float

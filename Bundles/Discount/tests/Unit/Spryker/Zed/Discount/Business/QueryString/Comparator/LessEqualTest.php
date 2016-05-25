@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\LessEqual;
 
 class LessEqualTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -87,10 +88,11 @@ class LessEqualTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return LessEqual
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\LessEqual
      */
     protected function createLessEqual()
     {
         return new LessEqual();
     }
+
 }

@@ -74,10 +74,11 @@ class ContainsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Contains
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Contains
      */
     protected function createContains()
     {
         return new Contains();
     }
+
 }

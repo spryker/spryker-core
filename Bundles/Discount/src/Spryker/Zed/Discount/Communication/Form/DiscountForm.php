@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -18,24 +17,24 @@ class DiscountForm extends AbstractType
 {
 
     /**
-     * @var GeneralForm
+     * @var \Spryker\Zed\Discount\Communication\Form\GeneralForm
      */
     protected $generalForm;
 
     /**
-     * @var CalculatorForm
+     * @var \Spryker\Zed\Discount\Communication\Form\CalculatorForm
      */
     protected $calculatorForm;
 
     /**
-     * @var ConditionsForm
+     * @var \Spryker\Zed\Discount\Communication\Form\ConditionsForm
      */
     protected $conditionsForm;
 
     /**
-     * @param GeneralForm $generalForm
-     * @param CalculatorForm $calculatorForm
-     * @param ConditionsForm $conditionsForm
+     * @param \Spryker\Zed\Discount\Communication\Form\GeneralForm $generalForm
+     * @param \Spryker\Zed\Discount\Communication\Form\CalculatorForm $calculatorForm
+     * @param \Spryker\Zed\Discount\Communication\Form\ConditionsForm $conditionsForm
      */
     public function __construct(
         GeneralForm $generalForm,

@@ -11,12 +11,13 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 
 class Tokenizer
 {
+
     const STRING_TO_TOKENS_REGEXP = '((\(|\)|".*?")|\s+)';
 
     /**
      * @param string $queryString
      *
-     * @throws QueryStringException
+     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
      * @return array|string[]
      */
@@ -37,4 +38,5 @@ class Tokenizer
 
         return $tokens;
     }
+
 }

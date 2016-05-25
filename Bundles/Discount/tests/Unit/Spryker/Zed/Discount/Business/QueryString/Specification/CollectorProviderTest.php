@@ -8,15 +8,16 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString\Specification;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification;
+use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorOrSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 
 class CollectorProviderTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -86,11 +87,11 @@ class CollectorProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $collectorPluginMock
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface $collectorPluginMock
      *
-     * @return CollectorProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider
      */
-    protected function createCollectorProvider($collectorPluginMock = null)
+    protected function createCollectorProvider(CollectorPluginInterface $collectorPluginMock = null)
     {
         if ($collectorPluginMock === null) {
             $collectorPluginMock = $this->createCollectorPluginMock();
@@ -100,7 +101,7 @@ class CollectorProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CollectorPluginInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface
      */
     protected function createCollectorPluginMock()
     {
@@ -108,10 +109,11 @@ class CollectorProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CollectorSpecificationInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     protected function createCollectorSpecificationMock()
     {
         return $this->getMock(CollectorSpecificationInterface::class);
     }
+
 }

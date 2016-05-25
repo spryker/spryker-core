@@ -6,17 +6,16 @@
 
 namespace Spryker\Zed\Discount\Dependency\Facade;
 
-use Spryker\Zed\Assertion\Business\AssertionFacade;
-
 class DiscountToAssertionBridge implements DiscountToAssertionInterface
 {
+
     /**
-     * @var AssertionFacade
+     * @var \Spryker\Zed\Assertion\Business\AssertionFacade
      */
     protected $assertionFacade;
 
     /**
-     * @param AssertionFacade $assertionFacade
+     * @param \Spryker\Zed\Assertion\Business\AssertionFacade $assertionFacade
      */
     public function __construct($assertionFacade)
     {

@@ -8,7 +8,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\Calculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Discount\Business\Calculator\Fixed;
+use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
 
 /**
  * Class FixedTest

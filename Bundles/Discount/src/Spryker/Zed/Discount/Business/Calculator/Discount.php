@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator;
 
-use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Shared\Library\Error\ErrorLogger;
-use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class Discount
@@ -35,15 +34,15 @@ class Discount
     protected $decisionRuleBuilder;
 
     /**
-     * @var VoucherValidator
+     * @var \Spryker\Zed\Discount\Business\Voucher\VoucherValidator
      */
     protected $voucherValidator;
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface $calculator
-     * @param SpecificationBuilder $decisionRuleBuilder
-     * @param VoucherValidator $voucherValidator
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder $decisionRuleBuilder
+     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherValidator $voucherValidator
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,
@@ -73,7 +72,7 @@ class Discount
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param CollectedDiscountTransfer[] $collectedDiscounts
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscounts
      *
      * @return void
      */
@@ -163,8 +162,8 @@ class Discount
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return bool
      */

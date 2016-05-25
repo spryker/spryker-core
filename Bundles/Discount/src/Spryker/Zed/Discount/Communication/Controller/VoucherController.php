@@ -20,15 +20,16 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class VoucherController extends AbstractController
 {
+
     const URL_PARAM_ID_POOL = 'id-pool';
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_ID_VOUCHER = 'id-voucher';
     const CSV_FILENAME = 'vouchers.csv';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteDiscountVouchersAction(Request $request)
     {
@@ -57,9 +58,9 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteVoucherCodeAction(Request $request)
     {
@@ -142,4 +143,5 @@ class VoucherController extends AbstractController
 
         return $redirectUrl;
     }
+
 }

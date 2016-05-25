@@ -11,19 +11,20 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class DecisionRuleAndSpecification implements DecisionRuleSpecificationInterface
 {
+
     /**
-     * @var DecisionRuleSpecificationInterface
+     * @var \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected $left;
 
     /**
-     * @var DecisionRuleSpecificationInterface
+     * @var \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected $right;
 
     /**
-     * @param DecisionRuleSpecificationInterface $left
-     * @param DecisionRuleSpecificationInterface $right
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $left
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $right
      */
     public function __construct(
         DecisionRuleSpecificationInterface $left,
@@ -35,8 +36,8 @@ class DecisionRuleAndSpecification implements DecisionRuleSpecificationInterface
 
     /**
      *
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */
@@ -44,4 +45,5 @@ class DecisionRuleAndSpecification implements DecisionRuleSpecificationInterface
     {
         return $this->left->isSatisfiedBy($quoteTransfer, $itemTransfer) && $this->right->isSatisfiedBy($quoteTransfer, $itemTransfer);
     }
+
 }

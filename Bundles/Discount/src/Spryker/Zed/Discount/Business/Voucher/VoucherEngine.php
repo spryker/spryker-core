@@ -11,15 +11,11 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-/**
- * Class VoucherEngine
- */
 class VoucherEngine
 {
 
@@ -44,26 +40,18 @@ class VoucherEngine
     protected $messengerFacade;
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected $connection;
-
-    /**
      * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
-     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         DiscountConfig $discountConfig,
         DiscountQueryContainerInterface $queryContainer,
-        DiscountToMessengerInterface $messengerFacade,
-        ConnectionInterface $connection
+        DiscountToMessengerInterface $messengerFacade
     ) {
         $this->discountConfig = $discountConfig;
         $this->queryContainer = $queryContainer;
         $this->messengerFacade = $messengerFacade;
-        $this->connection = $connection;
     }
 
     /**
@@ -80,13 +68,13 @@ class VoucherEngine
     }
 
     /**
-     * @param DiscountVoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
     protected function saveBatchVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer)
     {
-        $this->connection->beginTransaction();
+        $this->getConnection()->beginTransaction();
         $voucherCodesAreValid = $this->generateAndSaveVoucherCodes(
             $discountVoucherTransfer,
             $discountVoucherTransfer->getQuantity()
@@ -103,18 +91,18 @@ class VoucherEngine
     protected function acceptVoucherCodesTransaction(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
     {
         if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_SUCCESS) {
-            $this->connection->commit();
+            $this->getConnection()->commit();
 
             return $voucherCreateInfoInterface;
         }
 
-        $this->connection->rollBack();
+        $this->getConnection()->rollBack();
 
         return $voucherCreateInfoInterface;
     }
 
     /**
-     * @param DiscountVoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
@@ -161,7 +149,7 @@ class VoucherEngine
     }
 
     /**
-     * @param DiscountVoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      * @param int $quantity
      *
      * @return int
@@ -255,7 +243,7 @@ class VoucherEngine
     }
 
     /**
-     * @param DiscountVoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      * @param string $code
      *
      * @return string
@@ -300,6 +288,14 @@ class VoucherEngine
         }
 
         return $highestBatchValueOnVouchers->getVoucherBatch() + 1;
+    }
+
+    /**
+     * @return \Propel\Runtime\Connection\ConnectionInterface
+     */
+    protected function getConnection()
+    {
+        return $this->queryContainer->getConnection();
     }
 
 }

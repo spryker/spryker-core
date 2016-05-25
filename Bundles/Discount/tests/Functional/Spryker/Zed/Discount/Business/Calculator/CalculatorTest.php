@@ -5,24 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Discount\Business\Model;
+namespace Functional\Spryker\Zed\Discount\Business\Calculator;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Config;
 use Spryker\Zed\Assertion\Business\AssertionFacade;
-use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Calculator\Calculator;
-use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
+use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
-use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
@@ -77,161 +75,11 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return void
-     */
-    public function testTwoDiscountsShouldNotBeFilteredOut()
-    {
-        $discountCollection = [];
-        $discountCollection[] = $this->initializeDiscount(
-            'name 1',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            50,
-            true,
-            true
-        );
-        $discountCollection[] = $this->initializeDiscount(
-            'name 2',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            50,
-            true,
-            false
-        );
-
-        $calculator = $this->getCalculator();
-
-        $quoteTransfer = $this->getQuoteTransferWithTwoItems();
-        $result = $calculator->calculate($discountCollection, $quoteTransfer);
-        $this->assertEquals(2, count($result));
-    }
-
-    /**
-     * @return void
-     */
-    public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanOne()
-    {
-        $discountCollection = [];
-        $discountCollection[] = $this->initializeDiscount(
-            'name 1',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            50,
-            true,
-            true
-        );
-        $discountCollection[] = $this->initializeDiscount(
-            'name 2',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            50,
-            true,
-            false
-        );
-        $discountCollection[] = $this->initializeDiscount(
-            'name 3',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            60,
-            true,
-            false
-        );
-
-        $calculator = $this->getCalculator();
-
-        $quoteTransfer = $this->getQuoteTransferWithTwoItems();
-        $result = $calculator->calculate($discountCollection, $quoteTransfer);
-        $this->assertEquals(2, count($result));
-    }
-
-    /**
-     * @return void
-     */
-    public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanTwo()
-    {
-        $discountCollection = [];
-        $discountCollection[] = $this->initializeDiscount(
-            'name 1',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            50,
-            true,
-            true
-        );
-        $discountCollection[] = $this->initializeDiscount(
-            'name 2',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            50,
-            true,
-            false
-        );
-        $discountCollection[] = $this->initializeDiscount(
-            'name 3',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            60,
-            true,
-            false
-        );
-        $discountCollection[] = $this->initializeDiscount(
-            'name 4',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            70,
-            true,
-            false
-        );
-
-        $calculator = $this->getCalculator();
-
-        $order = $this->getQuoteTransferWithTwoItems();
-        $result = $calculator->calculate(
-            $discountCollection,
-            $order
-        );
-        $this->assertEquals(2, count($result));
-    }
-
-    /**
-     * @return void
-     */
-    public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanTwoAndTwoPrivilegedOnes()
-    {
-        $discountCollection = [];
-        $discountCollection[] = $this->initializeDiscount(
-            'name 1',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            50,
-            true,
-            true
-        );
-        $discountCollection[] = $this->initializeDiscount(
-            'name 2',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            50,
-            true,
-            true
-        );
-        $discountCollection[] = $this->initializeDiscount(
-            'name 3',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            60,
-            true,
-            false
-        );
-        $discountCollection[] = $this->initializeDiscount(
-            'name 4',
-            DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
-            70,
-            true,
-            false
-        );
-
-        $calculator = $this->getCalculator();
-
-        $quoteTransfer = $this->getQuoteTransferWithTwoItems();
-        $result = $calculator->calculate($discountCollection, $quoteTransfer);
-        $this->assertEquals(3, count($result));
-    }
-
-    /**
      * @param string $displayName
      * @param string $calculatorPlugin
      * @param int $amount
      * @param bool $isActive
-     * @param bool $isPrivileged
+     * @param bool $isExclusive
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */
@@ -240,7 +88,7 @@ class CalculatorTest extends Test
         $calculatorPlugin,
         $amount,
         $isActive,
-        $isPrivileged = true
+        $isExclusive = true
     ) {
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setDisplayName($displayName);
@@ -248,7 +96,7 @@ class CalculatorTest extends Test
         $discountTransfer->setIsActive($isActive);
         $discountTransfer->setCollectorQueryString('sku = "sku1"');
         $discountTransfer->setCalculatorPlugin($calculatorPlugin);
-        $discountTransfer->setIsPrivileged($isPrivileged);
+        $discountTransfer->setIsExclusive($isExclusive);
 
         return $discountTransfer;
     }
@@ -289,7 +137,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return SpecificationBuilder
+     * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
     protected function createCollectorBuilder()
     {
@@ -301,7 +149,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return CollectorProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider
      */
     protected function createCollectorSpecificationProvider()
     {
@@ -311,7 +159,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return CollectorPluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
      */
     protected function createCollectorPlugins()
     {
@@ -321,7 +169,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return Distributor
+     * @return \Spryker\Zed\Discount\Business\Distributor\Distributor
      */
     protected function createDistributor()
     {
@@ -329,7 +177,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return MessengerFacade
+     * @return \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     protected function createMessengerFacade()
     {
@@ -337,7 +185,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return Percentage
+     * @return \Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage
      */
     protected function createPercentageCalculator()
     {
@@ -353,7 +201,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return DiscountToMessengerBridge
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge
      */
     protected function createDiscountToMessengerBridge()
     {
@@ -371,7 +219,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return Tokenizer
+     * @return \Spryker\Zed\Discount\Business\QueryString\Tokenizer
      */
     protected function createTokenizer()
     {
@@ -379,7 +227,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return DiscountToAssertionBridge
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionBridge
      */
     protected function createDiscountToAssertionBridge()
     {

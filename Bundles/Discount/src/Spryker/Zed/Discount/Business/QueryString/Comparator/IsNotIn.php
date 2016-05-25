@@ -14,7 +14,7 @@ class IsNotIn implements ComparatorInterface
 {
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
      * @return bool
@@ -35,7 +35,7 @@ class IsNotIn implements ComparatorInterface
     }
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -61,4 +61,5 @@ class IsNotIn implements ComparatorInterface
             ComparatorOperators::TYPE_LIST,
         ];
     }
+
 }

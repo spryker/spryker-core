@@ -12,7 +12,7 @@ interface ComparatorInterface
 {
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
      * @return bool
@@ -20,7 +20,7 @@ interface ComparatorInterface
     public function compare(ClauseTransfer $clauseTransfer, $withValue);
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -35,4 +35,5 @@ interface ComparatorInterface
      * @return array|string[]
      */
     public function getAcceptedTypes();
+
 }

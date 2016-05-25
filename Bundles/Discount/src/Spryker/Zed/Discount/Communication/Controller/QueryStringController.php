@@ -10,7 +10,6 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-
 /**
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
@@ -18,14 +17,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QueryStringController extends AbstractController
 {
+
     const URL_PARAM_TYPE = 'type';
     const URL_PARAM_FIELD = 'field';
     const URL_PARAM_QUERY_STRING = 'query-string';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function ruleFieldsAction(Request $request)
     {
@@ -38,9 +38,9 @@ class QueryStringController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function ruleFieldExpressionsAction(Request $request)
     {
@@ -54,9 +54,9 @@ class QueryStringController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function logicalComparatorsAction(Request $request)
     {
@@ -69,9 +69,9 @@ class QueryStringController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      *
      */
     public function validateQueryStringAction(Request $request)

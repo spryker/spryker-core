@@ -13,6 +13,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 
 class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -108,10 +109,10 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @param DecisionRulePluginInterface|null $decisionRulePluginMock
-     * @param ComparatorOperators|null $comparatorOperators
-     * @param LogicalComparators|null $logicalComparatorsMock
-     * @return MetaDataProvider
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|null $decisionRulePluginMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators|null $comparatorOperators
+     * @param \Spryker\Zed\Discount\Business\QueryString\LogicalComparators|null $logicalComparatorsMock
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaDataProvider
      */
     protected function createMetaDataProvider($decisionRulePluginMock = null, $comparatorOperators = null, $logicalComparatorsMock = null)
     {
@@ -137,7 +138,7 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DecisionRulePluginInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
      */
     protected function createDecisionRulePluginMock()
     {
@@ -145,7 +146,7 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ComparatorOperators
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
     protected function createComparatorOperatorsMock()
     {
@@ -155,7 +156,7 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|LogicalComparators
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\LogicalComparators
      */
     protected function createLogicalComparatorsMock()
     {

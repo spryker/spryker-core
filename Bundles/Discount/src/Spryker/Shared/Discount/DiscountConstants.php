@@ -10,8 +10,8 @@ namespace Spryker\Shared\Discount;
 interface DiscountConstants
 {
 
-    CONST TYPE_VOUCHER = 'voucher';
-    CONST TYPE_CART_RULE = 'cart_rule';
+    const TYPE_VOUCHER = 'voucher';
+    const TYPE_CART_RULE = 'cart_rule';
 
     /**
      * Types of result type saved in VoucherCreateInfoTransfer.

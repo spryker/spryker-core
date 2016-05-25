@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class GeneralForm extends AbstractType
 {
+
     const FIELD_DISCOUNT_TYPE = 'discount_type';
     const FIELD_DISPLAY_NAME = 'display_name';
     const FIELD_DESCRIPTION = 'description';
@@ -24,12 +25,12 @@ class GeneralForm extends AbstractType
     const FIELD_IS_EXCLUSIVE = 'is_exclusive';
 
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
     /**
-     * @param DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
     public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {
@@ -186,4 +187,5 @@ class GeneralForm extends AbstractType
     {
         return 'discount_general';
     }
+
 }

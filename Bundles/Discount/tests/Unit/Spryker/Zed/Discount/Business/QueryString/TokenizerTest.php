@@ -11,6 +11,7 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 
 class TokenizerTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -44,10 +45,11 @@ class TokenizerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Tokenizer
+     * @return \Spryker\Zed\Discount\Business\QueryString\Tokenizer
      */
     protected function createTokenizer()
     {
         return new Tokenizer();
     }
+
 }

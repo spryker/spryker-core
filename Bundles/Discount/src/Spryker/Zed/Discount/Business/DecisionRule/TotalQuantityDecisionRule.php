@@ -15,12 +15,12 @@ class TotalQuantityDecisionRule implements DecisionRuleInterface
 {
 
     /**
-     * @var ComparatorOperators
+     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
     protected $comparators;
 
     /**
-     * @param ComparatorOperators $comparators
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators $comparators
      */
     public function __construct(ComparatorOperators $comparators)
     {
@@ -28,9 +28,9 @@ class TotalQuantityDecisionRule implements DecisionRuleInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $currentItemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
@@ -40,8 +40,8 @@ class TotalQuantityDecisionRule implements DecisionRuleInterface
         QuoteTransfer $quoteTransfer,
         ItemTransfer $currentItemTransfer,
         ClauseTransfer $clauseTransfer
-    )
-    {
+    ) {
+
         $totalQuantity = 0;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $totalQuantity += $itemTransfer->getQuantity();
@@ -49,4 +49,5 @@ class TotalQuantityDecisionRule implements DecisionRuleInterface
 
         return $this->comparators->compare($clauseTransfer, $totalQuantity);
     }
+
 }

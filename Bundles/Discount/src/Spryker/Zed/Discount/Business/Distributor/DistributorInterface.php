@@ -13,7 +13,7 @@ interface DistributorInterface
 {
 
     /**
-     * @param CollectedDiscountTransfer $collectedDiscountTransfer
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
      *
      * @return void
      */

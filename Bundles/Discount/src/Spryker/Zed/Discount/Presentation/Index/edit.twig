@@ -22,11 +22,11 @@
             <div class="tabs-container">
                 <div class="tabs-left">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#tab-1"> General information</a></li>
-                        <li><a data-toggle="tab" href="#tab-2">Discount calculation</a></li>
-                        <li><a data-toggle="tab" href="#tab-3">Conditions</a></li>
+                        <li class="active"><a data-toggle="tab" href="#tab-1">{{ 'General information' | trans }}</a></li>
+                        <li><a data-toggle="tab" href="#tab-2">{{ 'Discount calculation' | trans }}</a></li>
+                        <li><a data-toggle="tab" href="#tab-3">{{ 'Conditions' | trans }}</a></li>
                         {% if discountConfigurator.getDiscountVoucher and discountConfigurator.getDiscountVoucher.fkDiscountVoucherPool %}
-                           <li><a data-toggle="tab" href="#tab-4">Voucher codes</a></li>
+                           <li><a data-toggle="tab" href="#tab-4">{{ 'Voucher codes' | trans }}</a></li>
                         {% endif %}
                     </ul>
 

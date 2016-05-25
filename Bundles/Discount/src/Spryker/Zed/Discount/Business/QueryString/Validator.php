@@ -11,24 +11,23 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\Specification\AbstractSpecificationBuilder;
 
 class Validator
 {
 
     /**
-     * @var SpecificationBuilder
+     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
     protected $decisionRuleBuilder;
 
     /**
-     * @var SpecificationBuilder
+     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
     protected $collectorBuilder;
 
     /**
-     * @param SpecificationBuilder $decisionRuleBuilder
-     * @param SpecificationBuilder $collectorBuilder
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder $decisionRuleBuilder
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder $collectorBuilder
      */
     public function __construct(SpecificationBuilder $decisionRuleBuilder, SpecificationBuilder $collectorBuilder)
     {
@@ -62,7 +61,6 @@ class Validator
                             $type
                         )
                     );
-                    break;
             }
         } catch (ComparatorException $e) {
             $validationMessages[] = $e->getMessage();
@@ -80,6 +78,7 @@ class Validator
      * Dry run for decision rules
      *
      * @param string $queryString
+     * @return void
      */
     protected function decisionRuleQueryString($queryString)
     {
@@ -91,6 +90,7 @@ class Validator
      * Dry run for collectors
      *
      * @param string $queryString
+     * @return void
      */
     protected function collectorQueryString($queryString)
     {

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Business\QueryString;
 
-use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Equal;
@@ -20,8 +19,9 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
 
 class OperatorProvider
 {
+
     /**
-     * @return ComparatorInterface[]
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[]
      */
     public function createComparators()
     {
@@ -40,7 +40,7 @@ class OperatorProvider
     }
 
     /**
-     * @return Contains
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Contains
      */
     protected function createContains()
     {
@@ -48,7 +48,7 @@ class OperatorProvider
     }
 
     /**
-     * @return DoesNotContain
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain
      */
     protected function createDoesNotContain()
     {
@@ -56,7 +56,7 @@ class OperatorProvider
     }
 
     /**
-     * @return Equal
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Equal
      */
     protected function createEqual()
     {
@@ -64,7 +64,7 @@ class OperatorProvider
     }
 
     /**
-     * @return IsIn
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn
      */
     protected function createIsIn()
     {
@@ -72,7 +72,7 @@ class OperatorProvider
     }
 
     /**
-     * @return IsNotIn
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn
      */
     protected function createIsNotIn()
     {
@@ -80,7 +80,7 @@ class OperatorProvider
     }
 
     /**
-     * @return Less
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Less
      */
     protected function createLess()
     {
@@ -88,7 +88,7 @@ class OperatorProvider
     }
 
     /**
-     * @return LessEqual
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\LessEqual
      */
     protected function createLessEqual()
     {
@@ -96,7 +96,7 @@ class OperatorProvider
     }
 
     /**
-     * @return More
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\More
      */
     protected function createMore()
     {
@@ -104,7 +104,7 @@ class OperatorProvider
     }
 
     /**
-     * @return MoreEqual
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\MoreEqual
      */
     protected function createMoreEqual()
     {
@@ -112,10 +112,11 @@ class OperatorProvider
     }
 
     /**
-     * @return NotEqual
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual
      */
     protected function createNotEqual()
     {
         return new NotEqual();
     }
+
 }

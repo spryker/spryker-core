@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class VoucherForm extends AbstractType
 {
+
     const FIELD_QUANTITY = 'quantity';
     const FIELD_CUSTOM_CODE = 'custom_code';
     const FIELD_RANDOM_GENERATED_CODE_LENGTH = 'random_generated_code_length';
@@ -126,7 +127,7 @@ class VoucherForm extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -138,10 +139,10 @@ class VoucherForm extends AbstractType
     }
 
         /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
+         * Returns the name of this type.
+         *
+         * @return string The name of this type
+         */
     public function getName()
     {
         return 'discount_voucher';
@@ -155,6 +156,5 @@ class VoucherForm extends AbstractType
         $range = range(3, 10);
         return array_combine(array_values($range), $range);
     }
-
 
 }

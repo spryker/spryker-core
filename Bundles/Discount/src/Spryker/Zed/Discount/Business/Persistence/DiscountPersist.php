@@ -10,26 +10,27 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\PersistenceException;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use Spryker\Shared\Discount\DiscountConstants;
 
 class DiscountPersist
 {
+
     /**
-     * @var VoucherEngine
+     * @var \Spryker\Zed\Discount\Business\Voucher\VoucherEngine
      */
     protected $voucherEngine;
 
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
     /**
-     * @param VoucherEngine $voucherEngine
-     * @param DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherEngine $voucherEngine
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
     public function __construct(VoucherEngine $voucherEngine, DiscountQueryContainerInterface $discountQueryContainer)
     {
@@ -39,7 +40,7 @@ class DiscountPersist
 
 
     /**
-     * @param DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
      * @return int
      */
@@ -58,9 +59,9 @@ class DiscountPersist
     }
 
     /**
-     * @param DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
-     * @throws PersistenceException
+     * @throws \Spryker\Zed\Discount\Business\Exception\PersistenceException
      *
      * @return bool
      * @throws \Propel\Runtime\Exception\PropelException
@@ -98,9 +99,9 @@ class DiscountPersist
     }
 
     /**
-     * @param DiscountVoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      *
-     * @throws PersistenceException
+     * @throws \Spryker\Zed\Discount\Business\Exception\PersistenceException
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
@@ -128,7 +129,7 @@ class DiscountPersist
      * @param int $idDiscount
      * @param bool $isActive
      *
-     * @throws PersistenceException
+     * @throws \Spryker\Zed\Discount\Business\Exception\PersistenceException
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
@@ -148,7 +149,6 @@ class DiscountPersist
             );
         }
 
-
         $discountEntity->setIsActive($isActive);
         $affectedRows = $discountEntity->save();
 
@@ -157,11 +157,11 @@ class DiscountPersist
 
     /**
      *
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyDiscountVoucherPool
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
     protected function saveVoucherPool(SpyDiscount $discountEntity)
     {
@@ -181,8 +181,8 @@ class DiscountPersist
     }
 
     /**
-     * @param DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     * @param SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return void
      *
@@ -199,8 +199,8 @@ class DiscountPersist
     }
 
     /**
-     * @param DiscountVoucherTransfer $discountVoucherTransfer
-     * @param SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
@@ -216,4 +216,5 @@ class DiscountPersist
 
         return $this->voucherEngine->createVoucherCodes($discountVoucherTransfer);
     }
+
 }

@@ -29,7 +29,6 @@ class DiscountsTable extends AbstractTable
 
     const DATE_FORMAT = 'Y-m-d';
 
-
     /**
      * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
@@ -117,12 +116,11 @@ class DiscountsTable extends AbstractTable
         $buttons[] = $this->createAddVoucherCodeButton($discountEntity);
         $buttons[] = $this->createToggleDiscountVisibilityButton($discountEntity);
 
-
         return implode(' ', $buttons);
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return string
      */
@@ -132,7 +130,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return string
      */
@@ -147,7 +145,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return string
      */
@@ -164,7 +162,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return string
      */
@@ -181,7 +179,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return string
      */
@@ -202,7 +200,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return string
      */
@@ -226,7 +224,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return string
      */

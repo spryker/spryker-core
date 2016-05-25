@@ -15,12 +15,12 @@ class Equal implements ComparatorInterface
 {
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
      * @return bool
      *
-     * @throws ComparatorException
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
@@ -32,7 +32,7 @@ class Equal implements ComparatorInterface
     }
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -59,4 +59,5 @@ class Equal implements ComparatorInterface
             ComparatorOperators::TYPE_STRING,
         ];
     }
+
 }

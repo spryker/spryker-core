@@ -14,6 +14,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class VoucherValidator
 {
+
     const REASON_VOUCHER_CODE_NOT_ACTIVE = 'discount.voucher_code.not_active';
     const REASON_VOUCHER_CODE_POOL_MISSING = 'discount.voucher_code.pool_not_set';
     const REASON_VOUCHER_CODE_POOL_NOT_ACTIVE = 'discount.voucher_code.pool_not_active';
@@ -25,19 +26,19 @@ class VoucherValidator
     protected $discountQueryContainer;
 
     /**
-     * @var DiscountToMessengerInterface
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected $messengerFacade;
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     * @param DiscountToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,
         DiscountToMessengerInterface $messengerFacade
-    )
-    {
+    ) {
+
         $this->discountQueryContainer = $discountQueryContainer;
         $this->messengerFacade = $messengerFacade;
     }

@@ -13,7 +13,7 @@ class Percentage implements CalculatorInterface
 {
 
     /**
-     * @param DiscountableItemTransfer[] $discountableItems
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      * @param float $percentage
      *
      * @return int
@@ -70,7 +70,7 @@ class Percentage implements CalculatorInterface
     }
 
     /**
-     * @param DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
      *
      * @return mixed
      */

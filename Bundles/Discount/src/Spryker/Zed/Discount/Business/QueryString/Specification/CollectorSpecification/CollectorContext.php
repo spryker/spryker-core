@@ -12,19 +12,20 @@ use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 
 class CollectorContext implements CollectorSpecificationInterface
 {
+
     /**
-     * @var CollectorPluginInterface
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface
      */
     protected $collectorPlugin;
 
     /**
-     * @var ClauseTransfer
+     * @var \Generated\Shared\Transfer\ClauseTransfer
      */
     protected $clauseTransfer;
 
     /**
-     * @param CollectorPluginInterface $collectorPlugin
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface $collectorPlugin
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      */
     public function __construct(CollectorPluginInterface $collectorPlugin, ClauseTransfer $clauseTransfer)
     {
@@ -51,4 +52,5 @@ class CollectorContext implements CollectorSpecificationInterface
     {
         return $this->clauseTransfer->setAcceptedTypes($this->collectorPlugin->acceptedDataTypes());
     }
+
 }

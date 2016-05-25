@@ -11,19 +11,20 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class CollectorAndSpecification implements CollectorSpecificationInterface
 {
+
     /**
-     * @var CollectorSpecificationInterface
+     * @var \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     protected $left;
 
     /**
-     * @var CollectorSpecificationInterface
+     * @var \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     protected $right;
 
     /**
-     * @param CollectorSpecificationInterface $left
-     * @param CollectorSpecificationInterface $right
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $left
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $right
      */
     public function __construct(
         CollectorSpecificationInterface $left,
@@ -50,4 +51,5 @@ class CollectorAndSpecification implements CollectorSpecificationInterface
             }
         );
     }
+
 }

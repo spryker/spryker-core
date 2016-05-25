@@ -15,14 +15,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
 class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return mixed
      */
@@ -30,8 +31,8 @@ class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
         QuoteTransfer $quoteTransfer,
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
-    )
-    {
+    ) {
+
         return $this->getFacade()
             ->isSubTotalSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
@@ -57,4 +58,5 @@ class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
             ComparatorOperators::TYPE_INTEGER
         ];
     }
+
 }

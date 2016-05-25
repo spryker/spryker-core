@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Discount\Business\Model;
+namespace Functional\Spryker\Zed\Discount\Business\Distributor;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
@@ -68,7 +69,11 @@ class DistributorTest extends Test
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_4000);
 
-        $this->discountFacade->distributeAmount($items, $discountTransfer);
+        $collectedDiscountTransfer = new CollectedDiscountTransfer();
+        $collectedDiscountTransfer->setDiscount($discountTransfer);
+        $collectedDiscountTransfer->setDiscountableItems($items);
+
+        $this->discountFacade->distributeAmount($collectedDiscountTransfer);
 
         $this->assertEquals($items[0]->getUnitGrossPrice(), current($items[0]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
         $this->assertEquals($items[1]->getUnitGrossPrice(), current($items[1]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
@@ -91,7 +96,11 @@ class DistributorTest extends Test
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_300);
 
-        $this->discountFacade->distributeAmount($items, $discountTransfer);
+        $collectedDiscountTransfer = new CollectedDiscountTransfer();
+        $collectedDiscountTransfer->setDiscount($discountTransfer);
+        $collectedDiscountTransfer->setDiscountableItems($items);
+
+        $this->discountFacade->distributeAmount($collectedDiscountTransfer);
 
         $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[0]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
         $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[1]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
@@ -114,7 +123,11 @@ class DistributorTest extends Test
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_400);
 
-        $this->discountFacade->distributeAmount($items, $discountTransfer);
+        $collectedDiscountTransfer = new CollectedDiscountTransfer();
+        $collectedDiscountTransfer->setDiscount($discountTransfer);
+        $collectedDiscountTransfer->setDiscountableItems($items);
+
+        $this->discountFacade->distributeAmount($collectedDiscountTransfer);
 
         $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[0]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
         $this->assertEquals(self::DISCOUNT_AMOUNT_13334, current($items[1]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
@@ -137,7 +150,11 @@ class DistributorTest extends Test
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_700);
 
-        $this->discountFacade->distributeAmount($items, $discountTransfer);
+        $collectedDiscountTransfer = new CollectedDiscountTransfer();
+        $collectedDiscountTransfer->setDiscount($discountTransfer);
+        $collectedDiscountTransfer->setDiscountableItems($items);
+
+        $this->discountFacade->distributeAmount($collectedDiscountTransfer);
 
         $this->assertEquals(self::DISCOUNT_AMOUNT_100, current($items[0]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
         $this->assertEquals(self::DISCOUNT_AMOUNT_200, current($items[1]->getOriginalItemCalculatedDiscounts())->getUnitGrossAmount());
@@ -160,7 +177,11 @@ class DistributorTest extends Test
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_NEGATIVE);
 
-        $this->discountFacade->distributeAmount($items, $discountTransfer);
+        $collectedDiscountTransfer = new CollectedDiscountTransfer();
+        $collectedDiscountTransfer->setDiscount($discountTransfer);
+        $collectedDiscountTransfer->setDiscountableItems($items);
+
+        $this->discountFacade->distributeAmount($collectedDiscountTransfer);
 
         $this->assertEquals(0, $items[0]->getOriginalItemCalculatedDiscounts()->count());
         $this->assertEquals(0, $items[1]->getOriginalItemCalculatedDiscounts()->count());
@@ -183,7 +204,11 @@ class DistributorTest extends Test
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_100);
 
-        $this->discountFacade->distributeAmount($items, $discountTransfer);
+        $collectedDiscountTransfer = new CollectedDiscountTransfer();
+        $collectedDiscountTransfer->setDiscount($discountTransfer);
+        $collectedDiscountTransfer->setDiscountableItems($items);
+
+        $this->discountFacade->distributeAmount($collectedDiscountTransfer);
 
         $this->assertEquals(0, $items[0]->getOriginalItemCalculatedDiscounts()->count());
         $this->assertEquals(0, $items[1]->getOriginalItemCalculatedDiscounts()->count());
@@ -197,14 +222,14 @@ class DistributorTest extends Test
      */
     protected function getItems(array $grossPrices)
     {
-        $items = [];
+        $items = new \ArrayObject();
 
         foreach ($grossPrices as $grossPrice) {
-            $discountableItems = new DiscountableItemTransfer();
-            $discountableItems->setUnitGrossPrice($grossPrice);
-            $discountableItems->setQuantity(1);
-            $discountableItems->setOriginalItemCalculatedDiscounts(new \ArrayObject());
-            $items[] = $discountableItems;
+            $discountableItemTransfer = new DiscountableItemTransfer();
+            $discountableItemTransfer->setUnitGrossPrice($grossPrice);
+            $discountableItemTransfer->setQuantity(1);
+            $discountableItemTransfer->setOriginalItemCalculatedDiscounts(new \ArrayObject());
+            $items->append($discountableItemTransfer);
         }
 
         return $items;

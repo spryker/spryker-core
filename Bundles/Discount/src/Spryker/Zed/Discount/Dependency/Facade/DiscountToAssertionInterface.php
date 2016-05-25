@@ -7,6 +7,7 @@ namespace Spryker\Zed\Discount\Dependency\Facade;
 
 interface DiscountToAssertionInterface
 {
+
     /**
      * @param mixed $value
      * @param string|null $message
@@ -57,4 +58,5 @@ interface DiscountToAssertionInterface
      * @return void
      */
     public function assertAlphaNumeric($value, $message = null);
+
 }

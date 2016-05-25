@@ -17,14 +17,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
 class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */

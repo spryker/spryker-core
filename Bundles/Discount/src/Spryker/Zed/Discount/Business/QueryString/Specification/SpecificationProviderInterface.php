@@ -10,8 +10,9 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 interface SpecificationProviderInterface
 {
+
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return mixed
      */
@@ -31,5 +32,6 @@ interface SpecificationProviderInterface
      *
      * @return mixed
      */
-     public function createOr($leftNode, $rightNode);
+    public function createOr($leftNode, $rightNode);
+
 }

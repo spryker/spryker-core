@@ -7,10 +7,10 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleContext;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface;
 
@@ -129,9 +129,9 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @param SpecificationProviderInterface $specificationProviderMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProviderMock
      *
-     * @return SpecificationBuilder
+     * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
     public function createSpecificationBuilder(SpecificationProviderInterface $specificationProviderMock)
     {
@@ -145,7 +145,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Tokenizer
+     * @return \Spryker\Zed\Discount\Business\QueryString\Tokenizer
      */
     protected function createTokenizer()
     {
@@ -153,7 +153,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountToAssertionInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface
      */
     protected function createAssertionFacadeMock()
     {
@@ -161,7 +161,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpecificationProviderInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface
      */
     protected function createSpecificationProviderMock()
     {
@@ -169,7 +169,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DecisionRuleContext
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext
      */
     protected function createDecisionRuleContextMock()
     {
@@ -180,10 +180,11 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DecisionRuleSpecificationInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected function createDecisionRuleSpecificationMock()
     {
         return $this->getMock(DecisionRuleSpecificationInterface::class);
     }
+
 }

@@ -1,4 +1,4 @@
-<h3>Condition</h3>
+<h3>{{ 'Condition' | trans }}</h3>
 <hr />
 {{ form_row(discountForm.discountCondition) }}
 
@@ -6,22 +6,22 @@
  {{ 'discount.edit.condition.how_to' | trans }}
 </p>
 
-Available conditions:
+{{ 'Available collectors:' | trans }}
 <ul>
 {% for rule in decisionRuleTypes %}
     <li>{{ rule }}</li>
 {% endfor %}
 </ul>
-Condition with value "*" matches all items. <br />
+{{ 'Collector with value "*" matches all items. ' | trans }} <br />
 
-Boolean comparators:
+{{ 'Boolean comparators:' | trans }}
 <ul>
     {% for comparator in booleanComparators %}
         <li>{{ comparator }}</li>
     {% endfor %}
 </ul>
 
-Comparator expressions:
+{{ 'Comparator expressions:' | trans }}
 <ul>
     {% for comparatorExpression in comparatorExpressions %}
         <li>{{ comparatorExpression }}</li>

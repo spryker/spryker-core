@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Discount\Business\Calculator;
 
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
-use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -21,6 +20,7 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class Calculator implements CalculatorInterface
 {
+
     const DISCOUNT_SUCCESSFULLY_APPLIED_KEY = 'discount.successfully.applied';
 
     /**
@@ -29,7 +29,7 @@ class Calculator implements CalculatorInterface
     protected $calculatedDiscounts = [];
 
     /**
-     * @var SpecificationBuilder
+     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
     protected $collectorBuilder;
 
@@ -44,14 +44,14 @@ class Calculator implements CalculatorInterface
     protected $messengerFacade;
 
     /**
-     * @var DistributorInterface
+     * @var \Spryker\Zed\Discount\Business\Distributor\DistributorInterface
      */
     protected $distributor;
 
     /**
-     * @param SpecificationBuilder $collectorBuilder
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder $collectorBuilder
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
-     * @param DistributorInterface $distributor
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
     public function __construct(
@@ -71,7 +71,7 @@ class Calculator implements CalculatorInterface
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return CollectedDiscountTransfer[]
+     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
      */
     public function calculate(array $discounts, QuoteTransfer $quoteTransfer)
     {
@@ -86,7 +86,7 @@ class Calculator implements CalculatorInterface
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return CollectedDiscountTransfer[]
+     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
      */
     protected function calculateDiscountAmount(array $discounts, QuoteTransfer $quoteTransfer)
     {
@@ -110,9 +110,9 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param CollectedDiscountTransfer[] $collectedDiscounts
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscounts
      *
-     * @return CollectedDiscountTransfer[]
+     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
      */
     protected function filterExclusiveDiscounts(array $collectedDiscounts)
     {
@@ -128,7 +128,7 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param CollectedDiscountTransfer[] $collectedDiscountsTransfer
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscountsTransfer
      *
      * @return void
      */
@@ -141,7 +141,7 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return void
      */
@@ -157,9 +157,9 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param CollectedDiscountTransfer[] $collectedDiscountsTransfer
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscountsTransfer
      *
-     * @return CollectedDiscountTransfer[]
+     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
      *
      */
     protected function sortByDiscountAmountDescending(array $collectedDiscountsTransfer)
@@ -175,10 +175,10 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return DiscountableItemTransfer[]|array
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]|array
      */
     protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
@@ -199,11 +199,11 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      *
-     * @throws CalculatorException
+     * @throws \Spryker\Zed\Discount\Business\Exception\CalculatorException
      */
     protected function getCalculatorPlugin(DiscountTransfer $discountTransfer)
     {
@@ -221,10 +221,10 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param DiscountableItemTransfer[] $discountableItems
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      *
-     * @return CollectedDiscountTransfer
+     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer
      */
     protected function createCollectedDiscountTransfer(DiscountTransfer $discountTransfer, array $discountableItems)
     {

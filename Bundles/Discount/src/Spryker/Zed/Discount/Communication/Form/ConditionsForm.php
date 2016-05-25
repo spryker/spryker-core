@@ -7,27 +7,28 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 
 class ConditionsForm extends AbstractType
 {
+
     const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @param DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      */
     public function __construct(
         DiscountFacade $discountFacade
-    )
-    {
+    ) {
+
         $this->discountFacade = $discountFacade;
     }
 
@@ -43,7 +44,7 @@ class ConditionsForm extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -71,4 +72,5 @@ class ConditionsForm extends AbstractType
     {
         return 'discount_conditions';
     }
+
 }

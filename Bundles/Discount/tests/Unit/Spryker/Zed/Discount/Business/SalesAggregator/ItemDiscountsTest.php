@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
+namespace Unit\Spryker\Zed\Discount\Business\SalesAggregator;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -88,7 +88,7 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
             ->willReturn($discountQueryMock);
 
         $discountQueryContainer->expects($this->once())
-            ->method('querySalesDiscounts')
+            ->method('querySalesDiscount')
             ->willReturn($discountQueryMock);
 
         return new ItemDiscounts($discountQueryContainer);

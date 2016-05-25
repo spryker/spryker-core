@@ -10,10 +10,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CollectorSpecificationInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
     public function collect(QuoteTransfer $quoteTransfer);
+
 }

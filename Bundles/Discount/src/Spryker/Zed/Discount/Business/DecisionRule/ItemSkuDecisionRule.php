@@ -13,13 +13,14 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class ItemSkuDecisionRule implements DecisionRuleInterface
 {
+
     /**
-     * @var ComparatorOperators
+     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
     protected $comparators;
 
     /**
-     * @param ComparatorOperators $comparators
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators $comparators
      */
     public function __construct(ComparatorOperators $comparators)
     {
@@ -27,9 +28,9 @@ class ItemSkuDecisionRule implements DecisionRuleInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $currentItemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
@@ -42,4 +43,5 @@ class ItemSkuDecisionRule implements DecisionRuleInterface
     ) {
         return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getSku());
     }
+
 }

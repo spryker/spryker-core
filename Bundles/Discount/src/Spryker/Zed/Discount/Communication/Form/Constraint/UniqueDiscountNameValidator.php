@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\Constraint;
 
-use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -19,18 +17,19 @@ class UniqueDiscountNameValidator extends ConstraintValidator
      * Checks if the passed value is valid.
      *
      * @param mixed $value The value that should be validated
-     * @param Constraint $constraint The constraint for the validation
+     * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @api
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {
-        if(!$this->isNameChanged($value, $constraint)) {
-            return;
-        }
-
         if (!$constraint instanceof UniqueDiscountName) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueDiscountName');
+        }
+
+        if (!$this->isNameChanged($value, $constraint)) {
+            return;
         }
 
         if (!$this->isUniqueDiscountName($value, $constraint)) {
@@ -41,7 +40,7 @@ class UniqueDiscountNameValidator extends ConstraintValidator
 
     /**
      * @param string $discountName
-     * @param UniqueDiscountName $constraint
+     * @param \Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName $constraint
      *
      * @return bool
      */
@@ -56,7 +55,7 @@ class UniqueDiscountNameValidator extends ConstraintValidator
 
     /**
      * @param string $submittedDiscountName
-     * @param UniqueDiscountName $constraint
+     * @param \Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName $constraint
      *
      * @return bool
      */
@@ -85,4 +84,5 @@ class UniqueDiscountNameValidator extends ConstraintValidator
         return false;
 
     }
+
 }

@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_BATCH_PARAMETER = 'batch';
     const URL_PARAM_ID_POOL = 'id-pool';
@@ -30,9 +31,9 @@ class IndexController extends AbstractController
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -56,9 +57,9 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Request $request)
     {
@@ -105,7 +106,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -178,9 +179,9 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function toggleDiscountVisibilityAction(Request $request)
     {
@@ -226,7 +227,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $idPool
      * @param int $idDiscount
      *
@@ -263,8 +264,8 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
      * @return string
      */
@@ -282,4 +283,5 @@ class IndexController extends AbstractController
         }
         return $voucherCodesTable;
     }
+
 }

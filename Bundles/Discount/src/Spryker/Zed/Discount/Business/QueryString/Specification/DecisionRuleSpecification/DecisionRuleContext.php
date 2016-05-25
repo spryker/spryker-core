@@ -15,43 +15,44 @@ class DecisionRuleContext implements DecisionRuleSpecificationInterface
 {
 
      /**
-      * @var DecisionRulePluginInterface
+      * @var \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
       */
-     protected $rulePlugin;
+    protected $rulePlugin;
 
     /**
-     * @var ClauseTransfer
+     * @var \Generated\Shared\Transfer\ClauseTransfer
      */
-     protected $clauseTransfer;
+    protected $clauseTransfer;
 
      /**
-      * @param DecisionRulePluginInterface $rulePlugin
-      * @param ClauseTransfer $clauseTransfer
+      * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface $rulePlugin
+      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
       */
-     public function __construct(DecisionRulePluginInterface $rulePlugin, ClauseTransfer $clauseTransfer)
-     {
-          $this->rulePlugin = $rulePlugin;
-          $this->clauseTransfer = $clauseTransfer;
-     }
+    public function __construct(DecisionRulePluginInterface $rulePlugin, ClauseTransfer $clauseTransfer)
+    {
+        $this->rulePlugin = $rulePlugin;
+        $this->clauseTransfer = $clauseTransfer;
+    }
 
      /**
       *
-      * @param QuoteTransfer $quoteTransfer
-      * @param ItemTransfer $itemTransfer
+      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
       *
       * @return bool
       */
-     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
-     {
-          $this->setAcceptedDataTypes();
-          return $this->rulePlugin->isSatisfiedBy($quoteTransfer, $itemTransfer, $this->clauseTransfer);
-     }
+    public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
+    {
+        $this->setAcceptedDataTypes();
+        return $this->rulePlugin->isSatisfiedBy($quoteTransfer, $itemTransfer, $this->clauseTransfer);
+    }
 
      /**
       * @return $this
       */
-     protected function setAcceptedDataTypes()
-     {
-          return $this->clauseTransfer->setAcceptedTypes($this->rulePlugin->acceptedDataTypes());
-     }
+    protected function setAcceptedDataTypes()
+    {
+        return $this->clauseTransfer->setAcceptedTypes($this->rulePlugin->acceptedDataTypes());
+    }
+
 }

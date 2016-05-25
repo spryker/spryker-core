@@ -6,23 +6,24 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\Constraint;
 
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueDiscountName extends SymfonyConstraint
 {
+
     const OPTION_DISCOUNT_QUERY_CONTAINER = 'discountQueryContainer';
 
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
     /**
-     * @return DiscountQueryContainerInterface
+     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     public function getDiscountQueryContainer()
     {
         return $this->discountQueryContainer;
     }
+
 }

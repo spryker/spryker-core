@@ -8,14 +8,15 @@
 namespace Spryker\Zed\Discount\Communication\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class QueryStringValidator extends ConstraintValidator
 {
+
     /**
      * @param string $value
-     * @param \Symfony\Component\Validator\Constraint|QueryString $constraint
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\Discount\Communication\Form\Constraint\QueryString $constraint
      *
      * @return void
      */
@@ -41,7 +42,7 @@ class QueryStringValidator extends ConstraintValidator
 
     /**
      * @param string $queryString
-     * @param QueryString|\Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword $constraint
+     * @param \Spryker\Zed\Discount\Communication\Form\Constraint\QueryString|\Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword $constraint
      *
      * @return array|string[]
      */
@@ -53,4 +54,5 @@ class QueryStringValidator extends ConstraintValidator
                 $queryString
             );
     }
+
 }

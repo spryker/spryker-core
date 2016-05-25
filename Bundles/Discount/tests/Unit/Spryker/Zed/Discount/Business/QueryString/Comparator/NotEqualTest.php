@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
 
 class NotEqualTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -72,10 +73,11 @@ class NotEqualTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return NotEqual
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual
      */
     protected function createNotEqual()
     {
         return new NotEqual();
     }
+
 }

@@ -14,7 +14,7 @@ class Contains implements ComparatorInterface
 {
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
      * @return bool
@@ -31,7 +31,7 @@ class Contains implements ComparatorInterface
     }
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      *
@@ -59,4 +59,5 @@ class Contains implements ComparatorInterface
             ComparatorOperators::TYPE_INTEGER
         ];
     }
+
 }

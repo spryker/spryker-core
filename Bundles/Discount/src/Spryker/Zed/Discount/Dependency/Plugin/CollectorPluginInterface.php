@@ -11,9 +11,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CollectorPluginInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return array
      */
@@ -32,4 +33,5 @@ interface CollectorPluginInterface
      * @return array|string[]
      */
     public function acceptedDataTypes();
+
 }

@@ -10,10 +10,10 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View' } %}
 
         {% block widget_content %}
-           <h4>General Information</h4>
+           <h4>{{ 'General Information' | trans }}</h4>
            <table class="table">
                <tr>
-                   <td>Discount Type: </td>
+                   <td>{{ 'Discount Type:' | trans }}</td>
                    <td>
                        {% if discountConfigurator.discountVoucher %}
                            Voucher code
@@ -23,58 +23,58 @@
                    </td>
                </tr>
                <tr>
-                   <td>Name:</td>
+                   <td>{{ 'Name:' | trans }}</td>
                    <td>{{ discountConfigurator.discountGeneral.displayName }}</td>
                </tr>
                <tr>
-                   <td>Description:</td>
+                   <td>{{ 'Description:' | trans }}</td>
                    <td>{{ discountConfigurator.discountGeneral.description }}</td>
                </tr>
 
                <tr>
-                   <td>Exclusive:</td>
+                   <td>{{ 'Exclusive:' | trans }}</td>
                    <td>
                        {% if discountConfigurator.discountGeneral.isExclusive %}
-                           Yes
+                           {{ 'Yes' | trans }}
                        {% else %}
-                           No
+                           {{ 'No' | trans }}
                        {% endif %}
                    </td>
                </tr>
                <tr>
-                   <td>Valid from:</td>
+                   <td>{{ 'Valid from:' | trans }}</td>
                    <td>{{ discountConfigurator.discountGeneral.validFrom|date }}</td>
                </tr>
                <tr>
-                   <td>Valid until:</td>
+                   <td>{{ 'Valid until:' | trans }}</td>
                    <td>{{ discountConfigurator.discountGeneral.validTo|date }}</td>
                </tr>
            </table>
 
-          <h4>Discount calculation</h4>
+          <h4>{{ 'Discount calculation' | trans }}</h4>
           <table class="table">
               <tr>
-                  <td>Type:</td>
+                  <td>{{ 'Type:' | trans }}</td>
                   <td>{{ discountConfigurator.discountCalculator.calculatorPlugin }}</td>
               </tr>
               <tr>
-                  <td>Amount:</td>
+                  <td>{{ 'Amount:' | trans }}</td>
                   <td>{{ discountConfigurator.discountCalculator.amount }}</td>
               </tr>
               <tr>
-                  <td>Apply to:</td>
+                  <td>{{ 'Apply to:' | trans }}</td>
                   <td>{{ discountConfigurator.discountCalculator.collectorQueryString }}</td>
               </tr>
           </table>
 
-          <h4>Conditions</h4>
+          <h4>{{ 'Conditions' | trans }}</h4>
           <table class="table">
               <tr>
                   <td>
                       {% if discountConfigurator.discountCondition.decisionRuleQueryString %}
                         {{ discountConfigurator.discountCondition.decisionRuleQueryString }}
                       {% else %}
-                          No conditions, discount always applied.
+                          {{  'No conditions, discount always applied.' | trans }}
                       {% endif %}
                   </td>
               </tr>

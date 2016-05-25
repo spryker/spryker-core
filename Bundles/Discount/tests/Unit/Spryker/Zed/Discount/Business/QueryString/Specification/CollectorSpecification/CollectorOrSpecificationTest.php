@@ -45,21 +45,22 @@ class CollectorOrSpecificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $leftMock
-     * @param $rightMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $leftMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $rightMock
      *
-     * @return CollectorOrSpecification
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorOrSpecification
      */
-    protected function createCollectorOrSpecification($leftMock, $rightMock)
+    protected function createCollectorOrSpecification(CollectorSpecificationInterface $leftMock, CollectorSpecificationInterface $rightMock)
     {
         return new CollectorOrSpecification($leftMock, $rightMock);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CollectorSpecificationInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     protected function createCollectorSpecificationMock()
     {
         return $this->getMock(CollectorSpecificationInterface::class);
     }
+
 }

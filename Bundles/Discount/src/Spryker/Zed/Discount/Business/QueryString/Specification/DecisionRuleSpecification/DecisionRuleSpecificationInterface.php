@@ -11,12 +11,14 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DecisionRuleSpecificationInterface
 {
+
     /**
      *
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer);
+
 }

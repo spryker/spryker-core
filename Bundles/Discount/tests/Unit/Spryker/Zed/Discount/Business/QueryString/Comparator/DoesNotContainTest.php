@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
 
 class DoesNotContainTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -72,10 +73,11 @@ class DoesNotContainTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return DoesNotContain
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain
      */
     protected function createDoesNotContains()
     {
         return new DoesNotContain();
     }
+
 }

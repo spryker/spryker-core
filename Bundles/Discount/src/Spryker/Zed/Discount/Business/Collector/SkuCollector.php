@@ -17,12 +17,12 @@ class SkuCollector implements CollectorInterface
 {
 
     /**
-     * @var ComparatorOperators
+     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
     protected $comparators;
 
     /**
-     * @param ComparatorOperators $comparators
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators $comparators
      */
     public function __construct(ComparatorOperators $comparators)
     {
@@ -31,26 +31,26 @@ class SkuCollector implements CollectorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return DiscountableItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
         $discountableItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-             if ($this->comparators->compare($clauseTransfer, $itemTransfer->getSku()) === true) {
-                 $discountableItems[] = $this->createDiscountableItemTransfer($itemTransfer);
-             }
-         }
+            if ($this->comparators->compare($clauseTransfer, $itemTransfer->getSku()) === true) {
+                $discountableItems[] = $this->createDiscountableItemTransfer($itemTransfer);
+            }
+        }
 
         return $discountableItems;
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return DiscountableItemTransfer
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer
      */
     protected function createDiscountableItemTransfer(ItemTransfer $itemTransfer)
     {
@@ -60,4 +60,5 @@ class SkuCollector implements CollectorInterface
 
         return $discountableItemTransfer;
     }
+
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
+namespace Unit\Spryker\Zed\Discount\Business\SalesAggregator;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;

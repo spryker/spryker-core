@@ -60,21 +60,22 @@ class DecisionRuleAndSpecificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $leftMock
-     * @param $rightMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $leftMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $rightMock
      *
-     * @return DecisionRuleAndSpecification
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification
      */
-    protected function createDecisionRuleAndSpecification($leftMock, $rightMock)
+    protected function createDecisionRuleAndSpecification(DecisionRuleSpecificationInterface$leftMock, DecisionRuleSpecificationInterface $rightMock)
     {
         return new DecisionRuleAndSpecification($leftMock, $rightMock);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DecisionRuleSpecificationInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected function createDecisionRuleSpecificationMock()
     {
         return $this->getMock(DecisionRuleSpecificationInterface::class);
     }
+
 }

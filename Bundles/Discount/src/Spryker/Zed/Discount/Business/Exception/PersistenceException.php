@@ -8,5 +8,4 @@ namespace Spryker\Zed\Discount\Business\Exception;
 
 class PersistenceException extends \Exception
 {
-
 }
