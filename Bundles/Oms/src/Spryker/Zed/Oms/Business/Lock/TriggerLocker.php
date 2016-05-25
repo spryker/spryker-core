@@ -7,6 +7,8 @@
 namespace Spryker\Zed\Oms\Business\Lock;
 
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
+use Propel\Runtime\Exception\PropelException;
+use Spryker\Zed\Oms\Business\Exception\LockException;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
@@ -38,6 +40,8 @@ class TriggerLocker implements LockerInterface
     /**
      * @param int $identifier
      *
+     * @throws \Spryker\Zed\Oms\Business\Exception\LockException
+     *
      * @return bool
      */
     public function acquire($identifier)
@@ -47,24 +51,13 @@ class TriggerLocker implements LockerInterface
         $stateMachineLockEntity->setIdentifier($identifier);
         $expirationDate = $this->createExpirationDate();
         $stateMachineLockEntity->setExpires($expirationDate);
-        $affectedRows = $stateMachineLockEntity->save();
+        try {
+            $affectedRows = $stateMachineLockEntity->save();
+        } catch (PropelException $exception) {
+            throw new LockException('State machine trigger is locked.');
+        }
 
         return $affectedRows > 0;
-    }
-
-    /**
-     * @param int $identifier
-     *
-     * @return bool
-     */
-    public function isLocked($identifier)
-    {
-        $locked = $this->queryContainer->queryLockedItemsByIdentifierAndExpirationDate(
-            $identifier,
-            new \DateTime('now')
-        )->count();
-
-        return $locked > 0;
     }
 
     /**

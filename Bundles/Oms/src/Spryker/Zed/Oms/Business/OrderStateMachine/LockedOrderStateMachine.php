@@ -45,10 +45,6 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     public function triggerEvent($eventId, array $orderItems, $data)
     {
         $identifier = $this->buildIdentifierForOrderItemsLock($orderItems);
-        if ($this->triggerLocker->isLocked($identifier)) {
-            throw new LockException('State machine trigger is locked.');
-        }
-
         $this->triggerLocker->acquire($identifier);
         try {
             $triggerEventResult = $this->stateMachine->triggerEvent($eventId, $orderItems, $data);
@@ -70,10 +66,6 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     public function triggerEventForNewItem(array $orderItems, $data)
     {
         $identifier = $this->buildIdentifierForOrderItemsLock($orderItems);
-        if ($this->triggerLocker->isLocked($identifier)) {
-            throw new LockException('State machine trigger is locked.');
-        }
-
         $this->triggerLocker->acquire($identifier);
         try {
             $triggerEventResult = $this->stateMachine->triggerEventForNewItem($orderItems, $data);
@@ -105,10 +97,6 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     public function triggerEventForNewOrderItems(array $orderItemIds, $data)
     {
         $identifier = $this->buildIdentifierForOrderItemIdsLock($orderItemIds);
-        if ($this->triggerLocker->isLocked($identifier)) {
-            throw new LockException('State machine trigger is locked.');
-        }
-
         $this->triggerLocker->acquire($identifier);
         try {
             $triggerEventResult = $this->stateMachine->triggerEventForNewOrderItems($orderItemIds, $data);
@@ -131,10 +119,6 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     public function triggerEventForOneOrderItem($eventId, $orderItemId, $data)
     {
         $identifier = $this->buildIdentifierForOrderItemIdsLock([$orderItemId]);
-        if ($this->triggerLocker->isLocked($identifier)) {
-            throw new LockException('State machine trigger is locked.');
-        }
-
         $this->triggerLocker->acquire($identifier);
         try {
             $triggerEventResult = $this->stateMachine->triggerEventForOneOrderItem($eventId, $orderItemId, $data);
@@ -150,17 +134,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @throws \Spryker\Zed\Oms\Business\Exception\LockException
-     *
      * @return array
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, $data)
     {
         $identifier = $this->buildIdentifierForOrderItemIdsLock($orderItemIds);
-        if ($this->triggerLocker->isLocked($identifier)) {
-            throw new LockException('State machine trigger is locked.');
-        }
-
         $this->triggerLocker->acquire($identifier);
         try {
             $triggerEventResult = $this->stateMachine->triggerEventForOrderItems($eventId, $orderItemIds, $data);

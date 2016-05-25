@@ -55,9 +55,9 @@
 
         <behavior name="timestampable"/>
 
-        <index name="spy_oms_state_machine_lock-identifier">
-            <index-column name="identifier"/>
-        </index>
+        <unique name="spy_oms_state_machine_lock-identifier">
+            <unique-column name="identifier"/>
+        </unique>
 
         <id-method-parameter value="spy_oms_state_machine_lock_pk_seq"/>
     </table>
