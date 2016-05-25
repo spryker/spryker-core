@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Braintree\Business\Payment\Handler\Transaction;
 
 use Braintree\Exception\NotFound;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\BraintreeTransactionResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -461,8 +462,47 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         return \Braintree\Transaction::sale([
             'amount' => $quoteTransfer->getTotals()->getGrandTotal() / 100,
             'paymentMethodNonce' => $paymentTransfer->getNonce(),
-            'options' => $options
+            'options' => $options,
+            'customer' => $this->getCustomerData($quoteTransfer),
+            'billing' => $this->getCustomerAddressData($quoteTransfer->getBillingAddress()),
+            'shipping' => $this->getCustomerAddressData($quoteTransfer->getShippingAddress()),
         ]);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function getCustomerData(QuoteTransfer $quoteTransfer)
+    {
+        return [
+            'firstName' => $quoteTransfer->getCustomer()->getFirstName(),
+            'lastName' => $quoteTransfer->getCustomer()->getLastName(),
+            'email' => $quoteTransfer->getCustomer()->getEmail(),
+
+            'company' => $quoteTransfer->getBillingAddress()->getCompany(),
+            'phone' => $quoteTransfer->getBillingAddress()->getPhone(),
+        ];
+    }
+
+    /**
+     * @param AddressTransfer $addressTransfer
+     * @return array
+     */
+    protected function getCustomerAddressData(AddressTransfer $addressTransfer)
+    {
+        return [
+            'firstName' => $addressTransfer->getFirstName(),
+            'lastName' => $addressTransfer->getLastName(),
+            'company' => $addressTransfer->getCompany(),
+            'streetAddress' => trim(sprintf('%s %s', $addressTransfer->getAddress1(), $addressTransfer->getAddress2())),
+            'extendedAddress' => $addressTransfer->getAddress3(),
+            'locality' => $addressTransfer->getCity(),
+            'region' => $addressTransfer->getRegion(),
+            'postalCode' => $addressTransfer->getZipCode(),
+            'countryCodeAlpha2' => $addressTransfer->getIso2Code()
+        ];
     }
 
 }

@@ -56,6 +56,7 @@
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
         <property name="company" type="string" />
+        <property name="email" type="string" />
     </transfer>
 
     <!-- Data dependency on the Address transfer object -->
@@ -70,6 +71,7 @@
         <property name="zipCode" type="string" />
         <property name="iso2Code" type="string" />
         <property name="salutation" type="string" />
+        <property name="region" type="string" />
     </transfer>
 
     <transfer name="Item">
