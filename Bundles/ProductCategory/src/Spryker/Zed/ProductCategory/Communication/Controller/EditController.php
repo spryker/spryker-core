@@ -235,7 +235,6 @@ class EditController extends AddController
             $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
             $locales[] = $localeTransfer;
 
-            $data['is_main'] = true;
             $categoryData = array_merge($attributes[$localeCode], $data);
             $this->updateCategory($localeTransfer, $categoryData);
 
@@ -246,7 +245,7 @@ class EditController extends AddController
 
         $parentIdList = $data['extra_parents'];
         foreach ($parentIdList as $parentNodeId) {
-            $this->updateExtraParents($nodeTransfer, $locales, $parentNodeId);
+            $this->updateExtraParent($nodeTransfer, $locales, $parentNodeId);
         }
 
         $this->updateProductOrder($idCategory, (array)json_decode($data['product_order'], true));
@@ -290,6 +289,7 @@ class EditController extends AddController
     protected function updateCategoryNode(LocaleTransfer $locale, array $data)
     {
         $nodeTransfer = $this->createCategoryNodeTransferFromData($data);
+        $nodeTransfer->setIsMain(true);
 
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryNode $currentCategoryNode */
         $existingCategoryNode = $this->getFactory()
@@ -302,8 +302,31 @@ class EditController extends AddController
         return $nodeTransfer;
     }
 
+    protected function updateExtraParent(NodeTransfer $mainNodeTransfer, array $localeCollection, $extraParentNodeId)
+    {
+        if ((int)$extraParentNodeId === (int)$mainNodeTransfer->getIdCategoryNode()) {
+            return;
+        }
 
-    protected function updateExtraParents(NodeTransfer $mainNodeTransfer, array $localeCollection, $extraParentNodeId)
+        $nodeTransfer = (new NodeTransfer())
+            ->setFkCategory($mainNodeTransfer->getFkCategory())
+            ->setFkParentCategoryNode($extraParentNodeId)
+            ->setIsMain(false)
+            ->setIsRoot(false);
+
+        foreach ($localeCollection as $localeTransfer) {
+            $existingCategoryNode = $this->getFactory()
+                ->getCategoryQueryContainer()
+                ->queryNotMainNodesByCategoryId($mainNodeTransfer->getFkCategory())
+                ->filterByFkParentCategoryNode($extraParentNodeId)
+                ->findOne();
+    
+            $this->createOrUpdateCategoryNode($existingCategoryNode, $nodeTransfer, $localeTransfer);
+        }
+    }
+
+
+    protected function updateExtraParents222(NodeTransfer $mainNodeTransfer, array $localeCollection, $extraParentNodeId)
     {
         return;
 
