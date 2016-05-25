@@ -37,6 +37,7 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, CategoryFormEdit::FIELD_PK_CATEGORY_NODE)
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, CategoryFormEdit::FIELD_FK_NODE_CATEGORY)
             ->withColumn(SpyCategoryNodeTableMap::COL_IS_MAIN, CategoryFormEdit::CATEGORY_NODE_IS_MAIN)
+            ->withColumn(SpyCategoryNodeTableMap::COL_NODE_ORDER, CategoryFormEdit::CATEGORY_NODE_ORDER)
             ->findOne();
 
         if ($categoryEntity) {
@@ -65,6 +66,7 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
                 CategoryFormEdit::FIELD_FK_PARENT_CATEGORY_NODE => $categoryEntity[CategoryFormEdit::FIELD_FK_PARENT_CATEGORY_NODE],
                 CategoryFormEdit::FIELD_FK_NODE_CATEGORY => $categoryEntity[CategoryFormEdit::FIELD_FK_NODE_CATEGORY],
                 CategoryFormEdit::FIELD_CATEGORY_KEY => $categoryEntity[CategoryFormEdit::FIELD_CATEGORY_KEY],
+                CategoryFormEdit::CATEGORY_NODE_ORDER => $categoryEntity[CategoryFormEdit::CATEGORY_NODE_ORDER],
                 //category
                 self::CATEGORY_IS_ACTIVE => $categoryEntity[self::CATEGORY_IS_ACTIVE],
                 self::CATEGORY_IS_IN_MENU => $categoryEntity[self::CATEGORY_IS_IN_MENU],
@@ -76,6 +78,8 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
                 CategoryFormEdit::LOCALIZED_ATTRIBUTES => $localizedAttributes
             ];
         }
+
+        dump($formData);
 
         return $formData;
     }

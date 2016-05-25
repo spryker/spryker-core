@@ -15,6 +15,7 @@ use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
+use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -48,14 +49,17 @@ class AddController extends AbstractController
 
         $localeTransfer = $this->getFactory()->getCurrentLocale();
 
+
         if ($form->isValid()) {
+
             $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
-            $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
+            $nodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
+            $nodeTransfer->setIsMain(true);
 
             try {
                 $idCategory = $this
                     ->getFacade()
-                    ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
+                    ->addCategory($categoryTransfer, $nodeTransfer, $localeTransfer);
 
                 $this->addSuccessMessage('The category was added successfully.');
 
@@ -130,46 +134,7 @@ class AddController extends AbstractController
     {
         return (new NodeTransfer())
             ->fromArray($data, true)
-            ->setIsMain(true)
             ->setIsRoot(false);
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return int|null
-     */
-    protected function createCategoryData(array $data)
-    {
-        $this->getFactory()->getPropelConnection()->beginTransaction();
-
-        $idCategory = null;
-        $nodeTransfer = $this->createCategoryNodeTransferFromData($data);
-        $attributes = $data[CategoryFormAdd::LOCALIZED_ATTRIBUTES];
-
-        foreach ($attributes as $localeCode => $localizedAttributes) {
-            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
-
-            $a = array_merge($data, $localizedAttributes);
-
-            $CategoryLocalizedTransfer = (new CategoryLocalizedTransfer())
-                ->fromArray($a, true)
-                ->setLocale($localeTransfer)
-                ->setIsActive(true)
-                ->setIsClickable(true)
-                ->setIsInMenu(true);
-
-            //dump($CategoryLocalizedTransfer->toArray(), $nodeTransfer->toArray(), $data);die;
-
-            $idCategory = $this
-                ->getFactory()
-                ->createCategoryManagerFoo()
-                ->create($CategoryLocalizedTransfer, $nodeTransfer);
-        }
-
-        $this->getFactory()->getPropelConnection()->commit();
-
-        return $idCategory;
     }
 
 }

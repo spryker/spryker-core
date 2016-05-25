@@ -23,6 +23,7 @@ class CategoryFormEdit extends CategoryFormAdd
     const CATEGORY_IS_IN_MENU = 'is_in_menu';
     const CATEGORY_IS_CLICKABLE = 'is_clickable';
     const CATEGORY_NODE_IS_MAIN = 'is_main';
+    const CATEGORY_NODE_ORDER = 'node_order';
 
     const EXTRA_PARENTS = 'extra_parents';
     const LOCALIZED_ATTRIBUTES = 'localized_attributes';
