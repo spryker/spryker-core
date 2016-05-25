@@ -8,13 +8,6 @@
 namespace Spryker\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
-use Spryker\Zed\Category\Business\Manager\NodeUrlManager;
-use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
-use Spryker\Zed\Category\Business\Tree\ClosureTableWriter;
-use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
-use Spryker\Zed\Category\Business\Tree\NodeWriter;
-use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
@@ -24,11 +17,7 @@ use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormDele
 use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormEditDataProvider;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleBridge;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
-use Spryker\Zed\Touch\Business\TouchFacade;
-use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
@@ -196,21 +185,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     public function getPropelConnection()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION);
-    }
-
-    /**
-     * @param $localeFacade
-     *
-     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge
-     */
-    protected function createProductCategoryToLocaleBridge($localeFacade)
-    {
-        return new ProductCategoryToLocaleBridge($localeFacade);
-    }
-
-    protected function createProductCategoryToCategoryBridge($categoryFacade)
-    {
-        return new ProductCategoryToCategoryBridge($categoryFacade);
     }
 
 }
