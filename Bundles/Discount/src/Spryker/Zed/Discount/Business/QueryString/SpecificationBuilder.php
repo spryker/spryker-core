@@ -315,7 +315,7 @@ class SpecificationBuilder
      */
     protected function validateField($fieldName)
     {
-        $matches = preg_match('/^[a-z0-9\.]+$/i', $fieldName);
+        $matches = preg_match('/^[a-z0-9\.\-]+$/i', $fieldName);
 
         if ($matches === 0) {
             throw new QueryStringException(

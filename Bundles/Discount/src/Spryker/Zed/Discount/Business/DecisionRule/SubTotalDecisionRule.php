@@ -31,16 +31,19 @@ class SubTotalDecisionRule implements DecisionRuleInterface
      * @param ItemTransfer $currentItemTransfer
      * @param ClauseTransfer $clauseTransfer
      *
-     * @return bool
-     *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,
         ItemTransfer $currentItemTransfer,
         ClauseTransfer $clauseTransfer
-    )
-    {
+    ) {
+        if (!$quoteTransfer->getTotals()){
+            return false;
+        }
+
         return $this->comparators->compare($clauseTransfer, $quoteTransfer->getTotals()->getSubtotal());
     }
 }

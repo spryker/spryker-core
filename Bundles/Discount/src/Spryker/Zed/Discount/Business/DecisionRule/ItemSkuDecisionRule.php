@@ -31,9 +31,9 @@ class ItemSkuDecisionRule implements DecisionRuleInterface
      * @param ItemTransfer $currentItemTransfer
      * @param ClauseTransfer $clauseTransfer
      *
-     * @return bool
-     *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,

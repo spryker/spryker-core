@@ -38,6 +38,10 @@ class ComparatorOperators
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
+        if (!$withValue) {
+            return false;
+        }
+
         if ($this->isMatchAllValue($clauseTransfer->getValue())) {
             return true;
         }
