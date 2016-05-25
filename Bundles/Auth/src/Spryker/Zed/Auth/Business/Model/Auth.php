@@ -88,8 +88,7 @@ class Auth implements AuthInterface
 
         $this->registerAuthorizedUser($token, $userTransfer);
 
-        $userTransfer->setPassword(null);
-        $this->userFacade->updateUser($userTransfer);
+        $this->userFacade->updateUser(clone $userTransfer);
 
         $this->session->migrate();
 
@@ -120,16 +119,16 @@ class Auth implements AuthInterface
      * @param string $token
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function registerAuthorizedUser($token, UserTransfer $userTransfer)
     {
         $key = $this->getSessionKey($token);
-        $this->session->set($key, serialize($userTransfer));
+        $this->session->set($key, $userTransfer);
 
         $this->userFacade->setCurrentUser($userTransfer);
 
-        return unserialize($this->session->get($key));
+        return $userTransfer;
     }
 
     /**
@@ -271,7 +270,7 @@ class Auth implements AuthInterface
      */
     public function getCurrentUser($token)
     {
-        $user = $this->unserializeUserFromSession($token);
+        $user = $this->readUserFromSession($token);
 
         return $user;
     }
@@ -283,16 +282,41 @@ class Auth implements AuthInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function unserializeUserFromSession($token)
+    public function getUserFromSession($token)
     {
-        $key = $this->getSessionKey($token);
-        $user = unserialize($this->session->get($key));
+        $user = $this->readUserFromSession($token);
 
-        if ($user === false) {
+        if ($user === null) {
             throw new UserNotLoggedException();
         }
 
-        return $user;
+        return clone $user;
+    }
+
+    /**
+     * @deprecated Deprecated since v2.0.2. Will be removed in the next major release.
+     *
+     * @param string $token
+     *
+     * @throws \Spryker\Zed\Auth\Business\Exception\UserNotLoggedException
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function unserializeUserFromSession($token)
+    {
+        return $this->getUserFromSession($token);
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function readUserFromSession($token)
+    {
+        $key = $this->getSessionKey($token);
+
+        return $this->session->get($key);
     }
 
     /**
@@ -302,10 +326,9 @@ class Auth implements AuthInterface
      */
     public function userTokenIsValid($token)
     {
-        $key = $this->getSessionKey($token);
-        $user = unserialize($this->session->get($key));
+        $user = $this->readUserFromSession($token);
 
-        return $user !== false;
+        return $user !== null;
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
+use Spryker\Shared\Library\Json;
 use Spryker\Zed\Application\Business\Exception\NavigationCacheEmptyException;
 use Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
@@ -125,6 +126,26 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
         $isEnabled = true;
         $navigationCache = new NavigationCache($cacheFile, $isEnabled);
         $navigationCache->getNavigation();
+    }
+
+    /**
+     * Checks, that JSON serialization is used in the cache.
+     *
+     * @return void
+     */
+    public function testCacheShouldNotUseSerialize()
+    {
+        $cacheFile = $this->getCacheFile();
+        $isEnabled = true;
+
+        $navigationCache = new NavigationCache($cacheFile, $isEnabled);
+
+        $navigationData = ['foo' => 'bar'];
+        $navigationCache->setNavigation($navigationData);
+
+        $rawData = file_get_contents($cacheFile);
+        $this->assertEquals($navigationData, Json::decode($rawData, true));
+        $this->assertEquals($rawData, Json::encode($navigationData));
     }
 
 }

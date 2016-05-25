@@ -64,7 +64,79 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testNoReferenceSavedInSession()
+    {
+        $sessionClient = $this->createSessionClient();
+        $authModel = new Auth(
+            $sessionClient,
+            $this->createFacadeUser(),
+            new AuthConfig(),
+            $this->createStaticTokenClient()
+        );
+
+        $userTransfer = $this->createUserTransfer(static::USERNAME);
+
+        $sessionClient->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($userTransfer));
+
+        $userFromSession = $authModel->getUserFromSession('testtoken')->setUsername('test3434');
+        $this->assertNotEquals($userTransfer, $userFromSession);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAuthorise()
+    {
+        $sessionClient = $this->createSessionClient();
+        $userFacade = $this->createFacadeUser();
+
+        $authModel = new Auth(
+            $sessionClient,
+            $userFacade,
+            new AuthConfig(),
+            $this->createStaticTokenClient()
+        );
+
+        $userTransfer = $this->createUserTransfer(static::USERNAME);
+
+        $userFacade->expects($this->once())
+            ->method('getUserByUsername')
+            ->will($this->returnValue($userTransfer));
+
+        $userFacade->expects($this->once())
+            ->method('hasActiveUserByUsername')
+            ->will($this->returnValue(true));
+
+        $userFacade->expects($this->once())
+            ->method('isValidPassword')
+            ->will($this->returnValue(true));
+
+        // Check that session receives exactly the TO, which was passed.
+        $sessionClient->expects($this->once())
+            ->method('set')
+            ->with($this->stringContains('auth'), $this->identicalTo($userTransfer));
+
+        // Test that object is cloned inside authenticate.
+        $userFacade->expects($this->once())
+            ->method('updateUser')
+            ->with(
+                $this->logicalAnd(
+                    $this->equalTo($userTransfer),
+                    $this->logicalNot($this->identicalTo($userTransfer))
+                )
+            );
+
+        $result = $authModel->authenticate(static::USERNAME, 'test');
+        $this->assertTrue($result);
+    }
+
+    /**
      * @param string $userName
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function createUserTransfer($userName)
@@ -102,7 +174,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     {
         $sessionClient = $this->getMock(
             SessionClient::class,
-            ['set', 'migrate']
+            ['get', 'set', 'migrate']
         );
 
         return $sessionClient;
