@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface;
 
-class ProductAttribute
+class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterface
 {
     /**
      * @var ProductDiscountConnectorToProductInterface
@@ -31,8 +31,7 @@ class ProductAttribute
     public function __construct(
         ProductDiscountConnectorToProductInterface $productFacade,
         ProductDiscountConnectorToDiscountInterface $discountFacade
-    )
-    {
+    ) {
         $this->productFacade = $productFacade;
         $this->discountFacade = $discountFacade;
     }

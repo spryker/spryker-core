@@ -69,9 +69,9 @@ class SpecificationBuilder
      * @param string[] $tokens
      * @param int $currentTokenIndex
      *
-     * @return CollectorSpecificationInterface|DecisionRuleSpecificationInterface
-     *
      * @throws QueryStringException
+     *
+     * @return CollectorSpecificationInterface|DecisionRuleSpecificationInterface
      */
     protected function build(array $tokens, &$currentTokenIndex = 0)
     {
@@ -125,7 +125,7 @@ class SpecificationBuilder
 
                 default:
 
-                    $clauseTransfer = $this->parseClause($tokens, $currentTokenIndex);
+                    $clauseTransfer = $this->buildClause($tokens, $currentTokenIndex);
 
                     if ($parentLeftSpecification === null) {
                         $parentLeftSpecification = $this->specificationProvider->getSpecificationContext($clauseTransfer);
@@ -161,11 +161,11 @@ class SpecificationBuilder
      * @param array $tokens
      * @param int $currentTokenIndex
      *
-     * @return ClauseTransfer
-     *
      * @throws QueryStringException
+     *
+     * @return ClauseTransfer
      */
-    protected function parseClause($tokens, &$currentTokenIndex)
+    protected function buildClause($tokens, &$currentTokenIndex)
     {
         $value = '';
         $fieldName = '';
@@ -214,11 +214,11 @@ class SpecificationBuilder
 
     /**
      * @param string $conditional
-     * @param mixed $parentLeftSpecification
-     * @param mixed $parentRightSpecification
-     * @param mixed $compositeSpecification
+     * @param CollectorSpecificationInterface|DecisionRuleSpecificationInterface $parentLeftSpecification
+     * @param CollectorSpecificationInterface|DecisionRuleSpecificationInterface $parentRightSpecification
+     * @param CollectorSpecificationInterface|DecisionRuleSpecificationInterface $compositeSpecification
      *
-     * @return mixed
+     * @return CollectorSpecificationInterface|DecisionRuleSpecificationInterface
      */
     protected function createComposite(
         $conditional,
@@ -263,18 +263,27 @@ class SpecificationBuilder
     protected function createClauseTransfer($fieldName, $comparatorOperator, $value)
     {
         $clauseTransfer = new ClauseTransfer();
+        $this->setClauseField($fieldName, $clauseTransfer);
+        $clauseTransfer->setOperator(trim($comparatorOperator));
+        $clauseTransfer->setValue(trim($value));
 
+        return $clauseTransfer;
+    }
+
+    /**
+     * @param string $fieldName
+     * @param ClauseTransfer $clauseTransfer
+     */
+    protected function setClauseField($fieldName, ClauseTransfer $clauseTransfer)
+    {
         if (strpos($fieldName, '.') !== false) {
             list($fieldName, $attribute) = explode('.', $fieldName);
             $clauseTransfer->setAttribute($attribute);
         }
 
         $clauseTransfer->setField(trim($fieldName));
-        $clauseTransfer->setOperator(trim($comparatorOperator));
-        $clauseTransfer->setValue(trim($value));
-
-        return $clauseTransfer;
     }
+
     /**
      * @param string $value
      *
@@ -318,6 +327,5 @@ class SpecificationBuilder
         }
 
     }
-
 
 }

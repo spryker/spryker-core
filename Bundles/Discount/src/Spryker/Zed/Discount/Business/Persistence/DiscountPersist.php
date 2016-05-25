@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Spryker\Zed\Discount\Business\Exception\PersistenceException;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Shared\Discount\DiscountConstants;
@@ -59,11 +60,17 @@ class DiscountPersist
     /**
      * @param DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
+     * @throws PersistenceException
+     *
      * @return bool
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function update(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
-        $idDiscount = $discountConfiguratorTransfer->getDiscountGeneral()
+        $idDiscount = $discountConfiguratorTransfer
+            ->requireDiscountGeneral()
+            ->getDiscountGeneral()
+            ->requireIdDiscount()
             ->getIdDiscount();
 
         $discountEntity = $this->discountQueryContainer
@@ -71,11 +78,15 @@ class DiscountPersist
             ->findOneByIdDiscount($idDiscount);
 
         if (!$discountEntity) {
-            return false;
+            throw new PersistenceException(
+                sprintf(
+                    'Discount with id "%d" not found in database.',
+                    $idDiscount
+                )
+            );
         }
 
         $this->hydrateDiscountEntity($discountConfiguratorTransfer, $discountEntity);
-
         if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
             $this->saveVoucherPool($discountEntity);
         }
@@ -89,13 +100,26 @@ class DiscountPersist
     /**
      * @param DiscountVoucherTransfer $discountVoucherTransfer
      *
+     * @throws PersistenceException
+     *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
     public function saveVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer)
     {
+        $discountVoucherTransfer->requireIdDiscount();
+
         $discountEntity = $this->discountQueryContainer
             ->queryDiscount()
             ->findOneByIdDiscount($discountVoucherTransfer->getIdDiscount());
+
+        if (!$discountEntity) {
+            throw new PersistenceException(
+                sprintf(
+                    'Discount with id "%d" not found in database.',
+                    $discountVoucherTransfer->getIdDiscount()
+                )
+            );
+        }
 
          return $this->persistVoucherCodes($discountVoucherTransfer, $discountEntity);
     }
@@ -104,6 +128,9 @@ class DiscountPersist
      * @param int $idDiscount
      * @param bool $isActive
      *
+     * @throws PersistenceException
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return bool
      */
     public function toggleDiscountVisibility($idDiscount, $isActive = false)
@@ -111,6 +138,16 @@ class DiscountPersist
         $discountEntity = $this->discountQueryContainer
             ->queryDiscount()
             ->findOneByIdDiscount($idDiscount);
+
+        if (!$discountEntity) {
+            throw new PersistenceException(
+                sprintf(
+                    'Discount with id "%d" not found in database.',
+                    $idDiscount
+                )
+            );
+        }
+
 
         $discountEntity->setIsActive($isActive);
         $affectedRows = $discountEntity->save();

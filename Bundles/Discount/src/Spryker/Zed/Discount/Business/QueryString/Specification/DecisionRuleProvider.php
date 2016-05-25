@@ -9,12 +9,13 @@ namespace Spryker\Zed\Discount\Business\QueryString\Specification;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification;
+use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
-class DecisionRuleProvider implements SpecificationProviderInterface
+class DecisionRuleProvider extends BaseSpecificationProvider implements SpecificationProviderInterface
 {
     /**
      * @var DecisionRulePluginInterface[]
@@ -62,10 +63,7 @@ class DecisionRuleProvider implements SpecificationProviderInterface
     {
         foreach ($this->decisionRulePlugins as $decisionRulePlugin) {
 
-            $clauseFieldName = $clauseTransfer->getField();
-            if ($clauseTransfer->getAttribute()) {
-                $clauseFieldName = $clauseTransfer->getField() . '.*';
-            }
+            $clauseFieldName = $this->getClauseFieldName($clauseTransfer);
 
             if (strcasecmp($decisionRulePlugin->getFieldName(), $clauseFieldName) === 0) {
                 return new DecisionRuleContext($decisionRulePlugin, $clauseTransfer);
@@ -80,4 +78,6 @@ class DecisionRuleProvider implements SpecificationProviderInterface
             )
         );
     }
+
+
 }

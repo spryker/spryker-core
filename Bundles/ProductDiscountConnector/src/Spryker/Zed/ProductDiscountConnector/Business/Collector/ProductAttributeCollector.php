@@ -11,33 +11,21 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface;
-use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface;
+use Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRuleInterface;
 
-class ProductAttributeCollector
+class ProductAttributeCollector implements ProductAttributeCollectorInterface
 {
     /**
-     * @var ProductDiscountConnectorToProductInterface
+     * @var ProductAttributeDecisionRuleInterface
      */
-    protected $productFacade;
+    protected $productAttributeDecisionRule;
 
     /**
-     * @var ProductDiscountConnectorToDiscountInterface
+     * @param ProductAttributeDecisionRuleInterface $productAttributeDecisionRule
      */
-    protected $discountFacade;
-
-    /**
-     * @param ProductDiscountConnectorToProductInterface $productFacade
-     * @param ProductDiscountConnectorToDiscountInterface $discountFacade
-     */
-    public function __construct(
-        ProductDiscountConnectorToProductInterface $productFacade,
-        ProductDiscountConnectorToDiscountInterface $discountFacade
-    )
+    public function __construct(ProductAttributeDecisionRuleInterface $productAttributeDecisionRule)
     {
-        $this->productFacade = $productFacade;
-        $this->discountFacade = $discountFacade;
-
+        $this->productAttributeDecisionRule = $productAttributeDecisionRule;
     }
 
     /**
@@ -51,8 +39,10 @@ class ProductAttributeCollector
         $discountableItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
 
-            $haveAttribute = $this->haveItemGivenAttributeInVariants($clauseTransfer, $itemTransfer);
-            if ($haveAttribute) {
+            $isSatisfied = $this->productAttributeDecisionRule
+                ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+
+            if ($isSatisfied) {
                 $discountableItems[] = $this->createDiscountableItemTransfer($itemTransfer);
             }
         }
@@ -72,31 +62,5 @@ class ProductAttributeCollector
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($itemTransfer->getCalculatedDiscounts());
 
         return $discountableItemTransfer;
-    }
-
-    /**
-     * @param ClauseTransfer $clauseTransfer
-     * @param ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function haveItemGivenAttributeInVariants(ClauseTransfer $clauseTransfer, ItemTransfer $itemTransfer)
-    {
-        $productVariants = $this->productFacade
-            ->getProductVariantsByAbstractSku($itemTransfer->getAbstractSku());
-
-        foreach ($productVariants as $productVariantTransfer) {
-            $attributes = $productVariantTransfer->getAttributes();
-            foreach ($attributes as $attribute => $value) {
-                if ($clauseTransfer->getAttribute() !== $attribute) {
-                    continue;
-                }
-
-                if ($this->discountFacade->queryStringCompare($clauseTransfer, $value)) {
-                   return true;
-                }
-            }
-        }
-        return false;
     }
 }

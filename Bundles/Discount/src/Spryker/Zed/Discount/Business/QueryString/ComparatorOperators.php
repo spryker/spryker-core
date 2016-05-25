@@ -106,7 +106,7 @@ class ComparatorOperators
     }
 
     /**
-     * @return string[]
+     * @return array|string[]
      */
     public function getAvailableComparatorExpressions()
     {

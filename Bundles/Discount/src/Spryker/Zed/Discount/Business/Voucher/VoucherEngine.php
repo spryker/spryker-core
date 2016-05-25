@@ -24,14 +24,14 @@ class VoucherEngine
 {
 
     /**
-     * @var int|null
+     * @var int
      */
-    protected $remainingCodesToGenerate = null;
+    protected $remainingCodesToGenerate = 0;
 
     /**
      * @var \Spryker\Zed\Discount\DiscountConfig
      */
-    protected $settings;
+    protected $discountConfig;
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -49,18 +49,18 @@ class VoucherEngine
     protected $connection;
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $settings
+     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
-        DiscountConfig $settings,
+        DiscountConfig $discountConfig,
         DiscountQueryContainerInterface $queryContainer,
         DiscountToMessengerInterface $messengerFacade,
         ConnectionInterface $connection
     ) {
-        $this->settings = $settings;
+        $this->discountConfig = $discountConfig;
         $this->queryContainer = $queryContainer;
         $this->messengerFacade = $messengerFacade;
         $this->connection = $connection;
@@ -229,7 +229,7 @@ class VoucherEngine
      */
     protected function getRandomVoucherCode($length)
     {
-        $allowedCharacters = $this->settings->getVoucherCodeCharacters();
+        $allowedCharacters = $this->discountConfig->getVoucherCodeCharacters();
 
         $consonants = $allowedCharacters[DiscountConfig::KEY_VOUCHER_CODE_CONSONANTS];
         $vowels = $allowedCharacters[DiscountConfig::KEY_VOUCHER_CODE_VOWELS];
@@ -263,7 +263,7 @@ class VoucherEngine
     protected function addCustomCodeToGenerated(DiscountVoucherTransfer $discountVoucherTransfer, $code)
     {
         $customCode = $discountVoucherTransfer->getCustomCode();
-        $replacementString = $this->settings->getVoucherPoolTemplateReplacementString();
+        $replacementString = $this->discountConfig->getVoucherPoolTemplateReplacementString();
 
         if (!$customCode) {
             return $code;
@@ -273,7 +273,7 @@ class VoucherEngine
             return $customCode . $code;
         }
 
-        return str_replace($this->settings->getVoucherPoolTemplateReplacementString(), $code, $customCode);
+        return str_replace($this->discountConfig->getVoucherPoolTemplateReplacementString(), $code, $customCode);
     }
 
     /**

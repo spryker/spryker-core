@@ -4,12 +4,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Discount\Business\QueryString\Specification;
+namespace Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 
 class DecisionRuleContext implements DecisionRuleSpecificationInterface

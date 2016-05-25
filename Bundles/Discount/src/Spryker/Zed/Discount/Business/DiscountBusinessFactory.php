@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
 use Spryker\Zed\Discount\Business\Collector\SkuCollector;
 use Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule;
-use Spryker\Zed\Discount\Business\DecisionRule\ProductAttribute;
 use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
@@ -252,14 +251,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createSkuDecisionRule()
     {
         return new ItemSkuDecisionRule($this->createComparatorOperators());
-    }
-
-    /**
-     * @return ItemSkuDecisionRule
-     */
-    public function createProductAttributeDecisionRule()
-    {
-        return new ProductAttribute($this->createComparatorOperators());
     }
 
     /**

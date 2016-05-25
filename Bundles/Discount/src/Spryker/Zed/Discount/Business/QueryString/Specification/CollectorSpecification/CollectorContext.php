@@ -4,11 +4,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Discount\Business\QueryString\Specification;
+namespace Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 
 class CollectorContext implements CollectorSpecificationInterface

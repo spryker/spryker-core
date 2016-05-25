@@ -8,7 +8,7 @@ namespace Spryker\Zed\ProductDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductDiscountConnector\Business\Collector\ProductAttributeCollector;
-use Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttribute;
+use Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRule;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface;
 use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvider;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface;
@@ -16,11 +16,11 @@ use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnec
 class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return ProductAttribute
+     * @return ProductAttributeDecisionRule
      */
     public function createProductAttributeDecisionRule()
     {
-        return new ProductAttribute($this->getProductFacade(), $this->getDiscountFacade());
+        return new ProductAttributeDecisionRule($this->getProductFacade(), $this->getDiscountFacade());
     }
 
     /**
@@ -28,7 +28,7 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductAttributeCollector()
     {
-        return new ProductAttributeCollector($this->getProductFacade(), $this->getDiscountFacade());
+        return new ProductAttributeCollector($this->createProductAttributeDecisionRule());
     }
 
     /**

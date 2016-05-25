@@ -10,12 +10,13 @@ namespace Spryker\Zed\Discount\Business\QueryString\Specification;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification;
+use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorOrSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
-class CollectorProvider implements SpecificationProviderInterface
+class CollectorProvider extends BaseSpecificationProvider implements SpecificationProviderInterface
 {
 
     /**
@@ -64,10 +65,7 @@ class CollectorProvider implements SpecificationProviderInterface
     {
         foreach ($this->collectorPlugins as $collectorPlugin) {
 
-            $clauseFieldName = $clauseTransfer->getField();
-            if ($clauseTransfer->getAttribute()) {
-                $clauseFieldName = $clauseTransfer->getField() . '.*';
-            }
+            $clauseFieldName = $this->getClauseFieldName($clauseTransfer);
 
             if (strcasecmp($collectorPlugin->getFieldName(), $clauseFieldName) === 0) {
                 return new CollectorContext($collectorPlugin, $clauseTransfer);

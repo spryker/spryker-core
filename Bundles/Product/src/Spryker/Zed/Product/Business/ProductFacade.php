@@ -312,6 +312,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param string $abstractSku
      *
      * @return \Generated\Shared\Transfer\ProductVariantTransfer[]

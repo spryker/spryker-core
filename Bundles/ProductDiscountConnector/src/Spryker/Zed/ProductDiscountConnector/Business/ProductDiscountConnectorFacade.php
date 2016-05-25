@@ -43,6 +43,8 @@ class ProductDiscountConnectorFacade extends AbstractFacade
      */
     public function collectByProductAttribute(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
-        return $this->getFactory()->createProductAttributeCollector()->collect($quoteTransfer, $clauseTransfer);
+        return $this->getFactory()
+            ->createProductAttributeCollector()
+            ->collect($quoteTransfer, $clauseTransfer);
     }
 }
