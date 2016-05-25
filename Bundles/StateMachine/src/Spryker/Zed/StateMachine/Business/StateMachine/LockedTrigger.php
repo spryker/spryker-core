@@ -4,12 +4,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\StateMachine\Business\Lock;
+namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\StateMachine\Business\Exception\LockException;
-use Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface;
+use Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface;
 
 class LockedTrigger implements TriggerInterface
 {
@@ -25,44 +24,37 @@ class LockedTrigger implements TriggerInterface
     protected $stateMachineTrigger;
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected $propelConnection;
-
-    /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $stateMachineTrigger
      * @param \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface $itemLock
-     * @param \Propel\Runtime\Connection\ConnectionInterface $propelConnection
      */
-    public function __construct(
-        TriggerInterface $stateMachineTrigger,
-        ItemLockInterface $itemLock,
-        ConnectionInterface $propelConnection
-    ) {
+    public function __construct(TriggerInterface $stateMachineTrigger, ItemLockInterface $itemLock)
+    {
         $this->itemLock = $itemLock;
         $this->stateMachineTrigger = $stateMachineTrigger;
-        $this->propelConnection = $propelConnection;
     }
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param int $identifier
-     * @return int
+     *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\LockException
+     *
+     * @return int
+     *
      */
     public function triggerForNewStateMachineItem(StateMachineProcessTransfer $stateMachineProcessTransfer, $identifier)
     {
-        $this->propelConnection->beginTransaction();
         if ($this->itemLock->isLocked($identifier)) {
             throw new LockException('State machine item is locked.');
         }
 
         $this->itemLock->acquire($identifier);
-        $this->propelConnection->commit();
 
-        $triggerResult = $this->stateMachineTrigger->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
-
-        $this->itemLock->release($identifier);
+        try {
+            $triggerResult = $this->stateMachineTrigger->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+        } finally {
+            $this->itemLock->release($identifier);
+        }
 
         return $triggerResult;
     }
@@ -70,25 +62,27 @@ class LockedTrigger implements TriggerInterface
     /**
      * @param string $eventName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @return int
+     *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\LockException
+     *
+     * @return int
      */
     public function triggerEvent($eventName, array $stateMachineItems)
     {
         $identifier = $this->buildIdentifierForMultipleItemLock($stateMachineItems);
 
-        $this->propelConnection->beginTransaction();
         if ($this->itemLock->isLocked($identifier)) {
             throw new LockException('State machine item is locked.');
         }
 
         $this->itemLock->acquire($identifier);
-        $this->propelConnection->commit();
 
-        $triggerEventResult = $this->stateMachineTrigger
-            ->triggerEvent($eventName, $stateMachineItems);
-
-        $this->itemLock->release($identifier);
+        try {
+            $triggerEventResult = $this->stateMachineTrigger
+                ->triggerEvent($eventName, $stateMachineItems);
+        } finally {
+            $this->itemLock->release($identifier);
+        }
 
         return $triggerEventResult;
     }

@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\StateMachine\Business\Logger;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog;
+use Spryker\Zed\StateMachine\Business\Logger\PathFinderInterface;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLog;
 use Spryker\Zed\StateMachine\Business\Process\Event;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
@@ -82,17 +83,29 @@ class TransitionLogTest extends StateMachineMocks
 
     /**
      * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock
-     * @return \Spryker\Zed\StateMachine\Business\Logger\TransitionLog
      *
+     * @return \Spryker\Zed\StateMachine\Business\Logger\TransitionLog
      */
     protected function createTransitionLog(SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock)
     {
-        $partialTransitionLogMock = $this->getMock(TransitionLog::class, ['createStateMachineTransitionLogEntity']);
+        $partialTransitionLogMock = $this->getMock(
+            TransitionLog::class,
+            ['createStateMachineTransitionLogEntity'],
+            [$this->createPathFinderMock()]
+        );
 
         $partialTransitionLogMock->method('createStateMachineTransitionLogEntity')
             ->willReturn($stateMachineTransitionLogEntityMock);
 
         return $partialTransitionLogMock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Logger\PathFinderInterface
+     */
+    protected function createPathFinderMock()
+    {
+        return $this->getMock(PathFinderInterface::class);
     }
 
     /**

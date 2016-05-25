@@ -92,9 +92,10 @@ interface PersistenceInterface
      * @param \DateTime $timeoutDate
      * @param string $eventName
      *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function saveStateMachineItemTimeout(
         StateMachineItemTransfer $stateMachineItemTransfer,

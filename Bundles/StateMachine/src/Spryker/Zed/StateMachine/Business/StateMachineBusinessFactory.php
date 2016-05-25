@@ -9,7 +9,7 @@ namespace Spryker\Zed\StateMachine\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\StateMachine\Business\Graph\Drawer;
 use Spryker\Zed\StateMachine\Business\Lock\ItemLock;
-use Spryker\Zed\StateMachine\Business\Lock\LockedTrigger;
+use Spryker\Zed\StateMachine\Business\Logger\PathFinder;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLog;
 use Spryker\Zed\StateMachine\Business\Process\Event;
 use Spryker\Zed\StateMachine\Business\Process\Process;
@@ -19,6 +19,7 @@ use Spryker\Zed\StateMachine\Business\StateMachine\Builder;
 use Spryker\Zed\StateMachine\Business\StateMachine\Condition;
 use Spryker\Zed\StateMachine\Business\StateMachine\Finder;
 use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolver;
+use Spryker\Zed\StateMachine\Business\StateMachine\LockedTrigger;
 use Spryker\Zed\StateMachine\Business\StateMachine\Persistence;
 use Spryker\Zed\StateMachine\Business\StateMachine\StateUpdater;
 use Spryker\Zed\StateMachine\Business\StateMachine\Timeout;
@@ -40,8 +41,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     {
         return new LockedTrigger(
             $this->createStateMachineTrigger(),
-            $this->createItemLock(),
-            $this->getPropelConnection()
+            $this->createItemLock()
         );
     }
 
@@ -94,7 +94,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
             $this->createStateMachineTimeout(),
             $this->createHandlerResolver(),
             $this->createStateMachinePersistence(),
-            $this->getPropelConnection()
+            $this->getQueryContainer()
         );
     }
 
@@ -139,7 +139,9 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
      */
     public function createLoggerTransitionLog()
     {
-        return new TransitionLog();
+        return new TransitionLog(
+            $this->createPathFinder()
+        );
     }
 
     /**
@@ -183,6 +185,14 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\StateMachine\Business\Logger\PathFinder
+     */
+    protected function createPathFinder()
+    {
+        return new PathFinder();
+    }
+
+    /**
      * @param string $stateMachineName
      *
      * @return \Spryker\Zed\StateMachine\Business\Graph\DrawerInterface
@@ -217,14 +227,6 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     public function getStateMachineHandlerPlugins()
     {
         return $this->getProvidedDependency(StateMachineDependencyProvider::PLUGINS_STATE_MACHINE_HANDLERS);
-    }
-
-    /**
-     * @return \Propel\Runtime\Connection\ConnectionInterface
-     */
-    public function getPropelConnection()
-    {
-        return $this->getProvidedDependency(StateMachineDependencyProvider::PLUGIN_PROPEL_CONNECTION);
     }
 
 }

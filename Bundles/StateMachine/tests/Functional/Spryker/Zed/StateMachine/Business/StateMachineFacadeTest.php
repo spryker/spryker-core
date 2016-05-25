@@ -19,7 +19,6 @@ use Orm\Zed\StateMachine\Persistence\SpyStateMachineLock;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
@@ -584,10 +583,6 @@ class StateMachineFacadeTest extends Test
 
         $container[StateMachineDependencyProvider::PLUGIN_GRAPH] = function () {
              return new GraphPlugin();
-        };
-
-        $container[StateMachineDependencyProvider::PLUGIN_PROPEL_CONNECTION] = function () {
-            return (new Connection())->get();
         };
 
         $stateMachineBusinessFactory->setContainer($container);

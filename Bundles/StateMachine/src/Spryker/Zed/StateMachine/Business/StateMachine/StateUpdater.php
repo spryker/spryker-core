@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
+use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class StateUpdater implements StateUpdaterInterface
 {
@@ -28,26 +28,25 @@ class StateUpdater implements StateUpdaterInterface
     protected $stateMachinePersistence;
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
+     * @var \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
      */
-    protected $propelConnection;
+    protected $stateMachineQueryContainer;
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface $timeout
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $stateMachineHandlerResolver
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $stateMachinePersistence
-     * @param \Propel\Runtime\Connection\ConnectionInterface $propelConnection
      */
     public function __construct(
         TimeoutInterface $timeout,
         HandlerResolverInterface $stateMachineHandlerResolver,
         PersistenceInterface $stateMachinePersistence,
-        ConnectionInterface $propelConnection
+        StateMachineQueryContainerInterface $stateMachineQueryContainer
     ) {
         $this->timeout = $timeout;
         $this->stateMachineHandlerResolver = $stateMachineHandlerResolver;
         $this->stateMachinePersistence = $stateMachinePersistence;
-        $this->propelConnection = $propelConnection;
+        $this->stateMachineQueryContainer = $stateMachineQueryContainer;
     }
 
     /**
@@ -69,7 +68,7 @@ class StateUpdater implements StateUpdaterInterface
             return;
         }
 
-        $this->propelConnection->beginTransaction();
+        $this->getConnection()->beginTransaction();
 
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
             $stateMachineItemTransfer->requireProcessName()
@@ -103,7 +102,15 @@ class StateUpdater implements StateUpdaterInterface
             }
         }
 
-        $this->propelConnection->commit();
+        $this->getConnection()->commit();
+    }
+
+    /**
+     * @return \Propel\Runtime\Connection\ConnectionInterface
+     */
+    protected function getConnection()
+    {
+        return $this->stateMachineQueryContainer->getConnection();
     }
 
 }

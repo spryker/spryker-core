@@ -6,8 +6,9 @@
 namespace Spryker\Zed\StateMachine\Persistence;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface StateMachineQueryContainerInterface
+interface StateMachineQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

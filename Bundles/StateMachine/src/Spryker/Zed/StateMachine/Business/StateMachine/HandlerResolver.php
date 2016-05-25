@@ -28,6 +28,7 @@ class HandlerResolver implements HandlerResolverInterface
      * @param string $stateMachineName
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineHandlerNotFound
+     *
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
      */
     public function get($stateMachineName)

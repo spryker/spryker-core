@@ -10,14 +10,12 @@ namespace Spryker\Zed\StateMachine;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const PLUGINS_STATE_MACHINE_HANDLERS = 'PLUGINS_STATE_MACHINE_HANDLERS';
     const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
-    const PLUGIN_PROPEL_CONNECTION = 'PLUGIN_PROPEL_CONNECTION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,10 +26,6 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::PLUGINS_STATE_MACHINE_HANDLERS] = function () {
             return $this->getStateMachineHandlers();
-        };
-
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
-            return (new Connection())->get();
         };
 
         $container[self::PLUGIN_GRAPH] = function () {

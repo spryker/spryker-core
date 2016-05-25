@@ -77,10 +77,10 @@ class Condition implements ConditionInterface
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $sourceState
      * @param \Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface $transactionLogger
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
-     *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException
      * @throws \Exception
+     *
+     * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
     public function checkConditionForTransitions(
         array $transitions,
@@ -196,8 +196,9 @@ class Condition implements ConditionInterface
      * @param array $stateToTransitionsMap
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     protected function updateStateByTransition(
         $stateMachineName,
@@ -266,8 +267,10 @@ class Condition implements ConditionInterface
      * @param string $conditionString
      * @param string $stateMachineName
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface
      * @throws \Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException
+     *
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface
+     *
      */
     protected function getConditionPlugin($conditionString, $stateMachineName)
     {
@@ -283,6 +286,7 @@ class Condition implements ConditionInterface
      * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException
+     *
      * @return void
      */
     protected function assertConditionIsSet($conditionString, StateMachineHandlerInterface $stateMachineHandler)

@@ -13,6 +13,7 @@ use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\StateUpdater;
 use Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface;
+use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
 class StateUpdaterTest extends StateMachineMocks
@@ -198,12 +199,24 @@ class StateUpdaterTest extends StateMachineMocks
             $propelConnectionMock = $this->createPropelConnectionMock();
         }
 
+        $queryContainerMock = $this->createQueryContainerMock();
+        $queryContainerMock->method('getConnection')
+            ->willReturn($propelConnectionMock);
+
         return new StateUpdater(
             $timeoutMock,
             $handlerResolverMock,
             $stateMachinePersistenceMock,
-            $propelConnectionMock
+            $queryContainerMock
         );
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
+     */
+    protected function createQueryContainerMock()
+    {
+        return $this->getMock(StateMachineQueryContainerInterface::class);
     }
 
 }

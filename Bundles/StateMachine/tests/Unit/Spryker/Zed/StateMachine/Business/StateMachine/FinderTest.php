@@ -83,10 +83,7 @@ class FinderTest extends StateMachineMocks
 
         $stateMachineItems[] = $stateMachineItemTransfer;
 
-        $manualEvents = $finder->getManualEventsForStateMachineItems(
-            $stateMachineItems,
-            self::TEST_STATE_MACHINE_NAME
-        );
+        $manualEvents = $finder->getManualEventsForStateMachineItems($stateMachineItems);
 
         $this->assertCount(1, $manualEvents);
 

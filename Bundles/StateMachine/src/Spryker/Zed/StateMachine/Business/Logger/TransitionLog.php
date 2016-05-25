@@ -17,15 +17,25 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface;
 class TransitionLog implements TransitionLogInterface
 {
 
-    const SAPI_CLI = 'cli';
     const QUERY_STRING = 'QUERY_STRING';
-    const DOCUMENT_URI = 'DOCUMENT_URI';
-    const ARGV = 'argv';
 
     /**
      * @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog[]
      */
     protected $logEntities;
+
+    /**
+     * @var \Spryker\Zed\StateMachine\Business\Logger\PathFinderInterface
+     */
+    protected $pathFinder;
+
+    /**
+     * @param \Spryker\Zed\StateMachine\Business\Logger\PathFinderInterface $pathFinder
+     */
+    public function __construct(PathFinderInterface $pathFinder)
+    {
+        $this->pathFinder = $pathFinder;
+    }
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
@@ -140,7 +150,7 @@ class TransitionLog implements TransitionLogInterface
         );
         $stateMachineTransitionLogEntity->setHostname(System::getHostname());
 
-        $path = $this->getExecutorPath();
+        $path = $this->pathFinder->getCurrentExecutionPath();
         $stateMachineTransitionLogEntity->setPath($path);
 
         $params = [];
@@ -192,23 +202,6 @@ class TransitionLog implements TransitionLogInterface
     protected function getParamsFromQueryString($queryString)
     {
         return explode('&', $queryString);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getExecutorPath()
-    {
-        if (PHP_SAPI !== self::SAPI_CLI) {
-            return $_SERVER[self::DOCUMENT_URI];
-        }
-
-        $path = self::SAPI_CLI;
-        if (isset($_SERVER[self::ARGV]) && is_array($_SERVER[self::ARGV])) {
-            $path = implode(' ', $_SERVER[self::ARGV]);
-        }
-
-        return $path;
     }
 
 }

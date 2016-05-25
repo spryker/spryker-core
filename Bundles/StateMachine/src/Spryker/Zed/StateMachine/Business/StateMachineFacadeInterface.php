@@ -15,16 +15,6 @@ interface StateMachineFacadeInterface
 {
 
     /**
-     * Trigger when first time adding item to state machine process
-     *
-     * Specification:
-     *  - Returns boolean true if trigger was successful
-     *  - Creates new process item in persistence if does not exist
-     *  - Creates new state item in persistence if does not exist
-     *  - Calls plugin method in StateMachineHandlerInterface::getInitialStateForProcess
-     *  - Calls plugin method in StateMachineHandlerInterface::itemStateUpdated when state changed happens
-     *  - Persist state history
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -35,14 +25,6 @@ interface StateMachineFacadeInterface
     public function triggerForNewStateMachineItem(StateMachineProcessTransfer $stateMachineProcessTransfer, $identifier);
 
     /**
-     * Trigger event for single item. Must be already initialized with triggerForNewStateMachineItem
-     *
-     * Specification:
-     *  - Returns boolean true if trigger was successful
-     *  - Creates new state item in persistence if does not exist
-     *  - Calls plugin method in StateMachineHandlerInterface::itemStateUpdated when state changed happens
-     *  - Persist state history
-     *
      * @api
      *
      * @param string $eventName
@@ -53,14 +35,6 @@ interface StateMachineFacadeInterface
     public function triggerEvent($eventName, StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
-     * Trigger event for multiple items. Must be already initialized with triggerForNewStateMachineItem
-     *
-     * Specification:
-     *  - Returns boolean true if trigger was successful
-     *  - Creates new state item in persistence if does not exist
-     *  - Calls plugin method in StateMachineHandlerInterface::itemStateUpdated when state changed happens
-     *  - Persist state history
-     *
      * @api
      *
      * @param string $eventName
@@ -71,12 +45,6 @@ interface StateMachineFacadeInterface
     public function triggerEventForItems($eventName, array $stateMachineItems);
 
     /**
-     * Return available state machine process list. Includes all state machine details: states transitions, events
-     *
-     * Specification:
-     *  - Parse xml file and build object graph from it.
-     *  - Calls plugin method in StateMachineHandlerInterface::getActiveProcesses to get list of process
-     *
      * @api
      *
      * @param string $stateMachineName
@@ -86,11 +54,6 @@ interface StateMachineFacadeInterface
     public function getProcesses($stateMachineName);
 
     /**
-     * Specification:
-     *  - Read all transition without event for given state machine.
-     *  - Read from database items with those transitions
-     *  - execute each transition
-     *
      * @api
      *
      * @param string $stateMachineName
@@ -100,11 +63,6 @@ interface StateMachineFacadeInterface
     public function checkConditions($stateMachineName);
 
     /**
-     *
-     *  Specification:
-     *  - Read all expired timeout events for given state machine
-     *  - Execute events
-     *
      * @api
      *
      * @param string $stateMachineName
@@ -114,11 +72,6 @@ interface StateMachineFacadeInterface
     public function checkTimeouts($stateMachineName);
 
     /**
-     *
-     * Specification:
-     *  - Read all processes from given state machine
-     *  - Using graph library draw graph
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -131,9 +84,6 @@ interface StateMachineFacadeInterface
     public function drawProcess(StateMachineProcessTransfer $stateMachineProcessTransfer, $highlightState = null, $format = null, $fontSize = null);
 
     /**
-     * Specification:
-     *  - Read process id from database.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -143,12 +93,6 @@ interface StateMachineFacadeInterface
     public function getStateMachineProcessId(StateMachineProcessTransfer $stateMachineProcessTransfer);
 
     /**
-     *
-     *  Specification:
-     *  - Read state machine process list
-     *  - Find all manual events
-     *  - Map manual events with give event name.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
@@ -158,11 +102,6 @@ interface StateMachineFacadeInterface
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
-     * Specification:
-     *  - Read state machine process list
-     *  - Find all manual events
-     *  - Map manual events with give event state machine items.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
@@ -172,10 +111,6 @@ interface StateMachineFacadeInterface
     public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
     /**
-     *
-     * Specification:
-     *  - Get StateMachine item transfer as stored in persistence
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
@@ -185,9 +120,6 @@ interface StateMachineFacadeInterface
     public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
-     * Specification:
-     *  - Get StateMachine items transfer as stored in persistence
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
@@ -197,9 +129,6 @@ interface StateMachineFacadeInterface
     public function getProcessedStateMachineItems(array $stateMachineItems);
 
     /**
-     * Specification:
-     *  - Get history for given state machine item reading state machine history table
-     *
      * @api
      *
      * @param int $idStateMachineProcess
@@ -209,9 +138,6 @@ interface StateMachineFacadeInterface
     public function getStateHistoryByStateItemIdentifier($idStateMachineProcess, $identifier);
 
     /**
-     * Specification:
-     *  - Find all items with flag for given state machine and process, parse xml.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -222,9 +148,6 @@ interface StateMachineFacadeInterface
     public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName);
 
     /**
-     * Specification:
-     *  - Find all items without flag for given state machine and process, parse xml.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -235,9 +158,6 @@ interface StateMachineFacadeInterface
     public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName);
 
     /**
-     * Specification:
-     *  - Clear all expired locks from database, deletes rows.
-     *
      * @api
      *
      * @return void

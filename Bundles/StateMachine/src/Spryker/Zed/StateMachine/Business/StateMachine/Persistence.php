@@ -241,9 +241,9 @@ class Persistence implements PersistenceInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
-     *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
     public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer)
     {
@@ -344,9 +344,9 @@ class Persistence implements PersistenceInterface
      * @param \DateTime $timeoutDate
      * @param string $eventName
      *
-     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout
-     *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout
      */
     public function saveStateMachineItemTimeout(
         StateMachineItemTransfer $stateMachineItemTransfer,
@@ -384,6 +384,7 @@ class Persistence implements PersistenceInterface
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess
      */
     protected function saveStateMachineProcess(StateMachineProcessTransfer $stateMachineProcessTransfer)
@@ -401,6 +402,7 @@ class Persistence implements PersistenceInterface
      * @param string $stateName
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState
      */
     protected function saveStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer, $stateName)

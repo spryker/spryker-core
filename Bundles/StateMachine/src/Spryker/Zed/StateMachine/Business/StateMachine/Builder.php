@@ -169,8 +169,11 @@ class Builder implements BuilderInterface
     /**
      * @param string $pathToXml
      * @param string $fileName
-     * @return \SimpleXMLElement
+     *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
+     * @return \SimpleXMLElement
+     *
      */
     protected function loadXmlFromFileName($pathToXml, $fileName)
     {
@@ -387,6 +390,7 @@ class Builder implements BuilderInterface
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface[] $eventMap
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
      * @return void
      */
     protected function createTransitions(array $stateToProcessMap, array $processMap, array $eventMap)
@@ -411,6 +415,7 @@ class Builder implements BuilderInterface
      * @param \SimpleXMLElement $xmlTransition
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
      * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface
      */
     protected function createTransition(array $stateToProcessMap, array $eventMap, \SimpleXMLElement $xmlTransition)
@@ -464,6 +469,7 @@ class Builder implements BuilderInterface
      * @param \SimpleXMLElement $xmlTransition
      * @param string $sourceName
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
+     *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
      * @return void
@@ -570,6 +576,7 @@ class Builder implements BuilderInterface
      * @param string $eventName
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
      * @return void
      */
     protected function assertEventExists(array $eventMap, $sourceName, $eventName)

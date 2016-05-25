@@ -4,46 +4,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\StateMachine\Business\Lock;
+namespace Unit\Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\StateMachine\Business\Exception\LockException;
 use Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface;
-use Spryker\Zed\StateMachine\Business\Lock\LockedTrigger;
+use Spryker\Zed\StateMachine\Business\StateMachine\LockedTrigger;
 use Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
 class LockedTriggerTest extends StateMachineMocks
 {
-
-    /**
-     * @return void
-     */
-    public function testTriggerForNewItemShouldBeWrappedInLockAndTransaction()
-    {
-        $triggerMock = $this->createTriggerMock();
-        $triggerMock->expects($this->once())->method('triggerForNewStateMachineItem');
-
-        $itemLockMock = $this->createItemLockMock();
-        $itemLockMock->expects($this->once())
-             ->method('isLocked')
-             ->willReturn(false);
-
-        $itemLockMock->expects($this->once())
-            ->method('acquire');
-
-        $itemLockMock->expects($this->once())
-            ->method('release');
-
-        $propelConnectionMock = $this->createPropelConnectionMock();
-        $propelConnectionMock->expects($this->once())->method('beginTransaction');
-        $propelConnectionMock->expects($this->once())->method('commit');
-
-        $lockedTrigger = $this->createLockedTrigger($triggerMock, $itemLockMock, $propelConnectionMock);
-        $lockedTrigger->triggerForNewStateMachineItem(new StateMachineProcessTransfer(), 1);
-    }
 
     /**
      * @return void
@@ -83,11 +55,7 @@ class LockedTriggerTest extends StateMachineMocks
         $itemLockMock->expects($this->once())
             ->method('release');
 
-        $propelConnectionMock = $this->createPropelConnectionMock();
-        $propelConnectionMock->expects($this->once())->method('beginTransaction');
-        $propelConnectionMock->expects($this->once())->method('commit');
-
-        $lockedTrigger = $this->createLockedTrigger($triggerMock, $itemLockMock, $propelConnectionMock);
+        $lockedTrigger = $this->createLockedTrigger($triggerMock, $itemLockMock);
 
         $items = [];
         $itemTransfer = new StateMachineItemTransfer();
@@ -120,16 +88,11 @@ class LockedTriggerTest extends StateMachineMocks
     /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $triggerMock
      * @param \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface $itemLockMock
-     * @param \Propel\Runtime\Connection\ConnectionInterface $propelConnectionMock
      *
-     * @return \Spryker\Zed\StateMachine\Business\Lock\LockedTrigger
+     * @return \Spryker\Zed\StateMachine\Business\StateMachine\LockedTrigger
      */
-    public function createLockedTrigger(
-        TriggerInterface $triggerMock = null,
-        ItemLockInterface $itemLockMock = null,
-        ConnectionInterface $propelConnectionMock = null
-    ) {
-
+    public function createLockedTrigger(TriggerInterface $triggerMock = null, ItemLockInterface $itemLockMock = null)
+    {
         if ($triggerMock === null) {
             $triggerMock = $this->createTriggerMock();
         }
@@ -138,14 +101,9 @@ class LockedTriggerTest extends StateMachineMocks
             $itemLockMock = $this->createItemLockMock();
         }
 
-        if ($propelConnectionMock === null) {
-            $propelConnectionMock = $this->createPropelConnectionMock();
-        }
-
         return new LockedTrigger(
             $triggerMock,
-            $itemLockMock,
-            $propelConnectionMock
+            $itemLockMock
         );
     }
 
