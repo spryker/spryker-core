@@ -470,7 +470,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
@@ -487,7 +487,8 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
      * @return array
      */
     protected function getCustomerAddressData(AddressTransfer $addressTransfer)
