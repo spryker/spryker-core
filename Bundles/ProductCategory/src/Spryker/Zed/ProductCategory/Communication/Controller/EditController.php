@@ -41,7 +41,7 @@ class EditController extends AddController
             ->findOne();
 
         if (!$currentCategory) {
-            $this->addErrorMessage(sprintf('The category you are trying to edit %s does not exist.', $idCategory));
+            $this->addErrorMessage(sprintf('The category with id "%s" does not exist.', $idCategory));
 
             return new RedirectResponse('/category');
         }
@@ -306,6 +306,8 @@ class EditController extends AddController
 
     protected function updateExtraParents(NodeTransfer $mainNodeTransfer, array $localeCollection, $extraParentNodeId)
     {
+        return ;
+
         if ((int) $extraParentNodeId === (int) $mainNodeTransfer->getIdCategoryNode()) {
             return;
         }
