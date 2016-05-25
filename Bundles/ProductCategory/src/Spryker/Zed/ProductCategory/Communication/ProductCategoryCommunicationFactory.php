@@ -8,14 +8,13 @@
 namespace Spryker\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Category\Business\Foo\CategoryManager;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
+use Spryker\Zed\Category\Business\Localized\CategoryManager;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManager;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriter;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Spryker\Zed\Category\Business\Tree\NodeWriter;
-use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
@@ -201,7 +200,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\Foo\CategoryManager
+     * @return \Spryker\Zed\Category\Business\Localized\CategoryManager
      */
     public function createCategoryManagerFoo()
     {
@@ -230,7 +229,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param $localeFacade
      *
-     * @return CategoryToLocaleBridge
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge
      */
     protected function createProductCategoryToLocaleBridge($localeFacade)
     {

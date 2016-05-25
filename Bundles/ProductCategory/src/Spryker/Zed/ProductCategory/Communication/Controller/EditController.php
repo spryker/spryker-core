@@ -59,10 +59,11 @@ class EditController extends AddController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->updateCategoryData($form->getData());
-            $this->addSuccessMessage('The category was saved successfully.');
+            if ($this->updateCategoryData($form->getData())) {
+                $this->addSuccessMessage('The category was saved successfully.');
 
-            return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
+                return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
+            }
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -199,11 +200,25 @@ class EditController extends AddController
     /**
      * @param array $data
      *
-     * @return void
+     * @return bool
      */
     protected function updateCategoryData(array $data)
     {
         $this->getFactory()->getPropelConnection()->beginTransaction();
+
+        $categoryKey = $data['category_key'];
+
+        $entity = $this->getFactory()->getCategoryQueryContainer()
+            ->queryCategoryByKey($categoryKey);
+
+        if ($entity) {
+            $this->addErrorMessage(sprintf(
+                'Category with key "%s" already exists',
+                $categoryKey
+            ));
+
+            return false;
+        }
 
         $attributes = $data[CategoryFormEdit::LOCALIZED_ATTRIBUTES];
         foreach ($attributes as $localeCode => $localizedAttributes) {
@@ -234,6 +249,8 @@ class EditController extends AddController
         }
 
         $this->getFactory()->getPropelConnection()->commit();
+
+        return true;
     }
 
     /**

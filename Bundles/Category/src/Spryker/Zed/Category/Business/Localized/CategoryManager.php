@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\Foo;
+namespace Spryker\Zed\Category\Business\Localized;
 
 use Generated\Shared\Transfer\CategoryLocalizedTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -86,6 +86,14 @@ class CategoryManager
     public function create(CategoryLocalizedTransfer $categoryLocalizedTransfer, NodeTransfer $nodeTransfer)
     {
         $this->queryContainer->getConnection()->beginTransaction();
+
+        $entity = $this->queryContainer->queryCategoryByKey($categoryLocalizedTransfer->requireCategoryKey()->getCategoryKey());
+        if ($entity) {
+            throw new \Exception(sprintf(
+                'Category with key "%s" already exists',
+                $categoryLocalizedTransfer->getCategoryKey()
+            ));
+        }
 
         $categoryLocalizedTransfer = $this->persistCategory($categoryLocalizedTransfer);
         $nodeTransfer = $this->persistNode($categoryLocalizedTransfer, $nodeTransfer);
@@ -205,9 +213,9 @@ class CategoryManager
             $data
         );
 
-        $categoryEntity = $this->queryContainer->queryCategoryByKey(
-            $categoryLocalizedTransfer->requireCategoryKey()->getCategoryKey()
-        )->findOne();
+        $categoryEntity = $this->queryContainer
+            ->queryCategoryById($categoryLocalizedTransfer->getIdCategory())
+            ->findOne();
 
         if (!$categoryEntity) {
             $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $localeTransfer);
