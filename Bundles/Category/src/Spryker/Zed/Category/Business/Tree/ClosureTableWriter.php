@@ -24,11 +24,11 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryTreeRepository
      */
-    public function __construct(CategoryQueryContainerInterface $queryContainer)
+    public function __construct(CategoryQueryContainerInterface $categoryTreeRepository)
     {
-        $this->queryContainer = $queryContainer;
+        $this->queryContainer = $categoryTreeRepository;
     }
 
     /**
@@ -38,7 +38,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
      */
     public function create(NodeTransfer $categoryNode)
     {
-        $nodeId = $categoryNode->requireIdCategoryNode()->getIdCategoryNode();
+        $nodeId = $categoryNode->getIdCategoryNode();
         $parentId = $categoryNode->getFkParentCategoryNode();
 
         if ($parentId === null) {
@@ -68,7 +68,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     public function moveNode(NodeTransfer $categoryNode)
     {
         $obsoleteEntities = $this->queryContainer
-            ->queryClosureTableParentEntries($categoryNode->requireIdCategoryNode()->getIdCategoryNode())
+            ->queryClosureTableParentEntries($categoryNode->getIdCategoryNode())
             ->find();
 
         foreach ($obsoleteEntities as $obsoleteEntity) {
@@ -76,11 +76,11 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         }
 
         $nodeEntities = $this->queryContainer
-            ->queryClosureTableFilterByIdNode($categoryNode->requireIdCategoryNode()->getIdCategoryNode())
+            ->queryClosureTableFilterByIdNode($categoryNode->getIdCategoryNode())
             ->find();
 
         $parentEntities = $this->queryContainer
-            ->queryClosureTableFilterByIdNodeDescendant($categoryNode->requireFkParentCategoryNode()->getFkParentCategoryNode())
+            ->queryClosureTableFilterByIdNodeDescendant($categoryNode->getFkParentCategoryNode())
             ->find();
 
         foreach ($nodeEntities as $nodeEntity) {
@@ -104,7 +104,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
      */
     protected function createRootNode(NodeTransfer $categoryNode)
     {
-        $nodeId = $categoryNode->requireIdCategoryNode()->getIdCategoryNode();
+        $nodeId = $categoryNode->getIdCategoryNode();
 
         $pathEntity = new SpyCategoryClosureTable();
         $pathEntity->setFkCategoryNode($nodeId);
@@ -122,28 +122,18 @@ class ClosureTableWriter implements ClosureTableWriterInterface
      */
     protected function persistNode($nodeId, $parentId)
     {
-        $closureQuery = new SpyCategoryClosureTableQuery();
+        $closureQuery= new SpyCategoryClosureTableQuery();
         $nodes = $closureQuery->findByFkCategoryNodeDescendant($parentId);
 
         foreach ($nodes as $node) {
-            $query = new SpyCategoryClosureTableQuery();
-            $entity = $query
-                ->filterByFkCategoryNode($node->getFkCategoryNode())
-                ->filterByFkCategoryNodeDescendant($nodeId)
-                ->findOneOrCreate();
-
+            $entity = new SpyCategoryClosureTable();
             $entity->setFkCategoryNode($node->getFkCategoryNode());
             $entity->setFkCategoryNodeDescendant($nodeId);
             $entity->setDepth($node->getDepth() + 1);
             $entity->save();
         }
 
-        $query = new SpyCategoryClosureTableQuery();
-        $entity = $query
-            ->filterByFkCategoryNode($nodeId)
-            ->filterByFkCategoryNodeDescendant($nodeId)
-            ->findOneOrCreate();
-
+        $entity = new SpyCategoryClosureTable();
         $entity->setFkCategoryNode($nodeId);
         $entity->setFkCategoryNodeDescendant($nodeId);
         $entity->setDepth(0);
@@ -205,7 +195,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         $query
             ->innerJoinCategory()
             ->useCategoryQuery()
-                ->innerJoinAttribute()
+            ->innerJoinAttribute()
             ->endUse()
             ->orderByFkParentCategoryNode()
             ->orderByNodeOrder('DESC')

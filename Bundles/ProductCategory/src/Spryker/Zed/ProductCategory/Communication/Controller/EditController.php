@@ -127,8 +127,6 @@ class EditController extends AddController
         array $localeCollection,
         array $parentIdList
     ) {
-        return;
-
         $existingParents = $this->getFactory()
             ->getCategoryFacade()
             ->getNotMainNodesByIdCategory($idCategory);
@@ -302,6 +300,13 @@ class EditController extends AddController
         return $nodeTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $mainNodeTransfer
+     * @param array $localeCollection
+     * @param int $extraParentNodeId
+     *
+     * @return void
+     */
     protected function updateExtraParent(NodeTransfer $mainNodeTransfer, array $localeCollection, $extraParentNodeId)
     {
         if ((int)$extraParentNodeId === (int)$mainNodeTransfer->getIdCategoryNode()) {
@@ -320,51 +325,8 @@ class EditController extends AddController
                 ->queryNotMainNodesByCategoryId($mainNodeTransfer->getFkCategory())
                 ->filterByFkParentCategoryNode($extraParentNodeId)
                 ->findOne();
-    
+
             $this->createOrUpdateCategoryNode($existingCategoryNode, $nodeTransfer, $localeTransfer);
-        }
-    }
-
-
-    protected function updateExtraParents222(NodeTransfer $mainNodeTransfer, array $localeCollection, $extraParentNodeId)
-    {
-        return;
-
-        if ((int)$extraParentNodeId === (int)$mainNodeTransfer->getIdCategoryNode()) {
-            return;
-        }
-
-        $nodeTransfer = (new NodeTransfer())
-            ->setFkCategory($mainNodeTransfer->getFkCategory())
-            ->setFkParentCategoryNode($extraParentNodeId)
-            ->setIsMain(false)
-            ->setIsRoot(false);
-
-        $existingCategoryNode = null;
-        foreach ($localeCollection as $localeTransfer) {
-            if ($existingCategoryNode === null) {
-                $existingCategoryNode = $this->getFactory()
-                    ->getCategoryQueryContainer()
-                    ->queryNodeByIdCategoryAndParentNode($mainNodeTransfer->getFkCategory(), $extraParentNodeId)
-                    ->filterByIsMain(false)
-                    ->findOne();
-            }
-
-            if ($existingCategoryNode && ((int)$existingCategoryNode->getIdCategoryNode() !== (int)$mainNodeTransfer->getIdCategoryNode())) {
-                $nodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
-
-                $this->getFactory()
-                    ->getCategoryFacade()
-                    ->updateCategoryNode($nodeTransfer, $localeTransfer);
-
-                continue;
-            }
-
-            if (!$existingCategoryNode) {
-                $this->getFactory()
-                    ->getCategoryFacade()
-                    ->createCategoryNode($nodeTransfer, $localeTransfer);
-            }
         }
     }
 

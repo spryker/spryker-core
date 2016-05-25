@@ -79,8 +79,6 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
             ];
         }
 
-        dump($formData);
-
         return $formData;
     }
 

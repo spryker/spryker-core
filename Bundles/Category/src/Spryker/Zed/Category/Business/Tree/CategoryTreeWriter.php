@@ -254,6 +254,10 @@ class CategoryTreeWriter
     protected function removeNodeUrl($idCategoryNode, LocaleTransfer $locale)
     {
         $nodeEntity = $this->categoryTreeReader->getNodeById($idCategoryNode);
+        if (!$nodeEntity) {
+            return;
+        }
+
         $nodeTransfer = (new NodeTransfer())
             ->fromArray($nodeEntity->toArray());
 

@@ -8,11 +8,14 @@
 namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class NodeWriter implements NodeWriterInterface
 {
+
+    const CATEGORY_URL_IDENTIFIER_LENGTH = 4;
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -34,11 +37,8 @@ class NodeWriter implements NodeWriterInterface
      */
     public function create(NodeTransfer $categoryNode)
     {
-        $nodeEntity = $this->queryContainer
-            ->queryMainNodesByCategoryId($categoryNode->requireFkCategory()->getFkCategory())
-            ->findOneOrCreate();
-
-        $nodeEntity->fromArray($categoryNode->modifiedToArray());
+        $nodeEntity = new SpyCategoryNode();
+        $nodeEntity->fromArray($categoryNode->toArray());
         $nodeEntity->save();
 
         $nodeId = $nodeEntity->getIdCategoryNode();
@@ -52,22 +52,19 @@ class NodeWriter implements NodeWriterInterface
      *
      * @throws \Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException
      *
-     * @return int
+     * @return void
      */
     public function delete($nodeId)
     {
         $nodeEntity = $this->queryContainer
             ->queryNodeById($nodeId)
             ->findOne();
-
         if (!$nodeEntity) {
-            throw new NodeNotFoundException();
+            return;
+            //throw new NodeNotFoundException();
         }
-
         $categoryId = $nodeEntity->getFkCategory();
         $nodeEntity->delete();
-
-        return $categoryId;
     }
 
     /**
@@ -80,7 +77,6 @@ class NodeWriter implements NodeWriterInterface
         $nodeEntity = $this->queryContainer
             ->queryNodeById($categoryNode->getIdCategoryNode())
             ->findOne();
-
         if ($nodeEntity) {
             $nodeEntity->fromArray($categoryNode->toArray());
             $nodeEntity->save();
