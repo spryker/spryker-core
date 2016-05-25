@@ -7,15 +7,11 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
-use Generated\Shared\Transfer\CategoryLocalizedTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\Propel;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
-use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
-use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -48,7 +44,6 @@ class AddController extends AbstractController
             ->handleRequest($request);
 
         $localeTransfer = $this->getFactory()->getCurrentLocale();
-
 
         if ($form->isValid()) {
 

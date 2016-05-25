@@ -24,7 +24,6 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_PRODUCT = 'product facade';
     const FACADE_CATEGORY = 'category facade';
-    const FACADE_URL = 'category url';
     const CATEGORY_QUERY_CONTAINER = 'category query container';
     const PRODUCT_QUERY_CONTAINER = 'product query container';
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
@@ -104,10 +103,6 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
             return (new Connection())->get();
-        };
-
-        $container[self::FACADE_URL] = function (Container $container) {
-            return $container->getLocator()->url()->facade();
         };
 
         return $container;

@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductCategory\Communication\Controller;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
@@ -218,7 +217,7 @@ class EditController extends AddController
             ->findOne();
 
         if ($entity) {
-            if ((int) $entity->getIdCategory() !== (int) $idCategory) {
+            if ((int)$entity->getIdCategory() !== (int)$idCategory) {
                 $this->addErrorMessage(sprintf(
                     'Category with key "%s" already exists',
                     $categoryKey
@@ -306,9 +305,9 @@ class EditController extends AddController
 
     protected function updateExtraParents(NodeTransfer $mainNodeTransfer, array $localeCollection, $extraParentNodeId)
     {
-        return ;
+        return;
 
-        if ((int) $extraParentNodeId === (int) $mainNodeTransfer->getIdCategoryNode()) {
+        if ((int)$extraParentNodeId === (int)$mainNodeTransfer->getIdCategoryNode()) {
             return;
         }
 

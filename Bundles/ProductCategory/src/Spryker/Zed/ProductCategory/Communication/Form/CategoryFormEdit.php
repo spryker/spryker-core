@@ -308,5 +308,4 @@ class CategoryFormEdit extends CategoryFormAdd
         return $this;
     }
 
-
 }

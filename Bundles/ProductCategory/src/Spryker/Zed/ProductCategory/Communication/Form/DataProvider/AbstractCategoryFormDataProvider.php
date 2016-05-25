@@ -76,8 +76,7 @@ class AbstractCategoryFormDataProvider
             foreach ($categoryEntity->getNodes() as $nodeEntity) {
                 if (!array_key_exists($nodeEntity->getFkParentCategoryNode(), $pathCache)) {
                     $path = $this->buildPath($nodeEntity);
-                }
-                else {
+                } else {
                     $path = $pathCache[$nodeEntity->getFkParentCategoryNode()];
                 }
 
