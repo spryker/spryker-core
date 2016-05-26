@@ -12,7 +12,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-class VoucherValidator
+class VoucherValidator implements VoucherValidatorInterface
 {
 
     const REASON_VOUCHER_CODE_NOT_ACTIVE = 'discount.voucher_code.not_active';

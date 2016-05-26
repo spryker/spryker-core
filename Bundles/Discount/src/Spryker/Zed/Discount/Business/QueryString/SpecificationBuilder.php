@@ -11,7 +11,7 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface;
 
-class SpecificationBuilder
+class SpecificationBuilder implements SpecificationBuilderInterface
 {
 
     const OPEN_PARENTHESIS = '(';
@@ -21,7 +21,7 @@ class SpecificationBuilder
     const TYPE_DECISION_RULE = 'decision-rule';
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\Tokenizer
+     * @var \Spryker\Zed\Discount\Business\QueryString\TokenizerInterface
      */
     protected $tokenizer;
 
@@ -36,12 +36,12 @@ class SpecificationBuilder
     protected $specificationProvider;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\Tokenizer $tokenizer
+     * @param \Spryker\Zed\Discount\Business\QueryString\TokenizerInterface $tokenizer
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface $assertionFacade
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProvider
      */
     public function __construct(
-        Tokenizer $tokenizer,
+        TokenizerInterface $tokenizer,
         DiscountToAssertionInterface $assertionFacade,
         SpecificationProviderInterface $specificationProvider
     ) {

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Business\DecisionRule;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class SubTotalDecisionRule implements DecisionRuleInterface
 {
@@ -20,9 +20,9 @@ class SubTotalDecisionRule implements DecisionRuleInterface
     protected $comparators;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators $comparators
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparators
      */
-    public function __construct(ComparatorOperators $comparators)
+    public function __construct(ComparatorOperatorsInterface $comparators)
     {
         $this->comparators = $comparators;
     }

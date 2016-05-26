@@ -16,7 +16,7 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-class VoucherEngine
+class VoucherEngine implements VoucherEngineInterface
 {
 
     /**

@@ -15,7 +15,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-class DiscountConfiguratorHydrate
+class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterface
 {
 
     /**
@@ -24,7 +24,7 @@ class DiscountConfiguratorHydrate
     protected $discountQueryContainer;
 
     /**
-     * DiscountConfiguratorHydrate constructor.
+     * @param DiscountQueryContainerInterface $discountQueryContainer
      */
     public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {
@@ -74,6 +74,7 @@ class DiscountConfiguratorHydrate
 
         $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom());
         $discountGeneralTransfer->setValidTo($discountEntity->getValidTo());
+
         return $discountGeneralTransfer;
     }
 

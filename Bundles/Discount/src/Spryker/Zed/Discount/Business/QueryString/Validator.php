@@ -12,25 +12,27 @@ use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 
-class Validator
+class Validator implements ValidatorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
+     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface
      */
     protected $decisionRuleBuilder;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
+     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface
      */
     protected $collectorBuilder;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder $decisionRuleBuilder
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder $collectorBuilder
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $decisionRuleBuilder
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $collectorBuilder
      */
-    public function __construct(SpecificationBuilder $decisionRuleBuilder, SpecificationBuilder $collectorBuilder)
-    {
+    public function __construct(
+        SpecificationBuilderInterface $decisionRuleBuilder,
+        SpecificationBuilderInterface $collectorBuilder
+    ) {
         $this->decisionRuleBuilder = $decisionRuleBuilder;
         $this->collectorBuilder = $collectorBuilder;
     }
@@ -78,6 +80,7 @@ class Validator
      * Dry run for decision rules
      *
      * @param string $queryString
+     *
      * @return void
      */
     protected function decisionRuleQueryString($queryString)
@@ -90,6 +93,7 @@ class Validator
      * Dry run for collectors
      *
      * @param string $queryString
+     *
      * @return void
      */
     protected function collectorQueryString($queryString)

@@ -338,22 +338,10 @@ class DiscountFacade extends AbstractFacade
      */
     public function distributeAmount(CollectedDiscountTransfer $collectedDiscountTransfer)
     {
-        $this->getFactory()->createDistributor()->distribute($collectedDiscountTransfer);
+        $this->getFactory()
+            ->createDistributor()
+            ->distribute($collectedDiscountTransfer);
     }
-
-    /**
-     * @api
-     *
-     * @param string $pluginName
-     *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
-     */
-    public function getCalculatorPluginByName($pluginName)
-    {
-        return $this->getFactory()
-            ->getCalculatorPlugins()[$pluginName];
-    }
-
 
     /**
      * @api

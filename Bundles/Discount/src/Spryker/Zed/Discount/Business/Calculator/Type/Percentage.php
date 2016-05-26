@@ -14,27 +14,27 @@ class Percentage implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param float $percentage
+     * @param float $value
      *
      * @return int
      */
-    public function calculate(array $discountableItems, $percentage)
+    public function calculate(array $discountableItems, $value)
     {
-        $this->ensureIsValidNumber($percentage);
+        $this->ensureIsValidNumber($value);
 
         $discountAmount = 0;
 
-        if ($percentage > 100) {
-            $percentage = 100;
+        if ($value > 100) {
+            $value = 100;
         }
 
-        if ($percentage <= 0) {
+        if ($value <= 0) {
             return 0;
         }
 
         foreach ($discountableItems as $discountableItemTransfer) {
             $itemTotalAmount = $discountableItemTransfer->getUnitGrossPrice() * $this->getDiscountableObjectQuantity($discountableItemTransfer);
-            $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $percentage);
+            $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $value);
         }
 
         if ($discountAmount <= 0) {
@@ -65,7 +65,7 @@ class Percentage implements CalculatorInterface
     protected function ensureIsValidNumber($number)
     {
         if (!is_float($number) && !is_int($number)) {
-            throw new \InvalidArgumentException('Wrong percentage number, only float or integer is allowed.');
+            throw new \InvalidArgumentException('Wrong value number, only float or integer is allowed.');
         }
     }
 

@@ -15,7 +15,7 @@ use Spryker\Zed\Discount\Business\Exception\PersistenceException;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-class DiscountPersist
+class DiscountPersist implements DiscountPersistInterface
 {
 
     /**
@@ -62,9 +62,9 @@ class DiscountPersist
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\PersistenceException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function update(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {

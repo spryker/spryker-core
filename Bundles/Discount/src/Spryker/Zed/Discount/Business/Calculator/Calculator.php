@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Library\Error\ErrorLogger;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
@@ -29,7 +29,7 @@ class Calculator implements CalculatorInterface
     protected $calculatedDiscounts = [];
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
+     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface
      */
     protected $collectorBuilder;
 
@@ -49,13 +49,13 @@ class Calculator implements CalculatorInterface
     protected $distributor;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder $collectorBuilder
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $collectorBuilder
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
     public function __construct(
-        SpecificationBuilder $collectorBuilder,
+        SpecificationBuilderInterface $collectorBuilder,
         DiscountToMessengerInterface $messengerFacade,
         DistributorInterface $distributor,
         array $calculatorPlugins

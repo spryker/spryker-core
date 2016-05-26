@@ -13,6 +13,8 @@ use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -70,28 +72,16 @@ class IndexController extends AbstractController
 
         $discountForm = $this->getFactory()->createDiscountForm();
         $discountForm->setData($discountConfiguratorTransfer);
-        $discountForm->handleRequest($request);
-
-        if ($discountForm->isValid()) {
-            $isUpdated = $this->getFacade()->updateDiscount($discountForm->getData());
-            if ($isUpdated === true) {
-                $this->addSuccessMessage('Discount successfully updated.');
-            }
-        }
+        $this->handleDiscountForm($request, $discountForm);
 
         $voucherFormDataProvider = $this->getFactory()->createVoucherFormDataProvider();
         $voucherForm = $this->getFactory()->createVoucherForm(
             $voucherFormDataProvider->getData($idDiscount)
         );
-        $voucherForm->handleRequest($request);
 
-        if ($voucherForm->isValid()) {
-            $voucherCreateInfoTransfer = $this->getFacade()->saveVoucherCodes($voucherForm->getData());
-            $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
-
-            return new RedirectResponse(
-                $this->createEditRedirectUrl($idDiscount)
-            );
+        $voucherFormHandleResponse = $this->handleVoucherForm($request, $voucherForm, $idDiscount);
+        if ($voucherFormHandleResponse instanceof RedirectResponse){
+            return $voucherFormHandleResponse;
         }
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);
@@ -103,6 +93,29 @@ class IndexController extends AbstractController
             'voucherForm' => $voucherForm->createView(),
             'discountConfigurator' => $discountConfiguratorTransfer,
         ], $this->getQueryStringMetData());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\FormInterface $voucherForm
+     * @param int $idDiscount
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleVoucherForm(Request $request, FormInterface $voucherForm, $idDiscount)
+    {
+        $voucherForm->handleRequest($request);
+
+        if ($voucherForm->isValid()) {
+            $voucherCreateInfoTransfer = $this->getFacade()->saveVoucherCodes($voucherForm->getData());
+            $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
+
+            return new RedirectResponse(
+                $this->createEditRedirectUrl($idDiscount)
+            );
+        }
+
+        return [];
     }
 
     /**
@@ -282,6 +295,24 @@ class IndexController extends AbstractController
             )->render();
         }
         return $voucherCodesTable;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param FormInterface $discountForm
+     *
+     * @return void
+     */
+    protected function handleDiscountForm(Request $request, FormInterface $discountForm)
+    {
+        $discountForm->handleRequest($request);
+
+        if ($discountForm->isValid()) {
+            $isUpdated = $this->getFacade()->updateDiscount($discountForm->getData());
+            if ($isUpdated === true) {
+                $this->addSuccessMessage('Discount successfully updated.');
+            }
+        }
     }
 
 }

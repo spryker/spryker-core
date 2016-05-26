@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 
-class Tokenizer
+class Tokenizer implements TokenizerInterface
 {
 
     const STRING_TO_TOKENS_REGEXP = '((\(|\)|".*?")|\s+)';

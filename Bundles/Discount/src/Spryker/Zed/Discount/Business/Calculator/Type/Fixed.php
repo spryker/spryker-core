@@ -12,17 +12,17 @@ class Fixed implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param float $percentage
+     * @param float $value
      *
      * @return float
      */
-    public function calculate(array $discountableItems, $percentage)
+    public function calculate(array $discountableItems, $value)
     {
-        if ($percentage <= 0) {
+        if ($value <= 0) {
             return 0;
         }
 
-        return $percentage;
+        return $value;
     }
 
 }

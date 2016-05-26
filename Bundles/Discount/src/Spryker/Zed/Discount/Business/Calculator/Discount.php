@@ -11,11 +11,11 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Shared\Library\Error\ErrorLogger;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
-use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
+use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-class Discount
+class Discount implements DiscountInterface
 {
 
     /**
@@ -29,26 +29,26 @@ class Discount
     protected $calculator;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
+     * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface
      */
     protected $decisionRuleBuilder;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Voucher\VoucherValidator
+     * @var \Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface
      */
     protected $voucherValidator;
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface $calculator
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder $decisionRuleBuilder
-     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherValidator $voucherValidator
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $decisionRuleBuilder
+     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface $voucherValidator
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,
         CalculatorInterface $calculator,
-        SpecificationBuilder $decisionRuleBuilder,
-        VoucherValidator $voucherValidator
+        SpecificationBuilderInterface $decisionRuleBuilder,
+        VoucherValidatorInterface $voucherValidator
     ) {
         $this->queryContainer = $queryContainer;
         $this->calculator = $calculator;
@@ -96,7 +96,7 @@ class Discount
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
-    public function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes = [])
+    protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes = [])
     {
         return $this->queryContainer
             ->queryCartRulesIncludingSpecifiedVouchers($voucherCodes)

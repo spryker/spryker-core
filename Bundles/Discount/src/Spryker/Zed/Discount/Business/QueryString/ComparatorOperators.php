@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 
-class ComparatorOperators
+class ComparatorOperators implements ComparatorOperatorsInterface
 {
 
     const TYPE_INTEGER  = 'integer';

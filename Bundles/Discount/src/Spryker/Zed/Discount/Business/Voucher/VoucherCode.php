@@ -33,7 +33,9 @@ class VoucherCode implements VoucherCodeInterface
      */
     public function releaseUsedCodes(array $codes)
     {
-        $voucherEntityList = $this->discountQueryContainer->queryVoucherPoolByVoucherCodes($codes)->find();
+        $voucherEntityList = $this->discountQueryContainer
+            ->queryVoucherPoolByVoucherCodes($codes)
+            ->find();
 
         if (count($voucherEntityList) === 0) {
             return false;
@@ -58,7 +60,9 @@ class VoucherCode implements VoucherCodeInterface
      */
     public function useCodes(array $codes)
     {
-        $voucherEntityList = $this->discountQueryContainer->queryVoucherPoolByVoucherCodes($codes)->find();
+        $voucherEntityList = $this->discountQueryContainer
+            ->queryVoucherPoolByVoucherCodes($codes)
+            ->find();
 
         if (count($voucherEntityList) === 0) {
             return false;
