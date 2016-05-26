@@ -32,6 +32,40 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testSessionRegenerationOnLogin()
+    {
+        $userTransfer = $this->createUserTransfer(static::USERNAME);
+
+        $userFacade = $this->createFacadeUser();
+        $userFacade->expects($this->once())
+            ->method('getUserByUsername')
+            ->will($this->returnValue($userTransfer));
+
+        $userFacade->expects($this->once())
+            ->method('hasActiveUserByUsername')
+            ->will($this->returnValue(true));
+
+        $userFacade->expects($this->once())
+            ->method('isValidPassword')
+            ->will($this->returnValue(true));
+
+        $authModel = $this->prepareSessionRegeneration($userFacade);
+        $result = $authModel->authenticate(static::USERNAME, 'test');
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSessionRegenerationOnLogout()
+    {
+        $authModel = $this->prepareSessionRegeneration($this->createFacadeUser());
+        $authModel->logout();
+    }
+
+    /**
+     * @return void
+     */
     public function testNoReferenceSavedInSession()
     {
         $sessionClient = $this->createSessionClient();
@@ -140,7 +174,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     {
         $sessionClient = $this->getMock(
             SessionClient::class,
-            ['get', 'set']
+            ['get', 'set', 'migrate']
         );
 
         return $sessionClient;
@@ -156,6 +190,38 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         );
 
         return $staticTokenClient;
+    }
+
+    /**
+     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge $userFacade
+     *
+     * @return \Spryker\Zed\Auth\Business\Model\Auth
+     */
+    protected function prepareSessionRegeneration($userFacade)
+    {
+        $sessionClient = $this->createSessionClient();
+        $authModel = new Auth(
+            $sessionClient,
+            $userFacade,
+            new AuthConfig(),
+            $this->createStaticTokenClient()
+        );
+
+        $this->checkMigrateIsCalled($sessionClient);
+
+        return $authModel;
+    }
+
+    /**
+     * @param \PHPUnit_Framework_MockObject_MockObject $sessionClient
+     *
+     * @return void
+     */
+    protected function checkMigrateIsCalled(\PHPUnit_Framework_MockObject_MockObject $sessionClient)
+    {
+        $sessionClient->expects($this->once())
+            ->method('migrate')
+            ->will($this->returnValue(true));
     }
 
 }
