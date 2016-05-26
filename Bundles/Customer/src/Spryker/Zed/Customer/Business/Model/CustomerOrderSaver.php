@@ -87,10 +87,9 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     {
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
         if ($addressTransfer->getIdCustomerAddress() === null) {
-            $newAddressTransfer = $this->address->createAddress($addressTransfer);
-            $addressTransfer->setIdCustomerAddress($newAddressTransfer->getIdCustomerAddress());
+            $this->address->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer);
         } else {
-            $this->address->updateAddress($addressTransfer);
+            $this->address->updateAddressAndCustomerDefaultAddresses($addressTransfer);
         }
     }
 
