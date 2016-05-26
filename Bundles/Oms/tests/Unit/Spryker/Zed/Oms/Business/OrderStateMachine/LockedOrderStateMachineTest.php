@@ -173,7 +173,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
         $lockedStateMachine = $this->createLockedStateMachine();
 
         $generateIdentifierMethod = new \ReflectionMethod($lockedStateMachine, 'buildIdentifierForOrderItemIdsLock');
-        $generateIdentifierMethod->setAccessible(TRUE);
+        $generateIdentifierMethod->setAccessible(true);
 
         $this->assertEquals($expectedResult, $generateIdentifierMethod->invoke($lockedStateMachine, $testIdsList1));
         $this->assertEquals($expectedResult, $generateIdentifierMethod->invoke($lockedStateMachine, $testIdsList2));
