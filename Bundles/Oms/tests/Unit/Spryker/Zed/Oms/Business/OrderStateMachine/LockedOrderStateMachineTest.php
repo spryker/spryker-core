@@ -161,6 +161,25 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testIdentifierGeneratedSameForOrderIdsDifferentOrderAndNotUnique()
+    {
+        $testIdsList1 = ['100', '11', '12', '10', 11, 12];
+        $testIdsList2 = [12, 11, 100, '10'];
+
+        $expectedResult = '10-11-12-100';
+
+        $lockedStateMachine = $this->createLockedStateMachine();
+
+        $generateIdentifierMethod = new \ReflectionMethod($lockedStateMachine, 'buildIdentifierForOrderItemIdsLock');
+        $generateIdentifierMethod->setAccessible(TRUE);
+
+        $this->assertEquals($expectedResult, $generateIdentifierMethod->invoke($lockedStateMachine, $testIdsList1));
+        $this->assertEquals($expectedResult, $generateIdentifierMethod->invoke($lockedStateMachine, $testIdsList2));
+    }
+
+    /**
      * @param string $expectedIdentifier
      *
      * @return void

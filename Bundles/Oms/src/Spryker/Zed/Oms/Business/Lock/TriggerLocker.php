@@ -49,8 +49,7 @@ class TriggerLocker implements LockerInterface
         $stateMachineLockEntity = $this->createStateMachineLockEntity();
 
         $stateMachineLockEntity->setIdentifier($identifier);
-        $expirationDate = $this->createExpirationDate();
-        $stateMachineLockEntity->setExpires($expirationDate);
+        $stateMachineLockEntity->setExpires($this->createExpirationDate());
         try {
             $affectedRows = $stateMachineLockEntity->save();
         } catch (PropelException $exception) {
