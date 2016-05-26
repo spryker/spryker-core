@@ -99,6 +99,17 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
+     * @return bool
+     */
+    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
+    {
+        return $this->urlFacade->hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, $locale);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)

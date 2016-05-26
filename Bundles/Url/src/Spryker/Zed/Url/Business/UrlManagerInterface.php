@@ -88,14 +88,22 @@ interface UrlManagerInterface
      * @param int $idCategoryNode
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
 
     /**
      * @param int $idCategoryNode
+     * @param int $idLocale
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     * @return bool
+     */
+    public function hasResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
 

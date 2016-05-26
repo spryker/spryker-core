@@ -1,0 +1,7 @@
+modules:
+    config:
+        \Testify\Module\Environment:
+            mode: 'isolated'
+
+        \Config\Module\ConfigInit:
+            enabled: true

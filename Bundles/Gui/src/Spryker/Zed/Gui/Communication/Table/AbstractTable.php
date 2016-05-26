@@ -580,7 +580,7 @@ abstract class AbstractTable
     protected function generateCreateButton($url, $title, array $options = [])
     {
         $defaultOptions = [
-            'class' => 'btn-primary',
+            'class' => 'btn-create',
             'icon' => 'fa-plus',
         ];
 
@@ -597,7 +597,7 @@ abstract class AbstractTable
     protected function generateEditButton($url, $title, array $options = [])
     {
         $defaultOptions = [
-            'class' => 'btn-success',
+            'class' => 'btn-edit',
             'icon' => 'fa-pencil-square-o',
         ];
 
@@ -614,7 +614,7 @@ abstract class AbstractTable
     protected function generateViewButton($url, $title, array $options = [])
     {
         $defaultOptions = [
-            'class' => 'btn-info',
+            'class' => 'btn-view',
             'icon' => 'fa-caret-right',
         ];
 
