@@ -162,6 +162,8 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $expectedIdentifier
+     *
+     * @return void
      */
     protected function expectStateMachineLockSaveSuccess($expectedIdentifier)
     {
@@ -186,6 +188,8 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $expectedIdentifier
+     *
+     * @return void
      */
     protected function expectStateMachineLockSaveFails($expectedIdentifier)
     {
@@ -210,6 +214,8 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $identifier
+     *
+     * @return void
      */
     protected function expectTriggerRelease($identifier)
     {
@@ -241,9 +247,13 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
     protected function createStateMachineMock()
     {
         $this->stateMachineMock = $this->getMockForAbstractClass(
-            OrderStateMachineInterface::class, [], '', true, true, true, [
-                'triggerEvent'
-            ]
+            OrderStateMachineInterface::class,
+            [],
+            '',
+            true,
+            true,
+            true,
+            ['triggerEvent']
         );
         return $this->stateMachineMock;
     }
@@ -325,7 +335,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array $orderItems
-     * 
+     *
      * @return string
      */
     protected function getOrderItemsIdentifier($orderItems)

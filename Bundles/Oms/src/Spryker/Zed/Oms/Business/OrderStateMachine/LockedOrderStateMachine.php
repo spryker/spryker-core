@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Spryker\Zed\Oms\Business\Exception\LockException;
 use Spryker\Zed\Oms\Business\Lock\LockerInterface;
 
 class LockedOrderStateMachine implements OrderStateMachineInterface
