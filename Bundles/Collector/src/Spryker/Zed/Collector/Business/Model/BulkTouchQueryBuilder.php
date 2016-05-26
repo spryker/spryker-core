@@ -28,16 +28,12 @@ class BulkTouchQueryBuilder
     /**
      * @throws \InvalidArgumentException
      *
-     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchByIdQueryInterface
+     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
      */
     public function createBulkTouchUpdateQuery()
     {
         $className = CollectorConfig::COLLECTOR_BULK_UPDATE_QUERY_CLASS;
         $resolvedClassName = $this->getResolvedClassName($className);
-
-        if (!$resolvedClassName) {
-            throw new \InvalidArgumentException('Can\'t resolve bulk touch class name: ' . $className);
-        }
 
         return new $resolvedClassName();
     }
@@ -52,10 +48,6 @@ class BulkTouchQueryBuilder
         $className = CollectorConfig::COLLECTOR_BULK_DELETE_QUERY_CLASS;
         $resolvedClassName = $this->getResolvedClassName($className);
 
-        if (!$resolvedClassName) {
-            throw new \InvalidArgumentException('Can\'t resolve bulk touch class name: ' . $className);
-        }
-
         return new $resolvedClassName();
     }
 
@@ -69,7 +61,7 @@ class BulkTouchQueryBuilder
         $classList = $this->config->getCurrentBulkQueryClassNames();
 
         if (!isset($classList[$className])) {
-            return false;
+            throw new \InvalidArgumentException('Can\'t resolve bulk touch class name: ' . $className);
         }
 
         return $classList[$className];
