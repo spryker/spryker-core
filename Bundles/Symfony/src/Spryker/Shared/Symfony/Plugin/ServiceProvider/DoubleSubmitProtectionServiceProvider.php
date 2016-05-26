@@ -13,6 +13,7 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitPro
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\SessionStorage;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -27,12 +28,7 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
 
         $app['form.extension.double_submit_protection'] = $app->share(function ($app) {
             $translator = isset($app['translator']) ? $app['translator'] : null;
-
-            return new DoubleSubmitProtectionExtension(
-                $this->createTokenGenerator($app),
-                $this->createTokenStorage($app),
-                $translator
-            );
+            return $this->createDoubleSubmitProtectionExtension($app, $translator);
         });
 
         $app->extend('form.extensions', function ($extensions) use ($app) {
@@ -42,11 +38,9 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
     }
 
     /**
-     * @param \Silex\Application $app
-     *
      * @return \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator
      */
-    protected function createTokenGenerator(Application $app)
+    protected function createTokenGenerator()
     {
         return new TokenHashGenerator();
     }
@@ -59,6 +53,21 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
     protected function createTokenStorage(Application $app)
     {
         return new SessionStorage($app['session']);
+    }
+
+    /**
+     * @param \Silex\Application $app
+     * @param \Symfony\Component\Translation\TranslatorInterface|null $translator
+     *
+     * @return \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension
+     */
+    protected function createDoubleSubmitProtectionExtension(Application $app, TranslatorInterface $translator)
+    {
+        return new DoubleSubmitProtectionExtension(
+            $this->createTokenGenerator(),
+            $this->createTokenStorage($app),
+            $translator
+        );
     }
 
     /**

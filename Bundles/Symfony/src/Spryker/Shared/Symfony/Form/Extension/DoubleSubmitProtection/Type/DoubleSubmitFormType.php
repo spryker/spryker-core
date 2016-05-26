@@ -76,12 +76,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $eventSubscriber = new FormEventSubscriber(
-            $this->tokenGenerator,
-            $this->storage,
-            $this->translator,
-            $this->translationDomain
-        );
+        $eventSubscriber = $this->createFormEventSubscriber();
 
         $eventSubscriber
             ->setErrorMessage($options[static::OPTION_KEY_ERROR_MESSAGE])
@@ -99,22 +94,24 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        if (!$view->parent && $form->isRoot()) {
-            $factory = $form->getConfig()->getFormFactory();
-            $token = $this->tokenGenerator->generateToken();
-            $fieldName = $options[static::OPTION_KEY_TOKEN_FIELD_NAME];
-            $formName = $form->getName() ?: get_class($form->getConfig()->getType()->getInnerType());
-            $this->storage->setToken($formName, $token);
-
-            $tokenForm = $factory->createNamed(
-                $fieldName,
-                'hidden',
-                $token,
-                ['mapped' => false]
-            );
-
-            $view->children[$fieldName] = $tokenForm->createView($view);
+        if ($view->parent || !$form->isRoot()) {
+            return ;
         }
+
+        $factory = $form->getConfig()->getFormFactory();
+        $token = $this->tokenGenerator->generateToken();
+        $fieldName = $options[static::OPTION_KEY_TOKEN_FIELD_NAME];
+        $formName = $form->getName() ?: get_class($form->getConfig()->getType()->getInnerType());
+        $this->storage->setToken($formName, $token);
+
+        $tokenForm = $factory->createNamed(
+            $fieldName,
+            'hidden',
+            $token,
+            ['mapped' => false]
+        );
+
+        $view->children[$fieldName] = $tokenForm->createView($view);
     }
 
     /**
@@ -138,6 +135,19 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     public function getExtendedType()
     {
         return 'form';
+    }
+
+    /**
+     * @return \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\FormEventSubscriber
+     */
+    protected function createFormEventSubscriber()
+    {
+        return new FormEventSubscriber(
+            $this->tokenGenerator,
+            $this->storage,
+            $this->translator,
+            $this->translationDomain
+        );
     }
 
 }
