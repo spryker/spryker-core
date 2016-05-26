@@ -95,7 +95,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         if ($view->parent || !$form->isRoot()) {
-            return ;
+            return;
         }
 
         $factory = $form->getConfig()->getFormFactory();
