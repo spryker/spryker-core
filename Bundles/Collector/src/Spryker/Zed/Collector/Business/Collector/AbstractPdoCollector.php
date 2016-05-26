@@ -15,7 +15,7 @@ use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPdoCollectorQuery;
 
-abstract class AbstractPdoCollector extends AbstractCollector
+abstract class AbstractPdoCollector extends AbstractDatabaseCollector
 {
 
     /**

@@ -24,6 +24,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\RedisWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdater as StorageTouchUpdater;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Internal\InstallElasticsearch;
+use Spryker\Zed\Collector\Business\Manager\CollectorManager;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
 use Spryker\Zed\Collector\CollectorConfig;
@@ -321,6 +322,14 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         $installer->setMessenger($messenger);
 
         return $installer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Manager\CollectorManager
+     */
+    public function getCollectorManager()
+    {
+        return new CollectorManager();
     }
 
 }

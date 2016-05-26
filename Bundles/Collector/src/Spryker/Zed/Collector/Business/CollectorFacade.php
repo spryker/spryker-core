@@ -8,6 +8,11 @@
 namespace Spryker\Zed\Collector\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -155,6 +160,42 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
         $exporter = $this->getFactory()->createYvesStorageExporter();
 
         return $exporter->getEnabledCollectorTypes();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector *
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    public function runCollector(
+        DatabaseCollectorInterface $collector,
+        SpyTouchQuery $baseQuery,
+        LocaleTransfer $locale,
+        BatchResultInterface $result,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
+    ) {
+
+        $this->getFactory()
+            ->getCollectorManager()
+            ->runCollector(
+                $collector,
+                $baseQuery,
+                $locale,
+                $result,
+                $dataWriter,
+                $touchUpdater,
+                $output
+            );
     }
 
 }
