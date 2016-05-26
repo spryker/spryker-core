@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
@@ -59,7 +60,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     public function __construct(
         TokenGeneratorInterface $tokenGenerator,
         StorageInterface $storage,
-        $translator = null,
+        TranslatorInterface $translator = null,
         $translationDomain = null
     ) {
         $this->tokenGenerator = $tokenGenerator;
