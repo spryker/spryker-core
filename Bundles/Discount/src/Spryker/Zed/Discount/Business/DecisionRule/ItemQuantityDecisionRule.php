@@ -11,11 +11,11 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
-class GrandTotalDecisionRule implements DecisionRuleInterface
+class ItemQuantityDecisionRule implements DecisionRuleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
+     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
     protected $comparators;
 
@@ -32,9 +32,9 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return bool
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,
@@ -42,14 +42,7 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
         ClauseTransfer $clauseTransfer
     ) {
 
-        if (!$quoteTransfer->getTotals()) {
-            return false;
-        }
-
-        $amountInCents = $clauseTransfer->getValue() * 100;
-        $clauseTransfer->setValue($amountInCents);
-
-        return $this->comparators->compare($clauseTransfer, $quoteTransfer->getTotals()->getGrandTotal());
+        return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getQuantity());
     }
 
 }

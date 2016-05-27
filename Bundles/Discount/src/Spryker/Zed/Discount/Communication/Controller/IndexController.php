@@ -13,7 +13,6 @@ use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,7 +79,7 @@ class IndexController extends AbstractController
         );
 
         $voucherFormHandleResponse = $this->handleVoucherForm($request, $voucherForm, $idDiscount);
-        if ($voucherFormHandleResponse instanceof RedirectResponse){
+        if ($voucherFormHandleResponse instanceof RedirectResponse) {
             return $voucherFormHandleResponse;
         }
 
@@ -299,7 +298,7 @@ class IndexController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param FormInterface $discountForm
+     * @param \Symfony\Component\Form\FormInterface $discountForm
      *
      * @return void
      */

@@ -7,6 +7,7 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 interface TokenizerInterface
 {
+
     /**
      * @param string $queryString
      *
@@ -15,4 +16,5 @@ interface TokenizerInterface
      * @return array|string[]
      */
     public function tokenizeQueryString($queryString);
+
 }

@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductDiscountConnector\Business\Collector\ProductAttributeCollector;
 use Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRule;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface;
-use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvider;
+use Spryker\Zed\ProductDiscountConnector\ProductCategoryDiscountConnectorDependencyProvider;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface;
 
 class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
@@ -36,7 +36,7 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function getProductFacade()
     {
-        return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::FACADE_PRODUCT);
+        return $this->getProvidedDependency(ProductCategoryDiscountConnectorDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -44,6 +44,6 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function getDiscountFacade()
     {
-        return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::FACADE_DISCOUNT);
+        return $this->getProvidedDependency(ProductCategoryDiscountConnectorDependencyProvider::FACADE_DISCOUNT);
     }
 }

@@ -36,9 +36,9 @@ class LessEqualTest extends \PHPUnit_Framework_TestCase
         $lessEqual = $this->createLessEqual();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('1');
+        $clauseTransfer->setValue('2');
 
-        $isMatching = $lessEqual->compare($clauseTransfer, '2');
+        $isMatching = $lessEqual->compare($clauseTransfer, '1');
 
         $this->assertTrue($isMatching);
     }
@@ -66,9 +66,9 @@ class LessEqualTest extends \PHPUnit_Framework_TestCase
         $lessEqual = $this->createLessEqual();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('2');
+        $clauseTransfer->setValue('1');
 
-        $isMatching = $lessEqual->compare($clauseTransfer, '1');
+        $isMatching = $lessEqual->compare($clauseTransfer, '2');
 
         $this->assertFalse($isMatching);
     }

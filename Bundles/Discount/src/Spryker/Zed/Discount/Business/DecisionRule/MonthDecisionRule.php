@@ -11,8 +11,10 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
-class GrandTotalDecisionRule implements DecisionRuleInterface
+class MonthDecisionRule implements DecisionRuleInterface
 {
+
+    const DATE_FORMAT = 'n';
 
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
@@ -32,9 +34,9 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return bool
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,
@@ -42,14 +44,20 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
         ClauseTransfer $clauseTransfer
     ) {
 
-        if (!$quoteTransfer->getTotals()) {
-            return false;
-        }
+        $currentMonth = $this->getCurrentMonth();
 
-        $amountInCents = $clauseTransfer->getValue() * 100;
-        $clauseTransfer->setValue($amountInCents);
+        return $this->comparators->compare($clauseTransfer, $currentMonth);
+    }
 
-        return $this->comparators->compare($clauseTransfer, $quoteTransfer->getTotals()->getGrandTotal());
+    /**
+     * @return string
+     */
+    protected function getCurrentMonth()
+    {
+        $currentDate = new \DateTime();
+        $time = $currentDate->format(self::DATE_FORMAT);
+
+        return $time;
     }
 
 }

@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 interface ComparatorOperatorsInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param mixed $withValue
@@ -29,4 +30,5 @@ interface ComparatorOperatorsInterface
      * @return array|string[]
      */
     public function getAvailableComparatorExpressions();
+
 }

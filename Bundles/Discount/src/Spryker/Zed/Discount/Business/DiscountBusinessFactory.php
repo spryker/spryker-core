@@ -11,10 +11,18 @@ use Spryker\Zed\Discount\Business\Calculator\Calculator;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
 use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
+use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
+use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
 use Spryker\Zed\Discount\Business\Collector\SkuCollector;
+use Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\DayOfWeekDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\ItemQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
@@ -382,6 +390,70 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createSubTotalDecisionRule()
     {
         return new SubTotalDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector
+     */
+    public function createItemQuantityCollector()
+    {
+        return new ItemQuantityCollector($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemQuantityDecisionRule
+     */
+    public function createItemQuantityDecisionRule()
+    {
+        return new ItemQuantityDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule
+     */
+    public function createItemPriceDecisionRule()
+    {
+        return new ItemPriceDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Collector\ItemPriceCollector
+     */
+    public function createItemPriceCollector()
+    {
+        return new ItemPriceCollector($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\DayOfWeekDecisionRule
+     */
+    public function createDayOfWeekDecisionRule()
+    {
+        return new DayOfWeekDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule
+     */
+    public function createCalendarWeekDecisionRule()
+    {
+        return new CalendarWeekDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule
+     */
+    public function createMonthDecisionRule()
+    {
+        return new MonthDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule
+     */
+    public function createTimeDecisionRule()
+    {
+        return new TimeDecisionRule($this->createComparatorOperators());
     }
 
 }

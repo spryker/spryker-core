@@ -45,6 +45,9 @@ class SubTotalDecisionRule implements DecisionRuleInterface
             return false;
         }
 
+        $amountInCents = $clauseTransfer->getValue() * 100;
+        $clauseTransfer->setValue($amountInCents);
+
         return $this->comparators->compare($clauseTransfer, $quoteTransfer->getTotals()->getSubtotal());
     }
 

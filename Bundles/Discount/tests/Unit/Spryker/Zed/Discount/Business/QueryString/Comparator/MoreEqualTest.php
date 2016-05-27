@@ -36,9 +36,9 @@ class MoreEqualTest extends \PHPUnit_Framework_TestCase
         $moreEqual = $this->createMoreEqual();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('2');
+        $clauseTransfer->setValue('1');
 
-        $isMatching = $moreEqual->compare($clauseTransfer, '1');
+        $isMatching = $moreEqual->compare($clauseTransfer, '2');
 
         $this->assertTrue($isMatching);
     }
@@ -51,9 +51,9 @@ class MoreEqualTest extends \PHPUnit_Framework_TestCase
         $moreEqual = $this->createMoreEqual();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('1');
+        $clauseTransfer->setValue('2');
 
-        $isMatching = $moreEqual->compare($clauseTransfer, '2');
+        $isMatching = $moreEqual->compare($clauseTransfer, '1');
 
         $this->assertFalse($isMatching);
     }

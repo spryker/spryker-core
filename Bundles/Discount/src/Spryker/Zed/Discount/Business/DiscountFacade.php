@@ -136,6 +136,152 @@ class DiscountFacade extends AbstractFacade
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isItemQuantitySatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+
+        return $this->getFactory()
+            ->createItemQuantityDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     */
+    public function collectByItemQuantity(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
+    {
+        return $this->getFactory()
+            ->createItemQuantityCollector()
+            ->collect($quoteTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isItemPriceSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+        return $this->getFactory()
+            ->createItemPriceDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     */
+    public function collectByItemPrice(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
+    {
+        return $this->getFactory()
+            ->createItemPriceCollector()
+            ->collect($quoteTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isCalendarWeekSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+        return $this->getFactory()
+           ->createCalendarWeekDecisionRule()
+           ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isDayOfTheWeekSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+        return $this->getFactory()
+            ->createDayOfWeekDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isMonthSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+
+        return $this->getFactory()
+            ->createMonthDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return boolean
+     */
+    public function isTimeSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+        return $this->getFactory()
+            ->createTimeDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @api
+     *
      * @param string $type
      *
      * @return array|string[]

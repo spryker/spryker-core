@@ -10,10 +10,18 @@ namespace Spryker\Zed\Discount;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemByPriceCollectorPlugin;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemByQuantityCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\CalendarWeekDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\DayOfTheWeekDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\GrandTotalDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\ItemPriceDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\ItemQuantityDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MonthDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
@@ -123,7 +131,9 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCollectorPlugins()
     {
         return [
-            new ItemBySkuCollectorPlugin()
+            new ItemBySkuCollectorPlugin(),
+            new ItemByQuantityCollectorPlugin(),
+            new ItemByPriceCollectorPlugin(),
         ];
     }
 
@@ -137,6 +147,12 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             new GrandTotalDecisionRulePlugin(),
             new SubTotalDecisionRulePlugin(),
             new TotalQuantityDecisionRulePlugin(),
+            new ItemQuantityDecisionRulePlugin(),
+            new ItemPriceDecisionRulePlugin(),
+            new CalendarWeekDecisionRulePlugin(),
+            new DayOfTheWeekDecisionRulePlugin(),
+            new MonthDecisionRulePlugin(),
+            new TimeDecisionRulePlugin(),
         ];
     }
 

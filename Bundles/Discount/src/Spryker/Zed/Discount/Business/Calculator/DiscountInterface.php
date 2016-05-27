@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DiscountInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

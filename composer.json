@@ -446,7 +446,10 @@
       "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
       "Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/src",
       "Unit\\Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/tests",
-      "Functional\\Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/tests"
+      "Functional\\Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/tests",
+      "Spryker\\Zed\\ProductCategoryDiscountConnector\\": "Bundles/ProductCategoryDiscountConnector/src",
+      "Unit\\Spryker\\Zed\\ProductCategoryDiscountConnector\\": "Bundles/ProductCategoryDiscountConnector/tests",
+      "Functional\\Spryker\\Zed\\ProductCategoryDiscountConnector\\": "Bundles/ProductCategoryDiscountConnector/tests"
     },
     "psr-4": {
       "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",

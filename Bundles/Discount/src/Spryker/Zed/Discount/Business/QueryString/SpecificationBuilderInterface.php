@@ -7,10 +7,12 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 interface SpecificationBuilderInterface
 {
+
     /**
      * @param string $queryString
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     public function buildFromQueryString($queryString);
+
 }

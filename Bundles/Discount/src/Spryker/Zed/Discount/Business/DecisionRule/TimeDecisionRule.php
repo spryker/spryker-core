@@ -11,8 +11,10 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
-class GrandTotalDecisionRule implements DecisionRuleInterface
+class TimeDecisionRule implements DecisionRuleInterface
 {
+
+    const TIME_FORMAT = 'H:i';
 
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
@@ -32,9 +34,9 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return bool
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,
@@ -42,14 +44,36 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
         ClauseTransfer $clauseTransfer
     ) {
 
-        if (!$quoteTransfer->getTotals()) {
-            return false;
-        }
+        $currentTime = $this->convertToSeconds(
+            $this->getCurrentTime()
+        );
 
-        $amountInCents = $clauseTransfer->getValue() * 100;
-        $clauseTransfer->setValue($amountInCents);
+        $compareWithTime = $this->convertToSeconds(
+            $clauseTransfer->getValue()
+        );
 
-        return $this->comparators->compare($clauseTransfer, $quoteTransfer->getTotals()->getGrandTotal());
+        $clauseTransfer->setValue($compareWithTime);
+
+        return $this->comparators->compare($clauseTransfer, $currentTime);
+    }
+
+    /**
+     * @return int
+     */
+    protected function convertToSeconds($timeFormatted)
+    {
+        return strtotime("1970-01-01 $timeFormatted UTC");
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentTime()
+    {
+        $currentDate = new \DateTime();
+        $time = $currentDate->format(self::TIME_FORMAT);
+
+        return $time;
     }
 
 }

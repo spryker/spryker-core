@@ -24,7 +24,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected $discountQueryContainer;
 
     /**
-     * @param DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
     public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {

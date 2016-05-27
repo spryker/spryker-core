@@ -6,13 +6,13 @@
  {{ 'discount.edit.condition.how_to' | trans }}
 </p>
 
-{{ 'Available collectors:' | trans }}
+{{ 'Available conditions:' | trans }}
 <ul>
 {% for rule in decisionRuleTypes %}
     <li>{{ rule }}</li>
 {% endfor %}
 </ul>
-{{ 'Collector with value "*" matches all items. ' | trans }} <br />
+{{ 'Condition with value "*" matches all items. ' | trans }} <br />
 
 {{ 'Boolean comparators:' | trans }}
 <ul>

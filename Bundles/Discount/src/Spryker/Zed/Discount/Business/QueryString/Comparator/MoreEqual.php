@@ -26,7 +26,7 @@ class MoreEqual implements ComparatorInterface
             throw new ComparatorException('Only numeric value can be used together with ">=" comparator.');
         }
 
-        return $clauseTransfer->getValue() >= $withValue;
+        return $withValue >= $clauseTransfer->getValue();
     }
 
     /**

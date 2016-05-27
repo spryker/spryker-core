@@ -27,7 +27,7 @@ class NotEqual implements ComparatorInterface
             throw new ComparatorException('Only scalar value allowed for "!=" operator.');
         }
 
-        return strcasecmp($clauseTransfer->getValue(), $withValue) !== 0;
+        return strcasecmp($withValue, $clauseTransfer->getValue()) !== 0;
     }
 
     /**

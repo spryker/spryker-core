@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 
 interface VoucherEngineInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      *
@@ -24,4 +25,5 @@ interface VoucherEngineInterface
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function createVoucherCode(DiscountVoucherTransfer $discountVoucherTransfer);
+
 }

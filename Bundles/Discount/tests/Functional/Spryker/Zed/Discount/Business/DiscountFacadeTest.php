@@ -62,12 +62,12 @@ class DiscountFacadeTest extends Test
 
         $quoteTransfer = new QuoteTransfer();
         $totalTransfer = new TotalsTransfer();
-        $totalTransfer->setGrandTotal(100);
+        $totalTransfer->setGrandTotal(1000);
         $quoteTransfer->setTotals($totalTransfer);
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setOperator('=');
-        $clauseTransfer->setValue(100);
+        $clauseTransfer->setValue(10);
         $clauseTransfer->setAcceptedTypes([
             ComparatorOperators::TYPE_INTEGER
         ]);
@@ -122,7 +122,7 @@ class DiscountFacadeTest extends Test
 
         $quoteTransfer = new QuoteTransfer();
         $totalsTransfer = new TotalsTransfer();
-        $totalsTransfer->setSubtotal(50);
+        $totalsTransfer->setSubtotal(5000);
         $quoteTransfer->setTotals($totalsTransfer);
 
         $clauseTransfer = new ClauseTransfer();
@@ -696,4 +696,5 @@ class DiscountFacadeTest extends Test
 
         return $discountConfiguratorTransfer;
     }
+
 }

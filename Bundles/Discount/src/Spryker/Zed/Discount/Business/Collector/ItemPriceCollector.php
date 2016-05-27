@@ -4,14 +4,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Discount\Business\DecisionRule;
+namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
-class GrandTotalDecisionRule implements DecisionRuleInterface
+class ItemPriceCollector implements CollectorInterface
 {
 
     /**
@@ -29,27 +28,22 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
-     * @return bool
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
-    public function isSatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $currentItemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-
-        if (!$quoteTransfer->getTotals()) {
-            return false;
+    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
+    {
+        $discountableItems = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $amountInCents = $clauseTransfer->getValue() * 100;
+            $clauseTransfer->setValue($amountInCents);
+            if ($this->comparators->compare($clauseTransfer, $itemTransfer->getUnitGrossPrice())) {
+                $discountableItems[] = $itemTransfer;
+            }
         }
 
-        $amountInCents = $clauseTransfer->getValue() * 100;
-        $clauseTransfer->setValue($amountInCents);
-
-        return $this->comparators->compare($clauseTransfer, $quoteTransfer->getTotals()->getGrandTotal());
+        return $discountableItems;
     }
 
 }

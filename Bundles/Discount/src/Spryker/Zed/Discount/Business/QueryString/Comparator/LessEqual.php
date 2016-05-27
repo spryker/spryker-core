@@ -27,7 +27,7 @@ class LessEqual implements ComparatorInterface
             throw new ComparatorException('Only numeric value can be used together with "<=" comparator.');
         }
 
-        return $compareWithValue->getValue() <= $withValue;
+        return $withValue <= $compareWithValue->getValue();
     }
 
     /**

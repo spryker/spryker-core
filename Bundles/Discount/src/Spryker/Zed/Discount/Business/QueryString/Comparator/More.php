@@ -17,9 +17,9 @@ class More implements ComparatorInterface
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
-     * @return bool
-     *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
      *
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
@@ -28,7 +28,7 @@ class More implements ComparatorInterface
             throw new ComparatorException('Only numeric value can be used together with ">" comparator.');
         }
 
-        return $clauseTransfer->getValue() > $withValue;
+        return $withValue > $clauseTransfer->getValue();
     }
 
     /**
