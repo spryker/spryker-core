@@ -35,13 +35,22 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static $bufferedValues = null;
 
     /**
+     * @var StorageClientInterface
+     */
+    protected static $service;
+
+    /**
      * @api
      *
      * @return \Spryker\Client\Storage\StorageClientInterface $service
      */
     public function getService()
     {
-        return $this->getFactory()->createCachedService();
+        if (self::$service === null) {
+            self::$service = $this->getFactory()->createCachedService();
+        }
+
+        return self::$service;
     }
 
     /**
@@ -154,7 +163,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
             if ($updateCache) {
                 $ttl = 86400; // TTL = 1 day to avoid artifacts in Storage
-                self::getService()->set($cacheKey, json_encode(array_keys(self::$cachedKeys)), $ttl);
+                self::$service->set($cacheKey, json_encode(array_keys(self::$cachedKeys)), $ttl);
             }
         }
     }

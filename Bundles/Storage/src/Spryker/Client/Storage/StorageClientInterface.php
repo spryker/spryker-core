@@ -119,11 +119,4 @@ interface StorageClientInterface
      */
     public function getCountItems();
 
-    /**
-     * @api
-     *
-     * @return void
-     */
-    public static function persistCache();
-
 }

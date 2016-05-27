@@ -17,22 +17,22 @@ class Service implements ServiceInterface
     /**
      * @var \Predis\ClientInterface
      */
-    private $client;
+    protected $client;
 
     /**
      * @var bool
      */
-    private $debug;
+    protected $debug;
 
     /**
      * @var array
      */
-    private $accessStats;
+    protected $accessStats;
 
     /**
      * @var array
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Predis\ClientInterface $client
