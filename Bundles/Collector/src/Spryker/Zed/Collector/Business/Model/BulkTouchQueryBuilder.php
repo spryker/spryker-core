@@ -26,8 +26,6 @@ class BulkTouchQueryBuilder
     }
 
     /**
-     * @throws \InvalidArgumentException
-     *
      * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
      */
     public function createBulkTouchUpdateQuery()
@@ -39,8 +37,6 @@ class BulkTouchQueryBuilder
     }
 
     /**
-     * @throws \InvalidArgumentException
-     *
      * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
      */
     public function createBulkTouchDeleteQuery()
@@ -54,7 +50,9 @@ class BulkTouchQueryBuilder
     /**
      * @param string $className
      *
-     * @return string|false
+     * @throws \InvalidArgumentException
+     *
+     * @return string
      */
     protected function getResolvedClassName($className)
     {

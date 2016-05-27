@@ -34,12 +34,12 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     protected $touchKeyColumnName;
 
     /**
-     * @var string
+     * @var \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
      */
     protected $bulkTouchUpdateQuery;
 
     /**
-     * @var string
+     * @var \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
      */
     protected $bulkTouchDeleteQuery;
 
