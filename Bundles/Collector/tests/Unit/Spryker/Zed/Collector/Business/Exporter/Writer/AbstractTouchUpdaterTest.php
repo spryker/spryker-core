@@ -27,7 +27,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     protected $bulkTouchUpdateQuery;
 
     /**
-     * @var \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
+     * @var \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
      */
     protected $bulkTouchDeleteQuery;
 
@@ -147,7 +147,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface|\Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
+     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
      */
     protected function createBulkTouchDeleteQuery()
     {
