@@ -23,12 +23,12 @@ abstract class AbstractClassResolver
     /**
      * @var string
      */
-    private $resolvedClassName;
+    protected $resolvedClassName;
 
     /**
      * @var array
      */
-    private $classNames = [];
+    protected $classNames = [];
 
     /**
      * @var \Spryker\Shared\Library\Collection\CollectionInterface
@@ -39,6 +39,14 @@ abstract class AbstractClassResolver
      * @return string
      */
     abstract protected function getClassPattern();
+
+    /**
+     * @param string $namespace
+     * @param string|null $store
+     *
+     * @return string
+     */
+    abstract protected function buildClassName($namespace, $store = null);
 
     /**
      * @return bool
@@ -116,14 +124,6 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @param string $namespace
-     * @param string|null $store
-     *
-     * @return string
-     */
-    abstract protected function buildClassName($namespace, $store = null);
-
-    /**
      * @throws \Exception
      *
      * @return array
@@ -195,15 +195,7 @@ abstract class AbstractClassResolver
      */
     protected static function getCacheFilename()
     {
-        return DataDirectory::getLocalStoreSpecificPath('cache/autoloader').'/unresolvable.php';
-    }
-
-    /**
-     * @return void
-     */
-    public function __destruct()
-    {
-        self::persistCache();
+        return DataDirectory::getLocalStoreSpecificPath('cache/autoloader').'/unresolvable.json';
     }
 
 }
