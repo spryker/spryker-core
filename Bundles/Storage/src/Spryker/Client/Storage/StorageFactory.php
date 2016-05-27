@@ -62,7 +62,7 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Remove this once BC breaking feature is introduced to Application Bundle
+     * @deprecated Remove this once BC breaking feature is introduced to Storage Bundle
      *
      * @return string
      */
