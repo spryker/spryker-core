@@ -11,6 +11,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Collection\Collection;
+use Spryker\Shared\Library\DataDirectory;
 
 abstract class AbstractClassResolver
 {
@@ -47,9 +48,8 @@ abstract class AbstractClassResolver
         $classNames = $this->buildClassNames();
 
         foreach ($classNames as $className) {
-            if ($this->getUnresolvableCollection()->has($className)) {
-
-                return false;
+            if (self::getUnresolvableCollection()->has($className)) {
+                continue;
             }
 
             if ($this->classExists($className)) {
@@ -57,7 +57,7 @@ abstract class AbstractClassResolver
 
                 return true;
             } else {
-                $this->getUnresolvableCollection()->set($className, true);
+                self::getUnresolvableCollection()->set($className, true);
             }
         }
 
@@ -85,7 +85,7 @@ abstract class AbstractClassResolver
     /**
      * @return array
      */
-    private function buildClassNames()
+    protected function buildClassNames()
     {
         $this->addProjectClassNames();
         $this->addCoreClassNames();
@@ -96,7 +96,7 @@ abstract class AbstractClassResolver
     /**
      * @return void
      */
-    private function addProjectClassNames()
+    protected function addProjectClassNames()
     {
         $storeName = Store::getInstance()->getStoreName();
         foreach ($this->getProjectNamespaces() as $namespace) {
@@ -108,7 +108,7 @@ abstract class AbstractClassResolver
     /**
      * @return void
      */
-    private function addCoreClassNames()
+    protected function addCoreClassNames()
     {
         foreach ($this->getCoreNamespaces() as $namespace) {
             $this->classNames[] = $this->buildClassName($namespace);
@@ -128,7 +128,7 @@ abstract class AbstractClassResolver
      *
      * @return array
      */
-    private function getProjectNamespaces()
+    protected function getProjectNamespaces()
     {
         return Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACES);
     }
@@ -138,7 +138,7 @@ abstract class AbstractClassResolver
      *
      * @return array
      */
-    private function getCoreNamespaces()
+    protected function getCoreNamespaces()
     {
         return Config::getInstance()->get(KernelConstants::CORE_NAMESPACES);
     }
@@ -146,13 +146,64 @@ abstract class AbstractClassResolver
     /**
      * @return \Spryker\Shared\Library\Collection\CollectionInterface
      */
-    private function getUnresolvableCollection()
+    protected static function getUnresolvableCollection()
     {
         if (self::$unresolvableCollection === null) {
             self::$unresolvableCollection = new Collection([]);
+            self::loadCache();
         }
 
         return self::$unresolvableCollection;
+    }
+
+    /**
+     * @return void
+     */
+    public static function persistCache()
+    {
+        try {
+            file_put_contents(self::getCacheFilename(), json_encode(
+                self::getUnresolvableCollection()->toArray())
+            );
+        }
+        catch (\Exception $e) {
+
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public static function loadCache()
+    {
+        try {
+            $data = json_decode(file_get_contents(
+                self::getCacheFilename()
+            ), true);
+
+            if (is_array($data)) {
+                self::getUnresolvableCollection()->collect($data);
+            }
+        }
+        catch (\Exception $e) {
+
+        }
+    }
+
+    /**
+     * @return string
+     */
+    protected static function getCacheFilename()
+    {
+        return DataDirectory::getLocalStoreSpecificPath('cache/autoloader').'/unresolvable.php';
+    }
+
+    /**
+     * @return void
+     */
+    public function __destruct()
+    {
+        self::persistCache();
     }
 
 }
