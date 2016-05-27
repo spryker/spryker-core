@@ -56,8 +56,7 @@ abstract class AbstractClassResolver
                 $this->resolvedClassName = $className;
 
                 return true;
-            }
-            else {
+            } else {
                 $this->getUnresolvableCollection()->set($className, true);
             }
         }
