@@ -65,7 +65,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
             'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
         ];
 
-        if (Config::hasValue(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
+        if (Config::hasKey(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER) && Config::hasValue(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
             $config['headers'] = [
                 'Authorization' => 'Basic '.Config::get(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)
             ];
