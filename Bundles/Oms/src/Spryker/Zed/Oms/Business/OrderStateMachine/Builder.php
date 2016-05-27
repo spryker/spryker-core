@@ -53,16 +53,13 @@ class Builder implements BuilderInterface
     protected $processDefinitionLocation;
 
     /**
-     * @deprecated The optional argument `$processDefinitionLocation` will be mandatory in next major version.
-     * Define paths to your process definition in `OmsConfig::getProcessDefinitionLocation()`
-     *
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|array|null $processDefinitionLocation
      */
-    public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, $process, $processDefinitionLocation = null)
+    public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, $process, $processDefinitionLocation)
     {
         $this->event = $event;
         $this->state = $state;
