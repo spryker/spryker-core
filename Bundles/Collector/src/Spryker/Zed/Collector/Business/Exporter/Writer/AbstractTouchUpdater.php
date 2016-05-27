@@ -65,8 +65,6 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      * @param int $idLocale
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
