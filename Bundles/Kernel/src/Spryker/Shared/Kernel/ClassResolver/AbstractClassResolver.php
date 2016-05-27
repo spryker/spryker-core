@@ -10,6 +10,7 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Library\Collection\Collection;
 
 abstract class AbstractClassResolver
 {
@@ -29,6 +30,11 @@ abstract class AbstractClassResolver
     private $classNames = [];
 
     /**
+     * @var \Spryker\Shared\Library\Collection\CollectionInterface
+     */
+    protected static $unresolvableCollection;
+
+    /**
      * @return string
      */
     abstract protected function getClassPattern();
@@ -41,10 +47,18 @@ abstract class AbstractClassResolver
         $classNames = $this->buildClassNames();
 
         foreach ($classNames as $className) {
+            if ($this->getUnresolvableCollection()->has($className)) {
+
+                return false;
+            }
+
             if ($this->classExists($className)) {
                 $this->resolvedClassName = $className;
 
                 return true;
+            }
+            else {
+                $this->getUnresolvableCollection()->set($className, true);
             }
         }
 
@@ -128,6 +142,18 @@ abstract class AbstractClassResolver
     private function getCoreNamespaces()
     {
         return Config::getInstance()->get(KernelConstants::CORE_NAMESPACES);
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\Collection\CollectionInterface
+     */
+    private function getUnresolvableCollection()
+    {
+        if (self::$unresolvableCollection === null) {
+            self::$unresolvableCollection = new Collection([]);
+        }
+
+        return self::$unresolvableCollection;
     }
 
 }
