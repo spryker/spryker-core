@@ -86,4 +86,5 @@ class StorageFactory extends AbstractFactory
 
         return $config;
     }
+
 }
