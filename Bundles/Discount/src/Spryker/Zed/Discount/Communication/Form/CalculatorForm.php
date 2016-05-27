@@ -12,6 +12,9 @@ use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CalculatorForm extends AbstractType
@@ -32,16 +35,24 @@ class CalculatorForm extends AbstractType
     protected $discountFacade;
 
     /**
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     */
+    protected $calculatorPlugins;
+
+    /**
      * @param \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider $calculatorFormDataProvider
      * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
     public function __construct(
         CalculatorFormDataProvider $calculatorFormDataProvider,
-        DiscountFacade $discountFacade
+        DiscountFacade $discountFacade,
+        array $calculatorPlugins
     ) {
 
         $this->calculatorFormDataProvider = $calculatorFormDataProvider;
         $this->discountFacade = $discountFacade;
+        $this->calculatorPlugins = $calculatorPlugins;
     }
 
 
@@ -56,21 +67,60 @@ class CalculatorForm extends AbstractType
         $this->addCalculatorType($builder)
             ->addAmountField($builder)
             ->addCollectorQueryString($builder);
+
+        $builder
+            ->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                function (FormEvent $event) {
+                    $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
+                }
+            );
+
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $data
+     * @return void
+     */
+    protected function addCalculatorPluginAmountValidators(FormInterface $form, array $data)
+    {
+        if (!isset($data[self::FIELD_CALCULATOR_PLUGIN])) {
+            return;
+        }
+
+        $calculatorPlugin = $this->getCalculatorPlugin($data[self::FIELD_CALCULATOR_PLUGIN]);
+        if (!$calculatorPlugin) {
+            return;
+        }
+
+        $amountField = $form->get(self::FIELD_AMOUNT);
+        $constraints = $amountField->getConfig()->getOption('constraints');
+        $constraints = array_merge($constraints, $calculatorPlugin->getAmountValidators());
+        $form->remove(self::FIELD_AMOUNT);
+        $this->addAmountField($form, ['constraints' => $constraints]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface|\Symfony\Component\Form\FormInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addAmountField(FormBuilderInterface $builder)
+    protected function addAmountField($builder, array $options = [])
     {
-        $builder->add(self::FIELD_AMOUNT, 'text', [
+        $defaultOptions = [
             'label' => 'Amount*',
             'constraints' => [
                 new NotBlank(),
             ],
-        ]);
+        ];
+
+        $builder->add(
+            self::FIELD_AMOUNT,
+            'text',
+            array_merge($defaultOptions, $options)
+        );
 
         return $this;
     }
@@ -113,6 +163,18 @@ class CalculatorForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param string $pluginName
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
+     */
+    protected function getCalculatorPlugin($pluginName)
+    {
+        if (isset($this->calculatorPlugins[$pluginName])) {
+            return $this->calculatorPlugins[$pluginName];
+        }
     }
 
     /**

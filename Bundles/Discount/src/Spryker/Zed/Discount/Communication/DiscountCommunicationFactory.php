@@ -66,7 +66,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     {
         $calculatorDataProvider = $this->createCalculatorFormDataProvider();
 
-        return new CalculatorForm($calculatorDataProvider, $this->getFacade());
+        return new CalculatorForm($calculatorDataProvider, $this->getFacade(), $this->getCalculatorPlugins());
     }
 
     /**
@@ -111,7 +111,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     {
         $discountQuery = $this->getQueryContainer()->queryDiscount();
 
-        return new DiscountsTable($discountQuery);
+        return new DiscountsTable($discountQuery, $this->getCalculatorPlugins());
     }
 
     /**

@@ -35,11 +35,18 @@ class DiscountsTable extends AbstractTable
     protected $discountQuery;
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountQuery $discountQuery
+     * @var array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
-    public function __construct(SpyDiscountQuery $discountQuery)
+    protected $calculatorPlugins = [];
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountQuery $discountQuery
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     */
+    public function __construct(SpyDiscountQuery $discountQuery, array $calculatorPlugins)
     {
         $this->discountQuery = $discountQuery;
+        $this->calculatorPlugins = $calculatorPlugins;
     }
 
     /**
@@ -92,7 +99,7 @@ class DiscountsTable extends AbstractTable
             $result[] = [
                 SpyDiscountTableMap::COL_ID_DISCOUNT => $discountEntity->getIdDiscount(),
                 SpyDiscountTableMap::COL_DISPLAY_NAME => $discountEntity->getDisplayName(),
-                SpyDiscountTableMap::COL_AMOUNT => $discountEntity->getAmount(),
+                SpyDiscountTableMap::COL_AMOUNT => $this->createFormatterAmount($discountEntity),
                 self::TABLE_COL_TYPE => $this->getDiscountType($discountEntity),
                 self::TYPE_COL_PERIOD => $this->createTimePeriod($discountEntity),
                 SpyDiscountTableMap::COL_IS_ACTIVE => $this->getStatus($discountEntity),
@@ -231,6 +238,28 @@ class DiscountsTable extends AbstractTable
     protected function createTimePeriod(SpyDiscount $discountEntity)
     {
         return $discountEntity->getValidFrom(self::DATE_FORMAT) . ' - ' . $discountEntity->getValidTo(self::DATE_FORMAT);
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return string
+     */
+    protected function createFormatterAmount(SpyDiscount $discountEntity)
+    {
+        return $this->getCalculatorPlugin(
+            $discountEntity->getCalculatorPlugin()
+        )->getFormattedAmount($discountEntity->getAmount());
+    }
+
+    /**
+     * @param string $pluginName
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
+     */
+    protected function getCalculatorPlugin($pluginName)
+    {
+        return $this->calculatorPlugins[$pluginName];
     }
 
 }

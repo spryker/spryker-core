@@ -64,7 +64,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     }
 
     /**
-     * @param string[] $tokens
+     * @param array|string[] $tokens
      * @param int $currentTokenIndex
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
@@ -269,6 +269,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     /**
      * @param string $fieldName
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
      * @return void
      */
     protected function setClauseField($fieldName, ClauseTransfer $clauseTransfer)
@@ -292,7 +293,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     }
 
     /**
-     * @return string[]
+     * @return array|string[]
      */
     protected function getCompoundComparatorParts()
     {
@@ -309,6 +310,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      * @param string $fieldName
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
+     *
      * @return void
      */
     protected function validateField($fieldName)

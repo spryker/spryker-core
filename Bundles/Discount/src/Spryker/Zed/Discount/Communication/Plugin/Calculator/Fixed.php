@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
-use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
@@ -21,26 +21,37 @@ class Fixed extends AbstractPlugin implements DiscountCalculatorPluginInterface
 
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param int $number
+     * @param int $percentage
      *
      * @return float
      */
-    public function calculate(array $discountableItems, $number)
+    public function calculate(array $discountableItems, $percentage)
     {
-        return $this->getFacade()->calculateFixed($discountableItems, $number);
+        return $this->getFacade()
+            ->calculateFixed($discountableItems, $percentage);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
      * @return string
      */
-    public function getFormattedAmount(DiscountTransfer $discountTransfer)
+    public function getFormattedAmount($amount)
     {
         $currencyManager = CurrencyManager::getInstance();
-        $discountAmount = $currencyManager->convertCentToDecimal($discountTransfer->getAmount());
+        $discountAmount = $currencyManager->convertCentToDecimal($amount);
 
         return $currencyManager->format($discountAmount);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Validator\ValidatorInterface
+     */
+    public function getAmountValidators()
+    {
+        return [
+            new Regex([
+                'pattern' => '/[0-9\.]+/'
+            ])
+        ];
     }
 
 }

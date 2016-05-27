@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
-use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
@@ -20,24 +21,41 @@ class Percentage extends AbstractPlugin implements DiscountCalculatorPluginInter
 
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param float $number
+     * @param float $percentage
      *
      * @return float
      */
-    public function calculate(array $discountableItems, $number)
+    public function calculate(array $discountableItems, $percentage)
     {
         return $this->getFacade()
-            ->calculatePercentage($discountableItems, $number);
+            ->calculatePercentage($discountableItems, $percentage);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param int $amount
      *
      * @return string
+     *
      */
-    public function getFormattedAmount(DiscountTransfer $discountTransfer)
+    public function getFormattedAmount($amount)
     {
-        return $discountTransfer->getAmount() . '%';
+        return $amount . ' %';
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\ValidatorInterface
+     */
+    public function getAmountValidators()
+    {
+        return [
+            new Regex([
+                'pattern' => '/[0-9\.]+/'
+            ]),
+            new Range([
+                'min' => 1,
+                'max' => 100
+            ])
+        ];
     }
 
 }

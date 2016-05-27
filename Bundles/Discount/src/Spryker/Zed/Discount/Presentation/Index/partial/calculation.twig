@@ -1,6 +1,11 @@
 <h3>{{ 'Calculation' | trans }}</h3>
 <hr />
-{{ form_row(discountForm.discountCalculator) }}
+
+{{ form_row(discountForm.discountCalculator.calculator_plugin) }}
+
+{{ form_row(discountForm.discountCalculator.amount) }}
+
+{{ form_row(discountForm.discountCalculator.collector_query_string) }}
 
 <p>
     {{ 'discount.edit.calculation.how_to' | trans }}
