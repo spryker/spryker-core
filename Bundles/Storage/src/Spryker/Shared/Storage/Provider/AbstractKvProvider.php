@@ -56,15 +56,35 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     {
         switch ($kvName) {
             case self::KV_ADAPTER_REDIS:
-                return [
-                    'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-                    'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
-                    'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
-                    'password' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD),
-                    'persistent' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION),
-                ];
+                return $this->getConnectionParameters();
         }
         throw new \ErrorException('Missing implementation for adapter ' . $kvName);
+    }
+
+    /**
+     * @deprecated Remove this once BC breaking feature is introduced to Application Bundle
+     *
+     * @return string
+     */
+    protected function getConnectionParameters()
+    {
+        $config = [
+            'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
+            'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
+            'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+        ];
+
+        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {//BC break
+            $config = [
+                'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
+                'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
+                'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+                'password' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD),
+                'persistent' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION),
+            ];
+        }
+
+        return $config;
     }
 
 }
