@@ -60,7 +60,7 @@ class CollectorConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getPgsqlEngineName()
+    public function getPostgresEngineName()
     {
         return Config::get(CollectorConstants::ZED_DB_ENGINE_PGSQL);
     }
@@ -131,7 +131,7 @@ class CollectorConfig extends AbstractBundleConfig
             $this->getMysqlEngineName() => [
 
             ],
-            $this->getPgsqlEngineName() => [
+            $this->getPostgresEngineName() => [
                 static::COLLECTOR_BULK_DELETE_QUERY_CLASS => BulkDeleteTouchByIdQuery::class,
                 static::COLLECTOR_BULK_UPDATE_QUERY_CLASS => BulkUpdateTouchKeyByIdQuery::class
             ]
