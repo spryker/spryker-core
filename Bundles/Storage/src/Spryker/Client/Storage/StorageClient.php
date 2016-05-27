@@ -8,15 +8,12 @@
 namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\Log\LoggerTrait;
 
 /**
  * @method \Spryker\Client\Storage\StorageFactory getFactory()
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
-
-    use LoggerTrait;
 
     /**
      * @api
@@ -97,7 +94,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function get($key)
     {
-//        $this->getLogger()->info('GET: ' .$key);
         return $this->getService()->get($key);
     }
 
@@ -110,7 +106,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function getMulti(array $keys)
     {
-//        $this->getLogger()->info('MULTI: ' . implode(', ', $keys));
         return $this->getService()->getMulti($keys);
     }
 

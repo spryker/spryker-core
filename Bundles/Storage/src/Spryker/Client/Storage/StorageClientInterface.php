@@ -17,6 +17,8 @@ interface StorageClientInterface
      * @param mixed $value
      * @param int $ttl
      *
+     * @throws \Exception
+     *
      * @return mixed
      */
     public function set($key, $value, $ttl = null);

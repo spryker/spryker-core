@@ -34,11 +34,6 @@ class GlossaryStorage implements GlossaryStorageInterface
     protected $translations = [];
 
     /**
-     * @var array
-     */
-    protected $translationKeyMap = [];
-
-    /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
      * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
@@ -62,7 +57,7 @@ class GlossaryStorage implements GlossaryStorageInterface
             return $keyName;
         }
 
-        if (!isset($this->translationKeyMap[$keyName])) {
+        if (!isset($this->translations[$keyName])) {
             $this->loadTranslation($keyName);
         }
 
@@ -70,7 +65,11 @@ class GlossaryStorage implements GlossaryStorageInterface
             return $this->translations[$keyName];
         }
 
-        return str_replace(array_keys($parameters), array_values($parameters), $this->translations[$keyName]);
+        return str_replace(
+            array_keys($parameters),
+            array_values($parameters),
+            $this->translations[$keyName]
+        );
     }
 
     /**
