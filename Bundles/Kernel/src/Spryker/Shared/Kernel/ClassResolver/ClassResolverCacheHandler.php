@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-
 class ClassResolverCacheHandler extends AbstractClassResolver
 {
 
@@ -37,4 +36,5 @@ class ClassResolverCacheHandler extends AbstractClassResolver
     {
         self::getCache()->persistCache();
     }
+
 }

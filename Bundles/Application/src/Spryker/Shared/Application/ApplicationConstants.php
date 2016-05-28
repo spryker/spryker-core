@@ -22,6 +22,7 @@ interface ApplicationConstants
     const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
     const STORE_PREFIX = 'STORE_PREFIX';
     const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
+    const ENABLE_AUTO_LOADER_CACHE = 'ENABLE_AUTO_LOADER_CACHE';
 
     // see http://twig.sensiolabs.org/doc/api.html#environment-options
     const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';

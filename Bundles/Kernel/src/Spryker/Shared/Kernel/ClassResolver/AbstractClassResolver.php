@@ -49,7 +49,7 @@ abstract class AbstractClassResolver
     /**
      * @return \Spryker\Shared\Kernel\ClassResolver\ClassResolverCacheInterface
      */
-    protected function getCache()
+    protected static function getCache()
     {
         if (self::$cache === null) {
             self::$cache = new ClassResolverCache();
@@ -83,7 +83,7 @@ abstract class AbstractClassResolver
      */
     protected function classExists($className)
     {
-        return self::getCache()->classExists($className);
+        return $this->getCache()->classExists($className);
     }
 
     /**
