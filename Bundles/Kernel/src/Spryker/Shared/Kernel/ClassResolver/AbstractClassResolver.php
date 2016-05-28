@@ -10,8 +10,6 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Collection\Collection;
-use Spryker\Shared\Library\DataDirectory;
 
 abstract class AbstractClassResolver
 {
@@ -23,17 +21,17 @@ abstract class AbstractClassResolver
     /**
      * @var string
      */
-    protected $resolvedClassName;
+    private $resolvedClassName;
 
     /**
      * @var array
      */
-    protected $classNames = [];
+    private $classNames = [];
 
     /**
-     * @var \Spryker\Shared\Library\Collection\CollectionInterface
+     * @var \Spryker\Shared\Kernel\ClassResolver\ClassResolverCacheInterface
      */
-    protected static $unresolvableCollection;
+    private static $cache;
 
     /**
      * @return string
@@ -49,6 +47,18 @@ abstract class AbstractClassResolver
     abstract protected function buildClassName($namespace, $store = null);
 
     /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ClassResolverCacheInterface
+     */
+    protected function getCache()
+    {
+        if (self::$cache === null) {
+            self::$cache = new ClassResolverCache();
+        }
+
+        return self::$cache;
+    }
+
+    /**
      * @return bool
      */
     public function canResolve()
@@ -56,16 +66,10 @@ abstract class AbstractClassResolver
         $classNames = $this->buildClassNames();
 
         foreach ($classNames as $className) {
-            if (self::getUnresolvableCollection()->has($className)) {
-                continue;
-            }
-
             if ($this->classExists($className)) {
                 $this->resolvedClassName = $className;
 
                 return true;
-            } else {
-                self::getUnresolvableCollection()->set($className, true);
             }
         }
 
@@ -79,7 +83,7 @@ abstract class AbstractClassResolver
      */
     protected function classExists($className)
     {
-        return class_exists($className);
+        return self::getCache()->classExists($className);
     }
 
     /**
@@ -93,7 +97,7 @@ abstract class AbstractClassResolver
     /**
      * @return array
      */
-    protected function buildClassNames()
+    private function buildClassNames()
     {
         $this->addProjectClassNames();
         $this->addCoreClassNames();
@@ -104,7 +108,7 @@ abstract class AbstractClassResolver
     /**
      * @return void
      */
-    protected function addProjectClassNames()
+    private function addProjectClassNames()
     {
         $storeName = Store::getInstance()->getStoreName();
         foreach ($this->getProjectNamespaces() as $namespace) {
@@ -116,7 +120,7 @@ abstract class AbstractClassResolver
     /**
      * @return void
      */
-    protected function addCoreClassNames()
+    private function addCoreClassNames()
     {
         foreach ($this->getCoreNamespaces() as $namespace) {
             $this->classNames[] = $this->buildClassName($namespace);
@@ -128,7 +132,7 @@ abstract class AbstractClassResolver
      *
      * @return array
      */
-    protected function getProjectNamespaces()
+    private function getProjectNamespaces()
     {
         return Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACES);
     }
@@ -138,64 +142,9 @@ abstract class AbstractClassResolver
      *
      * @return array
      */
-    protected function getCoreNamespaces()
+    private function getCoreNamespaces()
     {
         return Config::getInstance()->get(KernelConstants::CORE_NAMESPACES);
-    }
-
-    /**
-     * @return \Spryker\Shared\Library\Collection\CollectionInterface
-     */
-    protected static function getUnresolvableCollection()
-    {
-        if (self::$unresolvableCollection === null) {
-            self::$unresolvableCollection = new Collection([]);
-            self::loadCache();
-        }
-
-        return self::$unresolvableCollection;
-    }
-
-    /**
-     * @return void
-     */
-    public static function persistCache()
-    {
-        try {
-            file_put_contents(self::getCacheFilename(), json_encode(
-                self::getUnresolvableCollection()->toArray())
-            );
-        }
-        catch (\Exception $e) {
-
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public static function loadCache()
-    {
-        try {
-            $data = json_decode(file_get_contents(
-                self::getCacheFilename()
-            ), true);
-
-            if (is_array($data)) {
-                self::getUnresolvableCollection()->collect($data);
-            }
-        }
-        catch (\Exception $e) {
-
-        }
-    }
-
-    /**
-     * @return string
-     */
-    protected static function getCacheFilename()
-    {
-        return DataDirectory::getLocalStoreSpecificPath('cache/autoloader').'/unresolvable.json';
     }
 
 }

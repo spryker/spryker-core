@@ -26,4 +26,13 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
         return $this->getFactory()->createCacheDelete()->deleteAllFiles();
     }
 
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function deleteAllAutoloaderFiles()
+    {
+        return $this->getFactory()->createAutoloaderCacheDelete()->deleteAllFiles();
+    }
 }

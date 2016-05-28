@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cache\Business;
 
+use Spryker\Zed\Cache\Business\Model\AutoloaderCacheDelete;
 use Spryker\Zed\Cache\Business\Model\CacheDelete;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -26,4 +27,13 @@ class CacheBusinessFactory extends AbstractBusinessFactory
         return new CacheDelete($config);
     }
 
+    /**
+     * @return \Spryker\Zed\Cache\Business\Model\CacheDelete
+     */
+    public function createAutoloaderCacheDelete()
+    {
+        $config = $this->getConfig();
+
+        return new AutoloaderCacheDelete($config);
+    }
 }

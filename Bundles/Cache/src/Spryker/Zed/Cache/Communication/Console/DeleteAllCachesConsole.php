@@ -43,6 +43,13 @@ class DeleteAllCachesConsole extends Console
         foreach ($dirs as $dir) {
             $output->writeln($dir);
         }
+
+        $dirs = $this->getFacade()->deleteAllAutoloaderFiles();
+        $this->info('Removed autoloader cache files', true);
+        foreach ($dirs as $dir) {
+            $output->writeln($dir);
+        }
+
     }
 
 }
