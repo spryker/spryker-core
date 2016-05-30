@@ -13,8 +13,6 @@ use Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface;
 class BulkDeleteTouchByIdQuery extends AbstractBulkTouchQuery implements BulkDeleteTouchByIdQueryInterface
 {
 
-    protected $queryTemplate = "DELETE FROM %s WHERE %s IN (%s)";
-
     /**
      * @param string $tableName
      * @param string $idColumnName
@@ -32,6 +30,14 @@ class BulkDeleteTouchByIdQuery extends AbstractBulkTouchQuery implements BulkDel
         );
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getQueryTemplate()
+    {
+        return "DELETE FROM %s WHERE %s IN (%s)";
     }
 
 }

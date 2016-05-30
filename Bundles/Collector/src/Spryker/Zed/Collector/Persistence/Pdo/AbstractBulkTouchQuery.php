@@ -7,12 +7,8 @@
 
 namespace Spryker\Zed\Collector\Persistence\Pdo;
 
-class AbstractBulkTouchQuery
+abstract class AbstractBulkTouchQuery
 {
-
-    protected $queryTemplate;
-
-    protected $queryGlue = "; \n";
 
     /**
      * @var array
@@ -38,17 +34,14 @@ class AbstractBulkTouchQuery
     /**
      * @return string
      */
-    protected function getQueryTemplate()
-    {
-        return $this->queryTemplate;
-    }
+    abstract protected function getQueryTemplate();
 
     /**
      * @return string
      */
     protected function getQueryGlue()
     {
-        return $this->queryGlue;
+        return "; \n";
     }
 
 }

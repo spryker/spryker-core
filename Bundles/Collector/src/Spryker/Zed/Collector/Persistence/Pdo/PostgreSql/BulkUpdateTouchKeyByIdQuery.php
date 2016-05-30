@@ -13,8 +13,6 @@ use Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface;
 class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements BulkUpdateTouchKeyByIdQueryInterface
 {
 
-    protected $queryTemplate = "UPDATE %s SET key = '%s' WHERE %s = '%s'";
-
     /**
      * @param string $tableName
      * @param string $keyValue
@@ -34,6 +32,14 @@ class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements Bulk
         );
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getQueryTemplate()
+    {
+        return "UPDATE %s SET key = '%s' WHERE %s = '%s'";
     }
 
 }
