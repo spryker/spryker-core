@@ -277,7 +277,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             $values = $this->getService()->getMulti(array_keys(self::$cachedKeys));
 
             if (is_array($values) && !empty($values)) {
-                foreach($values as $key => $value) {
+                foreach ($values as $key => $value) {
                     $keySuffix = substr($key, strlen(Service::KV_PREFIX));
                     self::$bufferedValues[$keySuffix] = $this->jsonDecode($value);
                 }
