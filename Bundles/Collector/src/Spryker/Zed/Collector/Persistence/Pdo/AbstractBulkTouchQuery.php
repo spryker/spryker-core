@@ -18,6 +18,11 @@ abstract class AbstractBulkTouchQuery
     /**
      * @return string
      */
+    abstract protected function getQueryTemplate();
+
+    /**
+     * @return string
+     */
     public function getRawSqlString()
     {
         return implode($this->getQueryGlue(), $this->queries);
@@ -30,11 +35,6 @@ abstract class AbstractBulkTouchQuery
     {
         $this->queries = [];
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function getQueryTemplate();
 
     /**
      * @return string
