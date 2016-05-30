@@ -36,4 +36,5 @@ class CacheBusinessFactory extends AbstractBusinessFactory
 
         return new AutoloaderCacheDelete($config);
     }
+
 }
