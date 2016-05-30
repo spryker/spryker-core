@@ -15,7 +15,7 @@ class ClassResolverCacheHandler extends AbstractClassResolver
      */
     protected function getClassPattern()
     {
-        // TODO: Implement getClassPattern() method.
+
     }
 
     /**
@@ -26,7 +26,7 @@ class ClassResolverCacheHandler extends AbstractClassResolver
      */
     protected function buildClassName($namespace, $store = null)
     {
-        // TODO: Implement buildClassName() method.
+
     }
 
     /**
