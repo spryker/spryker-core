@@ -128,13 +128,27 @@ class CollectorConfig extends AbstractBundleConfig
     protected function getQueryToDbEngineClassMap()
     {
         return [
-            $this->getMysqlEngineName() => [
+            $this->getMysqlEngineName() => $this->getMysqlDbEngineClassMap(),
+            $this->getPostgresEngineName() => $this->getPostgresDbEngineClassMap()
+        ];
+    }
 
-            ],
-            $this->getPostgresEngineName() => [
-                static::COLLECTOR_BULK_DELETE_QUERY_CLASS => BulkDeleteTouchByIdQuery::class,
-                static::COLLECTOR_BULK_UPDATE_QUERY_CLASS => BulkUpdateTouchKeyByIdQuery::class
-            ]
+    /**
+     * @return array
+     */
+    protected function getMysqlDbEngineClassMap()
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPostgresDbEngineClassMap()
+    {
+        return [
+            static::COLLECTOR_BULK_DELETE_QUERY_CLASS => BulkDeleteTouchByIdQuery::class,
+            static::COLLECTOR_BULK_UPDATE_QUERY_CLASS => BulkUpdateTouchKeyByIdQuery::class
         ];
     }
 

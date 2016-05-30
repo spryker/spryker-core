@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Collector\Persistence\Pdo\PostgreSql;
 
+use Spryker\Zed\Collector\Persistence\Pdo\AbstractBulkTouchQuery;
 use Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface;
 
 class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements BulkUpdateTouchKeyByIdQueryInterface
