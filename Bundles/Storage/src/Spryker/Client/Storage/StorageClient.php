@@ -35,7 +35,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static $bufferedValues = null;
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected static $service;
 
