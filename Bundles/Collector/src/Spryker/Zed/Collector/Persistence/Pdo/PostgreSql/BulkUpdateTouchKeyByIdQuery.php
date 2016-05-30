@@ -9,32 +9,10 @@ namespace Spryker\Zed\Collector\Persistence\Pdo\PostgreSql;
 
 use Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface;
 
-class BulkUpdateTouchKeyByIdQuery implements BulkUpdateTouchKeyByIdQueryInterface
+class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements BulkUpdateTouchKeyByIdQueryInterface
 {
 
-    const QUERY_TEMPLATE = "UPDATE %s SET key = '%s' WHERE %s = '%s'";
-    const QUERY_GLUE = "; \n";
-
-    /**
-     * Name of the table to bulk update touch information for
-     *
-     * @var string
-     */
-    protected $tableName;
-
-    /**
-     * Name of the "ID" column to bulk update touch information for
-     *
-     * @var string
-     */
-    protected $idColumnName;
-
-    /**
-     * List of queries for bulk-update operation
-     *
-     * @var array
-     */
-    protected $queries = [];
+    protected $queryTemplate = "UPDATE %s SET key = '%s' WHERE %s = '%s'";
 
     /**
      * @param string $tableName
@@ -47,7 +25,7 @@ class BulkUpdateTouchKeyByIdQuery implements BulkUpdateTouchKeyByIdQueryInterfac
     public function addQuery($tableName, $keyValue, $idColumnName, $idValue)
     {
         $this->queries[] = sprintf(
-            static::QUERY_TEMPLATE,
+            $this->getQueryTemplate(),
             $tableName,
             $keyValue,
             $idColumnName,
@@ -55,23 +33,6 @@ class BulkUpdateTouchKeyByIdQuery implements BulkUpdateTouchKeyByIdQueryInterfac
         );
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRawSqlString()
-    {
-        $queryString = implode(static::QUERY_GLUE, $this->queries);
-        return $queryString;
-    }
-
-    /**
-     * @return void
-     */
-    public function flushQueries()
-    {
-        $this->queries = [];
     }
 
 }

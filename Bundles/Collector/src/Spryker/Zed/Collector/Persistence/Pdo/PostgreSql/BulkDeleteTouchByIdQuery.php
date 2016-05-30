@@ -9,32 +9,10 @@ namespace Spryker\Zed\Collector\Persistence\Pdo\PostgreSql;
 
 use Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface;
 
-class BulkDeleteTouchByIdQuery implements BulkDeleteTouchByIdQueryInterface
+class BulkDeleteTouchByIdQuery extends AbstractBulkTouchQuery implements BulkDeleteTouchByIdQueryInterface
 {
 
-    const QUERY_TEMPLATE = "DELETE FROM %s WHERE %s IN (%s)";
-    const QUERY_GLUE = "; \n";
-
-    /**
-     * Name of the table to bulk delete touch information from
-     *
-     * @var string
-     */
-    protected $tableName;
-
-    /**
-     * Name of the "ID" column to bulk delete touch information by
-     *
-     * @var string
-     */
-    protected $idColumnName;
-
-    /**
-     * List of queries for bulk-delete operation
-     *
-     * @var array
-     */
-    protected $queries = [];
+    protected $queryTemplate = "DELETE FROM %s WHERE %s IN (%s)";
 
     /**
      * @param string $tableName
@@ -46,30 +24,13 @@ class BulkDeleteTouchByIdQuery implements BulkDeleteTouchByIdQueryInterface
     public function addQuery($tableName, $idColumnName, $idsToDelete)
     {
         $this->queries[] = sprintf(
-            static::QUERY_TEMPLATE,
+            $this->getQueryTemplate(),
             $tableName,
             $idColumnName,
             implode(',', $idsToDelete)
         );
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRawSqlString()
-    {
-        $queryString = implode(static::QUERY_GLUE, $this->queries);
-        return $queryString;
-    }
-
-    /**
-     * @return void
-     */
-    public function flushQueries()
-    {
-        $this->queries = [];
     }
 
 }
