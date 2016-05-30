@@ -24,8 +24,7 @@ class AbstractBulkTouchQuery
      */
     public function getRawSqlString()
     {
-        $queryString = implode($this->getQueryGlue(), $this->queries);
-        return $queryString;
+        return implode($this->getQueryGlue(), $this->queries);
     }
 
     /**
