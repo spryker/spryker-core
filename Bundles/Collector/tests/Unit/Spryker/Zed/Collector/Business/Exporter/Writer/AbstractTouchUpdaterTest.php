@@ -8,10 +8,11 @@
 namespace Unit\Spryker\Zed\Collector\Business\Exporter\Writer;
 
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\CollectorConfig;
+use Unit\Spryker\Zed\Collector\Business\Fixture\CollectorConfigWithNotDefinedDbEngineFake;
+use Unit\Spryker\Zed\Collector\Business\Fixture\TouchUpdaterStub;
 
 class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
 {
@@ -49,7 +50,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
         $idLocale = 1;
         $connection = $this->createConnectionMock();
 
-        $touchUpdater = $this->createTouchUpdaterMock();
+        $touchUpdater = $this->createTouchUpdater();
 
         $expectedQuery =
             "UPDATE touchKeyTableName_value SET key = 'data_key1' WHERE touchKeyIdColumnName_value = 'new value'; \n"
@@ -73,7 +74,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
         $idLocale = 1;
         $connection = $this->createConnectionMock();
 
-        $touchUpdater = $this->createTouchUpdaterMock();
+        $touchUpdater = $this->createTouchUpdater();
 
         $expectedQuery = 'DELETE FROM touchKeyTableName_value WHERE fk_touch IN (id_touch1,id_touch2)';
 
@@ -95,7 +96,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     public function testBulkUpdateIsFailingWithWrongTouchQueryConfigured()
     {
         $this->collectorConfig = $this->createWrongCollectorConfig();
-        $this->createTouchUpdaterMock();
+        $this->createTouchUpdater();
     }
 
     /**
@@ -113,27 +114,9 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function createTouchUpdaterMock()
+    protected function createTouchUpdater()
     {
-        $touchUpdaterMock = $this->getMockForAbstractClass(
-            AbstractTouchUpdater::class,
-            [$this->createBulkTouchUpdateQuery(), $this->createBulkTouchDeleteQuery()],
-            '',
-            true,
-            true,
-            true,
-            ['createTouchKeyEntity']
-        );
-
-        $touchUpdaterMockReflection = new \ReflectionClass($touchUpdaterMock);
-        $protectedProperties = ['touchKeyTableName', 'touchKeyIdColumnName', 'touchKeyColumnName'];
-        foreach ($protectedProperties as $propertyName) {
-            $propertyReflection = $touchUpdaterMockReflection->getProperty($propertyName);
-            $propertyReflection->setAccessible(true);
-            $propertyReflection->setValue($touchUpdaterMock, $propertyName . '_value');
-        }
-
-        return $touchUpdaterMock;
+        return new TouchUpdaterStub($this->createBulkTouchUpdateQuery(), $this->createBulkTouchDeleteQuery());
     }
 
     /**
@@ -212,23 +195,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
      */
     protected function createWrongCollectorConfig()
     {
-        return new CollectorConfigWithNotDefinedDbEngine();
-    }
-
-}
-
-class CollectorConfigWithNotDefinedDbEngine extends CollectorConfig
-{
-
-    const COLLECTOR_BULK_DELETE_QUERY_CLASS = 'WrongBulkDeleteTouchByIdQuery';
-    const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'WrongBulkUpdateTouchKeyByIdQuery';
-
-    /**
-     * @return string
-     */
-    public function getCurrentEngineName()
-    {
-        return $this->getMysqlEngineName();
+        return new CollectorConfigWithNotDefinedDbEngineFake();
     }
 
 }
