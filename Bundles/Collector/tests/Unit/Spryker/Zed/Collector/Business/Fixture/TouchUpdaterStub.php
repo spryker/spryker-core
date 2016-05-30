@@ -32,7 +32,6 @@ class TouchUpdaterStub extends AbstractTouchUpdater
      */
     protected function createTouchKeyEntity()
     {
-        return;
     }
 
 }
