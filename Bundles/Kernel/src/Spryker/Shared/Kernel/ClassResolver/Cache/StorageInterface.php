@@ -22,4 +22,14 @@ interface StorageInterface
      */
     public function getData();
 
+    /**
+     * @return bool
+     */
+    public function isModified();
+
+    /**
+     * @return void
+     */
+    public function markAsModified();
+
 }

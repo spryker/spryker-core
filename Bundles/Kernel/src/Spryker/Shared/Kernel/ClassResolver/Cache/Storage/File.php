@@ -8,11 +8,10 @@
 namespace Spryker\Shared\Kernel\ClassResolver\Cache\Storage;
 
 use Spryker\Shared\Kernel\ClassResolver\Cache\AbstractStorage;
-use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 use Spryker\Shared\Library\DataDirectory;
 use Spryker\Shared\Library\Json;
 
-class File extends AbstractStorage implements StorageInterface
+class File extends AbstractStorage
 {
 
     /**
@@ -31,8 +30,6 @@ class File extends AbstractStorage implements StorageInterface
             file_put_contents($this->getCacheFilename(), Json::encode(
                 $data
             ));
-
-            $this->markAsModified();
         }
         catch (\Exception $e) {
 

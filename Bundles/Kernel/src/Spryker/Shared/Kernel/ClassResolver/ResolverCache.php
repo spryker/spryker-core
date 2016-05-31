@@ -61,10 +61,22 @@ class ResolverCache implements ResolverCacheInterface
         $exists = class_exists($className);
 
         if (!$exists) {
-            $this->getUnresolvableCollection()->set($className, true);
+            $this->markAsUnresolvable($className);
         }
 
         return $exists;
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return void
+     */
+    protected function markAsUnresolvable($className)
+    {
+        $this->getUnresolvableCollection()->set($className, true);
+
+        $this->storage->markAsModified();
     }
 
     /**

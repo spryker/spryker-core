@@ -7,25 +7,28 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver\Cache;
 
-abstract class AbstractStorage
+abstract class AbstractStorage implements StorageInterface
 {
 
     /**
      * @var bool
      */
-    protected static $modified = false;
+    protected $modified = false;
 
     /**
      * @return bool
      */
-    protected function isModified()
+    public function isModified()
     {
-        return self::$modified;
+        return $this->modified;
     }
 
-    protected function markAsModified()
+    /**
+     * @return void
+     */
+    public function markAsModified()
     {
-        self::$modified = true;
+        $this->modified = true;
     }
 
 }
