@@ -8,10 +8,11 @@
 namespace Spryker\Shared\Kernel\ClassResolver;
 
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\ClassResolver\Cache\Provider\File as ClassResolverFileCacheProvider;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 
-abstract class AbstractClassResolver extends ClassResolverCacheProvider
+abstract class AbstractClassResolver
 {
 
     const KEY_NAMESPACE = '%namespace%';
@@ -66,7 +67,10 @@ abstract class AbstractClassResolver extends ClassResolverCacheProvider
      */
     protected function classExists($className)
     {
-        return parent::classExists($className);
+        //TODO get this from project
+        return (new ClassResolverFileCacheProvider())
+            ->getCache()
+            ->classExists($className);
     }
 
     /**

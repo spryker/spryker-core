@@ -7,11 +7,10 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
+use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 use Spryker\Shared\Library\Collection\LazyCollection;
-use Spryker\Shared\Library\DataDirectory;
-use Spryker\Shared\Library\Json;
 
-class ClassResolverCache implements ClassResolverCacheInterface
+class ResolverCache implements ResolverCacheInterface
 {
 
     /**
@@ -20,13 +19,26 @@ class ClassResolverCache implements ClassResolverCacheInterface
     protected static $unresolvableCollection;
 
     /**
+     * @var \Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface
+     */
+    protected $storage;
+
+    /**
+     * @param \Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface $storage
+     */
+    public function __construct(StorageInterface $storage)
+    {
+        $this->storage = $storage;
+    }
+
+    /**
      * @return \Spryker\Shared\Library\Collection\CollectionInterface
      */
     protected function getUnresolvableCollection()
     {
         if (self::$unresolvableCollection === null) {
             $callback = function () {
-                return $this->getCachedData();
+                return $this->getData();
             };
 
             self::$unresolvableCollection = new LazyCollection($callback);
@@ -58,43 +70,19 @@ class ClassResolverCache implements ClassResolverCacheInterface
     /**
      * @return void
      */
-    public function persistCache()
+    public function persist()
     {
-        try {
-            file_put_contents($this->getCacheFilename(), Json::encode(
-                $this->getUnresolvableCollection()->toArray()
-            ));
-        }
-        catch (\Exception $e) {
-
-        }
+        $this->storage->persist(
+            $this->getUnresolvableCollection()->toArray()
+        );
     }
 
     /**
      * @return array
      */
-    public function getCachedData()
+    public function getData()
     {
-        try {
-            $json = file_get_contents(
-                $this->getCacheFilename()
-            );
-
-            $data = (array)Json::decode($json);
-
-            return $data ?: [];
-        }
-        catch (\Exception $e) {
-            return [];
-        }
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCacheFilename()
-    {
-        return DataDirectory::getLocalStoreSpecificPath('cache/autoloader').'/unresolvable.json';
+        return $this->storage->getData();
     }
 
 }

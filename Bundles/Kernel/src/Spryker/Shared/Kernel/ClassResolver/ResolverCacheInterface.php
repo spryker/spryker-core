@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-interface ClassResolverCacheInterface
+interface ResolverCacheInterface
 {
 
     /**
@@ -20,11 +20,11 @@ interface ClassResolverCacheInterface
     /**
      * @return void
      */
-    public function persistCache();
+    public function persist();
 
     /**
      * @return array
      */
-    public function getCachedData();
+    public function getData();
 
 }
