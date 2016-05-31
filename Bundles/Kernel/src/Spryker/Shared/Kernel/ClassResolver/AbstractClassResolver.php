@@ -11,7 +11,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 
-abstract class AbstractClassResolver
+abstract class AbstractClassResolver extends ClassResolverCacheProvider
 {
 
     const KEY_NAMESPACE = '%namespace%';
@@ -29,11 +29,6 @@ abstract class AbstractClassResolver
     private $classNames = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\ClassResolverCacheInterface
-     */
-    private static $cache;
-
-    /**
      * @return string
      */
     abstract protected function getClassPattern();
@@ -45,18 +40,6 @@ abstract class AbstractClassResolver
      * @return string
      */
     abstract protected function buildClassName($namespace, $store = null);
-
-    /**
-     * @return \Spryker\Shared\Kernel\ClassResolver\ClassResolverCacheInterface
-     */
-    protected static function getCache()
-    {
-        if (self::$cache === null) {
-            self::$cache = new ClassResolverCache();
-        }
-
-        return self::$cache;
-    }
 
     /**
      * @return bool
@@ -83,7 +66,7 @@ abstract class AbstractClassResolver
      */
     protected function classExists($className)
     {
-        return $this->getCache()->classExists($className);
+        return parent::classExists($className);
     }
 
     /**
