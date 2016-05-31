@@ -9,6 +9,7 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 use Spryker\Shared\Library\Collection\LazyCollection;
 use Spryker\Shared\Library\DataDirectory;
+use Spryker\Shared\Library\Json;
 
 class ClassResolverCache implements ClassResolverCacheInterface
 {
@@ -60,7 +61,7 @@ class ClassResolverCache implements ClassResolverCacheInterface
     public function persistCache()
     {
         try {
-            file_put_contents($this->getCacheFilename(), json_encode(
+            file_put_contents($this->getCacheFilename(), Json::encode(
                 $this->getUnresolvableCollection()->toArray()
             ));
         }
@@ -75,9 +76,11 @@ class ClassResolverCache implements ClassResolverCacheInterface
     public function getCachedData()
     {
         try {
-            $data = json_decode(file_get_contents(
+            $json = file_get_contents(
                 $this->getCacheFilename()
-            ), true);
+            );
+
+            $data = (array)Json::decode($json);
 
             return $data ?: [];
         }
