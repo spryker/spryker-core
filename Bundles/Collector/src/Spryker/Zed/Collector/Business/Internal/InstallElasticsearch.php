@@ -51,7 +51,7 @@ class InstallElasticsearch extends AbstractInstaller
         $index = $this->client->getIndex($this->indexName);
 
         if (!$index->exists()) {
-            $numberOfShards = 4;
+            $numberOfShards = 1;
             $numberOfReplicas = 1;
 
             if (Config::hasValue(ApplicationConstants::ELASTICA_NUMBER_OF_SHARDS)) {
