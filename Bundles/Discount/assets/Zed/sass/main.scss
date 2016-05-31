@@ -40,3 +40,19 @@
 table.dataTable.gui-table-data {
     width: 100% !important;
 }
+
+.tabs-container {
+    .nav > li > a {
+        color: #999;
+    }
+
+    .nav li.active a.tab-item {
+        background-color: #1ab394 !important;
+        color: #fff;
+
+        &:hover,
+        &:focus {
+            color: #fff;
+        }
+    }
+}
