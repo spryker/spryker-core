@@ -7,11 +7,12 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver\Cache\Storage;
 
+use Spryker\Shared\Kernel\ClassResolver\Cache\AbstractStorage;
 use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 use Spryker\Shared\Library\DataDirectory;
 use Spryker\Shared\Library\Json;
 
-class File implements StorageInterface
+class File extends AbstractStorage implements StorageInterface
 {
 
     /**
@@ -21,10 +22,17 @@ class File implements StorageInterface
      */
     public function persist(array $data)
     {
+        if (!$this->isModified()) {
+            return;
+        }
+
         try {
+            //TODO check this http://php.net/manual/en/function.file-put-contents.php#82934
             file_put_contents($this->getCacheFilename(), Json::encode(
                 $data
             ));
+
+            $this->markAsModified();
         }
         catch (\Exception $e) {
 
