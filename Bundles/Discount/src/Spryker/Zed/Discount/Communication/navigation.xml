@@ -7,5 +7,15 @@
         <bundle>discount</bundle>
         <controller>index</controller>
         <action>list</action>
+        <pages>
+            <create>
+                <label>Discounts</label>
+                <title>Discounts</title>
+                <bundle>discount</bundle>
+                <controller>index</controller>
+                <action>create</action>
+                <visible>0</visible>
+            </create>
+        </pages>
     </discount>
 </config>
