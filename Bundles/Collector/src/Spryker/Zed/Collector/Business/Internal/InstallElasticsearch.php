@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Collector\Business\Internal;
 
 use Elastica\Client;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 
 class InstallElasticsearch extends AbstractInstaller
@@ -49,12 +51,21 @@ class InstallElasticsearch extends AbstractInstaller
         $index = $this->client->getIndex($this->indexName);
 
         if (!$index->exists()) {
-            $index->create(
-                [
-                    'number_of_shards' => 4,
-                    'number_of_replicas' => 1,
-                ]
-            );
+            $numberOfShards = 4;
+            $numberOfReplicas = 1;
+
+            if (Config::hasValue(ApplicationConstants::ELASTICA_NUMBER_OF_SHARDS)) {
+                $numberOfShards = Config::get(ApplicationConstants::ELASTICA_NUMBER_OF_SHARDS);
+            }
+
+            if (Config::hasValue(ApplicationConstants::ELASTICA_NUMBER_OF_REPLICAS)) {
+                $numberOfReplicas = Config::get(ApplicationConstants::ELASTICA_NUMBER_OF_REPLICAS);
+            }
+
+            $index->create([
+                'number_of_shards' => $numberOfShards,
+                'number_of_replicas' => $numberOfReplicas,
+            ]);
         }
     }
 

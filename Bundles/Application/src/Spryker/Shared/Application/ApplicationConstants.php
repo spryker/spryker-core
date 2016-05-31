@@ -75,6 +75,8 @@ interface ApplicationConstants
     const ELASTICA_PARAMETER__TRANSPORT = 'port';
     const ELASTICA_PARAMETER__INDEX_NAME = 'index_name';
     const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'document_type';
+    const ELASTICA_NUMBER_OF_SHARDS = 'ELASTICA_NUMBER_OF_SHARDS';
+    const ELASTICA_NUMBER_OF_REPLICAS = 'ELASTICA_NUMBER_OF_REPLICAS';
 
     const JENKINS_BASE_URL = 'jenkins_url';
     const JENKINS_DIRECTORY = 'jenkins_dir';
