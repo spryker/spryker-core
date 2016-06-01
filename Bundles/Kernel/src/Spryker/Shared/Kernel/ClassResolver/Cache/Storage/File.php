@@ -28,7 +28,7 @@ class File implements StorageInterface
             file_put_contents(
                 $this->getCacheFilename(),
                 '<?php return ' . $string . ';',
-                LOCK_EX
+                LOCK_EX | LOCK_NB
             );
         }
         catch (\Exception $e) {
