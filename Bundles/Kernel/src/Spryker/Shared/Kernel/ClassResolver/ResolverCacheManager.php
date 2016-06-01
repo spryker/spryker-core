@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\ClassResolver\Cache\ProviderInterface;
 
 class ResolverCacheManager implements ResolverCacheFactoryInterface
 {
+
     /**
      * @return bool
      */
@@ -44,4 +45,5 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
 
         return $cacheProvider;
     }
+
 }
