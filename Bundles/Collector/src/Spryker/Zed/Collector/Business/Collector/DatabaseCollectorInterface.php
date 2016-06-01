@@ -10,6 +10,7 @@ namespace Spryker\Zed\Collector\Business\Collector;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Shared\Library\BatchIterator\CountableIteratorInterface;
+use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
@@ -33,6 +34,7 @@ interface DatabaseCollectorInterface
      * @param \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface $batchCollection
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
+     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $storeReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface $output
@@ -43,6 +45,7 @@ interface DatabaseCollectorInterface
         CountableIteratorInterface $batchCollection,
         TouchUpdaterInterface $touchUpdater,
         BatchResultInterface $batchResult,
+        ReaderInterface $storeReader,
         WriterInterface $storeWriter,
         LocaleTransfer $locale,
         OutputInterface $output
