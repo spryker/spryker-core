@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Discount\Business\Calculator;
+namespace Unit\Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
