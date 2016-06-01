@@ -15,7 +15,7 @@ abstract class AbstractProvider implements ProviderInterface
     /**
      * @var \Spryker\Shared\Kernel\ClassResolver\ResolverCacheInterface
      */
-    protected static $cache;
+    protected $cache;
 
     /**
      * @return \Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface
@@ -27,12 +27,13 @@ abstract class AbstractProvider implements ProviderInterface
      */
     public function getCache()
     {
-        if (self::$cache === null) {
-            $storage = $this->buildStorage();
-            self::$cache = new ResolverCache($storage);
+        if ($this->cache === null) {
+            $this->cache = new ResolverCache(
+                $this->buildStorage()
+            );
         }
 
-        return self::$cache;
+        return $this->cache;
     }
 
 }

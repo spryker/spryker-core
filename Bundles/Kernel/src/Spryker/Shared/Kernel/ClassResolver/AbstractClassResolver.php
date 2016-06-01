@@ -8,7 +8,6 @@
 namespace Spryker\Shared\Kernel\ClassResolver;
 
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\ClassResolver\Cache\Provider\File as ClassResolverFileCacheProvider;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 
@@ -67,10 +66,23 @@ abstract class AbstractClassResolver
      */
     protected function classExists($className)
     {
-        //TODO get this from project
-        return (new ClassResolverFileCacheProvider())
-            ->getCache()
-            ->classExists($className);
+        $resolverCacheManager = $this->createResolverCacheManager();
+
+        if (!$resolverCacheManager->useCache()) {
+            return class_exists($className);
+        }
+
+        $cacheProvider = $resolverCacheManager->createClassResolverCacheProvider();
+
+        return $cacheProvider->getCache()->classExists($className);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface
+     */
+    protected function createResolverCacheManager()
+    {
+        return new ResolverCacheManager();
     }
 
     /**

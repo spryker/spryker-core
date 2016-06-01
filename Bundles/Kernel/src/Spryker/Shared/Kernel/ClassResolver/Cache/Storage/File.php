@@ -7,11 +7,10 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver\Cache\Storage;
 
-use Spryker\Shared\Kernel\ClassResolver\Cache\AbstractStorage;
+use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 use Spryker\Shared\Library\DataDirectory;
-use Spryker\Shared\Library\Json;
 
-class File extends AbstractStorage
+class File implements StorageInterface
 {
 
     /**
@@ -21,15 +20,15 @@ class File extends AbstractStorage
      */
     public function persist(array $data)
     {
-        if (!$this->isModified()) {
-            return;
-        }
-
         try {
             //TODO check this http://php.net/manual/en/function.file-put-contents.php#82934
-            file_put_contents($this->getCacheFilename(), Json::encode(
-                $data
-            ));
+
+            $string = var_export($data, true);
+
+            file_put_contents(
+                $this->getCacheFilename(),
+                '<?php return ' . $string . ';'
+            );
         }
         catch (\Exception $e) {
 
@@ -42,13 +41,9 @@ class File extends AbstractStorage
     public function getData()
     {
         try {
-            $json = file_get_contents(
-                $this->getCacheFilename()
-            );
+            $cache = include $this->getCacheFilename();
 
-            $data = (array)Json::decode($json);
-
-            return $data ?: [];
+            return $cache ?: [];
         }
         catch (\Exception $e) {
             return [];
@@ -60,7 +55,7 @@ class File extends AbstractStorage
      */
     protected function getCacheFilename()
     {
-        return DataDirectory::getLocalStoreSpecificPath('cache/autoloader').'/unresolvable.json';
+        return DataDirectory::getLocalStoreSpecificPath('cache/autoloader').'/unresolvable.php';
     }
 
 }

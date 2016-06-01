@@ -19,6 +19,11 @@ class ResolverCache implements ResolverCacheInterface
     protected static $unresolvableCollection;
 
     /**
+     * @var bool
+     */
+    protected static $modified = false;
+
+    /**
      * @var \Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface
      */
     protected $storage;
@@ -76,7 +81,7 @@ class ResolverCache implements ResolverCacheInterface
     {
         $this->getUnresolvableCollection()->set($className, true);
 
-        $this->storage->markAsModified();
+        $this->markAsModified();
     }
 
     /**
@@ -84,6 +89,10 @@ class ResolverCache implements ResolverCacheInterface
      */
     public function persist()
     {
+        if (!$this->isModified()) {
+            return;
+        }
+
         $this->storage->persist(
             $this->getUnresolvableCollection()->toArray()
         );
@@ -95,6 +104,22 @@ class ResolverCache implements ResolverCacheInterface
     public function getData()
     {
         return $this->storage->getData();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isModified()
+    {
+        return self::$modified;
+    }
+
+    /**
+     * @return void
+     */
+    protected function markAsModified()
+    {
+        self::$modified = true;
     }
 
 }
