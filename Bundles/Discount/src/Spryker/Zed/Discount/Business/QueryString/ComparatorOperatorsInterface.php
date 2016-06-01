@@ -31,4 +31,16 @@ interface ComparatorOperatorsInterface
      */
     public function getAvailableComparatorExpressions();
 
+    /**
+     * @return array|string[]
+     */
+    public function getCompoundComparatorExpressions();
+
+    /**
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isValidComparator(ClauseTransfer $clauseTransfer);
+
 }

@@ -4,13 +4,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Discount\Business\QueryString\Specification;
+namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 
 class MetaProviderFactory
 {
+
+    const TYPE_COLLECTOR = 'collector';
+    const TYPE_DECISION_RULE = 'decision-rule';
 
     /**
      * @var \Spryker\Zed\Discount\Business\DiscountBusinessFactory
@@ -28,14 +30,14 @@ class MetaProviderFactory
     /**
      * @param string $type
      *
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaDataProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
      */
     public function createMetaProviderByType($type)
     {
         switch (strtolower($type)) {
-            case SpecificationBuilder::TYPE_DECISION_RULE:
+            case self::TYPE_DECISION_RULE:
                 return $this->createDecisionRuleMetaProvider();
-            case SpecificationBuilder::TYPE_COLLECTOR:
+            case self::TYPE_COLLECTOR:
                 return $this->createCollectorMetaProvider();
 
         }
@@ -49,7 +51,7 @@ class MetaProviderFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaDataProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
      */
     protected function createDecisionRuleMetaProvider()
     {
@@ -61,7 +63,7 @@ class MetaProviderFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaDataProvider
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
      */
     protected function createCollectorMetaProvider()
     {

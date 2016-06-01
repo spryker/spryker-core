@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -55,7 +55,7 @@ class ConditionsForm extends AbstractType
             'constraints' => [
                 new QueryString([
                     QueryString::OPTION_DISCOUNT_FACADE => $this->discountFacade,
-                    QueryString::OPTION_QUERY_STRING_TYPE => SpecificationBuilder::TYPE_DECISION_RULE,
+                    QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_DECISION_RULE,
                 ]),
             ],
         ]);

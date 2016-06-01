@@ -7,12 +7,13 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
+use Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface;
 
 class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -135,13 +136,24 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function createSpecificationBuilder(SpecificationProviderInterface $specificationProviderMock)
     {
-        $assertionFacade = $this->createAssertionFacadeMock();
+        $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
+        $createComparatorOperatorsMock->method('getCompoundComparatorExpressions')
+            ->willReturn([]);
 
         return new SpecificationBuilder(
             $this->createTokenizer(),
-            $assertionFacade,
-            $specificationProviderMock
+            $specificationProviderMock,
+            $createComparatorOperatorsMock,
+            $this->createClauseValidatorMock()
         );
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface
+     */
+    protected function createClauseValidatorMock()
+    {
+        return $this->getMock(ClauseValidatorInterface::class);
     }
 
     /**
@@ -153,12 +165,13 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
-    protected function createAssertionFacadeMock()
+    protected function createComparatorOperatorsMock()
     {
-        return $this->getMock(DiscountToAssertionInterface::class);
+        return $this->getMock(ComparatorOperatorsInterface::class);
     }
+
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface

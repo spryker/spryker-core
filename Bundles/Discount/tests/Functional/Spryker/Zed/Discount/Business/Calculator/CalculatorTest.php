@@ -11,15 +11,19 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Assertion\Business\AssertionFacade;
 use Spryker\Zed\Discount\Business\Calculator\Calculator;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
+use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
+use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionBridge;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Locator;
@@ -143,9 +147,50 @@ class CalculatorTest extends Test
     {
         return new SpecificationBuilder(
             $this->createTokenizer(),
-            $this->createDiscountToAssertionBridge(),
-            $this->createCollectorSpecificationProvider()
+            $this->createCollectorSpecificationProvider(),
+            $this->createComparatorOperators(),
+            $this->createClauseValidator()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
+     */
+    protected function createComparatorOperators()
+    {
+        $operators = (new OperatorProvider())->createComparators();
+        return new ComparatorOperators($operators);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\ClauseValidator
+     */
+    protected function createClauseValidator()
+    {
+        return new ClauseValidator(
+            $this->createComparatorOperators(),
+            $this->createMetaDataProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
+     */
+    protected function createMetaDataProvider()
+    {
+        return new MetaDataProvider(
+            $this->createDecisionRulePlugins(),
+            $this->createComparatorOperators(),
+            $this->createLogicalOperators()
+        );
+
+    }
+
+    protected function createDecisionRulePlugins()
+    {
+        return [
+            new SkuDecisionRulePlugin()
+        ];
     }
 
     /**
@@ -227,11 +272,11 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionBridge
+     * @return \Spryker\Zed\Discount\Business\QueryString\LogicalComparators
      */
-    protected function createDiscountToAssertionBridge()
+    protected function createLogicalOperators()
     {
-        return new DiscountToAssertionBridge(new AssertionFacade());
+        return new LogicalComparators();
     }
 
 }

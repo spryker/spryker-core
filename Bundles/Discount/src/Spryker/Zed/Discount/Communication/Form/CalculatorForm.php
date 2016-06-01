@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Symfony\Component\Form\AbstractType;
@@ -157,7 +157,7 @@ class CalculatorForm extends AbstractType
                 new NotBlank(),
                 new QueryString([
                     QueryString::OPTION_DISCOUNT_FACADE => $this->discountFacade,
-                    QueryString::OPTION_QUERY_STRING_TYPE => SpecificationBuilder::TYPE_COLLECTOR,
+                    QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_COLLECTOR,
                 ]),
             ],
         ]);
@@ -175,6 +175,12 @@ class CalculatorForm extends AbstractType
         if (isset($this->calculatorPlugins[$pluginName])) {
             return $this->calculatorPlugins[$pluginName];
         }
+
+        throw new \InvalidArgumentException(sprintf(
+            'Calculator plugin with name "%s" not found',
+            $pluginName
+        ));
+
     }
 
     /**

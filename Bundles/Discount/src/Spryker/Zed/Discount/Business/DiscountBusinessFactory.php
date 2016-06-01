@@ -28,13 +28,14 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
+use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
-use Spryker\Zed\Discount\Business\QueryString\Specification\MetaProviderFactory;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Business\QueryString\Validator;
 use Spryker\Zed\Discount\Business\SalesAggregator\DiscountTotalAmount;
@@ -186,14 +187,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionInterface
-     */
-    protected function getAssertionFacade()
-    {
-        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_ASSERTION);
-    }
-
-    /**
      * @return \Spryker\Zed\Discount\Business\SalesAggregator\DiscountTotalAmount
      */
     public function createOrderDiscountTotalAmount()
@@ -300,8 +293,9 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new SpecificationBuilder(
             $this->createTokenizer(),
-            $this->getAssertionFacade(),
-            $this->createDecisionRuleProvider()
+            $this->createDecisionRuleProvider(),
+            $this->createComparatorOperators(),
+            $this->createClauseValidator(MetaProviderFactory::TYPE_DECISION_RULE)
         );
     }
 
@@ -312,9 +306,21 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new SpecificationBuilder(
             $this->createTokenizer(),
-            $this->getAssertionFacade(),
-            $this->createCollectorProvider()
+            $this->createCollectorProvider(),
+            $this->createComparatorOperators(),
+            $this->createClauseValidator(MetaProviderFactory::TYPE_COLLECTOR)
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\ClauseValidator
+     */
+    protected function createClauseValidator($type)
+    {
+        $metaDatProvider = $this->createQueryStringSpecificationMetaProviderFactory()
+            ->createMetaProviderByType($type);
+
+        return new ClauseValidator($this->createComparatorOperators(), $metaDatProvider);
     }
 
     /**
@@ -326,7 +332,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaProviderFactory
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory
      */
     public function createQueryStringSpecificationMetaProviderFactory()
     {

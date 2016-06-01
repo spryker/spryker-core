@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ClauseTransfer;
 class BaseSpecificationProvider
 {
 
+    const ATTRIBUTE_FIELD_WILDCARD = '.*';
+
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -20,7 +22,7 @@ class BaseSpecificationProvider
     {
         $clauseFieldName = $clauseTransfer->getField();
         if ($clauseTransfer->getAttribute()) {
-            $clauseFieldName = $clauseTransfer->getField() . '.*';
+            $clauseFieldName = $clauseTransfer->getField() . self::ATTRIBUTE_FIELD_WILDCARD;
         }
         return $clauseFieldName;
     }

@@ -8,10 +8,12 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
+use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 
 class ComparatorOperators implements ComparatorOperatorsInterface
 {
 
+    const MATCH_ALL_IDENTIFIER = '*';
     const TYPE_INTEGER  = 'integer';
     const TYPE_STRING  = 'string';
     const TYPE_LIST = 'list';
@@ -51,16 +53,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
                  continue;
             }
 
-            $withTypes = $clauseTransfer->getAcceptedTypes();
-            if ($this->isTypeAccepted($withTypes, $operator->getAcceptedTypes()) === false) {
-                throw new ComparatorException(
-                    sprintf(
-                        '""%s" operator does not accept any of "%s" types',
-                        get_class($operator),
-                        implode(',', $withTypes)
-                    )
-                );
-            }
+            $this->assertTypeAccepted($clauseTransfer->getAcceptedTypes(), $operator);
 
             return $operator->compare($clauseTransfer, $withValue);
         }
@@ -74,23 +67,6 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @param array|string[] $withTypes
-     * @param array|string[] $operatorTypes
-     *
-     * @return bool
-     */
-    protected function isTypeAccepted(array $withTypes, array $operatorTypes)
-    {
-        foreach ($withTypes as $withType) {
-            if (in_array($withType, $operatorTypes)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * @param array|string[] $acceptedTypes
      *
      * @return array|string[]
@@ -99,7 +75,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     {
         $operatorExpressions = [];
         foreach ($this->operators as $operator) {
-            if ($this->isTypeAccepted($acceptedTypes, $operator->getAcceptedTypes()) === false) {
+            if ($this->isTypeSet($acceptedTypes, $operator) === false) {
                 continue;
             }
             $operatorExpressions[] = $operator->getExpression();
@@ -121,13 +97,88 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isValidComparator(ClauseTransfer $clauseTransfer)
+    {
+        foreach ($this->operators as $operator) {
+            if ($operator->accept($clauseTransfer) === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getCompoundComparatorExpressions()
+    {
+        $combinedOperators = [];
+        foreach ($this->operators as $comparator) {
+            $expression = $comparator->getExpression();
+            $parts = explode(' ', trim($expression));
+            if (count($parts) <= 1) {
+                continue;
+            }
+            $combinedOperators = array_merge($combinedOperators, $parts);
+        }
+
+        return array_unique($combinedOperators);
+    }
+
+    /**
+     * @param array|string[] $withTypes
+     * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface $operator
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     *
+     */
+    protected function assertTypeAccepted(array $withTypes, ComparatorInterface $operator)
+    {
+        if ($this->isTypeSet($withTypes, $operator) === true) {
+            return true;
+        }
+
+        throw new ComparatorException(
+            sprintf(
+                '""%s" operator does not accept any of "%s" types',
+                get_class($operator),
+                implode(',', $withTypes)
+            )
+        );
+    }
+
+    /**
+     * @param array $withTypes
+     * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface $comparator
+     *
+     * @return bool
+     */
+    protected function isTypeSet(array $withTypes, ComparatorInterface $comparator)
+    {
+        foreach ($withTypes as $withType) {
+            if (in_array($withType, $comparator->getAcceptedTypes())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param string $withValue
      *
      * @return bool
      */
     protected function isMatchAllValue($withValue)
     {
-        if ($withValue === '*') {
+        if ($withValue === self::MATCH_ALL_IDENTIFIER) {
             return true;
         }
 

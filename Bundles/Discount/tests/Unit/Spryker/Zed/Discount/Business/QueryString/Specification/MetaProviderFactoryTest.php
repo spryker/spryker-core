@@ -9,9 +9,8 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString\Specification;
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
-use Spryker\Zed\Discount\Business\QueryString\Specification\MetaDataProvider;
-use Spryker\Zed\Discount\Business\QueryString\Specification\MetaProviderFactory;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 
 class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,7 +36,7 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
         $metaProviderFactoryMock = $this->createMetaProviderFactory($discountBusinessFactoryMock);
 
         $decisionRuleProvider = $metaProviderFactoryMock->createMetaProviderByType(
-            SpecificationBuilder::TYPE_DECISION_RULE
+            MetaProviderFactory::TYPE_DECISION_RULE
         );
 
         $this->assertInstanceOf(MetaDataProvider::class, $decisionRuleProvider);
@@ -65,7 +64,7 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
         $metaProviderFactoryMock = $this->createMetaProviderFactory($discountBusinessFactoryMock);
 
         $collectorProvider = $metaProviderFactoryMock->createMetaProviderByType(
-            SpecificationBuilder::TYPE_COLLECTOR
+            MetaProviderFactory::TYPE_COLLECTOR
         );
 
         $this->assertInstanceOf(MetaDataProvider::class, $collectorProvider);

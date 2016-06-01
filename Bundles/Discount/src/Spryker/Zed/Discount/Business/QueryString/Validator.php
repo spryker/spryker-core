@@ -6,11 +6,10 @@
 
 namespace Spryker\Zed\Discount\Business\QueryString;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 
 class Validator implements ValidatorInterface
 {
@@ -48,11 +47,11 @@ class Validator implements ValidatorInterface
         $validationMessages = [];
         try {
             switch (strtolower($type)) {
-                case SpecificationBuilder::TYPE_DECISION_RULE:
+                case MetaProviderFactory::TYPE_DECISION_RULE:
                     $this->decisionRuleQueryString($queryString);
                     break;
 
-                case SpecificationBuilder::TYPE_COLLECTOR:
+                case MetaProviderFactory::TYPE_COLLECTOR:
                     $this->collectorQueryString($queryString);
                     break;
 
@@ -85,8 +84,7 @@ class Validator implements ValidatorInterface
      */
     protected function decisionRuleQueryString($queryString)
     {
-        $collectorComposite = $this->decisionRuleBuilder->buildFromQueryString($queryString);
-        $collectorComposite->isSatisfiedBy(new QuoteTransfer(), new ItemTransfer());
+        $this->decisionRuleBuilder->buildFromQueryString($queryString);
     }
 
     /**
@@ -98,8 +96,7 @@ class Validator implements ValidatorInterface
      */
     protected function collectorQueryString($queryString)
     {
-        $collectorComposite = $this->collectorBuilder->buildFromQueryString($queryString);
-        $collectorComposite->collect(new QuoteTransfer());
+        $this->collectorBuilder->buildFromQueryString($queryString);
     }
 
 }

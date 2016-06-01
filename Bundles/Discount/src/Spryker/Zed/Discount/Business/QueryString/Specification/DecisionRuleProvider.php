@@ -22,11 +22,11 @@ class DecisionRuleProvider extends BaseSpecificationProvider implements Specific
     protected $decisionRulePlugins = [];
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[] $collectorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[] $decisionRulePlugins
      */
-    public function __construct(array $collectorPlugins)
+    public function __construct(array $decisionRulePlugins)
     {
-        $this->decisionRulePlugins = $collectorPlugins;
+        $this->decisionRulePlugins = $decisionRulePlugins;
     }
 
     /**
@@ -63,7 +63,6 @@ class DecisionRuleProvider extends BaseSpecificationProvider implements Specific
         foreach ($this->decisionRulePlugins as $decisionRulePlugin) {
 
             $clauseFieldName = $this->getClauseFieldName($clauseTransfer);
-
             if (strcasecmp($decisionRulePlugin->getFieldName(), $clauseFieldName) === 0) {
                 return new DecisionRuleContext($decisionRulePlugin, $clauseTransfer);
             }

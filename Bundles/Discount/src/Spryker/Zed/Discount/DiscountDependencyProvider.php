@@ -23,7 +23,6 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToAssertionBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -35,7 +34,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const STORE_CONFIG = 'STORE_CONFIG';
     const FACADE_MESSENGER = 'MESSENGER_FACADE';
     const FACADE_TAX = 'TAX_FACADE';
-    const FACADE_ASSERTION = 'FACADE_ASSERTION';
 
     const PLUGIN_PROPEL_CONNECTION = 'PROPEL_CONNECTION_PLUGIN';
     const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
@@ -79,10 +77,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_TAX] = function (Container $container) {
             return new DiscountToTaxBridge($container->getLocator()->tax()->facade());
-        };
-
-        $container[self::FACADE_ASSERTION] = function (Container $container) {
-            return new DiscountToAssertionBridge($container->getLocator()->assertion()->facade());
         };
 
         return $container;

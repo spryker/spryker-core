@@ -4,8 +4,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Discount\Business\QueryString\Specification;
+namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 
+use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 
@@ -59,7 +60,10 @@ class MetaDataProvider
     /**
      * @param string $fieldName
      *
-     * @return array|string[]
+     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
+     *
+     * @return array|\string[]
+     *
      */
     public function getAcceptedTypesByFieldName($fieldName)
     {
@@ -69,6 +73,10 @@ class MetaDataProvider
             }
         }
 
+        throw new QueryStringException(
+            'No specification plugin found for "%s" field.',
+            $fieldName
+        );
     }
 
     /**

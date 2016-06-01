@@ -8,7 +8,7 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString\Specification;
 
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
-use Spryker\Zed\Discount\Business\QueryString\Specification\MetaDataProvider;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
 use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 
 class MetaDataProviderTest extends \PHPUnit_Framework_TestCase

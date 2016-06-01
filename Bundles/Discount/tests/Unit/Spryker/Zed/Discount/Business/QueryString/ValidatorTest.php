@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Business\QueryString\Validator;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
@@ -31,7 +32,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $validator = $this->createValidator($decisionRuleMock);
 
-        $messages = $validator->validateByType(SpecificationBuilder::TYPE_DECISION_RULE, 'query string');
+        $messages = $validator->validateByType(MetaProviderFactory::TYPE_DECISION_RULE, 'query string');
 
         $this->assertCount(1, $messages);
         $this->assertEquals($queryStringException, $messages[0]);
@@ -54,7 +55,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $validator = $this->createValidator(null, $collectorMock);
 
-        $messages = $validator->validateByType(SpecificationBuilder::TYPE_COLLECTOR, 'query string');
+        $messages = $validator->validateByType(MetaProviderFactory::TYPE_COLLECTOR, 'query string');
 
         $this->assertCount(1, $messages);
         $this->assertEquals($queryStringException, $messages[0]);

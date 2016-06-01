@@ -23,7 +23,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DiscountFacadeTest extends Test
@@ -171,7 +171,7 @@ class DiscountFacadeTest extends Test
     public function testGetQueryStringFieldsByTypeForCollectorShouldReturnListOfFieldsForGivenType()
     {
         $discountFacade = $this->createDiscountFacade();
-        $fields = $discountFacade->getQueryStringFieldsByType(SpecificationBuilder::TYPE_COLLECTOR);
+        $fields = $discountFacade->getQueryStringFieldsByType(MetaProviderFactory::TYPE_COLLECTOR);
 
         $this->assertNotEmpty($fields);
     }
@@ -182,7 +182,7 @@ class DiscountFacadeTest extends Test
     public function testGetQueryStringFieldsByTypeForDecisionRuleShouldReturnListOfFieldsForGivenType()
     {
         $discountFacade = $this->createDiscountFacade();
-        $fields = $discountFacade->getQueryStringFieldsByType(SpecificationBuilder::TYPE_DECISION_RULE);
+        $fields = $discountFacade->getQueryStringFieldsByType(MetaProviderFactory::TYPE_DECISION_RULE);
 
         $this->assertNotEmpty($fields);
     }
@@ -193,7 +193,7 @@ class DiscountFacadeTest extends Test
     public function testGetQueryStringFieldExpressionsForFieldCollectorShouldReturnListOfExpressions()
     {
         $discountFacade = $this->createDiscountFacade();
-        $expressions = $discountFacade->getQueryStringFieldExpressionsForField(SpecificationBuilder::TYPE_COLLECTOR, 'sku');
+        $expressions = $discountFacade->getQueryStringFieldExpressionsForField(MetaProviderFactory::TYPE_COLLECTOR, 'sku');
 
         $this->assertNotEmpty($expressions);
     }
@@ -204,7 +204,7 @@ class DiscountFacadeTest extends Test
     public function testGetQueryStringFieldExpressionsForFieldDecisionRuleShouldReturnListOfExpressions()
     {
         $discountFacade = $this->createDiscountFacade();
-        $expressions = $discountFacade->getQueryStringFieldExpressionsForField(SpecificationBuilder::TYPE_DECISION_RULE, 'sku');
+        $expressions = $discountFacade->getQueryStringFieldExpressionsForField(MetaProviderFactory::TYPE_DECISION_RULE, 'sku');
 
         $this->assertNotEmpty($expressions);
     }
@@ -215,7 +215,7 @@ class DiscountFacadeTest extends Test
     public function testGetQueryStringComparatorExpressionsForDecisionRuleShouldReturnListOfComparatorExpressions()
     {
         $discountFacade = $this->createDiscountFacade();
-        $expressions = $discountFacade->getQueryStringComparatorExpressions(SpecificationBuilder::TYPE_DECISION_RULE);
+        $expressions = $discountFacade->getQueryStringComparatorExpressions(MetaProviderFactory::TYPE_DECISION_RULE);
 
         $this->assertNotEmpty($expressions);
     }
@@ -226,7 +226,7 @@ class DiscountFacadeTest extends Test
     public function testGetQueryStringComparatorExpressionsForCollectorShouldReturnListOfComparatorExpressions()
     {
         $discountFacade = $this->createDiscountFacade();
-        $logicalComparators = $discountFacade->getQueryStringComparatorExpressions(SpecificationBuilder::TYPE_DECISION_RULE);
+        $logicalComparators = $discountFacade->getQueryStringComparatorExpressions(MetaProviderFactory::TYPE_DECISION_RULE);
 
         $this->assertNotEmpty($logicalComparators);
     }
@@ -237,7 +237,7 @@ class DiscountFacadeTest extends Test
     public function testGetQueryStringLogicalComparatorsShouldReturnListOfComparators()
     {
         $discountFacade = $this->createDiscountFacade();
-        $expressions = $discountFacade->getQueryStringLogicalComparators(SpecificationBuilder::TYPE_COLLECTOR);
+        $expressions = $discountFacade->getQueryStringLogicalComparators(MetaProviderFactory::TYPE_COLLECTOR);
 
         $this->assertNotEmpty($expressions);
     }
@@ -295,7 +295,7 @@ class DiscountFacadeTest extends Test
             ComparatorOperators::TYPE_STRING
         ]);
 
-        $errors = $discountFacade->validateQueryStringByType(SpecificationBuilder::TYPE_DECISION_RULE, 'invalid =');
+        $errors = $discountFacade->validateQueryStringByType(MetaProviderFactory::TYPE_DECISION_RULE, 'invalid =');
 
         $this->assertCount(1, $errors);
     }
@@ -368,7 +368,7 @@ class DiscountFacadeTest extends Test
             ComparatorOperators::TYPE_STRING
         ]);
 
-        $errors = $discountFacade->validateQueryStringByType(SpecificationBuilder::TYPE_DECISION_RULE, 'sku = "123"');
+        $errors = $discountFacade->validateQueryStringByType(MetaProviderFactory::TYPE_DECISION_RULE, 'sku = "123"');
 
         $this->assertEmpty($errors);
     }

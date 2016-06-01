@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -143,10 +143,10 @@ class IndexController extends AbstractController
     protected function getQueryStringMetData()
     {
         return [
-            'collectorTypes' => $this->getFacade()->getQueryStringFieldsByType(SpecificationBuilder::TYPE_COLLECTOR),
-            'decisionRuleTypes' => $this->getFacade()->getQueryStringFieldsByType(SpecificationBuilder::TYPE_DECISION_RULE),
-            'booleanComparators' => $this->getFacade()->getQueryStringLogicalComparators(SpecificationBuilder::TYPE_COLLECTOR),
-            'comparatorExpressions' => $this->getFacade()->getQueryStringComparatorExpressions(SpecificationBuilder::TYPE_COLLECTOR),
+            'collectorTypes' => $this->getFacade()->getQueryStringFieldsByType(MetaProviderFactory::TYPE_COLLECTOR),
+            'decisionRuleTypes' => $this->getFacade()->getQueryStringFieldsByType(MetaProviderFactory::TYPE_DECISION_RULE),
+            'booleanComparators' => $this->getFacade()->getQueryStringLogicalComparators(MetaProviderFactory::TYPE_COLLECTOR),
+            'comparatorExpressions' => $this->getFacade()->getQueryStringComparatorExpressions(MetaProviderFactory::TYPE_COLLECTOR),
         ];
     }
 
