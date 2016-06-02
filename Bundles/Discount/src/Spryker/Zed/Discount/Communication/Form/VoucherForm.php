@@ -133,7 +133,11 @@ class VoucherForm extends AbstractType
      */
     protected function addSubmitButton(FormBuilderInterface $builder)
     {
-        $builder->add('generate', 'submit');
+        $builder->add('generate', 'submit', [
+            'attr' => [
+                'class' => 'btn-create',
+            ]
+        ]);
 
         return $this;
     }
