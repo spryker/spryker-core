@@ -57,7 +57,7 @@ class Builder implements BuilderInterface
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
-     * @param string|array|null $processDefinitionLocation
+     * @param string|array $processDefinitionLocation
      */
     public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, $process, $processDefinitionLocation)
     {
