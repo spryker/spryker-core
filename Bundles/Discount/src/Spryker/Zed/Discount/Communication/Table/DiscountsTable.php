@@ -213,9 +213,9 @@ class DiscountsTable extends AbstractTable
      */
     protected function createToggleDiscountVisibilityButton(SpyDiscount $discountEntity)
     {
-        $visibility = 'activate';
+        $visibility = 'Activate';
         if ($discountEntity->getIsActive()) {
-            $visibility = 'deactivate';
+            $visibility = 'Deactivate';
         }
 
         $viewDiscountUrl = Url::generate(
