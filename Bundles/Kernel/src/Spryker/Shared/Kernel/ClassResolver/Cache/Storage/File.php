@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver\Cache\Storage;
 
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Library\DataDirectory;
 use Spryker\Shared\Library\Error\ErrorLogger;
 
@@ -24,10 +26,15 @@ class File implements StorageInterface
         try {
             $string = var_export($data, true);
 
+            $flag = LOCK_EX | LOCK_NB;
+            if (Config::get(KernelConstants::AUTO_LOADER_CACHE_FILE_NO_LOCK)) {
+                $flag = LOCK_NB;
+            }
+
             file_put_contents(
                 $this->getCacheFilename(),
                 '<?php return ' . $string . ';',
-                LOCK_EX | LOCK_NB
+                $flag
             );
         } catch (\Exception $exception) {
             ErrorLogger::log($exception);
