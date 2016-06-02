@@ -16,21 +16,35 @@ class InstallElasticsearch extends AbstractInstaller
     /**
      * @var \Elastica\Client
      */
-    private $client;
+    protected $client;
 
     /**
      * @var string
      */
-    private $indexName;
+    protected $indexName;
+
+    /**
+     * @var int
+     */
+    protected $numberOfShards;
+
+    /**
+     * @var int
+     */
+    protected $numberOfReplicas;
 
     /**
      * @param \Elastica\Client $client
      * @param string $indexName
+     * @param int $numberOfShards
+     * @param int $numberOfReplicas
      */
-    public function __construct(Client $client, $indexName)
+    public function __construct(Client $client, $indexName, $numberOfShards = 1, $numberOfReplicas = 1)
     {
         $this->client = $client;
         $this->indexName = $indexName;
+        $this->numberOfShards = $numberOfShards;
+        $this->numberOfReplicas = $numberOfReplicas;
     }
 
     /**
@@ -49,12 +63,10 @@ class InstallElasticsearch extends AbstractInstaller
         $index = $this->client->getIndex($this->indexName);
 
         if (!$index->exists()) {
-            $index->create(
-                [
-                    'number_of_shards' => 4,
-                    'number_of_replicas' => 1,
-                ]
-            );
+            $index->create([
+                'number_of_shards' => $this->numberOfShards,
+                'number_of_replicas' => $this->numberOfReplicas,
+            ]);
         }
     }
 
