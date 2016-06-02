@@ -10,6 +10,7 @@ namespace Spryker\Shared\Library\Storage\Adapter\KeyValue;
 use Predis\Client;
 use Predis\Connection\ConnectionException;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Library\LibraryConstants;
 
 /**
  * @property \Predis\Client $resource
@@ -42,7 +43,7 @@ abstract class Redis extends AbstractKeyValue
      */
     public function __destruct()
     {
-        $isPersistent = (bool)Config::getValueByName('ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION');
+        $isPersistent = (bool)Config::get(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
 
         if (!$isPersistent && $this->resource) {
             $this->resource->disconnect();

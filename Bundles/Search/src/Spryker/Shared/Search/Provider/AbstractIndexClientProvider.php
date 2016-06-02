@@ -8,9 +8,9 @@
 namespace Spryker\Shared\Search\Provider;
 
 use Elastica\Client;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
+use Spryker\Shared\Search\SearchConstants;
 
 /**
  * Class ClientStorageProvider
@@ -28,20 +28,18 @@ abstract class AbstractIndexClientProvider extends AbstractClientProvider
     protected function createZedClient()
     {
         $config = [
-            'transport' => ucfirst(Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT)),
-            'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
-            'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
+            'transport' => ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT)),
+            'port' => Config::get(SearchConstants::ELASTICA_PARAMETER__PORT),
+            'host' => Config::get(SearchConstants::ELASTICA_PARAMETER__HOST),
         ];
 
-        $auth = Config::getValueByName('ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER');
-
-        if ($auth !== null) {
+        if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
             $config['headers'] = [
-                'Authorization' => 'Basic ' . $auth
+                'Authorization' => 'Basic ' . Config::get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER)
             ];
         }
 
-        return (new Client($config))->getIndex(Config::get(ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME));
+        return (new Client($config))->getIndex(Config::get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME));
     }
 
 }
