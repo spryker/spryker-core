@@ -52,8 +52,6 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @throws \Exception
-     *
      * @return array
      */
     protected function getConfig()
@@ -62,9 +60,7 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Remove this once BC breaking feature is introduced to Storage Bundle
-     *
-     * @return string
+     * @return array
      */
     protected function getConnectionParameters()
     {
@@ -74,15 +70,13 @@ class StorageFactory extends AbstractFactory
             'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
         ];
 
-        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {//BC break
-            $config = [
-                'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-                'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
-                'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
-                'password' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD),
-                'persistent' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION),
-            ];
+        $password = Config::getValueByName('ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD');
+        if ($password !== null) {
+            $config['password'] = $password;
         }
+
+        $isPersistent = (bool)Config::getValueByName('ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION');
+        $config['persistent'] = $isPersistent;
 
         return $config;
     }

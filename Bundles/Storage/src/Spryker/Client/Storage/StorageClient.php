@@ -32,7 +32,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @var array
      */
-    protected static $bufferedValues = null;
+    protected static $bufferedValues;
 
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
@@ -58,7 +58,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @param string $key
      * @param mixed $value
-     * @param int $ttl
+     * @param int|null $ttl
      *
      * @return void
      */
@@ -256,7 +256,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         if (!empty($cacheKey)) {
             $cachedKeys = $this->getService()->get($cacheKey);
 
-            if (is_array($cachedKeys) && !empty($cachedKeys)) {
+            if (!empty($cachedKeys) && is_array($cachedKeys)) {
                 foreach ($cachedKeys as $key) {
                     self::$cachedKeys[$key] = self::KEY_INIT;
                 }
@@ -273,10 +273,10 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         self::$bufferedValues = [];
 
-        if (is_array(self::$cachedKeys) && !empty(self::$cachedKeys)) {
+        if (!empty(self::$cachedKeys) && is_array(self::$cachedKeys)) {
             $values = $this->getService()->getMulti(array_keys(self::$cachedKeys));
 
-            if (is_array($values) && !empty($values)) {
+            if (!empty($values) && is_array($values)) {
                 foreach ($values as $key => $value) {
                     $keySuffix = substr($key, strlen(Service::KV_PREFIX));
                     self::$bufferedValues[$keySuffix] = $this->jsonDecode($value);

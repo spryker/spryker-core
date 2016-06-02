@@ -101,15 +101,29 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPredisClient()
     {
+        $config =  $this->getConnectionParameters();
+
+        return new PredisClient($config);
+    }
+
+
+    /**
+     * @return array
+     */
+    protected function getConnectionParameters()
+    {
         $config = [
             'protocol' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
             'port' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT),
             'host' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
-            'password' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD),
         ];
-        $client = new PredisClient($config);
 
-        return $client;
+        $password = Config::getValueByName('ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD');
+        if ($password !== null) {
+            $config['password'] = $password;
+        }
+
+        return $config;
     }
 
 }

@@ -84,6 +84,18 @@ class Config
     }
 
     /**
+     * Asks for value of config constant without errors even if the constant does not exist.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public static function getValueByName($name)
+    {
+        return constant($name);
+    }
+
+    /**
      * @param string|null $environment
      *
      * @return void

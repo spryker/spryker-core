@@ -287,7 +287,7 @@ class Service implements ServiceInterface
     /**
      * @param string $key
      * @param mixed $value
-     * @param int $ttl
+     * @param int|null $ttl
      *
      * @throws \Exception
      *
