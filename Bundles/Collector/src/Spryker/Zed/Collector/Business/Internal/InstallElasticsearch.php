@@ -36,6 +36,8 @@ class InstallElasticsearch extends AbstractInstaller
     /**
      * @param \Elastica\Client $client
      * @param string $indexName
+     * @param int $numberOfShards
+     * @param int $numberOfReplicas
      */
     public function __construct(Client $client, $indexName, $numberOfShards = 1, $numberOfReplicas = 1)
     {
