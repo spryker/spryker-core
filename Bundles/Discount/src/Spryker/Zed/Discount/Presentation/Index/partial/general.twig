@@ -1,4 +1,4 @@
-<h3>{{ 'General' | trans }}</h3>
+<div class="well well-sm">{{ 'Fill in the general discount information' | trans }}</div>
 <hr />
 
 {{ form_row(discountForm.discountGeneral.discount_type) }}
@@ -12,28 +12,34 @@
 
 {{ form_label(discountForm.discountGeneral.valid_from) }}
 <div class="row">
-    <div class="col-xs-2">
-        {{ form_widget(discountForm.discountGeneral.valid_from.year) }}
+    <div class="col-xs-12">
+        {{ form_widget(discountForm.discountGeneral.valid_from) }}
     </div>
-    <div class="col-xs-2">
-        {{ form_widget(discountForm.discountGeneral.valid_from.month) }}
-    </div>
-    <div class="col-xs-2">
-        {{ form_widget(discountForm.discountGeneral.valid_from.day) }}
-    </div>
+    {#<div class="col-xs-2">#}
+        {#{{ form_widget(discountForm.discountGeneral.valid_from.year) }}#}
+    {#</div>#}
+    {#<div class="col-xs-2">#}
+        {#{{ form_widget(discountForm.discountGeneral.valid_from.month) }}#}
+    {#</div>#}
+    {#<div class="col-xs-2">#}
+        {#{{ form_widget(discountForm.discountGeneral.valid_from.day) }}#}
+    {#</div>#}
 </div>
 
 {{ form_label(discountForm.discountGeneral.valid_to) }}
 <div class="row">
-    <div class="col-xs-2">
-        {{ form_widget(discountForm.discountGeneral.valid_to.year) }}
+    <div class="col-xs-12">
+        {{ form_widget(discountForm.discountGeneral.valid_to) }}
     </div>
-    <div class="col-xs-2">
-        {{ form_widget(discountForm.discountGeneral.valid_to.month) }}
-    </div>
-    <div class="col-xs-2">
-        {{ form_widget(discountForm.discountGeneral.valid_to.day) }}
-    </div>
+    {#<div class="col-xs-2">#}
+        {#{{ form_widget(discountForm.discountGeneral.valid_to.year) }}#}
+    {#</div>#}
+    {#<div class="col-xs-2">#}
+        {#{{ form_widget(discountForm.discountGeneral.valid_to.month) }}#}
+    {#</div>#}
+    {#<div class="col-xs-2">#}
+        {#{{ form_widget(discountForm.discountGeneral.valid_to.day) }}#}
+    {#</div>#}
 </div>
 
 

@@ -9,7 +9,31 @@ require('ZedGui');
 require('../../sass/main.scss');
 
 $(document).ready(function(){
-   $('#create-discount-button').on('click', function() {
-         $('#discount-form').submit();
-   });
+    $('#create-discount-button').on('click', function() {
+        $('#discount-form').submit();
+    });
+
+    $('.tabs-manager .btn-tab-previous').on('click', function(){
+        $(this).
+            closest('.tabs-manager').
+            children('.nav').
+            children('.active').
+            prev('li').
+            find('a').
+            trigger('click');
+    });
+
+    $('.tabs-manager .btn-tab-next').on('click', function(){
+        $(this).
+            closest('.tabs-manager').
+            children('.nav').
+            children('.active').
+            next('li').
+            find('a').
+            trigger('click');
+    });
+
+    $('.datepicker').datepicker({
+        dateFormat: 'y-m-d'
+    });
 });
