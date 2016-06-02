@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Business\QueryString;
 
-use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
@@ -66,8 +65,6 @@ class Validator implements ValidatorInterface
         } catch (ComparatorException $e) {
             $validationMessages[] = $e->getMessage();
         } catch (QueryStringException $e) {
-            $validationMessages[] = $e->getMessage();
-        } catch (InvalidArgumentException $e) {
             $validationMessages[] = $e->getMessage();
         }
 

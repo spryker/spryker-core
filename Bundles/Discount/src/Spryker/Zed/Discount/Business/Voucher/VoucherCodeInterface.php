@@ -13,14 +13,14 @@ interface VoucherCodeInterface
     /**
      * @param string[] $codes
      *
-     * @return bool
+     * @return int
      */
     public function releaseUsedCodes(array $codes);
 
     /**
      * @param string[] $codes
      *
-     * @return bool
+     * @return int
      */
     public function useCodes(array $codes);
 

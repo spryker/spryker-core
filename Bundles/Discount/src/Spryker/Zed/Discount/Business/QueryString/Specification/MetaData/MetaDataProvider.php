@@ -10,7 +10,7 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 
-class MetaDataProvider
+class MetaDataProvider implements MetaDataProviderInterface
 {
 
     /**

@@ -12,14 +12,14 @@ use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\PersistenceException;
-use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
+use Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountPersist implements DiscountPersistInterface
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Voucher\VoucherEngine
+     * @var \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface
      */
     protected $voucherEngine;
 
@@ -29,11 +29,13 @@ class DiscountPersist implements DiscountPersistInterface
     protected $discountQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherEngine $voucherEngine
+     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface $voucherEngine
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
-    public function __construct(VoucherEngine $voucherEngine, DiscountQueryContainerInterface $discountQueryContainer)
-    {
+    public function __construct(
+        VoucherEngineInterface $voucherEngine,
+        DiscountQueryContainerInterface $discountQueryContainer
+    ) {
         $this->voucherEngine = $voucherEngine;
         $this->discountQueryContainer = $discountQueryContainer;
     }
@@ -46,13 +48,14 @@ class DiscountPersist implements DiscountPersistInterface
      */
     public function save(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
-        $discountEntity = new SpyDiscount();
+        $discountEntity = $this->createDiscountEntity();
         $this->hydrateDiscountEntity($discountConfiguratorTransfer, $discountEntity);
-        $discountEntity->save();
 
         if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
             $this->saveVoucherPool($discountEntity);
         }
+
+        $discountEntity->save();
 
         return $discountEntity->getIdDiscount();
 
@@ -165,19 +168,33 @@ class DiscountPersist implements DiscountPersistInterface
      */
     protected function saveVoucherPool(SpyDiscount $discountEntity)
     {
-        if ($discountEntity->getFkDiscountVoucherPool()) {
+        if ($discountEntity->getVoucherPool()) {
             return $discountEntity->getVoucherPool();
         }
 
-        $discountVoucherPoolEntity = new SpyDiscountVoucherPool();
-        $discountVoucherPoolEntity->setName($discountEntity->getDisplayName());
-        $discountVoucherPoolEntity->setIsActive(true);
-        $discountVoucherPoolEntity->save();
+        $discountVoucherPoolEntity = $this->createVoucherPoolEntity();
+        $this->hydrateVoucherPoolEntity($discountEntity, $discountVoucherPoolEntity);
+        if ($discountEntity->getIdDiscount()) {
+            $discountVoucherPoolEntity->save();
+        }
 
         $discountEntity->setVoucherPool($discountVoucherPoolEntity);
-        $discountEntity->save();
 
         return $discountVoucherPoolEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity
+     *
+     * @return void
+     */
+    protected function hydrateVoucherPoolEntity(
+        SpyDiscount $discountEntity,
+        SpyDiscountVoucherPool $discountVoucherPoolEntity
+    ) {
+        $discountVoucherPoolEntity->setName($discountEntity->getDisplayName());
+        $discountVoucherPoolEntity->setIsActive(true);
     }
 
     /**
@@ -185,7 +202,6 @@ class DiscountPersist implements DiscountPersistInterface
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return void
-     *
      */
     protected function hydrateDiscountEntity(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer,
@@ -212,9 +228,27 @@ class DiscountPersist implements DiscountPersistInterface
         $discountVoucherPoolEntity = $this->saveVoucherPool($discountEntity);
 
         $discountEntity->setFkDiscountVoucherPool($discountVoucherPoolEntity->getIdDiscountVoucherPool());
+        $discountEntity->save();
+
         $discountVoucherTransfer->setFkDiscountVoucherPool($discountVoucherPoolEntity->getIdDiscountVoucherPool());
 
         return $this->voucherEngine->createVoucherCodes($discountVoucherTransfer);
+    }
+
+    /**
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
+     */
+    protected function createDiscountEntity()
+    {
+        return new SpyDiscount();
+    }
+
+    /**
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
+     */
+    protected function createVoucherPoolEntity()
+    {
+        return new SpyDiscountVoucherPool();
     }
 
 }

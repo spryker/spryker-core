@@ -29,7 +29,7 @@ class VoucherCode implements VoucherCodeInterface
     /**
      * @param string[] $codes
      *
-     * @return bool
+     * @return int
      */
     public function releaseUsedCodes(array $codes)
     {
@@ -38,25 +38,30 @@ class VoucherCode implements VoucherCodeInterface
             ->find();
 
         if (count($voucherEntityList) === 0) {
-            return false;
+            return 0;
         }
 
+        $updatedCodes = 0;
         foreach ($voucherEntityList as $discountVoucherEntity) {
             if (!$this->isVoucherWithCounter($discountVoucherEntity)) {
                 continue;
             }
 
             $this->decrementNumberOfUses($discountVoucherEntity);
-            $this->saveDiscountVoucherEntity($discountVoucherEntity);
+            $affectedRows = $this->saveDiscountVoucherEntity($discountVoucherEntity);
+
+            if ($affectedRows > 0) {
+                $updatedCodes++;
+            }
         }
 
-        return true;
+        return $updatedCodes;
     }
 
     /**
      * @param string[] $codes
      *
-     * @return bool
+     * @return int
      */
     public function useCodes(array $codes)
     {
@@ -65,9 +70,10 @@ class VoucherCode implements VoucherCodeInterface
             ->find();
 
         if (count($voucherEntityList) === 0) {
-            return false;
+            return 0;
         }
 
+        $updatedCodes = 0;
         foreach ($voucherEntityList as $discountVoucherEntity) {
             if (!$discountVoucherEntity->getIsActive()) {
                 continue;
@@ -78,10 +84,14 @@ class VoucherCode implements VoucherCodeInterface
             }
 
             $this->incrementNumberOfUses($discountVoucherEntity);
-            $this->saveDiscountVoucherEntity($discountVoucherEntity);
+            $affectedRows = $this->saveDiscountVoucherEntity($discountVoucherEntity);
+
+            if ($affectedRows > 0) {
+                $updatedCodes++;
+            }
         }
 
-        return true;
+        return $updatedCodes;
     }
 
     /**
@@ -115,7 +125,7 @@ class VoucherCode implements VoucherCodeInterface
     {
         $maxNumberOfUses = $voucherEntity->getMaxNumberOfUses();
 
-        if ($maxNumberOfUses !== null) {
+        if (!empty($maxNumberOfUses)) {
             return true;
         }
 
@@ -125,11 +135,11 @@ class VoucherCode implements VoucherCodeInterface
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
      *
-     * @return void
+     * @return int
      */
     protected function saveDiscountVoucherEntity(SpyDiscountVoucher $discountVoucherEntity)
     {
-        $discountVoucherEntity->save();
+        return $discountVoucherEntity->save();
     }
 
 }

@@ -201,9 +201,9 @@ class Calculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
-     *
      * @throws \Spryker\Zed\Discount\Business\Exception\CalculatorException
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
     protected function getCalculatorPlugin(DiscountTransfer $discountTransfer)
     {

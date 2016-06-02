@@ -9,6 +9,7 @@ namespace Spryker\Zed\Discount\Business\DecisionRule;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class GrandTotalDecisionRule implements DecisionRuleInterface
@@ -20,11 +21,21 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
     protected $comparators;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparators
+     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
      */
-    public function __construct(ComparatorOperatorsInterface $comparators)
-    {
+    protected $currencyManager;
+
+    /**
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparators
+     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManager
+     */
+    public function __construct(
+        ComparatorOperatorsInterface $comparators,
+        CurrencyManagerInterface $currencyManager
+    ) {
+
         $this->comparators = $comparators;
+        $this->currencyManager = $currencyManager;
     }
 
     /**
@@ -46,7 +57,7 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
             return false;
         }
 
-        $amountInCents = $clauseTransfer->getValue() * 100;
+        $amountInCents = $this->currencyManager->convertDecimalToCent($clauseTransfer->getValue());
         $clauseTransfer->setValue($amountInCents);
 
         return $this->comparators->compare($clauseTransfer, $quoteTransfer->getTotals()->getGrandTotal());

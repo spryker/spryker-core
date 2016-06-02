@@ -13,7 +13,7 @@ interface DiscountInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function calculate(QuoteTransfer $quoteTransfer);
 

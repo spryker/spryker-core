@@ -34,9 +34,9 @@ class TimeDecisionRule implements DecisionRuleInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return bool
-     *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,
@@ -70,10 +70,18 @@ class TimeDecisionRule implements DecisionRuleInterface
      */
     protected function getCurrentTime()
     {
-        $currentDate = new \DateTime();
+        $currentDate = $this->getCurrentDateTime();
         $time = $currentDate->format(self::TIME_FORMAT);
 
         return $time;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    protected function getCurrentDateTime()
+    {
+        return new \DateTime();
     }
 
 }

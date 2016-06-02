@@ -7,12 +7,10 @@
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Generated\Shared\Transfer\DiscountableItemTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
-class ItemQuantityCollector implements CollectorInterface
+class ItemQuantityCollector extends BaseCollector implements CollectorInterface
 {
 
     /**
@@ -36,28 +34,20 @@ class ItemQuantityCollector implements CollectorInterface
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
-        $collectedItems = [];
+        $discountableItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($this->comparators->compare($clauseTransfer, $itemTransfer->getQuantity())) {
-                $collectedItems[] = $this->createDiscountableItemTransfer($itemTransfer);
+            if ($this->comparators->compare($clauseTransfer, $itemTransfer->getQuantity()) === false) {
+                continue;
             }
+
+            $discountableItems[] = $this->createDiscountableItemTransfer(
+                $itemTransfer->getUnitGrossPrice(),
+                $itemTransfer->getQuantity(),
+                $itemTransfer->getCalculatedDiscounts()
+            );
         }
 
-        return $collectedItems;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer
-     */
-    protected function createDiscountableItemTransfer(ItemTransfer $itemTransfer)
-    {
-        $discountableItemTransfer = new DiscountableItemTransfer();
-        $discountableItemTransfer->fromArray($itemTransfer->toArray(), true);
-        $discountableItemTransfer->setOriginalItemCalculatedDiscounts($itemTransfer->getCalculatedDiscounts());
-
-        return $discountableItemTransfer;
+        return $discountableItems;
     }
 
 }

@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
+use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
@@ -14,6 +15,41 @@ use Spryker\Zed\Discount\Business\QueryString\Validator;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * @return void
+     */
+    public function testValidateDecisionRuleWhenThereIsNoErrorShouldNotThrowException()
+    {
+        $decisionRuleMock = $this->createSpecificationBuilderMock();
+        $decisionRuleMock
+            ->expects($this->once())
+            ->method('buildFromQueryString');
+
+        $validator = $this->createValidator($decisionRuleMock);
+
+        $messages = $validator->validateByType(MetaProviderFactory::TYPE_DECISION_RULE, 'query string');
+
+        $this->assertCount(0, $messages);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCollectorWhenThereIsNoErrorShouldNotThrowException()
+    {
+        $collectorBuilderMock = $this->createSpecificationBuilderMock();
+        $collectorBuilderMock
+            ->expects($this->once())
+            ->method('buildFromQueryString');
+
+        $validator = $this->createValidator(null, $collectorBuilderMock);
+
+        $messages = $validator->validateByType(MetaProviderFactory::TYPE_COLLECTOR, 'query string');
+
+        $this->assertCount(0, $messages);
+    }
+
 
     /**
      * @return void
@@ -60,6 +96,30 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $messages);
         $this->assertEquals($queryStringException, $messages[0]);
     }
+
+    /**
+     * @return void
+     */
+    public function testValidateCollectorWhenComparatorExceptionThrownShouldStoreIntoResponseArray()
+    {
+        $queryStringException = 'Test';
+
+        $collectorMock = $this->createSpecificationBuilderMock();
+        $collectorMock
+            ->expects($this->once())
+            ->method('buildFromQueryString')
+            ->willThrowException(
+                new ComparatorException($queryStringException)
+            );
+
+        $validator = $this->createValidator(null, $collectorMock);
+
+        $messages = $validator->validateByType(MetaProviderFactory::TYPE_COLLECTOR, 'query string');
+
+        $this->assertCount(1, $messages);
+        $this->assertEquals($queryStringException, $messages[0]);
+    }
+
 
     /**
      * @return void

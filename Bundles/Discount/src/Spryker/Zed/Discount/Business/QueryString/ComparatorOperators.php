@@ -147,7 +147,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
 
         throw new ComparatorException(
             sprintf(
-                '""%s" operator does not accept any of "%s" types',
+                '"%s" operator does not accept any of "%s" types',
                 get_class($operator),
                 implode(',', $withTypes)
             )

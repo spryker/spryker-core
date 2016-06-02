@@ -34,9 +34,9 @@ class MonthDecisionRule implements DecisionRuleInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return bool
-     *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,
@@ -54,10 +54,18 @@ class MonthDecisionRule implements DecisionRuleInterface
      */
     protected function getCurrentMonth()
     {
-        $currentDate = new \DateTime();
+        $currentDate = $this->getCurrentDate();
         $time = $currentDate->format(self::DATE_FORMAT);
 
         return $time;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    protected function getCurrentDate()
+    {
+        return new \DateTime();
     }
 
 }

@@ -115,8 +115,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         SpyDiscount $discountEntity,
         DiscountConfiguratorTransfer $discountConfigurator
     ) {
-        $voucherPoolEntity = $discountEntity->getVoucherPool();
-        if ($voucherPoolEntity) {
+        if ($discountEntity->getFkDiscountVoucherPool()) {
             $discountVoucherTransfer = new DiscountVoucherTransfer();
             $discountVoucherTransfer->setIdDiscount($idDiscount);
             $discountVoucherTransfer->setFkDiscountVoucherPool($discountEntity->getFkDiscountVoucherPool());

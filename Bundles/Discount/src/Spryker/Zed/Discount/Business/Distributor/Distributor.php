@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Discount\Business\Exception\DistributorException;
 
 class Distributor implements DistributorInterface
 {
@@ -47,9 +46,7 @@ class Distributor implements DistributorInterface
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($collectedDiscountTransfer->getDiscount());
 
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
-            if (!$this->isOriginalItemCalculatedDiscountsProvided($discountableItemTransfer)) {
-                continue;
-            }
+
             $singleItemGrossAmountShare = $discountableItemTransfer->getUnitGrossPrice() / $totalGrossAmount;
 
             $itemDiscountAmount = ($totalDiscountAmount * $singleItemGrossAmountShare) + $this->roundingError;
@@ -62,30 +59,6 @@ class Distributor implements DistributorInterface
 
             $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     *
-     * @return bool
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\DistributorException
-     */
-    protected function isOriginalItemCalculatedDiscountsProvided(DiscountableItemTransfer $discountableItemTransfer)
-    {
-        if ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() === false) {
-            throw new DistributorException(
-                'Original item calculated discounts object reference must be provided to DiscountableItemTransfer.'
-            );
-        }
-
-        if (!$discountableItemTransfer->getOriginalItemCalculatedDiscounts() instanceof \ArrayObject) {
-            throw new DistributorException(
-                'Original item calculated discounts object must be instance of \ArrayObject.'
-            );
-        }
-
-        return true;
     }
 
     /**

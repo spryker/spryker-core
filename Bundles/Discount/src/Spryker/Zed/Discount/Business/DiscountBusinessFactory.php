@@ -18,7 +18,6 @@ use Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\DayOfWeekDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule;
-use Spryker\Zed\Discount\Business\DecisionRule\ItemQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
@@ -379,7 +378,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createGrandTotalDecisionRule()
     {
-        return new GrandTotalDecisionRule($this->createComparatorOperators());
+        return new GrandTotalDecisionRule($this->createComparatorOperators(), $this->getCurrencyManager());
     }
 
     /**
@@ -395,7 +394,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createSubTotalDecisionRule()
     {
-        return new SubTotalDecisionRule($this->createComparatorOperators());
+        return new SubTotalDecisionRule($this->createComparatorOperators(), $this->getCurrencyManager());
     }
 
     /**
@@ -407,11 +406,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemQuantityDecisionRule
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
      */
     public function createItemQuantityDecisionRule()
     {
-        return new ItemQuantityDecisionRule($this->createComparatorOperators());
+        return new ItemSkuDecisionRule($this->createComparatorOperators());
     }
 
     /**
@@ -419,7 +418,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemPriceDecisionRule()
     {
-        return new ItemPriceDecisionRule($this->createComparatorOperators());
+        return new ItemPriceDecisionRule($this->createComparatorOperators(), $this->getCurrencyManager());
     }
 
     /**
@@ -427,7 +426,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemPriceCollector()
     {
-        return new ItemPriceCollector($this->createComparatorOperators());
+        return new ItemPriceCollector($this->createComparatorOperators(), $this->getCurrencyManager());
     }
 
     /**
@@ -460,6 +459,16 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createTimeDecisionRule()
     {
         return new TimeDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     */
+    public function getCurrencyManager()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::CURRENCY_MANAGER);
     }
 
 }

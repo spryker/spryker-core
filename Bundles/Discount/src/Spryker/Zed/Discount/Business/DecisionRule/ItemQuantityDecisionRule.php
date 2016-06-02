@@ -32,9 +32,10 @@ class ItemQuantityDecisionRule implements DecisionRuleInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
      * @return bool
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,

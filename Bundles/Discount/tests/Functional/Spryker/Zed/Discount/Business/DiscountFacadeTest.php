@@ -615,7 +615,7 @@ class DiscountFacadeTest extends Test
 
         $released = $discountFacade->releaseUsedVoucherCodes($voucherCodeList);
 
-        $this->assertTrue($released);
+        $this->assertEquals(1, $released);
     }
 
 

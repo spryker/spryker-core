@@ -136,7 +136,14 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
             ->method('getExpression')
             ->willReturn('>');
 
-        $comparatorOperators = $this->createComparatorOperators([$equalComparatorMock, $moreComparatorMock]);
+        $lessComparatorMock = $this->createComparatorMock();
+        $lessComparatorMock->expects($this->once())
+            ->method('getAcceptedTypes')
+            ->willReturn([
+                ComparatorOperators::TYPE_LIST,
+            ]);
+
+        $comparatorOperators = $this->createComparatorOperators([$equalComparatorMock, $moreComparatorMock, $lessComparatorMock]);
 
         $expressions = $comparatorOperators->getOperatorExpressionsByTypes([ComparatorOperators::TYPE_INTEGER]);
 
@@ -169,6 +176,123 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $expressions);
         $this->assertEquals('=', $expressions[0]);
         $this->assertEquals('>', $expressions[1]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompoundComparatorExpressions()
+    {
+        $combinedOperator = 'combined operator';
+        $equalComparatorMock = $this->createComparatorMock();
+        $equalComparatorMock->expects($this->once())
+            ->method('getExpression')
+            ->willReturn($combinedOperator);
+
+        $moreComparatorMock = $this->createComparatorMock();
+        $moreComparatorMock->expects($this->once())
+            ->method('getExpression')
+            ->willReturn('>');
+
+        $comparatorOperators = $this->createComparatorOperators([$equalComparatorMock, $moreComparatorMock]);
+
+        $combinedOperators = $comparatorOperators->getCompoundComparatorExpressions();
+
+        $this->assertCount(2, $combinedOperators);
+
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValidComparatorWhenValidShouldReturnTrue()
+    {
+        $equalComparatorMock = $this->createComparatorMock();
+        $equalComparatorMock->expects($this->once())
+            ->method('accept')
+            ->willReturn(true);
+
+        $comparatorOperators = $this->createComparatorOperators([$equalComparatorMock]);
+
+        $clauseTransfer = new ClauseTransfer();
+
+        $isValid = $comparatorOperators->isValidComparator($clauseTransfer);
+
+        $this->assertTrue($isValid);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValidComparatorWhenInValidShouldReturnFalse()
+    {
+        $equalComparatorMock = $this->createComparatorMock();
+        $equalComparatorMock->expects($this->once())
+            ->method('accept')
+            ->willReturn(false);
+
+        $comparatorOperators = $this->createComparatorOperators([$equalComparatorMock]);
+
+        $clauseTransfer = new ClauseTransfer();
+
+        $isValid = $comparatorOperators->isValidComparator($clauseTransfer);
+
+        $this->assertFalse($isValid);
+    }
+
+    /**
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     * @return void
+     */
+    public function testCompareWhenUsingMatchAllIdentifierShouldAlwaysReturnFalse()
+    {
+        $comparatorOperators = $this->createComparatorOperators([]);
+
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue(ComparatorOperators::MATCH_ALL_IDENTIFIER);
+
+        $isValid = $comparatorOperators->compare($clauseTransfer, 'value');
+
+        $this->assertTrue($isValid);
+    }
+
+    /**
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     * @return void
+     */
+    public function testCompareWhenValueIsNotProvidedShouldReturnFalse()
+    {
+        $comparatorOperators = $this->createComparatorOperators([]);
+
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue(ComparatorOperators::MATCH_ALL_IDENTIFIER);
+
+        $isValid = $comparatorOperators->compare($clauseTransfer, '');
+
+        $this->assertFalse($isValid);
+    }
+
+    /**
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     * @return void
+     */
+    public function testWhenNoneOfComparatorsAcceptsClauseShouldThrowException()
+    {
+        $this->expectException(ComparatorException::class);
+
+        $equalComparatorMock = $this->createComparatorMock();
+        $equalComparatorMock->expects($this->once())
+            ->method('accept')
+            ->willReturn(false);
+
+        $comparatorOperators = $this->createComparatorOperators([$equalComparatorMock]);
+
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setOperator('not existing');
+
+        $isValid = $comparatorOperators->compare($clauseTransfer, 'value');
+
+        $this->assertFalse($isValid);
     }
 
     /**

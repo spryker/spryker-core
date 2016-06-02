@@ -8,7 +8,7 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface;
 
 class ClauseValidator implements ClauseValidatorInterface
 {
@@ -19,17 +19,17 @@ class ClauseValidator implements ClauseValidatorInterface
     protected $comparatorOperators;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
+     * @var \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface
      */
     protected $metaDataProvider;
 
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorOperators
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider $metaDataProvider
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface $metaDataProvider
      */
     public function __construct(
         ComparatorOperatorsInterface $comparatorOperators,
-        MetaDataProvider $metaDataProvider
+        MetaDataProviderInterface $metaDataProvider
     ) {
         $this->comparatorOperators = $comparatorOperators;
         $this->metaDataProvider = $metaDataProvider;

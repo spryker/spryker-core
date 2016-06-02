@@ -90,9 +90,27 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('createOr')
             ->willReturn($this->createDecisionRuleSpecificationMock());
 
+        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, ['is', 'in']);
+        $compositeSpecification = $specificationBuilder->buildFromQueryString(
+            '((sku = "123" and (quantity is in "321,321" or sku = "123"))) or color = "red"'
+        );
+
+        $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildDecisionRuleWithAttributeClauseShouldBuildClauseWithAdditionalAttributeData()
+    {
+        $specificationProviderMock = $this->createSpecificationProviderMock();
+        $specificationProviderMock->expects($this->exactly(1))
+            ->method('getSpecificationContext')
+            ->willReturn($this->createDecisionRuleContextMock());
+
         $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock);
         $compositeSpecification = $specificationBuilder->buildFromQueryString(
-            '(sku = "123" and (quantity = "321" or sku = "123")) or color = "red"'
+            'attribute.value = "123"'
         );
 
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
@@ -128,17 +146,35 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
     }
 
+    /**
+     * @return void
+     */
+    public function testBuildDecisionRuleWhenNumberOfParenthesisNotMatchingShouldThrowException()
+    {
+        $this->expectException(QueryStringException::class);
+
+        $specificationProviderMock = $this->createSpecificationProviderMock();
+        $specificationProviderMock->expects($this->once())
+            ->method('getSpecificationContext')
+            ->willReturn($this->createDecisionRuleContextMock());
+
+        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock);
+        $specificationBuilder->buildFromQueryString('(sku = 123');
+    }
+
 
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProviderMock
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
-    public function createSpecificationBuilder(SpecificationProviderInterface $specificationProviderMock)
-    {
+    public function createSpecificationBuilder(
+        SpecificationProviderInterface $specificationProviderMock,
+        array $compoundExpressions = []
+    ) {
         $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
         $createComparatorOperatorsMock->method('getCompoundComparatorExpressions')
-            ->willReturn([]);
+            ->willReturn($compoundExpressions);
 
         return new SpecificationBuilder(
             $this->createTokenizer(),

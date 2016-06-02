@@ -8,18 +8,16 @@
 namespace Functional\Spryker\Zed\Discount\Business\QueryString;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
-use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
@@ -170,8 +168,8 @@ class SpecificationBuilderTest extends Test
     }
 
     /**
-     * @param ComparatorOperators $comparatorOperators
-     * @param MetaDataProvider $decisionRuleMetaProvider
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators $comparatorOperators
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider $decisionRuleMetaProvider
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\ClauseValidator
      */

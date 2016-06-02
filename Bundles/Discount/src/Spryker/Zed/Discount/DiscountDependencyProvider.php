@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount;
 
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemByPriceCollectorPlugin;
@@ -43,6 +44,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
     const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
 
+    const CURRENCY_MANAGER = 'CURRENCY_MANAGER';
+
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -77,6 +80,10 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_TAX] = function (Container $container) {
             return new DiscountToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
+        $container[self::CURRENCY_MANAGER] = function () {
+            return $this->getCurrencyManager();
         };
 
         return $container;
@@ -129,6 +136,14 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             new ItemByQuantityCollectorPlugin(),
             new ItemByPriceCollectorPlugin(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     */
+    protected function getCurrencyManager()
+    {
+        return CurrencyManager::getInstance();
     }
 
     /**

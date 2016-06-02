@@ -34,9 +34,10 @@ class DayOfWeekDecisionRule implements DecisionRuleInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
      * @return bool
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,
@@ -54,10 +55,18 @@ class DayOfWeekDecisionRule implements DecisionRuleInterface
      */
     protected function getCurrentDateOfWeek()
     {
-        $currentDate = new \DateTime();
-        $dayOfWeek = $currentDate->format(self::DATE_FORMAT);
+        $currentDateTime = $this->getCurrentDateTime();
+        $dayOfWeek = $currentDateTime->format(self::DATE_FORMAT);
 
         return $dayOfWeek;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    protected function getCurrentDateTime()
+    {
+        return new \DateTime();
     }
 
 }

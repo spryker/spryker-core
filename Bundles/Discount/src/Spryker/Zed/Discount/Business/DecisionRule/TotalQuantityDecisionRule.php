@@ -42,12 +42,23 @@ class TotalQuantityDecisionRule implements DecisionRuleInterface
         ClauseTransfer $clauseTransfer
     ) {
 
+        $totalQuantity = $this->getQuoteItemQuantity($quoteTransfer);
+
+        return $this->comparators->compare($clauseTransfer, $totalQuantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getQuoteItemQuantity(QuoteTransfer $quoteTransfer)
+    {
         $totalQuantity = 0;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $totalQuantity += $itemTransfer->getQuantity();
         }
-
-        return $this->comparators->compare($clauseTransfer, $totalQuantity);
+        return $totalQuantity;
     }
 
 }

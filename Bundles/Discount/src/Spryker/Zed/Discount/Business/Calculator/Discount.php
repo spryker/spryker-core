@@ -59,13 +59,15 @@ class Discount implements DiscountInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function calculate(QuoteTransfer $quoteTransfer)
     {
         $applicableDiscounts = $this->getApplicableDiscounts($quoteTransfer);
         $collectedDiscounts = $this->calculator->calculate($applicableDiscounts, $quoteTransfer);
-        $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
+        if (count($collectedDiscounts) > 0) {
+            $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
+        }
 
         return $quoteTransfer;
     }

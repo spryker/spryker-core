@@ -34,9 +34,9 @@ class CalendarWeekDecisionRule implements DecisionRuleInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return bool
-     *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,
@@ -54,10 +54,18 @@ class CalendarWeekDecisionRule implements DecisionRuleInterface
      */
     protected function getCalendarWeek()
     {
-        $currentDateTime = new \DateTime();
+        $currentDateTime = $this->getCurrentDateTime();
         $calendarWeek = $currentDateTime->format(self::DATE_FORMAT);
 
         return $calendarWeek;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    protected function getCurrentDateTime()
+    {
+        return new \DateTime();
     }
 
 }
