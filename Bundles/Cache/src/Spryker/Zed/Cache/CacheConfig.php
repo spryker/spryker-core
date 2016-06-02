@@ -22,6 +22,14 @@ class CacheConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getAutoloaderCachePath()
+    {
+        return APPLICATION_ROOT_DIR . '/data/{STORE}/autoloader';
+    }
+
+    /**
      * @return array
      */
     public function getAllowedStores()

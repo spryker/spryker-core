@@ -34,6 +34,14 @@ abstract class AbstractClassResolver
     abstract protected function getClassPattern();
 
     /**
+     * @param string $namespace
+     * @param string|null $store
+     *
+     * @return string
+     */
+    abstract protected function buildClassName($namespace, $store = null);
+
+    /**
      * @return bool
      */
     public function canResolve()
@@ -58,7 +66,23 @@ abstract class AbstractClassResolver
      */
     protected function classExists($className)
     {
-        return class_exists($className);
+        $resolverCacheManager = $this->createResolverCacheManager();
+
+        if (!$resolverCacheManager->useCache()) {
+            return class_exists($className);
+        }
+
+        $cacheProvider = $resolverCacheManager->createClassResolverCacheProvider();
+
+        return $cacheProvider->getCache()->classExists($className);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface
+     */
+    protected function createResolverCacheManager()
+    {
+        return new ResolverCacheManager();
     }
 
     /**
@@ -101,14 +125,6 @@ abstract class AbstractClassResolver
             $this->classNames[] = $this->buildClassName($namespace);
         }
     }
-
-    /**
-     * @param string $namespace
-     * @param string|null $store
-     *
-     * @return string
-     */
-    abstract protected function buildClassName($namespace, $store = null);
 
     /**
      * @throws \Exception

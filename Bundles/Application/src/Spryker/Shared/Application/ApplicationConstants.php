@@ -19,7 +19,7 @@ interface ApplicationConstants
     const NAVIGATION_CACHE_ENABLED = 'navigation cache enabled';
     const NAVIGATION_ENABLED = 'NAVIGATION_ENABLED';
     const SET_REPEAT_DATA = 'SET_REPEAT_DATA';
-    const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
+    const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR'; //deprecated
     const STORE_PREFIX = 'STORE_PREFIX';
     const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
 
