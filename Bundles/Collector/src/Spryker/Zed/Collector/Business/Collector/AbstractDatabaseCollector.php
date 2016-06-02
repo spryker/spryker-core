@@ -85,7 +85,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
-     * 
+     *
      * @return void
      */
     protected function processBatchForExport(
