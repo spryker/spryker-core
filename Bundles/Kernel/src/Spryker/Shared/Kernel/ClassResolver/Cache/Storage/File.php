@@ -9,6 +9,7 @@ namespace Spryker\Shared\Kernel\ClassResolver\Cache\Storage;
 
 use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 use Spryker\Shared\Library\DataDirectory;
+use Spryker\Shared\Library\Error\ErrorLogger;
 
 class File implements StorageInterface
 {
@@ -21,8 +22,6 @@ class File implements StorageInterface
     public function persist(array $data)
     {
         try {
-            //TODO check this http://php.net/manual/en/function.file-put-contents.php#82934
-
             $string = var_export($data, true);
 
             file_put_contents(
@@ -30,9 +29,8 @@ class File implements StorageInterface
                 '<?php return ' . $string . ';',
                 LOCK_EX | LOCK_NB
             );
-        }
-        catch (\Exception $e) {
-
+        } catch (\Exception $exception) {
+            ErrorLogger::log($exception);
         }
     }
 
@@ -45,8 +43,7 @@ class File implements StorageInterface
             $cache = include $this->getCacheFilename();
 
             return $cache ?: [];
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return [];
         }
     }

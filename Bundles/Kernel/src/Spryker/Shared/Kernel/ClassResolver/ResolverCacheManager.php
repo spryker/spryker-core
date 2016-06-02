@@ -26,22 +26,47 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
     /**
      * @throws \Exception
      *
-     * @return \Spryker\Shared\Kernel\ClassResolver\Cache\ProviderInterface
+     * @return void
      */
-    public function createClassResolverCacheProvider()
+    protected function assertConfig()
     {
         if (!Config::hasValue(ApplicationConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER)) {
-            throw new \Exception('Undefined UnresolvableCacheProvider. Make sure class exists and it\'s set in AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER');
+            throw new \Exception(
+                'Undefined UnresolvableCacheProvider. Make sure class exists and it\'s set in AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER'
+            );
         }
+    }
 
-        $className = Config::get(ApplicationConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER);
-        $cacheProvider = new $className();
-
+    /**
+     * @param $cacheProvider
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    protected function assertProviderInterface($cacheProvider)
+    {
         if (!($cacheProvider instanceof ProviderInterface)) {
             throw new \Exception(sprintf(
                 'Class defined in AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER "%s", must implement \Spryker\Shared\Kernel\ClassResolver\Cache\ProviderInterface'
             ));
         }
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return \Spryker\Shared\Kernel\ClassResolver\Cache\ProviderInterface
+     */
+    public function createClassResolverCacheProvider()
+    {
+        $this->assertConfig();
+
+        $className = Config::get(ApplicationConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER);
+
+        $cacheProvider = new $className();
+
+        $this->assertProviderInterface($cacheProvider);
 
         return $cacheProvider;
     }
