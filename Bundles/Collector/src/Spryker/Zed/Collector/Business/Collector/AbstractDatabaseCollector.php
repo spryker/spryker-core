@@ -78,6 +78,16 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         $output->writeln('');
     }
 
+    /**
+     * @param array $batch
+     * @param \Symfony\Component\Console\Helper\ProgressBar $progressBar
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
+     * 
+     * @return void
+     */
     protected function processBatchForExport(
         array $batch,
         ProgressBar $progressBar,
@@ -107,6 +117,13 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         $batchResult->increaseProcessedCount($collectedDataCount);
     }
 
+    /**
+     * @param \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface $batchCollection
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Symfony\Component\Console\Helper\ProgressBar
+     */
     protected function startProgressBar(
         CountableIteratorInterface $batchCollection,
         BatchResultInterface $batchResult,
