@@ -88,7 +88,7 @@ class Config
      *
      * @param string $name
      *
-     * @return mixed
+     * @return mixed|null
      */
     public static function getValueByName($name)
     {
