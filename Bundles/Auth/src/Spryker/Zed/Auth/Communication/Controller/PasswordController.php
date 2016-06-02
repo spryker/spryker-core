@@ -62,7 +62,6 @@ class PasswordController extends AbstractController
         }
 
         $isValidToken = $this->getFacade()->isValidPasswordResetToken($token);
-        $isValidToken = true;
 
         if (empty($isValidToken)) {
             $this->addErrorMessage('Invalid request token!');

@@ -40,6 +40,21 @@ class DeleteAllCachesConsole extends Console
     {
         $dirs = $this->getFacade()->deleteAllFiles();
         $this->info('Removed cache files', true);
+        $this->displayDeleted($dirs, $output);
+
+        $dirs = $this->getFacade()->deleteAllAutoloaderFiles();
+        $this->info('Removed autoloader cache files', true);
+        $this->displayDeleted($dirs, $output);
+    }
+
+    /**
+     * @param array $dirs
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function displayDeleted(array $dirs, OutputInterface $output)
+    {
         foreach ($dirs as $dir) {
             $output->writeln($dir);
         }
