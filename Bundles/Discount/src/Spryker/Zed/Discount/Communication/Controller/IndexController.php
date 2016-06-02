@@ -14,6 +14,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,6 +31,41 @@ class IndexController extends AbstractController
     const URL_PARAM_ID_POOL = 'id-pool';
     const URL_PARAM_VISIBILITY = 'visibility';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
+
+    /**
+     * @return JsonResponse
+     */
+    public function queryAction()
+    {
+        $filters = [
+            [
+                'id' => 'name',
+                'label' => 'Name',
+                'type' => 'string',
+            ],
+            [
+                'id' => 'sku',
+                'label' => 'sku',
+                'type' => 'string',
+            ],
+            [
+                'id' => 'in_stock',
+                'label' => 'In Stock',
+                'type' => 'integer',
+                'input' => 'radio',
+                'values' => [
+                    1 => 'Yes',
+                    0 => 'No',
+                ],
+                'operators' => [
+                    'equal',
+                    'not-equal',
+                ]
+            ]
+        ];
+
+        return new JsonResponse($filters);
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

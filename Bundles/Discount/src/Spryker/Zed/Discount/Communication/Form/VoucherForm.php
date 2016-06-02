@@ -50,7 +50,6 @@ class VoucherForm extends AbstractType
         ]);
 
         return $this;
-
     }
 
     /**
@@ -69,7 +68,6 @@ class VoucherForm extends AbstractType
         );
 
         return $this;
-
     }
 
     /**
@@ -91,7 +89,6 @@ class VoucherForm extends AbstractType
         );
 
         return $this;
-
     }
 
 
@@ -111,7 +108,6 @@ class VoucherForm extends AbstractType
         );
 
         return $this;
-
     }
 
     /**
@@ -142,11 +138,11 @@ class VoucherForm extends AbstractType
         return $this;
     }
 
-        /**
-         * Returns the name of this type.
-         *
-         * @return string The name of this type
-         */
+    /**
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
+     */
     public function getName()
     {
         return 'discount_voucher';

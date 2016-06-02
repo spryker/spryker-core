@@ -160,6 +160,9 @@ class CalculatorForm extends AbstractType
                     QueryString::OPTION_QUERY_STRING_TYPE => SpecificationBuilder::TYPE_COLLECTOR,
                 ]),
             ],
+            'attr' => [
+                'data-url' => '/discount/index/query',
+            ],
         ]);
 
         return $this;

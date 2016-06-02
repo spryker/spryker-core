@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "spryker-zed-discount",
+  "version": "1.0.0",
+  "dependencies": {
+    "dot": "^1.0.3",
+    "jquery-query-builder": "github:spryker/jquery-query-builder.git",
+    "jquery-extendext": "github:mistic100/jQuery.extendext#0.1.1",
+    "sql-parser": "^0.5.0"
+  }
+}
