@@ -3,12 +3,12 @@
 {% block action %}
     {{ createActionButton('#', 'Save' | trans, {'id': 'create-discount-button'}) }}
 
-    {% set visibility = 'activate' %}
     {% if discountConfigurator.getDiscountGeneral.isActive %}
-       {% set visibility = 'deactivate' %}
+        {{ removeActionButton(url('/discount/index/toggle-discount-visibility', {'id-discount': idDiscount, 'visibility': 'deactivate'}), 'Deactivate' | trans) }}
+    {% else %}
+        {{ viewActionButton(url('/discount/index/toggle-discount-visibility', {'id-discount': idDiscount, 'visibility': 'activate'}), 'Activate' | trans) }}
     {% endif %}
 
-    {{ viewActionButton(url('/discount/index/toggle-discount-visibility', {'id-discount': idDiscount, 'visibility': visibility}), visibility | trans) }}
     {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
 {% endblock %}
 
@@ -25,7 +25,7 @@
                     <li><a class="tab-item" data-toggle="tab" href="#tab-2">{{ 'Discount calculation' | trans }}</a></li>
                     <li><a class="tab-item" data-toggle="tab" href="#tab-3">{{ 'Conditions' | trans }}</a></li>
                     {% if discountConfigurator.getDiscountVoucher and discountConfigurator.getDiscountVoucher.fkDiscountVoucherPool %}
-                       <li><a data-toggle="tab" href="#tab-4">{{ 'Voucher codes' | trans }}</a></li>
+                       <li><a class="tab-item" data-toggle="tab" href="#tab-4">{{ 'Voucher codes' | trans }}</a></li>
                     {% endif %}
                 </ul>
 
@@ -60,7 +60,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-xs-6">
-                        <button class="btn btn-tab-previous">{{ 'Previous' | trans }}</button>
+                        <button class="btn btn-tab-previous btn-view">{{ 'Previous' | trans }}</button>
                     </div>
                     <div class="col-xs-6 text-right">
                         <button class="btn btn-tab-next btn-create">{{ 'Next' | trans }}</button>
