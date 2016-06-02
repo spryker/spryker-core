@@ -92,4 +92,5 @@ class CollectorConfig extends AbstractBundleConfig
     {
         return 1;
     }
+
 }
