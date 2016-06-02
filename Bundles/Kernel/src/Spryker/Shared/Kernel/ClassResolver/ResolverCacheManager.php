@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\ClassResolver\Cache\ProviderInterface;
+use Spryker\Shared\Kernel\KernelConstants;
 
 class ResolverCacheManager implements ResolverCacheFactoryInterface
 {
@@ -19,8 +19,8 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
      */
     public function useCache()
     {
-        return Config::hasValue(ApplicationConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED)
-            && Config::get(ApplicationConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED, false);
+        return Config::hasValue(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED)
+            && Config::get(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED, false);
     }
 
     /**
@@ -30,7 +30,7 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
      */
     protected function assertConfig()
     {
-        if (!Config::hasValue(ApplicationConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER)) {
+        if (!Config::hasValue(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER)) {
             throw new \Exception(
                 'Undefined UnresolvableCacheProvider. Make sure class exists and it\'s set in AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER'
             );
@@ -62,7 +62,7 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
     {
         $this->assertConfig();
 
-        $className = Config::get(ApplicationConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER);
+        $className = Config::get(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER);
 
         $cacheProvider = new $className();
 
