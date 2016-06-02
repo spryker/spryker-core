@@ -35,11 +35,10 @@ class PasswordController extends AbstractController
 
         if ($resetRequestForm->isValid()) {
             $formData = $resetRequestForm->getData();
-            if (!$this->getFacade()->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL])) {
-                $this->addErrorMessage('Email address is unknown.');
-            } else {
-                $this->addSuccessMessage('Email sent. Please check your inbox for further instructions.');
-            }
+            $this->getFacade()->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL]);
+            $this->addSuccessMessage(
+                'If there is an account associated with this email, you will receive a mail with a further instructions.'
+            );
         }
 
         return $this->viewResponse([
