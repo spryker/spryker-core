@@ -33,7 +33,21 @@ $(document).ready(function(){
             trigger('click');
     });
 
-    $('.datepicker').datepicker({
-        dateFormat: 'yy-mm-dd'
+    $('#discount_discountGeneral_valid_from').datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        numberOfMonths: 3,
+        onClose: function(selectedDate){
+            $('#discount_discountGeneral_valid_to').datepicker('option', 'minDate', selectedDate);
+        }
+    });
+
+    $('#discount_discountGeneral_valid_to').datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        numberOfMonths: 3,
+        onClose: function(selectedDate){
+            $('#discount_discountGeneral_valid_from').datepicker('option', 'maxDate', selectedDate);
+        }
     });
 });

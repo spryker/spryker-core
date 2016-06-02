@@ -148,7 +148,7 @@ class GeneralForm extends AbstractType
         $builder->add(self::FIELD_VALID_FROM, 'date', [
             'widget' => 'single_text',
             'attr' => [
-                'class' => 'datepicker'
+                'class' => 'datepicker',
             ],
         ]);
 
@@ -165,7 +165,7 @@ class GeneralForm extends AbstractType
         $builder->add(self::FIELD_VALID_TO, 'date', [
             'widget' => 'single_text',
             'attr' => [
-                'class' => 'datepicker'
+                'class' => 'datepicker',
             ],
         ]);
 
