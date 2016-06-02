@@ -38,7 +38,7 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
     }
 
     /**
-     * @param $cacheProvider
+     * @param \Spryker\Shared\Kernel\ClassResolver\Cache\ProviderInterface $cacheProvider
      *
      * @throws \Exception
      *
