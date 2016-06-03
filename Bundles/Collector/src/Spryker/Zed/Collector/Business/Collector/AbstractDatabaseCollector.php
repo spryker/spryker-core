@@ -34,7 +34,6 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     ) {
         $this->prepareCollectorScope($touchQuery, $locale);
         $batchCollection = $this->generateBatchIterator();
-        
         return $batchCollection;
     }
 
