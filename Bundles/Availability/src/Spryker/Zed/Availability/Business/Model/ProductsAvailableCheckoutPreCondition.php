@@ -20,7 +20,7 @@ class ProductsAvailableCheckoutPreCondition
     protected $sellable;
 
     /**
-     * AvailabilityFacade constructor.
+     * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      */
     public function __construct(SellableInterface $sellable)
     {

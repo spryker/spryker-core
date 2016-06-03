@@ -20,7 +20,7 @@ class CategoryToLocaleBridge implements CategoryToLocaleInterface
     /**
      * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
-    public function __construct(LocaleFacadeInterface $localeFacade)
+    public function __construct($localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }

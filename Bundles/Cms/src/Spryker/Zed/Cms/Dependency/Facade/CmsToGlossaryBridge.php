@@ -22,7 +22,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
     /**
      * @param \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface $glossaryFacade
      */
-    public function __construct(GlossaryFacadeInterface $glossaryFacade)
+    public function __construct($glossaryFacade)
     {
         $this->glossaryFacade = $glossaryFacade;
     }
