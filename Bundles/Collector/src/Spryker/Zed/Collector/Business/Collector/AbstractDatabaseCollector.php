@@ -34,6 +34,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     ) {
         $this->prepareCollectorScope($touchQuery, $locale);
         $batchCollection = $this->generateBatchIterator();
+        
         return $batchCollection;
     }
 
@@ -57,11 +58,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         LocaleTransfer $locale,
         OutputInterface $output
     ) {
-        $progressBar = $this->startProgressBar(
-            $batchCollection,
-            $batchResult,
-            $output
-        );
+        $progressBar = $this->startProgressBar($batchCollection, $batchResult, $output);
 
         foreach ($batchCollection as $batch) {
             $this->processBatchForExport(
@@ -100,11 +97,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         $progressBar->advance($batchSize);
 
         $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
-        $collectedData = $this->collectData(
-            $batch,
-            $locale,
-            $touchUpdaterSet
-        );
+        $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
         $collectedDataCount = count($collectedData);
 
         $touchUpdater->bulkUpdate(
@@ -158,10 +151,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         $deletedCount = 0;
 
         while ($batchCount > 0) {
-            $entityCollection = $this->getTouchCollectionToDelete(
-                $offset,
-                $itemType
-            );
+            $entityCollection = $this->getTouchCollectionToDelete($offset, $itemType);
             $batchCount = count($entityCollection);
 
             if ($batchCount > 0) {

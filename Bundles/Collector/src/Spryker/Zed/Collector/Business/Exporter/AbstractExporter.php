@@ -136,13 +136,17 @@ abstract class AbstractExporter implements ExporterInterface
         $baseQuery->setFormatter($this->getFormatter());
 
         $collectorPlugin = $this->collectorPlugins[$type];
-        $collectorPlugin->run($baseQuery, $locale, $result, $this->reader, $this->writer, $this->touchUpdater, $output);
-
-        $this->finishExport(
+        $collectorPlugin->run(
+            $baseQuery,
+            $locale,
             $result,
-            $type,
-            $startTime
+            $this->reader,
+            $this->writer,
+            $this->touchUpdater,
+            $output
         );
+
+        $this->finishExport($result, $type, $startTime);
 
         return $result;
     }
@@ -160,7 +164,7 @@ abstract class AbstractExporter implements ExporterInterface
             $this->marker->setLastExportMarkByTypeAndLocale(
                 $type,
                 $batchResult->getProcessedLocale(),
-                $this->createTimestamp($startTime)
+                $startTime
             );
         }
     }
@@ -171,28 +175,6 @@ abstract class AbstractExporter implements ExporterInterface
     protected function getFormatter()
     {
         return new PropelArraySetFormatter();
-    }
-
-    /**
-     * @param \DateTime|null $dateTime
-     * @return string
-     */
-    protected function createTimestamp($dateTime = null)
-    {
-        if (!$dateTime instanceof \DateTime) {
-            $dateTime = new \DateTime();
-        }
-        return $dateTime->format(
-            $this->getTimeFormat()
-        );
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTimeFormat()
-    {
-        return 'Y-m-d H:i:s';
     }
 
     /**

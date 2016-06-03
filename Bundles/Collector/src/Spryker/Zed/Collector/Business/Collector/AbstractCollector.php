@@ -244,7 +244,12 @@ abstract class AbstractCollector
 
             if (trim($key) !== '') {
                 $keysToDelete[$key] = true;
-                $this->appendTouchUpdaterSetItem($touchUpdaterSet, $key, $entityData[CollectorConfig::COLLECTOR_TOUCH_ID], $entityData);
+                $this->appendTouchUpdaterSetItem(
+                    $touchUpdaterSet,
+                    $key,
+                    $entityData[CollectorConfig::COLLECTOR_TOUCH_ID],
+                    $entityData
+                );
             }
         }
 

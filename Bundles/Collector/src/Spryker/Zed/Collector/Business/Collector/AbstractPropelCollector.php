@@ -27,8 +27,12 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
     protected function validateDependencies()
     {
         parent::validateDependencies();
+
         if (!($this->queryBuilder instanceof AbstractPropelCollectorQuery)) {
-            throw new DependencyException(sprintf('queryBuilder does not implement AbstractPropelCollectorQuery in %s', get_class($this)));
+            throw new DependencyException(sprintf(
+                'queryBuilder does not implement AbstractPropelCollectorQuery in %s',
+                get_class($this)
+            ));
         }
     }
 
