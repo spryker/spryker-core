@@ -75,7 +75,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     public function __construct(
         TokenGeneratorInterface $generator,
         StorageInterface $storage,
-        TranslatorInterface $translator,
+        $translator = null,
         $translationDomain = null
     ) {
         $this->tokenGenerator = $generator;

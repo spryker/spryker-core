@@ -45,7 +45,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
     public function __construct(
         TokenGeneratorInterface $tokenGenerator,
         StorageInterface $tokenStorage,
-        TranslatorInterface $translator = null,
+        $translator = null,
         $translationDomain = null
     ) {
         $this->tokenGenerator = $tokenGenerator;

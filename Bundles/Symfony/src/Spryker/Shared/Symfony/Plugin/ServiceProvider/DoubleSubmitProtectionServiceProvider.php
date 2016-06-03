@@ -61,7 +61,7 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
      *
      * @return \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension
      */
-    protected function createDoubleSubmitProtectionExtension(Application $app, TranslatorInterface $translator)
+    protected function createDoubleSubmitProtectionExtension(Application $app, $translator = null)
     {
         return new DoubleSubmitProtectionExtension(
             $this->createTokenGenerator(),
