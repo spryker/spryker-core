@@ -8,44 +8,37 @@
 require('ZedGui');
 //require('dot/doT');
 //require('jquery-extendext');
-require('sql-parser/browser/sql-parser');
+window.SQLParser = require('sql-parser/browser/sql-parser');
 require('jquery-query-builder');
 require('../../sass/main.scss');
+
 
 //var QueryBuilder = require('./legacy/query-builder.js');
 
 function SprykerQueryBuilder(sqlQuery, ajaxUrl){
     var self = this;
-    console.log('create object');
     this.getFiltersUrl = ajaxUrl;
     this.sql = sqlQuery;
     this.builder = '';
     this.init = function(){
-        console.log('instantiate object');
         self.builder = $('#builder');
         self.createBuilder();
     };
 }
 
 SprykerQueryBuilder.prototype.createBuilder = function(){
-    console.log('create builder');
+
     var self = this;
     $.get(self.getFiltersUrl).done(function(filters){
-        console.log('ajax success');
-        console.log(filters);
-
-
-        console.log(self, self.builder);
-
         $(self.builder).queryBuilder({
             filters: filters
         });
-        //self.builder.queryBuilder('setRulesFromSQL', self.sql);
+        self.builder.queryBuilder('setRulesFromSQL', self.sql);
     });
 };
 
 SprykerQueryBuilder.prototype.saveQuery = function(){
-    console.log('save query');
+
     var result = this.builder.queryBuilder('getSQL', false);
 
     if (result.sql.length) {
@@ -57,7 +50,7 @@ var QueryBuilder = SprykerQueryBuilder;
 var sqlBuilder;
 
 function loadSqlQuery(){
-    console.log('load sql query');
+
     var inputElement = $('#discount_discountCalculator_collector_query_string');
     var sqlRules = inputElement.val();
     var ajaxUrl = inputElement.data('url');

@@ -25,10 +25,8 @@ class ConditionsForm extends AbstractType
     /**
      * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      */
-    public function __construct(
-        DiscountFacade $discountFacade
-    ) {
-
+    public function __construct(DiscountFacade $discountFacade)
+    {
         $this->discountFacade = $discountFacade;
     }
 

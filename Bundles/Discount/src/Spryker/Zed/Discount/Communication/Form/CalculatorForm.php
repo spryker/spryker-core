@@ -161,7 +161,7 @@ class CalculatorForm extends AbstractType
                 ]),
             ],
             'attr' => [
-                'data-url' => '/discount/index/query',
+                'data-url' => '/discount/query-string/rule-fields/?type=' . MetaProviderFactory::TYPE_COLLECTOR,
             ],
         ]);
 
