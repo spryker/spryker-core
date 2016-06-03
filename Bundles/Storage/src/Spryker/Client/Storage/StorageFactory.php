@@ -52,17 +52,32 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @throws \Exception
-     *
      * @return array
      */
     protected function getConfig()
     {
-        return [
+        return $this->getConnectionParameters();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getConnectionParameters()
+    {
+        $config = [
             'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
             'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
             'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
         ];
+
+        if (Config::hasValue(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
+        }
+
+        $isPersistent = (bool)Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
+        $config['persistent'] = $isPersistent;
+
+        return $config;
     }
 
 }

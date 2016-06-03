@@ -40,7 +40,9 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
      */
     protected function existsDatabase()
     {
-        return $this->runProcess($this->getExistsCommand());
+        return $this->runProcess(
+            $this->getExistsCommand()
+        );
     }
 
     /**
@@ -50,7 +52,9 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
      */
     protected function createDatabase()
     {
-        $this->runProcess($this->getCreateCommand());
+        $this->runProcess(
+            $this->getCreateCommand()
+        );
     }
 
     /**
@@ -59,8 +63,11 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     protected function getExistsCommand()
     {
         return sprintf(
-            'psql -U %s -lqt | cut -d \| -f 1 | grep -w %s | wc -l',
-            'postgres',
+            'psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
+            Config::get(PropelConstants::ZED_DB_HOST),
+            Config::get(PropelConstants::ZED_DB_PORT),
+            Config::get(PropelConstants::ZED_DB_USERNAME),
+            Config::get(PropelConstants::ZED_DB_DATABASE),
             Config::get(PropelConstants::ZED_DB_DATABASE)
         );
     }
@@ -71,9 +78,12 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     protected function getCreateCommand()
     {
         return sprintf(
-            'psql -U %s -w  -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; "',
-            'postgres',
-            Config::get(PropelConstants::ZED_DB_DATABASE)
+            'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
+            Config::get(PropelConstants::ZED_DB_HOST),
+            Config::get(PropelConstants::ZED_DB_PORT),
+            Config::get(PropelConstants::ZED_DB_USERNAME),
+            Config::get(PropelConstants::ZED_DB_DATABASE),
+            'postgres'
         );
     }
 
@@ -86,6 +96,8 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
      */
     protected function runProcess($command)
     {
+        $this->exportPostgresPassword();
+
         $process = new Process($command);
         $process->run();
 
@@ -96,6 +108,17 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
+    }
+
+    /**
+     * @return void
+     */
+    protected function exportPostgresPassword()
+    {
+        putenv(sprintf(
+            'PGPASSWORD=%s',
+            Config::get(PropelConstants::ZED_DB_PASSWORD)
+        ));
     }
 
 }
