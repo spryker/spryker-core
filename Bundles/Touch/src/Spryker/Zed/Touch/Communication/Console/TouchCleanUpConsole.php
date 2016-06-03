@@ -41,16 +41,12 @@ class TouchCleanUpConsole extends Console
     {
         $deleteCount = $this->getFacade()->removeTouchEntriesMarkedAsDeleted();
 
-        $output->writeln('');
         $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
-        $output->writeln('Cleaning up the touch table(s)');
-        $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
+        $output->writeln('<fg=yellow>Cleaning up the touch table(s)<fg=yellow>');
         $output->writeln('');
         $output->writeln("<fg=white>Removed $deleteCount Touch table entries (along with related touch data)</fg=white>");
         $output->writeln('');
-        $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
-        $output->writeln('Finished. All Done.');
-        $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
+        $output->writeln('<fg=green>Finished. All Done.</fg=green>');
         $output->writeln('');
     }
 
