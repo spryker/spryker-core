@@ -11,7 +11,7 @@
     }
   },
   "require": {
-    "spryker/application": "^2.1.0",
+    "spryker/application": "^2.3.0",
     "spryker/event-journal": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/new-relic": "^2.0.0",
