@@ -82,7 +82,7 @@ class CollectorConfig extends AbstractBundleConfig
      */
     public function getNumberOfShards()
     {
-        return 1;
+        return 4;
     }
 
     /**

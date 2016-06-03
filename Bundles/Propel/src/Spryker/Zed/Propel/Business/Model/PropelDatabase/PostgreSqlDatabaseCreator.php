@@ -77,6 +77,18 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
      */
     protected function getCreateCommand()
     {
+        if ($this->useSudo()) {
+            return $this->getSudoCreateCommand();
+        }
+
+        return $this->getCreateCommandRemote();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCreateCommandRemote()
+    {
         return sprintf(
             'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
             Config::get(PropelConstants::ZED_DB_HOST),
@@ -84,6 +96,17 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
             Config::get(PropelConstants::ZED_DB_USERNAME),
             Config::get(PropelConstants::ZED_DB_DATABASE),
             'postgres'
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSudoCreateCommand()
+    {
+        return sprintf(
+            'sudo createdb %s -E UTF8 -T template0',
+            Config::get(PropelConstants::ZED_DB_DATABASE)
         );
     }
 
@@ -119,6 +142,14 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
             'PGPASSWORD=%s',
             Config::get(PropelConstants::ZED_DB_PASSWORD)
         ));
+    }
+
+    /**
+     * @return bool
+     */
+    protected function useSudo()
+    {
+        return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
     }
 
 }

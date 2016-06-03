@@ -23,7 +23,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/assertion": "^2.0.0",
     "spryker/checkout": "^2.0.0",
-    "spryker/library": "2.0.0"
+    "spryker/library": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "0.3.1",
