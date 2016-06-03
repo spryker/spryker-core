@@ -11,29 +11,36 @@
 
         {% block widget_content %}
             {{ form_start(discountForm, {attr: {'id' : 'discount-form'}}) }}
-            <div class="tabs-container">
-                <div class="tabs-left">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#tab-1">{{ 'General information' | trans }}</a></li>
-                        <li><a data-toggle="tab" href="#tab-2">{{ 'Discount calculation' | trans }}</a></li>
-                        <li><a data-toggle="tab" href="#tab-3">{{ 'Conditions' | trans }}</a></li>
-                    </ul>
-                    <div class="tab-content ">
-                        <div id="tab-1" class="tab-pane active">
-                            <div class="panel-body">
-                                {% include '@Discount/Index/partial/general.twig' %}
-                            </div>
+            <div class="tabs-container tabs-manager">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a class="tab-item" data-toggle="tab" href="#tab-1">{{ 'General information' | trans }}</a></li>
+                    <li><a class="tab-item" data-toggle="tab" href="#tab-2">{{ 'Discount calculation' | trans }}</a></li>
+                    <li><a class="tab-item" data-toggle="tab" href="#tab-3">{{ 'Conditions' | trans }}</a></li>
+                </ul>
+                <div class="tab-content ">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            {% include '@Discount/Index/partial/general.twig' %}
                         </div>
-                        <div id="tab-2" class="tab-pane">
-                            <div class="panel-body">
-                                {% include '@Discount/Index/partial/calculation.twig' %}
-                            </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="panel-body">
+                            {% include '@Discount/Index/partial/calculation.twig' %}
                         </div>
-                        <div id="tab-3" class="tab-pane">
-                            <div class="panel-body">
-                                {% include '@Discount/Index/partial/condition.twig' %}
-                            </div>
+                    </div>
+                    <div id="tab-3" class="tab-pane">
+                        <div class="panel-body">
+                            {% include '@Discount/Index/partial/condition.twig' %}
                         </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-tab-previous">{{ 'Previous' | trans }}</button>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <button type="button" class="btn btn-tab-next btn-create">{{ 'Next' | trans }}</button>
                     </div>
                 </div>
             </div>
@@ -42,6 +49,11 @@
 
     {% endembed %}
 
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-discount-main.css">
 {% endblock %}
 
 {% block footer_js %}

@@ -50,7 +50,6 @@ class VoucherForm extends AbstractType
         ]);
 
         return $this;
-
     }
 
     /**
@@ -69,7 +68,6 @@ class VoucherForm extends AbstractType
         );
 
         return $this;
-
     }
 
     /**
@@ -83,7 +81,7 @@ class VoucherForm extends AbstractType
             self::FIELD_RANDOM_GENERATED_CODE_LENGTH,
             'choice',
             [
-                'label' => 'Random generated code length',
+                'label' => 'Add Random Generated Code Length',
                 'placeholder' => 'No additional random characters',
                 'required' => false,
                 'choices' => $this->createCodeLengthRangeList()
@@ -91,7 +89,6 @@ class VoucherForm extends AbstractType
         );
 
         return $this;
-
     }
 
 
@@ -111,7 +108,6 @@ class VoucherForm extends AbstractType
         );
 
         return $this;
-
     }
 
     /**
@@ -133,16 +129,20 @@ class VoucherForm extends AbstractType
      */
     protected function addSubmitButton(FormBuilderInterface $builder)
     {
-        $builder->add('generate', 'submit');
+        $builder->add('generate', 'submit', [
+            'attr' => [
+                'class' => 'btn-create',
+            ]
+        ]);
 
         return $this;
     }
 
-        /**
-         * Returns the name of this type.
-         *
-         * @return string The name of this type
-         */
+    /**
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
+     */
     public function getName()
     {
         return 'discount_voucher';

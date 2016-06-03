@@ -1,4 +1,4 @@
-<h3>{{ 'Vouchers' | trans }}</h3>
+<div class="well well-sm">{{ 'Create voucher codes for the discount' | trans }}</div>
 <hr />
 
 {{ form(voucherForm) }}
@@ -7,5 +7,6 @@
 {{ removeActionButton(url('/discount/voucher/delete-discount-vouchers', {'id-pool': discountConfigurator.discountVoucher.fkDiscountVoucherPool, 'id-discount' : idDiscount }), 'Delete codes' | trans ) }}
 
 {% if voucherCodesTable is defined %}
+    <hr />
     {{ voucherCodesTable | raw }}
 {% endif %}

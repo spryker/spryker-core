@@ -1,13 +1,13 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% block action %}
-    {{ editActionButton(url('/discount/index/edit', {'id-discount' : discountConfigurator.discountGeneral.idDiscount}), 'edit' | trans, {'id': 'create-discount-button'}) }}
+    {{ editActionButton(url('/discount/index/edit', {'id-discount' : discountConfigurator.discountGeneral.idDiscount}), 'Edit' | trans, {'id': 'create-discount-button'}) }}
     {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Generated Discount Codes' } %}
 
         {% block widget_content %}
            <h4>{{ 'General Information' | trans }}</h4>

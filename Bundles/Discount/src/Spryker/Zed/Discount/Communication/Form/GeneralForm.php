@@ -146,7 +146,10 @@ class GeneralForm extends AbstractType
     protected function addValidFromField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_VALID_FROM, 'date', [
-            'years' => $this->generateFutureDates()
+            'widget' => 'single_text',
+            'attr' => [
+                'class' => 'datepicker',
+            ],
         ]);
 
         return $this;
@@ -160,7 +163,10 @@ class GeneralForm extends AbstractType
     protected function addValidToField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_VALID_TO, 'date', [
-            'years' => $this->generateFutureDates()
+            'widget' => 'single_text',
+            'attr' => [
+                'class' => 'datepicker',
+            ],
         ]);
 
         return $this;
