@@ -13,7 +13,6 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitPro
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\SessionStorage;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

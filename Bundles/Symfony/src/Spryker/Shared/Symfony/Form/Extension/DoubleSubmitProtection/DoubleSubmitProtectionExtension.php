@@ -11,7 +11,6 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\Type\DoubleSubmitFormType;
 use Symfony\Component\Form\AbstractExtension;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class DoubleSubmitProtectionExtension extends AbstractExtension
 {
