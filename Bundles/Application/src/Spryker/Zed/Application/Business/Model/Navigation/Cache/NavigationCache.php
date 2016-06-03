@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
+use Spryker\Shared\Library\Json;
 use Spryker\Zed\Application\Business\Exception\NavigationCacheEmptyException;
 use Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException;
 
@@ -48,7 +49,7 @@ class NavigationCache implements NavigationCacheInterface
      */
     public function setNavigation(array $navigation)
     {
-        file_put_contents($this->cacheFile, serialize($navigation));
+        file_put_contents($this->cacheFile, Json::encode($navigation));
     }
 
     /**
@@ -68,7 +69,7 @@ class NavigationCache implements NavigationCacheInterface
             throw new NavigationCacheEmptyException('Navigation cache is enabled, but cache is empty.');
         }
 
-        return unserialize($content);
+        return Json::decode($content, true);
     }
 
 }

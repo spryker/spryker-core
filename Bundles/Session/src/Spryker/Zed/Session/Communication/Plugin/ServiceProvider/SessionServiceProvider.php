@@ -49,7 +49,8 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             'name' => str_replace('.', '-', Config::get(ApplicationConstants::ZED_STORAGE_SESSION_COOKIE_NAME)),
             'cookie_lifetime' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_TIME_TO_LIVE),
             'cookie_secure' => $this->secureCookie(),
-            'use_only_cookies' => true
+            'cookie_httponly' => true,
+            'use_only_cookies' => true,
         ];
 
         $this->client->setContainer($app['session']);
@@ -117,9 +118,13 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         $path = null;
 
         if (SessionConstants::SESSION_HANDLER_REDIS === $saveHandler) {
-            $path = Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
-                . '://' . Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST)
-                . ':' . Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT);
+            $path = sprintf(
+                '%s://h:%s@%s:%s',
+                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
+                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD),
+                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
+                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT)
+            );
         }
 
         if (SessionConstants::SESSION_HANDLER_FILE === $saveHandler) {
