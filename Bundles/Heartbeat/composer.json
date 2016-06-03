@@ -7,7 +7,7 @@
     }
   },
   "require": {
-    "spryker/application": "^2.0.0",
+    "spryker/application": "^2.1.0",
     "spryker/kernel": "^2.0.0",
     "spryker/elastica": "^2.0.0",
     "spryker/propel": "^2.0.0",

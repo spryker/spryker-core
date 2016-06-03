@@ -10,6 +10,7 @@ namespace Spryker\Shared\Storage\Provider;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
+use Spryker\Shared\Storage\StorageConstants;
 
 abstract class AbstractKvProvider extends AbstractClientProvider
 {
@@ -56,13 +57,30 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     {
         switch ($kvName) {
             case self::KV_ADAPTER_REDIS:
-                return [
-                    'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-                    'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
-                    'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
-                ];
+                return $this->getConnectionParameters();
         }
         throw new \ErrorException('Missing implementation for adapter ' . $kvName);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getConnectionParameters()
+    {
+        $config = [
+            'protocol' => Config::get(StorageConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
+            'port' => Config::get(StorageConstants::YVES_STORAGE_SESSION_REDIS_PORT),
+            'host' => Config::get(StorageConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+        ];
+
+        if (Config::get(StorageConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(StorageConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
+        }
+
+        $isPersistent = (bool)Config::get(StorageConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
+        $config['persistent'] = $isPersistent;
+
+        return $config;
     }
 
 }
