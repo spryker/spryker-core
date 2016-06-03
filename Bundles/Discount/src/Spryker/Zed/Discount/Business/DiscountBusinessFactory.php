@@ -124,8 +124,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new VoucherEngine(
             $this->getConfig(),
-            $this->getQueryContainer(),
-            $this->getMessengerFacade()
+            $this->getQueryContainer()
         );
     }
 

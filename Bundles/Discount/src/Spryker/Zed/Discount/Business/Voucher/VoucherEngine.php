@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
+use Spryker\Zed\Discount\Business\Exception\VoucherEngineException;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -35,23 +35,31 @@ class VoucherEngine implements VoucherEngineInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
-     */
-    protected $messengerFacade;
-
-    /**
      * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      */
     public function __construct(
         DiscountConfig $discountConfig,
-        DiscountQueryContainerInterface $queryContainer,
-        DiscountToMessengerInterface $messengerFacade
+        DiscountQueryContainerInterface $queryContainer
     ) {
         $this->discountConfig = $discountConfig;
         $this->queryContainer = $queryContainer;
-        $this->messengerFacade = $messengerFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
+     */
+    public function createVoucherCode(DiscountVoucherTransfer $discountVoucherTransfer)
+    {
+        $voucherEntity = $this->createDiscountVoucherEntity();
+        $this->hydrateDiscountVoucherEntity($discountVoucherTransfer, $voucherEntity);
+        $voucherEntity->save();
+
+        return $voucherEntity;
     }
 
     /**
@@ -191,33 +199,22 @@ class VoucherEngine implements VoucherEngineInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
-     */
-    public function createVoucherCode(DiscountVoucherTransfer $discountVoucherTransfer)
-    {
-        $voucherEntity = new SpyDiscountVoucher();
-        $voucherEntity->fromArray($discountVoucherTransfer->toArray());
-
-        $voucherEntity
-            ->setFkDiscountVoucherPool($discountVoucherTransfer->getFkDiscountVoucherPool())
-            ->setIsActive(true)
-            ->save();
-
-        return $voucherEntity;
-    }
-
-    /**
      * @param int $length
      *
+     * @throws \Spryker\Zed\Discount\Business\Exception\VoucherEngineException
+     *
      * @return string
+     *
      */
     protected function getRandomVoucherCode($length)
     {
         $allowedCharacters = $this->discountConfig->getVoucherCodeCharacters();
+
+        if (!$allowedCharacters) {
+            throw new VoucherEngineException(
+                'Configuration for voucher code characters missing.'
+            );
+        }
 
         $consonants = $allowedCharacters[DiscountConfig::KEY_VOUCHER_CODE_CONSONANTS];
         $vowels = $allowedCharacters[DiscountConfig::KEY_VOUCHER_CODE_VOWELS];
@@ -261,7 +258,7 @@ class VoucherEngine implements VoucherEngineInterface
             return $customCode . $code;
         }
 
-        return str_replace($this->discountConfig->getVoucherPoolTemplateReplacementString(), $code, $customCode);
+        return str_replace($replacementString, $code, $customCode);
     }
 
     /**
@@ -296,6 +293,28 @@ class VoucherEngine implements VoucherEngineInterface
     protected function getConnection()
     {
         return $this->queryContainer->getConnection();
+    }
+
+    /**
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
+     */
+    protected function createDiscountVoucherEntity()
+    {
+        return new SpyDiscountVoucher();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     * @param SpyDiscountVoucher $voucherEntity
+     *
+     * @return void
+     */
+    protected function hydrateDiscountVoucherEntity(
+        DiscountVoucherTransfer $discountVoucherTransfer,
+        SpyDiscountVoucher $voucherEntity
+    ) {
+        $voucherEntity->fromArray($discountVoucherTransfer->toArray());
+        $voucherEntity->setIsActive(true);
     }
 
 }
