@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryFacadeInterface;
 
 class CmsToGlossaryBridge implements CmsToGlossaryInterface
 {
