@@ -10,6 +10,8 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface;
+use Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface;
 
 abstract class AbstractTouchUpdater implements TouchUpdaterInterface
 {
@@ -32,43 +34,31 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     protected $touchKeyColumnName;
 
     /**
+     * @var string
+     */
+    protected $bulkTouchUpdateQuery;
+
+    /**
+     * @var string
+     */
+    protected $bulkTouchDeleteQuery;
+
+    /**
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
     abstract protected function createTouchKeyEntity();
 
     /**
-     * @param array $idsToDelete
-     *
-     * @return string
+     * @param BulkUpdateTouchKeyByIdQueryInterface $bulkTouchUpdateQuery
+     * @param BulkDeleteTouchByIdQueryInterface    $bulkTouchDeleteQuery
      */
-    protected function getDeleteSql(array $idsToDelete)
+    public function __construct(
+        BulkUpdateTouchKeyByIdQueryInterface $bulkTouchUpdateQuery,
+        BulkDeleteTouchByIdQueryInterface $bulkTouchDeleteQuery
+    )
     {
-        $sql = implode(',', $idsToDelete);
-        $sql = rtrim($sql, ',');
-
-        return sprintf(
-            "DELETE FROM %s WHERE %s IN (%s); \n",
-            $this->touchKeyTableName,
-            self::FK_TOUCH,
-            $sql
-        );
-    }
-
-    /**
-     * @param string $idKey
-     * @param string $key
-     *
-     * @return string
-     */
-    protected function getUpdateSql($idKey, $key)
-    {
-        return sprintf(
-            "UPDATE %s SET key = '%s' WHERE %s = '%s'; \n",
-            $this->touchKeyTableName,
-            $key,
-            $this->touchKeyIdColumnName,
-            $idKey
-        );
+        $this->bulkTouchUpdateQuery = $bulkTouchUpdateQuery;
+        $this->bulkTouchDeleteQuery = $bulkTouchDeleteQuery;
     }
 
     /**
@@ -82,12 +72,16 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      */
     public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
     {
-        $updateSql = '';
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
             $idKey = $this->getCollectorKeyFromData($touchData);
 
             if ($idKey !== null) {
-                $updateSql .= $this->getUpdateSql($idKey, $key);
+                $this->bulkTouchUpdateQuery->addQuery(
+                    $this->touchKeyTableName,
+                    $key,
+                    $this->touchKeyIdColumnName,
+                    $idKey
+                );
             } else {
                 /** @var \Orm\Zed\Touch\Persistence\SpyTouchStorage|\Orm\Zed\Touch\Persistence\SpyTouchSearch $entity */
                 $entity = $this->createTouchKeyEntity();
@@ -98,6 +92,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
             }
         }
 
+        $updateSql = $this->bulkTouchUpdateQuery->getRawSqlString();
         if (trim($updateSql) !== '' && $connection !== null) {
             $connection->exec($updateSql);
         }
@@ -122,7 +117,14 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
         }
 
         if (!empty($idsToDelete) && $connection !== null) {
-            $sql = $this->getDeleteSql($idsToDelete);
+            $sql = $this->bulkTouchDeleteQuery
+                ->addQuery(
+                    $this->touchKeyTableName,
+                    static::FK_TOUCH,
+                    $idsToDelete
+                )
+                ->getRawSqlString();
+
             $connection->exec($sql);
         }
     }

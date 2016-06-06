@@ -160,7 +160,10 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExporterWriterSearchTouchUpdater()
     {
-        return new SearchTouchUpdater();
+        return new SearchTouchUpdater(
+            $this->createBulkUpdateTouchQuery(),
+            $this->createBulkDeleteTouchQuery()
+        );
     }
 
     /**
@@ -168,7 +171,10 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExporterWriterStorageTouchUpdater()
     {
-        return new StorageTouchUpdater();
+        return new StorageTouchUpdater(
+            $this->createBulkUpdateTouchQuery(),
+            $this->createBulkDeleteTouchQuery()
+        );
     }
 
     /**
@@ -304,6 +310,64 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     protected function createSearchMarkerKeyBuilder()
     {
         return new SearchMarkerKeyBuilder();
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     *
+     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
+     */
+    protected function createBulkUpdateTouchQuery()
+    {
+        $className = CollectorConfig::COLLECTOR_BULK_UPDATE_QUERY_CLASS;
+
+        $classList = $this->getConfig()->getCollectorBulkQueryClassNames(
+            $this->getCurrentDatabaseEngineName()
+        );
+
+        if (!array_key_exists($className, $classList)) {
+            throw new \InvalidArgumentException('Invalid StoragePdoQueryAdapter name: ' . $className);
+        }
+
+        $bulkUpdateClassName = $classList[$className];
+        return new $bulkUpdateClassName();
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     *
+     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
+     */
+    protected function createBulkDeleteTouchQuery()
+    {
+        $className = CollectorConfig::COLLECTOR_BULK_DELETE_QUERY_CLASS;
+
+        $classList = $this->getConfig()->getCollectorBulkQueryClassNames(
+            $this->getCurrentDatabaseEngineName()
+        );
+
+        if (!array_key_exists($className, $classList)) {
+            throw new \InvalidArgumentException('Invalid StoragePdoQueryAdapter name: ' . $className);
+        }
+
+        $bulkDeleteClassName = $classList[$className];
+        return new $bulkDeleteClassName();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentDatabaseEngineName()
+    {
+        return $this->getPropelFacade()->getCurrentDatabaseEngineName();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\PropelFacadeInterface
+     */
+    protected function getPropelFacade()
+    {
+        return $this->getProvidedDependency(CollectorDependencyProvider::FACADE_PROPEL);
     }
 
     /**

@@ -9,6 +9,8 @@ namespace Spryker\Zed\Collector;
 
 use Spryker\Shared\Collector\CollectorConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkDeleteTouchByIdQuery;
+use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkUpdateTouchKeyByIdQuery;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CollectorConfig extends AbstractBundleConfig
@@ -27,6 +29,9 @@ class CollectorConfig extends AbstractBundleConfig
     const COLLECTOR_TYPE_BLOCK = 'block';
     const COLLECTOR_TYPE_REDIRECT = 'redirect';
     const COLLECTOR_TYPE_URL = 'url';
+
+    const COLLECTOR_BULK_DELETE_QUERY_CLASS = 'BulkDeleteTouchByIdQuery';
+    const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'BulkUpdateTouchKeyByIdQuery';
 
     /**
      * @return string
@@ -91,6 +96,24 @@ class CollectorConfig extends AbstractBundleConfig
     public function getNumberOfReplicas()
     {
         return 1;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCollectorBulkQueryClassNames($dbEngineName)
+    {
+        $data = [
+            'MySql' => [
+
+            ],
+            'PostgreSql' => [
+                static::COLLECTOR_BULK_DELETE_QUERY_CLASS => BulkDeleteTouchByIdQuery::class,
+                static::COLLECTOR_BULK_UPDATE_QUERY_CLASS => BulkUpdateTouchKeyByIdQuery::class
+            ]
+        ];
+
+        return $data[$dbEngineName];
     }
 
 }
