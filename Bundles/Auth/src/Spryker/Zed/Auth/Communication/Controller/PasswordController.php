@@ -37,7 +37,7 @@ class PasswordController extends AbstractController
             $formData = $resetRequestForm->getData();
             $this->getFacade()->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL]);
             $this->addSuccessMessage(
-                'If there is an account associated with this email, you will receive a mail with a further instructions.'
+                'If there is an account associated with this email, you will receive an Email with further instructions.'
             );
         }
 
