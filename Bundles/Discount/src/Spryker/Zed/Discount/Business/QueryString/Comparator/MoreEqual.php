@@ -44,7 +44,7 @@ class MoreEqual implements ComparatorInterface
      */
     public function getExpression()
     {
-        return '>=';
+        return 'greater_or_equal';
     }
 
     /**

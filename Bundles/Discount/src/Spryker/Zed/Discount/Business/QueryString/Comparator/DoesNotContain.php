@@ -45,7 +45,7 @@ class DoesNotContain implements ComparatorInterface
      */
     public function getExpression()
     {
-        return 'does not contain';
+        return 'not_contains';
     }
 
     /**

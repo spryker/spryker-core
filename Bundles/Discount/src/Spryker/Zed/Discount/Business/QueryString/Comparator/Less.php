@@ -44,7 +44,7 @@ class Less implements ComparatorInterface
      */
     public function getExpression()
     {
-        return '<';
+        return 'less';
     }
 
     /**

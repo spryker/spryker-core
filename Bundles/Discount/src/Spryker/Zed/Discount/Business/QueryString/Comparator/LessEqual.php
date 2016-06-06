@@ -45,7 +45,7 @@ class LessEqual implements ComparatorInterface
      */
     public function getExpression()
     {
-        return '<=';
+        return 'less_or_equal';
     }
 
     /**

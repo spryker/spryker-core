@@ -49,7 +49,7 @@ class IsNotIn implements ComparatorInterface
      */
     public function getExpression()
     {
-        return 'is not in';
+        return 'not_in';
     }
 
     /**

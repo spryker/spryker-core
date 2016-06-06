@@ -46,7 +46,7 @@ class Equal implements ComparatorInterface
      */
     public function getExpression()
     {
-        return '=';
+        return 'equal';
     }
 
     /**
