@@ -25,7 +25,7 @@ abstract class AbstractCheckPlugin extends BaseAbstractPlugin implements Conditi
         $orderEntity = $orderItem->getOrder();
 
         $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($orderEntity->toArray(), $ignoreMissingProperties = true);
+        $orderTransfer->fromArray($orderEntity->toArray(), true);
 
         $isSuccess = $this->callFacade($orderTransfer);
 

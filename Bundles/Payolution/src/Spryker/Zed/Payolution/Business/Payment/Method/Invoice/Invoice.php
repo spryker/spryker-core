@@ -60,8 +60,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
 
         $requestData = $this->getBaseTransactionRequest(
             $quoteTransfer->getTotals()->getGrandTotal(),
-            $payolutionTransfer->getCurrencyIso3Code(),
-            $isSalesOrder = null
+            $payolutionTransfer->getCurrencyIso3Code()
         );
         $this->addRequestData(
             $requestData,

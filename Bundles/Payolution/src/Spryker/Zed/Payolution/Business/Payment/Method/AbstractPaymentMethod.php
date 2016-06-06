@@ -71,11 +71,11 @@ abstract class AbstractPaymentMethod
     /**
      * @param int $grandTotal
      * @param string $currency
-     * @param string $idOrder
+     * @param string|null $idOrder
      *
      * @return array
      */
-    protected function getBaseTransactionRequest($grandTotal, $currency, $idOrder)
+    protected function getBaseTransactionRequest($grandTotal, $currency, $idOrder = null)
     {
         return [
             ApiConstants::ACCOUNT_BRAND => $this->getAccountBrand(),
