@@ -70,7 +70,7 @@ class ResetPasswordForm extends AbstractType
                     'userFacade' => $this->userFacade,
                 ]),
             ],
-            'attr' => ['autocomplete' => 'off',]
+            'attr' => ['autocomplete' => 'off', ]
         ]);
 
         return $this;
@@ -88,8 +88,8 @@ class ResetPasswordForm extends AbstractType
                 new NotBlank(),
             ],
             'invalid_message' => 'The password fields must match.',
-            'first_options' => ['label' => 'Password', 'attr' => ['autocomplete' => 'off',]],
-            'second_options' => ['label' => 'Repeat Password', 'attr' => ['autocomplete' => 'off',]],
+            'first_options' => ['label' => 'Password', 'attr' => ['autocomplete' => 'off', ] ],
+            'second_options' => ['label' => 'Repeat Password', 'attr' => ['autocomplete' => 'off', ] ],
             'required' => true,
             'type' => 'password',
         ]);
