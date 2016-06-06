@@ -46,7 +46,7 @@ class ItemByQuantityCollectorPlugin extends AbstractPlugin implements CollectorP
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_STRING,
+            ComparatorOperators::TYPE_INTEGER,
             ComparatorOperators::TYPE_LIST,
         ];
     }

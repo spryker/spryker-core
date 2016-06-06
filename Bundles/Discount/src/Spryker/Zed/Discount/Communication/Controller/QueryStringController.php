@@ -31,21 +31,11 @@ class QueryStringController extends AbstractController
     {
         $type = $request->query->get(self::URL_PARAM_TYPE);
 
-        $ruleFields = $this->getFacade()->getQueryStringFieldsByType($type);
+        $transformer = $this->getFactory()->createJavascriptQueryBuilderTransformer();
 
-        $transformed = [];
-        foreach ($ruleFields as $ruleField) {
-
-            $fieldTransformed['id'] = $ruleField;
-            $fieldTransformed['label'] = $ruleField;
-            $fieldTransformed['type'] = 'string';
-            $comparators = $this->getFacade()->getQueryStringFieldExpressionsForField($type, $ruleField);
-            $fieldTransformed['comparators'] = $comparators;
-
-            $transformed[] = $fieldTransformed;
-        }
-
-        return new JsonResponse($transformed);
+        return new JsonResponse(
+            $transformer->getFilters($type)
+        );
     }
 
     /**

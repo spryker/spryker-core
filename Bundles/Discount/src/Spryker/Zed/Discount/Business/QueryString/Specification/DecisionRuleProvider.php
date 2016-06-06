@@ -13,7 +13,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
-class DecisionRuleProvider extends BaseSpecificationProvider implements SpecificationProviderInterface
+class DecisionRuleProvider implements SpecificationProviderInterface
 {
 
     /**
@@ -62,8 +62,7 @@ class DecisionRuleProvider extends BaseSpecificationProvider implements Specific
     {
         foreach ($this->decisionRulePlugins as $decisionRulePlugin) {
 
-            $clauseFieldName = $this->getClauseFieldName($clauseTransfer);
-            if (strcasecmp($decisionRulePlugin->getFieldName(), $clauseFieldName) === 0) {
+            if (strcasecmp($decisionRulePlugin->getFieldName(), $clauseTransfer->getField()) === 0) {
                 return new DecisionRuleContext($decisionRulePlugin, $clauseTransfer);
             }
         }

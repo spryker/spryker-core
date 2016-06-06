@@ -31,7 +31,51 @@ SprykerQueryBuilder.prototype.createBuilder = function(){
     var self = this;
     $.get(self.getFiltersUrl).done(function(filters){
         $(self.builder).queryBuilder({
-            filters: filters
+            filters: filters,
+            sqlOperators: {
+              contains: {
+                  op : 'CONTAINS ?',
+                  mod: '{0}'
+              },
+              not_contains: {
+                  op : 'DOES NOT CONTAIN ?',
+                  mod: '{0}'
+              },
+              in: {
+                  op : 'IS IN ?',
+                  sep: ', '
+              },
+              not_in: {
+                  op : 'IS NOT IN ?',
+                  sep: ', '
+              }
+            },
+            sqlRuleOperator: {
+               'CONTAINS': function(v) {
+                   return {
+                       val: v,
+                       op: 'contains'
+                   };
+               },
+               'DOES NOT CONTAIN': function(v) {
+                   return {
+                       val: v,
+                       op: 'not_contains'
+                   };
+               },
+               'IS IN': function(v) {
+                 return {
+                     val: v,
+                     op: 'in'
+                 };
+               },
+               'IS NOT IN': function(v) {
+                  return {
+                     val: v,
+                     op: 'not_in'
+                  };
+               }
+            }
         });
         self.builder.queryBuilder('setRulesFromSQL', self.sql);
     });

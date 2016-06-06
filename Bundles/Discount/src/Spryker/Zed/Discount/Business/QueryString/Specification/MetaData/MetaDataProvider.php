@@ -9,12 +9,13 @@ namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
+use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface;
 
 class MetaDataProvider implements MetaDataProviderInterface
 {
 
     /**
-     *
      * @var array|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
      */
     protected $specificationPlugins = [];
@@ -51,7 +52,14 @@ class MetaDataProvider implements MetaDataProviderInterface
     {
         $queryStringFields = [];
         foreach ($this->specificationPlugins as $specificationPlugin) {
-            $queryStringFields[] = $specificationPlugin->getFieldName();
+            if ($specificationPlugin instanceof DiscountRuleWithAttributesPluginInterface) {
+                $queryStringFields = array_merge(
+                    $queryStringFields,
+                    $this->getAttributeTypes($specificationPlugin)
+                );
+            } else {
+                $queryStringFields[] = $specificationPlugin->getFieldName();
+            }
         }
 
         return $queryStringFields;
@@ -62,21 +70,25 @@ class MetaDataProvider implements MetaDataProviderInterface
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
-     * @return array|\string[]
+     * @return array|string[]
      *
      */
     public function getAcceptedTypesByFieldName($fieldName)
     {
-        foreach ($this->specificationPlugins as $specificationPlugins) {
-            if ($fieldName === $specificationPlugins->getFieldName()) {
-                return $specificationPlugins->acceptedDataTypes();
+        foreach ($this->specificationPlugins as $specificationPlugin) {
+            if ($specificationPlugin instanceof DiscountRuleWithAttributesPluginInterface) {
+                list($fieldName, $attribute) = explode('.', $fieldName) ;
+            }
+
+            if ($fieldName === $specificationPlugin->getFieldName()) {
+                return $specificationPlugin->acceptedDataTypes();
             }
         }
 
-        throw new QueryStringException(
+        throw new QueryStringException(sprintf(
             'No specification plugin found for "%s" field.',
             $fieldName
-        );
+        ));
     }
 
     /**
@@ -105,6 +117,20 @@ class MetaDataProvider implements MetaDataProviderInterface
     public function getLogicalComparators()
     {
         return $this->logicalComparators->getLogicalOperators();
+    }
+
+    /**
+     * @param DecisionRulePluginInterface|DiscountRuleWithAttributesPluginInterface $specificationPlugin
+     *
+     * @return array
+     */
+    protected function getAttributeTypes($specificationPlugin)
+    {
+        $attributeFields = [];
+        foreach ($specificationPlugin->getAttributeTypes() as $attributeType) {
+            $attributeFields[] = $specificationPlugin->getFieldName() . '.' . $attributeType;
+        }
+        return $attributeFields;
     }
 
 }

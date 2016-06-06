@@ -14,7 +14,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorOrSpecification;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
-class CollectorProvider extends BaseSpecificationProvider implements SpecificationProviderInterface
+class CollectorProvider implements SpecificationProviderInterface
 {
 
     /**
@@ -62,10 +62,7 @@ class CollectorProvider extends BaseSpecificationProvider implements Specificati
     public function getSpecificationContext(ClauseTransfer $clauseTransfer)
     {
         foreach ($this->collectorPlugins as $collectorPlugin) {
-
-            $clauseFieldName = $this->getClauseFieldName($clauseTransfer);
-
-            if (strcasecmp($collectorPlugin->getFieldName(), $clauseFieldName) === 0) {
+            if (strcasecmp($collectorPlugin->getFieldName(), $clauseTransfer->getField()) === 0) {
                 return new CollectorContext($collectorPlugin, $clauseTransfer);
             }
         }

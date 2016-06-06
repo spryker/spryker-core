@@ -17,6 +17,7 @@ use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider
 use Spryker\Zed\Discount\Communication\Form\DiscountForm;
 use Spryker\Zed\Discount\Communication\Form\GeneralForm;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
+use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformer;
 use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
@@ -163,6 +164,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function getCalculatorPlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformer
+     */
+    public function createJavascriptQueryBuilderTransformer()
+    {
+        return new JavascriptQueryBuilderTransformer($this->getFacade());
     }
 
 }

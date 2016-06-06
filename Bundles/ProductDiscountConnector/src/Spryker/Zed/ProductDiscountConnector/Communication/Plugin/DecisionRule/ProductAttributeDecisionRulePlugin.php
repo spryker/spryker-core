@@ -11,12 +11,13 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade getFacade()
  */
-class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
+class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithAttributesPluginInterface
 {
 
     /**
@@ -30,10 +31,8 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
         QuoteTransfer $quoteTransfer,
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
-    )
-    {
-        return $this->getFacade()
-            ->isProductAttributeSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    ) {
+        return $this->getFacade()->isProductAttributeSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
@@ -43,7 +42,7 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
      */
     public function getFieldName()
     {
-        return 'attribute.*';
+        return 'attribute';
     }
 
     /**
@@ -55,7 +54,16 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
     {
         return [
             ComparatorOperators::TYPE_STRING,
+            ComparatorOperators::TYPE_INTEGER,
             ComparatorOperators::TYPE_LIST,
         ];
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getAttributeTypes()
+    {
+        return $this->getFacade()->getAttributeTypes();
     }
 }

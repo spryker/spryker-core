@@ -26,7 +26,6 @@ interface DecisionRulePluginInterface
         ClauseTransfer $clauseTransfer
     );
 
-
     /**
      * Name of field as used in query string
      *

@@ -15,6 +15,7 @@ class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependenc
 {
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
     const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,4 +36,5 @@ class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependenc
             );
         };
     }
+
 }

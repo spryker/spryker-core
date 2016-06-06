@@ -12,7 +12,7 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 class Tokenizer implements TokenizerInterface
 {
 
-    const STRING_TO_TOKENS_REGEXP = '((\(|\)|".*?")|\s+)';
+    const STRING_TO_TOKENS_REGEXP = '((\(|\)|["\'].*?["\'])|\s+)';
 
     /**
      * @param string $queryString

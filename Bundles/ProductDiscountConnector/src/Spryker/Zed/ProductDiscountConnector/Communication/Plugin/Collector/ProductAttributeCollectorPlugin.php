@@ -8,22 +8,24 @@
 namespace Spryker\Zed\ProductDiscountConnector\Communication\Plugin\Collector;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade getFacade()
  */
-class ProductAttributeCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
+class ProductAttributeCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface, DiscountRuleWithAttributesPluginInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param ClauseTransfer $clauseTransfer
      *
-     * @return array
+     * @return DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
@@ -37,7 +39,7 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
      */
     public function getFieldName()
     {
-        return 'attribute.*';
+        return 'attribute';
     }
 
     /**
@@ -49,7 +51,16 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
     {
         return [
             ComparatorOperators::TYPE_STRING,
+            ComparatorOperators::TYPE_INTEGER,
             ComparatorOperators::TYPE_LIST,
         ];
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getAttributeTypes()
+    {
+        return $this->getFacade()->getAttributeTypes();
     }
 }

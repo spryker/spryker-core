@@ -108,14 +108,19 @@ class ClauseValidator implements ClauseValidatorInterface
      */
     protected function validateIfFieldIsRegistered(ClauseTransfer $clauseTransfer)
     {
+        $clauseField = $clauseTransfer->getField();
+        if ($clauseTransfer->getAttribute()) {
+            $clauseField = $clauseField . '.' . $clauseTransfer->getAttribute();
+        }
+
         foreach ($this->metaDataProvider->getAvailableFields() as $field) {
-            if ($field === $clauseTransfer->getField()) {
+            if ($field === $clauseField) {
                 return;
             }
         }
 
         throw new QueryStringException(sprintf(
-            'Could not find value "%s" as a clause field.',
+            'Could not found for field with name "%s".',
             $clauseTransfer->getField()
         ));
     }
