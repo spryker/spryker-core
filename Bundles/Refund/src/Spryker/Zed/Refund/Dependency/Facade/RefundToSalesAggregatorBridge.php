@@ -11,12 +11,12 @@ class RefundToSalesAggregatorBridge implements RefundToSalesAggregatorInterface
 {
 
     /**
-     * @var \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade
+     * @var \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacadeInterface
      */
     protected $salesAggregatorFacade;
 
     /**
-     * @param \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade
+     * @param \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacadeInterface $salesAggregatorFacade
      */
     public function __construct($salesAggregatorFacade)
     {

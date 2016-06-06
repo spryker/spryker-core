@@ -13,12 +13,12 @@ class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
 {
 
     /**
-     * @var \Spryker\Zed\Glossary\Business\GlossaryFacade
+     * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\Glossary\Business\GlossaryFacade $glossaryFacade
+     * @param \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {

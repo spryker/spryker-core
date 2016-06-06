@@ -25,8 +25,6 @@ class ResetPasswordForm extends AbstractType
     protected $userFacade;
 
     /**
-     * ResetPasswordForm constructor.
-     *
      * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      */
     public function __construct(UserFacade $userFacade)

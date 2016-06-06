@@ -13,12 +13,12 @@ class CartToMessengerBridge implements CartToMessengerBridgeInterface
 {
 
     /**
-     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @var \Spryker\Zed\Messenger\Business\MessengerFacadeInterface
      */
     protected $messengerFacade;
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\MessengerFacade $messengerFacade
+     * @param \Spryker\Zed\Messenger\Business\MessengerFacadeInterface $messengerFacade
      */
     public function __construct($messengerFacade)
     {

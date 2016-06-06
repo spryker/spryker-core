@@ -11,14 +11,12 @@ class ProductSearchToLocaleBridge implements ProductSearchToLocaleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * CategoryToLocaleBridge constructor.
-     *
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
     public function __construct($localeFacade)
     {

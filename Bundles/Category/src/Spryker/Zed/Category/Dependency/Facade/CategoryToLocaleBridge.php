@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Category\Dependency\Facade;
 
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
-
 class CategoryToLocaleBridge implements CategoryToLocaleInterface
 {
 
@@ -20,7 +18,7 @@ class CategoryToLocaleBridge implements CategoryToLocaleInterface
     /**
      * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
-    public function __construct(LocaleFacadeInterface $localeFacade)
+    public function __construct($localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }
