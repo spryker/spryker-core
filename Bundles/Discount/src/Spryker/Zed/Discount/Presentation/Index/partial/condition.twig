@@ -3,28 +3,32 @@
 
 {{ form_row(discountForm.discountCondition) }}
 
-<p>
- {{ 'discount.edit.condition.how_to' | trans }}
-</p>
+<div id="builder_condition"></div>
 
-{{ 'Available conditions:' | trans }}
-<ul>
-{% for rule in decisionRuleTypes %}
-    <li>{{ rule }}</li>
-{% endfor %}
-</ul>
-{{ 'Condition with value "*" matches all items. ' | trans }} <br />
+<button type="button" class="btn btn-sm btn-success" id="btn-condition-get">Save Query Configuration</button>
 
-{{ 'Boolean comparators:' | trans }}
-<ul>
-    {% for comparator in booleanComparators %}
-        <li>{{ comparator }}</li>
-    {% endfor %}
-</ul>
+{#<p>#}
+ {#{{ 'discount.edit.condition.how_to' | trans }}#}
+{#</p>#}
 
-{{ 'Comparator expressions:' | trans }}
-<ul>
-    {% for comparatorExpression in comparatorExpressions %}
-        <li>{{ comparatorExpression }}</li>
-    {% endfor %}
-</ul>
+{#{{ 'Available conditions:' | trans }}#}
+{#<ul>#}
+{#{% for rule in decisionRuleTypes %}#}
+    {#<li>{{ rule }}</li>#}
+{#{% endfor %}#}
+{#</ul>#}
+{#{{ 'Condition with value "*" matches all items. ' | trans }} <br />#}
+
+{#{{ 'Boolean comparators:' | trans }}#}
+{#<ul>#}
+    {#{% for comparator in booleanComparators %}#}
+        {#<li>{{ comparator }}</li>#}
+    {#{% endfor %}#}
+{#</ul>#}
+
+{#{{ 'Comparator expressions:' | trans }}#}
+{#<ul>#}
+    {#{% for comparatorExpression in comparatorExpressions %}#}
+        {#<li>{{ comparatorExpression }}</li>#}
+    {#{% endfor %}#}
+{#</ul>#}

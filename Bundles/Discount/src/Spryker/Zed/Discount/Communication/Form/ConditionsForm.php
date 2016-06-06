@@ -56,6 +56,9 @@ class ConditionsForm extends AbstractType
                     QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_DECISION_RULE,
                 ]),
             ],
+            'attr' => [
+                'data-url' => '/discount/query-string/rule-fields/?type=' . MetaProviderFactory::TYPE_COLLECTOR,
+            ],
         ]);
 
         return $this;
