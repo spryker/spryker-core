@@ -259,7 +259,6 @@ class Customer
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
