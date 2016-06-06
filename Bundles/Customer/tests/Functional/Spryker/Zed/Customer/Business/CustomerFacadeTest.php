@@ -26,6 +26,7 @@ class CustomerFacadeTest extends Test
 {
 
     const TESTER_EMAIL = 'tester@spryker.com';
+    const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
     const TESTER_PASSWORD = 'tester';
     const TESTER_NAME = 'Tester';
     const TESTER_CITY = 'Testcity';
@@ -242,6 +243,18 @@ class CustomerFacadeTest extends Test
         $this->customerFacade->sendPasswordRestoreMail($customerTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
         $customerResponseTransfer = $this->customerFacade->restorePassword($customerTransfer);
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRestorePasswordNonExistent()
+    {
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setEmail(self::TESTER_NON_EXISTING_EMAIL);
+
+        $customerResponseTransfer = $this->customerFacade->sendPasswordRestoreMail($customerTransfer);
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
     }
 
