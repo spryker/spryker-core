@@ -271,13 +271,6 @@ class Customer
         try {
             $customerEntity = $this->getCustomer($customerTransfer);
         } catch (CustomerNotFoundException $e) {
-            $customerError = new CustomerErrorTransfer();
-            $customerError->setMessage(Messages::CUSTOMER_EMAIL_INVALID);
-
-            $customerResponseTransfer
-                ->setIsSuccess(false)
-                ->addError($customerError);
-
             return $customerResponseTransfer;
         }
 
