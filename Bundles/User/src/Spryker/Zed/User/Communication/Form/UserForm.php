@@ -129,8 +129,8 @@ class UserForm extends AbstractType
                     new NotBlank(),
                 ],
                 'invalid_message' => 'The password fields must match.',
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options' => ['label' => 'Password', 'attr' => ['autocomplete' => 'off',],],
+                'second_options' => ['label' => 'Repeat Password', 'attr' => ['autocomplete' => 'off',],],
                 'required' => true,
                 'type' => 'password',
             ]);
