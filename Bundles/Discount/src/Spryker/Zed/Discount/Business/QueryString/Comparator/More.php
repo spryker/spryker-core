@@ -46,7 +46,7 @@ class More implements ComparatorInterface
      */
     public function getExpression()
     {
-        return 'greater';
+        return '>';
     }
 
     /**

@@ -49,7 +49,7 @@ class IsIn implements ComparatorInterface
      */
     public function getExpression()
     {
-        return 'in';
+        return 'is in';
     }
 
     /**

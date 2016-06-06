@@ -45,7 +45,7 @@ class NotEqual implements ComparatorInterface
      */
     public function getExpression()
     {
-        return 'not_equal';
+        return '!=';
     }
 
     /**
