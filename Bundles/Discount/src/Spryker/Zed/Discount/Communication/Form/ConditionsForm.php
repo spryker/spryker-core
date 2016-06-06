@@ -48,13 +48,16 @@ class ConditionsForm extends AbstractType
      */
     protected function addDecisionRuleQueryString(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DECISION_RULE_QUERY_STRING, 'textarea', [
+        $builder->add(self::FIELD_DECISION_RULE_QUERY_STRING, 'hidden', [
             'label' => 'Apply when',
             'constraints' => [
                 new QueryString([
                     QueryString::OPTION_DISCOUNT_FACADE => $this->discountFacade,
                     QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_DECISION_RULE,
                 ]),
+            ],
+            'attr' => [
+                'data-url' => '/discount/query-string/rule-fields/?type=' . MetaProviderFactory::TYPE_COLLECTOR,
             ],
         ]);
 

@@ -6,31 +6,29 @@
 'use strict';
 
 require('ZedGui');
-//require('dot/doT');
-//require('jquery-extendext');
 window.SQLParser = require('sql-parser/browser/sql-parser');
 require('jquery-query-builder');
 require('../../sass/main.scss');
 
-
-//var QueryBuilder = require('./legacy/query-builder.js');
-
-function SprykerQueryBuilder(sqlQuery, ajaxUrl){
+function SprykerQueryBuilder(sqlQuery, ajaxUrl, inputElement, targetElement){
     var self = this;
     this.getFiltersUrl = ajaxUrl;
     this.sql = sqlQuery;
-    this.builder = '';
+    this.builder = null;
+    this.inputElement = inputElement;
     this.init = function(){
-        self.builder = $('#builder');
+        self.builder = $(targetElement);
         self.createBuilder();
     };
+
+    this.init();
 }
 
 SprykerQueryBuilder.prototype.createBuilder = function(){
 
     var self = this;
     $.get(self.getFiltersUrl).done(function(filters){
-        $(self.builder).queryBuilder({
+        self.builder.queryBuilder({
             filters: filters,
             sqlOperators: {
               contains: {
@@ -86,21 +84,29 @@ SprykerQueryBuilder.prototype.saveQuery = function(){
     var result = this.builder.queryBuilder('getSQL', false);
 
     if (result.sql.length) {
-        $('#discount_discountCalculator_collector_query_string').val(result.sql);
+        this.inputElement.val(result.sql);
     }
 };
 
-var QueryBuilder = SprykerQueryBuilder;
-var sqlBuilder;
+var sqlCalculationBuilder;
+var sqlConditionBuilder;
 
-function loadSqlQuery(){
+function loadSqlCalculationQuery(){
 
     var inputElement = $('#discount_discountCalculator_collector_query_string');
     var sqlRules = inputElement.val();
     var ajaxUrl = inputElement.data('url');
 
-    sqlBuilder = new QueryBuilder(sqlRules, ajaxUrl);
-    sqlBuilder.init();
+    sqlCalculationBuilder = new SprykerQueryBuilder(sqlRules, ajaxUrl, inputElement, '#builder_calculation');
+}
+
+function loadSqlConditionsQuery(){
+
+    var inputElement = $('#discount_discountCondition_decision_rule_query_string');
+    var sqlRules = inputElement.val();
+    var ajaxUrl = inputElement.data('url');
+
+    sqlConditionBuilder = new SprykerQueryBuilder(sqlRules, ajaxUrl, inputElement, '#builder_condition');
 }
 
 $(document).ready(function(){
@@ -146,13 +152,13 @@ $(document).ready(function(){
         }
     });
 
-    $('#btn-get').on('click', function() {
-        sqlBuilder.saveQuery();
+    $('#btn-calculation-get').on('click', function() {
+        sqlCalculationBuilder.saveQuery();
+    });
+    $('#btn-condition-get').on('click', function() {
+        sqlConditionBuilder.saveQuery();
     });
 
-    //$('#reload').on('click', function(){
-    //    loadSqlQuery();
-    //});
-
-    loadSqlQuery();
+    loadSqlCalculationQuery();
+    loadSqlConditionsQuery();
 });
