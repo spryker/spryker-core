@@ -48,7 +48,7 @@ class ConditionsForm extends AbstractType
      */
     protected function addDecisionRuleQueryString(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DECISION_RULE_QUERY_STRING, 'textarea', [
+        $builder->add(self::FIELD_DECISION_RULE_QUERY_STRING, 'hidden', [
             'label' => 'Apply when',
             'constraints' => [
                 new QueryString([

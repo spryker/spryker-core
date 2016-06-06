@@ -151,7 +151,7 @@ class CalculatorForm extends AbstractType
      */
     protected function addCollectorQueryString(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_COLLECTOR_QUERY_STRING, 'textarea', [
+        $builder->add(self::FIELD_COLLECTOR_QUERY_STRING, 'hidden', [
             'label' => 'Apply to*',
             'constraints' => [
                 new NotBlank(),
