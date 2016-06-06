@@ -118,13 +118,19 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         $path = null;
 
         if (SessionConstants::SESSION_HANDLER_REDIS === $saveHandler) {
-            $path = sprintf(
-                '%s://h:%s@%s:%s',
-                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
-                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD),
-                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
-                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT)
-            );
+            $path = Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
+                . '://' . Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST)
+                . ':' . Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT);
+
+            if (Config::hasKey(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD)) {
+                $path = sprintf(
+                    '%s://h:%s@%s:%s',
+                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
+                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD),
+                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
+                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT)
+                );
+            }
         }
 
         if (SessionConstants::SESSION_HANDLER_FILE === $saveHandler) {
