@@ -49,7 +49,9 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
         $spySalesOrderItem = $this->createOrderItem();
 
         $itemSplit = $this->createOrderItemSplitter($spySalesOrderItem, 4);
-        $splitResponse = $itemSplit->split($orderItemId = 1, $quantity = 1);
+        $orderItemId = 1;
+        $quantity = 1;
+        $splitResponse = $itemSplit->split($orderItemId, $quantity);
 
         $this->assertTrue($splitResponse->getSuccess());
         $this->assertNotEmpty($splitResponse->getSuccessMessage());

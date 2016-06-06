@@ -134,8 +134,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
 
         $requestData = $this->getBaseTransactionRequest(
             $quoteTransfer->getTotals()->getGrandTotal(),
-            $payolutionTransfer->getCurrencyIso3Code(),
-            $isSalesOrder = null
+            $payolutionTransfer->getCurrencyIso3Code()
         );
         $this->addRequestData(
             $requestData,

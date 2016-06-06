@@ -38,7 +38,7 @@ class ItemGrouperFacade extends AbstractFacade implements ItemGrouperFacadeInter
     public function groupItemsByKeyForNewCollection(GroupableContainerTransfer $groupableItems)
     {
         return $this->getFactory()
-            ->createGrouper($regroupAllItemCollection = true)
+            ->createGrouper(true)
             ->groupByKey($groupableItems);
     }
 
