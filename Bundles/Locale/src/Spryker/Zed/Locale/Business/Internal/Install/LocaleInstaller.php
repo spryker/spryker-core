@@ -49,6 +49,9 @@ class LocaleInstaller extends AbstractInstaller
      */
     protected function installLocales()
     {
+        $this->localeQueryContainer->getConnection()
+            ->beginTransaction();
+
         $localeFile = fopen($this->localeFile, 'r');
 
         while (!feof($localeFile)) {
@@ -63,6 +66,9 @@ class LocaleInstaller extends AbstractInstaller
                 $entity->save();
             }
         }
+
+        $this->localeQueryContainer->getConnection()
+            ->commit();
     }
 
 }

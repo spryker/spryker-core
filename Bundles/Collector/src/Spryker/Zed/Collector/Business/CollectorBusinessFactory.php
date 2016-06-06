@@ -315,7 +315,9 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         $installer = new InstallElasticsearch(
             StorageInstanceBuilder::getElasticsearchInstance(),
-            $this->getConfig()->getSearchIndexName()
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getNumberOfShards(),
+            $this->getConfig()->getNumberOfReplicas()
         );
 
         $installer->setMessenger($messenger);
