@@ -1,0 +1,28 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Product' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ createActionButton('/product/add', 'Create Product' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Products' } %}
+
+        {% block widget_content %}
+
+            {{ products | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productmanagement-main.js"></script>
+{% endblock %}
+

@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\ProductManagement\Communication\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
+class ProductLocalizedForm extends AbstractType
+{
+
+    const FIELD_NAME = 'name';
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'localizedProduct';
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $this
+            ->addNameField($builder)
+        ;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addNameField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_NAME, 'text', [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
+
+        return $this;
+    }
+
+}
