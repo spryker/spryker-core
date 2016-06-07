@@ -11,6 +11,8 @@ interface ProductImageQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param int $idProductImageSet
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery

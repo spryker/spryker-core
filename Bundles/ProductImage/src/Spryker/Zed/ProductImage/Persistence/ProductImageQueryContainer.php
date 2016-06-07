@@ -17,6 +17,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
 {
 
     /**
+     * @api
+     *
      * @param int $idProductImageSet
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery

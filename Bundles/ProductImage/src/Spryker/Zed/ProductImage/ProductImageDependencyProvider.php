@@ -9,9 +9,7 @@ namespace Spryker\Zed\ProductImage;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleBridge;
 use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToProductBridge;
-use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToTaxBridge;
 
 class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
 {
