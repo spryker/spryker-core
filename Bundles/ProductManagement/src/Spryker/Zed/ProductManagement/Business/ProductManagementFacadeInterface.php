@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Business;
 
 
-interface ProductManagementInterface
+interface ProductManagementFacadeInterface
 {
 
 

@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 /**
- * @method \Spryker\Zed\ProductManagement\Business\ProductFacade getFacade()
- * @method \Spryker\Zed\ProductManagement\Persistence\ProductQueryContainer getQueryContainer()
- * @method \Spryker\Zed\ProductManagement\Communication\ProductCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacade getFacade()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
@@ -24,35 +24,8 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getFactory()->createProductTable();
-
-        return [
-            'products' => $table->render(),
-        ];
+        die('test');
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function tableAction()
-    {
-        $table = $this->getFactory()->createProductTable();
-
-        return $this->jsonResponse(
-            $table->fetchData()
-        );
-    }
-
-    /**
-     * @throws \ErrorException
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function getCurrentLocale()
-    {
-        return $this->getFactory()
-            ->getLocaleFacade()
-            ->getCurrentLocale();
-    }
 
 }

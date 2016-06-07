@@ -10,10 +10,10 @@ namespace Spryker\Zed\ProductManagement\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\ProductManagement\ProductConfig getConfig()
+ * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  */
-class ProductManagementFactory extends AbstractBusinessFactory
+class ProductManagementBusinessFactory extends AbstractBusinessFactory
 {
 
 
