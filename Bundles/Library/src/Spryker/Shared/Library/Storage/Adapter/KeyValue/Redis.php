@@ -43,7 +43,10 @@ abstract class Redis extends AbstractKeyValue
      */
     public function __destruct()
     {
-        $isPersistent = (bool)Config::get(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
+        $isPersistent = false;
+        if (Config::hasKey(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
+            $isPersistent = (bool)Config::get(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
+        }
 
         if (!$isPersistent && $this->resource) {
             $this->resource->disconnect();

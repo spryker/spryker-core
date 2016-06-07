@@ -60,7 +60,7 @@ class File implements StorageInterface
      */
     protected function getCacheFilename()
     {
-        return DataDirectory::getLocalStoreSpecificPath('cache/autoloader').'/unresolvable.php';
+        return DataDirectory::getLocalStoreSpecificPath('cache/autoloader') . '/unresolvable.php';
     }
 
 }

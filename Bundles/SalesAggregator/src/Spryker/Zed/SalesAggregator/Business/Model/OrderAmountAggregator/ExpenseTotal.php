@@ -22,7 +22,7 @@ class ExpenseTotal implements OrderAmountAggregatorInterface
     protected $salesQueryContainer;
 
     /**
-     * ExpenseTotal constructor.
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
     public function __construct(SalesQueryContainerInterface $salesQueryContainer)
     {

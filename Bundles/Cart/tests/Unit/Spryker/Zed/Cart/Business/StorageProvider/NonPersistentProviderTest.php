@@ -46,9 +46,12 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddExistingItem()
     {
-        $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
+        $itemId = '123';
+        $existingQuantity = 1;
+        $newQuantity = 3;
 
-        $newItem = $this->createItem($itemId, $newQuantity = 3);
+        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
+        $newItem = $this->createItem($itemId, $newQuantity);
         $change = new CartChangeTransfer();
         $change->addItem($newItem);
         $change->setQuote($quoteTransfer);
@@ -72,9 +75,14 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddNewItem()
     {
-        $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
+        $itemId = '123';
+        $newId = '321';
+        $existingQuantity = 1;
+        $newQuantity = 3;
 
-        $newItem = $this->createItem($newId = '321', $newQuantity = 3);
+        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
+
+        $newItem = $this->createItem($newId, $newQuantity);
         $change = new CartChangeTransfer();
         $change->addItem($newItem);
         $change->setQuote($quoteTransfer);
@@ -108,8 +116,12 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemoveExistingItem()
     {
-        $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
-        $newItem = $this->createItem($itemId, $reduceQuantity = 1);
+        $itemId = '123';
+        $existingQuantity = 1;
+        $reduceQuantity = 1;
+
+        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
+        $newItem = $this->createItem($itemId, $reduceQuantity);
         $change = new CartChangeTransfer();
         $change->addItem($newItem);
         $change->setQuote($quoteTransfer);
@@ -123,8 +135,13 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemoveNotExistingItem()
     {
-        $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
-        $newItem = $this->createItem($deleteItemId = '321', $reduceQuantity = 1);
+        $itemId = '123';
+        $existingQuantity = 1;
+        $reduceQuantity = 1;
+        $deleteItemId = '321';
+
+        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
+        $newItem = $this->createItem($deleteItemId, $reduceQuantity);
         $change = new CartChangeTransfer();
         $change->addItem($newItem);
         $change->setQuote($quoteTransfer);
@@ -143,8 +160,12 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testReduceWithMoreThenExists()
     {
-        $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
-        $newItem = $this->createItem($itemId, $reduceQuantity = 3);
+        $itemId = '123';
+        $existingQuantity = 1;
+        $reduceQuantity = 3;
+
+        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
+        $newItem = $this->createItem($itemId, $reduceQuantity);
         $change = new CartChangeTransfer();
         $change->addItem($newItem);
         $change->setQuote($quoteTransfer);
@@ -161,9 +182,14 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testIncreaseWithNegativeValue()
     {
-        $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
+        $itemId = '123';
+        $newId = '123';
+        $existingQuantity = 1;
+        $newQuantity = -3;
 
-        $newItem = $this->createItem($newId = '123', $newQuantity = -3);
+        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
+
+        $newItem = $this->createItem($newId, $newQuantity);
         $change = new CartChangeTransfer();
         $change->addItem($newItem);
         $change->setQuote($quoteTransfer);
@@ -179,9 +205,14 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testIncreaseWithZeroValue()
     {
-        $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
+        $itemId = '123';
+        $newId = '123';
+        $existingQuantity = 1;
+        $newQuantity = 0;
 
-        $newItem = $this->createItem($newId = '123', $newQuantity = 0);
+        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
+
+        $newItem = $this->createItem($newId, $newQuantity);
         $change = new CartChangeTransfer();
         $change->addItem($newItem);
         $change->setQuote($quoteTransfer);
@@ -197,9 +228,14 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecreaseWithNegativeValue()
     {
-        $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
+        $itemId = '123';
+        $newId = '123';
+        $existingQuantity = 1;
+        $newQuantity = -3;
 
-        $newItem = $this->createItem($newId = '123', $newQuantity = -3);
+        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
+
+        $newItem = $this->createItem($newId, $newQuantity);
         $change = new CartChangeTransfer();
         $change->addItem($newItem);
         $change->setQuote($quoteTransfer);
@@ -215,9 +251,14 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecreaseWithZeroValue()
     {
-        $quoteTransfer = $this->createQuoteWithItem($itemId = '123', $existingQuantity = 1);
+        $itemId = '123';
+        $newId = '123';
+        $existingQuantity = 1;
+        $newQuantity = 0;
 
-        $newItem = $this->createItem($newId = '123', $newQuantity = 0);
+        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
+
+        $newItem = $this->createItem($newId, $newQuantity);
         $change = new CartChangeTransfer();
         $change->addItem($newItem);
         $change->setQuote($quoteTransfer);
