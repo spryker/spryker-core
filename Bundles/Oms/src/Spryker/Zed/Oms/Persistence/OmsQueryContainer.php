@@ -31,8 +31,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public function querySalesOrderItemsByState(array $states, $processName)
     {
         return $this->getSalesQueryContainer()->querySalesOrderItem()
-            ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
-            ->joinState(null, $joinType = Criteria::INNER_JOIN)
+            ->joinProcess(null, Criteria::INNER_JOIN)
+            ->joinState(null, Criteria::INNER_JOIN)
             ->where('Process.name = ?', $processName)
             ->where("State.name IN ('" . implode("', '", $states) . "')");
     }

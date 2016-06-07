@@ -11,12 +11,12 @@ class PriceToProductBridge implements PriceToProductInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
+     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
      */
     public function __construct($productFacade)
     {

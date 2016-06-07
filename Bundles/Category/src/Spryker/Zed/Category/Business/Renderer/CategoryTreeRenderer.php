@@ -16,6 +16,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 class CategoryTreeRenderer
 {
 
+    const NODE_HASH_ALGORITHM = 'sha256';
     const UNKNOWN_CATEGORY = 'Unknown Category';
 
     /**
@@ -121,7 +122,7 @@ class CategoryTreeRenderer
      */
     protected function getNodeHash(SpyCategoryNode $node)
     {
-        return sha1($this->getNodeName($node));
+        return hash(static::NODE_HASH_ALGORITHM, $this->getNodeName($node));
     }
 
     /**

@@ -65,7 +65,11 @@ class GlossaryStorage implements GlossaryStorageInterface
             return $this->translations[$keyName];
         }
 
-        return str_replace(array_keys($parameters), array_values($parameters), $this->translations[$keyName]);
+        return str_replace(
+            array_keys($parameters),
+            array_values($parameters),
+            $this->translations[$keyName]
+        );
     }
 
     /**

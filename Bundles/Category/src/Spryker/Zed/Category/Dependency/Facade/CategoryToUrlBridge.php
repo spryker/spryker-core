@@ -14,14 +14,12 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
 {
 
     /**
-     * @var \Spryker\Zed\Url\Business\UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
     protected $urlFacade;
 
     /**
-     * CategoryToUrlBridge constructor.
-     *
-     * @param \Spryker\Zed\Url\Business\UrlFacade $urlFacade
+     * @param \Spryker\Zed\Url\Business\UrlFacadeInterface $urlFacade
      */
     public function __construct($urlFacade)
     {

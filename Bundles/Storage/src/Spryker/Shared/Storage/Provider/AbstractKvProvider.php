@@ -56,13 +56,32 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     {
         switch ($kvName) {
             case self::KV_ADAPTER_REDIS:
-                return [
-                    'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-                    'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
-                    'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
-                ];
+                return $this->getConnectionParameters();
         }
         throw new \ErrorException('Missing implementation for adapter ' . $kvName);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getConnectionParameters()
+    {
+        $config = [
+            'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
+            'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
+            'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+        ];
+
+        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
+        }
+
+        $config['persistent'] = false;
+        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
+            $config['persistent'] = (bool)Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
+        }
+
+        return $config;
     }
 
 }
