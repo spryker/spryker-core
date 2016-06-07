@@ -164,20 +164,7 @@ class CreditCardSubForm extends AbstractSubForm
             'choice',
             [
                 'label' => false,
-                'choices' => [
-                    '01' => '01',
-                    '02' => '02',
-                    '03' => '03',
-                    '04' => '04',
-                    '05' => '05',
-                    '06' => '06',
-                    '07' => '07',
-                    '08' => '08',
-                    '09' => '09',
-                    '10' => '10',
-                    '11' => '11',
-                    '12' => '12',
-                ],
+                'choices' => $this->getMonthChoices(),
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -195,20 +182,12 @@ class CreditCardSubForm extends AbstractSubForm
      */
     protected function addCardExpiresYear(FormBuilderInterface $builder)
     {
-        $currentYear = date('Y');
-
         $builder->add(
             self::FIELD_CARD_EXPIRES_YEAR,
             'choice',
             [
                 'label' => false,
-                'choices' => [
-                    $currentYear => $currentYear,
-                    ++$currentYear => $currentYear,
-                    ++$currentYear => $currentYear,
-                    ++$currentYear => $currentYear,
-                    ++$currentYear => $currentYear,
-                ],
+                'choices' => $this->getYearChoices(),
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Expires year',
@@ -242,6 +221,43 @@ class CreditCardSubForm extends AbstractSubForm
         );
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getMonthChoices()
+    {
+        return [
+            '01' => '01',
+            '02' => '02',
+            '03' => '03',
+            '04' => '04',
+            '05' => '05',
+            '06' => '06',
+            '07' => '07',
+            '08' => '08',
+            '09' => '09',
+            '10' => '10',
+            '11' => '11',
+            '12' => '12',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getYearChoices()
+    {
+        $currentYear = date('Y');
+        
+        return [
+            $currentYear => $currentYear,
+            ++$currentYear => $currentYear,
+            ++$currentYear => $currentYear,
+            ++$currentYear => $currentYear,
+            ++$currentYear => $currentYear,
+        ];
     }
 
 }
