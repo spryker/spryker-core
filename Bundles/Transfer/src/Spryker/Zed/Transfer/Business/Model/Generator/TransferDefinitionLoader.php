@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Symfony\Component\Finder\Finder;
 use Zend\Config\Factory;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -20,6 +19,11 @@ class TransferDefinitionLoader implements LoaderInterface
     const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface
+     */
+    private $finder;
+
+    /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer
      */
     private $definitionNormalizer;
@@ -27,21 +31,16 @@ class TransferDefinitionLoader implements LoaderInterface
     /**
      * @var array
      */
-    private $sourceDirectories;
-
-    /**
-     * @var array
-     */
     private $transferDefinitions = [];
 
     /**
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer $normalizer
-     * @param array $sourceDirectories
      */
-    public function __construct(DefinitionNormalizer $normalizer, array $sourceDirectories)
+    public function __construct(FinderInterface $finder, DefinitionNormalizer $normalizer)
     {
+        $this->finder = $finder;
         $this->definitionNormalizer = $normalizer;
-        $this->sourceDirectories = $sourceDirectories;
     }
 
     /**
@@ -49,7 +48,7 @@ class TransferDefinitionLoader implements LoaderInterface
      */
     public function getDefinitions()
     {
-        $this->loadDefinitions($this->sourceDirectories);
+        $this->loadDefinitions();
         $this->transferDefinitions = $this->definitionNormalizer->normalizeDefinitions(
             $this->transferDefinitions
         );
@@ -58,32 +57,17 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @param array $sourceDirectories
-     *
      * @return array
      */
-    private function loadDefinitions(array $sourceDirectories)
+    private function loadDefinitions()
     {
-        $xmlTransferDefinitions = $this->getXmlTransferDefinitionFiles($sourceDirectories);
+        $xmlTransferDefinitions = $this->finder->getXmlTransferDefinitionFiles();
         foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
             $bundle = $this->getBundleFromPathName($xmlTransferDefinition->getFilename());
             $containingBundle = $this->getContainingBundleFromPathName($xmlTransferDefinition->getPathname());
             $definition = Factory::fromFile($xmlTransferDefinition->getPathname(), true)->toArray();
             $this->addDefinition($definition, $bundle, $containingBundle);
         }
-    }
-
-    /**
-     * @param array $sourceDirectories
-     *
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
-     */
-    private function getXmlTransferDefinitionFiles(array $sourceDirectories)
-    {
-        $finder = new Finder();
-        $finder->in($sourceDirectories)->name('*.transfer.xml')->depth('< 1');
-
-        return $finder;
     }
 
     /**

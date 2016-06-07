@@ -10,6 +10,7 @@ namespace Spryker\Zed\Transfer\Business;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
@@ -17,6 +18,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
+use Spryker\Zed\Transfer\Business\Model\TransferValidator;
 
 /**
  * @method \Spryker\Zed\Transfer\TransferConfig getConfig()
@@ -66,6 +68,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     protected function createLoader()
     {
         return new TransferDefinitionLoader(
+            $this->createFinder(),
             $this->createDefinitionNormalizer(),
             $this->getConfig()->getSourceDirectories()
         );
@@ -103,6 +106,29 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     protected function createDefinitionNormalizer()
     {
         return new DefinitionNormalizer();
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return \Spryker\Zed\Transfer\Business\Model\TransferValidator
+     */
+    public function createValidator(LoggerInterface $messenger)
+    {
+        return new TransferValidator(
+            $messenger,
+            $this->createFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder
+     */
+    protected function createFinder()
+    {
+        return new TransferDefinitionFinder(
+            $this->getConfig()->getSourceDirectories()
+        );
     }
 
 }
