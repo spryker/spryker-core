@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification;
 
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class CollectorOrSpecification implements CollectorSpecificationInterface
@@ -25,10 +26,8 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $left
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $right
      */
-    public function __construct(
-        CollectorSpecificationInterface $left,
-        CollectorSpecificationInterface $right
-    ) {
+    public function __construct(CollectorSpecificationInterface $left, CollectorSpecificationInterface $right)
+    {
         $this->left = $left;
         $this->right = $right;
     }
@@ -36,7 +35,7 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer)
     {
@@ -50,10 +49,14 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $leftArray
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $rightArray
      *
-     * @return array
+     * @return DiscountableItemTransfer[]
      */
     protected function array_merge_by_object(array $leftArray, array $rightArray)
     {
+        if (count($leftArray) === 0) {
+            return $rightArray;
+        }
+
         $merged = [];
         foreach ($leftArray as $leftItem) {
             $leftItemHash = spl_object_hash($leftItem->getOriginalItemCalculatedDiscounts());

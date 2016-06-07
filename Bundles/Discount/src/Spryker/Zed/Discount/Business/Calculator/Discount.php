@@ -65,9 +65,7 @@ class Discount implements DiscountInterface
     {
         $applicableDiscounts = $this->getApplicableDiscounts($quoteTransfer);
         $collectedDiscounts = $this->calculator->calculate($applicableDiscounts, $quoteTransfer);
-        if (count($collectedDiscounts) > 0) {
-            $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
-        }
+        $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
 
         return $quoteTransfer;
     }

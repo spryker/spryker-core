@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
@@ -85,7 +86,7 @@ class CalculatorForm extends AbstractType
      */
     protected function addCalculatorPluginAmountValidators(FormInterface $form, array $data)
     {
-        if (!isset($data[self::FIELD_CALCULATOR_PLUGIN])) {
+        if (empty($data[self::FIELD_CALCULATOR_PLUGIN])) {
             return;
         }
 
@@ -151,7 +152,7 @@ class CalculatorForm extends AbstractType
      */
     protected function addCollectorQueryString(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_COLLECTOR_QUERY_STRING, 'hidden', [
+        $builder->add(self::FIELD_COLLECTOR_QUERY_STRING, 'textarea', [
             'label' => 'Apply to*',
             'constraints' => [
                 new NotBlank(),
@@ -161,7 +162,12 @@ class CalculatorForm extends AbstractType
                 ]),
             ],
             'attr' => [
-                'data-url' => '/discount/query-string/rule-fields/?type=' . MetaProviderFactory::TYPE_COLLECTOR,
+                'data-url' => Url::generate(
+                    '/discount/query-string/rule-fields',
+                    [
+                        'type' => MetaProviderFactory::TYPE_COLLECTOR
+                    ]
+                )->build(),
             ],
         ]);
 

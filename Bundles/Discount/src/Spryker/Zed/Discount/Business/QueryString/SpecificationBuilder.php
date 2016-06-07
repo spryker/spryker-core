@@ -310,7 +310,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      */
     protected function cleanValue($value)
     {
-        return str_replace('"', '', $value);
+        return preg_replace('/["\']/', '', $value);
     }
 
 }

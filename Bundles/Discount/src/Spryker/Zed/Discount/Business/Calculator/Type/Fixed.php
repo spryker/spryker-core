@@ -22,7 +22,7 @@ class Fixed implements CalculatorInterface
             return 0;
         }
 
-        return $value;
+        return $value * 100;
     }
 
 }

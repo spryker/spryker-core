@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification;
 
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CollectorSpecificationInterface
@@ -14,7 +15,7 @@ interface CollectorSpecificationInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer);
 

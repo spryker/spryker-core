@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
@@ -48,7 +49,7 @@ class ConditionsForm extends AbstractType
      */
     protected function addDecisionRuleQueryString(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DECISION_RULE_QUERY_STRING, 'hidden', [
+        $builder->add(self::FIELD_DECISION_RULE_QUERY_STRING, 'textarea', [
             'label' => 'Apply when',
             'constraints' => [
                 new QueryString([
@@ -57,7 +58,12 @@ class ConditionsForm extends AbstractType
                 ]),
             ],
             'attr' => [
-                'data-url' => '/discount/query-string/rule-fields/?type=' . MetaProviderFactory::TYPE_COLLECTOR,
+                'data-url' => Url::generate(
+                    '/discount/query-string/rule-fields',
+                    [
+                        'type' => MetaProviderFactory::TYPE_DECISION_RULE
+                    ]
+                )->build(),
             ],
         ]);
 

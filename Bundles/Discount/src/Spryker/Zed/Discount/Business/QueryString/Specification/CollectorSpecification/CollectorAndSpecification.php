@@ -26,17 +26,16 @@ class CollectorAndSpecification implements CollectorSpecificationInterface
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $left
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $right
      */
-    public function __construct(
-        CollectorSpecificationInterface $left,
-        CollectorSpecificationInterface $right
-    ) {
+    public function __construct(CollectorSpecificationInterface $left, CollectorSpecificationInterface $right)
+    {
         $this->left = $left;
         $this->right = $right;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @return array
+     *
+     * @return DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer)
     {
