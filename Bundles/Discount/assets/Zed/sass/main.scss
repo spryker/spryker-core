@@ -3,7 +3,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-@import "../node_modules/jquery-query-builder/dist/css/query-builder.default.css";
+@import "./query-builder.scss";
 
 .load-cart-rules {
     height: 32px;
@@ -46,6 +46,10 @@ table.dataTable.gui-table-data {
 .tabs-container {
     .nav > li > a {
         color: #999;
+    }
+
+    .nav li a.tab-item {
+        background: #f3f3f4;
     }
 
     .nav li.active a.tab-item {
