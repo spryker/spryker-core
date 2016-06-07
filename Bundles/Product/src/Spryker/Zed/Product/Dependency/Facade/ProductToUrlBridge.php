@@ -13,14 +13,12 @@ class ProductToUrlBridge implements ProductToUrlInterface
 {
 
     /**
-     * @var \Spryker\Zed\Url\Business\UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
     protected $urlFacade;
 
     /**
-     * CmsToUrlBridge constructor.
-     *
-     * @param \Spryker\Zed\Url\Business\UrlFacade $urlFacade
+     * @param \Spryker\Zed\Url\Business\UrlFacadeInterface $urlFacade
      */
     public function __construct($urlFacade)
     {

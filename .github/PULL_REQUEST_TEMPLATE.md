@@ -7,14 +7,14 @@
 
    Bundle       | Expected Release Type
    :----------- | :------------
-   bundle A     | major or new (requires 3 reviewers)
-   bundle B     | minor (requires 2 reviewers)
-   bundle C     | patch (requires 1 reviewer)
+   BundleA      | major or new (requires 3 reviewers)
+   BundleB      | minor (requires 2 reviewers)
+   BundleC      | patch (requires 1 reviewer)
 
-- Recommended reviewers: @reviewer1_name
+- Recommended reviewers: @reviewer_names
 
 -----------------------------------------
-#### [Major] Bundle A
+#### [Major] BundleA
 - [ ] API contract checked
 - [ ] Unit tests
 - [ ] Functional (Facade) tests
@@ -30,7 +30,7 @@
 Changes go here. Those will be copied to the release log for this bundle.
 
 -----------------------------------------
-#### [Minor] Bundle B
+#### [Minor] BundleB
 - [ ] Tests for the feature
 - [ ] Scrutinizer score is not worse
 - [ ] No open tickets that could be in minor release
@@ -44,7 +44,7 @@ Changes go here. Those will be copied to the release log for this bundle.
 Changes go here. Those will be copied to the release log for this bundle.
 
 -----------------------------------------
-#### [Patch] Bundle C
+#### [Patch] BundleC
 - [ ] Tests for the patch
 - [ ] Scrutinizer score is not worse
 
@@ -53,4 +53,4 @@ Changes go here. Those will be copied to the release log for this bundle.
 - [ ] Project integration [PR](https://github.com/spryker/project/pull/pr_number)
 
 ###### Change log
-Changes go here. Those will be copied to the release log for this bundle.
+Changes go here. Those will be copied to the release log for this bundle. Please use full sentences.

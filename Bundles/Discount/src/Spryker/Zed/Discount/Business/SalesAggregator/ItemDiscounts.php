@@ -23,7 +23,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     protected $discountQueryContainer;
 
     /**
-     * ItemDiscountAmounts constructor.
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
     public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {

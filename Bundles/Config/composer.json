@@ -17,7 +17,7 @@
     "spryker/library": "^2.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "0.3.1",
+    "spryker/code-sniffer": "*",
     "spryker/testify": "^2.0.0"
   },
   "description": "config bundle",

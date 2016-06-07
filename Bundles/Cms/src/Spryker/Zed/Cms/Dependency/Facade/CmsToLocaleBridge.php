@@ -16,7 +16,7 @@ class CmsToLocaleBridge implements CmsToLocaleInterface
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
     public function __construct($localeFacade)
     {

@@ -15,12 +15,12 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
 {
 
     /**
-     * @var \Spryker\Zed\Category\Business\CategoryFacade
+     * @var \Spryker\Zed\Category\Business\CategoryFacadeInterface
      */
     protected $categoryFacade;
 
     /**
-     * @param \Spryker\Zed\Category\Business\CategoryFacade $categoryFacade
+     * @param \Spryker\Zed\Category\Business\CategoryFacadeInterface $categoryFacade
      */
     public function __construct($categoryFacade)
     {

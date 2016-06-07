@@ -62,8 +62,9 @@ class LocaleManager
         return $this->transferGenerator->convertLocale($locale);
     }
 
-
     /**
+     * @deprecated Use getLocale($localeName) instead
+     *
      * @param string $localeCode
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException

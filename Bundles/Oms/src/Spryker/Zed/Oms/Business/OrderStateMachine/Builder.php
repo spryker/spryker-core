@@ -433,7 +433,7 @@ class Builder implements BuilderInterface
         $finder = $this->getFinder();
         $finder->in($this->processDefinitionLocation);
         if (strpos($fileName, '/') !== false) {
-            $finder->path(dirname($fileName));
+            $finder->path($this->createSubProcessPathPattern($fileName));
             $finder->name(basename($fileName));
         } else {
             $finder->name($fileName);
@@ -479,6 +479,16 @@ class Builder implements BuilderInterface
                 )
             );
         }
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return string
+     */
+    protected function createSubProcessPathPattern($fileName)
+    {
+        return '/\b' . dirname($fileName) . '\b/';
     }
 
 }

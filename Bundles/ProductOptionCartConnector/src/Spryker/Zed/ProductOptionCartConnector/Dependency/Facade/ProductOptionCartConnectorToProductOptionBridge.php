@@ -16,9 +16,7 @@ class ProductOptionCartConnectorToProductOptionBridge implements ProductOptionCa
     protected $productOptionFacade;
 
     /**
-     * ProductOptionExporterToProductOptionBridge constructor.
-     *
-     * @param \Spryker\Zed\ProductOption\Business\ProductOptionFacade $productOptionFacade
+     * @param \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface $productOptionFacade
      */
     public function __construct($productOptionFacade)
     {

@@ -123,11 +123,9 @@ class MenuFormatter implements MenuFormatterInterface
         if (isset($page[self::URI]) && !empty($page[self::URI])) {
             return $page[self::URI];
         }
-        $controller = (
-            isset($page[self::CONTROLLER]) &&
-            self::INDEX !== $page[self::CONTROLLER]) ? $page[self::CONTROLLER] : null;
 
-        $action = (isset($page[self::ACTION]) && self::INDEX !== $page[self::ACTION]) ? $page[self::ACTION] : null;
+        $action = $this->getPageAction($page);
+        $controller = $this->getPageController($page, $action);
 
         return $this->urlBuilder->build($page[self::BUNDLE], $controller, $action);
     }
@@ -154,6 +152,39 @@ class MenuFormatter implements MenuFormatterInterface
         }
 
         return $formattedPage;
+    }
+
+    /**
+     * @param array $page
+     * @return mixed|null
+     */
+    protected function getPageAction(array $page)
+    {
+        $pageAction = null;
+        if (isset($page[self::ACTION]) && self::INDEX !== $page[self::ACTION]) {
+            $pageAction = $page[self::ACTION];
+        }
+
+        return $pageAction;
+    }
+
+    /**
+     * @param array $page
+     * @param mixed|null $action
+     * @return mixed|null
+     */
+    protected function getPageController(array $page, $action)
+    {
+        $pageController = null;
+        if (isset($page[self::CONTROLLER]) &&
+            (
+                self::INDEX !== $page[self::CONTROLLER] || $action !== null
+            )
+        ) {
+            $pageController = $page[self::CONTROLLER];
+        }
+
+        return $pageController;
     }
 
 }

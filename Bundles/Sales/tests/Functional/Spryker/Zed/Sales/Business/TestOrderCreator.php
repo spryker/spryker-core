@@ -36,18 +36,18 @@ class TestOrderCreator
             $omsStateEntity,
             $salesOrderEntity,
             $omsProcessEntity,
-            $quantity = 2,
-            $unitGrosPrice = 500,
-            $taxRate = 19
+            1,
+            500,
+            19
         );
 
         $this->createOrderItem(
             $omsStateEntity,
             $salesOrderEntity,
             $omsProcessEntity,
-            $quantity = 1,
-            $unitGrosPrice = 800,
-            $taxRate = 19
+            1,
+            800,
+            19
         );
 
         return $salesOrderEntity;
@@ -56,11 +56,13 @@ class TestOrderCreator
     /**
      * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $omsStateEntity
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
      * @param int $quantity
      * @param int $grossPrice
      * @param int $taxRate
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function createOrderItem(

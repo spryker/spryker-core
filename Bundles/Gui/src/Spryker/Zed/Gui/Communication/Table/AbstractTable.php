@@ -29,6 +29,8 @@ abstract class AbstractTable
     const BUTTON_DEFAULT_CLASS = 'btn-default';
     const BUTTON_ICON = 'icon';
     const PARAMETER_VALUE = 'value';
+    const SORT_BY_COLUMN = 'column';
+    const SORT_BY_DIRECTION = 'dir';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -348,12 +350,63 @@ abstract class AbstractTable
      */
     public function getOrders(TableConfiguration $config)
     {
-        return $this->request->query->get('order', [
+        $defaultSorting = [
             [
-                'column' => $config->getDefaultSortColumnIndex(),
-                'dir' => $config->getDefaultSortDirection(),
+                self::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),
+                self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
             ],
-        ]);
+        ];
+
+        $orderParameter = $this->request->query->get('order');
+
+        if (!is_array($orderParameter)) {
+            return $defaultSorting;
+        }
+
+        $sorting = $this->createSortingParameters($orderParameter);
+
+        if (empty($sorting)) {
+            return $defaultSorting;
+        }
+
+        return $sorting;
+    }
+
+    /**
+     * @param array $orderParameter
+     *
+     * @return array
+     */
+    protected function createSortingParameters(array $orderParameter)
+    {
+        $sorting = [];
+        foreach ($orderParameter as $sortingRules) {
+            if (!is_array($sortingRules)) {
+                continue;
+            }
+            $sorting[] = [
+                self::SORT_BY_COLUMN => $this->getParameter($sortingRules, self::SORT_BY_COLUMN, 0),
+                self::SORT_BY_DIRECTION => $this->getParameter($sortingRules, self::SORT_BY_DIRECTION, 'asc'),
+            ];
+        }
+
+        return $sorting;
+    }
+
+    /**
+     * @param array $dataArray
+     * @param string $key
+     * @param string $defaultValue
+     *
+     * @return string
+     */
+    protected function getParameter(array $dataArray, $key, $defaultValue)
+    {
+        if (array_key_exists($key, $dataArray)) {
+            return $dataArray[$key];
+        }
+
+        return $defaultValue;
     }
 
     /**
@@ -392,32 +445,64 @@ abstract class AbstractTable
      */
     public function prepareConfig()
     {
+        $configArray = [
+            'tableId' => $this->getTableIdentifier(),
+            'class' => $this->tableClass,
+            'url' => $this->defaultUrl,
+            'header' => [],
+        ];
+
         if ($this->getConfiguration() instanceof TableConfiguration) {
-            $configArray = [
-                'tableId' => $this->getTableIdentifier(),
-                'class' => $this->tableClass,
+            $configTableArray = [
+                'url' => ($this->config->getUrl() === null) ? $this->defaultUrl : $this->config->getUrl(),
                 'header' => $this->config->getHeader(),
                 'footer' => $this->config->getFooter(),
                 'order' => $this->getOrders($this->config),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
-                'url' => ($this->config->getUrl() === null) ? $this->defaultUrl : $this->config->getUrl(),
             ];
-        } else {
-            $configArray = [
-                'tableId' => $this->getTableIdentifier(),
-                'class' => $this->tableClass,
-                'url' => $this->defaultUrl,
-                'header' => [],
-            ];
+
+            $configArray = array_merge($configArray, $configTableArray);
         }
 
         return $configArray;
     }
 
     /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @param array $order
+     * @return string
+     */
+    protected function getOrderByColumn(ModelCriteria $query, TableConfiguration $config, array $order)
+    {
+        $columns = $this->getColumnsList($query, $config);
+
+        if (!isset($order[0]) || !isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
+            return reset($columns);
+        }
+
+        return $columns[$order[0][self::SORT_BY_COLUMN]];
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @return array
+     */
+    protected function getColumnsList(ModelCriteria $query, TableConfiguration $config)
+    {
+        if ($config->getHeader()) {
+            return array_keys($config->getHeader());
+        }
+
+        return array_keys($query->getTableMap()->getColumns());
+    }
+
+    /**
      * @todo CD-412 to be rafactored, does to many things and is hard to understand
+     * @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -427,19 +512,14 @@ abstract class AbstractTable
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config, $returnRawResults = false)
     {
-        //$limit = $config->getPageLength();
         $limit = $this->getLimit();
         $offset = $this->getOffset();
         $order = $this->getOrders($config);
-        // @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
-        if ($config->getHeader()) {
-            $columns = array_keys($config->getHeader());
-        } else {
-            $columns = array_keys($query->getTableMap()->getColumns());
-        }
-        $orderColumn = $columns[$order[0]['column']];
+
+        $orderColumn = $this->getOrderByColumn($query, $config, $order);
+
         $this->total = $query->count();
-        $query->orderBy($orderColumn, $order[0]['dir']);
+        $query->orderBy($orderColumn, $order[0][self::SORT_BY_DIRECTION]);
         $searchTerm = $this->getSearchTerm();
 
         $isFirst = true;

@@ -38,7 +38,7 @@ class ModalFunction extends TwigFunction
             $html .= '<div class="modal-content">';
             $html .= '<header class="modal-header">';
             $html .= '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-            $html .= '<h4 class="modal-title">' . __($title) . '</h4>';
+            $html .= '<h4 class="modal-title">' . $title . '</h4>';
             $html .= '</header>';
             $html .= '<div class="modal-body">' . $content . '</div>';
 

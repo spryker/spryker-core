@@ -74,6 +74,16 @@ class Config
     }
 
     /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public static function hasKey($key)
+    {
+        return array_key_exists($key, self::$config);
+    }
+
+    /**
      * @param string|null $environment
      *
      * @return void
