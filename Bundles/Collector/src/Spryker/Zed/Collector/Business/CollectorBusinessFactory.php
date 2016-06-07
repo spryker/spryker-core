@@ -25,6 +25,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdater as Stora
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Internal\InstallElasticsearch;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
+use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
@@ -160,7 +161,10 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExporterWriterSearchTouchUpdater()
     {
-        return new SearchTouchUpdater();
+        return new SearchTouchUpdater(
+            $this->createBulkUpdateTouchQuery(),
+            $this->createBulkDeleteTouchQuery()
+        );
     }
 
     /**
@@ -168,7 +172,10 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExporterWriterStorageTouchUpdater()
     {
-        return new StorageTouchUpdater();
+        return new StorageTouchUpdater(
+            $this->createBulkUpdateTouchQuery(),
+            $this->createBulkDeleteTouchQuery()
+        );
     }
 
     /**
@@ -304,6 +311,32 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     protected function createSearchMarkerKeyBuilder()
     {
         return new SearchMarkerKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
+     */
+    protected function createBulkUpdateTouchQuery()
+    {
+        return $this->createBulkTouchQueryBuilder()
+            ->createBulkTouchUpdateQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
+     */
+    protected function createBulkDeleteTouchQuery()
+    {
+        return $this->createBulkTouchQueryBuilder()
+            ->createBulkTouchDeleteQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder
+     */
+    protected function createBulkTouchQueryBuilder()
+    {
+        return new BulkTouchQueryBuilder($this->getConfig());
     }
 
     /**
