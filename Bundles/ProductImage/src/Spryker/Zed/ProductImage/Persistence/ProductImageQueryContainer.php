@@ -7,17 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageConfigurationPresetTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageConfigurationPresetValueTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTypeTranslationTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTypeUsageExclusionTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTypeUsageTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageValuePriceTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageValueTranslationTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageValueUsageConstraintTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageValueUsageTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -37,7 +27,8 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
             ->createProductImageSetToProductImageQuery()
             ->useSpyProductImageQuery()
             ->endUse()
-            ->filterByFkProductImageSet($idProductImageSet);
+            ->filterByFkProductImageSet($idProductImageSet)
+            ->orderBySort(Criteria::DESC);
     }
 
 }

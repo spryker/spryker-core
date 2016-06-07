@@ -240,6 +240,8 @@ class ProductManager implements ProductManagerInterface
                 $productImageSetToProductImageEntity->setFkProductImageSet($idProductImageSet);
                 $productImageSetToProductImageEntity->setFkProductImage($idProductImage);
                 $productImageSetToProductImageEntity->setSort($productImage->getSort());
+                $productImageSetToProductImageEntity->setDisplayInCart($productImage->getDisplayInCart());
+                $productImageSetToProductImageEntity->setDisplayInCatalog($productImage->getDisplayInCatalog());
 
                 $productImageSetToProductImageEntity->save();
             }
