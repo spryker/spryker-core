@@ -404,9 +404,9 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function testDeleteAddress()
+    protected function createCustomerWithAddress()
     {
         $customerTransfer = $this->createTestCustomer();
         $addressTransfer = new AddressTransfer();
@@ -416,13 +416,62 @@ class CustomerFacadeTest extends Test
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
         $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
-        $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
+
+        return $this->getTestCustomerTransfer($customerTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteAddress()
+    {
+        $customerTransfer = $this->createCustomerWithAddress();
 
         $addresses = $customerTransfer->getAddresses()->getAddresses();
         $addressTransfer = $addresses[0];
 
         $deletedAddress = $this->customerFacade->deleteAddress($addressTransfer);
         $this->assertNotNull($deletedAddress);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteDefaultAddress()
+    {
+        $customerTransfer = $this->createCustomerWithAddress();
+
+        $addresses = $customerTransfer->getAddresses()->getAddresses();
+        $addressTransfer = $addresses[0];
+
+        $this->customerFacade->setDefaultBillingAddress($addressTransfer);
+
+        $deletedAddress = $this->customerFacade->deleteAddress($addressTransfer);
+        $this->assertNotNull($deletedAddress);
+
+        $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
+        $this->assertNull($customerTransfer->getDefaultBillingAddress());
+    }
+
+    /**
+     * @expectedException \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
+     *
+     * @return void
+     */
+    public function testDeleteCustomerWithDefaultAddresses()
+    {
+        $customerTransfer = $this->createCustomerWithAddress();
+
+        $addresses = $customerTransfer->getAddresses()->getAddresses();
+        $addressTransfer = $addresses[0];
+
+        $this->customerFacade->setDefaultBillingAddress($addressTransfer);
+        $this->customerFacade->setDefaultShippingAddress($addressTransfer);
+
+        $isSuccess = $this->customerFacade->deleteCustomer($customerTransfer);
+        $this->assertTrue($isSuccess);
+
+        $this->customerFacade->getAddress($addressTransfer);
     }
 
 }

@@ -25,10 +25,10 @@
         <unique name="spy_customer-customer_reference">
             <unique-column name="customer_reference"/>
         </unique>
-        <foreign-key name="spy_customer-default_billing_address" foreignTable="spy_customer_address" phpName="BillingAddress" refPhpName="CustomerBillingAddress">
+        <foreign-key name="spy_customer-default_billing_address" foreignTable="spy_customer_address" phpName="BillingAddress" refPhpName="CustomerBillingAddress" onDelete="SETNULL">
             <reference foreign="id_customer_address" local="default_billing_address"/>
         </foreign-key>
-        <foreign-key name="spy_customer-default_shipping_address" foreignTable="spy_customer_address" phpName="ShippingAddress" refPhpName="CustomerShippingAddress">
+        <foreign-key name="spy_customer-default_shipping_address" foreignTable="spy_customer_address" phpName="ShippingAddress" refPhpName="CustomerShippingAddress" onDelete="SETNULL">
             <reference foreign="id_customer_address" local="default_shipping_address"/>
         </foreign-key>
         <id-method-parameter value="spy_customer_pk_seq"/>
@@ -53,7 +53,7 @@
         <column name="comment" size="255" type="VARCHAR"/>
         <column name="deleted_at" required="false" type="TIMESTAMP"/>
 
-        <foreign-key name="spy_customer_address-fk_customer" foreignTable="spy_customer" phpName="Customer" refPhpName="Address">
+        <foreign-key name="spy_customer_address-fk_customer" foreignTable="spy_customer" phpName="Customer" refPhpName="Address" onDelete="CASCADE">
             <reference foreign="id_customer" local="fk_customer"/>
         </foreign-key>
         <foreign-key name="spy_customer_address-fk_region" foreignTable="spy_region" phpName="Region" refPhpName="CustomerAddress">
