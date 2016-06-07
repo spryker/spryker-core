@@ -13,12 +13,12 @@ class SalesToSequenceNumberBridge implements SalesToSequenceNumberInterface
 {
 
     /**
-     * @var \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade
+     * @var \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface
      */
     protected $sequenceNumberFacade;
 
     /**
-     * @param \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade $sequenceNumberFacade
+     * @param \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface $sequenceNumberFacade
      */
     public function __construct($sequenceNumberFacade)
     {

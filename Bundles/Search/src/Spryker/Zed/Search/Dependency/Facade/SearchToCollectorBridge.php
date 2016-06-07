@@ -11,12 +11,12 @@ class SearchToCollectorBridge implements SearchToCollectorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Collector\Business\CollectorFacade
+     * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
      */
     protected $collectorFacade;
 
     /**
-     * @param \Spryker\Zed\Collector\Business\CollectorFacade $collectorFacade
+     * @param \Spryker\Zed\Collector\Business\CollectorFacadeInterface $collectorFacade
      */
     public function __construct($collectorFacade)
     {

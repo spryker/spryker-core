@@ -18,7 +18,7 @@ class DiscountToMessengerBridge implements DiscountToMessengerInterface
     protected $messengerFacade;
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\MessengerFacade $messengerFacade
+     * @param \Spryker\Zed\Messenger\Business\MessengerFacadeInterface $messengerFacade
      */
     public function __construct($messengerFacade)
     {

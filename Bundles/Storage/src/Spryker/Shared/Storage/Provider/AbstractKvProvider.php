@@ -10,7 +10,6 @@ namespace Spryker\Shared\Storage\Provider;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
-use Spryker\Shared\Storage\StorageConstants;
 
 abstract class AbstractKvProvider extends AbstractClientProvider
 {
@@ -68,17 +67,19 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     protected function getConnectionParameters()
     {
         $config = [
-            'protocol' => Config::get(StorageConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-            'port' => Config::get(StorageConstants::YVES_STORAGE_SESSION_REDIS_PORT),
-            'host' => Config::get(StorageConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+            'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
+            'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
+            'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
         ];
 
-        if (Config::get(StorageConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
-            $config['password'] = Config::get(StorageConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
+        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
         }
 
-        $isPersistent = (bool)Config::get(StorageConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
-        $config['persistent'] = $isPersistent;
+        $config['persistent'] = false;
+        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
+            $config['persistent'] = (bool)Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
+        }
 
         return $config;
     }

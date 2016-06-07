@@ -13,14 +13,12 @@ class AclToUserBridge implements AclToUserInterface
 {
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
     protected $userFacade;
 
     /**
-     * AclToUserBridge constructor.
-     *
-     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacadeInterface $userFacade
      */
     public function __construct($userFacade)
     {

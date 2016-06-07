@@ -13,12 +13,12 @@ class RefundToOmsBridge implements RefundToOmsInterface
 {
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OmsFacade
+     * @var \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
     protected $omsFacade;
 
     /**
-     * @param \Spryker\Zed\Oms\Business\OmsFacade $omsFacade
+     * @param \Spryker\Zed\Oms\Business\OmsFacadeInterface $omsFacade
      */
     public function __construct($omsFacade)
     {
