@@ -28,7 +28,8 @@ SprykerQueryBuilder.prototype.createBuilder = function(){
             sqlOperators: self.getSqlOperators(),
             sqlRuleOperator: self.getSqlRuleOperators()
         });
-        if (self.sql) {
+        self.builder.prepend('<label class="control-label query-builder-label">Build Query</label>');
+        if (typeof self.sql !== 'undefined' && self.sql !== '') {
             self.builder.queryBuilder('setRulesFromSQL', self.sql);
         }
     });
@@ -43,11 +44,14 @@ SprykerQueryBuilder.prototype.toggleButton = function(event){
     if (self.displayQueryBuilder === true) {
         self.saveQuery();
         inputElementContainer.removeClass('hidden');
+        self.builder.addClass('hidden');
         self.builder.queryBuilder('destroy');
         self.displayQueryBuilder = false;
+        self.builder.children('.query-builder-label').remove();
         label = button.data('label-query-builder');
     } else {
         inputElementContainer.addClass('hidden');
+        self.builder.removeClass('hidden');
         self.displayQueryBuilder = true;
         self.sql = $(self.inputElement).val();
         self.createBuilder();

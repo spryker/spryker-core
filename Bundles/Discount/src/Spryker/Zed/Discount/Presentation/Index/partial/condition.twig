@@ -3,7 +3,7 @@
 
 {{ form_row(discountForm.discountCondition) }}
 
-<div id="builder_condition"></div>
+<div id="builder_condition" class="query-builder-container"></div>
 {{ form_errors(discountForm.discountCondition.decision_rule_query_string) }}
 
 <button type="button" class="btn btn-sm btn-success" id="btn-condition-get" data-label-plain-query="{{ 'Plain query' | trans }}" data-label-query-builder="{{ 'Query builder' | trans }}">
