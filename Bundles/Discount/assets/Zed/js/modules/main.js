@@ -6,112 +6,29 @@
 'use strict';
 
 require('ZedGui');
-window.SQLParser = require('sql-parser/browser/sql-parser');
-require('jquery-query-builder');
+var SqlFactory = require('./libs/sql-factory');
+
 require('../../sass/main.scss');
 
-function SprykerQueryBuilder(sqlQuery, ajaxUrl, inputElement, targetElement){
-    var self = this;
-    this.getFiltersUrl = ajaxUrl;
-    this.sql = sqlQuery;
-    this.builder = null;
-    this.inputElement = inputElement;
-    this.init = function(){
-        self.builder = $(targetElement);
-        self.createBuilder();
-    };
-
-    this.init();
-}
-
-SprykerQueryBuilder.prototype.createBuilder = function(){
-
-    var self = this;
-    $.get(self.getFiltersUrl).done(function(filters){
-        self.builder.queryBuilder({
-            filters: filters,
-            sqlOperators: {
-              contains: {
-                  op : 'CONTAINS ?',
-                  mod: '{0}'
-              },
-              not_contains: {
-                  op : 'DOES NOT CONTAIN ?',
-                  mod: '{0}'
-              },
-              in: {
-                  op : 'IS IN ?',
-                  sep: ', '
-              },
-              not_in: {
-                  op : 'IS NOT IN ?',
-                  sep: ', '
-              }
-            },
-            sqlRuleOperator: {
-               'CONTAINS': function(v) {
-                   return {
-                       val: v,
-                       op: 'contains'
-                   };
-               },
-               'DOES NOT CONTAIN': function(v) {
-                   return {
-                       val: v,
-                       op: 'not_contains'
-                   };
-               },
-               'IS IN': function(v) {
-                 return {
-                     val: v,
-                     op: 'in'
-                 };
-               },
-               'IS NOT IN': function(v) {
-                  return {
-                     val: v,
-                     op: 'not_in'
-                  };
-               }
-            }
-        });
-        self.builder.queryBuilder('setRulesFromSQL', self.sql);
-    });
-};
-
-SprykerQueryBuilder.prototype.saveQuery = function(){
-
-    var result = this.builder.queryBuilder('getSQL', false);
-
-    if (result.sql.length) {
-        this.inputElement.val(result.sql);
-    }
-};
-
-var sqlCalculationBuilder;
-var sqlConditionBuilder;
-
-function loadSqlCalculationQuery(){
-
-    var inputElement = $('#discount_discountCalculator_collector_query_string');
-    var sqlRules = inputElement.val();
-    var ajaxUrl = inputElement.data('url');
-
-    sqlCalculationBuilder = new SprykerQueryBuilder(sqlRules, ajaxUrl, inputElement, '#builder_calculation');
-}
-
-function loadSqlConditionsQuery(){
-
-    var inputElement = $('#discount_discountCondition_decision_rule_query_string');
-    var sqlRules = inputElement.val();
-    var ajaxUrl = inputElement.data('url');
-
-    sqlConditionBuilder = new SprykerQueryBuilder(sqlRules, ajaxUrl, inputElement, '#builder_condition');
-}
-
 $(document).ready(function(){
-    $('#create-discount-button').on('click', function() {
+
+    var sqlCalculationBuilder = SqlFactory('#discount_discountCalculator_collector_query_string', '#builder_calculation');
+    var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition');
+
+    $('#create-discount-button').on('click', function(element) {
+        element.preventDefault();
+        sqlCalculationBuilder.saveQuery();
+        sqlConditionBuilder.saveQuery();
+
         $('#discount-form').submit();
+    });
+
+    $('#btn-calculation-get').click(function(){
+        sqlCalculationBuilder.toggleButton();
+    });
+
+    $('#btn-condition-get').click(function(){
+        sqlConditionBuilder.toggleButton();
     });
 
     $('.tabs-manager .btn-tab-previous').on('click', function(){
@@ -151,14 +68,4 @@ $(document).ready(function(){
             $('#discount_discountGeneral_valid_from').datepicker('option', 'maxDate', selectedDate);
         }
     });
-
-    $('#btn-calculation-get').on('click', function() {
-        sqlCalculationBuilder.saveQuery();
-    });
-    $('#btn-condition-get').on('click', function() {
-        sqlConditionBuilder.saveQuery();
-    });
-
-    loadSqlCalculationQuery();
-    loadSqlConditionsQuery();
 });
