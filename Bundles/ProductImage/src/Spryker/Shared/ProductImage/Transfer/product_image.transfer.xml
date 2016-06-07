@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="https://static.spryker.com https://static.spryker.com/transfer-01.xsd" >
+
+    <transfer name="ProductImageSet">
+        <property name="idProductImageSet" type="int" />
+        <property name="productImages" type="ProductImage[]" singular="productImage" />
+        <property name="name" type="string" />
+        <property name="locale" type="Locale" />
+    </transfer>
+
+    <transfer name="ProductImage">
+        <property name="idProductImage" type="int" />
+        <property name="idProductImageSetToProductImage" type="int" />
+
+        <property name="sort" type="int" />
+        <property name="displayInCart" type="bool" />
+        <property name="displayInCatalog" type="bool" />
+        <property name="externalUrlSmall" type="string" />
+        <property name="externalUrlLarge" type="string" />
+    </transfer>
+
+    <transfer name="ProductAbstract">
+        <property name="productImagesSets" type="ProductImageSet[]" singular="productImageSet" />
+    </transfer>
+    <transfer name="Product">
+        <property name="productImagesSets" type="ProductImageSet[]" singular="productImageSet" />
+    </transfer>
+
+</transfers>
