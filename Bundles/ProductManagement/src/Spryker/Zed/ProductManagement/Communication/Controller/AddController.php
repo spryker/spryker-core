@@ -51,7 +51,7 @@ class AddController extends AbstractController
                 $this->addSuccessMessage('The product was added successfully.');
 
                 return $this->redirectResponse(sprintf(
-                    '/product/edit?%s=%d' ,
+                    '/product-management/edit?%s=%d' ,
                     self::PARAM_ID_PRODUCT_ABSTRACT,
                     $idProductAbstract
                 ));
