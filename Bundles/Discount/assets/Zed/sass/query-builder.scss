@@ -5,6 +5,7 @@
 
 .query-builder-container {
   min-height: 120px;
+  background: url('/assets/img/cms-loader.gif') 0 50% no-repeat;
 }
 
 .query-builder {
@@ -36,6 +37,7 @@
   .rules-group-container {
     padding: 10px;
     padding-bottom: 6px;
+    background: #fff;
   }
 
   .rules-group-header {
