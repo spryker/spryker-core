@@ -14,6 +14,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
+    const COOKIE_HASH_ALGORITHM = 'sha256';
 
     /**
      * @throws \Exception
@@ -152,6 +153,20 @@ class IndexController extends AbstractController
         $redis = Redis::getInstance();
 
         return $redis->connect();
+    }
+
+    /**
+     * @return void
+     */
+    public function redisAddAction()
+    {
+        $redis = $this->getClient();
+
+        for ($i = 0; $i < 100; $i++) {
+            $redis->set(
+                hash(static::COOKIE_HASH_ALGORITHM, microtime(true))
+            );
+        }
     }
 
 }
