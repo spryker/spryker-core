@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
-use Spryker\Shared\Product\ProductConstants;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +21,7 @@ class AddController extends AbstractController
 {
 
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    const PARAM_SKU = 'sku';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -29,25 +30,22 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idProductAbstract = $request->get(self::PARAM_ID_PRODUCT_ABSTRACT);
-        if ($idProductAbstract) {
-            $idProductAbstract = $this->castId($idProductAbstract);
-        }
-
         $dataProvider = $this->getFactory()->createProductFormAddDataProvider();
         $form = $this
             ->getFactory()
             ->createProductFormAdd(
-                $dataProvider->getData($idProductAbstract),
+                $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
         if ($form->isValid()) {
             try {
+                $productTransfer = $this->createProductTransferFromFormData($form->getData());
+
                 $idCategory = $this
                     ->getFacade()
-                    ->addProduct();
+                    ->addProduct($productTransfer);
 
                 $this->addSuccessMessage('The product was added successfully.');
 
@@ -56,14 +54,33 @@ class AddController extends AbstractController
                     self::PARAM_ID_PRODUCT_ABSTRACT,
                     $idCategory
                 ));
-            } catch (CategoryUrlExistsException $e) {
-                $this->addErrorMessage($e->getMessage());
+            } catch (CategoryUrlExistsException $exception) {
+                $this->addErrorMessage($exception->getMessage());
             }
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName()
         ]);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function createProductTransferFromFormData(array $data)
+    {
+        dump($data);die;
+        $productTransfer = new ProductAbstractTransfer();
+
+        $productTransfer->setSku(
+            $data[self::PARAM_SKU]
+        );
+
+        return $productTransfer;
+
     }
 
 }

@@ -14,7 +14,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ProductFormAdd extends AbstractType
 {
 
+    const FIELD_DESCRIPTION = 'description';
+    const FIELD_NAME = 'name';
     const FIELD_SKU = 'sku';
+
     const LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
@@ -35,8 +38,7 @@ class ProductFormAdd extends AbstractType
     {
         $this
             ->addSkuField($builder)
-            ->addLocalizedForm($builder)
-        ;
+            ->addLocalizedForm($builder);
     }
 
     /**
@@ -68,6 +70,7 @@ class ProductFormAdd extends AbstractType
             ->add(self::LOCALIZED_ATTRIBUTES, 'collection', [
                 'type' => new ProductLocalizedForm()
             ]);
+
         return $this;
     }
 }

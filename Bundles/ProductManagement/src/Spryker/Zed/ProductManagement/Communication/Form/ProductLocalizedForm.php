@@ -15,6 +15,7 @@ class ProductLocalizedForm extends AbstractType
 {
 
     const FIELD_NAME = 'name';
+    const FIELD_DESCRIPTION = 'description';
 
     /**
      * @return string
@@ -34,7 +35,7 @@ class ProductLocalizedForm extends AbstractType
     {
         $this
             ->addNameField($builder)
-        ;
+            ->addDescriptionField($builder);
     }
 
     /**
@@ -46,6 +47,23 @@ class ProductLocalizedForm extends AbstractType
     {
         $builder
             ->add(self::FIELD_NAME, 'text', [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addDescriptionField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_DESCRIPTION, 'text', [
                 'constraints' => [
                     new NotBlank(),
                 ],

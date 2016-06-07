@@ -40,7 +40,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductFormAddDataProvider(
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
-            $this->getCurrentLocale()
+            $this->getLocaleFacade()
         );
     }
 
@@ -61,11 +61,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface
      */
-    public function getCurrentLocale()
+    public function getLocaleFacade()
     {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_LOCALE)
-            ->getCurrentLocale();
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_LOCALE);
     }
+
 }

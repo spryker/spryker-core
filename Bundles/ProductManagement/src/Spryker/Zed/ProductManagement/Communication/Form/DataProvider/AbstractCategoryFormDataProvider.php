@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class AbstractProductFormDataProvider
 {
+
+    const LOCALE_NAME = 'locale_name';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -20,29 +24,29 @@ class AbstractProductFormDataProvider
     protected $categoryQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
 
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer
+     * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface
      */
-    protected $locale;
+    protected $localeFacade;
 
 
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
-        LocaleTransfer $locale
+        ProductManagementToLocaleInterface $localeFacade
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
-        $this->locale = $locale;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -55,6 +59,46 @@ class AbstractProductFormDataProvider
         ];
 
         return $formOptions;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getAttributes($idProductAbstract)
+    {
+        $attributeCollection = $this->productQueryContainer
+            ->queryProductAbstractAttributes($idProductAbstract)
+            ->innerJoinLocale()
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE_NAME)
+            ->find();
+
+        $localizedAttributes = [];
+        foreach ($attributeCollection as $attribute) {
+            $data = $attribute->toArray();
+            $localizedAttributes[$data[self::LOCALE_NAME]] = $data;
+        }
+
+        return $localizedAttributes;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributesDefaultFields()
+    {
+        $availableLocales = $this->localeFacade->getAvailableLocales();
+
+        $fields = [];
+        foreach ($availableLocales as $id => $code) {
+            $fields[$code] = [
+                ProductFormAdd::FIELD_NAME => null,
+                ProductFormAdd::FIELD_DESCRIPTION => null,
+            ];
+        }
+
+        return $fields;
     }
 
 }
