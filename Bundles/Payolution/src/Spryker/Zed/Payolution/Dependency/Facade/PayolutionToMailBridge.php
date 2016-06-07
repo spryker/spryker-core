@@ -13,12 +13,12 @@ class PayolutionToMailBridge implements PayolutionToMailInterface
 {
 
     /**
-     * @var \Spryker\Zed\Mail\Business\MailFacade
+     * @var \Spryker\Zed\Mail\Business\MailFacadeInterface
      */
     protected $mailFacade;
 
     /**
-     * @param \Spryker\Zed\Mail\Business\MailFacade $mailFacade
+     * @param \Spryker\Zed\Mail\Business\MailFacadeInterface $mailFacade
      */
     public function __construct($mailFacade)
     {

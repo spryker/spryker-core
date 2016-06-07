@@ -13,12 +13,12 @@ class AuthToUserBridge implements AuthToUserInterface
 {
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
     protected $userFacade;
 
     /**
-     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacadeInterface $userFacade
      */
     public function __construct($userFacade)
     {

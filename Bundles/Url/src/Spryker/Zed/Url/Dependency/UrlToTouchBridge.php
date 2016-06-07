@@ -11,14 +11,12 @@ class UrlToTouchBridge implements UrlToTouchInterface
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Business\TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
     protected $touchFacade;
 
     /**
-     * ProductCategoryToTouchBridge constructor.
-     *
-     * @param \Spryker\Zed\Touch\Business\TouchFacade $touchFacade
+     * @param \Spryker\Zed\Touch\Business\TouchFacadeInterface $touchFacade
      */
     public function __construct($touchFacade)
     {

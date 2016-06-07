@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryFacadeInterface;
 
 class CmsToGlossaryBridge implements CmsToGlossaryInterface
 {
@@ -22,7 +21,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
     /**
      * @param \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface $glossaryFacade
      */
-    public function __construct(GlossaryFacadeInterface $glossaryFacade)
+    public function __construct($glossaryFacade)
     {
         $this->glossaryFacade = $glossaryFacade;
     }

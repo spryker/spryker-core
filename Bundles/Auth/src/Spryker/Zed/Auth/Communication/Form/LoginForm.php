@@ -67,6 +67,7 @@ class LoginForm extends AbstractType
                 ],
                 'attr' => [
                     'placeholder' => 'Password',
+                    'autocomplete' => 'off',
                 ],
             ]);
 
