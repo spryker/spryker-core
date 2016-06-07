@@ -18,17 +18,18 @@ $(document).ready(function(){
     $('#create-discount-button').on('click', function(element) {
         element.preventDefault();
         sqlCalculationBuilder.saveQuery();
+
         sqlConditionBuilder.saveQuery();
 
         $('#discount-form').submit();
     });
 
-    $('#btn-calculation-get').click(function(){
-        sqlCalculationBuilder.toggleButton();
+    $('#btn-calculation-get').click(function(event){
+        sqlCalculationBuilder.toggleButton(event);
     });
 
-    $('#btn-condition-get').click(function(){
-        sqlConditionBuilder.toggleButton();
+    $('#btn-condition-get').click(function(event){
+        sqlConditionBuilder.toggleButton(event);
     });
 
     $('.tabs-manager .btn-tab-previous').on('click', function(){

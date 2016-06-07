@@ -8,5 +8,8 @@
 {{ form_row(discountForm.discountCalculator.collector_query_string) }}
 
 <div id="builder_calculation"></div>
+{{ form_errors(discountForm.discountCalculator.collector_query_string) }}
 
-<button type="button" class="btn btn-sm btn-success" id="btn-calculation-get">Toggle input field</button>
+<button type="button" class="btn btn-sm btn-success" id="btn-calculation-get" data-label-plain-query="{{ 'Plain query' | trans }}" data-label-query-builder="{{ 'Query builder' | trans }}">
+    Plain query
+</button>

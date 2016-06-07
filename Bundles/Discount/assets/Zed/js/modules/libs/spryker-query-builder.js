@@ -28,25 +28,33 @@ SprykerQueryBuilder.prototype.createBuilder = function(){
             sqlOperators: self.getSqlOperators(),
             sqlRuleOperator: self.getSqlRuleOperators()
         });
-        self.builder.queryBuilder('setRulesFromSQL', self.sql);
+        if (self.sql) {
+            self.builder.queryBuilder('setRulesFromSQL', self.sql);
+        }
     });
 };
 
-SprykerQueryBuilder.prototype.toggleButton = function(){
+SprykerQueryBuilder.prototype.toggleButton = function(event){
     var self = this;
     var inputElementContainer = $(self.inputElement).parent();
+    var label = '';
+    var button = $(event.target);
 
     if (self.displayQueryBuilder === true) {
         self.saveQuery();
         inputElementContainer.removeClass('hidden');
         self.builder.queryBuilder('destroy');
         self.displayQueryBuilder = false;
+        label = button.data('label-query-builder');
     } else {
         inputElementContainer.addClass('hidden');
         self.displayQueryBuilder = true;
         self.sql = $(self.inputElement).val();
         self.createBuilder();
+        label = button.data('label-plain-query');
+
     }
+    button.text(label);
 };
 
 SprykerQueryBuilder.prototype.getSqlOperators = function(){
