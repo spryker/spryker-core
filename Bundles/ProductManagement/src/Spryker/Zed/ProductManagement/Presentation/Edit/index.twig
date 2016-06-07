@@ -1,0 +1,14 @@
+{% extends '@ProductManagement/Add/index.twig' %}
+{% set submit_title = 'Save' | trans %}
+{% set widget_title = 'Product Edit' | trans %}
+{% set widget_title = widget_title ~ ': ' ~ currentProduct.sku %}
+
+{% block action %}
+    {{ parent() }}
+    {{ createActionButton('/product-management/add', 'Create Product' | trans) }}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productmanagement-edit.js"></script>
+{% endblock %}

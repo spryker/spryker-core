@@ -36,6 +36,20 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
+     * @param int $idProductAbstract
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function getProductAbstractById($idProductAbstract)
+    {
+        return $this->getFactory()->createProductManager()->getProductAbstractById($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException

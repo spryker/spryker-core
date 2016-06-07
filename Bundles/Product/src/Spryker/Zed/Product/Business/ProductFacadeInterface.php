@@ -27,6 +27,17 @@ interface ProductFacadeInterface
     /**
      * @api
      *
+     * @param int $idProductAbstract
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function getProductAbstractById($idProductAbstract);
+
+    /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException

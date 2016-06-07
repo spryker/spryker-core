@@ -19,6 +19,7 @@ use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistExcepti
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
+use Spryker\Zed\Product\Business\Transfer\TransferGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
@@ -141,12 +142,10 @@ class ProductManager implements ProductManagerInterface
             $productAbstract = $this->productQueryContainer->queryProductAbstractBySku($sku)->findOne();
 
             if (!$productAbstract) {
-                throw new MissingProductException(
-                    sprintf(
-                        'Tried to retrieve an product abstract with sku %s, but it does not exist.',
-                        $sku
-                    )
-                );
+                throw new MissingProductException(sprintf(
+                    'Tried to retrieve an product abstract with sku %s, but it does not exist.',
+                    $sku
+                ));
             }
 
             $this->productAbstractsBySkuCache[$sku] = $productAbstract;
@@ -165,12 +164,10 @@ class ProductManager implements ProductManagerInterface
     protected function checkProductAbstractDoesNotExist($sku)
     {
         if ($this->hasProductAbstract($sku)) {
-            throw new ProductAbstractExistsException(
-                sprintf(
-                    'Tried to create an product abstract with sku %s that already exists',
-                    $sku
-                )
-            );
+            throw new ProductAbstractExistsException(sprintf(
+                'Tried to create an product abstract with sku %s that already exists',
+                $sku
+            ));
         }
     }
 
@@ -191,6 +188,7 @@ class ProductManager implements ProductManagerInterface
             if ($this->hasProductAbstractAttributes($idProductAbstract, $locale)) {
                 continue;
             }
+
             $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
             $productAbstractAttributesEntity = new SpyProductAbstractLocalizedAttributes();
@@ -217,13 +215,11 @@ class ProductManager implements ProductManagerInterface
     protected function checkProductAbstractAttributesDoNotExist($idProductAbstract, $locale)
     {
         if ($this->hasProductAbstractAttributes($idProductAbstract, $locale)) {
-            throw new ProductAbstractAttributesExistException(
-                sprintf(
-                    'Tried to create abstract attributes for product abstract %s, locale id %s, but it already exists',
-                    $idProductAbstract,
-                    $locale->getIdLocale()
-                )
-            );
+            throw new ProductAbstractAttributesExistException(sprintf(
+                'Tried to create abstract attributes for product abstract %s, locale id %s, but it already exists',
+                $idProductAbstract,
+                $locale->getIdLocale()
+            ));
         }
     }
 
@@ -285,12 +281,10 @@ class ProductManager implements ProductManagerInterface
     protected function checkProductConcreteDoesNotExist($sku)
     {
         if ($this->hasProductConcrete($sku)) {
-            throw new ProductConcreteExistsException(
-                sprintf(
-                    'Tried to create a product concrete with sku %s, but it already exists',
-                    $sku
-                )
-            );
+            throw new ProductConcreteExistsException(sprintf(
+                'Tried to create a product concrete with sku %s, but it already exists',
+                $sku
+            ));
         }
     }
 
@@ -314,15 +308,15 @@ class ProductManager implements ProductManagerInterface
     public function getProductConcreteIdBySku($sku)
     {
         if (!isset($this->productConcreteCollectionBySkuCache[$sku])) {
-            $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
+            $productConcrete = $this->productQueryContainer
+                ->queryProductConcreteBySku($sku)
+                ->findOne();
 
             if (!$productConcrete) {
-                throw new MissingProductException(
-                    sprintf(
-                        'Tried to retrieve a product concrete with sku %s, but it does not exist',
-                        $sku
-                    )
-                );
+                throw new MissingProductException(sprintf(
+                    'Tried to retrieve a product concrete with sku %s, but it does not exist',
+                    $sku
+                ));
             }
 
             $this->productConcreteCollectionBySkuCache[$sku] = $productConcrete;
@@ -370,13 +364,11 @@ class ProductManager implements ProductManagerInterface
     protected function checkProductConcreteAttributesDoNotExist($idProductConcrete, LocaleTransfer $locale)
     {
         if ($this->hasProductConcreteAttributes($idProductConcrete, $locale)) {
-            throw new ProductConcreteAttributesExistException(
-                sprintf(
-                    'Tried to create product concrete attributes for product id %s, locale id %s, but they exist',
-                    $idProductConcrete,
-                    $locale->getIdLocale()
-                )
-            );
+            throw new ProductConcreteAttributesExistException(sprintf(
+                'Tried to create product concrete attributes for product id %s, locale id %s, but they exist',
+                $idProductConcrete,
+                $locale->getIdLocale()
+            ));
         }
     }
 
@@ -483,15 +475,15 @@ class ProductManager implements ProductManagerInterface
      */
     public function getEffectiveTaxRateForProductConcrete($sku)
     {
-        $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
+        $productConcrete = $this->productQueryContainer
+            ->queryProductConcreteBySku($sku)
+            ->findOne();
 
         if (!$productConcrete) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $sku
-                )
-            );
+            throw new MissingProductException(sprintf(
+                'Tried to retrieve a product concrete with sku %s, but it does not exist.',
+                $sku
+            ));
         }
 
         $productAbstract = $productConcrete->getSpyProductAbstract();
@@ -532,12 +524,10 @@ class ProductManager implements ProductManagerInterface
         $productConcrete = $productConcreteQuery->findOne();
 
         if (!$productConcrete) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $concreteSku
-                )
-            );
+            throw new MissingProductException(sprintf(
+                'Tried to retrieve a product concrete with sku %s, but it does not exist.',
+                $concreteSku
+            ));
         }
 
         $productConcreteTransfer = new ProductConcreteTransfer();
@@ -580,18 +570,42 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAbstractIdByConcreteSku($sku)
     {
-        $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
+        $productConcrete = $this->productQueryContainer
+            ->queryProductConcreteBySku($sku)
+            ->findOne();
 
         if (!$productConcrete) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $sku
-                )
-            );
+            throw new MissingProductException(sprintf(
+                'Tried to retrieve a product concrete with sku %s, but it does not exist.',
+                $sku
+            ));
         }
 
         return $productConcrete->getFkProductAbstract();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function getProductAbstractById($idProductAbstract)
+    {
+        $productAbstractEntity = $this->productQueryContainer
+            ->queryProductAbstract()
+            ->filterByIdProductAbstract($idProductAbstract)
+            ->findOne();
+
+        if (!$productAbstractEntity) {
+            return null;
+        }
+
+        $transferGenerator = new TransferGenerator();
+        $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -603,15 +617,15 @@ class ProductManager implements ProductManagerInterface
      */
     public function getAbstractSkuFromProductConcrete($sku)
     {
-        $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
+        $productConcrete = $this->productQueryContainer
+            ->queryProductConcreteBySku($sku)
+            ->findOne();
 
         if (!$productConcrete) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $sku
-                )
-            );
+            throw new MissingProductException(sprintf(
+                'Tried to retrieve a product concrete with sku %s, but it does not exist.',
+                $sku
+            ));
         }
 
         return $productConcrete->getSpyProductAbstract()->getSku();

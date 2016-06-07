@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ProductFormEdit extends ProductFormAdd
 {
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -19,7 +20,6 @@ class ProductFormEdit extends ProductFormAdd
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
     }
 
 }

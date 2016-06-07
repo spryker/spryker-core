@@ -9,7 +9,9 @@ namespace Spryker\Zed\ProductManagement\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -33,11 +35,36 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductFormEdit(array $formData, array $formOptions = [])
+    {
+        $formType = new ProductFormEdit();
+
+        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider
      */
     public function createProductFormAddDataProvider()
     {
         return new ProductFormAddDataProvider(
+            $this->getCategoryQueryContainer(),
+            $this->getProductQueryContainer(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider
+     */
+    public function createProductFormEditDataProvider()
+    {
+        return new ProductFormEditDataProvider(
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getLocaleFacade()

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+
 class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 {
 
@@ -15,9 +17,10 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
      */
     public function getData()
     {
+        $formData = [];
         $fields = $this->getDefaultFormFields();
 
-        return $fields;
+        return array_merge($formData, $fields);
     }
 
     /**
@@ -26,6 +29,8 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     protected function getDefaultFormFields()
     {
         return [
+            ProductFormAdd::FIELD_SKU => null,
+            ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getAttributesDefaultFields()
         ];
     }
 
