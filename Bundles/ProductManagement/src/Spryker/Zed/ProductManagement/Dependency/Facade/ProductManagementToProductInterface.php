@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+
 interface ProductManagementToProductInterface
 {
 
@@ -25,5 +27,14 @@ interface ProductManagementToProductInterface
      * @return int
      */
     public function getProductAbstractIdBySku($sku);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return int
+     */
+    public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
 
 }

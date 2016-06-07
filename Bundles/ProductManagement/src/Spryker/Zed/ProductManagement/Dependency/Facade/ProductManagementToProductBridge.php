@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-class ProductManagementToProductBridge implements ProductCategoryToProductInterface
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+
+class ProductManagementToProductBridge implements ProductManagementToProductInterface
 {
 
     /**
@@ -43,6 +45,18 @@ class ProductManagementToProductBridge implements ProductCategoryToProductInterf
     public function getProductAbstractIdBySku($sku)
     {
         return $this->productFacade->getProductAbstractIdBySku($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return int
+     */
+    public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->productFacade->createProductAbstract($productAbstractTransfer);
     }
 
 }

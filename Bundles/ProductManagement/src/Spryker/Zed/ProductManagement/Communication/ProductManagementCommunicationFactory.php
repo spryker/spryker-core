@@ -68,4 +68,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_LOCALE);
     }
 
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
+     */
+    public function getProductFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT);
+    }
 }

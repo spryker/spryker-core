@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,7 +24,6 @@ class AddController extends AbstractController
 {
 
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    const PARAM_SKU = 'sku';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -41,18 +43,17 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             try {
-                $productTransfer = $this->createProductTransferFromFormData($form->getData());
+                $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
 
-                $idCategory = $this
-                    ->getFacade()
-                    ->addProduct($productTransfer);
+                $idProductAbstract = $this->getFactory()->getProductFacade()->createProductAbstract($productAbstractTransfer);
+                $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
                 $this->addSuccessMessage('The product was added successfully.');
 
                 return $this->redirectResponse(sprintf(
                     '/product/edit?%s=%d' ,
                     self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idCategory
+                    $idProductAbstract
                 ));
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
@@ -66,21 +67,81 @@ class AddController extends AbstractController
     }
 
     /**
+     * @param array $formData
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function buildProductAbstractTransferFromData(array $formData)
+    {
+        //TODO get definition of products attributes here
+        $abstractAttributes = [
+            'attribute_foo' => 'foo',
+            'attribute_bar' => 'bar'
+        ];
+
+        $abstractLocalizedAttributes = [
+            'de_DE' => [
+                'attribute_foo' => 'foo_de',
+                'attribute_bar' => 'bar_bar'
+            ],
+            'en_US' => [
+                'attribute_foo' => 'foo_en',
+                'attribute_bar' => 'bar_en'
+            ],
+        ];
+
+        $productAbstractTransfer = $this->createProductTransfer($formData);
+        $productAbstractTransfer->setAttributes($abstractAttributes);
+
+        $attributeData = $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES];
+        foreach ($attributeData as $localeCode => $localizedAttributesData) {
+            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
+
+            $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
+                $localizedAttributesData,
+                $abstractLocalizedAttributes[$localeCode],
+                $localeTransfer
+            );
+
+            $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function createProductTransferFromFormData(array $data)
+    protected function createProductTransfer(array $data)
     {
-        dump($data);die;
-        $productTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer = new ProductAbstractTransfer();
 
-        $productTransfer->setSku(
-            $data[self::PARAM_SKU]
+        $productAbstractTransfer->setSku(
+            $data[ProductFormAdd::FIELD_SKU]
         );
 
-        return $productTransfer;
+        $productAbstractTransfer->setIsActive(false);
 
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param array $data
+     * @param array $abstractLocalizedAttributes
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
+     */
+    protected function createLocalizedAttributesTransfer(array $data, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
+    {
+        $localizedAttributesTransfer = new LocalizedAttributesTransfer();
+        $localizedAttributesTransfer->setLocale($localeTransfer);
+        $localizedAttributesTransfer->setName($data[ProductFormAdd::FIELD_NAME]);
+        $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
+
+        return $localizedAttributesTransfer;
     }
 
 }
