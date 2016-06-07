@@ -443,7 +443,11 @@
       "Functional\\Spryker\\Shared\\ZedRequest\\": "Bundles/ZedRequest/tests",
       "Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/src",
       "Unit\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
-      "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests"
+      "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
+      "Spryker\\Shared\\ProductManagement\\": "Bundles/ProductManagement/src",
+      "Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/src",
+      "Unit\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests",
+      "Functional\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests"
     },
     "psr-4": {
       "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",

@@ -63,8 +63,6 @@ class AddController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'currentLocale' => $localeTransfer,
-            'showProducts' => false,
         ]);
     }
 

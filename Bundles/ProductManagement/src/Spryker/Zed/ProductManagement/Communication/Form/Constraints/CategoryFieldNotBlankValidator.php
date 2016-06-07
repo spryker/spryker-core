@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagementCategory\Communication\Form\Constraints;
+namespace Spryker\Zed\ProductManagement\Communication\Form\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlankValidator;
@@ -34,7 +34,7 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
     }
 
     /**
-     * @param \Spryker\Zed\ProductManagementCategory\Communication\Form\Constraints\CategoryFieldNotBlank $constraint
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\Constraints\CategoryFieldNotBlank $constraint
      *
      * @return bool
      */

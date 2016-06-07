@@ -4,7 +4,7 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ createActionButton('/product/add', 'Create Product' | trans) }}
+    {{ createActionButton('/product-management/add', 'Create Product' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -12,8 +12,6 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Products' } %}
 
         {% block widget_content %}
-
-            {{ products | raw }}
 
         {% endblock %}
 
