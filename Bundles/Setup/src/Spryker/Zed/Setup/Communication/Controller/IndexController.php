@@ -14,6 +14,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
+
     const COOKIE_HASH_ALGORITHM = 'sha256';
 
     /**
