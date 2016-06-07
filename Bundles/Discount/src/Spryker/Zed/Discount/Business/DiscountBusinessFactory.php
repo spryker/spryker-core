@@ -18,6 +18,7 @@ use Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\DayOfWeekDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\ItemQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
@@ -409,7 +410,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemQuantityDecisionRule()
     {
-        return new ItemSkuDecisionRule($this->createComparatorOperators());
+        return new ItemQuantityDecisionRule($this->createComparatorOperators());
     }
 
     /**

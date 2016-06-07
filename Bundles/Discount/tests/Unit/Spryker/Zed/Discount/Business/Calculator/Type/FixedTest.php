@@ -39,7 +39,7 @@ class FixedTest extends \PHPUnit_Framework_TestCase
         $calculator = new Fixed();
         $discountAmount = $calculator->calculate($items, self::DISCOUNT_AMOUNT_FIXED_100);
 
-        $this->assertEquals(self::DISCOUNT_AMOUNT_FIXED_100, $discountAmount);
+        $this->assertEquals(self::DISCOUNT_AMOUNT_FIXED_100 * 100, $discountAmount);
     }
 
     /**

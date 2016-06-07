@@ -54,7 +54,7 @@ class DiscountFacadeCalculateTest extends Test
         $this->assertCount(1, $cartRuleDiscounts);
 
         $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertEquals($discountEntity->getAmount(), $discountTransfer->getAmount());
+        $this->assertEquals($discountEntity->getAmount() * 100, $discountTransfer->getAmount());
     }
 
     /**
@@ -77,7 +77,7 @@ class DiscountFacadeCalculateTest extends Test
         $this->assertCount(1, $cartRuleDiscounts);
 
         $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertEquals($discountEntity->getAmount(), $discountTransfer->getAmount());
+        $this->assertEquals($discountEntity->getAmount() * 100, $discountTransfer->getAmount());
     }
 
     /**

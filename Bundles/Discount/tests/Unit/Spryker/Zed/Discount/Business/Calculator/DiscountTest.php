@@ -320,6 +320,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
 
         if (!$calculatorMock) {
             $calculatorMock = $this->createCalculatorMock();
+            $calculatorMock->method('calculate')->willReturn([]);
         }
 
         if (!$specificationBuilderMock) {
