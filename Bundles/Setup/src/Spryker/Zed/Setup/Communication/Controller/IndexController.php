@@ -157,6 +157,8 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @deprecated this method will be removed in the nearest major version.
+     *
      * @return void
      */
     public function redisAddAction()
