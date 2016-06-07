@@ -14,6 +14,9 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
+use Orm\Zed\ProductImage\Persistence\SpyProductImage;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
@@ -66,7 +69,7 @@ class ProductManager implements ProductManagerInterface
     protected $productConcreteCollectionBySkuCache = [];
 
     /**
-     * @var array
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
     protected $productAbstractsBySkuCache;
 
@@ -124,6 +127,7 @@ class ProductManager implements ProductManagerInterface
         $idProductAbstract = $productAbstract->getPrimaryKey();
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
         $this->createProductAbstractAttributes($productAbstractTransfer);
+        $this->createProductAbstractImages($productAbstractTransfer);
 
         return $idProductAbstract;
     }
@@ -205,6 +209,44 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    protected function createProductAbstractImages(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
+
+        foreach ($productAbstractTransfer->getProductImagesSets() as $productImagesSet) {
+            $productImageSetEntity = new SpyProductImageSet();
+            $productImageSetEntity->setFkProductAbstract($idProductAbstract);
+            $productImageSetEntity->setName($productImagesSet->getName());
+            $productImageSetEntity->setFkLocale($productImagesSet->getLocale()->getIdLocale());
+
+            $productImageSetEntity->save();
+            $idProductImageSet = $productImageSetEntity->getIdProductImageSet();
+
+            foreach ($productImagesSet->getProductImages() as $productImage) {
+                $productImageEntity = new SpyProductImage();
+                $productImageEntity->setExternalUrlLarge($productImage->getExternalUrlLarge());
+                $productImageEntity->setExternalUrlSmall($productImage->getExternalUrlSmall());
+
+                $productImageEntity->save();
+                $idProductImage = $productImageEntity->getIdProductImage();
+
+                $productImageSetToProductImageEntity = new SpyProductImageSetToProductImage();
+                $productImageSetToProductImageEntity->setFkProductImageSet($idProductImageSet);
+                $productImageSetToProductImageEntity->setFkProductImage($idProductImage);
+                $productImageSetToProductImageEntity->setSort($productImage->getSort());
+
+                $productImageSetToProductImageEntity->save();
+            }
+        }
+    }
+
+        /**
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
