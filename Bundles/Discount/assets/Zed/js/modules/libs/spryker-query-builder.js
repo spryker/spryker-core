@@ -5,17 +5,49 @@ require('jquery-query-builder');
 
 function SprykerQueryBuilder(sqlQuery, ajaxUrl, inputElement, targetElement){
     var self = this;
+    this.builder = null;
     this.getFiltersUrl = ajaxUrl;
     this.sql = sqlQuery;
-    this.builder = null;
+    this.displayQueryBuilder = true;
     this.inputElement = inputElement;
+    this.targetElement = targetElement;
     this.init = function(){
-        self.builder = $(targetElement);
+        self.builder = $(self.targetElement);
         self.createBuilder();
     };
 
     this.init();
 }
+
+SprykerQueryBuilder.prototype.createBuilder = function(){
+
+    var self = this;
+    $.get(self.getFiltersUrl).done(function(filters){
+        self.builder.queryBuilder({
+            filters: filters,
+            sqlOperators: self.getSqlOperators(),
+            sqlRuleOperator: self.getSqlRuleOperators()
+        });
+        self.builder.queryBuilder('setRulesFromSQL', self.sql);
+    });
+};
+
+SprykerQueryBuilder.prototype.toggleButton = function(){
+    var self = this;
+    var inputElementContainer = $(self.inputElement).parent();
+
+    if (self.displayQueryBuilder === true) {
+        self.saveQuery();
+        inputElementContainer.removeClass('hidden');
+        self.builder.queryBuilder('destroy');
+        self.displayQueryBuilder = false;
+    } else {
+        inputElementContainer.addClass('hidden');
+        self.displayQueryBuilder = true;
+        self.sql = $(self.inputElement).val();
+        self.createBuilder();
+    }
+};
 
 SprykerQueryBuilder.prototype.getSqlOperators = function(){
     return {
@@ -67,18 +99,6 @@ SprykerQueryBuilder.prototype.getSqlRuleOperators = function(){
     };
 };
 
-SprykerQueryBuilder.prototype.createBuilder = function(){
-
-    var self = this;
-    $.get(self.getFiltersUrl).done(function(filters){
-        self.builder.queryBuilder({
-            filters: filters,
-            sqlOperators: self.getSqlOperators(),
-            sqlRuleOperator: self.getSqlRuleOperators()
-        });
-        self.builder.queryBuilder('setRulesFromSQL', self.sql);
-    });
-};
 
 SprykerQueryBuilder.prototype.saveQuery = function(){
 

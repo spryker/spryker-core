@@ -12,8 +12,23 @@ require('../../sass/main.scss');
 
 $(document).ready(function(){
 
-    $('#create-discount-button').on('click', function() {
+    var sqlCalculationBuilder = SqlFactory('#discount_discountCalculator_collector_query_string', '#builder_calculation');
+    var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition');
+
+    $('#create-discount-button').on('click', function(element) {
+        element.preventDefault();
+        sqlCalculationBuilder.saveQuery();
+        sqlConditionBuilder.saveQuery();
+
         $('#discount-form').submit();
+    });
+
+    $('#btn-calculation-get').click(function(){
+        sqlCalculationBuilder.toggleButton();
+    });
+
+    $('#btn-condition-get').click(function(){
+        sqlConditionBuilder.toggleButton();
     });
 
     $('.tabs-manager .btn-tab-previous').on('click', function(){
@@ -52,15 +67,5 @@ $(document).ready(function(){
         onClose: function(selectedDate){
             $('#discount_discountGeneral_valid_from').datepicker('option', 'maxDate', selectedDate);
         }
-    });
-
-    var sqlCalculationBuilder = SqlFactory('#discount_discountCalculator_collector_query_string', '#builder_calculation');
-    var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition');
-
-    $('#btn-calculation-get').on('click', function() {
-        sqlCalculationBuilder.saveQuery();
-    });
-    $('#btn-condition-get').on('click', function() {
-        sqlConditionBuilder.saveQuery();
     });
 });
