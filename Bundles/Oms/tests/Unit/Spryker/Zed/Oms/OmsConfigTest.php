@@ -21,6 +21,32 @@ class OmsConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * @var array
+     */
+    private $configCache;
+
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        $reflectionClass = new \ReflectionClass(Config::class);
+        $reflectionProperty = $reflectionClass->getProperty('config');
+        $reflectionProperty->setAccessible(true);
+        $this->configCache = $reflectionProperty->getValue();
+    }
+
+    /**
+     * @return void
+     */
+    public function tearDown()
+    {
+        $reflectionClass = new \ReflectionClass(Config::class);
+        $reflectionProperty = $reflectionClass->getProperty('config');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($this->configCache);
+    }
+    /**
      * @return void
      */
     public function testGetProcessDefinitionLocationReturnDefault()
@@ -29,7 +55,7 @@ class OmsConfigTest extends \PHPUnit_Framework_TestCase
         $reflectionClass = new \ReflectionClass(Config::class);
         $reflectionProperty = $reflectionClass->getProperty('config');
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue([]);
+        $reflectionProperty->setValue(['foo' => 'bar']);
 
         $this->assertSame(OmsConfig::DEFAULT_PROCESS_LOCATION, $omsConfig->getProcessDefinitionLocation());
     }
@@ -57,7 +83,7 @@ class OmsConfigTest extends \PHPUnit_Framework_TestCase
         $reflectionClass = new \ReflectionClass(Config::class);
         $reflectionProperty = $reflectionClass->getProperty('config');
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue([]);
+        $reflectionProperty->setValue(['foo' => 'bar']);
 
         $this->assertStringStartsWith(APPLICATION_ROOT_DIR, $omsConfig->getProcessDefinitionLocation());
     }

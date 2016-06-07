@@ -91,10 +91,10 @@ class StepEngine implements StepEngineInterface
 
                 return $this->createRedirectResponse($this->stepCollection->getNextUrl($currentStep, $dataTransfer));
             }
+        } else {
+            $formCollection->provideDefaultFormData($dataTransfer);
         }
-
-        $formCollection->provideDefaultFormData($dataTransfer);
-
+        
         return $this->getTemplateVariables($currentStep, $dataTransfer, $formCollection);
     }
 
