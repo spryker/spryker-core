@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product-management>
+        <label>Product Management</label>
+        <title>Product Management</title>
+        <uri>/product-management</uri>
+        <icon>fa-database</icon>
+    </product-management>
+</config>
