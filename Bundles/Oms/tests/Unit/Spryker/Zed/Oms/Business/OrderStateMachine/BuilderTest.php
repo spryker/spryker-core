@@ -48,7 +48,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $stateMock = $this->getStateMock();
         $transitionMock = $this->getTransitionMock();
         $process = $this->getProcess();
-        $builder = new Builder($eventMock, $stateMock, $transitionMock, $process);
+        $builder = new Builder($eventMock, $stateMock, $transitionMock, $process, null);
 
         $this->assertInstanceOf(Builder::class, $builder);
     }
