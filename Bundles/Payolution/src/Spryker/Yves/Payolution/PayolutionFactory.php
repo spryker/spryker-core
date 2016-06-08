@@ -39,13 +39,13 @@ class PayolutionFactory extends AbstractFactory
      */
     public function createInstallmentFormDataProvider()
     {
-        return new InstallmentFormDataProvider($this->getPayolutionClient(), $this->createCurrencyManager());
+        return new InstallmentFormDataProvider($this->getPayolutionClient(), $this->getCurrencyManager());
     }
 
     /**
      * @return \Spryker\Shared\Library\Currency\CurrencyManager
      */
-    public function createCurrencyManager()
+    public function getCurrencyManager()
     {
         return CurrencyManager::getInstance();
     }
@@ -63,7 +63,7 @@ class PayolutionFactory extends AbstractFactory
      */
     public function createPayolutionHandler()
     {
-        return new PayolutionHandler($this->getPayolutionClient(), $this->createCurrencyManager());
+        return new PayolutionHandler($this->getPayolutionClient(), $this->getCurrencyManager());
     }
 
     /**
