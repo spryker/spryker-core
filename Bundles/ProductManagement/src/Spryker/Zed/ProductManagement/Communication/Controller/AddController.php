@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -107,6 +108,36 @@ class AddController extends AbstractController
         }
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $product
+     * @param array $attributeData
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function buildProductConcreteTransferFromData(ProductAbstractTransfer $productAbstractTransfer, array $product, array $attributeData)
+    {
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setAttributes([]);
+        $productConcreteTransfer->setSku($productAbstractTransfer->getSku() . '-' . rand(1,999));
+        $productConcreteTransfer->setIsActive(false);
+        $productConcreteTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+
+        foreach ($attributeData as $localeCode => $localizedAttributesData) {
+            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
+
+            $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
+                $localizedAttributesData,
+                [],
+                $localeTransfer
+            );
+
+            $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);
+        }
+
+        return $productConcreteTransfer;
     }
 
     /**

@@ -163,4 +163,14 @@ interface ProductManagerInterface
      */
     public function getProductConcrete($concreteSku);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteCollection
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+
 }

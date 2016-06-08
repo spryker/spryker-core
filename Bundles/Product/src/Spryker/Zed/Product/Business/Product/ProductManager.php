@@ -656,4 +656,33 @@ class ProductManager implements ProductManagerInterface
         return $taxRate;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteCollection
+     *
+     * @throws \Exception
+     * @return int
+     */
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    {
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
+        try {
+            $idProductAbstract = $this->createProductAbstract($productAbstractTransfer);
+            $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+
+            foreach ($productConcreteCollection as $productConcrete) {
+                $this->createProductConcrete($productConcrete, $idProductAbstract);
+            }
+
+            $this->productQueryContainer->getConnection()->commit();
+
+            return $idProductAbstract;
+
+        } catch (\Exception $e) {
+            $this->productQueryContainer->getConnection()->rollBack();
+            throw $e;
+        }
+    }
+
 }
