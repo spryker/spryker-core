@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\Product\Business\Product\MatrixGenerator;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
  */
-class EditController extends AbstractController
+class EditController extends AddController
 {
 
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
@@ -37,13 +38,39 @@ class EditController extends AbstractController
             self::PARAM_ID_PRODUCT_ABSTRACT
         ));
 
-        $currentProduct = $this->getProductFromRequest($request);
+        $productAbstract = $this->getFactory()
+            ->getProductFacade()
+            ->getProductAbstractById($idProductAbstract);
 
-        if (!$currentProduct) {
-            $this->addErrorMessage(sprintf('The product with id "%s" you are trying to edit, does not exist.', $idProductAbstract));
+        if (!$productAbstract) {
+            $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProductAbstract));
 
             return new RedirectResponse('/product-management');
         }
+
+
+        $attributeCollection = [
+            'size' => [
+                'size_40' => '40',
+                'size_41' => '41',
+            ],
+            'color' => [
+                'color_blue' => 'Blue',
+                'color_red' => 'Red',
+                'color_white' => 'White',
+            ],
+            'flavour' => [
+                'flavour_blue' => 'Blue',
+                'flavour_red' => 'Red',
+                'flavour_white' => 'White',
+            ]
+        ];
+
+        $matrixGenerator = new MatrixGenerator();
+        $matrix = $matrixGenerator->generate($productAbstract, $attributeCollection);
+        echo "<pre>";
+        print_r($matrix);
+        die;
 
         $dataProvider = $this->getFactory()->createProductFormEditDataProvider();
         $form = $this
@@ -56,12 +83,14 @@ class EditController extends AbstractController
 
         if ($form->isValid()) {
             try {
-                $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
+                $idProductAbstract = $this->getFactory()
+                    ->getProductFacade()
+                    ->saveProduct();
 
-                $idProductAbstract = $this->getFactory()->getProductFacade()->createProductAbstract($productAbstractTransfer);
-                $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-
-                $this->addSuccessMessage('The product was added successfully.');
+                $this->addSuccessMessage(sprintf(
+                    'The product [%s] was saved successfully.',
+                    $idProductAbstract
+                ));
 
                 return $this->redirectResponse(sprintf(
                     '/product-management/edit?%s=%d' ,
@@ -76,109 +105,10 @@ class EditController extends AbstractController
         return $this->viewResponse([
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
-            'currentProduct' => $currentProduct->toArray()
+            'currentProduct' => $productAbstract->toArray(),
+            'matrix' => $matrix
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return null|\Orm\Zed\Category\Persistence\SpyCategory
-     */
-    protected function getProductFromRequest(Request $request)
-    {
-        $idProductAbstract = $this->castId(
-            $request->get(self::PARAM_ID_PRODUCT_ABSTRACT)
-        );
-
-        $productAbstractTransfer = $this->getFactory()
-            ->getProductFacade()
-            ->getProductAbstractById($idProductAbstract);
-
-        if (!$productAbstractTransfer) {
-
-            return null;
-        }
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param array $formData
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function buildProductAbstractTransferFromData(array $formData)
-    {
-        //TODO get definition of products attributes here
-        $abstractAttributes = [
-            'attribute_foo' => 'foo',
-            'attribute_bar' => 'bar'
-        ];
-
-        $abstractLocalizedAttributes = [
-            'de_DE' => [
-                'attribute_foo' => 'foo_de',
-                'attribute_bar' => 'bar_bar'
-            ],
-            'en_US' => [
-                'attribute_foo' => 'foo_en',
-                'attribute_bar' => 'bar_en'
-            ],
-        ];
-
-        $productAbstractTransfer = $this->createProductTransfer($formData);
-        $productAbstractTransfer->setAttributes($abstractAttributes);
-
-        $attributeData = $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES];
-        foreach ($attributeData as $localeCode => $localizedAttributesData) {
-            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
-
-            $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
-                $localizedAttributesData,
-                $abstractLocalizedAttributes[$localeCode],
-                $localeTransfer
-            );
-
-            $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
-        }
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function createProductTransfer(array $data)
-    {
-        $productAbstractTransfer = new ProductAbstractTransfer();
-
-        $productAbstractTransfer->setSku(
-            $data[ProductFormAdd::FIELD_SKU]
-        );
-
-        $productAbstractTransfer->setIsActive(false);
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param array $data
-     * @param array $abstractLocalizedAttributes
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
-     */
-    protected function createLocalizedAttributesTransfer(array $data, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
-    {
-        $localizedAttributesTransfer = new LocalizedAttributesTransfer();
-        $localizedAttributesTransfer->setLocale($localeTransfer);
-        $localizedAttributesTransfer->setName($data[ProductFormAdd::FIELD_NAME]);
-        $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
-
-        return $localizedAttributesTransfer;
-    }
 
 }

@@ -73,4 +73,29 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
         return $this->productFacade->createProductAbstract($productAbstractTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteCollection
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    {
+        return $this->productFacade->addProduct($productAbstractTransfer, $productConcreteCollection);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
+     */
+    public function getAttributeManager()
+    {
+        return $this->productFacade->getAttributeManager();
+    }
+
 }

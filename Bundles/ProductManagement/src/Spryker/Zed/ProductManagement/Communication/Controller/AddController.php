@@ -45,10 +45,10 @@ class AddController extends AbstractController
         if ($form->isValid()) {
             try {
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
-
-                $idProductAbstract = $this->getFactory()->getProductFacade()->createProductAbstract($productAbstractTransfer);
-                $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-
+                $idProductAbstract = $this->getFactory()
+                    ->getProductFacade()
+                    ->addProduct($productAbstractTransfer, []);
+                
                 $this->addSuccessMessage('The product was added successfully.');
 
                 return $this->redirectResponse(sprintf(
@@ -74,25 +74,7 @@ class AddController extends AbstractController
      */
     protected function buildProductAbstractTransferFromData(array $formData)
     {
-        //TODO get definition of products attributes here
-        $abstractAttributes = [
-            'attribute_foo' => 'foo',
-            'attribute_bar' => 'bar'
-        ];
-
-        $abstractLocalizedAttributes = [
-            'de_DE' => [
-                'attribute_foo' => 'foo_de',
-                'attribute_bar' => 'bar_bar'
-            ],
-            'en_US' => [
-                'attribute_foo' => 'foo_en',
-                'attribute_bar' => 'bar_en'
-            ],
-        ];
-
         $productAbstractTransfer = $this->createProductTransfer($formData);
-        $productAbstractTransfer->setAttributes($abstractAttributes);
 
         $attributeData = $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES];
         foreach ($attributeData as $localeCode => $localizedAttributesData) {
@@ -100,7 +82,7 @@ class AddController extends AbstractController
 
             $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
                 $localizedAttributesData,
-                $abstractLocalizedAttributes[$localeCode],
+                [],
                 $localeTransfer
             );
 
@@ -112,12 +94,11 @@ class AddController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $product
-     * @param array $attributeData
+     * @param array $formData
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function buildProductConcreteTransferFromData(ProductAbstractTransfer $productAbstractTransfer, array $product, array $attributeData)
+    protected function buildProductConcreteTransferFromData(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setAttributes([]);
@@ -125,6 +106,7 @@ class AddController extends AbstractController
         $productConcreteTransfer->setIsActive(false);
         $productConcreteTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
 
+        $attributeData = $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES];
         foreach ($attributeData as $localeCode => $localizedAttributesData) {
             $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
 

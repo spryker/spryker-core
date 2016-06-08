@@ -238,4 +238,23 @@ interface ProductFacadeInterface
      */
     public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteCollection
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+
+    /**
+     * @api
+     *
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
+     */
+    public function getAttributeManager();
+
 }
