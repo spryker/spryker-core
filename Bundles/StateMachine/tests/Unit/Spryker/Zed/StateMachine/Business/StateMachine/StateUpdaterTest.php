@@ -7,6 +7,7 @@
 namespace Unit\Spryker\Zed\StateMachine\Business\SateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\StateMachine\Business\Process\Process;
 use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface;
@@ -203,6 +204,10 @@ class StateUpdaterTest extends StateMachineMocks
         $queryContainerMock->method('getConnection')
             ->willReturn($propelConnectionMock);
 
+        $stateMachineMachineHistoryQueryMock = $this->createStateMachineHistoryQueryMock();
+        $queryContainerMock->method('queryLastHistoryItem')
+            ->willReturn($stateMachineMachineHistoryQueryMock);
+
         return new StateUpdater(
             $timeoutMock,
             $handlerResolverMock,
@@ -217,6 +222,14 @@ class StateUpdaterTest extends StateMachineMocks
     protected function createQueryContainerMock()
     {
         return $this->getMock(StateMachineQueryContainerInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory
+     */
+    protected function createStateMachineHistoryQueryMock()
+    {
+        return $this->getMock(SpyStateMachineItemStateHistory::class);
     }
 
 }

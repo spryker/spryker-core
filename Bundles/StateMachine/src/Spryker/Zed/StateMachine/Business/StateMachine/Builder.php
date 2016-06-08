@@ -131,7 +131,7 @@ class Builder implements BuilderInterface
     {
         foreach ($this->rootElement->children() as $xmlProcess) {
             $processFile = $this->getAttributeString($xmlProcess, self::PROCESS_FILE_ATTRIBUTE);
-            if (!isset($processFile)) {
+            if ($processFile === null) {
                  continue;
             }
 
@@ -150,7 +150,7 @@ class Builder implements BuilderInterface
     protected function recursiveMerge($fromXmlElement, $intoXmlNode)
     {
         $xmlElements = $fromXmlElement->children();
-        if (!isset($xmlElements)) {
+        if ($xmlElements === null) {
             return;
         }
 
@@ -177,7 +177,7 @@ class Builder implements BuilderInterface
      */
     protected function loadXmlFromFileName($pathToXml, $fileName)
     {
-        $pathToXml = $pathToXml . DIRECTORY_SEPARATOR . $fileName. '.xml';
+        $pathToXml = $pathToXml . DIRECTORY_SEPARATOR . $fileName . '.xml';
 
         if (!file_exists($pathToXml)) {
             throw new StateMachineException(

@@ -7,7 +7,6 @@
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
-use Spryker\Zed\StateMachine\Business\Exception\LockException;
 use Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface;
 
 class LockedTrigger implements TriggerInterface
@@ -44,16 +43,18 @@ class LockedTrigger implements TriggerInterface
      */
     public function triggerForNewStateMachineItem(StateMachineProcessTransfer $stateMachineProcessTransfer, $identifier)
     {
-        if ($this->itemLock->isLocked($identifier)) {
-            throw new LockException('State machine item is locked.');
-        }
+        $lockIdentifier = $this->buildLockIdentifier(
+            $identifier,
+            $stateMachineProcessTransfer->getStateMachineName(),
+            $stateMachineProcessTransfer->getProcessName()
+        );
 
-        $this->itemLock->acquire($identifier);
+        $this->itemLock->acquire($lockIdentifier);
 
         try {
             $triggerResult = $this->stateMachineTrigger->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
         } finally {
-            $this->itemLock->release($identifier);
+            $this->itemLock->release($lockIdentifier);
         }
 
         return $triggerResult;
@@ -71,15 +72,10 @@ class LockedTrigger implements TriggerInterface
     {
         $identifier = $this->buildIdentifierForMultipleItemLock($stateMachineItems);
 
-        if ($this->itemLock->isLocked($identifier)) {
-            throw new LockException('State machine item is locked.');
-        }
-
         $this->itemLock->acquire($identifier);
 
         try {
-            $triggerEventResult = $this->stateMachineTrigger
-                ->triggerEvent($eventName, $stateMachineItems);
+            $triggerEventResult = $this->stateMachineTrigger->triggerEvent($eventName, $stateMachineItems);
         } finally {
             $this->itemLock->release($identifier);
         }
@@ -89,6 +85,7 @@ class LockedTrigger implements TriggerInterface
 
     /**
      * @param string $stateMachineName
+     *
      * @return int
      */
     public function triggerConditionsWithoutEvent($stateMachineName)
@@ -109,7 +106,11 @@ class LockedTrigger implements TriggerInterface
             if ($identifier) {
                 $identifier .= '-';
             }
-            $identifier .= $stateMachineItemTransfer->getIdentifier();
+            $identifier .= $this->buildLockIdentifier(
+                $stateMachineItemTransfer->getIdentifier(),
+                $stateMachineItemTransfer->getProcessName(),
+                $stateMachineItemTransfer->getStateMachineName()
+            );
         }
 
         return $identifier;
@@ -123,6 +124,18 @@ class LockedTrigger implements TriggerInterface
     public function triggerForTimeoutExpiredItems($stateMachineName)
     {
         return $this->stateMachineTrigger->triggerForTimeoutExpiredItems($stateMachineName);
+    }
+
+    /**
+     * @param string $identifier
+     * @param string $stateMachineName
+     * @param string $processName
+     *
+     * @return string
+     */
+    protected function buildLockIdentifier($identifier, $stateMachineName, $processName)
+    {
+        return $identifier . $stateMachineName . $processName;
     }
 
 }

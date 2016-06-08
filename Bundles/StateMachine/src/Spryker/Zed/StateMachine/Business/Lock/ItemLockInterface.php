@@ -18,13 +18,6 @@ interface ItemLockInterface
     /**
      * @param int $identifier
      *
-     * @return bool
-     */
-    public function isLocked($identifier);
-
-    /**
-     * @param int $identifier
-     *
      * @return void
      */
     public function release($identifier);

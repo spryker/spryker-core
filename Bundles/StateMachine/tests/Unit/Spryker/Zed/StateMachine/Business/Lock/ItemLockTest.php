@@ -9,6 +9,8 @@ namespace Unit\Spryker\Zed\StateMachine\Business\Lock;
 
 use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineLockQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineLock;
+use Propel\Runtime\Exception\PropelException;
+use Spryker\Zed\StateMachine\Business\Exception\LockException;
 use Spryker\Zed\StateMachine\Business\Lock\ItemLock;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
@@ -35,22 +37,17 @@ class ItemLockTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testIsLockedShouldReturnBooleanWhenItemIsLocked()
+    public function testAcquireWhenPropelExceptionThrownShouldReThrowLockException()
     {
-        $stateMachineQueryContainerMock = $this->createStateMachineQueryContainerMock();
+        $this->expectException(LockException::class);
 
-        $itemLockQuery = $this->createStateMachineQueryMock();
-        $itemLockQuery->expects($this->once())
-            ->method('count')
-            ->willReturn(1);
+        $stateMachineLockEntityMock = $this->createStateMachineItemLockEntityMock();
+        $stateMachineLockEntityMock->method('save')
+            ->willThrowException(new PropelException());
 
-        $stateMachineQueryContainerMock->expects($this->once())
-            ->method('queryLockedItemsByIdentifierAndExpirationDate')
-            ->willReturn($itemLockQuery);
+        $itemLock = $this->createItemLock($stateMachineLockEntityMock);
 
-        $itemLock = $this->createItemLock(null, $stateMachineQueryContainerMock);
-
-        $lockResult = $itemLock->isLocked(1);
+        $lockResult = $itemLock->acquire(1);
 
         $this->assertTrue($lockResult);
     }

@@ -64,6 +64,11 @@ interface EventInterface
     public function getName();
 
     /**
+     * @return string
+     */
+    public function getEventTypeLabel();
+
+    /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
      *
      * @return void

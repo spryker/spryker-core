@@ -131,4 +131,14 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
      */
     public function queryEventTimeoutByIdentifierAndFkProcess($identifier, $fkProcess);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     * @param int $transitionToIdState
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery
+     */
+    public function queryLastHistoryItem(StateMachineItemTransfer $stateMachineItemTransfer, $transitionToIdState);
+
 }

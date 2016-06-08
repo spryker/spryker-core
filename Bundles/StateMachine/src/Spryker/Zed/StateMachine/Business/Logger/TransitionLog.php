@@ -45,10 +45,7 @@ class TransitionLog implements TransitionLogInterface
     public function setEvent(EventInterface $event)
     {
         $nameEvent = $event->getName();
-
-        if ($event->isOnEnter()) {
-            $nameEvent .= ' (on enter)';
-        }
+        $nameEvent .= $event->getEventTypeLabel();
 
         foreach ($this->logEntities as $logEntity) {
             $logEntity->setEvent($nameEvent);

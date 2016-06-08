@@ -7,6 +7,8 @@
 namespace Spryker\Zed\StateMachine\Business\Lock;
 
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineLock;
+use Propel\Runtime\Exception\PropelException;
+use Spryker\Zed\StateMachine\Business\Exception\LockException;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 use Spryker\Zed\StateMachine\StateMachineConfig;
 
@@ -38,6 +40,8 @@ class ItemLock implements ItemLockInterface
     /**
      * @param int $identifier
      *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\LockException
+     *
      * @return bool
      */
     public function acquire($identifier)
@@ -47,24 +51,14 @@ class ItemLock implements ItemLockInterface
         $stateMachineLockEntity->setIdentifier($identifier);
         $expirationDate = $this->createExpirationDate();
         $stateMachineLockEntity->setExpires($expirationDate);
-        $affectedRows = $stateMachineLockEntity->save();
+
+        try {
+            $affectedRows = $stateMachineLockEntity->save();
+        } catch (PropelException $exception) {
+            throw new LockException('State machine trigger is locked.');
+        }
 
         return $affectedRows > 0;
-    }
-
-    /**
-     * @param int $identifier
-     *
-     * @return bool
-     */
-    public function isLocked($identifier)
-    {
-        $locked = $this->queryContainer->queryLockedItemsByIdentifierAndExpirationDate(
-            $identifier,
-            new \DateTime('now')
-        )->count();
-
-        return $locked > 0;
     }
 
     /**

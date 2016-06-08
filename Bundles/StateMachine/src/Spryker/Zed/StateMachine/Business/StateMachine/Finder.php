@@ -191,10 +191,12 @@ class Finder implements FinderInterface
         $selectedStates = [];
 
         $processStateList = $this->builder->createProcess($stateMachineProcessTransfer)->getAllStates();
+
         foreach ($processStateList as $state) {
-            if (($hasFlag && $state->hasFlag($flag)) || (!$hasFlag && !$state->hasFlag($flag))) {
-                $selectedStates[$state->getName()] = $state;
+            if ($hasFlag !== $state->hasFlag($flag)) {
+                continue;
             }
+            $selectedStates[$state->getName()] = $state;
         }
 
         return $selectedStates;

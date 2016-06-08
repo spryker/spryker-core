@@ -150,6 +150,26 @@ class Event implements EventInterface
     }
 
     /**
+     * @return string
+     */
+    public function getEventTypeLabel()
+    {
+        if ($this->isOnEnter()) {
+            return ' (on enter)';
+        }
+
+        if ($this->isManual()) {
+            return ' (manual)';
+        }
+
+        if ($this->hasTimeout()) {
+            return ' (timeout)';
+        }
+
+        return '';
+    }
+
+    /**
      * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
      */
     public function getTransitions()

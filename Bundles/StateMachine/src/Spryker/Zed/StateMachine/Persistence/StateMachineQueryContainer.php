@@ -10,6 +10,7 @@ namespace Spryker\Zed\StateMachine\Persistence;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineEventTimeoutTableMap;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineProcessTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -212,7 +213,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      * @param int $identifier
      * @param int $fkProcess
      *
-     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery
      */
     public function queryEventTimeoutByIdentifierAndFkProcess($identifier, $fkProcess)
     {
@@ -220,6 +221,27 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
             ->createStateMachineEventTimeoutQuery()
             ->filterByIdentifier($identifier)
             ->filterByFkStateMachineProcess($fkProcess);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     * @param int $transitionToIdState
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery
+     */
+    public function queryLastHistoryItem(StateMachineItemTransfer $stateMachineItemTransfer, $transitionToIdState)
+    {
+        return $this->getFactory()->createStateMachineItemStateHistoryQuery()
+            ->useStateQuery()
+               ->filterByFkStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess())
+            ->endUse()
+            ->filterByIdentifier($stateMachineItemTransfer->getIdentifier())
+            ->filterByFkStateMachineItemState($transitionToIdState)
+            ->orderByCreatedAt(Criteria::DESC)
+            ->orderByIdStateMachineItemStateHistory(Criteria::DESC)
+            ->limit(1);
     }
 
 }

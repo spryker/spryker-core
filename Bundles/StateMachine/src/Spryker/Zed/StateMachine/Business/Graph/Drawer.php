@@ -23,6 +23,8 @@ class Drawer implements DrawerInterface
     const EDGE_UPPER_HALF = 'upper half';
     const EDGE_LOWER_HALF = 'lower half';
     const EDGE_FULL = 'edge full';
+    const HIGHLIGHT_COLOR = '#FFFFCC';
+    const HAPPY_PATH_COLOR = '#70ab28';
 
     /**
      * @var array
@@ -268,7 +270,7 @@ class Drawer implements DrawerInterface
         }
 
         if ($highlighted) {
-            $attributes['fillcolor'] = '#FFFFCC';
+            $attributes['fillcolor'] = self::HIGHLIGHT_COLOR;
         }
 
         $attributes = array_merge($this->attributesState, $attributes);
@@ -426,7 +428,7 @@ class Drawer implements DrawerInterface
 
         if ($transition->isHappy()) {
             $attributes['weight'] = '100';
-            $attributes['color'] = '#70ab28';
+            $attributes['color'] = self::HAPPY_PATH_COLOR;
         } elseif ($transition->hasEvent()) {
             $attributes['weight'] = '10';
         } else {

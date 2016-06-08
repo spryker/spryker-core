@@ -157,7 +157,7 @@ class Process implements ProcessInterface
     /**
      * @param string $stateName
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
