@@ -12,7 +12,6 @@ use Spryker\Yves\DummyPayment\Form\CreditCardSubForm;
 use Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentCreditCardFormDataProvider;
 use Spryker\Yves\DummyPayment\Form\InvoiceSubForm;
 use Spryker\Yves\DummyPayment\Handler\DummyPaymentHandler;
-use Spryker\Yves\DummyPayment\Plugin\DummyPaymentCreditCardSubFormPlugin;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class DummyPaymentFactory extends AbstractFactory

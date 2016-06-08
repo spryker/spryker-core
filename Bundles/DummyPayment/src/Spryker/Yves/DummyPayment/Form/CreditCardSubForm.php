@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\DummyPayment\Form;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\DummyPaymentTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -78,8 +78,7 @@ class CreditCardSubForm extends AbstractSubForm
              ->addNameOnCard($builder)
              ->addCardExpiresMonth($builder)
              ->addCardExpiresYear($builder)
-             ->addCardSecurityCode($builder)
-        ;
+             ->addCardSecurityCode($builder);
     }
 
     /**
@@ -250,7 +249,7 @@ class CreditCardSubForm extends AbstractSubForm
     protected function getYearChoices()
     {
         $currentYear = date('Y');
-        
+
         return [
             $currentYear => $currentYear,
             ++$currentYear => $currentYear,

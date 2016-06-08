@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\DummyPayment\Form\DataProvider;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\DummyPaymentTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 

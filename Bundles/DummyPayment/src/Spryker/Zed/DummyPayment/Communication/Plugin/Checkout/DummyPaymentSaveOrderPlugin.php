@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
+/**
+ * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
+ */
 class DummyPaymentSaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
 

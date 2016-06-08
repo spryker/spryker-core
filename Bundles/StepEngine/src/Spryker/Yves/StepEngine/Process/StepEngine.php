@@ -94,7 +94,7 @@ class StepEngine implements StepEngineInterface
         } else {
             $formCollection->provideDefaultFormData($dataTransfer);
         }
-        
+
         return $this->getTemplateVariables($currentStep, $dataTransfer, $formCollection);
     }
 

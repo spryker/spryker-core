@@ -46,6 +46,7 @@ class OmsConfigTest extends \PHPUnit_Framework_TestCase
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($this->configCache);
     }
+
     /**
      * @return void
      */
