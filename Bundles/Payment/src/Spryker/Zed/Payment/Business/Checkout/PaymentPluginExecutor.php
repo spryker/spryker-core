@@ -30,6 +30,9 @@ class PaymentPluginExecutor
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @throws \Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException
      *
      * @return void
      */
@@ -41,6 +44,9 @@ class PaymentPluginExecutor
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @throws \Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException
      *
      * @return void
      */
@@ -52,9 +58,11 @@ class PaymentPluginExecutor
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @throws \Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException
      *
      * @return void
-     *
      */
     public function executePostCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
