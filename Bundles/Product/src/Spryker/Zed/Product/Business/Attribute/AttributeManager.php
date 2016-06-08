@@ -136,8 +136,7 @@ class AttributeManager implements AttributeManagerInterface
     {
         $this->checkAttributeTypeDoesNotExist($name);
 
-        $attributeTypeEntity = (new SpyProductAttributeType());
-        $attributeTypeEntity
+        $attributeTypeEntity = (new SpyProductAttributeType())
             ->setName($name)
             ->setInputRepresentation($inputType)
             ->setFkProductAttributeTypeParent($fkParentAttributeType);
