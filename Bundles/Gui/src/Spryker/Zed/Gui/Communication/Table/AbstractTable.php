@@ -246,6 +246,9 @@ abstract class AbstractTable
         $result = [];
 
         foreach ($headers as $key => $value) {
+            if (!array_key_exists($key, $row)) {
+                continue;
+            }
             $result[$key] = $row[$key];
         }
 
@@ -470,6 +473,21 @@ abstract class AbstractTable
     }
 
     /**
+     * @param ModelCriteria $criteria
+     *
+     * @return string
+     */
+    protected function getFirstAvailableColumnInQuery(ModelCriteria $criteria)
+    {
+        $tableMap = $criteria->getTableMap();
+        $columns = array_keys($tableMap->getColumns());
+
+        $firstColumnName = $tableMap->getColumn($columns[0])->getName();
+
+        return $tableMap->getName() . '.' . $firstColumnName;
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param array $order
@@ -479,11 +497,16 @@ abstract class AbstractTable
     {
         $columns = $this->getColumnsList($query, $config);
 
-        if (!isset($order[0]) || !isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
-            return reset($columns);
+        if (isset($order[0]) && intval($order[0][self::SORT_BY_COLUMN]) > 0 && isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
+
+            $selectedColumn = $columns[$order[0][self::SORT_BY_COLUMN]];
+
+            if (in_array($selectedColumn, $config->getSortable())) {
+                return $selectedColumn;
+            }
         }
 
-        return $columns[$order[0][self::SORT_BY_COLUMN]];
+        return $this->getFirstAvailableColumnInQuery($query);
     }
 
     /**
