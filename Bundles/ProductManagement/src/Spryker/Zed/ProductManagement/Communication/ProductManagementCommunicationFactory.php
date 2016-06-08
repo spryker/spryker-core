@@ -55,6 +55,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductFormAddDataProvider(
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
+            $this->getProductFacade(),
             $this->getLocaleFacade()
         );
     }
@@ -67,6 +68,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductFormEditDataProvider(
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
+            $this->getProductFacade(),
             $this->getLocaleFacade()
         );
     }

@@ -12,6 +12,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 
 class AbstractProductFormDataProvider
 {
@@ -33,20 +34,28 @@ class AbstractProductFormDataProvider
      */
     protected $localeFacade;
 
+    /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected $locale;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
+    protected $productFacade;
+
+
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
+        ProductManagementToProductInterface $productFacade,
         ProductManagementToLocaleInterface $localeFacade
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
         $this->localeFacade = $localeFacade;
+        $this->productFacade = $productFacade;
+        $this->locale = $localeFacade->getCurrentLocale();
     }
 
     /**

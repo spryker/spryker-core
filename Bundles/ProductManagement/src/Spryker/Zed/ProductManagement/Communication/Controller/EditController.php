@@ -33,8 +33,15 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $idProductAbstract = $this->castId($request->get(
+            self::PARAM_ID_PRODUCT_ABSTRACT
+        ));
+
         $currentProduct = $this->getProductFromRequest($request);
+
         if (!$currentProduct) {
+            $this->addErrorMessage(sprintf('The product with id "%s" you are trying to edit, does not exist.', $idProductAbstract));
+
             return new RedirectResponse('/product-management');
         }
 
@@ -42,7 +49,7 @@ class EditController extends AbstractController
         $form = $this
             ->getFactory()
             ->createProductFormAdd(
-                $dataProvider->getData(),
+                $dataProvider->getData($idProductAbstract),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
@@ -89,7 +96,6 @@ class EditController extends AbstractController
             ->getProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
-            $this->addErrorMessage(sprintf('The product you are trying to edit %s does not exist.', $idProductAbstract));
 
             return null;
         }

@@ -13,14 +13,23 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 {
 
     /**
+     * @param int $idProductAbstract
+     *
      * @return array
      */
-    public function getData()
+    public function getData($idProductAbstract)
     {
         $formData = [];
-        $fields = $this->getDefaultFormFields();
+        $defaults = $this->getDefaultFormFields();
 
-        return array_merge($formData, $fields);
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
+        $productAbstractTransfer = $this->productFacade->getProductAbstractById($idProductAbstract);
+        if ($productAbstractTransfer) {
+            $formData = $productAbstractTransfer->toArray();
+            $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $this->getAttributes($idProductAbstract);
+        }
+
+        return array_merge($defaults, $formData);
     }
 
     /**
