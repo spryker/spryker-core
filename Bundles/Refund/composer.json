@@ -15,7 +15,7 @@
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
-    "spryker/oms": "^2.0.0",
+    "spryker/oms": ">=2.0.0 <=3.0.0",
     "spryker/payone": "^2.0.0",
     "spryker/sales": "^2.0.0",
     "spryker/sql-criteria-builder": "^1.0.0",

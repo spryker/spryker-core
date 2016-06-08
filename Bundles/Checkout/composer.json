@@ -11,7 +11,7 @@
     "spryker/calculation": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
-    "spryker/oms": "^2.0.0",
+    "spryker/oms": ">=2.0.0 <=3.0.0",
     "spryker/zed-request": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/country": "^2.0.0",
