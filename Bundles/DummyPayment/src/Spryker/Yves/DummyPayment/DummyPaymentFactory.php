@@ -74,7 +74,7 @@ class DummyPaymentFactory extends AbstractFactory
      */
     public function createDummyPaymentHandler()
     {
-        return new DummyPaymentHandler($this->createCurrencyManager());
+        return new DummyPaymentHandler($this->getCurrencyManager());
     }
 
     /**
@@ -88,7 +88,7 @@ class DummyPaymentFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Library\Currency\CurrencyManager
      */
-    protected function createCurrencyManager()
+    protected function getCurrencyManager()
     {
         return CurrencyManager::getInstance();
     }
