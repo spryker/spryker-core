@@ -10,8 +10,12 @@ namespace Spryker\Yves\DummyPayment;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Yves\DummyPayment\Form\CreditCardSubForm;
 use Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentCreditCardFormDataProvider;
+use Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentInvoiceFormDataProvider;
 use Spryker\Yves\DummyPayment\Form\InvoiceSubForm;
 use Spryker\Yves\DummyPayment\Handler\DummyPaymentHandler;
+use Spryker\Yves\DummyPayment\Plugin\DummyPaymentCreditCardSubFormPlugin;
+use Spryker\Yves\DummyPayment\Plugin\DummyPaymentHandlerPlugin;
+use Spryker\Yves\DummyPayment\Plugin\DummyPaymentInvoiceSubFormPlugin;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class DummyPaymentFactory extends AbstractFactory
@@ -34,6 +38,14 @@ class DummyPaymentFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\DummyPayment\Plugin\DummyPaymentCreditCardSubFormPlugin
+     */
+    public function createCreditCardSubFormPlugin()
+    {
+        return new DummyPaymentCreditCardSubFormPlugin();
+    }
+
+    /**
      * @return \Spryker\Yves\DummyPayment\Form\InvoiceSubForm
      */
     public function createInvoiceForm()
@@ -42,11 +54,19 @@ class DummyPaymentFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentCreditCardFormDataProvider
+     * @return \Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentInvoiceFormDataProvider
      */
     public function createInvoiceFormDataProvider()
     {
-        return new DummyPaymentCreditCardFormDataProvider();
+        return new DummyPaymentInvoiceFormDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Yves\DummyPayment\Plugin\DummyPaymentInvoiceSubFormPlugin
+     */
+    public function createInvoiceSubFormPlugin()
+    {
+        return new DummyPaymentInvoiceSubFormPlugin();
     }
 
     /**
@@ -55,6 +75,14 @@ class DummyPaymentFactory extends AbstractFactory
     public function createDummyPaymentHandler()
     {
         return new DummyPaymentHandler($this->createCurrencyManager());
+    }
+
+    /**
+     * @return \Spryker\Yves\DummyPayment\Plugin\DummyPaymentHandlerPlugin
+     */
+    public function createDummyPaymentHandlerPlugin()
+    {
+        return new DummyPaymentHandlerPlugin();
     }
 
     /**

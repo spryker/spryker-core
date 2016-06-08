@@ -10,7 +10,6 @@ namespace Spryker\Yves\DummyPayment\Form;
 use Generated\Shared\Transfer\DummyPaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Shared\DummyPayment\DummyPaymentConstants;
-use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,6 +25,9 @@ class CreditCardSubForm extends AbstractSubForm
     const FIELD_CARD_EXPIRES_MONTH = 'card_expires_month';
     const FIELD_CARD_EXPIRES_YEAR = 'card_expires_year';
     const FIELD_CARD_SECURITY_CODE = 'card_security_code';
+
+    const OPTION_CARD_EXPIRES_CHOICES_MONTH = 'month choices';
+    const OPTION_CARD_EXPIRES_CHOICES_YEAR = 'year choices';
 
     /**
      * @return string
@@ -62,7 +64,7 @@ class CreditCardSubForm extends AbstractSubForm
 
         $resolver->setDefaults([
             'data_class' => DummyPaymentTransfer::class,
-        ])->setRequired(SubFormInterface::OPTIONS_FIELD_NAME);
+        ])->setRequired(self::OPTIONS_FIELD_NAME);
     }
 
     /**
@@ -76,8 +78,8 @@ class CreditCardSubForm extends AbstractSubForm
         $this->addCardType($builder)
              ->addCardNumber($builder)
              ->addNameOnCard($builder)
-             ->addCardExpiresMonth($builder)
-             ->addCardExpiresYear($builder)
+             ->addCardExpiresMonth($builder, $options)
+             ->addCardExpiresYear($builder, $options)
              ->addCardSecurityCode($builder);
     }
 
@@ -153,17 +155,18 @@ class CreditCardSubForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return \Spryker\Yves\DummyPayment\Form\CreditCardSubForm
+     * @return $this
      */
-    protected function addCardExpiresMonth(FormBuilderInterface $builder)
+    protected function addCardExpiresMonth(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             self::FIELD_CARD_EXPIRES_MONTH,
             'choice',
             [
                 'label' => false,
-                'choices' => $this->getMonthChoices(),
+                'choices' => $options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_MONTH],
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -176,17 +179,18 @@ class CreditCardSubForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return \Spryker\Yves\DummyPayment\Form\CreditCardSubForm
+     * @return $this
      */
-    protected function addCardExpiresYear(FormBuilderInterface $builder)
+    protected function addCardExpiresYear(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             self::FIELD_CARD_EXPIRES_YEAR,
             'choice',
             [
                 'label' => false,
-                'choices' => $this->getYearChoices(),
+                'choices' => $options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_YEAR],
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Expires year',
@@ -220,43 +224,6 @@ class CreditCardSubForm extends AbstractSubForm
         );
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getMonthChoices()
-    {
-        return [
-            '01' => '01',
-            '02' => '02',
-            '03' => '03',
-            '04' => '04',
-            '05' => '05',
-            '06' => '06',
-            '07' => '07',
-            '08' => '08',
-            '09' => '09',
-            '10' => '10',
-            '11' => '11',
-            '12' => '12',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getYearChoices()
-    {
-        $currentYear = date('Y');
-
-        return [
-            $currentYear => $currentYear,
-            ++$currentYear => $currentYear,
-            ++$currentYear => $currentYear,
-            ++$currentYear => $currentYear,
-            ++$currentYear => $currentYear,
-        ];
     }
 
 }

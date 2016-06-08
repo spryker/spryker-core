@@ -10,7 +10,6 @@ namespace Spryker\Yves\DummyPayment\Form;
 use Generated\Shared\Transfer\DummyPaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Shared\DummyPayment\DummyPaymentConstants;
-use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -54,9 +53,8 @@ class InvoiceSubForm extends AbstractSubForm
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class' => DummyPaymentTransfer::class,
-            SubFormInterface::OPTIONS_FIELD_NAME => [],
-        ]);
+            'data_class' => DummyPaymentTransfer::class
+        ])->setRequired(self::OPTIONS_FIELD_NAME);
     }
 
     /**
