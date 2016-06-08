@@ -29,44 +29,81 @@
 
         {% block widget_content %}
 
-            {{ form_row(form.sku) }}
+<div class="tabs-container">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab_general" data-toggle="tab">General</a></li>
+        <li class=""><a href="#tab_variant" data-toggle="tab">Variants</a></li>
+        <li class=""><a href="#tab_attribute" data-toggle="tab">Attributes</a></li>
+    </ul>
+    <div class="tab-content">
+        {# ============================ GENERAL ============================ #}
+        <div id="tab_general" class="tab-pane active">
+            <div class="panel-body">
 
-            <div class="tabs-container">
-                <ul class="nav nav-tabs">
-                    {% for locale,localizedAttributes in form.localized_attributes %}
-                        {% set activeCss = '' %}
-                        {% set invalidCss = '' %}
+                {{ form_row(form.sku) }}
 
-                        {% if currentLocale == locale %}
-                            {% set activeCss =  'active' %}
-                        {% endif %}
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        {% for locale,localizedAttributes in form.localized_attributes %}
+                            {% set activeCss = '' %}
+                            {% set invalidCss = '' %}
 
-                        {% if errors.localized_attributes is defined %}
-                            {% if locale in errors.localized_attributes|keys %}
-                                {% set invalidCss = 'invalid-tab' %}
+                            {% if currentLocale == locale %}
+                                {% set activeCss =  'active' %}
                             {% endif %}
-                        {% endif %}
 
-                        <li class="{{ activeCss }}  {{ invalidCss }}"><a href="#content_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
-                    {% endfor %}
-                </ul>
+                            {% if errors.localized_attributes is defined %}
+                                {% if locale in errors.localized_attributes|keys %}
+                                    {% set invalidCss = 'invalid-tab' %}
+                                {% endif %}
+                            {% endif %}
 
-                <div class="tab-content">
-                    {% for locale,localizedAttributes in form.localized_attributes %}
-                        {% set active = '' %}
-                        {% if currentLocale == locale %}
-                            {% set active = 'active' %}
-                        {% endif %}
+                            <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
+                        {% endfor %}
+                    </ul>
 
-                        <div id="content_{{ locale }}" class="tab-pane {{ active }}">
-                            <div class="panel-body">
-                                {{ form_row(localizedAttributes.name) }}
-                                {{ form_row(localizedAttributes.description) }}
+                    <div class="tab-content">
+                        {% for locale,localizedAttributes in form.localized_attributes %}
+                            {% set active = '' %}
+                            {% if currentLocale == locale %}
+                                {% set active = 'active' %}
+                            {% endif %}
+
+                            <div id="content_{{ locale }}" class="tab-pane {{ active }}">
+                                <div class="panel-body">
+                                    {{ form_row(localizedAttributes.name) }}
+                                    {{ form_row(localizedAttributes.description) }}
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
+
             </div>
+        </div>
+        {# ============================ END ============================ #}
+
+        {# ============================ VARIANT ============================ #}
+        <div id="tab_variant" class="tab-pane">
+            <div class="panel-body">
+
+                variants
+
+            </div>
+        </div>
+        {# ============================ END ============================ #}
+
+        {# ============================ ATTRIBUTE ============================ #}
+        <div id="tab_attribute" class="tab-pane">
+            <div class="panel-body">
+
+                attrubute
+
+            </div>
+        </div>
+        {# ============================ END ============================ #}
+    </div>
+</div>
 
         {% endblock %}
 

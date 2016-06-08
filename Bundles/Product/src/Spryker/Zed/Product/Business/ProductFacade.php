@@ -348,6 +348,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $productConcreteCollection
      *
@@ -360,6 +362,16 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createProductManager()
             ->addProduct($productAbstractTransfer, $productConcreteCollection);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
+     */
+    public function getAttributeManager()
+    {
+        return $this->getFactory()->createAttributeManager();
     }
 
 }
