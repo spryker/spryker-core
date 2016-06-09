@@ -8,9 +8,9 @@
 namespace Spryker\Shared\Search\Provider;
 
 use Elastica\Client;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
-use Spryker\Shared\Application\ApplicationConstants;
 
 /**
  * Class ClientStorageProvider

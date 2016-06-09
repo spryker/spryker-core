@@ -27,7 +27,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * - The name of the index is automatically prefixed with the store name + underscore
      * - Generates IndexMap class for each mapping type
      * - The generated IndexMaps are not store specific and has the class name of the mapping types suffixed with "IndexMap"
-     * - The generated files will be removed and re-created always when  install runs
+     * - The generated files will be removed and re-created always when install runs
      *
      * @api
      *

@@ -68,7 +68,7 @@ class IndexMapInstaller implements SearchInstallerInterface
                 'Generating index map classes for index: "%s"',
                 $indexDefinition->getIndexName()
             ));
-            
+
             $this->indexMapGenerator->generate($indexDefinition);
         }
     }
