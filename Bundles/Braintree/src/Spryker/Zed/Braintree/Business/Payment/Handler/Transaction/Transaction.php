@@ -449,24 +449,30 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
      */
     protected function preCheck(QuoteTransfer $quoteTransfer)
     {
-        $options = [
-            \Braintree\Transaction::THREE_D_SECURE => [
-                'required' => $this->config->getIs3DSecure()
-            ]
-        ];
-
         $paymentTransfer = $quoteTransfer->getPayment()->getBraintree();
-
         $this->initializeBraintree();
 
         return \Braintree\Transaction::sale([
             'amount' => $quoteTransfer->getTotals()->getGrandTotal() / 100,
             'paymentMethodNonce' => $paymentTransfer->getNonce(),
-            'options' => $options,
+            'options' => $this->getRequestOptions(),
             'customer' => $this->getCustomerData($quoteTransfer),
             'billing' => $this->getCustomerAddressData($quoteTransfer->getBillingAddress()),
             'shipping' => $this->getCustomerAddressData($quoteTransfer->getShippingAddress()),
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getRequestOptions()
+    {
+        return [
+            \Braintree\Transaction::THREE_D_SECURE => [
+                'required' => $this->config->getIs3DSecure()
+            ],
+            'storeInVault' => $this->config->getIsVaulted()
+        ];
     }
 
     /**
