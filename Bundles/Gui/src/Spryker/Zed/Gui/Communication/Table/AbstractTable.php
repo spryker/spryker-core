@@ -501,7 +501,7 @@ abstract class AbstractTable
 
             $selectedColumn = $columns[$order[0][self::SORT_BY_COLUMN]];
 
-            if (in_array($selectedColumn, $config->getSortable())) {
+            if (in_array($selectedColumn, $config->getSortable(), true)) {
                 return $selectedColumn;
             }
         }
