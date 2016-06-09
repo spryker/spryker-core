@@ -27,7 +27,7 @@ class CartFactory extends AbstractFactory
      */
     public function createZedStub()
     {
-        return new CartStub($this->getZedRequestClient());
+        return new CartStub($this->createZedRequestClient());
     }
 
 }
