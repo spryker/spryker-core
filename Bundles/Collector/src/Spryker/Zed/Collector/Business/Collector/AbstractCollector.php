@@ -191,8 +191,8 @@ abstract class AbstractCollector
     }
 
     /**
-     * @param int $offset
      * @param string $itemType
+     * @param int $offset
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouch[]
      */

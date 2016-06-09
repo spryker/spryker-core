@@ -28,12 +28,11 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
      *
      * @return \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface
      */
-    public function collectDataFromDatabase(
-        SpyTouchQuery $touchQuery,
-        LocaleTransfer $locale
-    ) {
+    public function collectDataFromDatabase(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
+    {
         $this->prepareCollectorScope($touchQuery, $locale);
         $batchCollection = $this->generateBatchIterator();
+
         return $batchCollection;
     }
 
