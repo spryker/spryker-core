@@ -336,9 +336,9 @@ class Condition implements ConditionInterface
     }
 
     /**
-     * @param array|StateMachineItemTransfer[] $stateMachineItems
+     * @param array|\Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return array|StateMachineItemTransfer[]
+     * @return array|\Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     protected function createStateMap(array $stateMachineItems)
     {
@@ -348,6 +348,5 @@ class Condition implements ConditionInterface
         }
         return $sourceStates;
     }
-
 
 }

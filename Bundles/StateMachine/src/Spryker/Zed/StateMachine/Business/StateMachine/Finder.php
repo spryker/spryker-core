@@ -346,7 +346,7 @@ class Finder implements FinderInterface
      */
     protected function getStateMachineProcessEntity(StateMachineProcessTransfer $stateMachineProcessTransfer)
     {
-       return $this->queryContainer->queryProcessByStateMachineAndProcessName(
+        return $this->queryContainer->queryProcessByStateMachineAndProcessName(
             $stateMachineProcessTransfer->getStateMachineName(),
             $stateMachineProcessTransfer->getProcessName()
         )->findOne();

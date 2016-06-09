@@ -144,7 +144,7 @@ class StateUpdater implements StateUpdaterInterface
 
     /**
      * @param array $sourceStateBuffer
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
@@ -162,7 +162,7 @@ class StateUpdater implements StateUpdaterInterface
     }
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return void
      */
@@ -175,7 +175,7 @@ class StateUpdater implements StateUpdaterInterface
     }
 
     /**
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return void
      */
@@ -187,9 +187,9 @@ class StateUpdater implements StateUpdaterInterface
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      * @param string $sourceState
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return void
      */
@@ -205,8 +205,8 @@ class StateUpdater implements StateUpdaterInterface
     /**
      * @param string $sourceState
      * @param string $targetState
-     * @param StateMachineItemTransfer $stateMachineItemTransfer
-     * @param ProcessInterface $process
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
@@ -226,6 +226,5 @@ class StateUpdater implements StateUpdaterInterface
         $this->notifyHandlerStateChanged($stateMachineItemTransfer);
         $this->stateMachinePersistence->saveItemStateHistory($stateMachineItemTransfer);
     }
-
 
 }

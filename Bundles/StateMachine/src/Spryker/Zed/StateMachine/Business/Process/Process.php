@@ -330,8 +330,8 @@ class Process implements ProcessInterface
 
     /**
      * @param array $transitions
-     * @param $eventsBySource
-     * @param EventInterface $event
+     * @param array $eventsBySource
+     * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
      *
      * @return array|string
      */
