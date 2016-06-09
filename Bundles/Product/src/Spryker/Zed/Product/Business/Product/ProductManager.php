@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -19,6 +20,7 @@ use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistExcepti
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
+use Spryker\Zed\Product\Business\Transfer\AbstractProductTransferGenerator;
 use Spryker\Zed\Product\Business\Transfer\TransferGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
@@ -602,8 +604,36 @@ class ProductManager implements ProductManagerInterface
             return null;
         }
 
-        $transferGenerator = new TransferGenerator();
+        $transferGenerator = new AbstractProductTransferGenerator();
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
+
+        $productAttributeCollection = $this->productQueryContainer
+            ->queryProductAbstractAttributes($idProductAbstract)
+            ->find();
+
+        dump($productAttributeCollection->toArray());
+
+        foreach ($productAttributeCollection as $attribute) {
+            $localeTransfer = $this->localeFacade->getLocaleById($attribute->getFkLocale());
+
+
+            $data = $attribute->toArray();
+
+
+            $data['attributes'] = json_decode($data['attributes']);
+            dump($data);
+
+            $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
+                ->fromArray($data);
+
+            die;
+            $localizedAttributesTransfer->setLocale($localeTransfer);
+            //$localizedAttributesTransfer->setName($data[ProductFormAdd::FIELD_NAME]);
+            //$localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
+
+            dump($localizedAttributesTransfer);
+        }
+
 
         return $productAbstractTransfer;
     }

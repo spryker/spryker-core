@@ -48,6 +48,7 @@ class EditController extends AddController
             return new RedirectResponse('/product-management');
         }
 
+        dump($productAbstract);
 
         $attributeCollection = [
             'size' => [

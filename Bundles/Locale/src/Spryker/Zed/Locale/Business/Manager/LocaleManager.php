@@ -88,6 +88,32 @@ class LocaleManager
     }
 
     /**
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale)
+    {
+        $localeEntity = $this->localeQueryContainer
+            ->queryLocales()
+            ->filterByIdLocale($idLocale)
+            ->findOne();
+
+        if (!$localeEntity) {
+            throw new MissingLocaleException(
+                sprintf(
+                    'Tried to retrieve locale with id %s, but it does not exist',
+                    $idLocale
+                )
+            );
+        }
+
+        return $this->transferGenerator->convertLocale($localeEntity);
+    }
+
+    /**
      * @param string $localeName
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException

@@ -13,7 +13,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class TransferGenerator implements TransferGeneratorInterface
+class AbstractProductTransferGenerator implements AbstractProductTransferGeneratorInterface
 {
 
     /**

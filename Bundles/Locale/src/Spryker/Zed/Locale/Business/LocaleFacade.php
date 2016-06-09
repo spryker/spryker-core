@@ -66,6 +66,20 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale)
+    {
+        $localeManager = $this->getFactory()->createLocaleManager();
+
+        return $localeManager->getLocaleById($idLocale);
+    }
+
+    /**
      * @api
      *
      * @return string
