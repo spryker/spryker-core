@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Product\Business\Attribute;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAttributesMetadata;
 use Orm\Zed\Product\Persistence\SpyProductAttributeType;
+use Spryker\Shared\Library\Json;
 use Spryker\Zed\Product\Business\Exception\AttributeExistsException;
 use Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException;
 use Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException;
@@ -153,7 +156,7 @@ class AttributeManager implements AttributeManagerInterface
      *
      * @return void
      */
-    private function checkAttributeTypeDoesNotExist($name)
+    protected function checkAttributeTypeDoesNotExist($name)
     {
         if ($this->hasAttributeType($name)) {
             throw new AttributeTypeExistsException(
@@ -163,6 +166,30 @@ class AttributeManager implements AttributeManagerInterface
                 )
             );
         }
+    }
+
+    protected function jsonToAttributes($json)
+    {
+        return Json::decode($json, true);
+    }
+
+    /**
+     * @param string $name
+     * @param string $attributeJson
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
+     */
+    public function createLocalizedAttributesTransfer($name, $attributeJson, LocaleTransfer $localeTransfer)
+    {
+        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
+            ->setName($name)
+            ->setAttributes(
+                $this->jsonToAttributes($attributeJson)
+            )
+            ->setLocale($localeTransfer);
+
+        return $localizedAttributesTransfer;
     }
 
 }

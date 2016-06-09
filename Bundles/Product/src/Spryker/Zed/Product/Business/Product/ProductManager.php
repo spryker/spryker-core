@@ -15,13 +15,13 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
+use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Business\Transfer\AbstractProductTransferGenerator;
-use Spryker\Zed\Product\Business\Transfer\TransferGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
@@ -37,6 +37,11 @@ class ProductManager implements ProductManagerInterface
     const COL_ID_PRODUCT_ABSTRACT = 'SpyProductAbstract.IdProductAbstract';
 
     const COL_NAME = 'SpyProductLocalizedAttributes.Name';
+
+    /**
+     * @var \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
+     */
+    protected $attributeManager;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -74,12 +79,14 @@ class ProductManager implements ProductManagerInterface
     protected $productAbstractsBySkuCache;
 
     /**
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface $attributeManager
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      */
     public function __construct(
+        AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
         ProductToTouchInterface $touchFacade,
         ProductToUrlInterface $urlFacade,
@@ -89,6 +96,7 @@ class ProductManager implements ProductManagerInterface
         $this->touchFacade = $touchFacade;
         $this->urlFacade = $urlFacade;
         $this->localeFacade = $localeFacade;
+        $this->attributeManager = $attributeManager;
     }
 
     /**
@@ -611,29 +619,13 @@ class ProductManager implements ProductManagerInterface
             ->queryProductAbstractAttributes($idProductAbstract)
             ->find();
 
-        dump($productAttributeCollection->toArray());
-
         foreach ($productAttributeCollection as $attribute) {
             $localeTransfer = $this->localeFacade->getLocaleById($attribute->getFkLocale());
 
+            $localizedAttributesTransfer = $this->attributeManager
+                ->createLocalizedAttributesTransfer($attribute->getName(), $attribute->getAttributes(), $localeTransfer);
 
-            $data = $attribute->toArray();
-
-
-            $data['attributes'] = json_decode($data['attributes']);
-            dump($data);
-
-            $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-                ->fromArray($data);
-
-            die;
-            $localizedAttributesTransfer->setLocale($localeTransfer);
-            //$localizedAttributesTransfer->setName($data[ProductFormAdd::FIELD_NAME]);
-            //$localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
-
-            dump($localizedAttributesTransfer);
         }
-
 
         return $productAbstractTransfer;
     }
