@@ -164,6 +164,9 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Runs collectors defined in the project and synchronizes data with stores (add, update, delete)
+     *
      * @api
      *
      * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector *

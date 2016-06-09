@@ -135,6 +135,7 @@ interface TouchFacadeInterface
     public function getItemsByType($itemType);
 
     /**
+     * Specification:
      * Removes all the rows from the touch table(s)
      * which are marked as deleted (item_event = SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
      *
