@@ -261,4 +261,11 @@ interface OmsFacadeInterface
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function clearLocks();
+
 }

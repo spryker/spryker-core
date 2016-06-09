@@ -15,7 +15,7 @@ use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPdoCollectorQuery;
 
-abstract class AbstractPdoCollector extends AbstractCollector
+abstract class AbstractPdoCollector extends AbstractDatabaseCollector
 {
 
     /**
@@ -45,11 +45,17 @@ abstract class AbstractPdoCollector extends AbstractCollector
     {
         parent::validateDependencies();
         if (!($this->criteriaBuilder instanceof CriteriaBuilderInterface)) {
-            throw new DependencyException(sprintf('criteriaBuilder does not implement CriteriaBuilder\CriteriaBuilderInterface in %s', get_class($this)));
+            throw new DependencyException(sprintf(
+                'criteriaBuilder does not implement CriteriaBuilder\CriteriaBuilderInterface in %s',
+                get_class($this)
+            ));
         }
 
         if (!($this->queryBuilder instanceof AbstractPdoCollectorQuery)) {
-            throw new DependencyException(sprintf('queryBuilder does not implement AbstractPdoCollectorQuery in %s', get_class($this)));
+            throw new DependencyException(sprintf(
+                'queryBuilder does not implement AbstractPdoCollectorQuery in %s',
+                get_class($this)
+            ));
         }
     }
 

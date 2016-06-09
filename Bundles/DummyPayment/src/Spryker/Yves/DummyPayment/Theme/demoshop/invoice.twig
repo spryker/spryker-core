@@ -1,0 +1,9 @@
+<div class="DummyPayment-form DummyPayment-invoice-form payment-form" id="dummyPaymentInvoice">
+    <h3>{{ 'payment.DummyPayment.invoice' | trans }}</h3>
+
+    <label>{{ 'DummyPayment_invoice.date_of_birth' | trans }}</label>
+    <div class="field">
+        {{ form_widget(form.DummyPayment_invoice.date_of_birth, { 'attr': {'placeholder': 'DummyPayment_invoice.date_of_birth' | trans } }) }}
+        {{ form_errors(form.DummyPayment_invoice.date_of_birth) }}
+    </div>
+</div>

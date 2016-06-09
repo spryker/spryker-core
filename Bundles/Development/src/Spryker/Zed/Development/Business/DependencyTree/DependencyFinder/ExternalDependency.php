@@ -24,6 +24,9 @@ class ExternalDependency extends AbstractDependencyFinder
     {
         $content = $fileInfo->getContents();
         $_SERVER['argv'] = [];
+        if (!defined('STDIN')) {
+            define('STDIN', fopen(__FILE__, 'r'));
+        }
         $file = new \PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], new \PHP_CodeSniffer());
         $file->start($content);
         $tokens = $file->getTokens();

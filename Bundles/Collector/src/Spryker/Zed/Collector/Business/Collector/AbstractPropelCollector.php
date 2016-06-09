@@ -13,7 +13,7 @@ use Spryker\Shared\Library\BatchIterator\PropelBatchIterator;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
-abstract class AbstractPropelCollector extends AbstractCollector
+abstract class AbstractPropelCollector extends AbstractDatabaseCollector
 {
 
     /**
@@ -27,8 +27,12 @@ abstract class AbstractPropelCollector extends AbstractCollector
     protected function validateDependencies()
     {
         parent::validateDependencies();
+
         if (!($this->queryBuilder instanceof AbstractPropelCollectorQuery)) {
-            throw new DependencyException(sprintf('queryBuilder does not implement AbstractPropelCollectorQuery in %s', get_class($this)));
+            throw new DependencyException(sprintf(
+                'queryBuilder does not implement AbstractPropelCollectorQuery in %s',
+                get_class($this)
+            ));
         }
     }
 

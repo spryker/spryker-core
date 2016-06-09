@@ -23,11 +23,11 @@ interface MarkerInterface
     /**
      * @param string $exportType
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $timestamp
+     * @param \DateTime $timestamp
      *
      * @return void
      */
-    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, $timestamp);
+    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, \DateTime $timestamp);
 
     /**
      * @param array $keys

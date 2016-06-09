@@ -259,7 +259,6 @@ class Customer
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -271,13 +270,6 @@ class Customer
         try {
             $customerEntity = $this->getCustomer($customerTransfer);
         } catch (CustomerNotFoundException $e) {
-            $customerError = new CustomerErrorTransfer();
-            $customerError->setMessage(Messages::CUSTOMER_EMAIL_INVALID);
-
-            $customerResponseTransfer
-                ->setIsSuccess(false)
-                ->addError($customerError);
-
             return $customerResponseTransfer;
         }
 
