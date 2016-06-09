@@ -19,7 +19,7 @@ class CartFactory extends AbstractFactory
      */
     public function createSession()
     {
-        return new QuoteSession($this->getSessionClient());
+        return new QuoteSession($this->createSessionClient());
     }
 
     /**
