@@ -52,4 +52,12 @@ class OmsConfig extends AbstractBundleConfig
         return [];
     }
 
+    /**
+     * @return string
+     */
+    public function getStateMachineLockerTimeoutInterval()
+    {
+        return '1 minutes';
+    }
+
 }

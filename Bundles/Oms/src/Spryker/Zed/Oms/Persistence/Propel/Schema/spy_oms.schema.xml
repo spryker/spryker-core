@@ -48,6 +48,20 @@
         <id-method-parameter value="spy_oms_order_process_pk_seq"/>
     </table>
 
+    <table name="spy_oms_state_machine_lock" phpName="SpyOmsStateMachineLock" identifierQuoting="true">
+        <column name="id_oms_state_machine_lock" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="identifier" type="VARCHAR" size="255"  required="true"/>
+        <column name="expires" type="TIMESTAMP" required="true"/>
+
+        <behavior name="timestampable"/>
+
+        <unique name="spy_oms_state_machine_lock-identifier">
+            <unique-column name="identifier"/>
+        </unique>
+
+        <id-method-parameter value="spy_oms_state_machine_lock_pk_seq"/>
+    </table>
+
     <table name="spy_oms_order_item_state" phpName="SpyOmsOrderItemState" identifierQuoting="true">
         <column name="id_oms_order_item_state" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 

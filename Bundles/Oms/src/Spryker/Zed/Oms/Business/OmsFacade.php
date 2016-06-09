@@ -74,7 +74,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = [])
     {
         return $this->getFactory()
-            ->createOrderStateMachine()
+            ->createLockedOrderStateMachine()
             ->triggerEventForOrderItems($eventId, $orderItemIds, $data);
     }
 
@@ -89,7 +89,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data = [])
     {
         return $this->getFactory()
-            ->createOrderStateMachine()
+            ->createLockedOrderStateMachine()
             ->triggerEventForNewOrderItems($orderItemIds, $data);
     }
 
@@ -105,7 +105,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = [])
     {
         return $this->getFactory()
-            ->createOrderStateMachine()
+            ->createLockedOrderStateMachine()
             ->triggerEventForOneOrderItem($eventId, $orderItemId, $data);
     }
 
@@ -143,7 +143,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function checkConditions(array $logContext = [])
     {
         return $this->getFactory()
-            ->createOrderStateMachine($logContext)
+            ->createLockedOrderStateMachine($logContext)
             ->checkConditions();
     }
 
@@ -157,7 +157,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function checkTimeouts(array $logContext = [])
     {
         $orderStateMachine = $this->getFactory()
-            ->createOrderStateMachine($logContext);
+            ->createLockedOrderStateMachine($logContext);
 
         return $this->getFactory()
             ->createOrderStateMachineTimeout()
@@ -340,7 +340,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         $orderItemsArray = $orderItems->getData();
 
         return $this->getFactory()
-            ->createOrderStateMachine($logContext)
+            ->createLockedOrderStateMachine($logContext)
             ->triggerEvent($eventId, $orderItemsArray, $data);
     }
 
@@ -358,7 +358,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         $orderItemsArray = $orderItems->getData();
 
         return $this->getFactory()
-            ->createOrderStateMachine($logContext)
+            ->createLockedOrderStateMachine($logContext)
             ->triggerEventForNewItem($orderItemsArray, $data);
     }
 
@@ -377,7 +377,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         $orderItemsArray = [$orderItem];
 
         return $this->getFactory()
-            ->createOrderStateMachine($logContext)
+            ->createLockedOrderStateMachine($logContext)
             ->triggerEvent($eventId, $orderItemsArray, $data);
     }
 
@@ -417,6 +417,16 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function clearLocks()
+    {
+        $this->getFactory()->createTriggerLocker()->clearLocks();
     }
 
 }
