@@ -19,7 +19,7 @@ class MatrixGenerator
      *
      * @return array
      */
-    public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku=null)
+    public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku=null, $level=0)
     {
         if (!$currentSku) {
             $currentSku = $productAbstractTransfer->getSku();
@@ -41,14 +41,59 @@ class MatrixGenerator
                 $s = $productTransfer->toArray(true);
                 //$s['localized_attributes'] = (array) $s['localized_attributes'];
                 //unset($s['localized_attributes']);
-                $productMatrix[$attributeType][$name] = $s;
+                //$productMatrix[$attributeType][$name][$value][] = $s;
+                $productMatrix[$attributeType][$name][] = $s;
 
                 $productAttributeCollection = $attributeCollection;
                 unset($productAttributeCollection[$attributeType]);
 
                 $productMatrix = array_merge(
                     $productMatrix,
-                    $this->generate($productAbstractTransfer, $productAttributeCollection, $concreteSku)
+                    $this->generate($productAbstractTransfer, $productAttributeCollection, $concreteSku, $level++)
+                );
+            }
+        }
+
+        return $productMatrix;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $attributeCollection
+     *
+     * @return array
+     */
+    public function generate222(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku=null, $level=0)
+    {
+        if (!$currentSku) {
+            $currentSku = $productAbstractTransfer->getSku();
+        }
+
+        $productMatrix = [];
+        foreach ($attributeCollection as $attributeType => $attributeValueSet) {
+            $abstractSku = $this->generateSku($currentSku, $attributeType);
+
+            foreach ($attributeValueSet as $name => $value) {
+                $concreteSku = $this->generateSku($abstractSku, $name);
+
+                $productTransfer = (new ProductConcreteTransfer())
+                    ->fromArray($productAbstractTransfer->toArray(), true)
+                    ->setSku($concreteSku)
+                    ->setProductAbstractSku($productAbstractTransfer->getSku())
+                    ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+
+                $s = $productTransfer->toArray(true);
+                //$s['localized_attributes'] = (array) $s['localized_attributes'];
+                //unset($s['localized_attributes']);
+                //$productMatrix[$attributeType][$name][$value][] = $s;
+                $productMatrix[$attributeType][$name][] = $s;
+
+                $productAttributeCollection = $attributeCollection;
+                unset($productAttributeCollection[$attributeType]);
+
+                $productMatrix = array_merge(
+                    $productMatrix,
+                    $this->generate($productAbstractTransfer, $productAttributeCollection, $concreteSku, $level++)
                 );
             }
         }

@@ -59,7 +59,12 @@ class EditController extends AddController
                 'blue' => 'Blue',
                 'red' => 'Red',
                 'white' => 'White',
-            ]];
+            ],
+            'flavour' => [
+                'spicy' => 'Mexican Food',
+                'sweet' => 'Cakes'
+            ]
+        ];
 
         $matrixGenerator = new MatrixGenerator();
         $matrix = $matrixGenerator->generate($productAbstract, $attributeCollection);
