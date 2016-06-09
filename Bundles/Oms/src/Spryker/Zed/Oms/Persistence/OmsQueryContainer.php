@@ -31,8 +31,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public function querySalesOrderItemsByState(array $states, $processName)
     {
         return $this->getSalesQueryContainer()->querySalesOrderItem()
-            ->joinProcess(null, $joinType = Criteria::INNER_JOIN)
-            ->joinState(null, $joinType = Criteria::INNER_JOIN)
+            ->joinProcess(null, Criteria::INNER_JOIN)
+            ->joinState(null, Criteria::INNER_JOIN)
             ->where('Process.name = ?', $processName)
             ->where("State.name IN ('" . implode("', '", $states) . "')");
     }
@@ -264,6 +264,50 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $query->filterByName($orderItemStates);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $identifier
+     * @param \DateTime $expirationDate
+     *
+     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate)
+    {
+        return $this->getFactory()
+            ->createOmsStateMachineLockQuery()
+            ->filterByIdentifier($identifier)
+            ->filterByExpires(['min' => $expirationDate]);
+    }
+
+    /**
+     * @api
+     *
+     * @param \DateTime $expirationDate
+     *
+     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockedItemsByExpirationDate(\DateTime $expirationDate)
+    {
+        return $this->getFactory()
+            ->createOmsStateMachineLockQuery()
+            ->filterByExpires(['max' => $expirationDate]);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $identifier
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockItemsByIdentifier($identifier)
+    {
+        return $this->getFactory()
+            ->createOmsStateMachineLockQuery()
+            ->filterByIdentifier($identifier);
     }
 
 }

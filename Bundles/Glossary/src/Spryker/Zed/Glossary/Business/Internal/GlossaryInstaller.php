@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Glossary\Business\Internal;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\Propel;
 use Spryker\Zed\Glossary\Business\Key\KeyManagerInterface;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
@@ -80,6 +81,9 @@ class GlossaryInstaller extends AbstractInstaller
      */
     protected function installKeysAndTranslations(array $translations)
     {
+        Propel::getConnection()
+            ->beginTransaction();
+
         $results = [];
         foreach ($translations as $keyName => $data) {
             $results[$keyName]['created'] = false;
@@ -104,6 +108,9 @@ class GlossaryInstaller extends AbstractInstaller
                 }
             }
         }
+
+        Propel::getConnection()
+            ->commit();
 
         return $results;
     }

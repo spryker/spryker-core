@@ -19,7 +19,7 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
     protected $taxFacade;
 
     /**
-     * ItemTaxWithDiscounts constructor.
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridgeInterface $taxFacade
      */
     public function __construct(DiscountToTaxBridgeInterface $taxFacade)
     {

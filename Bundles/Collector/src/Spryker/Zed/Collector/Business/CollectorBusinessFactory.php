@@ -27,6 +27,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Internal\InstallElasticsearch;
 use Spryker\Zed\Collector\Business\Manager\CollectorManager;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
+use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -162,7 +163,10 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExporterWriterSearchTouchUpdater()
     {
-        return new SearchTouchUpdater();
+        return new SearchTouchUpdater(
+            $this->createBulkUpdateTouchQuery(),
+            $this->createBulkDeleteTouchQuery()
+        );
     }
 
     /**
@@ -170,7 +174,10 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExporterWriterStorageTouchUpdater()
     {
-        return new StorageTouchUpdater();
+        return new StorageTouchUpdater(
+            $this->createBulkUpdateTouchQuery(),
+            $this->createBulkDeleteTouchQuery()
+        );
     }
 
     /**
@@ -314,6 +321,32 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
+     */
+    protected function createBulkUpdateTouchQuery()
+    {
+        return $this->createBulkTouchQueryBuilder()
+            ->createBulkTouchUpdateQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
+     */
+    protected function createBulkDeleteTouchQuery()
+    {
+        return $this->createBulkTouchQueryBuilder()
+            ->createBulkTouchDeleteQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder
+     */
+    protected function createBulkTouchQueryBuilder()
+    {
+        return new BulkTouchQueryBuilder($this->getConfig());
+    }
+
+    /**
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return \Spryker\Zed\Collector\Business\Internal\InstallElasticsearch
@@ -322,7 +355,9 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         $installer = new InstallElasticsearch(
             StorageInstanceBuilder::getElasticsearchInstance(),
-            $this->getConfig()->getSearchIndexName()
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getNumberOfShards(),
+            $this->getConfig()->getNumberOfReplicas()
         );
 
         $installer->setMessenger($messenger);

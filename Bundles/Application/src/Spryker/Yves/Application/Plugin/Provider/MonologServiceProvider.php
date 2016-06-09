@@ -11,6 +11,8 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Log;
 use Spryker\Shared\Library\Monolog\EventJournalHandler;
 
@@ -28,6 +30,10 @@ class MonologServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
+        if ((int)Config::get(ApplicationConstants::LOG_LEVEL) === 0) {
+            return;
+        }
+
         $app['logger'] = function () use ($app) {
             return $app['monolog'];
         };

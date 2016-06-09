@@ -8,12 +8,36 @@
 namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Storage\Redis\Service;
 
 /**
  * @method \Spryker\Client\Storage\StorageFactory getFactory()
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
+
+    const KEY_USED = 'used';
+    const KEY_NEW = 'new';
+    const KEY_INIT = 'init';
+
+    /**
+     * All keys which have been used for the last request with same URL
+     *
+     * @var array
+     */
+    protected static $cachedKeys;
+
+    /**
+     * Pre-loaded values for this URL from Storage
+     *
+     * @var array
+     */
+    protected static $bufferedValues;
+
+    /**
+     * @var \Spryker\Client\Storage\StorageClientInterface
+     */
+    protected static $service;
 
     /**
      * @api
@@ -22,7 +46,11 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function getService()
     {
-        return $this->getFactory()->createCachedService();
+        if (self::$service === null) {
+            self::$service = $this->getFactory()->createCachedService();
+        }
+
+        return self::$service;
     }
 
     /**
@@ -30,12 +58,13 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @param string $key
      * @param mixed $value
+     * @param int|null $ttl
      *
      * @return void
      */
-    public function set($key, $value)
+    public function set($key, $value, $ttl = null)
     {
-        $this->getService()->set($key, $value);
+        $this->getService()->set($key, $value, $ttl);
     }
 
     /**
@@ -93,7 +122,65 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function get($key)
     {
+        if (!isset(self::$cachedKeys)) {
+            $this->loadKeysFromCache();
+        }
+
+        if (!isset(self::$bufferedValues)) {
+            $this->loadAllValues();
+        }
+
+        if (array_key_exists($key, self::$bufferedValues)) {
+            self::$cachedKeys[$key] = self::KEY_USED;
+            return self::$bufferedValues[$key];
+        }
+
+        self::$cachedKeys[$key] = self::KEY_NEW;
+
         return $this->getService()->get($key);
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public static function persistCache()
+    {
+        $cacheKey = self::generateCacheKey();
+        if (!empty($cacheKey) && is_array(self::$cachedKeys)) {
+            $updateCache = false;
+            foreach (self::$cachedKeys as $key => $status) {
+                if ($status === self::KEY_INIT) {
+                    unset(self::$cachedKeys[$key]);
+                }
+
+                if ($status !== self::KEY_USED) {
+                    $updateCache = true;
+                    break;
+                }
+            }
+
+            if ($updateCache) {
+                $ttl = 86400; // TTL = 1 day to avoid artifacts in Storage
+                self::$service->set($cacheKey, json_encode(array_keys(self::$cachedKeys)), $ttl);
+            }
+        }
+    }
+
+    /**
+     * @return string
+     */
+    protected static function generateCacheKey()
+    {
+        $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
+        $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
+
+        if ($requestUri === null || $serverName === null) {
+            return '';
+        }
+
+        return 'StorageClient_' . $serverName . $requestUri;
     }
 
     /**
@@ -159,15 +246,71 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @return void
+     */
+    protected function loadKeysFromCache()
+    {
+        self::$cachedKeys = [];
+        $cacheKey = self::generateCacheKey();
+
+        if (!empty($cacheKey)) {
+            $cachedKeys = $this->getService()->get($cacheKey);
+
+            if (!empty($cachedKeys) && is_array($cachedKeys)) {
+                foreach ($cachedKeys as $key) {
+                    self::$cachedKeys[$key] = self::KEY_INIT;
+                }
+            }
+        }
+    }
+
+    /**
+     * Pre-Loads all values from storage with mget()
+     *
+     * @return void
+     */
+    protected function loadAllValues()
+    {
+        self::$bufferedValues = [];
+
+        if (!empty(self::$cachedKeys) && is_array(self::$cachedKeys)) {
+            $values = $this->getService()->getMulti(array_keys(self::$cachedKeys));
+
+            if (!empty($values) && is_array($values)) {
+                foreach ($values as $key => $value) {
+                    $keySuffix = substr($key, strlen(Service::KV_PREFIX));
+                    self::$bufferedValues[$keySuffix] = $this->jsonDecode($value);
+                }
+            }
+        }
+    }
+
+    /**
      * @api
      *
-     * @param string $pattern
+     * @param mixed $pattern
      *
      * @return array
      */
     public function getKeys($pattern = '*')
     {
         return $this->getService()->getKeys($pattern);
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    protected function jsonDecode($value)
+    {
+        $result = json_decode($value, true);
+
+        if (json_last_error() === \JSON_ERROR_SYNTAX) {
+            return $value;
+        }
+
+        return $result;
     }
 
 }

@@ -1,0 +1,34 @@
+{
+  "name": "spryker/step-engine",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+    "spryker/symfony": "^2.0.0",
+    "spryker/transfer": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "^2.0.0",
+    "spryker/console": "^2.0.1",
+    "spryker/testify": "^2.0.0"
+  },
+  "description": "step engine bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
+}

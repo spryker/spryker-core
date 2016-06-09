@@ -17,22 +17,22 @@ class Service implements ServiceInterface
     /**
      * @var \Predis\ClientInterface
      */
-    private $client;
+    protected $client;
 
     /**
      * @var bool
      */
-    private $debug;
+    protected $debug;
 
     /**
      * @var array
      */
-    private $accessStats;
+    protected $accessStats;
 
     /**
      * @var array
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Predis\ClientInterface $client
@@ -287,15 +287,22 @@ class Service implements ServiceInterface
     /**
      * @param string $key
      * @param mixed $value
+     * @param int|null $ttl
      *
      * @throws \Exception
      *
      * @return mixed
      */
-    public function set($key, $value)
+    public function set($key, $value, $ttl = null)
     {
         $key = $this->getKeyName($key);
-        $result = $this->client->set($key, $value);
+
+        if ($ttl === null) {
+            $result = $this->client->set($key, $value);
+        } else {
+            $result = $this->client->setex($key, $ttl, $value);
+        }
+
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new \Exception(

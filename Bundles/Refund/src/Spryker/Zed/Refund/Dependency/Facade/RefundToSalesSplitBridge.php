@@ -11,12 +11,12 @@ class RefundToSalesSplitBridge implements RefundToSalesSplitInterface
 {
 
     /**
-     * @var \Spryker\Zed\SalesSplit\Business\SalesSplitFacade SalesSplitFacade
+     * @var \Spryker\Zed\SalesSplit\Business\SalesSplitFacadeInterface
      */
     protected $salesSplitFacade;
 
     /**
-     * @param \Spryker\Zed\SalesSplit\Business\SalesSplitFacade $salesSplitFacade
+     * @param \Spryker\Zed\SalesSplit\Business\SalesSplitFacadeInterface $salesSplitFacade
      */
     public function __construct($salesSplitFacade)
     {
