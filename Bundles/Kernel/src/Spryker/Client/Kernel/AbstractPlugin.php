@@ -7,19 +7,23 @@
 
 namespace Spryker\Client\Kernel;
 
+use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver;
 
-abstract class AbstractClient
+abstract class AbstractPlugin
 {
 
     /**
-     * @var \Spryker\Client\Kernel\AbstractFactory
+     * @var \Spryker\client\Kernel\AbstractFactory
      */
     private $factory;
 
     /**
-     * @api
-     *
+     * @var \Spryker\Client\Kernel\AbstractClient
+     */
+    private $client;
+
+    /**
      * @param \Spryker\Client\Kernel\AbstractFactory $factory
      *
      * @return $this
@@ -62,48 +66,33 @@ abstract class AbstractClient
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\Stub\BaseStub
+     * @return \Spryker\Client\Kernel\AbstractClient
      */
-    protected function getZedStub()
+    protected function getClient()
     {
-        $factory = $this->getFactory();
-        if (!method_exists($factory, 'createZedStub')) {
-            throw new \BadMethodCallException(
-                sprintf('createZedStub method is not implemented in "%s".', get_class($factory))
-            );
+        if ($this->client === null) {
+            $this->client = $this->resolveClient();
         }
 
-        return $this->getFactory()->createZedStub();
+        return $this->client;
     }
 
     /**
-     * @api
+     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
      *
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Spryker\Client\Kernel\AbstractClient
      */
-    public function getZedInfoMessages()
+    private function resolveClient()
     {
-        return $this->getZedStub()->getInfoMessages();
+        return $this->getClientResolver()->resolve($this);
     }
 
     /**
-     * @api
-     *
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
+     * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
      */
-    public function getZedSuccessMessages()
+    private function getClientResolver()
     {
-        return $this->getZedStub()->getSuccessMessages();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Spryker\Shared\ZedRequest\Client\Message[]
-     */
-    public function getZedErrorMessages()
-    {
-        return $this->getZedStub()->getErrorMessages();
+        return new ClientResolver();
     }
 
 }
