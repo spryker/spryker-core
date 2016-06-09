@@ -32,6 +32,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
+use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
@@ -89,6 +90,9 @@ class SalesFacadeSaveOrderTest extends Test
 
         $this->salesFacade = new SalesFacade();
         $businessFactory = new SalesBusinessFactory();
+        $salesConfigMock = $this->getMock(SalesConfig::class, ['determineProcessForOrderItem']);
+        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('');
+        $businessFactory->setConfig($salesConfigMock);
         $businessFactory->setContainer($container);
         $this->salesFacade->setFactory($businessFactory);
     }

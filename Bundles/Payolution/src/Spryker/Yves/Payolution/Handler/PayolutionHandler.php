@@ -14,27 +14,26 @@ use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Yves\Payolution\Exception\PaymentMethodNotFoundException;
+use Spryker\Zed\Payolution\PayolutionConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class PayolutionHandler
 {
 
-    const PAYMENT_PROVIDER = 'payolution';
-
     /**
      * @var array
      */
     protected static $paymentMethods = [
-        PaymentTransfer::PAYOLUTION_INVOICE => 'invoice',
-        PaymentTransfer::PAYOLUTION_INSTALLMENT => 'installment',
+        PayolutionConfig::PAYMENT_METHOD_INVOICE => 'invoice',
+        PayolutionConfig::PAYMENT_METHOD_INSTALLMENT => 'installment',
     ];
 
     /**
      * @var array
      */
     protected static $payolutionPaymentMethodMapper = [
-        PaymentTransfer::PAYOLUTION_INVOICE => PayolutionConstants::BRAND_INVOICE,
-        PaymentTransfer::PAYOLUTION_INSTALLMENT => PayolutionConstants::BRAND_INSTALLMENT,
+        PayolutionConfig::PAYMENT_METHOD_INVOICE => PayolutionConstants::BRAND_INVOICE,
+        PayolutionConfig::PAYMENT_METHOD_INSTALLMENT => PayolutionConstants::BRAND_INSTALLMENT,
     ];
 
     /**
@@ -90,7 +89,7 @@ class PayolutionHandler
     protected function setPaymentProviderAndMethod(QuoteTransfer $quoteTransfer, $paymentSelection)
     {
         $quoteTransfer->getPayment()
-            ->setPaymentProvider(self::PAYMENT_PROVIDER)
+            ->setPaymentProvider(PayolutionConfig::PROVIDER_NAME)
             ->setPaymentMethod(self::$paymentMethods[$paymentSelection]);
     }
 

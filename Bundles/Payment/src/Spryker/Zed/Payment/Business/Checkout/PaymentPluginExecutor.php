@@ -82,7 +82,7 @@ class PaymentPluginExecutor
     {
         $this->assertResolverRequirements($quoteTransfer);
 
-        $provider = ucfirst($quoteTransfer->getPayment()->getPaymentProvider());
+        $provider = $quoteTransfer->getPayment()->getPaymentProvider();
 
         return $this->checkoutPlugins->get($provider, $pluginType);
     }
