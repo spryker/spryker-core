@@ -191,12 +191,12 @@ abstract class AbstractCollector
     }
 
     /**
-     * @param int $offset
      * @param string $itemType
+     * @param int $offset
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouch[]
      */
-    protected function getTouchCollectionToDelete($offset, $itemType)
+    protected function getTouchCollectionToDelete($itemType, $offset = 0)
     {
         $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
         $deleteQuery
@@ -262,11 +262,17 @@ abstract class AbstractCollector
     protected function validateDependencies()
     {
         if (!($this->touchQueryContainer instanceof TouchQueryContainerInterface)) {
-            throw new DependencyException(sprintf('touchQueryContainer does not implement TouchQueryContainerInterface in %s', get_class($this)));
+            throw new DependencyException(sprintf(
+                'touchQueryContainer does not implement TouchQueryContainerInterface in %s',
+                get_class($this)
+            ));
         }
 
         if (!($this->queryBuilder instanceof AbstractCollectorQuery)) {
-            throw new DependencyException(sprintf('queryBuilder does not implement AbstractCollectorQuery in %s', get_class($this)));
+            throw new DependencyException(sprintf(
+                'queryBuilder does not implement AbstractCollectorQuery in %s',
+                get_class($this)
+            ));
         }
     }
 
