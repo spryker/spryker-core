@@ -24,11 +24,6 @@ abstract class AbstractClassResolver
     private $resolvedClassName;
 
     /**
-     * @var array
-     */
-    private $classNames = [];
-
-    /**
      * @return string
      */
     abstract protected function getClassPattern();
@@ -98,32 +93,42 @@ abstract class AbstractClassResolver
      */
     private function buildClassNames()
     {
-        $this->addProjectClassNames();
-        $this->addCoreClassNames();
+        $classNames = [];
 
-        return $this->classNames;
+        $classNames = $this->addProjectClassNames($classNames);
+        $classNames = $this->addCoreClassNames($classNames);
+
+        return $classNames;
     }
 
     /**
-     * @return void
+     * @param array $classNames
+     *
+     * @return array
      */
-    private function addProjectClassNames()
+    private function addProjectClassNames(array $classNames)
     {
         $storeName = Store::getInstance()->getStoreName();
         foreach ($this->getProjectNamespaces() as $namespace) {
-            $this->classNames[] = $this->buildClassName($namespace, $storeName);
-            $this->classNames[] = $this->buildClassName($namespace);
+            $classNames[] = $this->buildClassName($namespace, $storeName);
+            $classNames[] = $this->buildClassName($namespace);
         }
+
+        return $classNames;
     }
 
     /**
-     * @return void
+     * @param array $classNames
+     *
+     * @return array
      */
-    private function addCoreClassNames()
+    private function addCoreClassNames(array $classNames)
     {
         foreach ($this->getCoreNamespaces() as $namespace) {
-            $this->classNames[] = $this->buildClassName($namespace);
+            $classNames[] = $this->buildClassName($namespace);
         }
+
+        return $classNames;
     }
 
     /**

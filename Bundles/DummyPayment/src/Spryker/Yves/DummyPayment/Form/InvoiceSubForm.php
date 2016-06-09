@@ -8,7 +8,6 @@
 namespace Spryker\Yves\DummyPayment\Form;
 
 use Generated\Shared\Transfer\DummyPaymentTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -23,7 +22,7 @@ class InvoiceSubForm extends AbstractSubForm
      */
     public function getName()
     {
-        return DummyPaymentConfig::PROVIDER_NAME . '_' . self::PAYMENT_METHOD;
+        return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
 
     /**
@@ -31,7 +30,7 @@ class InvoiceSubForm extends AbstractSubForm
      */
     public function getPropertyPath()
     {
-        return PaymentTransfer::DUMMY_PAYMENT_INVOICE;
+        return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
 
     /**

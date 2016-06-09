@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Payolution\Dependency\Injector;
 
 use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\PaymentDependencyProvider;

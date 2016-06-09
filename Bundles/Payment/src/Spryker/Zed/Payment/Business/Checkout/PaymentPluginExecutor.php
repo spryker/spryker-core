@@ -9,9 +9,7 @@ namespace Spryker\Zed\Payment\Business\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
-use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentPluginExecutor
@@ -76,7 +74,7 @@ class PaymentPluginExecutor
      * @param string $pluginType
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return CheckoutPluginInterface
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface
      */
     protected function findPlugin($pluginType, QuoteTransfer $quoteTransfer)
     {

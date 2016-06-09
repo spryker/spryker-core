@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\DummyPayment\Dependency\Injector;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\DummyPayment\Plugin\DummyPaymentCreditCardSubFormPlugin;

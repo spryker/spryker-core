@@ -20,5 +20,5 @@ interface CheckoutPluginInterface
      * @return void
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-    
+
 }

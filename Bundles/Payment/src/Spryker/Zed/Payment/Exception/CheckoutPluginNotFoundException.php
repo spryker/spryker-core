@@ -9,5 +9,4 @@ namespace Spryker\Zed\Payment\Exception;
 
 class CheckoutPluginNotFoundException extends \Exception
 {
-
 }
