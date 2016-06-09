@@ -41,7 +41,7 @@ class MatrixGenerator
                 $s = $productTransfer->toArray(true);
                 //$s['localized_attributes'] = (array) $s['localized_attributes'];
                 //unset($s['localized_attributes']);
-                $productMatrix[] = $s;
+                $productMatrix[$attributeType][$name] = $s;
 
                 $productAttributeCollection = $attributeCollection;
                 unset($productAttributeCollection[$attributeType]);
