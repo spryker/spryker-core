@@ -26,12 +26,13 @@ class ProductOptionDiscountConnectorToTaxBridge implements ProductOptionToTaxBri
     /**
      * @param int $grossPrice
      * @param float $taxRate
+     * @param bool $round
      *
      * @return int
      */
-    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate, $round = true)
     {
-        return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+        return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate, $round);
     }
 
 }

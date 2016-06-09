@@ -36,69 +36,18 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
     {
         $this->assertOrderTaxAmountRequirements($orderTransfer);
 
-        $orderEffectiveTaxRate = $this->getOrderEffectiveTaxRate($orderTransfer);
-
-        $totalTaxAmount = $this->getTotalTaxAmount($orderTransfer, $orderEffectiveTaxRate);
+        $totalTaxAmount = 0;
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $totalTaxAmount += $itemTransfer->getSumTaxAmount();
+        }
 
         $taxTotalTransfer = new TaxTotalTransfer();
         $taxTotalTransfer->setAmount($totalTaxAmount);
-        $taxTotalTransfer->setTaxRate($orderEffectiveTaxRate);
 
         $totalsTransfer = $orderTransfer->getTotals();
         $totalsTransfer->setTaxTotal($taxTotalTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return int
-     */
-    protected function getOrderEffectiveTaxRate(OrderTransfer $orderTransfer)
-    {
-        $itemEffectiveRates = $this->getEfectiveTaxRatesFromTaxableItems($orderTransfer->getItems());
-        $expenseEffectiveRates = $this->getEfectiveTaxRatesFromTaxableItems($orderTransfer->getExpenses());
-        $taxRates = array_merge($itemEffectiveRates, $expenseEffectiveRates);
-
-        $totalTaxRate = array_sum($taxRates);
-        if (empty($totalTaxRate)) {
-            return 0;
-        }
-
-        $effectiveTaxRate = $totalTaxRate / count($taxRates);
-
-        return $effectiveTaxRate;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ExpenseTransfer[] $taxableItems
-     *
-     * @return int[]
-     */
-    protected function getEfectiveTaxRatesFromTaxableItems(\ArrayObject $taxableItems)
-    {
-        $taxRates = [];
-        foreach ($taxableItems as $item) {
-            if ($item->getTaxRate()) {
-                $taxRates[] = $item->getTaxRate();
-            }
-        }
-
-        return $taxRates;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $orderEffectiveTaxRate
-     *
-     * @return int
-     */
-    protected function getTotalTaxAmount(OrderTransfer $orderTransfer, $orderEffectiveTaxRate)
-    {
-        return $this->taxFacade->getTaxAmountFromGrossPrice(
-            $orderTransfer->getTotals()->getGrandTotal(),
-            $orderEffectiveTaxRate
-        );
-    }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

@@ -188,6 +188,8 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
             $totalItemUnitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
             $totalItemSumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount($itemTransfer->getCalculatedDiscounts());
 
+            $this->setItemProductOptionDefaults($itemTransfer);
+
             $itemTransfer->setUnitTotalDiscountAmountWithProductOption($totalItemUnitDiscountAmount);
             $itemTransfer->setSumTotalDiscountAmountWithProductOption($totalItemSumDiscountAmount);
 
@@ -204,18 +206,38 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
+     * @return void
+     */
+    protected function setItemProductOptionDefaults(ItemTransfer $itemTransfer)
+    {
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $productOptionTransfer->setUnitGrossPriceWithDiscounts($productOptionTransfer->getUnitGrossPrice());
+            $productOptionTransfer->setSumGrossPriceWithDiscounts($productOptionTransfer->getSumGrossPrice());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
      * @return int
      */
     protected function getProductOptionUnitAmount(ItemTransfer $itemTransfer)
     {
-        $productOptionUnitAmount = 0;
+        $productOptionUnitTotalDiscountAmount = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $productOptionUnitAmount += $this->getCalculatedDiscountUnitGrossAmount(
+
+            $productOptionUnitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount(
                 $productOptionTransfer->getCalculatedDiscounts()
             );
+
+            $productOptionTransfer->setUnitGrossPriceWithDiscounts(
+                $productOptionTransfer->getUnitGrossPrice() - $productOptionUnitDiscountAmount
+            );
+
+            $productOptionUnitTotalDiscountAmount += $productOptionUnitDiscountAmount;
         }
 
-        return $productOptionUnitAmount;
+        return $productOptionUnitTotalDiscountAmount;
     }
 
     /**
@@ -225,14 +247,21 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
      */
     protected function getProductOptionSumAmount(ItemTransfer $itemTransfer)
     {
-        $productOptionSumAmount = 0;
+        $productOptionSumTotalDiscountAmount = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $productOptionSumAmount += $this->getCalculatedDiscountSumGrossAmount(
+
+            $productOptionSumDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount(
                 $productOptionTransfer->getCalculatedDiscounts()
             );
+
+            $productOptionTransfer->setSumGrossPriceWithDiscounts(
+                $productOptionTransfer->getSumGrossPrice() - $productOptionSumDiscountAmount
+            );
+
+            $productOptionSumTotalDiscountAmount += $productOptionSumDiscountAmount;
         }
 
-        return $productOptionSumAmount;
+        return $productOptionSumTotalDiscountAmount;
     }
 
     /**

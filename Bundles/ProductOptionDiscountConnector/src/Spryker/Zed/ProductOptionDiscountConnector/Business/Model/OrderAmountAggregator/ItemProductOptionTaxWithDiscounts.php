@@ -20,6 +20,11 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
     protected $taxFacade;
 
     /**
+     * @var int
+     */
+    protected $roundingError = 0;
+
+    /**
      * @param \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface $taxFacade
      */
     public function __construct(ProductOptionToTaxBridgeInterface $taxFacade)
@@ -45,49 +50,87 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
     protected function addTaxWithProductOptions(\ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
-            $effectiveTaxRate = $this->getEffectiveTaxRateForItem($itemTransfer);
-            if (empty($effectiveTaxRate)) {
-                continue;
-            }
 
-            $itemTransfer->requireUnitGrossPriceWithProductOptionAndDiscountAmounts()
-                ->requireSumGrossPriceWithProductOptionAndDiscountAmounts();
+            $unitOptionTaxTotalAmount = $this->getProductOptionWithDiscountsUnitTotalTaxAmount($itemTransfer);
+            $sumOptionTaxTotalAmount = $this->getProductOptionWithDiscountsSumTotalTaxAmount($itemTransfer);
 
-            $unitTaxAmount = $this->taxFacade->getTaxAmountFromGrossPrice(
-                $itemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts(),
-                $effectiveTaxRate
+            $itemUnitAmount = $this->calculateTaxAmount(
+                $itemTransfer->getUnitGrossPriceWithDiscounts(),
+                $itemTransfer->getTaxRate()
             );
 
-            $sumTaxAmount = $this->taxFacade->getTaxAmountFromGrossPrice(
-                $itemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts(),
-                $effectiveTaxRate
+            $itemSumTaxAmount = $this->calculateTaxAmount(
+                $itemTransfer->getSumGrossPriceWithDiscounts(),
+                $itemTransfer->getTaxRate()
             );
 
-            $itemTransfer->setUnitTaxAmountWithProductOptionAndDiscountAmounts($unitTaxAmount);
-            $itemTransfer->setSumTaxAmountWithProductOptionAndDiscountAmounts($sumTaxAmount);
+            $itemTransfer->setUnitTaxAmountWithProductOptionAndDiscountAmounts($itemUnitAmount + $unitOptionTaxTotalAmount);
+            $itemTransfer->setSumTaxAmountWithProductOptionAndDiscountAmounts($itemSumTaxAmount + $sumOptionTaxTotalAmount);
+
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return int
+     * @return float
      */
-    protected function getEffectiveTaxRateForItem(ItemTransfer $itemTransfer)
+    protected function getProductOptionWithDiscountsUnitTotalTaxAmount(ItemTransfer $itemTransfer)
     {
-        $taxRates = [];
-
-        $taxRates[] = $itemTransfer->getTaxRate();
+        $unitOptionTaxTotalAmount = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $taxRates[] = $productOptionTransfer->getTaxRate();
+
+            $unitOptionTaxAmount = $this->calculateTaxAmount(
+                $productOptionTransfer->getUnitGrossPriceWithDiscounts(),
+                $productOptionTransfer->getTaxRate()
+            );
+
+            $unitOptionTaxTotalAmount += $unitOptionTaxAmount;
+
+            $productOptionTransfer->setUnitTaxAmountWithDiscounts($unitOptionTaxAmount);
         }
 
-        $totalTaxRates = array_sum($taxRates);
-        if (empty($totalTaxRates)) {
-            return 0;
-        }
-
-        return $totalTaxRates / count($taxRates);
+        return $unitOptionTaxTotalAmount;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return float
+     */
+    protected function getProductOptionWithDiscountsSumTotalTaxAmount(ItemTransfer $itemTransfer)
+    {
+        $sumOptionTaxTotalAmount = 0;
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+
+            $sumOptionTaxAmount = $this->calculateTaxAmount(
+                $productOptionTransfer->getSumGrossPriceWithDiscounts(),
+                $productOptionTransfer->getTaxRate()
+            );
+
+            $sumOptionTaxTotalAmount += $sumOptionTaxAmount;
+
+            $productOptionTransfer->setSumTaxAmountWithDiscounts($sumOptionTaxAmount);
+        }
+
+        return $sumOptionTaxTotalAmount;
+    }
+
+    /**
+     * @param int $price
+     * @param float $taxRate
+     *
+     * @return float
+     */
+    protected function calculateTaxAmount($price, $taxRate)
+    {
+        $taxAmount = $this->taxFacade->getTaxAmountFromGrossPrice($price, $taxRate, false);
+
+        $taxAmount += $this->roundingError;
+
+        $taxAmountRounded = round($taxAmount, 4);
+        $this->roundingError = $taxAmount - $taxAmountRounded;
+
+        return $taxAmountRounded;
+    }
 }

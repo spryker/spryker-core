@@ -19,6 +19,11 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
     protected $taxFacade;
 
     /**
+     * @var float
+     */
+    protected $roundingError;
+
+    /**
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridgeInterface $taxFacade
      */
     public function __construct(DiscountToTaxBridgeInterface $taxFacade)
@@ -47,21 +52,39 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
             if (!$expenseTransfer->getTaxRate()) {
                 continue;
             }
-
-            $expenseTransfer->setUnitTaxAmountWithDiscounts(
-                $this->taxFacade->getTaxAmountFromGrossPrice(
-                    $expenseTransfer->getUnitGrossPriceWithDiscounts(),
-                    $expenseTransfer->getTaxRate()
-                )
+            $itemUnitTaxAmount = $this->calculateTaxAmount(
+                $expenseTransfer->getUnitGrossPriceWithDiscounts(),
+                $expenseTransfer->getTaxRate()
             );
 
-            $expenseTransfer->setSumTaxAmountWithDiscounts(
-                $this->taxFacade->getTaxAmountFromGrossPrice(
-                    $expenseTransfer->getSumGrossPriceWithDiscounts(),
-                    $expenseTransfer->getTaxRate()
-                )
+            $expenseTransfer->setUnitTaxAmountWithDiscounts($itemUnitTaxAmount);
+
+            $itemSumTaxAmount = $this->calculateTaxAmount(
+                $expenseTransfer->getSumGrossPriceWithDiscounts(),
+                $expenseTransfer->getTaxRate()
             );
+
+            $expenseTransfer->setSumTaxAmountWithDiscounts($itemSumTaxAmount);
+
         }
+    }
+
+    /**
+     * @param int $price
+     * @param float $taxRate
+     *
+     * @return float
+     */
+    protected function calculateTaxAmount($price, $taxRate)
+    {
+        $taxAmount = $this->taxFacade->getTaxAmountFromGrossPrice($price, $taxRate, false);
+
+        $taxAmount += $this->roundingError;
+
+        $taxAmountRounded = round($taxAmount, 4);
+        $this->roundingError = $taxAmount - $taxAmountRounded;
+
+        return $taxAmountRounded;
     }
 
 }

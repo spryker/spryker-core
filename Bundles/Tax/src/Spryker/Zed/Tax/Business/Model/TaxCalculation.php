@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 
@@ -18,6 +17,11 @@ class TaxCalculation implements CalculatorInterface
      * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     protected $priceCalculationHelper;
+
+    /**
+     * @var int
+     */
+    protected $roundingError = 0;
 
     /**
      * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
@@ -34,96 +38,44 @@ class TaxCalculation implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $this->assertTaxCalculationRequirements($quoteTransfer);
+        $totalTaxAmount = 0;
+        $totalTaxAmount += $this->sumItemTaxes($quoteTransfer);
+        $totalTaxAmount += $this->sumExpenseTaxes($quoteTransfer);
 
-        $taxRates = $this->getTaxesFromCurrentQuoteTransfer($quoteTransfer);
-        $effectiveTaxRate = $this->getCalculatedEffectiveTaxRate($taxRates);
+        $this->setTaxTotals($quoteTransfer, $totalTaxAmount);
 
-        if ($effectiveTaxRate <= 0) {
-            $this->setEmptyTaxRateTransfer($quoteTransfer);
-
-            return;
-        }
-
-        $grossPrice = $this->getAmountForTaxCalculation($quoteTransfer);
-        $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($grossPrice, $effectiveTaxRate);
-
-        $this->setTaxTotals($quoteTransfer, $effectiveTaxRate, $taxAmount);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $taxAmount
      *
-     * @return int[]
+     * @return void
      */
-    protected function aggregateItemTaxes(QuoteTransfer $quoteTransfer)
+    protected function setTaxTotals(QuoteTransfer $quoteTransfer, $taxAmount)
     {
-        $taxRates = [];
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getTaxRate()) {
-                $taxRates[] = $itemTransfer->getTaxRate();
-            }
-            $taxRates = array_merge($taxRates, $this->aggregateProductOptionTaxes($itemTransfer));
-        }
+        $taxTotalTransfer = new TaxTotalTransfer();
+        $taxTotalTransfer->setAmount($taxAmount);
 
-        return $taxRates;
+        $quoteTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return int[]
-     */
-    protected function aggregateExpenseTaxes(QuoteTransfer $quoteTransfer)
-    {
-        $taxRates = [];
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if (!$expenseTransfer->getTaxRate()) {
-                continue;
-            }
-            $taxRates[] = $expenseTransfer->getTaxRate();
-        }
-
-        return $taxRates;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return int[]
-     */
-    protected function aggregateProductOptionTaxes(ItemTransfer $itemTransfer)
-    {
-        $taxRates = [];
-        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            if (!$productOptionTransfer->getTaxRate()) {
-                continue;
-            }
-            $taxRates[] = $productOptionTransfer->getTaxRate();
-        }
-
-        return $taxRates;
-    }
-
-    /**
-     * @param int[] $taxRates
+     * @param int $price
+     * @param float $taxRate
      *
      * @return float
      */
-    protected function getCalculatedEffectiveTaxRate(array $taxRates)
+    protected function calculateTaxAmount($price, $taxRate)
     {
-        $totalTaxRate = 0;
-        foreach ($taxRates as $taxRate) {
-            $totalTaxRate += $taxRate;
-        }
+        $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($price, $taxRate, false);
 
-        if ($totalTaxRate <= 0) {
-            return 0;
-        }
+        $taxAmount += $this->roundingError;
 
-        $effectiveTaxRate = $totalTaxRate / count($taxRates);
+        $taxAmountRounded = round($taxAmount, 4);
+        $this->roundingError = $taxAmount - $taxAmountRounded;
 
-        return $effectiveTaxRate;
+        return $taxAmountRounded;
     }
 
     /**
@@ -131,63 +83,29 @@ class TaxCalculation implements CalculatorInterface
      *
      * @return int
      */
-    protected function getAmountForTaxCalculation(QuoteTransfer $quoteTransfer)
+    protected function sumExpenseTaxes(QuoteTransfer $quoteTransfer)
     {
-        return $quoteTransfer->getTotals()->getGrandTotal();
-    }
+        $totalTaxAmount = 0;
+        foreach ($quoteTransfer->getItems() as $expenseTransfer) {
+            $totalTaxAmount += $expenseTransfer->getSumTaxAmount();
+        }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $effectiveTaxRate
-     * @param int $taxAmount
-     *
-     * @return void
-     */
-    protected function setTaxTotals(QuoteTransfer $quoteTransfer, $effectiveTaxRate, $taxAmount)
-    {
-        $taxTotalTransfer = new TaxTotalTransfer();
-        $taxTotalTransfer->setTaxRate($effectiveTaxRate);
-        $taxTotalTransfer->setAmount($taxAmount);
-
-        $quoteTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
+        return $totalTaxAmount;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return int
      */
-    protected function setEmptyTaxRateTransfer(QuoteTransfer $quoteTransfer)
+    protected function sumItemTaxes(QuoteTransfer $quoteTransfer)
     {
-        $taxTotalsTransfer = new TaxTotalTransfer();
-        $taxTotalsTransfer->setTaxRate(0);
-        $taxTotalsTransfer->setAmount(0);
+        $totalTaxAmount = 0;
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $totalTaxAmount += $itemTransfer->getSumTaxAmount();
+        }
 
-        $quoteTransfer->getTotals()->setTaxTotal($taxTotalsTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return int[]
-     */
-    protected function getTaxesFromCurrentQuoteTransfer(QuoteTransfer $quoteTransfer)
-    {
-        $taxRates = $this->aggregateItemTaxes($quoteTransfer);
-        $taxRates = array_merge($taxRates, $this->aggregateExpenseTaxes($quoteTransfer));
-
-        return $taxRates;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function assertTaxCalculationRequirements(QuoteTransfer $quoteTransfer)
-    {
-        $quoteTransfer->requireTotals();
-        $quoteTransfer->getTotals()->requireGrandTotal();
+        return $totalTaxAmount;
     }
 
 }

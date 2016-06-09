@@ -15,7 +15,6 @@ interface SalesAggregatorFacadeInterface
 {
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -26,7 +25,6 @@ interface SalesAggregatorFacadeInterface
     public function getOrderTotalsByIdSalesOrder($idSalesOrder);
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -37,7 +35,6 @@ interface SalesAggregatorFacadeInterface
     public function getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem);
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -48,7 +45,6 @@ interface SalesAggregatorFacadeInterface
     public function getOrderTotalByOrderTransfer(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -59,7 +55,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderExpenseAmounts(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -70,7 +65,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderGrandTotal(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -81,7 +75,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderItemAmounts(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -92,7 +85,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderSubtotal(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -103,7 +95,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderItemTaxAmount(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -114,7 +105,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *

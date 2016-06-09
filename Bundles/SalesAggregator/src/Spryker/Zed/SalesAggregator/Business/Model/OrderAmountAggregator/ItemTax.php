@@ -19,6 +19,11 @@ class ItemTax implements OrderAmountAggregatorInterface
     protected $taxFacade;
 
     /**
+     * @var float
+     */
+    protected $roundingError;
+
+    /**
      * @param \Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface $taxFacade
      */
     public function __construct(SalesAggregatorToTaxInterface $taxFacade)
@@ -44,26 +49,21 @@ class ItemTax implements OrderAmountAggregatorInterface
      */
     protected function addTaxAmountToTaxableItems(\ArrayObject $taxableItems)
     {
-        foreach ($taxableItems as $item) {
-            if (!$item->getTaxRate()) {
-                continue;
-            }
-            $item->requireUnitGrossPrice()->requireSumGrossPrice();
-
-            $item->setUnitTaxAmount(
-                $this->taxFacade->getTaxAmountFromGrossPrice(
-                    $item->getUnitGrossPrice(),
-                    $item->getTaxRate()
-                )
+        foreach ($taxableItems as $itemTransfer) {
+            $unitTaxAmount = $this->calculateTaxAmount(
+                $itemTransfer->getUnitGrossPrice(),
+                $itemTransfer->getTaxRate()
             );
 
-            $item->setSumTaxAmount(
-                $this->taxFacade->getTaxAmountFromGrossPrice(
-                    $item->getSumGrossPrice(),
-                    $item->getTaxRate()
-                )
+            $sumTaxAmount = $this->calculateTaxAmount(
+                $itemTransfer->getSumTaxAmount(),
+                $itemTransfer->getTaxRate()
             );
+
+            $itemTransfer->setUnitTaxAmount($unitTaxAmount);
+            $itemTransfer->setSumTaxAmount($sumTaxAmount);
         }
+
     }
 
     /**
@@ -74,6 +74,24 @@ class ItemTax implements OrderAmountAggregatorInterface
     protected function assertItemTaxRequirements(OrderTransfer $orderTransfer)
     {
         $orderTransfer->requireItems();
+    }
+
+    /**
+     * @param int $price
+     * @param float $taxRate
+     *
+     * @return float
+     */
+    protected function calculateTaxAmount($price, $taxRate)
+    {
+        $taxAmount = $this->taxFacade->getTaxAmountFromGrossPrice($price, $taxRate, false);
+
+        $taxAmount += $this->roundingError;
+
+        $taxAmountRounded = round($taxAmount, 4);
+        $this->roundingError = $taxAmount - $taxAmountRounded;
+
+        return $taxAmountRounded;
     }
 
 }

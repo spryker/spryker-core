@@ -17,7 +17,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
 {
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -31,7 +30,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -45,7 +43,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -59,7 +56,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -73,7 +69,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -87,7 +82,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -101,7 +95,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -115,7 +108,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -129,7 +121,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *
@@ -143,7 +134,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
      *
      * @api
      *

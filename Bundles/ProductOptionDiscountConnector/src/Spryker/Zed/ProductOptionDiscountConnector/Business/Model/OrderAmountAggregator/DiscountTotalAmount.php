@@ -20,7 +20,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $this->assertDisountTotalRequirements($orderTransfer);
+        $this->assertDiscountTotalRequirements($orderTransfer);
 
         $orderTransfer->getTotals()
             ->setDiscountTotal($this->getTotalDiscountAmountWithProductOptions($orderTransfer));
@@ -59,7 +59,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
      *
      * @return void
      */
-    protected function assertDisountTotalRequirements(OrderTransfer $orderTransfer)
+    protected function assertDiscountTotalRequirements(OrderTransfer $orderTransfer)
     {
         $orderTransfer->requireTotals();
     }
