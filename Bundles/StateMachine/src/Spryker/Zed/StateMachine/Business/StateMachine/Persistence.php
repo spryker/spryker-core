@@ -106,7 +106,7 @@ class Persistence implements PersistenceInterface
      */
     public function getInitialStateIdByStateName(StateMachineItemTransfer $stateMachineItemTransfer, $stateName)
     {
-        $stateMachineItemTransfer = $this->getStateMachineItemState($stateMachineItemTransfer, $stateName);
+        $stateMachineItemTransfer = $this->saveStateMachineItem($stateMachineItemTransfer, $stateName);
 
         return $stateMachineItemTransfer->getIdItemState();
     }
@@ -117,7 +117,7 @@ class Persistence implements PersistenceInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    public function getStateMachineItemState(StateMachineItemTransfer $stateMachineItemTransfer, $stateName)
+    public function saveStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer, $stateName)
     {
         if (isset($this->persistedStates[$stateName])) {
             $stateMachineItemStateEntity = $this->persistedStates[$stateName];
@@ -131,7 +131,7 @@ class Persistence implements PersistenceInterface
                 )->findOne();
 
             if (!isset($stateMachineItemStateEntity)) {
-                $stateMachineItemStateEntity = $this->saveStateMachineItem($stateMachineItemTransfer, $stateName);
+                $stateMachineItemStateEntity = $this->saveStateMachineItemEntity($stateMachineItemTransfer, $stateName);
             }
             $this->persistedStates[$stateName] = $stateMachineItemStateEntity;
         }
@@ -405,7 +405,7 @@ class Persistence implements PersistenceInterface
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState
      */
-    protected function saveStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer, $stateName)
+    protected function saveStateMachineItemEntity(StateMachineItemTransfer $stateMachineItemTransfer, $stateName)
     {
         $stateMachineItemStateEntity = new SpyStateMachineItemState();
         $stateMachineItemStateEntity->setName($stateName);

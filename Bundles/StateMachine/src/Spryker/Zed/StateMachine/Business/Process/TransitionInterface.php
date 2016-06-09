@@ -15,12 +15,12 @@ interface TransitionInterface
      *
      * @return void
      */
-    public function setHappy($happy);
+    public function setHappyCase($happy);
 
     /**
      * @return bool
      */
-    public function isHappy();
+    public function isHappyCase();
 
     /**
      * @param string $condition
@@ -61,23 +61,23 @@ interface TransitionInterface
      *
      * @return void
      */
-    public function setSource(StateInterface $source);
+    public function setSourceState(StateInterface $source);
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
-    public function getSource();
+    public function getSourceState();
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $target
      *
      * @return void
      */
-    public function setTarget(StateInterface $target);
+    public function setTargetState(StateInterface $target);
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
-    public function getTarget();
+    public function getTargetState();
 
 }

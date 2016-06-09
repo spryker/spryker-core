@@ -106,7 +106,7 @@ class Builder implements BuilderInterface
 
         $this->mergeSubProcessFiles($pathToXml);
 
-        list($processMap, $mainProcess) = $this->createSubProcess();
+        list($processMap, $mainProcess) = $this->createMainSubProcess();
 
         $stateToProcessMap = $this->createStates($processMap);
 
@@ -158,8 +158,8 @@ class Builder implements BuilderInterface
         foreach ($xmlElements as $xmlElement) {
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
             $attributes = $xmlElement->attributes();
-            foreach ($attributes as $k => $v) {
-                $child->addAttribute($k, $v);
+            foreach ($attributes as $name => $value) {
+                $child->addAttribute($name, $value);
             }
 
             $this->recursiveMerge($xmlElement, $child);
@@ -182,7 +182,7 @@ class Builder implements BuilderInterface
         if (!file_exists($pathToXml)) {
             throw new StateMachineException(
                 sprintf(
-                    'State machine xml file not find in %s',
+                    'State machine xml file not found in "%s".',
                     $pathToXml
                 )
             );
@@ -266,7 +266,7 @@ class Builder implements BuilderInterface
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      */
-    protected function createSubProcess()
+    protected function createMainSubProcess()
     {
         $mainProcess = null;
         $xmlProcesses = $this->rootElement->children();
@@ -429,18 +429,18 @@ class Builder implements BuilderInterface
             )
         );
 
-        $transition->setHappy(
+        $transition->setHappyCase(
             $this->getAttributeBoolean(
                 $xmlTransition,
                 self::TRANSITION_HAPPY_PATH_ATTRIBUTE
             )
         );
 
-        $sourceName = (string)$xmlTransition->source;
+        $sourceState = (string)$xmlTransition->source;
 
-        $this->setTransitionSource($stateToProcessMap, $sourceName, $transition);
-        $this->setTransitionTarget($stateToProcessMap, $xmlTransition, $sourceName, $transition);
-        $this->setTransitionEvent($eventMap, $xmlTransition, $sourceName, $transition);
+        $this->setTransitionSource($stateToProcessMap, $sourceState, $transition);
+        $this->setTransitionTarget($stateToProcessMap, $xmlTransition, $sourceState, $transition);
+        $this->setTransitionEvent($eventMap, $xmlTransition, $sourceState, $transition);
 
         return $transition;
     }
@@ -460,7 +460,7 @@ class Builder implements BuilderInterface
 
         $sourceProcess = $stateToProcessMap[$sourceName];
         $sourceState = $sourceProcess->getState($sourceName);
-        $transition->setSource($sourceState);
+        $transition->setSourceState($sourceState);
         $sourceState->addOutgoingTransition($transition);
     }
 
@@ -480,39 +480,39 @@ class Builder implements BuilderInterface
         $sourceName,
         $transition
     ) {
-        $targetName = (string)$xmlTransition->target;
-        if (!isset($stateToProcessMap[$targetName])) {
+        $targetStateName = (string)$xmlTransition->target;
+        if (!isset($stateToProcessMap[$targetStateName])) {
             throw new StateMachineException(
                 sprintf(
                     'Target: "%s" does not exist from source: "%s"',
-                    $targetName,
+                    $targetStateName,
                     $sourceName
                 )
             );
         }
 
-        $targetProcess = $stateToProcessMap[$targetName];
-        $targetState = $targetProcess->getState($targetName);
-        $transition->setTarget($targetState);
+        $targetProcess = $stateToProcessMap[$targetStateName];
+        $targetState = $targetProcess->getState($targetStateName);
+        $transition->setTargetState($targetState);
         $targetState->addIncomingTransition($transition);
     }
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface[] $eventMap
      * @param \SimpleXMLElement $xmlTransition
-     * @param string $sourceName
+     * @param string $sourceState
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
      * @return void
      */
-    protected function setTransitionEvent(array $eventMap, \SimpleXMLElement $xmlTransition, $sourceName, $transition)
+    protected function setTransitionEvent(array $eventMap, \SimpleXMLElement $xmlTransition, $sourceState, $transition)
     {
         if (isset($xmlTransition->event)) {
             $eventName = (string)$xmlTransition->event;
 
-            $this->assertEventExists($eventMap, $sourceName, $eventName);
+            $this->assertEventExists($eventMap, $sourceState, $eventName);
 
             $event = $eventMap[$eventName];
             $event->addTransition($transition);

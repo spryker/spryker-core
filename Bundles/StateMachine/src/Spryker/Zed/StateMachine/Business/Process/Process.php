@@ -172,7 +172,7 @@ class Process implements ProcessInterface
 
         throw new StateMachineException(
             sprintf(
-                'Unknown state: %s',
+                'State "%s" not found in any of state machine processes. Is state defined in xml definition file?',
                 $stateName
             )
         );
@@ -239,12 +239,16 @@ class Process implements ProcessInterface
         if ($this->hasStates()) {
             $states = $this->getStates();
         }
-        if ($this->hasSubProcesses()) {
-            foreach ($this->getSubProcesses() as $subProcess) {
-                if ($subProcess->hasStates()) {
-                    $states = array_merge($states, $subProcess->getStates());
-                }
+
+        if (!$this->hasSubProcesses()) {
+            return $states;
+        }
+
+        foreach ($this->getSubProcesses() as $subProcess) {
+            if (!$subProcess->hasStates()) {
+                continue;
             }
+            $states = array_merge($states, $subProcess->getStates());
         }
 
         return $states;
@@ -314,17 +318,34 @@ class Process implements ProcessInterface
         $eventsBySource = [];
         foreach ($events as $event) {
             $transitions = $event->getTransitions();
-            foreach ($transitions as $transition) {
-                $sourceName = $transition->getSource()->getName();
-                if (!isset($eventsBySource[$sourceName])) {
-                    $eventsBySource[$sourceName] = [];
-                }
-                if (!in_array($event->getName(), $eventsBySource[$sourceName])) {
-                    $eventsBySource[$sourceName][] = $event->getName();
-                }
-            }
+            $eventsBySource = $this->groupTransitionsBySourceName(
+                $transitions,
+                $eventsBySource,
+                $event
+            );
         }
 
+        return $eventsBySource;
+    }
+
+    /**
+     * @param array $transitions
+     * @param $eventsBySource
+     * @param EventInterface $event
+     *
+     * @return array|string
+     */
+    protected function groupTransitionsBySourceName(array $transitions, array $eventsBySource, EventInterface $event)
+    {
+        foreach ($transitions as $transition) {
+            $sourceName = $transition->getSourceState()->getName();
+            if (!isset($eventsBySource[$sourceName])) {
+                $eventsBySource[$sourceName] = [];
+            }
+            if (!in_array($event->getName(), $eventsBySource[$sourceName], true)) {
+                $eventsBySource[$sourceName][] = $event->getName();
+            }
+        }
         return $eventsBySource;
     }
 

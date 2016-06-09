@@ -8,6 +8,7 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
+use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class StateUpdater implements StateUpdaterInterface
@@ -53,7 +54,7 @@ class StateUpdater implements StateUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param string[] $sourceStateBuffer
+     * @param string[] $sourceStates
      *
      * @throws \Exception
      *
@@ -62,7 +63,7 @@ class StateUpdater implements StateUpdaterInterface
     public function updateStateMachineItemState(
         array $stateMachineItems,
         array $processes,
-        array $sourceStateBuffer
+        array $sourceStates
     ) {
 
         if (count($stateMachineItems) === 0) {
@@ -73,37 +74,16 @@ class StateUpdater implements StateUpdaterInterface
 
         try {
             foreach ($stateMachineItems as $stateMachineItemTransfer) {
-                $stateMachineItemTransfer->requireProcessName()
-                    ->requireStateMachineName()
-                    ->requireIdentifier()
-                    ->requireStateName();
+                $this->assertStateMachineItemHaveRequiredData($stateMachineItemTransfer);
 
                 $process = $processes[$stateMachineItemTransfer->getProcessName()];
 
-                if (!isset($sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()])) {
-                    throw new StateMachineException(
-                        sprintf('Could not update state, source state not found.')
-                    );
-                }
+                $this->assertSourceStateExists($sourceStates, $stateMachineItemTransfer);
 
-                $sourceState = $sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()];
+                $sourceState = $sourceStates[$stateMachineItemTransfer->getIdentifier()];
                 $targetState = $stateMachineItemTransfer->getStateName();
 
-                if ($sourceState !== $targetState) {
-
-                    $this->assertTransitionAlreadyProcessed($stateMachineItemTransfer, $sourceState, $targetState);
-
-                    $this->timeout->dropOldTimeout($process, $sourceState, $stateMachineItemTransfer);
-                    $this->timeout->setNewTimeout($process, $stateMachineItemTransfer);
-
-                    $stateMachineHandler = $this->stateMachineHandlerResolver
-                        ->get($stateMachineItemTransfer->getStateMachineName());
-
-                    $stateMachineHandler->itemStateUpdated($stateMachineItemTransfer);
-
-                    $this->stateMachinePersistence->saveItemStateHistory($stateMachineItemTransfer);
-
-                }
+                $this->transitionState($sourceState, $targetState, $stateMachineItemTransfer, $process);
             }
         } catch (\Exception $e) {
             $this->getConnection()->rollBack();
@@ -134,12 +114,9 @@ class StateUpdater implements StateUpdaterInterface
         $sourceState,
         $targetState
     ) {
-        $alreadyTransitioned = $this->stateMachineQueryContainer->queryLastHistoryItem(
-            $stateMachineItemTransfer,
-            $stateMachineItemTransfer->getIdItemState()
-        )->count();
+        $isAlreadyTransitioned = $this->isAlreadyTransitioned($stateMachineItemTransfer);
 
-        if ($alreadyTransitioned > 0) {
+        if ($isAlreadyTransitioned) {
             throw new StateMachineException(
                 sprintf(
                     'Transition between "%s" -> "%s" already processed.',
@@ -149,5 +126,106 @@ class StateUpdater implements StateUpdaterInterface
             );
         }
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return bool
+     */
+    protected function isAlreadyTransitioned(StateMachineItemTransfer $stateMachineItemTransfer)
+    {
+        $numberOfItems = $this->stateMachineQueryContainer->queryLastHistoryItem(
+            $stateMachineItemTransfer,
+            $stateMachineItemTransfer->getIdItemState()
+        )->count();
+
+        return $numberOfItems > 0;
+    }
+
+    /**
+     * @param array $sourceStateBuffer
+     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
+     * @return void
+     */
+    protected function assertSourceStateExists(
+        array $sourceStateBuffer,
+        StateMachineItemTransfer $stateMachineItemTransfer
+    ) {
+        if (!isset($sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()])) {
+            throw new StateMachineException(
+                sprintf('Could not update state, source state not found.')
+            );
+        }
+    }
+
+    /**
+     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return void
+     */
+    protected function assertStateMachineItemHaveRequiredData(StateMachineItemTransfer $stateMachineItemTransfer)
+    {
+        $stateMachineItemTransfer->requireProcessName()
+            ->requireStateMachineName()
+            ->requireIdentifier()
+            ->requireStateName();
+    }
+
+    /**
+     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return void
+     */
+    protected function notifyHandlerStateChanged(StateMachineItemTransfer $stateMachineItemTransfer)
+    {
+        $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineItemTransfer->getStateMachineName());
+
+        $stateMachineHandler->itemStateUpdated($stateMachineItemTransfer);
+    }
+
+    /**
+     * @param ProcessInterface $process
+     * @param string $sourceState
+     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return void
+     */
+    protected function updateTimeouts(
+        ProcessInterface $process,
+        $sourceState,
+        StateMachineItemTransfer $stateMachineItemTransfer
+    ) {
+        $this->timeout->dropOldTimeout($process, $sourceState, $stateMachineItemTransfer);
+        $this->timeout->setNewTimeout($process, $stateMachineItemTransfer);
+    }
+
+    /**
+     * @param string $sourceState
+     * @param string $targetState
+     * @param StateMachineItemTransfer $stateMachineItemTransfer
+     * @param ProcessInterface $process
+     *
+     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
+     * @return void
+     */
+    protected function transitionState(
+        $sourceState,
+        $targetState,
+        StateMachineItemTransfer $stateMachineItemTransfer,
+        ProcessInterface $process
+    ) {
+        if ($sourceState === $targetState) {
+            return;
+        }
+        $this->assertTransitionAlreadyProcessed($stateMachineItemTransfer, $sourceState, $targetState);
+        $this->updateTimeouts($process, $sourceState, $stateMachineItemTransfer);
+        $this->notifyHandlerStateChanged($stateMachineItemTransfer);
+        $this->stateMachinePersistence->saveItemStateHistory($stateMachineItemTransfer);
+    }
+
 
 }

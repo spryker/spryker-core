@@ -22,7 +22,7 @@ interface ConditionInterface
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
-    public function checkConditionForTransitions(
+    public function getTargetStatesFromTransitions(
         array $transitions,
         StateMachineItemTransfer $stateMachineItemTransfer,
         StateInterface $sourceState,
@@ -35,6 +35,6 @@ interface ConditionInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $itemsWithOnEnterEvent
      */
-    public function checkConditionsForProcess($stateMachineName, $processName);
+    public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName);
 
 }

@@ -287,7 +287,7 @@ class Drawer implements DrawerInterface
         $hasOnlySelfReferences = true;
         $transitions = $state->getOutgoingTransitions();
         foreach ($transitions as $transition) {
-            if ($transition->getTarget()->getName() !== $state->getName()) {
+            if ($transition->getTargetState()->getName() !== $state->getName()) {
                 $hasOnlySelfReferences = false;
                 break;
             }
@@ -368,7 +368,7 @@ class Drawer implements DrawerInterface
             }
 
             if ($event->hasCommand()) {
-                $commandLabel = 'c:' . $event->getCommand();
+                $commandLabel = 'command:' . $event->getCommand();
 
                 if (!isset($this->stateMachineHandler->getCommandPlugins()[$event->getCommand()])) {
                     $commandLabel .= ' ' . $this->notImplemented;
@@ -426,7 +426,7 @@ class Drawer implements DrawerInterface
             }
         }
 
-        if ($transition->isHappy()) {
+        if ($transition->isHappyCase()) {
             $attributes['weight'] = '100';
             $attributes['color'] = self::HAPPY_PATH_COLOR;
         } elseif ($transition->hasEvent()) {
@@ -446,7 +446,7 @@ class Drawer implements DrawerInterface
      */
     protected function addEdgeFromState(TransitionInterface $transition, $fromName)
     {
-        $fromName = $fromName !== null ? $fromName : $transition->getSource()->getName();
+        $fromName = $fromName !== null ? $fromName : $transition->getSourceState()->getName();
 
         return $fromName;
     }
@@ -459,7 +459,7 @@ class Drawer implements DrawerInterface
      */
     protected function addEdgeToState(TransitionInterface $transition, $toName)
     {
-        $toName = $toName !== null ? $toName : $transition->getTarget()->getName();
+        $toName = $toName !== null ? $toName : $transition->getTargetState()->getName();
 
         return $toName;
     }

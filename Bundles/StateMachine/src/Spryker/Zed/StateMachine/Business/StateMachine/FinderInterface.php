@@ -53,14 +53,14 @@ interface FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param array $sourceStateBuffer
+     * @param array $sourceStates
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,
         array $processes,
-        array $sourceStateBuffer = []
+        array $sourceStates = []
     );
 
     /**

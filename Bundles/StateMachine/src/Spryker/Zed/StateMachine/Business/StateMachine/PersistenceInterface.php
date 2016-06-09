@@ -34,7 +34,7 @@ interface PersistenceInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    public function getStateMachineItemState(StateMachineItemTransfer $stateMachineItemTransfer, $stateName);
+    public function saveStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer, $stateName);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems

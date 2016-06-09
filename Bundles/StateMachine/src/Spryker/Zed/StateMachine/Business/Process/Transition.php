@@ -36,11 +36,11 @@ class Transition implements TransitionInterface
     protected $target;
 
     /**
-     * @param mixed $happy
+     * @param bool $happy
      *
      * @return void
      */
-    public function setHappy($happy)
+    public function setHappyCase($happy)
     {
         $this->happy = $happy;
     }
@@ -48,7 +48,7 @@ class Transition implements TransitionInterface
     /**
      * @return bool
      */
-    public function isHappy()
+    public function isHappyCase()
     {
         return $this->happy;
     }
@@ -110,7 +110,7 @@ class Transition implements TransitionInterface
      *
      * @return void
      */
-    public function setSource(StateInterface $source)
+    public function setSourceState(StateInterface $source)
     {
         $this->source = $source;
     }
@@ -118,7 +118,7 @@ class Transition implements TransitionInterface
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
-    public function getSource()
+    public function getSourceState()
     {
         return $this->source;
     }
@@ -128,7 +128,7 @@ class Transition implements TransitionInterface
      *
      * @return void
      */
-    public function setTarget(StateInterface $target)
+    public function setTargetState(StateInterface $target)
     {
         $this->target = $target;
     }
@@ -136,7 +136,7 @@ class Transition implements TransitionInterface
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
-    public function getTarget()
+    public function getTargetState()
     {
         return $this->target;
     }

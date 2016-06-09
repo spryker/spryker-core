@@ -40,11 +40,11 @@ class ConditionTest extends StateMachineMocks
 
         $transition = new Transition();
         $transition->setCondition('condition');
-        $transition->setSource($sourceState);
-        $transition->setTarget($targetState);
+        $transition->setSourceState($sourceState);
+        $transition->setTargetState($targetState);
         $transitions[] = $transition;
 
-        $processedTargetState = $condition->checkConditionForTransitions(
+        $processedTargetState = $condition->getTargetStatesFromTransitions(
             $transitions,
             new StateMachineItemTransfer(),
             new State(),
@@ -78,14 +78,14 @@ class ConditionTest extends StateMachineMocks
 
         $transition = new Transition();
         $transition->setCondition('condition');
-        $transition->setSource($sourceState);
-        $transition->setTarget($targetState);
+        $transition->setSourceState($sourceState);
+        $transition->setTargetState($targetState);
         $transitions[] = $transition;
 
         $sourceState = new State();
         $sourceState->setName('initial source');
 
-        $processedTargetState = $condition->checkConditionForTransitions(
+        $processedTargetState = $condition->getTargetStatesFromTransitions(
             $transitions,
             new StateMachineItemTransfer(),
             $sourceState,

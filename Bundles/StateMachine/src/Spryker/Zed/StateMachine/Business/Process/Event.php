@@ -23,7 +23,7 @@ class Event implements EventInterface
     /**
      * @var bool
      */
-    protected $onEnter;
+    protected $onEnter = false;
 
     /**
      * @var string
@@ -38,7 +38,7 @@ class Event implements EventInterface
     /**
      * @var bool
      */
-    protected $manual;
+    protected $manual = false;
 
     /**
      * @param bool $manual
@@ -140,7 +140,7 @@ class Event implements EventInterface
         $transitions = [];
 
         foreach ($this->transitions as $transition) {
-            if ($transition->getSource()->getName() !== $sourceState->getName()) {
+            if ($transition->getSourceState()->getName() !== $sourceState->getName()) {
                 continue;
             }
             $transitions[] = $transition;

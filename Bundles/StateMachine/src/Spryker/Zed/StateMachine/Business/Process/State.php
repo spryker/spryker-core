@@ -133,18 +133,18 @@ class State implements StateInterface
     }
 
     /**
-     * @param string $id
+     * @param string $eventName
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface
      */
-    public function getEvent($id)
+    public function getEvent($eventName)
     {
         foreach ($this->outgoingTransitions as $transition) {
             if ($transition->hasEvent()) {
                 $event = $transition->getEvent();
-                if ($event->getName() === $id) {
+                if ($event->getName() === $eventName) {
                     return $event;
                 }
             }
@@ -152,8 +152,8 @@ class State implements StateInterface
 
         throw new StateMachineException(
             sprintf(
-                'Event "%d" not found.',
-                $id
+                'Event "%d" not found. Have you added this event to transition?',
+                $eventName
             )
         );
     }

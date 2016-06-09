@@ -126,7 +126,7 @@ class TriggerTest extends StateMachineMocks
         $transitionLogMock = $this->createTriggerTransitionLog();
 
         $conditionMock->expects($this->once())
-            ->method('checkConditionsForProcess')
+            ->method('getOnEnterEventsForStatesWithoutTransition')
             ->willReturn($this->createStateMachineItems());
 
         $trigger = $this->createTrigger(
@@ -182,7 +182,7 @@ class TriggerTest extends StateMachineMocks
         $transition = new Transition();
         $state = new State();
         $state->setName('new');
-        $transition->setSource($state);
+        $transition->setSourceState($state);
 
         $event->addTransition($transition);
 
@@ -324,7 +324,7 @@ class TriggerTest extends StateMachineMocks
         $targetState = new State();
         $targetState->setName('target state');
         $conditionMock->expects($this->once())
-            ->method('checkConditionForTransitions')
+            ->method('getTargetStatesFromTransitions')
             ->willReturn($targetState);
 
         return $conditionMock;

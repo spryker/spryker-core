@@ -11,10 +11,10 @@ interface StateUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param array $sourceStateBuffer
+     * @param array $sourceStates
      *
      * @return void
      */
-    public function updateStateMachineItemState(array $stateMachineItems, array $processes, array $sourceStateBuffer);
+    public function updateStateMachineItemState(array $stateMachineItems, array $processes, array $sourceStates);
 
 }

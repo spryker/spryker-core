@@ -150,20 +150,15 @@ class Finder implements FinderInterface
             return [];
         }
 
-        $stateMachineProcessEntity = $this->queryContainer->queryProcessByStateMachineAndProcessName(
-            $stateMachineProcessTransfer->getStateMachineName(),
-            $stateMachineProcessTransfer->getProcessName()
-        )->findOne();
-
+        $stateMachineProcessEntity = $this->getStateMachineProcessEntity($stateMachineProcessTransfer);
         if ($stateMachineProcessEntity === null) {
             return [];
         }
 
-        $stateMachineItems = $this->queryContainer->queryItemsByIdStateMachineProcessAndItemStates(
-            $stateMachineProcessTransfer->getStateMachineName(),
-            $stateMachineProcessTransfer->getProcessName(),
+        $stateMachineItems = $this->getFlaggedStateMachineItems(
+            $stateMachineProcessTransfer,
             array_keys($statesByFlag)
-        )->find();
+        );
 
         $stateMachineItemsWithFlag = [];
         foreach ($stateMachineItems as $stateMachineItemEntity) {
@@ -205,7 +200,7 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param array $sourceStateBuffer
+     * @param array $sourceStates
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
@@ -214,7 +209,7 @@ class Finder implements FinderInterface
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,
         array $processes,
-        array $sourceStateBuffer = []
+        array $sourceStates = []
     ) {
         $itemsWithOnEnterEvent = [];
         foreach ($stateMachineItems as $stateMachineItemTransfer) {
@@ -226,8 +221,8 @@ class Finder implements FinderInterface
             $process = $processes[$processName];
             $targetState = $process->getStateFromAllProcesses($stateName);
 
-            if (isset($sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()])) {
-                $sourceState = $sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()];
+            if (isset($sourceStates[$stateMachineItemTransfer->getIdentifier()])) {
+                $sourceState = $sourceStates[$stateMachineItemTransfer->getIdentifier()];
             } else {
                 $sourceState = $process->getStateFromAllProcesses($stateMachineItemTransfer->getStateName());
             }
@@ -342,6 +337,34 @@ class Finder implements FinderInterface
         }
 
         return $stateMachineItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess
+     */
+    protected function getStateMachineProcessEntity(StateMachineProcessTransfer $stateMachineProcessTransfer)
+    {
+       return $this->queryContainer->queryProcessByStateMachineAndProcessName(
+            $stateMachineProcessTransfer->getStateMachineName(),
+            $stateMachineProcessTransfer->getProcessName()
+        )->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
+     * @param array $statesByFlag
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getFlaggedStateMachineItems(StateMachineProcessTransfer $stateMachineProcessTransfer, array $statesByFlag)
+    {
+        return $this->queryContainer->queryItemsByIdStateMachineProcessAndItemStates(
+            $stateMachineProcessTransfer->getStateMachineName(),
+            $stateMachineProcessTransfer->getProcessName(),
+            $statesByFlag
+        )->find();
     }
 
 }

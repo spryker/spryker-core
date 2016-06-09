@@ -139,16 +139,22 @@ class Timeout implements TimeoutInterface
      */
     protected function validateTimeout(\DateInterval $interval, $timeout)
     {
-        $vars = get_object_vars($interval);
-        $vSum = 0;
-        foreach ($vars as $v) {
-            $vSum += (int)$v;
-        }
-        if ($vSum === 0) {
-            throw new StateMachineException('Invalid format for timeout "' . $timeout . '"');
+        $intervalProperties = get_object_vars($interval);
+        $intervalSum = 0;
+        foreach ($intervalProperties as $intervalValue) {
+            $intervalSum += (int)$intervalValue;
         }
 
-        return $vSum;
+        if ($intervalSum === 0) {
+            throw new StateMachineException(
+                sprintf(
+                    'Invalid format for timeout "%s"',
+                    $timeout
+                )
+            );
+        }
+
+        return $intervalSum;
     }
 
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
+use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 use Spryker\Zed\StateMachine\Business\Process\StateInterface;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
@@ -82,7 +83,7 @@ class Condition implements ConditionInterface
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
-    public function checkConditionForTransitions(
+    public function getTargetStatesFromTransitions(
         array $transitions,
         StateMachineItemTransfer $stateMachineItemTransfer,
         StateInterface $sourceState,
@@ -91,31 +92,57 @@ class Condition implements ConditionInterface
         $possibleTransitions = [];
         foreach ($transitions as $transition) {
             if ($transition->hasCondition()) {
-                $conditionName = $transition->getCondition();
-                $conditionPlugin = $this->getConditionPlugin(
-                    $conditionName,
-                    $stateMachineItemTransfer->getStateMachineName()
+                $isValidCondition = $this->checkCondition(
+                    $stateMachineItemTransfer,
+                    $transactionLogger,
+                    $transition->getCondition()
                 );
 
-                try {
-                    $conditionCheck = $conditionPlugin->check($stateMachineItemTransfer);
-                } catch (\Exception $e) {
-                    $transactionLogger->setIsError(true);
-                    $transactionLogger->setErrorMessage(get_class($conditionPlugin) . ' - ' . $e->getMessage());
-                    $transactionLogger->saveAll();
-                    throw $e;
+                if ($isValidCondition) {
+                    array_push($possibleTransitions, $transition);
                 }
 
-                if ($conditionCheck === true) {
-                    $transactionLogger->addCondition($stateMachineItemTransfer, $conditionPlugin);
-                    array_unshift($possibleTransitions, $transition);
-                }
             } else {
                 array_push($possibleTransitions, $transition);
             }
         }
 
         return $this->findTargetState($sourceState, $possibleTransitions);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     * @param \Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface $transactionLogger
+     * @param string $conditionName
+     *
+     * @throws \Exception
+     * @return array
+     */
+    protected function checkCondition(
+        StateMachineItemTransfer $stateMachineItemTransfer,
+        TransitionLogInterface $transactionLogger,
+        $conditionName
+    ) {
+        $conditionPlugin = $this->getConditionPlugin(
+            $conditionName,
+            $stateMachineItemTransfer->getStateMachineName()
+        );
+
+        try {
+            $conditionCheck = $conditionPlugin->check($stateMachineItemTransfer);
+        } catch (\Exception $e) {
+            $transactionLogger->setIsError(true);
+            $transactionLogger->setErrorMessage(get_class($conditionPlugin) . ' - ' . $e->getMessage());
+            $transactionLogger->saveAll();
+            throw $e;
+        }
+
+        if ($conditionCheck === true) {
+            $transactionLogger->addCondition($stateMachineItemTransfer, $conditionPlugin);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -128,9 +155,8 @@ class Condition implements ConditionInterface
     {
         $targetState = $sourceState;
         if (count($possibleTransitions) > 0) {
-            /** @var \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $selectedTransition */
             $selectedTransition = array_shift($possibleTransitions);
-            $targetState = $selectedTransition->getTarget();
+            $targetState = $selectedTransition->getTargetState();
         }
         return $targetState;
     }
@@ -141,51 +167,32 @@ class Condition implements ConditionInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $itemsWithOnEnterEvent
      */
-    public function checkConditionsForProcess($stateMachineName, $processName)
+    public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName)
     {
         $process = $this->finder->findProcessByStateMachineAndProcessName($stateMachineName, $processName);
         $transitions = $process->getAllTransitionsWithoutEvent();
 
         $stateToTransitionsMap = $this->createStateToTransitionMap($transitions);
 
-        $states = array_keys($stateToTransitionsMap);
-        $stateMachineItemStateIds = $this->stateMachinePersistence->getStateMachineItemIdsByStatesProcessAndStateMachineName(
-            $stateMachineName,
-            $process->getName(),
-            $states
-        );
-
-        $stateMachineItems = $this->stateMachineHandlerResolver
-            ->get($stateMachineName)
-            ->getStateMachineItemsByStateIds($stateMachineItemStateIds);
-
-        if (count($stateMachineItems) === 0) {
-            return [];
-        }
-
-        $stateMachineItems = $this->stateMachinePersistence
-            ->updateStateMachineItemsFromPersistence($stateMachineItems);
-
-        if (count($stateMachineItems) === 0) {
-            return [];
-        }
+        $stateMachineItems = $this->getItemsByStatesAndProcessName($stateMachineName, $stateToTransitionsMap, $process);
 
         $this->transitionLog->init($stateMachineItems);
+        $sourceStates = $this->createStateMap($stateMachineItems);
 
-        $sourceStateBuffer = $this->updateStateByTransition($stateMachineName, $stateToTransitionsMap, $stateMachineItems);
+        $this->persistAffectedStates($stateMachineName, $stateToTransitionsMap, $stateMachineItems);
 
         $processes = [$process->getName() => $process];
 
         $this->stateUpdater->updateStateMachineItemState(
             $stateMachineItems,
             $processes,
-            $sourceStateBuffer
+            $sourceStates
         );
 
         $itemsWithOnEnterEvent = $this->finder->filterItemsWithOnEnterEvent(
             $stateMachineItems,
             $processes,
-            $sourceStateBuffer
+            $sourceStates
         );
 
         return $itemsWithOnEnterEvent;
@@ -193,23 +200,51 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $stateMachineName
-     * @param array $stateToTransitionsMap
+     * @param array|string[] $states
+     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
+
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     *
+     */
+    protected function getItemsByStatesAndProcessName(
+        $stateMachineName,
+        array $states,
+        ProcessInterface $process
+    ) {
+
+        $stateMachineItemStateIds = $this->stateMachinePersistence->getStateMachineItemIdsByStatesProcessAndStateMachineName(
+            $stateMachineName,
+            $process->getName(),
+            array_keys($states)
+        );
+
+        $stateMachineItems = $this->stateMachineHandlerResolver
+            ->get($stateMachineName)
+            ->getStateMachineItemsByStateIds($stateMachineItemStateIds);
+
+        $stateMachineItems = $this->stateMachinePersistence
+            ->updateStateMachineItemsFromPersistence($stateMachineItems);
+
+        return $stateMachineItems;
+    }
+
+    /**
+     * @param string $stateMachineName
+     * @param array|string[] $states
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @throws \Exception
      *
-     * @return array
+     * @return void
      */
-    protected function updateStateByTransition(
+    protected function persistAffectedStates(
         $stateMachineName,
-        array $stateToTransitionsMap,
+        array $states,
         array $stateMachineItems
     ) {
         $targetStateMap = [];
-        $sourceStateBuffer = [];
         foreach ($stateMachineItems as $i => $stateMachineItemTransfer) {
             $stateName = $stateMachineItemTransfer->getStateName();
-            $sourceStateBuffer[$stateMachineItemTransfer->getIdentifier()] = $stateName;
 
             $process = $this->finder->findProcessByStateMachineAndProcessName(
                 $stateMachineName,
@@ -220,11 +255,11 @@ class Condition implements ConditionInterface
 
             $this->transitionLog->addSourceState($stateMachineItemTransfer, $sourceState->getName());
 
-            $transitions = $stateToTransitionsMap[$stateMachineItemTransfer->getStateName()];
+            $transitions = $states[$stateMachineItemTransfer->getStateName()];
 
             $targetState = $sourceState;
             if (count($transitions) > 0) {
-                $targetState = $this->checkConditionForTransitions(
+                $targetState = $this->getTargetStatesFromTransitions(
                     $transitions,
                     $stateMachineItemTransfer,
                     $sourceState,
@@ -238,10 +273,8 @@ class Condition implements ConditionInterface
         }
 
         foreach ($stateMachineItems as $i => $stateMachineItemTransfer) {
-            $this->stateMachinePersistence->getStateMachineItemState($stateMachineItems[$i], $targetStateMap[$i]);
+            $this->stateMachinePersistence->saveStateMachineItem($stateMachineItems[$i], $targetStateMap[$i]);
         }
-
-        return $sourceStateBuffer;
     }
 
     /**
@@ -253,7 +286,7 @@ class Condition implements ConditionInterface
     {
         $stateToTransitionsMap = [];
         foreach ($transitions as $transition) {
-            $sourceStateName = $transition->getSource()->getName();
+            $sourceStateName = $transition->getSourceState()->getName();
             if (array_key_exists($sourceStateName, $stateToTransitionsMap) === false) {
                 $stateToTransitionsMap[$sourceStateName] = [];
             }
@@ -301,5 +334,20 @@ class Condition implements ConditionInterface
             );
         }
     }
+
+    /**
+     * @param array|StateMachineItemTransfer[] $stateMachineItems
+     *
+     * @return array|StateMachineItemTransfer[]
+     */
+    protected function createStateMap(array $stateMachineItems)
+    {
+        $sourceStates = [];
+        foreach ($stateMachineItems as $stateMachineItemTransfer) {
+            $sourceStates[$stateMachineItemTransfer->getIdentifier()] = $stateMachineItemTransfer->getStateName();
+        }
+        return $sourceStates;
+    }
+
 
 }

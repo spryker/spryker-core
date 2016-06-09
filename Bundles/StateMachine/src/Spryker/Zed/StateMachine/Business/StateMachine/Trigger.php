@@ -164,7 +164,7 @@ class Trigger implements TriggerInterface
     {
         $stateMachineHandler = $this->stateMachineHandlerResolver->get($stateMachineName);
         foreach ($stateMachineHandler->getActiveProcesses() as $processName) {
-            $stateMachineItemsWithOnEnterEvent = $this->condition->checkConditionsForProcess(
+            $stateMachineItemsWithOnEnterEvent = $this->condition->getOnEnterEventsForStatesWithoutTransition(
                 $stateMachineName,
                 $processName
             );
@@ -303,7 +303,7 @@ class Trigger implements TriggerInterface
             $targetState = $sourceState;
             if (isset($eventName) && $sourceState->hasEvent($eventName)) {
                 $transitions = $sourceState->getEvent($eventName)->getTransitionsBySource($sourceState);
-                $targetState = $this->condition->checkConditionForTransitions(
+                $targetState = $this->condition->getTargetStatesFromTransitions(
                     $transitions,
                     $stateMachineItemTransfer,
                     $sourceState,
@@ -316,7 +316,7 @@ class Trigger implements TriggerInterface
         }
 
         foreach ($stateMachineItems as $i => $stateMachineItemTransfer) {
-            $this->stateMachinePersistence->getStateMachineItemState($stateMachineItems[$i], $targetStateMap[$i]);
+            $this->stateMachinePersistence->saveStateMachineItem($stateMachineItems[$i], $targetStateMap[$i]);
         }
 
         return $sourceStateBuffer;

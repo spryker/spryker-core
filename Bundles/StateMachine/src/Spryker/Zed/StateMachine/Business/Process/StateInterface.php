@@ -57,13 +57,13 @@ interface StateInterface
     public function getEvents();
 
     /**
-     * @param string $id
+     * @param string $eventName
      *
      * @throws \Exception
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface
      */
-    public function getEvent($id);
+    public function getEvent($eventName);
 
     /**
      * @param string $id
