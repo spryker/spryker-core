@@ -11,6 +11,7 @@ use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
+use Spryker\Shared\Application\Communication\Plugin\ServiceProvider\HeadersSecurityServiceProvider;
 use Spryker\Shared\Url\UrlBuilder;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
@@ -80,6 +81,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new DateFormatterServiceProvider(),
             new TranslationServiceProvider(),
             new SubRequestServiceProvider(),
+            new HeadersSecurityServiceProvider(),
         ];
 
         return $providers;

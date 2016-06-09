@@ -11,8 +11,8 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
@@ -37,21 +37,33 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function boot(Application $app)
     {
-        $app->after(function (Request $request, Response $response) {
-            $store = Store::getInstance();
+        $app['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], 0);
+    }
 
-            $response->headers->set('X-Store', $store->getStoreName());
-            $response->headers->set('X-Env', APPLICATION_ENV);
-            $response->headers->set('X-Locale', $store->getCurrentLocale());
+    /**
+     * Sets cache control and store information in headers.
+     *
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event A FilterResponseEvent instance
+     * @return void
+     */
+    public function onKernelResponse(FilterResponseEvent $event)
+    {
+        if (!$event->isMasterRequest()) {
+            return;
+        }
 
-            $response->setPrivate();
-            $response->setMaxAge(0);
+        $store = Store::getInstance();
 
-            $response->headers->addCacheControlDirective('no-cache', true);
-            $response->headers->addCacheControlDirective('no-store', true);
-            $response->headers->addCacheControlDirective('must-revalidate', true);
+        $event->getResponse()->headers->set('X-Store', $store->getStoreName());
+        $event->getResponse()->headers->set('X-Env', APPLICATION_ENV);
+        $event->getResponse()->headers->set('X-Locale', $store->getCurrentLocale());
 
-        });
+        $event->getResponse()->setPrivate();
+        $event->getResponse()->setMaxAge(0);
+
+        $event->getResponse()->headers->addCacheControlDirective('no-cache', true);
+        $event->getResponse()->headers->addCacheControlDirective('no-store', true);
+        $event->getResponse()->headers->addCacheControlDirective('must-revalidate', true);
     }
 
 }
