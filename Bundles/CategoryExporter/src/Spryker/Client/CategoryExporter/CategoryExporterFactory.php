@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CategoryExporter;
 
-use Spryker\Client\Cart\CartDependencyProvider;
 use Spryker\Client\CategoryExporter\Builder\CategoryTreeBuilder;
 use Spryker\Client\CategoryExporter\KeyBuilder\CategoryResourceKeyBuilder;
 use Spryker\Client\CategoryExporter\KeyBuilder\NavigationKeyBuilder as KeyBuilderNavigationKeyBuilder;
@@ -37,16 +36,6 @@ class CategoryExporterFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->createResourceKeyBuilder()
         );
-    }
-
-    /**
-     * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return \Spryker\Client\Storage\StorageClientInterface
-     */
-    protected function getStorageClient()
-    {
-        return $this->getProvidedDependency(CartDependencyProvider::CLIENT_KV_STORAGE);
     }
 
     /**
