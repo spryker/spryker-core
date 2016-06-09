@@ -26,11 +26,11 @@ class CheckoutPluginCollection implements CheckoutPluginCollectionInterface
      */
     public function add(CheckoutPluginInterface $plugin, $provider, $pluginType)
     {
-        if (!isset($this->plugins[$provider])) {
-            $this->plugins[$provider] = [];
+        if (!isset($this->plugins[$pluginType])) {
+            $this->plugins[$pluginType] = [];
         }
 
-        $this->plugins[$provider][$pluginType] = $plugin;
+        $this->plugins[$pluginType][$provider] = $plugin;
 
         return $this;
     }
@@ -45,19 +45,19 @@ class CheckoutPluginCollection implements CheckoutPluginCollectionInterface
      */
     public function get($provider, $pluginType)
     {
-        if (empty($this->plugins[$provider])) {
-            throw new CheckoutPluginNotFoundException(
-                sprintf('Could not find any plugin for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $provider)
-            );
-        }
-
-        if (empty($this->plugins[$provider][$pluginType])) {
+        if (empty($this->plugins[$pluginType])) {
             throw new CheckoutPluginNotFoundException(
                 sprintf('Could not find "%s" plugin type for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $pluginType, $provider)
             );
         }
 
-        return $this->plugins[$provider][$pluginType];
+        if (empty($this->plugins[$pluginType][$provider])) {
+            throw new CheckoutPluginNotFoundException(
+                sprintf('Could not find any plugin for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $provider)
+            );
+        }
+
+        return $this->plugins[$pluginType][$provider];
     }
 
 }

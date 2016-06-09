@@ -10,20 +10,22 @@ namespace Spryker\Zed\Payment\Business\Checkout;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentPluginExecutor
 {
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface
      */
     protected $checkoutPlugins;
 
     /**
-     * @param array $checkoutPlugins
+     * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface $checkoutPlugins
      */
-    public function __construct(array $checkoutPlugins)
+    public function __construct(CheckoutPluginCollectionInterface $checkoutPlugins)
     {
         $this->checkoutPlugins = $checkoutPlugins;
     }
@@ -39,7 +41,7 @@ class PaymentPluginExecutor
     public function executePreCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS,  $quoteTransfer);
-        $plugin->checkCondition($quoteTransfer, $checkoutResponseTransfer);
+        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -53,7 +55,7 @@ class PaymentPluginExecutor
     public function executeOrderSaverPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS, $quoteTransfer);
-        $plugin->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -67,36 +69,22 @@ class PaymentPluginExecutor
     public function executePostCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS, $quoteTransfer);
-        $plugin->executeHook($quoteTransfer, $checkoutResponseTransfer);
+        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
      * @param string $pluginType
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @throws \Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException
-     *
-     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface
+     * @return CheckoutPluginInterface
      */
     protected function findPlugin($pluginType, QuoteTransfer $quoteTransfer)
     {
         $this->assertResolverRequirements($quoteTransfer);
 
-        $paymentProviderName = strtolower($quoteTransfer->getPayment()->getPaymentProvider());
-        $plugins = array_change_key_case($this->checkoutPlugins[$pluginType], CASE_LOWER);
+        $provider = ucfirst($quoteTransfer->getPayment()->getPaymentProvider());
 
-        if (array_key_exists($paymentProviderName, $plugins) === false) {
-            throw new PaymentProviderNotFoundException(
-                sprintf(
-                    'Payment provider with name "%s" is not register in checkout "%s" stack. You can add it in "%s".',
-                    $paymentProviderName,
-                    $pluginType,
-                    PaymentDependencyProvider::class
-                )
-            );
-        }
-
-        return $plugins[$paymentProviderName];
+        return $this->checkoutPlugins->get($provider, $pluginType);
     }
 
     /**

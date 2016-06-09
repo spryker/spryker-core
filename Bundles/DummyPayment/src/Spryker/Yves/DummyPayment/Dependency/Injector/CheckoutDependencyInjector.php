@@ -10,9 +10,13 @@ namespace Spryker\Yves\DummyPayment\Dependency\Injector;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
+use Spryker\Yves\DummyPayment\Plugin\DummyPaymentCreditCardSubFormPlugin;
+use Spryker\Yves\DummyPayment\Plugin\DummyPaymentHandlerPlugin;
+use Spryker\Yves\DummyPayment\Plugin\DummyPaymentInvoiceSubFormPlugin;
 use Spryker\Yves\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
+use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 
 /**
  * @method \Spryker\Yves\DummyPayment\DummyPaymentFactory getFactory()
@@ -41,8 +45,8 @@ class CheckoutDependencyInjector extends AbstractDependencyInjector
     protected function injectPaymentSubForms(ContainerInterface $container)
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
-            $paymentSubForms->add($this->getFactory()->createCreditCardSubFormPlugin());
-            $paymentSubForms->add($this->getFactory()->createInvoiceSubFormPlugin());
+            $paymentSubForms->add(new DummyPaymentCreditCardSubFormPlugin());
+            $paymentSubForms->add(new DummyPaymentInvoiceSubFormPlugin());
 
             return $paymentSubForms;
         });
@@ -58,10 +62,10 @@ class CheckoutDependencyInjector extends AbstractDependencyInjector
     protected function injectPaymentMethodHandler(ContainerInterface $container)
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER, function (StepHandlerPluginCollection $paymentMethodHandler) {
-            $dummyPaymentHandlerPlugin = $this->getFactory()->createDummyPaymentHandlerPlugin();
+            $dummyPaymentHandlerPlugin = new DummyPaymentHandlerPlugin();
 
-            $paymentMethodHandler->add($dummyPaymentHandlerPlugin, PaymentTransfer::DUMMY_PAYMENT_CREDIT_CARD);
-            $paymentMethodHandler->add($dummyPaymentHandlerPlugin, PaymentTransfer::DUMMY_PAYMENT_INVOICE);
+            $paymentMethodHandler->add($dummyPaymentHandlerPlugin, DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD);
+            $paymentMethodHandler->add($dummyPaymentHandlerPlugin, DummyPaymentConfig::PAYMENT_METHOD_INVOICE);
 
             return $paymentMethodHandler;
         });

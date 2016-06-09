@@ -10,15 +10,18 @@ namespace Unit\Spryker\Zed\Payment\Business\Checkout;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
-use Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface;
+use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
 {
+
+    const TEST_PROVIDER = 'Test';
 
     /**
      * @return void
@@ -26,9 +29,9 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     public function testPreCheckShouldTriggerTestPaymentPlugin()
     {
         $preCheckPluginMock = $this->createPreCheckPluginMock();
-        $preCheckPluginMock->expects($this->once())->method('checkCondition');
+        $preCheckPluginMock->expects($this->once())->method('execute');
 
-        $paymentPluginExecutor = $this->createPaymenPluginExecutor($preCheckPluginMock);
+        $paymentPluginExecutor = $this->createPaymentPluginExecutor($preCheckPluginMock);
         $quoteTransfer = $this->createQuoteTransfer();
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -41,9 +44,9 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     public function testOrderSaverShouldTriggerTestPaymentPlugin()
     {
         $orderSavePluginMock = $this->createSavePluginMock();
-        $orderSavePluginMock->expects($this->once())->method('saveOrder');
+        $orderSavePluginMock->expects($this->once())->method('execute');
 
-        $paymentPluginExecutor = $this->createPaymenPluginExecutor(null, $orderSavePluginMock);
+        $paymentPluginExecutor = $this->createPaymentPluginExecutor(null, $orderSavePluginMock);
         $quoteTransfer = $this->createQuoteTransfer();
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -56,9 +59,9 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     public function testPostCheckShouldTriggerTestPaymentPlugin()
     {
         $postCheckoutPluginMock = $this->createPostSavePluginMock();
-        $postCheckoutPluginMock->expects($this->once())->method('executeHook');
+        $postCheckoutPluginMock->expects($this->once())->method('execute');
 
-        $paymentPluginExecutor = $this->createPaymenPluginExecutor(null, null, $postCheckoutPluginMock);
+        $paymentPluginExecutor = $this->createPaymentPluginExecutor(null, null, $postCheckoutPluginMock);
         $quoteTransfer = $this->createQuoteTransfer();
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -70,9 +73,9 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
      */
     public function testOrderSaverShouldThrowExceptionWhenNonExistantProviderUsed()
     {
-        $this->setExpectedException(PaymentProviderNotFoundException::class);
+        $this->setExpectedException(CheckoutPluginNotFoundException::class);
 
-        $paymentPluginExecutor = $this->createPaymenPluginExecutor(null, null, null);
+        $paymentPluginExecutor = $this->createPaymentPluginExecutor(null, null, null);
         $quoteTransfer = $this->createQuoteTransfer();
         $quoteTransfer->getPayment()->setPaymentProvider('non existant provider');
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
@@ -87,7 +90,7 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
      *
      * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor
      */
-    protected function createPaymenPluginExecutor(
+    protected function createPaymentPluginExecutor(
         $preCheckPluginMock = null,
         $orderSavePluginMock = null,
         $postCheckPluginMock = null
@@ -108,49 +111,49 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
      * @param null $orderSavePluginMock
      * @param null $postCheckPluginMock
      *
-     * @return array
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface
      */
     protected function createCheckoutPlugins(
         $preCheckPluginMock = null,
         $orderSavePluginMock = null,
         $postCheckPluginMock = null
     ) {
+        $pluginCollection = new CheckoutPluginCollection();
+        if ($preCheckPluginMock !== null) {
+            $pluginCollection->add($preCheckPluginMock, self::TEST_PROVIDER, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
+        }
+        if ($orderSavePluginMock !== null) {
+            $pluginCollection->add($orderSavePluginMock, self::TEST_PROVIDER, PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS);
+        }
+        if ($postCheckPluginMock !== null) {
+            $pluginCollection->add($postCheckPluginMock, self::TEST_PROVIDER, PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS);
+        }
 
-        return [
-            PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS => [
-                'test' => $preCheckPluginMock,
-            ],
-            PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS => [
-                'test' => $orderSavePluginMock,
-            ],
-            PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS => [
-                'test' => $postCheckPluginMock,
-            ],
-        ];
+        return $pluginCollection;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface
      */
     protected function createPreCheckPluginMock()
     {
-        return $this->getMockBuilder(CheckoutPreConditionInterface::class)->getMock();
+        return $this->getMockBuilder(CheckoutPreCheckPluginInterface::class)->getMock();
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface
      */
     protected function createSavePluginMock()
     {
-        return $this->getMockBuilder(CheckoutSaveOrderInterface::class)->getMock();
+        return $this->getMockBuilder(CheckoutSaveOrderPluginInterface::class)->getMock();
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface
      */
     protected function createPostSavePluginMock()
     {
-        return $this->getMockBuilder(CheckoutPostSaveHookInterface::class)->getMock();
+        return $this->getMockBuilder(CheckoutPostCheckPluginInterface::class)->getMock();
     }
 
     /**
@@ -160,7 +163,7 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     {
         $quoteTransfer = new QuoteTransfer();
         $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentProvider('test');
+        $paymentTransfer->setPaymentProvider(self::TEST_PROVIDER);
         $quoteTransfer->setPayment($paymentTransfer);
 
         return $quoteTransfer;

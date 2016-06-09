@@ -84,19 +84,6 @@ class CheckoutPluginCollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return void
-     */
-    public function testReturnPluginByArrayAccess()
-    {
-        $checkoutPluginCollection = new CheckoutPluginCollection();
-        $pluginMock = $this->getPluginMock();
-        $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
-
-        $this->assertSame($pluginMock, $checkoutPluginCollection[self::PLUGIN_TYPE]);
-        $checkoutPluginCollection->get(self::PROVIDER, 'unknown');
-    }
-
-    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface
      */
     private function getPluginMock()

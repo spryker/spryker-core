@@ -9,6 +9,7 @@ namespace Spryker\Zed\Payment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentBusinessFactory extends AbstractBusinessFactory
@@ -23,7 +24,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return CheckoutPluginCollectionInterface
      */
     public function getCheckoutPlugins()
     {

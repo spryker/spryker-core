@@ -20,10 +20,10 @@ interface CheckoutPluginCollectionInterface
     public function add(CheckoutPluginInterface $plugin, $provider, $type);
 
     /**
-     * @param $provider
-     * @param $pluginType
+     * @param string $provider
+     * @param string $pluginType
      *
-     * @return void
+     * @return CheckoutPluginInterface
      */
     public function get($provider, $pluginType);
 
