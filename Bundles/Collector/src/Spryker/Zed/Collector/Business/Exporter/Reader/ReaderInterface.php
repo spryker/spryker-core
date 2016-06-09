@@ -14,7 +14,7 @@ interface ReaderInterface
      * @param string $key
      * @param string $type
      *
-     * @return string
+     * @return mixed
      */
     public function read($key, $type = '');
 

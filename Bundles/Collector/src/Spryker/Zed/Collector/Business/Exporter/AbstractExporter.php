@@ -9,6 +9,7 @@ namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
@@ -43,6 +44,11 @@ abstract class AbstractExporter implements ExporterInterface
     protected $writer;
 
     /**
+     * @var \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface
+     */
+    protected $reader;
+
+    /**
      * @var \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
      */
     protected $touchUpdater;
@@ -59,6 +65,7 @@ abstract class AbstractExporter implements ExporterInterface
 
     /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $reader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
      * @param \Spryker\Zed\Collector\Business\Exporter\MarkerInterface $marker
      * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failedResultPrototype
@@ -67,6 +74,7 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function __construct(
         TouchQueryContainerInterface $queryContainer,
+        ReaderInterface $reader,
         WriterInterface $writer,
         MarkerInterface $marker,
         FailedResultInterface $failedResultPrototype,
@@ -74,6 +82,7 @@ abstract class AbstractExporter implements ExporterInterface
         TouchUpdaterInterface $touchUpdater
     ) {
         $this->queryContainer = $queryContainer;
+        $this->reader = $reader;
         $this->writer = $writer;
         $this->marker = $marker;
         $this->failedResultPrototype = $failedResultPrototype;
@@ -127,13 +136,17 @@ abstract class AbstractExporter implements ExporterInterface
         $baseQuery->setFormatter($this->getFormatter());
 
         $collectorPlugin = $this->collectorPlugins[$type];
-        $collectorPlugin->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater, $output);
-
-        $this->finishExport(
+        $collectorPlugin->run(
+            $baseQuery,
+            $locale,
             $result,
-            $type,
-            $startTime
+            $this->reader,
+            $this->writer,
+            $this->touchUpdater,
+            $output
         );
+
+        $this->finishExport($result, $type, $startTime);
 
         return $result;
     }
@@ -151,7 +164,7 @@ abstract class AbstractExporter implements ExporterInterface
             $this->marker->setLastExportMarkByTypeAndLocale(
                 $type,
                 $batchResult->getProcessedLocale(),
-                $this->createTimestamp($startTime)
+                $startTime
             );
         }
     }
@@ -162,28 +175,6 @@ abstract class AbstractExporter implements ExporterInterface
     protected function getFormatter()
     {
         return new PropelArraySetFormatter();
-    }
-
-    /**
-     * @param \DateTime|null $dateTime
-     * @return string
-     */
-    protected function createTimestamp($dateTime = null)
-    {
-        if (!$dateTime instanceof \DateTime) {
-            $dateTime = new \DateTime();
-        }
-        return $dateTime->format(
-            $this->getTimeFormat()
-        );
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTimeFormat()
-    {
-        return 'Y-m-d H:i:s';
     }
 
     /**
