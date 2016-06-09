@@ -150,7 +150,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         $deletedCount = 0;
 
         while ($batchCount > 0) {
-            $entityCollection = $this->getTouchCollectionToDelete($offset, $itemType);
+            $entityCollection = $this->getTouchCollectionToDelete($itemType, $offset);
             $batchCount = count($entityCollection);
 
             if ($batchCount > 0) {
