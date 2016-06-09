@@ -51,18 +51,17 @@ class EditController extends AddController
 
         $attributeCollection = [
             'size' => [
-                'size_40' => '40',
-                'size_41' => '41',
+                '40' => '40',
+                '41' => '41',
             ],
             'color' => [
-                'color_blue' => 'Blue',
-                'color_red' => 'Red',
-                'color_white' => 'White',
+                'blue' => 'Blue',
+                'red' => 'Red',
+                'white' => 'White',
             ],
             'flavour' => [
-                'flavour_blue' => 'Blue',
-                'flavour_red' => 'Red',
-                'flavour_white' => 'White',
+                'sweet' => 'Cakes',
+                'spicy' => 'Mexican Food',
             ]
         ];
 

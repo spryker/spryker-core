@@ -22,17 +22,31 @@ class MatrixGenerator
     public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
         $productMatrix = [];
-        foreach ($attributeCollection as $attributeName => $attributeValueSet) {
-            $sku = $this->generateSku($productAbstractTransfer->getSku(), $attributeName);
+        foreach ($attributeCollection as $attributeType => $attributeValueSet) {
+            $sku = $this->generateSku($productAbstractTransfer->getSku(), $attributeType);
 
             foreach ($attributeValueSet as $name => $value) {
                 $productTransfer = (new ProductConcreteTransfer())
                     ->fromArray($productAbstractTransfer->toArray());
 
-                $concreteSku = $this->generateSku($sku, $value);
+                $concreteSku = $this->generateSku($sku, $name);
                 $productTransfer->setSku($concreteSku);
 
-                $productMatrix[$attributeName][] = $productTransfer->toArray();
+                $s = $productTransfer->toArray(true);
+                $s['localized_attributes'] = (array) $s['localized_attributes'];
+                unset($s['localized_attributes']);
+                $productMatrix[] = $s;
+
+                $productTemplateTransfer = (new ProductAbstractTransfer())
+                    ->fromArray($productTransfer->toArray(), true);
+
+                $productAttributeCollection = $attributeCollection;
+                unset($productAttributeCollection[$attributeType]);
+
+                $productMatrix = array_merge(
+                    $productMatrix,
+                    $this->generate($productTemplateTransfer, $productAttributeCollection)
+                );
             }
         }
 
@@ -80,12 +94,11 @@ class MatrixGenerator
         }
 
         $value = trim($value);
-        $value = preg_replace("/[^a-zA-Z0-9 -]/", "", $value);
+        $value = preg_replace("/[^a-zA-Z0-9 _ -]/", "", $value);
         $value = mb_strtolower($value);
-        $value = str_replace(' ', '-', $value);
+        $value = str_replace(' ', '', $value);
 
         return $value;
     }
-
 
 }
