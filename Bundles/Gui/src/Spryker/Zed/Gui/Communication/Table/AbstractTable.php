@@ -423,12 +423,12 @@ abstract class AbstractTable
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getLimit()
     {
         if (!$this->limit) {
-            $this->limit = $this->request->query->get('length', $this->defaultLimit);
+            $this->limit = $this->request->query->getInt('length', $this->defaultLimit);
         }
 
         return $this->limit;
