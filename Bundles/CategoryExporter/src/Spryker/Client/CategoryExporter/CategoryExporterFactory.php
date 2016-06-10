@@ -9,7 +9,7 @@ namespace Spryker\Client\CategoryExporter;
 
 use Spryker\Client\CategoryExporter\Builder\CategoryTreeBuilder;
 use Spryker\Client\CategoryExporter\KeyBuilder\CategoryResourceKeyBuilder;
-use Spryker\Client\CategoryExporter\KeyBuilder\NavigationKeyBuilder as KeyBuilderNavigationKeyBuilder;
+use Spryker\Client\CategoryExporter\KeyBuilder\NavigationKeyBuilder;
 use Spryker\Client\CategoryExporter\Model\Navigation;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -43,7 +43,7 @@ class CategoryExporterFactory extends AbstractFactory
      */
     protected function createNavigationKeyBuilder()
     {
-        return new KeyBuilderNavigationKeyBuilder();
+        return new NavigationKeyBuilder();
     }
 
     /**
