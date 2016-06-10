@@ -70,8 +70,6 @@ abstract class AbstractDependencyProvider implements BundleDependencyProviderInt
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return void
-     *
-     * @deprecated Will be removed, we don't need globally available search client.
      */
     protected function addSearchClient(Container $container)
     {
