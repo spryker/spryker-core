@@ -9,6 +9,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
+use Spryker\Client\Search\Model\Elasticsearch\Aggregation\NumericFacetAggregation;
 
 class RangeExtractor implements AggregationExtractorInterface
 {
@@ -57,15 +58,15 @@ class RangeExtractor implements AggregationExtractorInterface
      */
     protected function extractRangeData(array $aggregation, $parameterName, $fieldName)
     {
-        foreach ($aggregation[$fieldName . '-name']['buckets'] as $nameBucket) {
+        foreach ($aggregation[$fieldName . NumericFacetAggregation::NAME_SUFFIX]['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {
                 continue;
             }
 
-            if (isset($nameBucket[$fieldName . '-stats'])) {
+            if (isset($nameBucket[$fieldName . NumericFacetAggregation::STATS_SUFFIX])) {
                 return [
-                    $nameBucket[$fieldName . '-stats']['min'],
-                    $nameBucket[$fieldName . '-stats']['max']
+                    $nameBucket[$fieldName . NumericFacetAggregation::STATS_SUFFIX]['min'],
+                    $nameBucket[$fieldName . NumericFacetAggregation::STATS_SUFFIX]['max']
                 ];
             }
         }

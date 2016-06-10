@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
+use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\PaginatedQueryExpanderPlugin;
@@ -69,7 +70,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             );
 
         $expectedQuery = (new Query())
-            ->setQuery(new Query\BoolQuery())
+            ->setQuery(new BoolQuery())
             ->setFrom(0)
             ->setSize(10);
 
@@ -93,7 +94,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             );
 
         $expectedQuery = (new Query())
-            ->setQuery(new Query\BoolQuery())
+            ->setQuery(new BoolQuery())
             ->setFrom(0)
             ->setSize(10);
 
@@ -120,7 +121,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             );
 
         $expectedQuery = (new Query())
-            ->setQuery(new Query\BoolQuery())
+            ->setQuery(new BoolQuery())
             ->setFrom(0)
             ->setSize(20);
 
@@ -147,7 +148,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             );
 
         $expectedQuery = (new Query())
-            ->setQuery(new Query\BoolQuery())
+            ->setQuery(new BoolQuery())
             ->setFrom(0)
             ->setSize(10);
 

@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 class NumericFacetAggregation extends AbstractFacetAggregation
 {
 
+    const STATS_SUFFIX = '-stats';
+
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -43,7 +45,7 @@ class NumericFacetAggregation extends AbstractFacetAggregation
 
         $facetValueStats = $this
             ->aggregationBuilder
-            ->createStatsAggregation($fieldName . '-stats')
+            ->createStatsAggregation($fieldName . self::STATS_SUFFIX)
             ->setField($prefixedFieldName);
 
         $facetNameAgg = $this

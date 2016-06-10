@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
+use Elastica\Query\BoolQuery;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\SortConfigTransfer;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
@@ -63,7 +64,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
         $searchConfig = $this->createSimpleSortSearchConfig();
 
         $expectedQuery = (new Query())
-            ->setQuery(new Query\BoolQuery());
+            ->setQuery(new BoolQuery());
 
         $requestParameters = [];
 
@@ -78,7 +79,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
         $searchConfig = $this->createSimpleSortSearchConfig();
 
         $expectedQuery = (new Query())
-            ->setQuery(new Query\BoolQuery())
+            ->setQuery(new BoolQuery())
             ->setSort(
                 [
                     PageIndexMap::STRING_SORT . '.foo' => [
@@ -103,7 +104,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
         $searchConfig = $this->createSimpleSortSearchConfig();
 
         $expectedQuery = (new Query())
-            ->setQuery(new Query\BoolQuery());
+            ->setQuery(new BoolQuery());
 
         $requestParameters = [
             SortConfigBuilder::DEFAULT_SORT_PARAM_KEY => 'bar',

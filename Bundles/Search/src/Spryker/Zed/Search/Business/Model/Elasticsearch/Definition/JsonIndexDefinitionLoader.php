@@ -197,8 +197,8 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
         }
 
         $otherPrefixes = $this->storePrefixes;
-        $i = array_search($storePrefix, $this->storePrefixes);
-        unset($otherPrefixes[$i]);
+        $index = array_search($storePrefix, $this->storePrefixes);
+        unset($otherPrefixes[$index]);
 
         if (in_array($fileStorePrefix, $otherPrefixes)) {
             return false;

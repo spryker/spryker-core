@@ -48,8 +48,8 @@ class NestedRangeQuery extends AbstractNestedQuery
         list($minValue, $maxValue) = $this->getMinMaxValue();
 
         return $this->bindMultipleNestedQuery($fieldName, [
-            $this->queryBuilder->createTermQuery($fieldName . '.facet-name', $nestedFieldName),
-            $this->queryBuilder->createRangeQuery($fieldName . '.facet-value', $minValue, $maxValue),
+            $this->queryBuilder->createTermQuery($fieldName . self::FACET_NAME_SUFFIX, $nestedFieldName),
+            $this->queryBuilder->createRangeQuery($fieldName . self::FACET_VALUE_SUFFIX, $minValue, $maxValue),
         ]);
     }
 

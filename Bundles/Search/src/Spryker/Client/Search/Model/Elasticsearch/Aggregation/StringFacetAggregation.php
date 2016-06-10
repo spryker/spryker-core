@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 class StringFacetAggregation extends AbstractFacetAggregation
 {
 
+    const VALUE_SUFFIX = '-value';
+
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -41,7 +43,7 @@ class StringFacetAggregation extends AbstractFacetAggregation
 
         $facetValueAgg = $this
             ->aggregationBuilder
-            ->createTermsAggregation($fieldName . '-value')
+            ->createTermsAggregation($fieldName . self::VALUE_SUFFIX)
             ->setField($this->addNestedFieldPrefix($fieldName, self::FACET_VALUE));
 
         $facetNameAgg = $this

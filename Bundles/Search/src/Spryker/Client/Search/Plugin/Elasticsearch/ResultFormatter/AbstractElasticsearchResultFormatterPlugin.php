@@ -10,6 +10,7 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 use Elastica\ResultSet;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
+use Spryker\Client\Search\Exception\InvalidSearchResultTypeException;
 
 abstract class AbstractElasticsearchResultFormatterPlugin extends AbstractPlugin implements ResultFormatterPluginInterface
 {
@@ -30,12 +31,14 @@ abstract class AbstractElasticsearchResultFormatterPlugin extends AbstractPlugin
     /**
      * @param mixed $searchResult
      *
+     * @throws \Spryker\Client\Search\Exception\InvalidSearchResultTypeException
+     *
      * @return void
      */
     protected function assertResultType($searchResult)
     {
         if (!$searchResult instanceof ResultSet) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidSearchResultTypeException(sprintf(
                 'Expected search result type was "%s", got "%s" instead.',
                 ResultSet::class,
                 get_class($searchResult)

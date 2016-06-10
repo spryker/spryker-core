@@ -9,6 +9,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
+use Spryker\Shared\Library\Currency\CurrencyManager;
 
 class QueryFactory implements QueryFactoryInterface
 {
@@ -102,7 +103,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     protected function createNestedPriceRangeQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder);
+        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder, $this->createCurrencyManager());
     }
 
     /**
@@ -138,6 +139,14 @@ class QueryFactory implements QueryFactoryInterface
         return $this
             ->queryBuilder
             ->createTermQuery($facetConfigTransfer->getFieldName(), $filterValue);
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     */
+    protected function createCurrencyManager()
+    {
+        return CurrencyManager::getInstance();
     }
 
 }

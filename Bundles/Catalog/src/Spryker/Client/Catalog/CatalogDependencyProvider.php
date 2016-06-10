@@ -19,7 +19,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\SortedResultForma
 class CatalogDependencyProvider extends AbstractDependencyProvider
 {
 
-    const KVSTORAGE = 'kvstorage';
     const CLIENT_SEARCH = 'search client';
     const CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS = 'catalog search query expander plugins';
     const CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS = 'catalog search result formatter plugins';
@@ -32,10 +31,6 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = parent::provideServiceLayerDependencies($container);
-
-        $container[self::KVSTORAGE] = function (Container $container) {
-            return $container->getLocator()->storage()->client();
-        };
 
         $container[self::CLIENT_SEARCH] = function (Container $container) {
             return $container->getLocator()->search()->client();

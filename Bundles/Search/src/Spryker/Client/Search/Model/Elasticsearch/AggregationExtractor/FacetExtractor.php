@@ -10,6 +10,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
+use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation;
 
 class FacetExtractor implements AggregationExtractorInterface
 {
@@ -63,12 +64,12 @@ class FacetExtractor implements AggregationExtractorInterface
     {
         $facetResultValues = new \ArrayObject();
 
-        foreach ($aggregation[$fieldName . '-name']['buckets'] as $nameBucket) {
+        foreach ($aggregation[$fieldName . StringFacetAggregation::NAME_SUFFIX]['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {
                 continue;
             }
 
-            foreach ($nameBucket[$fieldName . '-value']['buckets'] as $valueBucket) {
+            foreach ($nameBucket[$fieldName . StringFacetAggregation::VALUE_SUFFIX]['buckets'] as $valueBucket) {
                 $facetResultValueTransfer = new FacetSearchResultValueTransfer();
                 $facetResultValueTransfer
                     ->setValue($valueBucket['key'])

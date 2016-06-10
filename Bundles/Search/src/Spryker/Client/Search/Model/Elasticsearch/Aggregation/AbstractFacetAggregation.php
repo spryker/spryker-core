@@ -16,6 +16,7 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
 
     const FACET_VALUE = 'facet-value';
     const FACET_NAME = 'facet-name';
+    const NAME_SUFFIX = '-name';
 
     /**
      * @param string $fieldName
@@ -36,7 +37,7 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
      */
     protected function createFacetNameAggregation($fieldName)
     {
-        return (new Terms($fieldName . '-name'))
+        return (new Terms($fieldName . self::NAME_SUFFIX))
             ->setField($this->addNestedFieldPrefix($fieldName, self::FACET_NAME));
     }
 

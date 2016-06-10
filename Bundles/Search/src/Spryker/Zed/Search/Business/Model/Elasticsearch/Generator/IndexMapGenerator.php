@@ -23,6 +23,10 @@ class IndexMapGenerator
 
     const PROPERTY_PATH_SEPARATOR = '.';
 
+    const TEMPLATE_VARIABLE_CLASS_NAME = 'className';
+    const TEMPLATE_VARIABLE_CONSTANTS = 'constants';
+    const TEMPLATE_VARIABLE_METADATA = 'metadata';
+
     /**
      * @var string
      */
@@ -104,9 +108,9 @@ class IndexMapGenerator
         $properties = $this->getMappingProperties($mapping);
 
         return [
-            'className' => $mappingName . self::CLASS_NAME_SUFFIX,
-            'constants' => $this->getConstants($properties),
-            'metadata' => $this->getMetadata($properties),
+            self::TEMPLATE_VARIABLE_CLASS_NAME => $mappingName . self::CLASS_NAME_SUFFIX,
+            self::TEMPLATE_VARIABLE_CONSTANTS => $this->getConstants($properties),
+            self::TEMPLATE_VARIABLE_METADATA => $this->getMetadata($properties),
         ];
     }
 
@@ -120,16 +124,12 @@ class IndexMapGenerator
     {
         $constants = [];
 
-        foreach ($properties as $propertyName => $propertyValue) {
-            $constants[$this->convertToConstant($path . $propertyName)] = $path . $propertyName;
+        foreach ($properties as $propertyName => $propertyData) {
+            $propertyConstantName = $this->convertToConstant($path . $propertyName);
 
-            if (isset($propertyValue[self::PROPERTIES])) {
-                $childMetadata = $this->getConstants(
-                    $propertyValue[self::PROPERTIES],
-                    $path . $propertyName . self::PROPERTY_PATH_SEPARATOR
-                );
-                $constants = array_merge($constants, $childMetadata);
-            }
+            $constants[$propertyConstantName] = $path . $propertyName;
+
+            $constants = $this->getChildConstants($path, $propertyData, $propertyName, $constants);
         }
 
         return $constants;
@@ -147,19 +147,10 @@ class IndexMapGenerator
 
         foreach ($properties as $propertyName => $propertyData) {
             $propertyConstantName = $this->convertToConstant($path . $propertyName);
-            foreach ($propertyData as $key => $value) {
-                if (is_scalar($value)) {
-                    $metadata[$propertyConstantName][$key] = $value;
-                }
-            }
 
-            if (isset($propertyData[self::PROPERTIES])) {
-                $childMetadata = $this->getMetadata(
-                    $propertyData[self::PROPERTIES],
-                    $path . $propertyName . self::PROPERTY_PATH_SEPARATOR
-                );
-                $metadata = array_merge($metadata, $childMetadata);
-            }
+            $metadata = $this->getScalarMetadata($propertyData, $metadata, $propertyConstantName);
+
+            $metadata = $this->getChildMetadata($path, $propertyData, $propertyName, $metadata);
         }
 
         return $metadata;
@@ -187,6 +178,70 @@ class IndexMapGenerator
         $normalized = mb_strtoupper($normalized);
 
         return $normalized;
+    }
+
+    /**
+     * @param array $propertyData
+     * @param array $metadata
+     * @param string $propertyConstantName
+     *
+     * @return array
+     */
+    protected function getScalarMetadata(array $propertyData, array $metadata, $propertyConstantName)
+    {
+        foreach ($propertyData as $key => $value) {
+            if (is_scalar($value)) {
+                $metadata[$propertyConstantName][$key] = $value;
+            }
+        }
+
+        return $metadata;
+    }
+
+    /**
+     * @param string $path
+     * @param array $propertyData
+     * @param string $propertyName
+     * @param array $metadata
+     *
+     * @return array
+     */
+    protected function getChildMetadata($path, array $propertyData, $propertyName, array $metadata)
+    {
+        if (!isset($propertyData[self::PROPERTIES])) {
+            return $metadata;
+        }
+
+        $path .= $propertyName . self::PROPERTY_PATH_SEPARATOR;
+
+        $childMetadata = $this->getMetadata($propertyData[self::PROPERTIES], $path);
+
+        $metadata = array_merge($metadata, $childMetadata);
+
+        return $metadata;
+    }
+
+    /**
+     * @param string $path
+     * @param array $propertyData
+     * @param string $propertyName
+     * @param array $constants
+     *
+     * @return array
+     */
+    protected function getChildConstants($path, array $propertyData, $propertyName, array $constants)
+    {
+        if (!isset($propertyData[self::PROPERTIES])) {
+            return $constants;
+        }
+
+        $path .= $propertyName . self::PROPERTY_PATH_SEPARATOR;
+
+        $childMetadata = $this->getConstants($propertyData[self::PROPERTIES], $path);
+
+        $constants = array_merge($constants, $childMetadata);
+
+        return $constants;
     }
 
 }

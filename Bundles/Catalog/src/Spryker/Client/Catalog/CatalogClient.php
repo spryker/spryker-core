@@ -30,14 +30,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      */
     public function catalogSearch($searchString, array $requestParameters = [])
     {
-        $searchQuery = $this
-            ->getFactory()
-            ->createCatalogSearchQueryPlugin($searchString);
-
-        $searchQuery = $this
-            ->getFactory()
-            ->getSearchClient()
-            ->expandQuery($searchQuery, $this->getFactory()->createCatalogSearchQueryExpanderPlugins(), $requestParameters);
+        $searchQuery = $this->createExpandedSearchQuery($searchString, $requestParameters);
 
         $resultFormatters = $this
             ->getFactory()
@@ -47,6 +40,26 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
             ->getFactory()
             ->getSearchClient()
             ->search($searchQuery, $resultFormatters, $requestParameters);
+    }
+
+    /**
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    protected function createExpandedSearchQuery($searchString, array $requestParameters)
+    {
+        $searchQuery = $this
+            ->getFactory()
+            ->createCatalogSearchQueryPlugin($searchString);
+
+        $searchQuery =  $this
+            ->getFactory()
+            ->getSearchClient()
+            ->expandQuery($searchQuery, $this->getFactory()->createCatalogSearchQueryExpanderPlugins(), $requestParameters);
+
+        return $searchQuery;
     }
 
 }

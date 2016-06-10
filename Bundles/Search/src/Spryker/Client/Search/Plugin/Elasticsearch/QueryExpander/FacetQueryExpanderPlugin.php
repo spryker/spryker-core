@@ -66,7 +66,9 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
                 $query = $this->createFacetFilterQuery($facetConfigTransfer, $filterValue);
             }
 
-            $facetFilters[$facetConfigTransfer->getName()] = $query;
+            if ($query !== null) {
+                $facetFilters[$facetConfigTransfer->getName()] = $query;
+            }
         }
 
         return $facetFilters;

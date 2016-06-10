@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\Fixtures;
 
 use Elastica\Query;
+use Elastica\Query\BoolQuery;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class BaseQueryPlugin implements QueryInterface
@@ -21,7 +22,7 @@ class BaseQueryPlugin implements QueryInterface
     public function __construct()
     {
         $this->query = (new Query())
-            ->setQuery(new Query\BoolQuery());
+            ->setQuery(new BoolQuery());
     }
 
     /**

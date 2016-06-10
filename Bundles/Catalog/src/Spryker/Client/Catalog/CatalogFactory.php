@@ -63,17 +63,9 @@ class CatalogFactory extends AbstractFactory
     {
         return new ModelCatalog(
             $this->createProductKeyBuilder(),
-            $this->getKvStorage(),
+            $this->getStorageClient(),
             Store::getInstance()->getCurrentLocale()
         );
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getKvStorage()
-    {
-        return $this->getProvidedDependency(CatalogDependencyProvider::KVSTORAGE);
     }
 
     /**
