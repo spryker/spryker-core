@@ -18,6 +18,20 @@ abstract class AbstractClient
     private $factory;
 
     /**
+     * @api
+     *
+     * @param \Spryker\Client\Kernel\AbstractFactory $factory
+     *
+     * @return $this
+     */
+    public function setFactory(AbstractFactory $factory)
+    {
+        $this->factory = $factory;
+
+        return $this;
+    }
+
+    /**
      * @return \Spryker\Client\Kernel\AbstractFactory
      */
     protected function getFactory()

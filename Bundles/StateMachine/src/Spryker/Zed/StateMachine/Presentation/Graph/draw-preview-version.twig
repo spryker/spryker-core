@@ -1,0 +1,19 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block content %}
+    <h5>{{ processName }}</h5>
+    <div id="preview">
+        <img id="preview-image" src="{{ url('/oms/index/draw?process=' ~ processName ~ '&format=svg&font=11') }}" />
+    </div>
+    <div style="clear:both;"></div>
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-statemachine-main.css">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script type="text/javascript" src="/assets/js/spryker-zed-statemachine-main.js"></script>
+{% endblock %}

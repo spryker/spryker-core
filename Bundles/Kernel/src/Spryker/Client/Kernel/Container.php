@@ -11,7 +11,7 @@ class Container extends \Pimple
 {
 
     /**
-     * @return \Generated\Client\Ide\AutoCompletion|static
+     * @return \Generated\Client\Ide\AutoCompletion
      */
     public function getLocator()
     {

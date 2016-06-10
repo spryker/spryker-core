@@ -84,30 +84,62 @@ abstract class AbstractFactory
 
     /**
      * @return \Spryker\Client\Session\SessionClient
+     *
+     * @deprecated Use getSessionClient() instead.
      */
     protected function createSessionClient()
+    {
+        return $this->getSessionClient();
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClient
+     */
+    public function getSessionClient()
     {
         return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_SESSION);
     }
 
     /**
      * @return \Spryker\Client\ZedRequest\ZedRequestClient
+     *
+     * @deprecated Use getZedRequestClient() instead.
      */
     protected function createZedRequestClient()
+    {
+        return $this->getZedRequestClient();
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClient
+     */
+    public function getZedRequestClient()
     {
         return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
     /**
      * @return \Spryker\Client\Storage\StorageClient
+     *
+     * @deprecated Use getStorageClient() instead.
      */
     protected function createStorageClient()
+    {
+        return $this->getStorageClient();
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\StorageClient
+     */
+    public function getStorageClient()
     {
         return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_KV_STORAGE);
     }
 
     /**
      * @return \Spryker\Client\Search\SearchClient
+     *
+     * @deprecated This method will be removed.
      */
     protected function createSearchClient()
     {
