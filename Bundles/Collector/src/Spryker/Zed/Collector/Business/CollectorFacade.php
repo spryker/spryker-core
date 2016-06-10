@@ -39,6 +39,9 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Initiates export into a file
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
@@ -130,6 +133,9 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Composes filename for given collector type
+     *
      * @api
      *
      * @param string $type

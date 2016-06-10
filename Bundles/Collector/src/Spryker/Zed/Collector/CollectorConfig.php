@@ -39,7 +39,7 @@ class CollectorConfig extends AbstractBundleConfig
      */
     public function getSearchIndexName()
     {
-        return Config::get(CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME);
+        return $this->get(CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME);
     }
 
     /**
@@ -47,7 +47,7 @@ class CollectorConfig extends AbstractBundleConfig
      */
     public function getSearchDocumentType()
     {
-        return Config::get(CollectorConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+        return $this->get(CollectorConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
     }
 
     /**
@@ -55,7 +55,7 @@ class CollectorConfig extends AbstractBundleConfig
      */
     public function getMysqlEngineName()
     {
-        return Config::get(CollectorConstants::ZED_DB_ENGINE_MYSQL);
+        return $this->get(CollectorConstants::ZED_DB_ENGINE_MYSQL);
     }
 
     /**
@@ -63,7 +63,7 @@ class CollectorConfig extends AbstractBundleConfig
      */
     public function getPostgresEngineName()
     {
-        return Config::get(CollectorConstants::ZED_DB_ENGINE_PGSQL);
+        return $this->get(CollectorConstants::ZED_DB_ENGINE_PGSQL);
     }
 
     /**
@@ -71,7 +71,7 @@ class CollectorConfig extends AbstractBundleConfig
      */
     public function getCurrentEngineName()
     {
-        return Config::get(CollectorConstants::ZED_DB_ENGINE);
+        return $this->get(CollectorConstants::ZED_DB_ENGINE);
     }
 
     /**
@@ -108,7 +108,6 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
-<<<<<<< HEAD
      * @return int
      */
     public function getNumberOfShards()

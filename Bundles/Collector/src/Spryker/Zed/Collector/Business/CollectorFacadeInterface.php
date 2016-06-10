@@ -30,6 +30,9 @@ interface CollectorFacadeInterface
     public function exportStorage(OutputInterface $output);
 
     /**
+     * Specification:
+     * - Initiates export into a file
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
@@ -92,6 +95,9 @@ interface CollectorFacadeInterface
     public function getSearchDocumentType();
 
     /**
+     * Specification:
+     * - Composes filename for given collector type
+     * 
      * @api
      *
      * @param string $type
