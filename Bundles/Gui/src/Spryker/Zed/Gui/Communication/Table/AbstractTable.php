@@ -55,12 +55,12 @@ abstract class AbstractTable
     /**
      * @var int
      */
-    protected $total;
+    protected $total = 0;
 
     /**
      * @var int
      */
-    protected $limit;
+    protected $limit = 0;
 
     /**
      * @var int
