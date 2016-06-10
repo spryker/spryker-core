@@ -97,7 +97,7 @@ interface CollectorFacadeInterface
     /**
      * Specification:
      * - Composes filename for given collector type
-     * 
+     *
      * @api
      *
      * @param string $type

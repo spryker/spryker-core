@@ -67,7 +67,7 @@ class FileWriterBuilder implements FileWriterBuilderInterface
      */
     public function getFullExportPath($type, LocaleTransfer $localeTransfer)
     {
-        return $this->baseExportDirPath.'/'.$type.'_'.$localeTransfer->getLocaleName().'.csv';
+        return $this->baseExportDirPath . '/' . $type . '_' . $localeTransfer->getLocaleName() . '.csv';
     }
 
 }
