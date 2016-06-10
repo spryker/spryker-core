@@ -443,6 +443,7 @@
       "Spryker\\Zed\\Wishlist\\": "Bundles/Wishlist/src",
       "Unit\\Spryker\\Zed\\Wishlist\\": "Bundles/Wishlist/tests",
       "Functional\\Spryker\\Zed\\Wishlist\\": "Bundles/Wishlist/tests",
+
       "Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/src",
       "Unit\\Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/tests",
       "Functional\\Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/tests",
@@ -451,7 +452,12 @@
       "Functional\\Spryker\\Shared\\ZedRequest\\": "Bundles/ZedRequest/tests",
       "Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/src",
       "Unit\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
-      "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests"
+      "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
+
+      "Spryker\\Shared\\StateMachine\\": "Bundles/StateMachine/src",
+      "Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/src",
+      "Unit\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests",
+      "Functional\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests"
     },
     "psr-4": {
       "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",
