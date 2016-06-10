@@ -410,11 +410,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         $this->connection->beginTransaction();
 
-        if ($deleteChildren) {
-            $this->deleteCategoryRecursive($idCategoryNode, $localeTransfer);
-        } else {
-            $sourceEntity = $this->categoryFacade->getNodeById($idCategoryNode);
+        $sourceEntity = $this->categoryFacade->getNodeById($idCategoryNode);
+        $idCategory = $sourceEntity->getFkCategory();
 
+        if ($deleteChildren) {
+            $this->deleteCategoryRecursive($idCategory, $localeTransfer);
+        } else {
             $destinationEntity = $this->categoryFacade->getNodeById($fkParentCategoryNode);
 
             $sourceNodeTransfer = (new NodeTransfer())
@@ -424,7 +425,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
                 ->fromArray($destinationEntity->toArray());
 
             $this->moveCategoryChildren($sourceNodeTransfer, $destinationNodeTransfer, $localeTransfer);
-            $this->deleteCategoryRecursive($idCategoryNode, $localeTransfer);
+            $this->deleteCategoryRecursive($idCategory, $localeTransfer);
         }
 
         $this->connection->commit();
