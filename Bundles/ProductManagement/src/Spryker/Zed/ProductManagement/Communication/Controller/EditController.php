@@ -48,8 +48,6 @@ class EditController extends AddController
             return new RedirectResponse('/product-management');
         }
 
-        dump($productAbstract);
-
         $attributeCollection = [
             'size' => [
                 '40' => '40',
@@ -66,8 +64,46 @@ class EditController extends AddController
             ]
         ];
 
+        $attributeCollection = [
+            'size' => [
+                '40' => '40',
+                '41' => '41',
+            ],
+            'color' => [
+                'blue' => 'Blue',
+            ],
+            'flavour' => [
+                'spicy' => 'Mexican Food',
+                'sweet' => 'Cakes'
+            ]
+        ];
+
+        function main($a) {
+            $result = [];
+
+            foreach ($a as $list) {
+
+            }
+            return $result;
+        }
+
+        function sub($items)
+        {
+
+        }
+
+        echo "<pre>";
+        $a = main($attributeCollection);
+        print_r($a);
+        die;
+
         $matrixGenerator = new MatrixGenerator();
-        $matrix = $matrixGenerator->generate($productAbstract, $attributeCollection);
+/*        $matrix = $matrixGenerator->t();
+        echo "<pre>";
+        print_r($matrix);
+        die;*/
+
+        $matrix = $matrixGenerator->generate($productAbstract, $attributeCollection, $productAbstract->getSku());
         echo "<pre>";
         print_r($matrix);
         die;

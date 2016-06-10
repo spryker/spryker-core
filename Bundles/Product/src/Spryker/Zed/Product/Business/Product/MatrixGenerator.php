@@ -13,46 +13,81 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 class MatrixGenerator
 {
 
+    public function t()
+    {
+        $attributeCollection = [
+            'size' => [
+                '40' => '40',
+                '41' => '41',
+            ],
+            'color' => [
+                'blue' => 'Blue',
+                'red' => 'Red',
+                'white' => 'White',
+            ],
+            'flavour' => [
+                'spicy' => 'Mexican Food',
+                'sweet' => 'Cakes'
+            ]
+        ];
+
+        $result = [];
+        $level = 0;
+        foreach ($attributeCollection as $attributeType => $attributeValueSet) {
+            $result = $this->g($attributeType, $attributeCollection);
+            $level++;
+        }
+
+        dump($result);
+    }
+
+    public function g($attributeType, $attributeCollection)
+    {
+        $children = $attributeCollection;
+        unset($children[$attributeType]);
+
+
+        $result = [];
+        foreach ($children as $ct => $cvs) {
+            $result[] = $this->g($ct, $children);
+        }
+
+        return $result;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
      * @return array
      */
-    public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku=null, $level=0)
+    public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku, &$level=0)
     {
-        if (!$currentSku) {
-            $currentSku = $productAbstractTransfer->getSku();
-        }
-
         $productMatrix = [];
         foreach ($attributeCollection as $attributeType => $attributeValueSet) {
-            $abstractSku = $this->generateSku($currentSku, $attributeType);
-
             foreach ($attributeValueSet as $name => $value) {
-                $concreteSku = $this->generateSku($abstractSku, $name);
+                $concreteSku = $this->generateSku($currentSku, $name);
 
-                $productTransfer = (new ProductConcreteTransfer())
+/*                $productTransfer = (new ProductConcreteTransfer())
                     ->fromArray($productAbstractTransfer->toArray(), true)
                     ->setSku($concreteSku)
                     ->setProductAbstractSku($productAbstractTransfer->getSku())
-                    ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+                    ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());*/
 
-                $s = $productTransfer->toArray(true);
+                //$s = $productTransfer->toArray(true);
                 //$s['localized_attributes'] = (array) $s['localized_attributes'];
                 //unset($s['localized_attributes']);
-                //$productMatrix[$attributeType][$name][$value][] = $s;
-                $productMatrix[$attributeType][$name][] = $s;
+                $productMatrix[$currentSku][$name] = $value;
 
                 $productAttributeCollection = $attributeCollection;
                 unset($productAttributeCollection[$attributeType]);
 
-                $productMatrix = array_merge(
-                    $productMatrix,
-                    $this->generate($productAbstractTransfer, $productAttributeCollection, $concreteSku, $level++)
-                );
+                $productMatrix += $this->generate($productAbstractTransfer, $productAttributeCollection, $concreteSku);
             }
+
         }
+
+        $level++;
 
         return $productMatrix;
     }
@@ -86,7 +121,7 @@ class MatrixGenerator
                 //$s['localized_attributes'] = (array) $s['localized_attributes'];
                 //unset($s['localized_attributes']);
                 //$productMatrix[$attributeType][$name][$value][] = $s;
-                $productMatrix[$attributeType][$name][] = $s;
+                //$productMatrix[$attributeType][$name][] = $this->generateAttributes($name => $value);
 
                 $productAttributeCollection = $attributeCollection;
                 unset($productAttributeCollection[$attributeType]);
@@ -133,6 +168,7 @@ class MatrixGenerator
      */
     protected function slugify($value)
     {
+        return $value;
         if (trim($value) === '') {
             return $value;
         }
