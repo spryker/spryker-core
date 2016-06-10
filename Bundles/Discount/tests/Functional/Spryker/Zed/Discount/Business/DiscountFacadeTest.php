@@ -471,7 +471,7 @@ class DiscountFacadeTest extends Test
             5
         );
 
-        $validationErrors = $this->discountFacade->isVoucherUsable([self::VOUCHER_CODE_TEST_6]);
+        $validationErrors = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_6);
 
         $this->assertCount(1, $validationErrors->getErrors());
     }

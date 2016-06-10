@@ -9,6 +9,7 @@ namespace Spryker\Zed\Touch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
@@ -130,7 +131,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->setQueryKey(self::TOUCH_ENTRIES_QUERY_KEY)
             ->filterByItemType($itemType)
             ->filterByItemEvent($itemEvent)
-            ->filterByItemId($itemIds);
+            ->filterByItemId($itemIds, Criteria::IN);
 
         return $query;
     }
@@ -150,7 +151,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     {
         $query = $this->getFactory()->createTouchQuery()
             ->filterByItemType($itemType)
-            ->filterByItemId($itemIds);
+            ->filterByItemId($itemIds, Criteria::IN);
 
         return $query;
     }
@@ -195,10 +196,10 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchSearchQuery
      */
-    public function queryTouchSearchByTouchIds($touchIds)
+    public function queryTouchSearchByTouchIds(array $touchIds)
     {
         $query = $this->getFactory()->createTouchSearchQuery();
-        $query->filterByFkTouch($touchIds);
+        $query->filterByFkTouch($touchIds, Criteria::IN);
 
         return $query;
     }
@@ -210,10 +211,10 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
      */
-    public function queryTouchStorageByTouchIds($touchIds)
+    public function queryTouchStorageByTouchIds(array $touchIds)
     {
         $query = $this->getFactory()->createTouchStorageQuery();
-        $query->filterByFkTouch($touchIds);
+        $query->filterByFkTouch($touchIds, Criteria::IN);
 
         return $query;
     }

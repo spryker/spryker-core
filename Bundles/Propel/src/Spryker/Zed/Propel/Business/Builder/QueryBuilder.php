@@ -8,143 +8,219 @@
 namespace Spryker\Zed\Propel\Business\Builder;
 
 use Propel\Generator\Builder\Om\QueryBuilder as PropelQueryBuilder;
+use Propel\Generator\Model\Column;
+use Propel\Generator\Model\PropelTypes;
 
 class QueryBuilder extends PropelQueryBuilder
 {
 
     /**
-     * Change default propel behaviour
+     * Adds the filterByCol method for this object.
      *
-     * @param string $objName
-     * @param string $clsName
-     *
-     * @return string
+     * @param string &$script The script will be modified in this method.
+     * @param \Propel\Generator\Model\Column $col
+     * @return void
      */
-    public function buildObjectInstanceCreationCode($objName, $clsName)
+    protected function addFilterByCol(&$script, Column $col)
     {
-        $bundle = $this->getBundleName();
+        $this->declareClass('Spryker\\Zed\\Propel\\Business\\Exception\\AmbiguousComparisonException');
+        $this->declareClass('Spryker\\Zed\\Propel\\Business\\Runtime\\ActiveQuery\\Criteria', 'Spryker');
 
-        return "
-            /** @var \\Generated\\Zed\\Ide\\AutoCompletion \$locator */
-            \$locator = \\Spryker\\Zed\\Kernel\\Locator::getInstance();
-            $objName = \$locator->"
-        . lcfirst($bundle)
-        . '()->entity'
-        . str_replace('Child', '', $this->getObjectClassName()) . '();';
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return mixed
-     */
-    protected function getBundleName()
-    {
-        if (preg_match('/Zed.(.*?).Persistence/', $this->getClasspath(), $matches)) {
-            return $matches[1];
-        }
-
-        throw new \Exception('Could not extract bundle name!');
-    }
-
-    /**
-     * @param string &$script
-     *
-     * @return string
-     */
-    protected function addFindPkSimple(&$script)
-    {
-        $table = $this->getTable();
-
-        // this method is not needed if the table has no primary key
-        if (!$table->hasPrimaryKey()) {
-            return '';
-        }
-
-        $platform = $this->getPlatform();
-        $tableMapClassName = $this->getTableMapClassName();
-        $ARClassName = $this->getObjectClassName();
-        $this->declareClassFromBuilder($this->getStubObjectBuilder());
-        $this->declareClasses('\PDO');
-        $selectColumns = [];
-        foreach ($table->getColumns() as $column) {
-            if (!$column->isLazyLoad()) {
-                $selectColumns[] = $this->quoteIdentifier($column->getName());
-            }
-        }
-        $conditions = [];
-        foreach ($table->getPrimaryKey() as $index => $column) {
-            $conditions[] = sprintf('%s = :p%d', $this->quoteIdentifier($column->getName()), $index);
-        }
-        $query = sprintf(
-            'SELECT %s FROM %s WHERE %s',
-            implode(', ', $selectColumns),
-            $this->quoteIdentifier($table->getName()),
-            implode(' AND ', $conditions)
-        );
-        $pks = [];
-        if ($table->hasCompositePrimaryKey()) {
-            foreach ($table->getPrimaryKey() as $index => $column) {
-                $pks[] = "\$key[$index]";
-            }
-        } else {
-            $pks[] = '$key';
-        }
-
-        $pkHashFromRow = $this->getTableMapBuilder()->getInstancePoolKeySnippet($pks);
+        $colPhpName = $col->getPhpName();
+        $colName = $col->getName();
+        $variableName = $col->getCamelCaseName();
+        $qualifiedName = $this->getColumnConstant($col);
         $script .= "
     /**
-     * Find object by primary key using raw SQL to go fast.
-     * Bypass doSelect() and the object formatter by using generated code.
-     *
-     * @param mixed \$key Primary key to use for the query
-     * @param ConnectionInterface \$con A connection object
-     *
-     * @return $ARClassName A model object, or null if the key is not found
-     * @throws \\Propel\\Runtime\\Exception\\PropelException
-     */
-    protected function findPkSimple(\$key, ConnectionInterface \$con)
-    {
-        \$sql = '$query';
-        try {
-            \$stmt = \$con->prepare(\$sql);";
-        if ($table->hasCompositePrimaryKey()) {
-            foreach ($table->getPrimaryKey() as $index => $column) {
-                $script .= $platform->getColumnBindingPHP($column, "':p$index'", "\$key[$index]", '            ');
-            }
-        } else {
-            $pk = $table->getPrimaryKey();
-            $column = $pk[0];
-            $script .= $platform->getColumnBindingPHP($column, "':p0'", '$key', '            ');
-        }
-        $script .= "
-            \$stmt->execute();
-        } catch (Exception \$e) {
-            Propel::log(\$e->getMessage(), Propel::LOG_ERR);
-            throw new PropelException(sprintf('Unable to execute SELECT statement [%s]', \$sql), 0, \$e);
-        }
-        \$obj = null;
-        if (\$row = \$stmt->fetch(\PDO::FETCH_NUM)) {";
-
-        if ($table->getChildrenColumn()) {
+     * Filter the query on the $colName column
+     *";
+        if ($col->isNumericType()) {
             $script .= "
-            \$cls = {$tableMapClassName}::getOMClass(\$row, 0, false);
-            /** @var $ARClassName \$obj */
-            " . $this->buildObjectInstanceCreationCode('$obj', '$cls') . '
-            ;';
+     * Example usage:
+     * <code>
+     * \$query->filterBy$colPhpName(1234); // WHERE $colName = 1234
+     * \$query->filterBy$colPhpName(array(12, 34), Criteria::IN); // WHERE $colName IN (12, 34)
+     * \$query->filterBy$colPhpName(array('min' => 12), SprykerCriteria::BETWEEN); // WHERE $colName > 12
+     * </code>";
+            if ($col->isForeignKey()) {
+                foreach ($col->getForeignKeys() as $fk) {
+                    $script .= "
+     *
+     * @see       filterBy" . $this->getFKPhpNameAffix($fk) . "()";
+                }
+            }
+            $script .= "
+     *
+     * @param     mixed \$$variableName The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent. Add Criteria::IN explicitly.
+     *              Use associative array('min' => \$minValue, 'max' => \$maxValue) for intervals. Add SprykerCriteria::BETWEEN explicitly.";
+        } elseif ($col->isTemporalType()) {
+            $script .= "
+     * Example usage:
+     * <code>
+     * \$query->filterBy$colPhpName('2011-03-14'); // WHERE $colName = '2011-03-14'
+     * \$query->filterBy$colPhpName('now'); // WHERE $colName = '2011-03-14'
+     * \$query->filterBy$colPhpName(array('max' => 'yesterday'), SprykerCriteria::BETWEEN); // WHERE $colName > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed \$$variableName The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent. Add Criteria::IN explicitly.
+     *              Use associative array('min' => \$minValue, 'max' => \$maxValue) for intervals. Add SprykerCriteria::BETWEEN explicitly.";
+        } elseif ($col->getType() == PropelTypes::PHP_ARRAY) {
+            $script .= "
+     * @param     array \$$variableName The values to use as filter. Use Criteria::LIKE to enable like matching of array values.";
+        } elseif ($col->isTextType()) {
+            $script .= "
+     * Example usage:
+     * <code>
+     * \$query->filterBy$colPhpName('fooValue');   // WHERE $colName = 'fooValue'
+     * \$query->filterBy$colPhpName('%fooValue%', Criteria::LIKE); // WHERE $colName LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string \$$variableName The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE). Add Criteria::LIKE explicitly.";
+        } elseif ($col->isBooleanType()) {
+            $script .= "
+     * Example usage:
+     * <code>
+     * \$query->filterBy$colPhpName(true); // WHERE $colName = true
+     * \$query->filterBy$colPhpName('yes'); // WHERE $colName = true
+     * </code>
+     *
+     * @param     boolean|string \$$variableName The value to use as filter.
+     *              Non-boolean arguments are converted using the following rules:
+     *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     *              Check on string values is case insensitive (so 'FaLsE' is seen as 'false').";
         } else {
             $script .= "
-            /** @var $ARClassName \$obj */
-            " . $this->buildObjectInstanceCreationCode('$obj', '$cls') . '
-            ';
+     * @param     mixed \$$variableName The value to use as filter";
         }
         $script .= "
-            \$obj->hydrate(\$row);
-            {$tableMapClassName}::addInstanceToPool(\$obj, $pkHashFromRow);
-        }
-        \$stmt->closeCursor();
+     * @param     string \$comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return \$this|" . $this->getQueryClassName() . " The current query, for fluid interface
+     *
+     * @throws \\Spryker\\Zed\\Propel\\Business\\Exception\\AmbiguousComparisonException
+     */
+    public function filterBy$colPhpName(\$$variableName = null, \$comparison = Criteria::EQUAL)
+    {";
+        if ($col->isNumericType() || $col->isTemporalType()) {
+            $script .= "
 
-        return \$obj;
+        if (is_array(\$$variableName)) {
+            \$useMinMax = false;
+            if (isset(\${$variableName}['min'])) {
+                if (\$comparison != SprykerCriteria::BETWEEN) {
+                    throw new AmbiguousComparisonException('\\'min\\' requires explicit SprykerCriteria::BETWEEN as comparison criteria.');
+                }
+                \$this->addUsingAlias($qualifiedName, \${$variableName}['min'], Criteria::GREATER_EQUAL);
+                \$useMinMax = true;
+            }
+            if (isset(\${$variableName}['max'])) {
+                if (\$comparison != SprykerCriteria::BETWEEN) {
+                    throw new AmbiguousComparisonException('\\'max\\' requires explicit SprykerCriteria::BETWEEN as comparison criteria.');
+                }
+                \$this->addUsingAlias($qualifiedName, \${$variableName}['max'], Criteria::LESS_EQUAL);
+                \$useMinMax = true;
+            }
+            if (\$useMinMax) {
+                return \$this;
+            }
+
+            if (\$comparison != Criteria::IN) {
+                throw new AmbiguousComparisonException('\$$variableName of type array requires explicit Criteria::IN as comparison criteria.');
+            }
+        }";
+        } elseif ($col->getType() == PropelTypes::OBJECT) {
+            $script .= "
+        if (is_object(\$$variableName)) {
+            \$$variableName = serialize(\$$variableName);
+        }";
+        } elseif ($col->getType() == PropelTypes::PHP_ARRAY) {
+            $script .= "
+        \$key = \$this->getAliasedColName($qualifiedName);
+        if (null === \$comparison || \$comparison == Criteria::CONTAINS_ALL) {
+            foreach (\$$variableName as \$value) {
+                \$value = '%| ' . \$value . ' |%';
+                if (\$this->containsKey(\$key)) {
+                    \$this->addAnd(\$key, \$value, Criteria::LIKE);
+                } else {
+                    \$this->add(\$key, \$value, Criteria::LIKE);
+                }
+            }
+
+            return \$this;
+        } elseif (\$comparison == Criteria::CONTAINS_SOME) {
+            foreach (\$$variableName as \$value) {
+                \$value = '%| ' . \$value . ' |%';
+                if (\$this->containsKey(\$key)) {
+                    \$this->addOr(\$key, \$value, Criteria::LIKE);
+                } else {
+                    \$this->add(\$key, \$value, Criteria::LIKE);
+                }
+            }
+
+            return \$this;
+        } elseif (\$comparison == Criteria::CONTAINS_NONE) {
+            foreach (\$$variableName as \$value) {
+                \$value = '%| ' . \$value . ' |%';
+                if (\$this->containsKey(\$key)) {
+                    \$this->addAnd(\$key, \$value, Criteria::NOT_LIKE);
+                } else {
+                    \$this->add(\$key, \$value, Criteria::NOT_LIKE);
+                }
+            }
+            \$this->addOr(\$key, null, Criteria::ISNULL);
+
+            return \$this;
+        }";
+        } elseif ($col->getType() == PropelTypes::ENUM) {
+            $script .= "
+        \$valueSet = " . $this->getTableMapClassName() . "::getValueSet(" . $this->getColumnConstant($col) . ");
+        if (is_scalar(\$$variableName)) {
+            if (!in_array(\$$variableName, \$valueSet)) {
+                throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$$variableName));
+            }
+            \$$variableName = array_search(\$$variableName, \$valueSet);
+        } elseif (is_array(\$$variableName)) {
+            if (\$comparison != Criteria::IN) {
+                throw new AmbiguousComparisonException('array requires explicit Criteria::IN as comparison criteria.');
+            }
+            \$convertedValues = array();
+            foreach (\$$variableName as \$value) {
+                if (!in_array(\$value, \$valueSet)) {
+                    throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$value));
+                }
+                \$convertedValues []= array_search(\$value, \$valueSet);
+            }
+            \$$variableName = \$convertedValues;
+        }";
+        } elseif ($col->isTextType()) {
+            $script .= "
+        if (\$comparison == Criteria::LIKE) {
+            \$$variableName = str_replace('*', '%', \$$variableName);
+        }
+
+        if (null === \$comparison) {
+            if (is_array(\$$variableName)) {
+                throw new AmbiguousComparisonException('\$$variableName of type array requires explicit Criteria::IN as comparison criteria.');
+            }
+            \$comparison = Criteria::EQUAL;
+        }";
+        } elseif ($col->isBooleanType()) {
+            $script .= "
+        if (is_string(\$$variableName)) {
+            \$$variableName = in_array(strtolower(\$$variableName), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+        }";
+        }
+        $script .= "
+
+        return \$this->addUsingAlias($qualifiedName, \$$variableName, \$comparison);
     }
 ";
     }

@@ -13,6 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Oms\OmsDependencyProvider;
+use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory getFactory()
@@ -144,7 +145,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             $stateNames[] = $state->getName();
         }
 
-        $query->useStateQuery()->filterByName($stateNames)->endUse();
+        $query->useStateQuery()->filterByName($stateNames, Criteria::IN)->endUse();
         $query->filterBySku($sku);
 
         return $query;
@@ -188,7 +189,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public function querySalesOrderItems(array $orderItemIds)
     {
         return $this->getSalesQueryContainer()->querySalesOrderItem()
-            ->filterByIdSalesOrderItem($orderItemIds);
+            ->filterByIdSalesOrderItem($orderItemIds, Criteria::IN);
     }
 
     /**
@@ -293,7 +294,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     {
         return $this->getFactory()
             ->createOmsStateMachineLockQuery()
-            ->filterByExpires(['max' => $expirationDate]);
+            ->filterByExpires(['max' => $expirationDate], SprykerCriteria::BETWEEN);
     }
 
     /**

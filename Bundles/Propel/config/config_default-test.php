@@ -70,6 +70,7 @@ $config[PropelConstants::PROPEL] = [
             'defaultKeyType' => 'fieldName',
             'builders' => [
                 'object' => '\Spryker\Zed\Propel\Business\Builder\ObjectBuilder',
+                'query' => '\Spryker\Zed\Propel\Business\Builder\QueryBuilder',
             ],
         ],
     ],

@@ -11,7 +11,7 @@
     }
   },
   "require": {
-    "propel/propel": "~2.0@dev",
+    "propel/propel": "2.0.0-alpha5",
     "spryker/application": "^2.0.0",
     "spryker/console": "^2.0.0",
     "spryker/kernel": "^2.0.0",

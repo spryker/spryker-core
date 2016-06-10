@@ -12,6 +12,7 @@ use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineEventTimeoutTableMap;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineProcessTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 
 /**
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachinePersistenceFactory getFactory()
@@ -130,7 +131,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
               ->filterByName($processName)
             ->endUse()
             ->joinProcess()
-            ->filterByName($states);
+            ->filterByName($states, Criteria::IN);
     }
 
     /**
@@ -176,7 +177,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     {
         return $this->getFactory()
             ->createStateMachineLockQuery()
-            ->filterByExpires(['max' => $expirationDate]);
+            ->filterByExpires(['max' => $expirationDate], SprykerCriteria::BETWEEN);
     }
 
     /**
