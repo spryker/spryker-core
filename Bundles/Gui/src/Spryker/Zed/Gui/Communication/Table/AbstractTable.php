@@ -55,7 +55,12 @@ abstract class AbstractTable
     /**
      * @var int
      */
-    protected $total;
+    protected $total = 0;
+
+    /**
+     * @var int
+     */
+    protected $limit = 0;
 
     /**
      * @var int
@@ -421,11 +426,26 @@ abstract class AbstractTable
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getLimit()
     {
-        return $this->request->query->get('length', $this->defaultLimit);
+        if (!$this->limit) {
+            $this->limit = $this->request->query->getInt('length', $this->defaultLimit);
+        }
+
+        return $this->limit;
+    }
+
+    /**
+     * @param int $limit
+     *
+     * @return $this
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = (int)$limit;
+        return $this;
     }
 
     /**
