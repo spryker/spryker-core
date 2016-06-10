@@ -8,14 +8,14 @@
 namespace Spryker\Zed\DummyPayment\Dependency\Injector;
 
 use Spryker\Shared\Kernel\ContainerInterface;
+use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPreCheckPlugin;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentSaveOrderPlugin;
 use Spryker\Zed\DummyPayment\DummyPaymentConfig;
-use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
-class PaymentDependencyInjector extends AbstractDependencyInjector
+class PaymentDependencyInjector implements DependencyInjectorInterface
 {
 
     /**
