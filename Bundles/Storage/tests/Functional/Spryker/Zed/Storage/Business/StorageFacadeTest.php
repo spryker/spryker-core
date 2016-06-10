@@ -27,7 +27,18 @@ class StorageFacadeTest extends Test
     {
         parent::setUp();
 
+        $this->skipIfCircleCi();
         $this->storageFacade = new StorageFacade();
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfCircleCi()
+    {
+        if (getenv('CIRCLECI')) {
+            $this->markTestSkipped('Circle ci not set up properly');
+        }
     }
 
     /**
