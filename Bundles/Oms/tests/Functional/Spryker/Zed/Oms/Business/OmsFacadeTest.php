@@ -40,6 +40,19 @@ class OmsFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testOrderMatrixCreation()
+    {
+        $omsFacade = $this->createOmsFacade();
+
+        $matrix = $omsFacade->getOrderItemMatrix();
+
+        $this->assertNotEmpty($matrix);
+        $this->assertEquals('', $matrix[0]['COL_STATE']);
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Business\OmsFacade
      */
     protected function createOmsFacade()
@@ -52,6 +65,17 @@ class OmsFacadeTest extends Test
         $omsFacade->setFactory($omsBusinessFactory);
 
         return $omsFacade;
+    }
+
+    /**
+     * @return void
+     */
+    public function testReservedItemsByNonExistentSku()
+    {
+        $omsFacade = $this->createOmsFacade();
+        $items = $omsFacade->getReservedOrderItemsForSku('non-existent-sku');
+
+        $this->assertEquals(0, $items->count());
     }
 
 }

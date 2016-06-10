@@ -24,6 +24,8 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Not used. Will be removed in the next major release.
+     *
      * @param array $productIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *

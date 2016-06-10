@@ -248,7 +248,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param string $sku
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function getReservedOrderItemsForSku($sku)
     {

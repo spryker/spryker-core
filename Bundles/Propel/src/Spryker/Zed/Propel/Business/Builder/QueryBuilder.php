@@ -206,11 +206,8 @@ class QueryBuilder extends PropelQueryBuilder
             \$$variableName = str_replace('*', '%', \$$variableName);
         }
 
-        if (null === \$comparison) {
-            if (is_array(\$$variableName)) {
-                throw new AmbiguousComparisonException('\$$variableName of type array requires explicit Criteria::IN as comparison criteria.');
-            }
-            \$comparison = Criteria::EQUAL;
+        if (\$comparison !== Criteria::IN && is_array(\$$variableName)) {
+            throw new AmbiguousComparisonException('\$$variableName of type array requires explicit Criteria::IN as comparison criteria.');
         }";
         } elseif ($col->isBooleanType()) {
             $script .= "

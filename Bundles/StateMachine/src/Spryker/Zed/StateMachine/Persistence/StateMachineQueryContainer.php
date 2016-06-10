@@ -153,6 +153,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     /**
      * @api
      *
+     * @deprecated Not used, will be removed in the next major release.
+     *
      * @param string $identifier
      * @param \DateTime $expirationDate
      *
@@ -163,7 +165,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
         return $this->getFactory()
             ->createStateMachineLockQuery()
             ->filterByIdentifier($identifier)
-            ->filterByExpires(['min' => $expirationDate]);
+            ->filterByExpires(['min' => $expirationDate], SprykerCriteria::BETWEEN);
     }
 
     /**

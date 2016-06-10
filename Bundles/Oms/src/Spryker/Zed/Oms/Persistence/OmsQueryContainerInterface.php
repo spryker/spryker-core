@@ -150,6 +150,8 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Not used, will be removed in the next major release.
+     *
      * @param string $identifier
      * @param \DateTime $expirationDate
      *

@@ -12,6 +12,7 @@ use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributesOperationTab
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -43,6 +44,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
+     * @deprecated Not used. Will be removed in the next major release.
+     *
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param array $productIds
@@ -54,7 +57,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     {
         $query = $this->getFactory()->createProductQuery();
         $query
-            ->filterByIdProduct($productIds)
+            ->filterByIdProduct($productIds, Criteria::IN)
             ->useSpyProductLocalizedAttributesQuery()
             ->filterByFkLocale($locale->getIdLocale())
             ->endUse()
