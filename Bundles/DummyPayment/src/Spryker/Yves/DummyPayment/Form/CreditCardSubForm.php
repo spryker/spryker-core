@@ -8,15 +8,13 @@
 namespace Spryker\Yves\DummyPayment\Form;
 
 use Generated\Shared\Transfer\DummyPaymentTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
-use Spryker\Shared\DummyPayment\DummyPaymentConstants;
+use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CreditCardSubForm extends AbstractSubForm
 {
 
-    const PAYMENT_PROVIDER = DummyPaymentConstants::PROVIDER_NAME;
     const PAYMENT_METHOD = 'credit_card';
 
     const FIELD_CARD_TYPE = 'card_type';
@@ -34,7 +32,7 @@ class CreditCardSubForm extends AbstractSubForm
      */
     public function getName()
     {
-        return self::PAYMENT_PROVIDER . '_' . self::PAYMENT_METHOD;
+        return DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD;
     }
 
     /**
@@ -42,7 +40,7 @@ class CreditCardSubForm extends AbstractSubForm
      */
     public function getPropertyPath()
     {
-        return PaymentTransfer::DUMMY_PAYMENT_CREDIT_CARD;
+        return DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD;
     }
 
     /**
@@ -50,7 +48,7 @@ class CreditCardSubForm extends AbstractSubForm
      */
     public function getTemplatePath()
     {
-        return DummyPaymentConstants::PROVIDER_NAME . '/' . self::PAYMENT_METHOD;
+        return DummyPaymentConfig::PROVIDER_NAME . '/' . self::PAYMENT_METHOD;
     }
 
     /**

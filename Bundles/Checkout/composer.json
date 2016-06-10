@@ -19,6 +19,7 @@
     "spryker/product": "^2.0.0",
     "spryker/sales": "^2.0.0",
     "spryker/stock": "^2.0.0",
+    "spryker/step-engine": "^1.0.0",
     "spryker/availability": "^2.0.0",
     "spryker/sequence-number": "^2.0.0"
   },
