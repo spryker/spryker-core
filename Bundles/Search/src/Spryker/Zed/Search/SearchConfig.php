@@ -24,16 +24,6 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getXmlIndexDefinitionDirectories()
-    {
-        return [
-            APPLICATION_ROOT_DIR . '/config/Zed/search/',
-        ];
-    }
-
-    /**
-     * @return array
-     */
     public function getJsonIndexDefinitionDirectories()
     {
         $directories = [

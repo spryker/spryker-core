@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Spryker\Shared\Library\Json;
-use Spryker\Zed\Search\Business\Exception\InvalidIndexDefinitionException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -118,37 +117,16 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      */
     protected function createIndexDefinition($indexName, array $definitionData)
     {
-        $this->assertArrayExists($indexName, $definitionData, 'settings');
-
+        $settings = isset($definitionData['settings']) ? $definitionData['settings'] : [];
         $mappings = isset($definitionData['mappings']) ? $definitionData['mappings'] : [];
 
         $indexDefinitionTransfer = new ElasticsearchIndexDefinitionTransfer();
         $indexDefinitionTransfer
             ->setIndexName($indexName)
-            ->setSettings($definitionData['settings'])
+            ->setSettings($settings)
             ->setMappings($mappings);
 
         return $indexDefinitionTransfer;
-    }
-
-    /**
-     * @param string $indexName
-     * @param array $definitionData
-     * @param string $key
-     *
-     * @throws \Spryker\Zed\Search\Business\Exception\InvalidIndexDefinitionException
-     *
-     * @return void
-     */
-    protected function assertArrayExists($indexName, array $definitionData, $key)
-    {
-        if (!isset($definitionData[$key]) || !is_array($definitionData[$key])) {
-            throw new InvalidIndexDefinitionException(sprintf(
-                'Missing or invalid array "%s" in "%s" index definition!',
-                $key,
-                $indexName
-            ));
-        }
     }
 
     /**

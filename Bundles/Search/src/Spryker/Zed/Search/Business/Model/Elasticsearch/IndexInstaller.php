@@ -77,7 +77,7 @@ class IndexInstaller implements SearchInstallerInterface
         }
 
         foreach ($indexDefinitionTransfer->getMappings() as $mappingName => $mappingData) {
-            $this->createMapping($index, $mappingName, $mappingData);
+            $this->sendMapping($index, $mappingName, $mappingData);
         }
     }
 
@@ -88,15 +88,12 @@ class IndexInstaller implements SearchInstallerInterface
      *
      * @return void
      */
-    protected function createMapping(Index $index, $mappingName, array $mappingData)
+    protected function sendMapping(Index $index, $mappingName, array $mappingData)
     {
         $type = $index->getType($mappingName);
-        if ($type->exists()) {
-            return;
-        }
 
         $this->messenger->info(sprintf(
-            'Creating mapping "%s" for index: "%s"',
+            'Send mapping type "%s" (index: "%s")',
             $mappingName,
             $index->getName()
         ));

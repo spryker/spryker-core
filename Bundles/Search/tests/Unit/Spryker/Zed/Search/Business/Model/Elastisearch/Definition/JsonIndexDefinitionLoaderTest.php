@@ -23,6 +23,27 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testEmptyIndexDefinitionLoading()
+    {
+        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
+            [__DIR__ . '/Fixtures/EmptyIndex'],
+            $this->createJsonIndexDefinitionMerger(),
+            $this->getStores()
+        );
+
+        $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
+
+        $this->assertEmpty($definitions['de_foo']->getSettings(), 'empty foo settings');
+        $this->assertEmpty($definitions['de_foo']->getMappings(), 'empty foo mapping');
+        $this->assertEmpty($definitions['de_bar']->getSettings(), 'empty bar settings');
+        $this->assertNotEmpty($definitions['de_bar']->getMappings(), 'not empty bar mapping');
+        $this->assertNotEmpty($definitions['de_baz']->getSettings(), 'not empty baz settings');
+        $this->assertEmpty($definitions['de_baz']->getMappings(), 'empty baz mapping');
+    }
+
+    /**
+     * @return void
+     */
     public function testSingleIndexDefinitionLoadingWithMultipleMappingTypes()
     {
         $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
