@@ -36,8 +36,12 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     public function testPaginationExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(SearchConfigInterface $searchConfig, Query $expectedQuery, array $params = [])
     {
+        $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfig);
+
         $queryExpander = new SortedQueryExpanderPlugin();
-        $query = $queryExpander->expandQuery($this->createBaseQueryPlugin(), $searchConfig, $params);
+        $queryExpander->setFactory($searchFactoryMock);
+
+        $query = $queryExpander->expandQuery($this->createBaseQueryPlugin(), $params);
 
         $query = $query->getSearchQuery();
 

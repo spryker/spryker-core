@@ -25,8 +25,12 @@ abstract class AbstractFacetQueryExpanderPluginQueryTest extends AbstractQueryEx
      */
     public function testFacetQueryExpanderShouldCreateSearchQueryBasedOnSearchConfig(SearchConfigInterface $searchConfig, BoolQuery $expectedQuery, array $params = [])
     {
+        $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfig);
+
         $queryExpander = new FacetQueryExpanderPlugin();
-        $query = $queryExpander->expandQuery($this->createBaseQueryPlugin(), $searchConfig, $params);
+        $queryExpander->setFactory($searchFactoryMock);
+
+        $query = $queryExpander->expandQuery($this->createBaseQueryPlugin(), $params);
 
         $query = $query->getSearchQuery()->getQuery();
 

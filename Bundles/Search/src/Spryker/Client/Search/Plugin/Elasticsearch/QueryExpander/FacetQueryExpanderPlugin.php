@@ -15,7 +15,6 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -28,13 +27,13 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      * @param array $requestParameters
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, SearchConfigInterface $searchConfig, array $requestParameters = [])
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
+        $searchConfig = $this->getFactory()->getSearchConfig();
         $facetConfig = $searchConfig->getFacetConfigBuilder();
         $query = $searchQuery->getSearchQuery();
 

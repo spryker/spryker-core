@@ -11,7 +11,6 @@ use Elastica\Query;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
 
 /**
@@ -22,13 +21,13 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
 
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      * @param array $requestParameters
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, SearchConfigInterface $searchConfig, array $requestParameters = [])
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
+        $searchConfig = $this->getFactory()->getSearchConfig();
         $sortConfig = $searchConfig->getSortConfigBuilder();
         $this->addSortingToQuery($searchQuery->getSearchQuery(), $sortConfig, $requestParameters);
 

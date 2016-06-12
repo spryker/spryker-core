@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -22,13 +21,13 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
 
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      * @param array $requestParameters
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, SearchConfigInterface $searchConfig, array $requestParameters = [])
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
+        $searchConfig = $this->getFactory()->getSearchConfig();
         $paginationConfig = $searchConfig->getPaginationConfigBuilder();
         $this->addPaginationToQuery($searchQuery->getSearchQuery(), $paginationConfig, $requestParameters);
 
