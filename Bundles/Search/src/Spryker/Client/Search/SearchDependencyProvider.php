@@ -27,7 +27,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
         $container = parent::provideServiceLayerDependencies($container);
 
         $container[self::SEARCH_CONFIG_BUILDER] = function (Container $container) {
-            return $this->createSearchConfigPlugin($container);
+            return $this->createSearchConfigBuilderPlugin($container);
         };
 
         return $container;
@@ -40,7 +40,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface
      */
-    protected function createSearchConfigPlugin(Container $container)
+    protected function createSearchConfigBuilderPlugin(Container $container)
     {
         throw new MissingSearchConfigPluginException(sprintf(
             'Missing instance of %s! You need to implement your own plugin and instantiate it in your own SearchDependencyProvider::createSearchConfigBuilder() to be able to search.',
