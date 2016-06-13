@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductOptionDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\ItemProductOptionTaxWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderDiscounts;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\OrderTaxAmountWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorDependencyProvider;
 
@@ -48,9 +48,9 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\ItemProductOptionTaxWithDiscounts
      */
-    public function createItemProductOptionsAndDiscountsAggregator()
+    public function createItemProductOptionsAndDiscountsTaxCalculator()
     {
         return new ItemProductOptionTaxWithDiscounts(
             $this->getProvidedDependency(ProductOptionDiscountConnectorDependencyProvider::FACADE_TAX)
@@ -58,13 +58,12 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\OrderTaxAmountWithDiscounts
      */
-    public function createOrderTaxAmountWithDiscounts()
+    public function createOrderTotalWithDiscountsTaxCalculator()
     {
         return new OrderTaxAmountWithDiscounts(
             $this->getProvidedDependency(ProductOptionDiscountConnectorDependencyProvider::FACADE_TAX)
         );
     }
-
 }

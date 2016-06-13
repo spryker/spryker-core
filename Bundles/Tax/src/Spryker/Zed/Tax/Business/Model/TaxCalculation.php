@@ -55,7 +55,7 @@ class TaxCalculation implements CalculatorInterface
     protected function setTaxTotals(QuoteTransfer $quoteTransfer, $taxAmount)
     {
         $taxTotalTransfer = new TaxTotalTransfer();
-        $taxTotalTransfer->setAmount($taxAmount);
+        $taxTotalTransfer->setAmount(round($taxAmount));
 
         $quoteTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
     }

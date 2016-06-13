@@ -113,30 +113,15 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
      *
      * @return int
      */
-    protected function getSumOfProductOptionCalculatedDiscounts(\ArrayObject $productOptionTransfer)
-    {
-        $totalDiscountUnitGrossAmount = 0;
-        $totalDiscountSumGrossAmount = 0;
-        foreach ($productOptionTransfer as $optionTransfer) {
-            $this->setCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
-            $totalDiscountUnitGrossAmount += $this->getCalculatedDiscountsUnitGrossAmount($optionTransfer->getCalculatedDiscounts());
-            $totalDiscountSumGrossAmount += $this->getCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
-        }
-
-        return [$totalDiscountUnitGrossAmount, $totalDiscountSumGrossAmount];
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
-     *
-     * @return int
-     */
     protected function getProductOptionGrossUnitTotalAmount(\ArrayObject $productOptionTransfer)
     {
         $totalDiscountUnitGrossAmount = 0;
         foreach ($productOptionTransfer as $optionTransfer) {
             $this->setCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
-            $totalDiscountUnitGrossAmount += $this->getCalculatedDiscountsUnitGrossAmount($optionTransfer->getCalculatedDiscounts());
+
+            $unitDiscountAmount = $this->getCalculatedDiscountsUnitGrossAmount($optionTransfer->getCalculatedDiscounts());
+            $optionTransfer->setUnitGrossPriceWithDiscounts($optionTransfer->getUnitGrossPrice() - $unitDiscountAmount);
+            $totalDiscountUnitGrossAmount += $unitDiscountAmount;
         }
 
         return $totalDiscountUnitGrossAmount;
@@ -152,7 +137,10 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         $totalDiscountSumGrossAmount = 0;
         foreach ($productOptionTransfer as $optionTransfer) {
             $this->setCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
-            $totalDiscountSumGrossAmount += $this->getCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
+
+            $sumDiscountAmount = $this->getCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
+            $optionTransfer->setSumGrossPriceWithDiscounts($optionTransfer->getSumGrossPrice() - $sumDiscountAmount);
+            $totalDiscountSumGrossAmount += $sumDiscountAmount;
         }
 
         return $totalDiscountSumGrossAmount;

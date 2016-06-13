@@ -56,7 +56,7 @@ class ItemTax implements OrderAmountAggregatorInterface
             );
 
             $sumTaxAmount = $this->calculateTaxAmount(
-                $itemTransfer->getSumTaxAmount(),
+                $itemTransfer->getSumGrossPrice(),
                 $itemTransfer->getTaxRate()
             );
 

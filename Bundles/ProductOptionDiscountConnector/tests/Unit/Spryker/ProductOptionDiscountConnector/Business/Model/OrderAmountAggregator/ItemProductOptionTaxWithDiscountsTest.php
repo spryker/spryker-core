@@ -10,7 +10,7 @@ namespace Unit\Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAm
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\ItemProductOptionTaxWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface;
 
 class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
@@ -86,7 +86,7 @@ class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
         $itemTransfer->addProductOption($productOptionTransfer);
 
         $productOptionTransfer = new ProductOptionTransfer();
-        $productOptionTransfer->setTaxRate(7);
+        $productOptionTransfer->setTaxRate(10);
         $itemTransfer->addProductOption($productOptionTransfer);
 
         $orderTransfer->addItem($itemTransfer);
@@ -102,7 +102,7 @@ class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
         $taxFacadeBridgeMock = $this->createTaxFacadeBridgeMock();
         $taxFacadeBridgeMock->method('getTaxAmountFromGrossPrice')->willReturnCallback(
             function ($grossSum, $taxRate) {
-                return round($grossSum / $taxRate); //tax forumula is not important, in this test we are testing if tax was calculated.
+                return round($grossSum / $taxRate); //tax formula is not important, in this test we are testing if tax was calculated.
             }
         );
 

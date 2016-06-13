@@ -5,13 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
+namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderAmountAggregatorInterface;
 use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface;
 
-class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterface
+class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterface, CalculatorInterface
 {
 
     /**
@@ -40,6 +43,17 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
     public function aggregate(OrderTransfer $orderTransfer)
     {
         $this->addTaxWithProductOptions($orderTransfer->getItems());
+    }
+
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function recalculate(QuoteTransfer $quoteTransfer)
+    {
+        $this->addTaxWithProductOptions($quoteTransfer->getItems());
     }
 
     /**
@@ -133,4 +147,5 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
 
         return $taxAmountRounded;
     }
+
 }

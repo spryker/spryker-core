@@ -8,7 +8,7 @@ namespace Spryker\Zed\Tax\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class ItemTax implements CalculatorInterface
+class ExpenseTaxCalculator implements CalculatorInterface
 {
 
     /**
@@ -36,19 +36,19 @@ class ItemTax implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $unitTaxAmount = $this->calculateTaxAmount(
-                $itemTransfer->getUnitGrossPrice(),
-                $itemTransfer->getTaxRate()
+                $expenseTransfer->getUnitGrossPrice(),
+                $expenseTransfer->getTaxRate()
             );
 
             $sumTaxAmount = $this->calculateTaxAmount(
-                $itemTransfer->getSumTaxAmount(),
-                $itemTransfer->getTaxRate()
+                $expenseTransfer->getSumGrossPrice(),
+                $expenseTransfer->getTaxRate()
             );
 
-            $itemTransfer->setUnitTaxAmount($unitTaxAmount);
-            $itemTransfer->setSumTaxAmount($sumTaxAmount);
+            $expenseTransfer->setUnitTaxAmount($unitTaxAmount);
+            $expenseTransfer->setSumTaxAmount($sumTaxAmount);
         }
     }
 

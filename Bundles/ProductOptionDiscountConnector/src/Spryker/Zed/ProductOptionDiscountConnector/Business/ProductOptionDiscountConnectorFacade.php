@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -61,7 +62,7 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
      */
     public function aggregateItemWithProductOptionsAndDiscountsTaxAmount(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createItemProductOptionsAndDiscountsAggregator()->aggregate($orderTransfer);
+        $this->getFactory()->createItemProductOptionsAndDiscountsTaxCalculator()->aggregate($orderTransfer);
     }
 
     /**
@@ -73,7 +74,31 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
      */
     public function aggregateOrderTotalTaxAmountWithDiscounts(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createOrderTaxAmountWithDiscounts()->aggregate($orderTransfer);
+        $this->getFactory()->createOrderTotalWithDiscountsTaxCalculator()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function recalculateItemWithProductOptionsAndDiscountsTaxAmount(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createItemProductOptionsAndDiscountsTaxCalculator()->recalculate($quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function recalculateOrderTotalTaxAmountWithDiscounts(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createOrderTotalWithDiscountsTaxCalculator()->recalculate($quoteTransfer);
     }
 
 }
