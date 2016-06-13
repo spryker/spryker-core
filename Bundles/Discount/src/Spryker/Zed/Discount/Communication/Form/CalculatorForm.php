@@ -6,12 +6,14 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -68,6 +70,37 @@ class CalculatorForm extends AbstractType
         $this->addCalculatorType($builder)
             ->addAmountField($builder)
             ->addCollectorQueryString($builder);
+
+
+        $builder->addModelTransformer(new CallbackTransformer(
+            function(DiscountCalculatorTransfer $databaseData = null){
+                if ($databaseData !== null) {
+                    $convertedAmount = $databaseData->getAmount() / 100;
+                    $databaseData->setAmount($convertedAmount);
+                }
+
+                return $databaseData;
+            },
+            function(DiscountCalculatorTransfer $databaseData){
+
+                return $databaseData;
+            }
+        ));
+
+        $builder->addViewTransformer(new CallbackTransformer(
+            function($databaseData){
+
+                return $databaseData;
+            },
+            function(DiscountCalculatorTransfer $submittedData = null){
+                if ($submittedData !== null) {
+                    $convertedAmount = $submittedData->getAmount() * 100;
+                    $submittedData->setAmount($convertedAmount);
+                }
+
+                return $submittedData;
+            }
+        ));
 
         $builder
             ->addEventListener(
