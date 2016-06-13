@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 class MatrixGenerator
 {
+    const SKU_TYPE_SEPARATOR = '-';
+    const SKU_VALUE_SEPARATOR = '_';
 
     public function t()
     {
@@ -31,7 +33,6 @@ class MatrixGenerator
         ];
 
         $attributes = [];
-        $attributesMeta = [];
         foreach ($attributeCollection as $attributeType => $attributeValueSet) {
             $typeAttributesValues = [];
             foreach ($attributeValueSet as $name => $value) {
@@ -41,8 +42,6 @@ class MatrixGenerator
             $attributes[] = $typeAttributesValues;
         }
 
-        dump($attributes, $attributesMeta);
-
         $attributesCount = count($attributes);
         $current = array_pad([], $attributesCount, 0);
 
@@ -50,14 +49,24 @@ class MatrixGenerator
 
         function gatherTokens($attributes, $current, $attributesCount)
         {
-            $tokens = [];
+            echo "<pre>";
+            $orderedTokens = [];
+            $unorderedTokenCollection = [];
+
             for ($i=0; $i<$attributesCount; $i++) {
-                $tokens[] = $attributes[$i][$current[$i]];
+                list($type, $value) = each($attributes[$i][$current[$i]]);
+                $unorderedTokenCollection[$type] = $value;
+            }
+
+            ksort($unorderedTokenCollection, SORT_STRING | SORT_FLAG_CASE);
+
+            foreach ($unorderedTokenCollection as $type => $value) {
+                $orderedTokens[] = [$type => $value];
             }
 
             $sku = '';
-            for ($a=0; $a<count($tokens); $a++) {
-                foreach ($tokens[$a] as $type => $value) {
+            for ($a=0; $a<count($orderedTokens); $a++) {
+                foreach ($orderedTokens[$a] as $type => $value) {
                     $sku .= $type . '-' . $value . '_';
                 }
             }
@@ -65,7 +74,7 @@ class MatrixGenerator
             $sku = rtrim($sku, '_');
 
             return [
-                'tokens' => $tokens,
+                'tokens' => $orderedTokens,
                 'sku' => $sku
             ];
         }
@@ -93,12 +102,116 @@ class MatrixGenerator
     }
 
     /**
+     * @param array $attributes
+     * @param array $current
+     * @param int $attributesCount
+     *
+     * @return array
+     */
+    protected function gatherTokens(array $attributes, array $current, $attributesCount)
+    {
+        $tokens = [];
+        for ($i=0; $i<$attributesCount; $i++) {
+            list($type, $value) = each($attributes[$i][$current[$i]]);
+            $tokens[$type] = $value;
+        }
+
+        $orderedTokens = $this->sortTokens($tokens);
+        $sku = $this->generateSku($orderedTokens);
+
+        return [
+            'tokens' => $orderedTokens,
+            'sku' => $sku
+        ];
+    }
+
+    /**
+     * @param array $unorderedTokenCollection
+     *
+     * @return array
+     */
+    protected function sortTokens(array $unorderedTokenCollection)
+    {
+        ksort($unorderedTokenCollection, SORT_STRING | SORT_FLAG_CASE);
+
+        $orderedTokens = [];
+        foreach ($unorderedTokenCollection as $type => $value) {
+            $orderedTokens[] = [$type => $value];
+        }
+
+        return $orderedTokens;
+    }
+
+    /**
+     * @param array $orderedTokens
+     *
+     * @return string
+     */
+    protected function generateSku(array $orderedTokens)
+    {
+        $sku = '';
+        for ($a=0; $a<count($orderedTokens); $a++) {
+            foreach ($orderedTokens[$a] as $type => $value) {
+                $sku .= $type . self::SKU_TYPE_SEPARATOR . $value . self::SKU_VALUE_SEPARATOR;
+            }
+        }
+
+        return rtrim($sku, self::SKU_VALUE_SEPARATOR);
+    }
+
+    /**
+     * @param array $attributeCollection
+     *
+     * @return array
+     */
+    public function generateTokens(array $attributeCollection)
+    {
+        $attributes = [];
+        foreach ($attributeCollection as $attributeType => $attributeValueSet) {
+            $typeAttributesValues = [];
+            foreach ($attributeValueSet as $name => $value) {
+                $typeAttributesValues[] = [$attributeType => $name];
+            }
+
+            $attributes[] = $typeAttributesValues;
+        }
+
+        $attributesCount = count($attributes);
+        $current = array_pad([], $attributesCount, 0);
+        $changeIndex = 0;
+
+        $result = [];
+        while ($changeIndex < $attributesCount) {
+            $result[] = $this->gatherTokens($attributes, $current, $attributesCount);
+            $changeIndex = 0;
+
+            while ($changeIndex < $attributesCount) {
+                $current[$changeIndex]++;
+
+                if ($current[$changeIndex] === count($attributes[$changeIndex])) {
+                    $current[$changeIndex] = 0;
+                    $changeIndex++;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
      * @return array
      */
-    public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku, &$level = 0)
+    public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
+    {
+
+    }
+
+    public function generate222(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku, &$level = 0)
     {
         $productMatrix = [];
         foreach ($attributeCollection as $attributeType => $attributeValueSet) {
@@ -127,55 +240,6 @@ class MatrixGenerator
         $level++;
 
         return $productMatrix;
-    }
-
-    /**
-     * @param string $sku
-     * @param string $attributeName
-     * @param string $attributeValue
-     *
-     * @return string
-     */
-    protected function generateSku($sku, $attributeName, $attributeValue = null)
-    {
-        $format = '%s-%s';
-        $attributeName = $this->slugify($attributeName);
-        $attributeValue = $this->slugify($attributeValue);
-
-        if ($attributeValue !== null) {
-            $format = '%s-%s-%s';
-        }
-
-        return sprintf(
-            $format,
-            $sku,
-            $attributeName,
-            $attributeValue
-        );
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    protected function slugify($value)
-    {
-        return $value;
-        if (trim($value) === '') {
-            return $value;
-        }
-
-        if (function_exists('iconv')) {
-            $value = iconv('UTF-8', 'ASCII//TRANSLIT', $value);
-        }
-
-        $value = trim($value);
-        $value = preg_replace("/[^a-zA-Z0-9 _ -]/", "", $value);
-        $value = mb_strtolower($value);
-        $value = str_replace(' ', '', $value);
-
-        return $value;
     }
 
 }

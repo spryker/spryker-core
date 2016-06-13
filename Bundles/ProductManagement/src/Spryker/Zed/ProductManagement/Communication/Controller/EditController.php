@@ -120,12 +120,7 @@ class EditController extends AddController
 
 
         $matrixGenerator = new MatrixGenerator();
-        $matrix = $matrixGenerator->t();
-        echo "<pre>";
-        print_r($matrix);
-        die;
-
-        $matrix = $matrixGenerator->generate($productAbstract, $attributeCollection, $productAbstract->getSku());
+        $matrix = $matrixGenerator->generateTokens($attributeCollection);
         echo "<pre>";
         print_r($matrix);
         die;
