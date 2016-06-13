@@ -15,6 +15,108 @@ class QueryBuilder extends PropelQueryBuilder
 {
 
     /**
+     * @param Column $col
+     * @return string
+     */
+    protected function addFilterByColIn(Column $col)
+    {
+        $script = '';
+
+        if ($col->isNumericType() || $col->isTemporalType() || $col->getType() == PropelTypes::ENUM || $col->isTextType()) {
+            $colPhpName = $col->getPhpName();
+            $variableName = $col->getCamelCaseName();
+            $queryClassName = $this->getQueryClassName();
+
+            $script .= <<<SCRIPT
+
+    /**
+     * Applies Criteria::IN filtering criteria for the column.
+     *
+     * @param array \$${variableName}s Filter value.
+     *
+     * @return \$this|$queryClassName The current query, for fluid interface
+     */
+    public function filterBy${colPhpName}_In(array \$${variableName}s)
+    {
+        return \$this->filterBy$colPhpName(\$${variableName}s, Criteria::IN);
+    }
+
+SCRIPT;
+        }
+
+        return $script;
+    }
+
+    protected function addFilterByColBetween(Column $col)
+    {
+        $script = '';
+
+        if ($col->isNumericType() || $col->isTemporalType()) {
+            $colPhpName = $col->getPhpName();
+            $variableName = $col->getCamelCaseName();
+            $queryClassName = $this->getQueryClassName();
+
+            $script .= <<<SCRIPT
+
+    /**
+     * Applies SprykerCriteria::BETWEEN filtering criteria for the column.
+     *
+     * @param array \$$variableName Filter value.
+     * [
+     *    'min' => 3, 'max' => 5
+     * ]
+     *
+     * 'min' and 'max' are optional, when neither is specified, thwows \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException.
+     *
+     * @return \$this|$queryClassName The current query, for fluid interface
+     */
+    public function filterBy${colPhpName}_Between(array \$$variableName)
+    {
+        return \$this->filterBy$colPhpName(\$$variableName, SprykerCriteria::BETWEEN);
+    }
+
+SCRIPT;
+        }
+
+        return $script;
+    }
+
+    /**
+     * @param Column $col
+     *
+     * @return string
+     */
+    protected function addFilterByColLike(Column $col)
+    {
+        $script = '';
+
+        if ($col->isTextType()) {
+            $colPhpName = $col->getPhpName();
+            $variableName = $col->getCamelCaseName();
+            $queryClassName = $this->getQueryClassName();
+
+            $script .= <<<SCRIPT
+
+    /**
+     * Applies SprykerCriteria::LIKE filtering criteria for the column.
+     *
+     * @param string \$$variableName Filter value.
+     *
+     * @return \$this|$queryClassName The current query, for fluid interface
+     */
+    public function filterBy${colPhpName}_Like(\$$variableName)
+    {
+        return \$this->filterBy$colPhpName(\$$variableName, Criteria::LIKE);
+    }
+
+SCRIPT;
+        }
+
+        return $script;
+    }
+
+
+    /**
      * Adds the filterByCol method for this object.
      *
      * @param string &$script The script will be modified in this method.
@@ -30,6 +132,11 @@ class QueryBuilder extends PropelQueryBuilder
         $colName = $col->getName();
         $variableName = $col->getCamelCaseName();
         $qualifiedName = $this->getColumnConstant($col);
+
+        $script .= $this->addFilterByColBetween($col);
+        $script .= $this->addFilterByColIn($col);
+        $script .= $this->addFilterByColLike($col);
+
         $script .= "
     /**
      * Filter the query on the $colName column

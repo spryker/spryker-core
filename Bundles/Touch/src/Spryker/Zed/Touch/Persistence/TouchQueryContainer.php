@@ -196,10 +196,15 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchSearchQuery
      */
-    public function queryTouchSearchByTouchIds(array $touchIds)
+    public function queryTouchSearchByTouchIds($touchIds)
     {
         $query = $this->getFactory()->createTouchSearchQuery();
-        $query->filterByFkTouch($touchIds, Criteria::IN);
+        if (is_array($touchIds)) {
+            $query->filterByFkTouch($touchIds, Criteria::IN);
+            return $query;
+        }
+
+        $query->filterByFkTouch($touchIds, Criteria::EQUAL);
 
         return $query;
     }
@@ -211,10 +216,15 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
      */
-    public function queryTouchStorageByTouchIds(array $touchIds)
+    public function queryTouchStorageByTouchIds($touchIds)
     {
         $query = $this->getFactory()->createTouchStorageQuery();
-        $query->filterByFkTouch($touchIds, Criteria::IN);
+        if (is_array($touchIds)) {
+            $query->filterByFkTouch($touchIds, Criteria::IN);
+            return $query;
+        }
+
+        $query->filterByFkTouch($touchIds, Criteria::EQUAL);
 
         return $query;
     }
