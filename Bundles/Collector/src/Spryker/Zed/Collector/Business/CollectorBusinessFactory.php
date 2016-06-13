@@ -32,7 +32,6 @@ use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
-use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
@@ -114,7 +113,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CollectorPluginCollectionInterface
+     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
      */
     protected function getCollectorStorageExporterPlugins()
     {
@@ -140,7 +139,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CollectorPluginCollectionInterface
+     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
      */
     protected function getCollectorFileExporterPlugins()
     {
@@ -283,7 +282,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CollectorPluginCollectionInterface
+     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
      */
     protected function getCollectorSearchExporterPlugins()
     {

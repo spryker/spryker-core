@@ -21,14 +21,14 @@ interface CollectorPluginCollectionInterface
     /**
      * @param string $type
      *
-     * @return CollectorPluginInterface
+     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface
      */
     public function getPlugin($type);
 
     /**
      * @param string $type
      *
-     * @return CollectorPluginInterface
+     * @return bool
      */
     public function hasPlugin($type);
 

@@ -13,7 +13,7 @@ class CollectorPluginCollection extends \ArrayObject implements CollectorPluginC
 {
 
     /**
-     * @var CollectorPluginInterface[]
+     * @var \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
      */
     protected $collectorPlugins = [];
 
@@ -24,7 +24,7 @@ class CollectorPluginCollection extends \ArrayObject implements CollectorPluginC
 
     /**
      * @param \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface $collectorPlugin
-     * @param $type
+     * @param string $type
      *
      * @return $this
      */

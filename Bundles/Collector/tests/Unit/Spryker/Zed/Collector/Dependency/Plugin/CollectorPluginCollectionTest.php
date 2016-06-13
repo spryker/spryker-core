@@ -110,10 +110,11 @@ class CollectorPluginCollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CollectorPluginInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface
      */
     private function getCollectorPluginMock()
     {
         return $this->getMock(CollectorPluginInterface::class);
     }
+
 }

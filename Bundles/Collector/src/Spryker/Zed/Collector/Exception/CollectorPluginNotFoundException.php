@@ -9,5 +9,4 @@ namespace Spryker\Zed\Collector\Exception;
 
 class CollectorPluginNotFoundException extends \Exception
 {
-
 }
