@@ -34,6 +34,46 @@ class EditController extends AddController
      */
     public function indexAction(Request $request)
     {
+
+/*
+        $attributes = [
+            ['red', 'blue', 'black'],
+            ['big', 'small', 'tiny'],
+            ['backed', 'raw']
+        ];
+
+        $attributesCount = count($attributes);
+        $current = array_pad([], $attributesCount, 0);
+
+        $changeIndex = 0;
+
+
+        echo "<pre>";
+
+        function printCurrrent($attributes, $current, $attributesCount) {
+            for ($i=0; $i<$attributesCount; $i++) {
+                print $attributes[$i][$current[$i]].' ';
+            }
+            print "\n";
+        }
+
+        while ($changeIndex < $attributesCount) {
+            printCurrrent($attributes, $current, $attributesCount);
+            $changeIndex = 0;
+
+            while ($changeIndex < $attributesCount) {
+                $current[$changeIndex]++;
+
+                if ($current[$changeIndex] === count($attributes[$changeIndex])) {
+                    $current[$changeIndex] = 0;
+                    $changeIndex++;
+                } else {
+                    break;
+                }
+            }
+        }*/
+
+
         $idProductAbstract = $this->castId($request->get(
             self::PARAM_ID_PRODUCT_ABSTRACT
         ));
@@ -78,30 +118,12 @@ class EditController extends AddController
             ]
         ];
 
-        function main($a) {
-            $result = [];
-
-            foreach ($a as $list) {
-
-            }
-            return $result;
-        }
-
-        function sub($items)
-        {
-
-        }
-
-        echo "<pre>";
-        $a = main($attributeCollection);
-        print_r($a);
-        die;
 
         $matrixGenerator = new MatrixGenerator();
-/*        $matrix = $matrixGenerator->t();
+        $matrix = $matrixGenerator->t();
         echo "<pre>";
         print_r($matrix);
-        die;*/
+        die;
 
         $matrix = $matrixGenerator->generate($productAbstract, $attributeCollection, $productAbstract->getSku());
         echo "<pre>";

@@ -31,28 +31,68 @@ class MatrixGenerator
             ]
         ];
 
-        $result = [];
-        $level = 0;
+        $attributes = [
+            ['red', 'blue', 'black'],
+            ['big', 'small', 'tiny'],
+            ['backed', 'raw']
+        ];
+
+        dump($attributes);
+
+        $attributes = [];
+        $attributesMeta = [];
         foreach ($attributeCollection as $attributeType => $attributeValueSet) {
-            $result = $this->g($attributeType, $attributeCollection);
-            $level++;
+            $typeAttributesValues = [];
+            $typeAttributesMeta = [];
+            foreach ($attributeValueSet as $name => $value) {
+                $typeAttributesValues[] = $attributeType . '-' .$name;
+                $typeAttributesMeta[$name] = $value;
+            }
+
+            $attributes[] = $typeAttributesValues;
+            $attributesMeta[] = [
+                $attributeType => $typeAttributesMeta
+            ];
         }
 
-        dump($result);
-    }
+        dump($attributes, $attributesMeta);
 
-    public function g($attributeType, $attributeCollection)
-    {
-        $children = $attributeCollection;
-        unset($children[$attributeType]);
+        $attributesCount = count($attributes);
+        $current = array_pad([], $attributesCount, 0);
 
+        $changeIndex = 0;
+
+        function gatherTokens($attributes, $current, $attributesCount, $attributesMeta) {
+            $result = [];
+            $resultMeta = [];
+            for ($i=0; $i<$attributesCount; $i++) {
+                $result['tokens'][] = $attributes[$i][$current[$i]];
+                $result['meta'][] = $attributesMeta[$i];
+            }
+
+            return $result;
+        }
 
         $result = [];
-        foreach ($children as $ct => $cvs) {
-            $result[] = $this->g($ct, $children);
+        while ($changeIndex < $attributesCount) {
+            $result[] = gatherTokens($attributes, $current, $attributesCount, $attributesMeta);
+            $changeIndex = 0;
+
+            while ($changeIndex < $attributesCount) {
+                $current[$changeIndex]++;
+
+                if ($current[$changeIndex] === count($attributes[$changeIndex])) {
+                    $current[$changeIndex] = 0;
+                    $changeIndex++;
+                } else {
+                    break;
+                }
+            }
         }
 
-        return $result;
+        echo "<pre>";
+        print_r($result);
+        die;
     }
 
     /**
@@ -88,50 +128,6 @@ class MatrixGenerator
         }
 
         $level++;
-
-        return $productMatrix;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $attributeCollection
-     *
-     * @return array
-     */
-    public function generate222(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku=null, $level=0)
-    {
-        if (!$currentSku) {
-            $currentSku = $productAbstractTransfer->getSku();
-        }
-
-        $productMatrix = [];
-        foreach ($attributeCollection as $attributeType => $attributeValueSet) {
-            $abstractSku = $this->generateSku($currentSku, $attributeType);
-
-            foreach ($attributeValueSet as $name => $value) {
-                $concreteSku = $this->generateSku($abstractSku, $name);
-
-                $productTransfer = (new ProductConcreteTransfer())
-                    ->fromArray($productAbstractTransfer->toArray(), true)
-                    ->setSku($concreteSku)
-                    ->setProductAbstractSku($productAbstractTransfer->getSku())
-                    ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
-
-                $s = $productTransfer->toArray(true);
-                //$s['localized_attributes'] = (array) $s['localized_attributes'];
-                //unset($s['localized_attributes']);
-                //$productMatrix[$attributeType][$name][$value][] = $s;
-                //$productMatrix[$attributeType][$name][] = $this->generateAttributes($name => $value);
-
-                $productAttributeCollection = $attributeCollection;
-                unset($productAttributeCollection[$attributeType]);
-
-                $productMatrix = array_merge(
-                    $productMatrix,
-                    $this->generate($productAbstractTransfer, $productAttributeCollection, $concreteSku, $level++)
-                );
-            }
-        }
 
         return $productMatrix;
     }
