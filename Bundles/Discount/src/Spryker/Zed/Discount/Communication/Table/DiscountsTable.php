@@ -74,6 +74,14 @@ class DiscountsTable extends AbstractTable
             SpyDiscountTableMap::COL_DISPLAY_NAME
         ]);
 
+        $config->setSortable([
+            SpyDiscountTableMap::COL_ID_DISCOUNT,
+            SpyDiscountTableMap::COL_DISPLAY_NAME,
+            SpyDiscountTableMap::COL_AMOUNT,
+            SpyDiscountTableMap::COL_IS_ACTIVE,
+            SpyDiscountTableMap::COL_IS_EXCLUSIVE,
+        ]);
+
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
