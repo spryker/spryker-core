@@ -32,6 +32,7 @@ use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
+use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
@@ -74,8 +75,6 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createTouchQueryContainer()
     {
-        trigger_error('Deprecated, use getTouchQueryContainer() instead.', E_USER_DEPRECATED);
-
         return $this->getTouchQueryContainer();
     }
 
@@ -107,14 +106,19 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createStorageMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterStorageTouchUpdater()
+            $this->createExporterWriterStorageTouchUpdater(),
+            $this->getCollectorStorageExporterPlugins()
         );
 
-        foreach ($this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS) as $touchItemType => $collectorPlugin) {
-            $storageExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
-        }
-
         return $storageExporter;
+    }
+
+    /**
+     * @return CollectorPluginCollectionInterface
+     */
+    protected function getCollectorStorageExporterPlugins()
+    {
+        return $this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS);
     }
 
     /**
@@ -128,14 +132,19 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createStorageMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterStorageTouchUpdater()
+            $this->createExporterWriterStorageTouchUpdater(),
+            $this->getCollectorFileExporterPlugins()
         );
 
-        foreach ($this->getProvidedDependency(CollectorDependencyProvider::FILE_PLUGINS) as $touchItemType => $collectorPlugin) {
-            $fileExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
-        }
-
         return $fileExporter;
+    }
+
+    /**
+     * @return CollectorPluginCollectionInterface
+     */
+    protected function getCollectorFileExporterPlugins()
+    {
+        return $this->getProvidedDependency(CollectorDependencyProvider::FILE_PLUGINS);
     }
 
     /**
@@ -266,14 +275,19 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createSearchMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterSearchTouchUpdater()
+            $this->createExporterWriterSearchTouchUpdater(),
+            $this->getCollectorSearchExporterPlugins()
         );
 
-        foreach ($this->getProvidedDependency(CollectorDependencyProvider::SEARCH_PLUGINS) as $touchItemType => $collectorPlugin) {
-            $searchExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
-        }
-
         return $searchExporter;
+    }
+
+    /**
+     * @return CollectorPluginCollectionInterface
+     */
+    protected function getCollectorSearchExporterPlugins()
+    {
+        return $this->getProvidedDependency(CollectorDependencyProvider::SEARCH_PLUGINS);
     }
 
     /**

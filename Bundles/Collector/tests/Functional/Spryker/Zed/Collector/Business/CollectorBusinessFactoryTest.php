@@ -8,6 +8,8 @@
 namespace Functional\Spryker\Zed\Collector\Business;
 
 use Spryker\Zed\Collector\Business\CollectorBusinessFactory;
+use Spryker\Zed\Collector\Business\Exporter\CollectorExporter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilderInterface;
 
 /**
  * @group Spryker
@@ -34,7 +36,7 @@ class CollectorBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $yvesFileExporter = $this->getFactory()->createYvesFileExporter();
 
-        $this->assertInstanceOf('\Spryker\Zed\Collector\Business\Exporter\CollectorExporter', $yvesFileExporter);
+        $this->assertInstanceOf(CollectorExporter::class, $yvesFileExporter);
     }
 
     /**
@@ -44,7 +46,7 @@ class CollectorBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $fileWriterBuilder = $this->getFactory()->createFileWriterBuilder();
 
-        $this->assertInstanceOf('\Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder', $fileWriterBuilder);
+        $this->assertInstanceOf(FileWriterBuilderInterface::class, $fileWriterBuilder);
     }
 
 }

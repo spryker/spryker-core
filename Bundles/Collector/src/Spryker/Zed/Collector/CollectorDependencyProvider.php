@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Collector;
 
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleBridge;
+use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollection;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -58,6 +59,18 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_LOCALE] = function (Container $container) {
             return new CollectorToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
+        $container[self::FILE_PLUGINS] = function (Container $container) {
+            return new CollectorPluginCollection();
+        };
+
+        $container[self::STORAGE_PLUGINS] = function (Container $container) {
+            return new CollectorPluginCollection();
+        };
+
+        $container[self::SEARCH_PLUGINS] = function (Container $container) {
+            return new CollectorPluginCollection();
         };
 
         return $container;

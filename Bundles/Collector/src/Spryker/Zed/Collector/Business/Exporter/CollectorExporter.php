@@ -67,21 +67,19 @@ class CollectorExporter
     public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output)
     {
         $results = [];
-        $types = array_keys($this->exporter->getCollectorPlugins());
+        $collectorPlugins = $this->exporter->getCollectorPlugins();
         $availableTypes = $this->getAvailableCollectorTypes();
-
         $output->writeln('');
         $output->writeln(sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>', $locale->getLocaleName()));
         $output->writeln('<fg=yellow>-------------</fg=yellow>');
 
         foreach ($availableTypes as $type) {
-            if (!in_array($type, $types)) {
+            if (!$collectorPlugins->hasPlugin($type)) {
                 $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green> ');
                 $output->write('<fg=white>N/A</fg=white>');
                 $output->writeln('');
                 continue;
             }
-
             $result = $this->exporter->exportByType($type, $locale, $output);
 
             $this->handleResult($result);
@@ -175,7 +173,7 @@ class CollectorExporter
      */
     public function getEnabledCollectorTypes()
     {
-        return array_keys($this->exporter->getCollectorPlugins());
+        return $this->exporter->getCollectorPlugins()->getTypes();
     }
 
     /**
