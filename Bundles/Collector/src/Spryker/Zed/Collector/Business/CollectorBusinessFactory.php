@@ -13,6 +13,7 @@ use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
+use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
 use Spryker\Zed\Collector\Business\Exporter\StorageExporter;
@@ -24,9 +25,10 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\RedisWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdater as StorageTouchUpdater;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Internal\InstallElasticsearch;
+use Spryker\Zed\Collector\Business\Manager\CollectorManager;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
+use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
-use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
@@ -85,6 +87,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         $storageExporter = new StorageExporter(
             $this->getTouchQueryContainer(),
+            $this->createRedisReader(),
             $this->createStorageWriter(),
             $this->createStorageMarker(),
             $this->createFailedResultModel(),
@@ -160,7 +163,10 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExporterWriterSearchTouchUpdater()
     {
-        return new SearchTouchUpdater();
+        return new SearchTouchUpdater(
+            $this->createBulkUpdateTouchQuery(),
+            $this->createBulkDeleteTouchQuery()
+        );
     }
 
     /**
@@ -168,7 +174,10 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExporterWriterStorageTouchUpdater()
     {
-        return new StorageTouchUpdater();
+        return new StorageTouchUpdater(
+            $this->createBulkUpdateTouchQuery(),
+            $this->createBulkDeleteTouchQuery()
+        );
     }
 
     /**
@@ -176,16 +185,12 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createYvesSearchExporter()
     {
-        $config = $this->getConfig();
         $searchWriter = $this->createSearchWriter();
 
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createElasticsearchExporter(
-                $searchWriter,
-                $config
-            ),
+            $this->createElasticsearchExporter($searchWriter),
             $this->getConfig()->getAvailableCollectorTypes()
         );
     }
@@ -198,24 +203,21 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createElasticsearchExporter(
-                $this->createSearchUpdateWriter(),
-                $this->getConfig()
-            ),
+            $this->createElasticsearchExporter($this->createSearchUpdateWriter()),
             $this->getConfig()->getAvailableCollectorTypes()
         );
     }
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $searchWriter
-     * @param \Spryker\Zed\Collector\CollectorConfig $config
      *
      * @return \Spryker\Zed\Collector\Business\Exporter\SearchExporter
      */
-    protected function createElasticsearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
+    protected function createElasticsearchExporter(WriterInterface $searchWriter)
     {
         $searchExporter = new SearchExporter(
             $this->getTouchQueryContainer(),
+            $this->createSearchReader(),
             $searchWriter,
             $this->createSearchMarker(),
             $this->createFailedResultModel(),
@@ -299,11 +301,49 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchReader
+     */
+    protected function createSearchReader()
+    {
+        return new ElasticsearchReader(
+            StorageInstanceBuilder::getElasticsearchInstance(),
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getSearchDocumentType()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder
      */
     protected function createSearchMarkerKeyBuilder()
     {
         return new SearchMarkerKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
+     */
+    protected function createBulkUpdateTouchQuery()
+    {
+        return $this->createBulkTouchQueryBuilder()
+            ->createBulkTouchUpdateQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
+     */
+    protected function createBulkDeleteTouchQuery()
+    {
+        return $this->createBulkTouchQueryBuilder()
+            ->createBulkTouchDeleteQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder
+     */
+    protected function createBulkTouchQueryBuilder()
+    {
+        return new BulkTouchQueryBuilder($this->getConfig());
     }
 
     /**
@@ -323,6 +363,14 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         $installer->setMessenger($messenger);
 
         return $installer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Manager\CollectorManager
+     */
+    public function createCollectorManager()
+    {
+        return new CollectorManager();
     }
 
 }

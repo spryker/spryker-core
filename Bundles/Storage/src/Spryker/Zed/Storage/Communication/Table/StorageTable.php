@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Storage\Communication\Table;
 
 use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Library\Sanitize\Html;
 
 class StorageTable extends AbstractTable
 {
@@ -44,6 +46,8 @@ class StorageTable extends AbstractTable
         $config->setHeader($headers);
         $config->setUrl('list-ajax');
 
+        $config->setRawColumns(['key']);
+
         return $config;
     }
 
@@ -66,10 +70,18 @@ class StorageTable extends AbstractTable
 
         $values = $this->storageClient->getMulti($keys);
 
+        $fixedValues = [];
+        foreach ($values as $i => $value) {
+            $i = str_replace('kv:', '', $i);
+            $fixedValues[$i] = $value;
+        }
+        $values = $fixedValues;
+
         foreach ($values as $key => $value) {
+            $url = Url::generate('/storage/maintenance/key', ['key' => $key]);
             $result[] = [
-                'key' => '<a href="/storage/maintenance/key?key=' . $key . '">' . $key . '</a>',
-                'value' => htmlentities(substr($value, 0, 200)),
+                'key' => '<a href="' . $url . '">' . Html::escape($key) . '</a>',
+                'value' => substr($value, 0, 200),
             ];
         }
 

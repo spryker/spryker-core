@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <maintenance>
+        <pages>
+            <statemachines-index>
+                <label>State machine</label>
+                <title>State machine</title>
+                <bundle>state-machine</bundle>
+                <controller>list</controller>
+                <action>index</action>
+            </statemachines-index>
+        </pages>
+    </maintenance>
+</config>

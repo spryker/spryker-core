@@ -28,7 +28,7 @@ class OmsConfig extends AbstractBundleConfig
      */
     public function getActiveProcesses()
     {
-        return [];
+        return $this->get(OmsConstants::ACTIVE_PROCESSES, []);
     }
 
     /**
@@ -50,6 +50,14 @@ class OmsConfig extends AbstractBundleConfig
     public function getStateBlacklist()
     {
         return [];
+    }
+
+    /**
+     * @return string
+     */
+    public function getStateMachineLockerTimeoutInterval()
+    {
+        return '1 minutes';
     }
 
 }

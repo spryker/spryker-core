@@ -35,14 +35,4 @@ class CollectorFactory extends AbstractFactory
         return $urlKeyBuilder;
     }
 
-    /**
-     * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return \Spryker\Client\Storage\StorageClient
-     */
-    protected function getStorageClient()
-    {
-        return $this->getProvidedDependency(CollectorDependencyProvider::CLIENT_KV_STORAGE);
-    }
-
 }

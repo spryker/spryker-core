@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Touch\Business;
 
+use Spryker\Shared\Library\BatchIterator\Builder\BatchIteratorBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouch;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
@@ -31,7 +32,8 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     {
         return new TouchRecord(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION),
+            $this->getBatchIteratorBuilder()
         );
     }
 
@@ -96,6 +98,14 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     protected function createIdFilterUpdate()
     {
         return new IdFilterUpdate($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\BatchIterator\Builder\BatchIteratorBuilder
+     */
+    protected function getBatchIteratorBuilder()
+    {
+        return new BatchIteratorBuilder();
     }
 
 }

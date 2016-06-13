@@ -19,7 +19,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/application": "^2.0.0",
     "spryker/acl": "^2.0.0",
-    "spryker/collector": "^2.0.0",
+    "spryker/collector": "^2.0.0 || ^3.0.0",
     "spryker/country": "^2.0.0",
     "spryker/locale": "^2.0.0",
     "spryker/newsletter": "^2.0.0",

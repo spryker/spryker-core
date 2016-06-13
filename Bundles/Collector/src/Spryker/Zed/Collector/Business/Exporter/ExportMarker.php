@@ -63,14 +63,14 @@ class ExportMarker implements MarkerInterface
     /**
      * @param string $exportType
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $timestamp
+     * @param \DateTime $timestamp
      *
      * @return void
      */
-    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, $timestamp)
+    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, \DateTime $timestamp)
     {
         $timestampKey = $this->keyBuilder->generateKey($exportType, $locale->getLocaleName());
-        $this->writer->write([$timestampKey => $timestamp], $exportType);
+        $this->writer->write([$timestampKey => $timestamp->format('Y-m-d H:i:s')], $exportType);
     }
 
     /**

@@ -26,10 +26,12 @@ class MaintenanceController extends AbstractController
      */
     public function indexAction()
     {
+        $count = $this->getFacade()->getTotalCount();
+
         return $this->viewResponse(
             [
-                'totalCount' => $this->getFacade()->getTotalCount(),
-                'metaData' => $this->getFacade()->getTotalCount(),
+                'totalCount' => $count,
+                'metaData' => $count,
             ]
         );
     }

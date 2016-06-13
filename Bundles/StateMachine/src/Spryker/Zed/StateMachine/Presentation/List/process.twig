@@ -1,0 +1,33 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Processes' } %}
+
+        {% block widget_content %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Processes for "{{ stateMachineName }}" state machine</h1>
+                </div>
+
+                {% for process in processes %}
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2>{{ process.processName }}</h2>
+                            </div>
+                            <div class="panel-body">
+                                <a href="{{ url('/state-machine/graph/draw', {process: process.processName, 'state-machine': stateMachineName}) }}" target="_blank">{{ process.processName }}</a>
+                                <a style="font-size:10px;" href="{{ url('/state-machine/graph/draw-preview-version', {process: process.processName}) }}" target="_blank">[preview-version]</a>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

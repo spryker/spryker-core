@@ -23,4 +23,14 @@ interface TouchRecordInterface
      */
     public function saveTouchRecord($itemType, $itemEvent, $idItem, $keyChange = false);
 
+    /**
+     * Removes all the rows from the touch table(s)
+     * which are marked as deleted (item_event = 2)
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function removeTouchEntriesMarkedAsDeleted();
+
 }

@@ -18,6 +18,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_TOUCH = 'touch query container';
     const SEARCH_PLUGINS = 'search plugins';
     const STORAGE_PLUGINS = 'storage plugins';
+    const FACADE_PROPEL = 'propel facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

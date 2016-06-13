@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
+use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
@@ -42,6 +44,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please use createLockedOrderStateMachine() instead
+     *
      * @param array $logContext
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
@@ -60,7 +64,20 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Please use createOrderStateMachine() instead
+     * @param array $logContext
+     *
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine
+     */
+    public function createLockedOrderStateMachine(array $logContext = [])
+    {
+         return new LockedOrderStateMachine(
+             $this->createOrderStateMachine($logContext),
+             $this->createTriggerLocker()
+         );
+    }
+
+    /**
+     * @deprecated Please use createLockedOrderStateMachine() instead
      *
      * @param array $logContext
      *
@@ -202,6 +219,17 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createUtilOrderItemMatrix()
     {
         return new OrderItemMatrix($this->getQueryContainer(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Lock\TriggerLocker
+     */
+    public function createTriggerLocker()
+    {
+        return new TriggerLocker(
+            $this->getQueryContainer(),
+            $this->getConfig()
+        );
     }
 
 }

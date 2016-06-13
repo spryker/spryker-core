@@ -125,4 +125,83 @@ class ProductCategoryFacadeTest extends Test
         );
     }
 
+    /**
+     * @group ProductCategory
+     *
+     * @return void
+     */
+    public function testDeleteCategoryWithParentsDeletesAllItsNodes()
+    {
+        $parentCategoryName1 = 'AParent';
+        $parentCategoryName2 = 'BParent';
+        $parentCategoryName3 = 'CParent';
+        $childCategoryName = 'Child';
+
+        $localeName = 'ABCDE';
+
+        $locale = $this->localeFacade->createLocale($localeName);
+
+        // Prepare category tree: 3 root "parent" categories, 1 child that belongs to 2 parents.
+
+        list($parentCategoryId1, $parentNodeId1) = $this->createDummyRootCategoryWithNode($parentCategoryName1, $locale);
+        list($parentCategoryId2, $parentNodeId2) = $this->createDummyRootCategoryWithNode($parentCategoryName2, $locale);
+
+        $childCategory = new CategoryTransfer();
+        $childCategory->setName($childCategoryName);
+        $childCategory->setCategoryKey(strtolower($childCategoryName));
+        $idChildCategory = $this->categoryFacade->createCategory($childCategory, $locale);
+
+        $childNode1 = new NodeTransfer();
+        $childNode1->setFkCategory($idChildCategory);
+        $childNode1->setFkParentCategoryNode($parentNodeId1);
+
+        $childNode2 = new NodeTransfer();
+        $childNode2->setFkCategory($idChildCategory);
+        $childNode2->setFkParentCategoryNode($parentNodeId2);
+
+        $this->categoryFacade->createCategoryNode($childNode1, $locale, false);
+        $childNodeId2 = $this->categoryFacade->createCategoryNode($childNode2, $locale, false);
+
+        list($parentCategoryId3, $parentNodeId3) = $this->createDummyRootCategoryWithNode($parentCategoryName3, $locale);
+
+        $this->assertNotEquals($parentCategoryId3, $parentNodeId3);
+
+        // Test that removing child category will also remove it's nodes from other parents
+        $this->productCategoryFacade->deleteCategory($childNodeId2, $parentNodeId2, true, $locale);
+
+        $parent1Children = $this->categoryFacade->getChildren($parentNodeId1, $locale);
+        $parent2Children = $this->categoryFacade->getChildren($parentNodeId2, $locale);
+
+        $this->assertEquals($parent1Children->count(), 0);
+        $this->assertEquals($parent2Children->count(), 0);
+
+        // Test removing of a category for which nodeId != categoryId works as well
+        $this->productCategoryFacade->deleteCategory($parentNodeId3, 0, true, $locale);
+
+        $result = $this->categoryFacade->getAllNodesByIdCategory($parentCategoryId3);
+
+        $this->assertEmpty($result);
+    }
+
+    /**
+     * @param string $name
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return array
+     */
+    protected function createDummyRootCategoryWithNode($name, $locale)
+    {
+        $parentCategory1 = new CategoryTransfer();
+        $parentCategory1->setName($name);
+        $parentCategory1->setCategoryKey(strtolower($name));
+        $idCategory = $this->categoryFacade->createCategory($parentCategory1, $locale);
+
+        $categoryNodeTransfer = new NodeTransfer();
+        $categoryNodeTransfer->setFkCategory($idCategory);
+        $categoryNodeTransfer->setIsRoot(true);
+        $idNode = $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $locale, false);
+
+        return [$idCategory, $idNode];
+    }
+
 }

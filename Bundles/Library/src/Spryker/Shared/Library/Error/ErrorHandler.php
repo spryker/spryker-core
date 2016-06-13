@@ -25,6 +25,8 @@ class ErrorHandler
 
     const DEVELOPMENT = 'development';
 
+    const SAPI_CLI = 'cli';
+
     /**
      * Do not allow object instantiation
      */
@@ -137,7 +139,7 @@ class ErrorHandler
      */
     protected function showErrorPage()
     {
-        if (headers_sent()) {
+        if (headers_sent() || $this->isCliCall()) {
             return;
         }
 
@@ -168,6 +170,14 @@ class ErrorHandler
         while (ob_get_level()) {
             ob_end_clean();
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isCliCall()
+    {
+        return PHP_SAPI === self::SAPI_CLI;
     }
 
 }
