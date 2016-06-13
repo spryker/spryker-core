@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
-use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface;
 
 class MetaDataProvider implements MetaDataProviderInterface
@@ -77,7 +76,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     {
         foreach ($this->specificationPlugins as $specificationPlugin) {
             if ($specificationPlugin instanceof DiscountRuleWithAttributesPluginInterface) {
-                list($fieldName, $attribute) = explode('.', $fieldName) ;
+                list($fieldName, $attribute) = explode('.', $fieldName);
             }
 
             if ($fieldName === $specificationPlugin->getFieldName()) {
@@ -120,7 +119,15 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @param DecisionRulePluginInterface|DiscountRuleWithAttributesPluginInterface $specificationPlugin
+     * @return array|string[]
+     */
+    public function getCompoundExpressions()
+    {
+        return $this->comparatorOperators->getCompoundComparatorExpressions();
+    }
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface $specificationPlugin
      *
      * @return array
      */

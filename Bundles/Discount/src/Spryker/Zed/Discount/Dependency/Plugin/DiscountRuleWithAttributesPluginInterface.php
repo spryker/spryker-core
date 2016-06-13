@@ -8,8 +8,10 @@ namespace Spryker\Zed\Discount\Dependency\Plugin;
 
 interface DiscountRuleWithAttributesPluginInterface
 {
+
     /**
      * @return array|string[]
      */
     public function getAttributeTypes();
+
 }

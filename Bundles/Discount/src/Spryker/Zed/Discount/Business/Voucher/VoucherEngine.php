@@ -305,7 +305,7 @@ class VoucherEngine implements VoucherEngineInterface
 
     /**
      * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
-     * @param SpyDiscountVoucher $voucherEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $voucherEntity
      *
      * @return void
      */

@@ -8,6 +8,7 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface;
 
 class SpecificationBuilder implements SpecificationBuilderInterface
@@ -42,21 +43,34 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     protected $clauseValidator;
 
     /**
+     * @var \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface
+     */
+    protected $metaDataProvider;
+
+    /**
+     * @var array|string[]
+     */
+    protected $availableFields;
+
+    /**
      * @param \Spryker\Zed\Discount\Business\QueryString\TokenizerInterface $tokenizer
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProvider
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorOperators
      * @param \Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface $clauseValidator
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface $metaDataProvider
      */
     public function __construct(
         TokenizerInterface $tokenizer,
         SpecificationProviderInterface $specificationProvider,
         ComparatorOperatorsInterface $comparatorOperators,
-        ClauseValidatorInterface $clauseValidator
+        ClauseValidatorInterface $clauseValidator,
+        MetaDataProviderInterface $metaDataProvider
     ) {
         $this->tokenizer = $tokenizer;
         $this->specificationProvider = $specificationProvider;
         $this->comparatorOperators = $comparatorOperators;
         $this->clauseValidator = $clauseValidator;
+        $this->metaDataProvider = $metaDataProvider;
     }
 
     /**
@@ -84,8 +98,9 @@ class SpecificationBuilder implements SpecificationBuilderInterface
         static $parenthesisDepth = 0;
 
         $leftNode = null;
-        $compositeSpecification = null;
-        $lastConditional = null;
+        $compositeNode = null;
+        $lastLogicalComparator = null;
+        $clauseTransfer = new ClauseTransfer();
 
         $countTokens = count($tokens);
 
@@ -93,8 +108,8 @@ class SpecificationBuilder implements SpecificationBuilderInterface
 
             $token = $this->cleanToken($tokens[$currentTokenIndex]);
 
-            switch ($token) {
-                case self::OPEN_PARENTHESIS:
+            switch (true) {
+                case self::OPEN_PARENTHESIS === $token:
                     $parenthesisDepth++;
                     $currentTokenIndex++;
                     $childTree = $this->buildTree($tokens, $currentTokenIndex);
@@ -102,47 +117,56 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                     if ($leftNode === null) {
                         $leftNode = $childTree;
                     } else {
-                        $compositeSpecification = $this->createComposite(
-                            $lastConditional,
-                            $leftNode,
-                            $childTree,
-                            $compositeSpecification
-                        );
+                        $compositeNode = $this->createCompositeNode($lastLogicalComparator, $leftNode, $childTree);
                     }
                     break;
 
-                case self::CLOSE_PARENTHESIS:
+                case self::CLOSE_PARENTHESIS === $token:
                     $parenthesisDepth--;
 
-                    if ($compositeSpecification == null && $leftNode !== null) {
+                    if ($compositeNode == null) {
                         return $leftNode;
                     }
 
-                    return $compositeSpecification;
+                    return $compositeNode;
 
-                case LogicalComparators::COMPARATOR_AND:
-                    $lastConditional = $token;
+                case $this->isLogicalComparator($token):
+                    $lastLogicalComparator = $token;
                     break;
 
-                case LogicalComparators::COMPARATOR_OR:
-                    $lastConditional = $token;
+                case $this->isField($token):
+                    $clauseTransfer = new ClauseTransfer();
+                    $this->setClauseField($token, $clauseTransfer);
                     break;
 
-                default:
-                    $clauseTransfer = $this->buildClause($tokens, $currentTokenIndex);
+                case $this->isComparator($token):
+                    if ($clauseTransfer->getOperator()) {
+                        $token = $clauseTransfer->getOperator() . ' ' . $token;
+                    }
+
+                    $clauseTransfer->setOperator($token);
+                    break;
+
+                case $this->isValue($token):
+                     $value = $this->clearQuotes($token);
+                     $clauseTransfer->setValue($value);
+
+                     $this->clauseValidator->validateClause($clauseTransfer);
 
                     if ($leftNode === null) {
                         $leftNode = $this->specificationProvider->getSpecificationContext($clauseTransfer);
-                        break;
+                    } else {
+                        $rightNode = $this->specificationProvider->getSpecificationContext($clauseTransfer);
+                        $compositeNode = $this->createCompositeNode($lastLogicalComparator, $leftNode, $rightNode);
                     }
 
-                    $rightNode = $this->specificationProvider->getSpecificationContext($clauseTransfer);
-
-                    $compositeSpecification = $this->createComposite(
-                        $lastConditional,
-                        $leftNode,
-                        $rightNode,
-                        $compositeSpecification
+                    break;
+                default:
+                    throw new QueryStringException(
+                        sprintf(
+                            "Token '%s' could not be identified by specification builder.",
+                            $token
+                        )
                     );
             }
 
@@ -153,68 +177,11 @@ class SpecificationBuilder implements SpecificationBuilderInterface
             throw new QueryStringException('Parenthesis not matching.');
         }
 
-        if ($compositeSpecification == null && $leftNode !== null) {
+        if ($compositeNode == null) {
             return $leftNode;
         }
 
-        return $compositeSpecification;
-    }
-
-    /**
-     * @param array $tokens
-     * @param int $currentTokenIndex
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
-     *
-     * @return \Generated\Shared\Transfer\ClauseTransfer
-     */
-    protected function buildClause($tokens, &$currentTokenIndex)
-    {
-        $value = '';
-        $fieldName = '';
-        $comparatorOperator = '';
-        $compoundComparator = '';
-
-        $countTokens = count($tokens);
-
-        while ($countTokens > $currentTokenIndex) {
-
-            $token = $this->cleanToken($tokens[$currentTokenIndex]);
-
-            if (!$fieldName) {
-                $fieldName = $token;
-                $currentTokenIndex++;
-                continue;
-            }
-
-            if (!$comparatorOperator) {
-
-                if (in_array($token, $this->getCompoundComparatorExpressions())) {
-                    $compoundComparator .= $token . ' ';
-                    $currentTokenIndex++;
-                    continue;
-                }
-
-                if ($compoundComparator) {
-                    $comparatorOperator = $compoundComparator;
-                } else {
-                    $comparatorOperator = $token;
-                    $currentTokenIndex++;
-                    continue;
-                }
-            }
-
-            if (!$value) {
-                $value = $this->cleanValue($token);
-            }
-
-            $clauseTransfer =  $this->createClauseTransfer($fieldName, $comparatorOperator, $value);
-            $this->clauseValidator->validateClause($clauseTransfer);
-
-            return $clauseTransfer;
-        }
-
-        throw new QueryStringException('Could not build clause from query string.');
+        return $compositeNode;
     }
 
     /**
@@ -230,34 +197,26 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     }
 
     /**
-     * @param string $conditional
+     * @param string $logicalComparator
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $leftNode
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $rightNode
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $compositeSpecification
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    protected function createComposite(
-        $conditional,
+    protected function createCompositeNode(
+        $logicalComparator,
         $leftNode,
-        $rightNode,
-        $compositeSpecification
+        $rightNode
     ) {
-        if (!$conditional) {
-            return $compositeSpecification;
+
+        $compositeNode = $leftNode;
+        if ($logicalComparator === LogicalComparators::COMPARATOR_AND) {
+            $compositeNode = $this->specificationProvider->createAnd($leftNode, $rightNode);
+        } elseif ($logicalComparator === LogicalComparators::COMPARATOR_OR) {
+            $compositeNode = $this->specificationProvider->createOr($leftNode, $rightNode);
         }
 
-        if ($compositeSpecification !== null) {
-            $leftNode = $compositeSpecification;
-        }
-
-        if ($conditional === LogicalComparators::COMPARATOR_AND) {
-            $compositeSpecification = $this->specificationProvider->createAnd($leftNode, $rightNode);
-        } elseif ($conditional === LogicalComparators::COMPARATOR_OR) {
-            $compositeSpecification = $this->specificationProvider->createOr($leftNode, $rightNode);
-        }
-
-        return $compositeSpecification;
+        return $compositeNode;
     }
 
     /**
@@ -268,23 +227,6 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     protected function cleanToken($token)
     {
         return strtolower($token);
-    }
-
-    /**
-     * @param string $fieldName
-     * @param string $comparatorOperator
-     * @param string $value
-     *
-     * @return \Generated\Shared\Transfer\ClauseTransfer
-     */
-    protected function createClauseTransfer($fieldName, $comparatorOperator, $value)
-    {
-        $clauseTransfer = new ClauseTransfer();
-        $this->setClauseField($fieldName, $clauseTransfer);
-        $clauseTransfer->setOperator(trim($comparatorOperator));
-        $clauseTransfer->setValue(trim($value));
-
-        return $clauseTransfer;
     }
 
     /**
@@ -308,9 +250,76 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      *
      * @return string
      */
-    protected function cleanValue($value)
+    protected function clearQuotes($value)
     {
         return preg_replace('/["\']/', '', $value);
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return bool
+     */
+    protected function isField($token)
+    {
+        $availableFields = $this->metaDataProvider->getAvailableFields();
+        foreach ($availableFields as $field) {
+            if ($field === $token) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return bool
+     */
+    protected function isLogicalComparator($token)
+    {
+        return in_array($token, [LogicalComparators::COMPARATOR_AND, LogicalComparators::COMPARATOR_OR], true);
+
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return bool
+     */
+    protected function isComparator($token)
+    {
+        if (in_array($token, $this->getCompoundComparatorExpressions(), true)) {
+            return true;
+        }
+
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setOperator($token);
+        return $this->comparatorOperators->isValidComparator($clauseTransfer);
+    }
+
+
+    /**
+     * @param string $token
+     *
+     * @return bool
+     */
+    protected function isValue($token)
+    {
+         $first = substr($token, 0, 1);
+         $last = substr($token, -1);
+
+        if ($first === '"' && $last === '"') {
+            return true;
+        }
+
+        if ($first === "'" && $last === "'") {
+            return true;
+        }
+
+         return false;
     }
 
 }

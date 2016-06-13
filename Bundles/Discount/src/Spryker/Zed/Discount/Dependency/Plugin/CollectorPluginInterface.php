@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Discount\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CollectorPluginInterface
@@ -17,7 +16,7 @@ interface CollectorPluginInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return DiscountableItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
 

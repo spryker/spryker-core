@@ -95,7 +95,6 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
         $discountVoucherEntityMock->method('getMaxNumberOfUses')
             ->willReturn(5);
 
-
         $voucherPoolEntity = $this->createVoucherPoolEntity();
         $voucherPoolEntity->setIsActive(true);
 
@@ -127,7 +126,6 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
         $discountVoucherEntityMock->method('getMaxNumberOfUses')
             ->willReturn(5);
 
-
         $voucherPoolEntity = $this->createVoucherPoolEntity();
         $voucherPoolEntity->setIsActive(true);
 
@@ -152,8 +150,8 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
     protected function createVoucherValidator(
         DiscountQueryContainerInterface $discountQueryContainerMock = null,
         DiscountToMessengerInterface $messengerFacadeMock = null
-    )
-    {
+    ) {
+
         if ($discountQueryContainerMock == null) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
@@ -166,7 +164,7 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function createDiscountQueryContainerMock()
     {
@@ -174,7 +172,7 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountToMessengerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected function createMessengerFacadeMock()
     {
@@ -182,7 +180,7 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpyDiscountVoucher
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     protected function createDiscountVoucherEntityMock()
     {
@@ -190,7 +188,7 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpyDiscountVoucherQuery
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     protected function createDiscountVoucherQueryMock()
     {
@@ -223,4 +221,5 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
     {
         return new SpyDiscountVoucherPool();
     }
+
 }

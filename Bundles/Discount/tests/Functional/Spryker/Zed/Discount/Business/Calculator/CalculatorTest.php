@@ -149,7 +149,8 @@ class CalculatorTest extends Test
             $this->createTokenizer(),
             $this->createCollectorSpecificationProvider(),
             $this->createComparatorOperators(),
-            $this->createClauseValidator()
+            $this->createClauseValidator(),
+            $this->createMetaDataProvider()
         );
     }
 

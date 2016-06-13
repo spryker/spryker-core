@@ -259,7 +259,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountConfig
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\DiscountConfig
      */
     protected function createDiscountConfigMock()
     {
@@ -267,7 +267,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function createDiscountQueryContainerMock()
     {
@@ -275,7 +275,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpyDiscountVoucher
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     protected function createDiscountVoucherEntityMock()
     {
@@ -283,7 +283,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpyDiscountVoucherQuery
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     protected function createDiscountVoucherQueryMock()
     {
@@ -299,7 +299,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ConnectionInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
     protected function createConnectionMock()
     {
@@ -320,4 +320,5 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
 
         return $discountVoucherTransfer;
     }
+
 }

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification;
 
-use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class CollectorOrSpecification implements CollectorSpecificationInterface
@@ -35,7 +34,7 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return DiscountableItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer)
     {
@@ -49,7 +48,7 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $leftArray
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $rightArray
      *
-     * @return DiscountableItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     protected function array_merge_by_object(array $leftArray, array $rightArray)
     {

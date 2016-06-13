@@ -13,6 +13,7 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridgeInterface;
 
 class OrderExpenseTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -38,7 +39,7 @@ class OrderExpenseTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {
@@ -68,10 +69,11 @@ class OrderExpenseTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountToTaxBridgeInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridgeInterface
      */
     protected function createDiscountTaxBridgeMock()
     {
         return $this->getMock(DiscountToTaxBridgeInterface::class);
     }
+
 }

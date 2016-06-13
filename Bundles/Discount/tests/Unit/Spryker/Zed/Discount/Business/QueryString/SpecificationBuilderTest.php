@@ -6,12 +6,14 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
+use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 
@@ -28,8 +30,14 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('getSpecificationContext')
             ->willReturn($this->createDecisionRuleContextMock());
 
-        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock);
-        $compositeSpecification = $specificationBuilder->buildFromQueryString('sku = 123');
+        $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
+        $createComparatorOperatorsMock->method('isValidComparator')
+            ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
+                return $clauseTransfer->getOperator() === '=' ? true : false;
+            });
+
+        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
+        $compositeSpecification = $specificationBuilder->buildFromQueryString('sku = "123"');
 
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
     }
@@ -47,7 +55,13 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
         $specificationProviderMock->expects($this->once())
             ->method('createOr');
 
-        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock);
+        $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
+        $createComparatorOperatorsMock->method('isValidComparator')
+            ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
+                return $clauseTransfer->getOperator() === '=' ? true : false;
+            });
+
+        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
         $compositeSpecification = $specificationBuilder->buildFromQueryString('sku = "123" or quantity = "321"');
 
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
@@ -66,7 +80,13 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
         $specificationProviderMock->expects($this->once())
             ->method('createAnd');
 
-        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock);
+        $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
+        $createComparatorOperatorsMock->method('isValidComparator')
+            ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
+                return $clauseTransfer->getOperator() === '=' ? true : false;
+            });
+
+        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
         $compositeSpecification = $specificationBuilder->buildFromQueryString('sku = "123" and quantity = "321"');
 
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
@@ -90,7 +110,17 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('createOr')
             ->willReturn($this->createDecisionRuleSpecificationMock());
 
-        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, ['is', 'in']);
+        $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
+        $createComparatorOperatorsMock->method('isValidComparator')
+            ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
+                if ($clauseTransfer->getOperator() === '=' || $clauseTransfer->getOperator() === 'is in') {
+                    return true;
+                }
+
+                return false;
+            });
+
+        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
         $compositeSpecification = $specificationBuilder->buildFromQueryString(
             '((sku = "123" and (quantity is in "321,321" or sku = "123"))) or color = "red"'
         );
@@ -108,7 +138,17 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('getSpecificationContext')
             ->willReturn($this->createDecisionRuleContextMock());
 
-        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock);
+        $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
+        $createComparatorOperatorsMock->method('isValidComparator')
+            ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
+                if ($clauseTransfer->getOperator() === '=') {
+                    return true;
+                }
+
+                return false;
+            });
+
+        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
         $compositeSpecification = $specificationBuilder->buildFromQueryString(
             'attribute.value = "123"'
         );
@@ -123,9 +163,18 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(QueryStringException::class);
 
-        $specificationProviderMock = $this->createSpecificationProviderMock();
+        $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
+        $createComparatorOperatorsMock->method('isValidComparator')
+            ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
+                if ($clauseTransfer->getOperator() === '=') {
+                    return true;
+                }
 
-        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock);
+                return false;
+            });
+
+        $specificationProviderMock = $this->createSpecificationProviderMock();
+        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
         $compositeSpecification = $specificationBuilder->buildFromQueryString('(sku = ');
 
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
@@ -153,35 +202,61 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(QueryStringException::class);
 
-        $specificationProviderMock = $this->createSpecificationProviderMock();
-        $specificationProviderMock->expects($this->once())
-            ->method('getSpecificationContext')
-            ->willReturn($this->createDecisionRuleContextMock());
+        $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
+        $createComparatorOperatorsMock->method('isValidComparator')
+            ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
+                if ($clauseTransfer->getOperator() === '=') {
+                    return true;
+                }
 
-        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock);
+                return false;
+            });
+
+        $specificationProviderMock = $this->createSpecificationProviderMock();
+        $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
         $specificationBuilder->buildFromQueryString('(sku = 123');
     }
 
 
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProviderMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $createComparatorOperatorsMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface $metaDataProviderMock
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
     public function createSpecificationBuilder(
         SpecificationProviderInterface $specificationProviderMock,
-        array $compoundExpressions = []
+        ComparatorOperatorsInterface $createComparatorOperatorsMock = null,
+        MetaDataProviderInterface $metaDataProviderMock = null
     ) {
-        $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $createComparatorOperatorsMock->method('getCompoundComparatorExpressions')
-            ->willReturn($compoundExpressions);
+
+        if ($createComparatorOperatorsMock === null) {
+            $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
+        }
+
+        if ($metaDataProviderMock === null) {
+            $metaDataProviderMock = $this->createMetaDataProviderMock();
+            $metaDataProviderMock->method('getAvailableFields')
+                ->willReturn(['quantity', 'sku', 'color', 'attribute.value']);
+
+        }
 
         return new SpecificationBuilder(
             $this->createTokenizer(),
             $specificationProviderMock,
             $createComparatorOperatorsMock,
-            $this->createClauseValidatorMock()
+            $this->createClauseValidatorMock(),
+            $metaDataProviderMock
         );
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface
+     */
+    protected function createMetaDataProviderMock()
+    {
+        return $this->getMock(MetaDataProviderInterface::class);
     }
 
     /**
@@ -205,7 +280,11 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createComparatorOperatorsMock()
     {
-        return $this->getMock(ComparatorOperatorsInterface::class);
+        $createComparatorOperatorsMock = $this->getMock(ComparatorOperatorsInterface::class);
+
+        $createComparatorOperatorsMock->method('getCompoundComparatorExpressions')->willReturn(['is', 'in']);
+
+        return $createComparatorOperatorsMock;
     }
 
 
@@ -214,7 +293,9 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createSpecificationProviderMock()
     {
-        return $this->getMock(SpecificationProviderInterface::class);
+        $specificationProviderMock = $this->getMock(SpecificationProviderInterface::class);
+
+        return $specificationProviderMock;
     }
 
     /**

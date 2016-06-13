@@ -40,4 +40,9 @@ interface MetaDataProviderInterface
      */
     public function getLogicalComparators();
 
+    /**
+     * @return array|string[]
+     */
+    public function getCompoundExpressions();
+
 }

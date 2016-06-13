@@ -82,10 +82,11 @@ class OrderExpenseWithDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function createDiscountQueryContainerMock()
     {
         return $this->getMock(DiscountQueryContainerInterface::class);
     }
+
 }

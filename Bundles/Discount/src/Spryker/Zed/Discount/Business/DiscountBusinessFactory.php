@@ -294,7 +294,8 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->createTokenizer(),
             $this->createDecisionRuleProvider(),
             $this->createComparatorOperators(),
-            $this->createClauseValidator(MetaProviderFactory::TYPE_DECISION_RULE)
+            $this->createClauseValidator(MetaProviderFactory::TYPE_DECISION_RULE),
+            $this->createMetaDataProviderByType(MetaProviderFactory::TYPE_DECISION_RULE)
         );
     }
 
@@ -307,7 +308,8 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->createTokenizer(),
             $this->createCollectorProvider(),
             $this->createComparatorOperators(),
-            $this->createClauseValidator(MetaProviderFactory::TYPE_COLLECTOR)
+            $this->createClauseValidator(MetaProviderFactory::TYPE_COLLECTOR),
+            $this->createMetaDataProviderByType(MetaProviderFactory::TYPE_COLLECTOR)
         );
     }
 
@@ -316,10 +318,10 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     protected function createClauseValidator($type)
     {
-        $metaDatProvider = $this->createQueryStringSpecificationMetaProviderFactory()
-            ->createMetaProviderByType($type);
-
-        return new ClauseValidator($this->createComparatorOperators(), $metaDatProvider);
+        return new ClauseValidator(
+            $this->createComparatorOperators(),
+            $this->createMetaDataProviderByType($type)
+        );
     }
 
     /**
@@ -333,7 +335,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory
      */
-    public function createQueryStringSpecificationMetaProviderFactory()
+    public function createQueryStringMetaDataProviderFactory()
     {
         return new MetaProviderFactory($this);
     }
@@ -469,6 +471,17 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function getCurrencyManager()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::CURRENCY_MANAGER);
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
+     */
+    protected function createMetaDataProviderByType($type)
+    {
+        return $this->createQueryStringMetaDataProviderFactory()
+            ->createMetaProviderByType($type);
     }
 
 }

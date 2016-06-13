@@ -67,6 +67,19 @@ class SpecificationBuilderTest extends Test
     /**
      * @return void
      */
+    public function testSpecificationBuildMultipleWithBooleanOrShouldReturnOrSpecs()
+    {
+        $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
+
+        $specification = $decisionRuleSpecificationBuilder->buildFromQueryString('(sku = "231" or (sku = "1" and  sku = "2")) and sku = "3") ');
+
+        $this->assertInstanceOf(DecisionRuleAndSpecification::class, $specification);
+
+    }
+
+    /**
+     * @return void
+     */
     public function testSpecificationBuildWhenInvalidFieldIsUsedShouldThrowException()
     {
         $this->expectException(QueryStringException::class);
@@ -118,7 +131,8 @@ class SpecificationBuilderTest extends Test
             $this->createTokenizer(),
             $this->createDecisionRuleProvider(),
             $comparatorOperators,
-            $this->createClauseValidator($comparatorOperators, $decisionRuleMetaProvider)
+            $this->createClauseValidator($comparatorOperators, $decisionRuleMetaProvider),
+            $this->createMetaDataProvider()
         );
     }
 
@@ -130,6 +144,19 @@ class SpecificationBuilderTest extends Test
         return [
            new SkuDecisionRulePlugin()
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
+     */
+    protected function createMetaDataProvider()
+    {
+        return new MetaDataProvider(
+            $this->createDecisionRulePlugins(),
+            $this->createComparatorOperators(),
+            $this->createLogicalComparators()
+        );
+
     }
 
     /**

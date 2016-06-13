@@ -343,7 +343,7 @@ class DiscountFacade extends AbstractFacade
     public function getQueryStringFieldsByType($type)
     {
         return $this->getFactory()
-            ->createQueryStringSpecificationMetaProviderFactory()
+            ->createQueryStringMetaDataProviderFactory()
             ->createMetaProviderByType($type)
             ->getAvailableFields();
     }
@@ -364,7 +364,7 @@ class DiscountFacade extends AbstractFacade
     public function getQueryStringFieldExpressionsForField($type, $fieldName)
     {
         return $this->getFactory()
-            ->createQueryStringSpecificationMetaProviderFactory()
+            ->createQueryStringMetaDataProviderFactory()
             ->createMetaProviderByType($type)
             ->getAvailableOperatorExpressionsForField($fieldName);
     }
@@ -384,7 +384,7 @@ class DiscountFacade extends AbstractFacade
     public function getQueryStringComparatorExpressions($type)
     {
         return $this->getFactory()
-            ->createQueryStringSpecificationMetaProviderFactory()
+            ->createQueryStringMetaDataProviderFactory()
             ->createMetaProviderByType($type)
             ->getAvailableComparatorExpressions();
     }
@@ -404,7 +404,7 @@ class DiscountFacade extends AbstractFacade
     public function getQueryStringLogicalComparators($type)
     {
         return $this->getFactory()
-            ->createQueryStringSpecificationMetaProviderFactory()
+            ->createQueryStringMetaDataProviderFactory()
             ->createMetaProviderByType($type)
             ->getLogicalComparators();
     }
