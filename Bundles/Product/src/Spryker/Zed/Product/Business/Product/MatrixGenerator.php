@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class MatrixGenerator
 {
@@ -31,28 +30,15 @@ class MatrixGenerator
             ]
         ];
 
-        $attributes = [
-            ['red', 'blue', 'black'],
-            ['big', 'small', 'tiny'],
-            ['backed', 'raw']
-        ];
-
-        dump($attributes);
-
         $attributes = [];
         $attributesMeta = [];
         foreach ($attributeCollection as $attributeType => $attributeValueSet) {
             $typeAttributesValues = [];
-            $typeAttributesMeta = [];
             foreach ($attributeValueSet as $name => $value) {
-                $typeAttributesValues[] = $attributeType . '-' .$name;
-                $typeAttributesMeta[$name] = $value;
+                $typeAttributesValues[] = [$attributeType => $name];
             }
 
             $attributes[] = $typeAttributesValues;
-            $attributesMeta[] = [
-                $attributeType => $typeAttributesMeta
-            ];
         }
 
         dump($attributes, $attributesMeta);
@@ -62,20 +48,31 @@ class MatrixGenerator
 
         $changeIndex = 0;
 
-        function gatherTokens($attributes, $current, $attributesCount, $attributesMeta) {
-            $result = [];
-            $resultMeta = [];
+        function gatherTokens($attributes, $current, $attributesCount)
+        {
+            $tokens = [];
             for ($i=0; $i<$attributesCount; $i++) {
-                $result['tokens'][] = $attributes[$i][$current[$i]];
-                $result['meta'][] = $attributesMeta[$i];
+                $tokens[] = $attributes[$i][$current[$i]];
             }
 
-            return $result;
+            $sku = '';
+            for ($a=0; $a<count($tokens); $a++) {
+                foreach ($tokens[$a] as $type => $value) {
+                    $sku .= $type . '-' . $value . '_';
+                }
+            }
+
+            $sku = rtrim($sku, '_');
+
+            return [
+                'tokens' => $tokens,
+                'sku' => $sku
+            ];
         }
 
         $result = [];
         while ($changeIndex < $attributesCount) {
-            $result[] = gatherTokens($attributes, $current, $attributesCount, $attributesMeta);
+            $result[] = gatherTokens($attributes, $current, $attributesCount);
             $changeIndex = 0;
 
             while ($changeIndex < $attributesCount) {
@@ -101,7 +98,7 @@ class MatrixGenerator
      *
      * @return array
      */
-    public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku, &$level=0)
+    public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku, &$level = 0)
     {
         $productMatrix = [];
         foreach ($attributeCollection as $attributeType => $attributeValueSet) {
