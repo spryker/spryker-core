@@ -147,6 +147,7 @@ class GeneralForm extends AbstractType
     {
         $builder->add(self::FIELD_VALID_FROM, 'date', [
             'widget' => 'single_text',
+            'required' => true,
             'attr' => [
                 'class' => 'datepicker',
             ],
@@ -164,6 +165,7 @@ class GeneralForm extends AbstractType
     {
         $builder->add(self::FIELD_VALID_TO, 'date', [
             'widget' => 'single_text',
+            'required' => true,
             'attr' => [
                 'class' => 'datepicker',
             ],
@@ -171,18 +173,6 @@ class GeneralForm extends AbstractType
 
         return $this;
     }
-
-    /**
-     * @return array
-     */
-    protected function generateFutureDates()
-    {
-        $date = new \DateTime();
-        $date->add(new \DateInterval('P10Y'));
-
-        return range(date('Y'), $date->format('Y-m-d'));
-    }
-
 
     /**
      * Returns the name of this type.

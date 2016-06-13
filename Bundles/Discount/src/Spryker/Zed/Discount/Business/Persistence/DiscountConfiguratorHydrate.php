@@ -140,7 +140,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     {
         $voucherType = DiscountConstants::TYPE_CART_RULE;
         if ($discountEntity->getFkDiscountVoucherPool()) {
-            $voucherType = DiscountConstants::TYPE_CART_RULE;
+            $voucherType = DiscountConstants::TYPE_VOUCHER;
         }
 
         return $voucherType;
