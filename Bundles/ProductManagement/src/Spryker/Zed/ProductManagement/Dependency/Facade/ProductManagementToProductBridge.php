@@ -91,6 +91,21 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteCollection
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    {
+        return $this->productFacade->saveProduct($productAbstractTransfer, $productConcreteCollection);
+    }
+
+    /**
+     * @api
+     *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
     public function getAttributeManager()

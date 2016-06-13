@@ -173,4 +173,13 @@ interface ProductManagerInterface
      */
     public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteCollection
+     *
+     * @throws \Exception
+     * @return int
+     */
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+
 }

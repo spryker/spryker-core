@@ -8,120 +8,72 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class MatrixGenerator
 {
+
+    const TOKENS = 'tokens';
+    const SKU = 'sku';
+
+    const SKU_ABSTRACT_SEPARATOR = '-';
     const SKU_TYPE_SEPARATOR = '-';
     const SKU_VALUE_SEPARATOR = '_';
 
-    public function t()
+    /**
+     * @param array $orderedTokenCollection
+     *
+     * @return string
+     */
+    protected function generateSkuFromTokens(array $orderedTokenCollection)
     {
-        $attributeCollection = [
-            'size' => [
-                '40' => '40',
-                '41' => '41',
-            ],
-            'color' => [
-                'blue' => 'Blue',
-                'red' => 'Red',
-                'white' => 'White',
-            ],
-            'flavour' => [
-                'spicy' => 'Mexican Food',
-                'sweet' => 'Cakes'
-            ]
-        ];
-
-        $attributes = [];
-        foreach ($attributeCollection as $attributeType => $attributeValueSet) {
-            $typeAttributesValues = [];
-            foreach ($attributeValueSet as $name => $value) {
-                $typeAttributesValues[] = [$attributeType => $name];
-            }
-
-            $attributes[] = $typeAttributesValues;
-        }
-
-        $attributesCount = count($attributes);
-        $current = array_pad([], $attributesCount, 0);
-
-        $changeIndex = 0;
-
-        function gatherTokens($attributes, $current, $attributesCount)
-        {
-            echo "<pre>";
-            $orderedTokens = [];
-            $unorderedTokenCollection = [];
-
-            for ($i=0; $i<$attributesCount; $i++) {
-                list($type, $value) = each($attributes[$i][$current[$i]]);
-                $unorderedTokenCollection[$type] = $value;
-            }
-
-            ksort($unorderedTokenCollection, SORT_STRING | SORT_FLAG_CASE);
-
-            foreach ($unorderedTokenCollection as $type => $value) {
-                $orderedTokens[] = [$type => $value];
-            }
-
-            $sku = '';
-            for ($a=0; $a<count($orderedTokens); $a++) {
-                foreach ($orderedTokens[$a] as $type => $value) {
-                    $sku .= $type . '-' . $value . '_';
-                }
-            }
-
-            $sku = rtrim($sku, '_');
-
-            return [
-                'tokens' => $orderedTokens,
-                'sku' => $sku
-            ];
-        }
-
-        $result = [];
-        while ($changeIndex < $attributesCount) {
-            $result[] = gatherTokens($attributes, $current, $attributesCount);
-            $changeIndex = 0;
-
-            while ($changeIndex < $attributesCount) {
-                $current[$changeIndex]++;
-
-                if ($current[$changeIndex] === count($attributes[$changeIndex])) {
-                    $current[$changeIndex] = 0;
-                    $changeIndex++;
-                } else {
-                    break;
-                }
+        $sku = '';
+        for ($a=0; $a<count($orderedTokenCollection); $a++) {
+            foreach ($orderedTokenCollection[$a] as $type => $value) {
+                $sku .= $type . self::SKU_TYPE_SEPARATOR . $value . self::SKU_VALUE_SEPARATOR;
             }
         }
 
-        echo "<pre>";
-        print_r($result);
-        die;
+        return rtrim($sku, self::SKU_VALUE_SEPARATOR);
     }
 
     /**
-     * @param array $attributes
+     * @param string $abstractSku
+     * @param string $concreteSku
+     *
+     * @return string
+     */
+    protected function formatConcreteSku($abstractSku, $concreteSku)
+    {
+        return sprintf(
+            '%s%s%s',
+            $abstractSku,
+            self::SKU_ABSTRACT_SEPARATOR,
+            $concreteSku
+        );
+    }
+
+    /**
+     * @param array $attributeCollection
      * @param array $current
-     * @param int $attributesCount
+     * @param int $attributeCount
      *
      * @return array
      */
-    protected function gatherTokens(array $attributes, array $current, $attributesCount)
+    protected function collectTokens(array $attributeCollection, array $current, $attributeCount)
     {
         $tokens = [];
-        for ($i=0; $i<$attributesCount; $i++) {
-            list($type, $value) = each($attributes[$i][$current[$i]]);
+        for ($a = 0; $a < $attributeCount; $a++) {
+            list($type, $value) = each($attributeCollection[$a][$current[$a]]);
             $tokens[$type] = $value;
         }
 
         $orderedTokens = $this->sortTokens($tokens);
-        $sku = $this->generateSku($orderedTokens);
+        $sku = $this->generateSkuFromTokens($orderedTokens);
 
         return [
-            'tokens' => $orderedTokens,
-            'sku' => $sku
+            self::TOKENS => $orderedTokens,
+            self::SKU => $sku
         ];
     }
 
@@ -143,28 +95,11 @@ class MatrixGenerator
     }
 
     /**
-     * @param array $orderedTokens
-     *
-     * @return string
-     */
-    protected function generateSku(array $orderedTokens)
-    {
-        $sku = '';
-        for ($a=0; $a<count($orderedTokens); $a++) {
-            foreach ($orderedTokens[$a] as $type => $value) {
-                $sku .= $type . self::SKU_TYPE_SEPARATOR . $value . self::SKU_VALUE_SEPARATOR;
-            }
-        }
-
-        return rtrim($sku, self::SKU_VALUE_SEPARATOR);
-    }
-
-    /**
      * @param array $attributeCollection
      *
      * @return array
      */
-    public function generateTokens(array $attributeCollection)
+    protected function convertAttributesIntoTokens(array $attributeCollection)
     {
         $attributes = [];
         foreach ($attributeCollection as $attributeType => $attributeValueSet) {
@@ -176,19 +111,46 @@ class MatrixGenerator
             $attributes[] = $typeAttributesValues;
         }
 
-        $attributesCount = count($attributes);
-        $current = array_pad([], $attributesCount, 0);
+        return $attributes;
+    }
+
+    /**
+     * @param array $tokenCollection
+     *
+     * @return array
+     */
+    protected function convertTokensIntoAttributes(array $tokenCollection)
+    {
+        $attributes = [];
+        for ($a=0; $a<count($tokenCollection); $a++) {
+            foreach ($tokenCollection[$a] as $attributeType => $attributeValue) {
+                $attributes[$attributeType] = $attributeValue;
+            }
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param array $tokenAttributeCollection
+     *
+     * @return array
+     */
+    public function generateTokens(array $tokenAttributeCollection)
+    {
+        $attributeCount = count($tokenAttributeCollection);
+        $current = array_pad([], $attributeCount, 0);
         $changeIndex = 0;
 
         $result = [];
-        while ($changeIndex < $attributesCount) {
-            $result[] = $this->gatherTokens($attributes, $current, $attributesCount);
+        while ($changeIndex < $attributeCount) {
+            $result[] = $this->collectTokens($tokenAttributeCollection, $current, $attributeCount);
             $changeIndex = 0;
 
-            while ($changeIndex < $attributesCount) {
+            while ($changeIndex < $attributeCount) {
                 $current[$changeIndex]++;
 
-                if ($current[$changeIndex] === count($attributes[$changeIndex])) {
+                if ($current[$changeIndex] === count($tokenAttributeCollection[$changeIndex])) {
                     $current[$changeIndex] = 0;
                     $changeIndex++;
                 } else {
@@ -208,38 +170,42 @@ class MatrixGenerator
      */
     public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
+        $tokenCollection = $this->generateTokens(
+            $this->convertAttributesIntoTokens($attributeCollection)
+        );
 
-    }
+        $result = [];
+        foreach ($tokenCollection as $token) {
+            $sku = $this->formatConcreteSku(
+                $productAbstractTransfer->requireSku()->getSku(),
+                $token[self::SKU]
+            );
+            $attributeTokens = $this->convertTokensIntoAttributes($token[self::TOKENS]);
 
-    public function generate222(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection, $currentSku, &$level = 0)
-    {
-        $productMatrix = [];
-        foreach ($attributeCollection as $attributeType => $attributeValueSet) {
-            foreach ($attributeValueSet as $name => $value) {
-                $concreteSku = $this->generateSku($currentSku, $name);
-
-/*                $productTransfer = (new ProductConcreteTransfer())
-                    ->fromArray($productAbstractTransfer->toArray(), true)
-                    ->setSku($concreteSku)
-                    ->setProductAbstractSku($productAbstractTransfer->getSku())
-                    ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());*/
-
-                //$s = $productTransfer->toArray(true);
-                //$s['localized_attributes'] = (array) $s['localized_attributes'];
-                //unset($s['localized_attributes']);
-                $productMatrix[$currentSku][$name] = $value;
-
-                $productAttributeCollection = $attributeCollection;
-                unset($productAttributeCollection[$attributeType]);
-
-                $productMatrix += $this->generate($productAbstractTransfer, $productAttributeCollection, $concreteSku);
-            }
-
+            $result[] = $this->createProductConcreteTransfer($productAbstractTransfer, $sku, $attributeTokens);
         }
 
-        $level++;
+        return $result;
+    }
 
-        return $productMatrix;
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param string $concreteSku
+     * @param array $attributeTokens
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function createProductConcreteTransfer(
+        ProductAbstractTransfer $productAbstractTransfer,
+        $concreteSku,
+        array $attributeTokens
+    ) {
+        return (new ProductConcreteTransfer())
+            ->fromArray($productAbstractTransfer->toArray(), true)
+            ->setSku($concreteSku)
+            ->setProductAbstractSku($productAbstractTransfer->getSku())
+            ->setIdProductAbstract($productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract())
+            ->setAttributes($attributeTokens);
     }
 
 }

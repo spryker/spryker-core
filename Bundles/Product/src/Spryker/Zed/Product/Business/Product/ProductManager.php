@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -695,6 +694,34 @@ class ProductManager implements ProductManagerInterface
 
             foreach ($productConcreteCollection as $productConcrete) {
                 $this->createProductConcrete($productConcrete, $idProductAbstract);
+            }
+
+            $this->productQueryContainer->getConnection()->commit();
+
+            return $idProductAbstract;
+
+        } catch (\Exception $e) {
+            $this->productQueryContainer->getConnection()->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteCollection
+     *
+     * @throws \Exception
+     * @return int
+     */
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    {
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
+        try {
+            $idProductAbstract = $this->saveProductAbstract($productAbstractTransfer);
+
+            foreach ($productConcreteCollection as $productConcrete) {
+                $this->saveProductConcrete($productConcrete, $idProductAbstract);
             }
 
             $this->productQueryContainer->getConnection()->commit();

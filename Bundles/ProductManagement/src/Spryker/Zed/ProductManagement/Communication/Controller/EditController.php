@@ -7,13 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Product\Business\Product\MatrixGenerator;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -73,7 +68,6 @@ class EditController extends AddController
             }
         }*/
 
-
         $idProductAbstract = $this->castId($request->get(
             self::PARAM_ID_PRODUCT_ABSTRACT
         ));
@@ -118,13 +112,6 @@ class EditController extends AddController
             ]
         ];
 
-
-        $matrixGenerator = new MatrixGenerator();
-        $matrix = $matrixGenerator->generateTokens($attributeCollection);
-        echo "<pre>";
-        print_r($matrix);
-        die;
-
         $dataProvider = $this->getFactory()->createProductFormEditDataProvider();
         $form = $this
             ->getFactory()
@@ -134,11 +121,16 @@ class EditController extends AddController
             )
             ->handleRequest($request);
 
+        $concreteProductCollection = [];
+
         if ($form->isValid()) {
             try {
+                $matrixGenerator = new MatrixGenerator();
+                $concreteProductCollection = $matrixGenerator->generate($productAbstract, $attributeCollection);
+
                 $idProductAbstract = $this->getFactory()
                     ->getProductFacade()
-                    ->saveProduct();
+                    ->saveProduct($productAbstract, $concreteProductCollection);
 
                 $this->addSuccessMessage(sprintf(
                     'The product [%s] was saved successfully.',
@@ -159,9 +151,8 @@ class EditController extends AddController
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstract->toArray(),
-            'matrix' => $matrix
+            'matrix' => $concreteProductCollection
         ]);
     }
-
 
 }

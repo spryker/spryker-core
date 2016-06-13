@@ -63,6 +63,18 @@ interface ProductManagementToProductInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteCollection
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+
+    /**
+     * @api
+     *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
     public function getAttributeManager();

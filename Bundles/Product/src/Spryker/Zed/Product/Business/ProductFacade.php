@@ -367,6 +367,23 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteCollection
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->saveProduct($productAbstractTransfer, $productConcreteCollection);
+    }
+
+    /**
+     * @api
+     *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
     public function getAttributeManager()
