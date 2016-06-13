@@ -237,7 +237,7 @@ class IndexController extends AbstractController
         $visibility = $request->query->get(self::URL_PARAM_VISIBILITY);
         $redirectUrl = $request->query->get(self::URL_PARAM_REDIRECT_URL);
 
-        $isActive = $visibility == 'activate' ? true : false;
+        $isActive = mb_convert_case($visibility, MB_CASE_LOWER, 'UTF-8') == 'activate' ? true : false;
 
         $visibilityChanged = $this->getFacade()->toggleDiscountVisibility($idDiscount, $isActive);
 
