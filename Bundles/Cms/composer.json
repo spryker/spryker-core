@@ -13,7 +13,7 @@
   "require": {
     "spryker/application": "^2.0.0",
     "spryker/category": "^2.0.0",
-    "spryker/collector": "^2.0.0",
+    "spryker/collector": "^2.0.0 || ^3.0.0",
     "spryker/glossary": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",

@@ -83,7 +83,7 @@ class DependencyController extends AbstractController
             $bundleToView = $request->query->get(self::QUERY_KEY_BUNDLE, false);
 
             if ($request->query->getBoolean(self::QUERY_KEY_BUILD_TREE, true)) {
-                $this->getFacade()->buildDependencyTree(self::APPLICATION_ZED, $bundleToView, '*');
+                $this->getFacade()->buildDependencyTree('*', $bundleToView, '*');
             }
 
             echo $this->getFacade()->drawDetailedDependencyTreeGraph($bundleToView);
@@ -105,7 +105,7 @@ class DependencyController extends AbstractController
 
             if ($request->query->getBoolean(self::QUERY_KEY_BUILD_TREE, true)) {
                 $bundle = (is_string($bundleToView)) ? $bundleToView : '*';
-                $this->getFacade()->buildDependencyTree(self::APPLICATION_ZED, $bundle, '*');
+                $this->getFacade()->buildDependencyTree('*', $bundle, '*');
             }
 
             echo $this->getFacade()->drawSimpleDependencyTreeGraph($showEngineBundle, $bundleToView);
@@ -119,7 +119,7 @@ class DependencyController extends AbstractController
      */
     public function adjacencyMatrixAction()
     {
-        $this->getFacade()->buildDependencyTree(self::APPLICATION_ZED, '*', '*');
+        $this->getFacade()->buildDependencyTree('*', '*', '*');
 
         $matrixData = $this->getFacade()->getAdjacencyMatrixData();
         $engineBundleList = $this->getFacade()->getEngineBundleList();
@@ -139,7 +139,7 @@ class DependencyController extends AbstractController
 
             if ($request->query->getBoolean(self::QUERY_KEY_BUILD_TREE, true)) {
                 $bundle = (is_string($bundleToView)) ? $bundleToView : '*';
-                $this->getFacade()->buildDependencyTree(self::APPLICATION_ZED, $bundle, '*');
+                $this->getFacade()->buildDependencyTree('*', $bundle, '*');
             }
 
             echo $this->getFacade()->drawExternalDependencyTreeGraph($bundleToView);

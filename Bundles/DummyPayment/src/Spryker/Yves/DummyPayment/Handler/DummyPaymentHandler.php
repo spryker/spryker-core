@@ -7,10 +7,10 @@
 
 namespace Spryker\Yves\DummyPayment\Handler;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Yves\DummyPayment\Exception\PaymentMethodNotFoundException;
+use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 
 class DummyPaymentHandler
 {
@@ -21,8 +21,8 @@ class DummyPaymentHandler
      * @var array
      */
     protected static $paymentMethods = [
-        PaymentTransfer::DUMMY_PAYMENT_INVOICE => 'invoice',
-        PaymentTransfer::DUMMY_PAYMENT_CREDIT_CARD => 'credit card',
+        DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'invoice',
+        DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'credit card',
     ];
 
     /**

@@ -261,7 +261,7 @@ class Service implements ServiceInterface
      */
     public function getCountItems()
     {
-        return count($this->client->keys($this->getSearchPattern(self::KV_PREFIX)));
+        return count($this->client->keys($this->getSearchPattern()));
     }
 
     /**

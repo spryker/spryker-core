@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Touch\Persistence;
 
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Orm\Zed\Touch\Persistence\SpyTouchSearchQuery;
+use Orm\Zed\Touch\Persistence\SpyTouchStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -23,6 +25,22 @@ class TouchPersistenceFactory extends AbstractPersistenceFactory
     public function createTouchQuery()
     {
         return SpyTouchQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearchQuery
+     */
+    public function createTouchSearchQuery()
+    {
+        return SpyTouchSearchQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
+     */
+    public function createTouchStorageQuery()
+    {
+        return SpyTouchStorageQuery::create();
     }
 
 }

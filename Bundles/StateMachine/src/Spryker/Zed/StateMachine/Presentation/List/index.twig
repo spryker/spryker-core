@@ -1,0 +1,24 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'State machines' } %}
+
+        {% block widget_content %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>State machines</h1>
+                </div>
+
+                <ul>
+                {% for stateMachineName in stateMachines %}
+                    <li><a href="{{ url('/state-machine/list/process', {'state-machine': stateMachineName}) }}" >{{ stateMachineName }}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

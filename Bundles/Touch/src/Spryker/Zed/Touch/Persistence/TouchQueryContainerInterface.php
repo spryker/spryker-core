@@ -112,4 +112,31 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      */
     public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt);
 
+    /**
+     * @api
+     *
+     * @param string $itemEvent
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchListByItemEvent($itemEvent);
+
+    /**
+     * @api
+     *
+     * @param array $touchIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearchQuery
+     */
+    public function queryTouchSearchByTouchIds($touchIds);
+
+    /**
+     * @api
+     *
+     * @param array $touchIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
+     */
+    public function queryTouchStorageByTouchIds($touchIds);
+
 }

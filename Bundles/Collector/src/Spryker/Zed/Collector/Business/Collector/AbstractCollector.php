@@ -14,9 +14,6 @@ use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
 use Spryker\Shared\Gui\ProgressBar\ProgressBarBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
-use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractCollectorQuery;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -194,192 +191,12 @@ abstract class AbstractCollector
     }
 
     /**
-     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
-    public function run(
-        SpyTouchQuery $baseQuery,
-        LocaleTransfer $locale,
-        BatchResultInterface $result,
-        WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater,
-        OutputInterface $output
-    ) {
-        $this->validateDependencies();
-
-        $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
-
-        $this->runDeletion($locale, $result, $dataWriter, $touchUpdater, $itemType, $output);
-        $this->runInsertion($baseQuery, $locale, $result, $dataWriter, $touchUpdater, $output);
-    }
-
-    /**
-     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
-    protected function runInsertion(
-        SpyTouchQuery $baseQuery,
-        LocaleTransfer $locale,
-        BatchResultInterface $batchResult,
-        WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater,
-        OutputInterface $output
-    ) {
-
-        $this->prepareCollectorScope($baseQuery, $locale);
-
-        $batchCollection = $this->generateBatchIterator();
-        $this->displayProgressWhileCountingBatchCollectionSize($output);
-        $totalCount = $batchCollection->count();
-        $batchResult->setTotalCount($totalCount);
-
-        $progressBar = $this->generateProgressBar($output, $totalCount);
-        $progressBar->start();
-        $progressBar->advance(0);
-
-        foreach ($batchCollection as $batch) {
-            $batchSize = count($batch);
-            $progressBar->advance($batchSize);
-
-            $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
-            $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
-            $collectedDataCount = count($collectedData);
-
-            $touchUpdater->bulkUpdate($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
-            $dataWriter->write($collectedData, $this->collectResourceType());
-
-            $batchResult->increaseProcessedCount($collectedDataCount);
-        }
-
-        $progressBar->finish();
-
-        $output->writeln('');
-    }
-
-    /**
-     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
-     *
-     * @return void
-     */
-    public function postRun(
-        SpyTouchQuery $baseQuery,
-        LocaleTransfer $locale,
-        BatchResultInterface $result,
-        WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater
-    ) {
-
-        $this->validateDependencies();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      * @param string $itemType
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
-    protected function runDeletion(
-        LocaleTransfer $locale,
-        BatchResultInterface $batchResult,
-        WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater,
-        $itemType,
-        OutputInterface $output
-    ) {
-
-        $deletedCount = $this->delete($itemType, $dataWriter, $touchUpdater, $locale);
-        $batchResult->setDeletedCount($batchResult->getDeletedCount() + $deletedCount);
-    }
-
-    /**
-     * @param string $itemType
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    protected function delete(
-        $itemType,
-        WriterInterface $dataWriter,
-        TouchUpdaterInterface $touchUpdater,
-        LocaleTransfer $locale
-    ) {
-
-        $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
-        $batchCount = 1;
-        $offset = 0;
-        $deletedCount = 0;
-
-        $this->touchQueryContainer->getConnection()->beginTransaction();
-        try {
-            while ($batchCount > 0) {
-                $entityCollection = $this->getTouchCollectionToDelete($offset, $itemType);
-                $batchCount = count($entityCollection);
-
-                if ($batchCount > 0) {
-                    $deletedCount += $batchCount;
-                    $offset += $this->chunkSize;
-
-                    $keysToDelete = $this->getKeysToDeleteAndUpdateTouchUpdaterSet(
-                        $entityCollection,
-                        $touchUpdater->getTouchKeyColumnName(),
-                        $touchUpdaterSet
-                    );
-
-                    if (!empty($keysToDelete)) {
-                        $touchUpdater->bulkDelete(
-                            $touchUpdaterSet,
-                            $locale->getIdLocale(),
-                            $this->touchQueryContainer->getConnection()
-                        );
-                        $dataWriter->delete($keysToDelete);
-                    }
-
-                    $this->bulkDeleteTouchEntities($entityCollection);
-                }
-            }
-        }
-        catch (\Exception $exception) {
-            $this->touchQueryContainer->getConnection()->rollBack();
-            throw $exception;
-        }
-
-        $this->touchQueryContainer->getConnection()->commit();
-
-        return $deletedCount;
-    }
-
-
-    /**
      * @param int $offset
-     * @param string $itemType
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouch[]
      */
-    protected function getTouchCollectionToDelete($offset, $itemType)
+    protected function getTouchCollectionToDelete($itemType, $offset = 0)
     {
         $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
         $deleteQuery
@@ -427,37 +244,16 @@ abstract class AbstractCollector
 
             if (trim($key) !== '') {
                 $keysToDelete[$key] = true;
-                $this->appendTouchUpdaterSetItem($touchUpdaterSet, $key, $entityData[CollectorConfig::COLLECTOR_TOUCH_ID], $entityData);
+                $this->appendTouchUpdaterSetItem(
+                    $touchUpdaterSet,
+                    $key,
+                    $entityData[CollectorConfig::COLLECTOR_TOUCH_ID],
+                    $entityData
+                );
             }
         }
 
         return $keysToDelete;
-    }
-
-    /**
-     * @param \Orm\Zed\Touch\Persistence\SpyTouch[] $entityCollection
-     *
-     * @return void
-     */
-    protected function bulkDeleteTouchEntities(array $entityCollection)
-    {
-        foreach ($entityCollection as $entity) {
-            $idList[] = $entity[CollectorConfig::COLLECTOR_TOUCH_ID];
-        }
-
-        if (empty($idList)) {
-            return;
-        }
-
-        $idListSql = rtrim(implode(',', $idList), ',');
-
-        $sql = sprintf(
-            'DELETE FROM %s WHERE %s IN (%s)',
-            SpyTouchTableMap::TABLE_NAME,
-            SpyTouchTableMap::COL_ID_TOUCH,
-            $idListSql
-        );
-        $this->touchQueryContainer->getConnection()->exec($sql);
     }
 
     /**
@@ -466,11 +262,17 @@ abstract class AbstractCollector
     protected function validateDependencies()
     {
         if (!($this->touchQueryContainer instanceof TouchQueryContainerInterface)) {
-            throw new DependencyException(sprintf('touchQueryContainer does not implement TouchQueryContainerInterface in %s', get_class($this)));
+            throw new DependencyException(sprintf(
+                'touchQueryContainer does not implement TouchQueryContainerInterface in %s',
+                get_class($this)
+            ));
         }
 
         if (!($this->queryBuilder instanceof AbstractCollectorQuery)) {
-            throw new DependencyException(sprintf('queryBuilder does not implement AbstractCollectorQuery in %s', get_class($this)));
+            throw new DependencyException(sprintf(
+                'queryBuilder does not implement AbstractCollectorQuery in %s',
+                get_class($this)
+            ));
         }
     }
 
