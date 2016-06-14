@@ -29,7 +29,7 @@
                 <title>View Discount</title>
                 <bundle>discount</bundle>
                 <controller>index</controller>
-                <action>edit</action>
+                <action>view</action>
                 <visible>0</visible>
             </view>
         </pages>
