@@ -19,7 +19,9 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class OrderStateMachine implements OrderStateMachineInterface
@@ -76,12 +78,12 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $activeProcesses;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface
      */
     protected $conditions;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface
      */
     protected $commands;
 
@@ -91,8 +93,8 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $transitionLog
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface $timeout
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
-     * @param array $conditions
-     * @param array $commands
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
@@ -100,16 +102,58 @@ class OrderStateMachine implements OrderStateMachineInterface
         TransitionLogInterface $transitionLog,
         TimeoutInterface $timeout,
         ReadOnlyArrayObject $activeProcesses,
-        array $conditions,
-        array $commands
+        $conditions,
+        $commands
     ) {
         $this->queryContainer = $queryContainer;
         $this->builder = $builder;
         $this->transitionLog = $transitionLog;
         $this->timeout = $timeout;
         $this->activeProcesses = $activeProcesses;
+        $this->setConditions($conditions);
+        $this->setCommands($commands);
+    }
+
+    /**
+     * Convert array to collection for BC
+     *
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
+     *
+     * @return $this
+     */
+    protected function setConditions($conditions)
+    {
         $this->conditions = $conditions;
+
+        if (is_array($conditions)) {
+            $conditionCollection = new ConditionCollection();
+            foreach ($conditions as $name => $condition) {
+                $conditionCollection->add($condition, $name);
+            }
+
+            $this->conditions = $conditionCollection;
+        }
+    }
+
+    /**
+     * Convert array to collection for BC
+     *
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
+     *
+     * @return $this
+     */
+    protected function setCommands($commands)
+    {
         $this->commands = $commands;
+
+        if (is_array($commands)) {
+            $commandCollection = new CommandCollection();
+            foreach ($commands as $name => $command) {
+                $commandCollection->add($command, $name);
+            }
+
+            $this->commands = $commandCollection;
+        }
     }
 
     /**
@@ -729,33 +773,25 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param string $commandString
+     * @param string $command
      *
      * @throws \LogicException
      *
      * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface
      */
-    protected function getCommand($commandString)
+    protected function getCommand($command)
     {
-        if (!isset($this->commands[$commandString])) {
-            throw new LogicException('Command ' . $commandString . ' not found in Settings');
-        }
-
-        return $this->commands[$commandString];
+        return $this->commands->get($command);
     }
 
     /**
-     * @param string $conditionString
+     * @param string $condition
      *
      * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
      */
-    protected function getCondition($conditionString)
+    protected function getCondition($condition)
     {
-        if (!isset($this->conditions[$conditionString])) {
-            throw new LogicException('Condition ' . $conditionString . ' not found in Settings');
-        }
-
-        return $this->conditions[$conditionString];
+        return $this->conditions->get($condition);
     }
 
     /**
