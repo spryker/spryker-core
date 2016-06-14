@@ -32,6 +32,26 @@ class Percentage extends AbstractPlugin implements DiscountCalculatorPluginInter
     }
 
     /**
+     * @param int $value
+     *
+     * @return int
+     */
+    public function transformForPersistence($value)
+    {
+        return $value;
+    }
+
+    /**
+     * @param int $value
+     *
+     * @return int
+     */
+    public function transformFromPersistence($value)
+    {
+        return $value;
+    }
+
+    /**
      * @param int $amount
      *
      * @return string
