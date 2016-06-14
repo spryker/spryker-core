@@ -18,12 +18,12 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     /**
      * @var \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
      */
-    private $finder;
+    protected $finder;
 
     /**
      * @var \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
      */
-    private $updater;
+    protected $updater;
 
     /**
      * @param \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface $finder
@@ -57,7 +57,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      *
      * @return void
      */
-    private function updateComposerJsonFile(SplFileInfo $composerJsonFile)
+    protected function updateComposerJsonFile(SplFileInfo $composerJsonFile)
     {
         exec('./composer.phar validate ' . $composerJsonFile->getPathname(), $output, $return);
         if ($return !== 0) {

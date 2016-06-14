@@ -16,12 +16,12 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
     /**
      * @var \Symfony\Component\Finder\Finder
      */
-    private $finder;
+    protected $finder;
 
     /**
      * @var string
      */
-    private $pathToBundles;
+    protected $pathToBundles;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder

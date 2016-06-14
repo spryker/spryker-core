@@ -23,17 +23,17 @@ class RequireExternalUpdater implements UpdaterInterface
     /**
      * @var array
      */
-    private $externalDependencyTree;
+    protected $externalDependencyTree;
 
     /**
      * @var array
      */
-    private $externalToInternalMap;
+    protected $externalToInternalMap;
 
     /**
      * @var array
      */
-    private $ignorableDependencies;
+    protected $ignorableDependencies;
 
     /**
      * @param array $externalDependencyTree
@@ -86,7 +86,7 @@ class RequireExternalUpdater implements UpdaterInterface
      *
      * @return string
      */
-    private function getBundleName(array $composerJsonData)
+    protected function getBundleName(array $composerJsonData)
     {
         $nameParts = explode('/', $composerJsonData[self::KEY_NAME]);
         $bundleName = array_pop($nameParts);
@@ -100,7 +100,7 @@ class RequireExternalUpdater implements UpdaterInterface
      *
      * @return array
      */
-    private function getExternalBundles($bundleName)
+    protected function getExternalBundles($bundleName)
     {
         $dependentBundles = [];
         foreach ($this->externalDependencyTree as $dependency) {
@@ -121,7 +121,7 @@ class RequireExternalUpdater implements UpdaterInterface
      *
      * @return string
      */
-    private function mapExternalToInternal($composerName)
+    protected function mapExternalToInternal($composerName)
     {
         foreach ($this->externalToInternalMap as $external => $internal) {
             if ($external[0] === '/') {

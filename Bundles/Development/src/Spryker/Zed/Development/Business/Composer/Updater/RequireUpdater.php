@@ -25,12 +25,12 @@ class RequireUpdater implements UpdaterInterface
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
      */
-    private $dependencyTreeReader;
+    protected $dependencyTreeReader;
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface
      */
-    private $treeFilter;
+    protected $treeFilter;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface $dependencyTreeReader
@@ -75,7 +75,7 @@ class RequireUpdater implements UpdaterInterface
      *
      * @return string
      */
-    private function getBundleName(array $composerJsonData)
+    protected function getBundleName(array $composerJsonData)
     {
         $nameParts = explode('/', $composerJsonData['name']);
         $bundleName = array_pop($nameParts);
@@ -89,7 +89,7 @@ class RequireUpdater implements UpdaterInterface
      *
      * @return array
      */
-    private function getDependentBundles($bundleName)
+    protected function getDependentBundles($bundleName)
     {
         $dependencyTree = $this->treeFilter->filter($this->dependencyTreeReader->read());
         $dependentBundles = [];
