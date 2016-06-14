@@ -57,6 +57,8 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
         $composerJson = $this->updater->update($composerJson);
 
+        ksort($composerJson['require']);
+
         $composerJson = json_encode($composerJson, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
         $composerJson = preg_replace(self::REPLACE_4_WITH_2_SPACES, '$1', $composerJson) . PHP_EOL;
 
