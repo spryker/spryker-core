@@ -25,7 +25,6 @@
     "spryker/newsletter": "^2.0.0",
     "spryker/price": "^2.0.0",
     "spryker/product": "^2.0.0",
-    "spryker/product-search": "^2.0.0",
     "spryker/user": "^2.0.0"
   },
   "description": "installer bundle",

@@ -17,7 +17,7 @@
     "spryker/new-relic": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/transfer": "^2.0.0",
-    "spryker/elastica": "^2.0.0",
+    "spryker/elastica": "^2.0.0 || ^3.0.0",
     "spryker/guzzle": "^2.0.0",
     "spryker/monolog": "^2.0.0",
     "spryker/redis": "^2.0.0",
