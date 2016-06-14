@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Development\DevelopmentConstants;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
@@ -50,10 +52,19 @@ class RequireUpdater implements UpdaterInterface
         $bundleName = $this->getBundleName($composerJson);
         $dependentBundles = $this->getDependentBundles($bundleName);
 
+        $composerRequireVersion = Config::get(DevelopmentConstants::COMPOSER_REQUIRE_VERSION);
+        if ($composerRequireVersion === null) {
+            return $composerJson;
+        }
+
+        if (preg_match('/^[0-9]/', $composerRequireVersion)) {
+            $composerRequireVersion = self::RELEASE_OPERATOR . $composerRequireVersion;
+        }
+
         foreach ($dependentBundles as $dependentBundle) {
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
-            $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = self::RELEASE_OPERATOR . '2.0.0-RC2';
+            $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = $composerRequireVersion;
         }
 
         return $composerJson;
