@@ -121,6 +121,7 @@
       "Unit\\Spryker\\Zed\\CustomerMailConnector\\": "Bundles/CustomerMailConnector/tests",
       "Functional\\Spryker\\Zed\\CustomerMailConnector\\": "Bundles/CustomerMailConnector/tests",
       "Spryker\\Zed\\Development\\": "Bundles/Development/src",
+      "Spryker\\Shared\\Development\\": "Bundles/Development/src",
       "Unit\\Spryker\\Zed\\Development\\": "Bundles/Development/tests",
       "Spryker\\Shared\\Discount\\": "Bundles/Discount/src",
       "Unit\\Spryker\\Shared\\Discount\\": "Bundles/Discount/tests",
