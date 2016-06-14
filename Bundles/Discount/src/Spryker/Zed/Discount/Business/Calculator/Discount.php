@@ -10,6 +10,7 @@ namespace Spryker\Zed\Discount\Business\Calculator;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Library\Error\ErrorLogger;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
@@ -98,6 +99,12 @@ class Discount implements DiscountInterface
      */
     protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes = [])
     {
+        $as = $this->queryContainer
+            ->queryCartRulesIncludingSpecifiedVouchers($voucherCodes)
+            ->toString();
+
+        $br = 1;
+
         return $this->queryContainer
             ->queryCartRulesIncludingSpecifiedVouchers($voucherCodes)
             ->find();
@@ -170,7 +177,7 @@ class Discount implements DiscountInterface
     protected function isDiscountApplicable(QuoteTransfer $quoteTransfer, SpyDiscount $discountEntity)
     {
         $voucherCode = $discountEntity->getVoucherCode();
-        if ($voucherCode) {
+        if ($discountEntity->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
             if ($this->voucherValidator->isUsable($voucherCode) === false) {
                 return false;
             }

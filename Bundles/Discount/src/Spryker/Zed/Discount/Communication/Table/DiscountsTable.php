@@ -152,12 +152,7 @@ class DiscountsTable extends AbstractTable
      */
     protected function getDiscountType(SpyDiscount $discountEntity)
     {
-        $discountType = DiscountConstants::TYPE_CART_RULE;
-        if ($discountEntity->getFkDiscountVoucherPool()) {
-            $discountType = DiscountConstants::TYPE_VOUCHER;
-        }
-
-        return str_replace('_', ' ', $discountType);
+        return str_replace('_', ' ', $discountEntity->getDiscountType());
     }
 
     /**

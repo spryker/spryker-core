@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterface
@@ -68,9 +67,6 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     {
         $discountGeneralTransfer = new DiscountGeneralTransfer();
         $discountGeneralTransfer->fromArray($discountEntity->toArray(), true);
-
-        $voucherType = $this->getVoucherType($discountEntity);
-        $discountGeneralTransfer->setDiscountType($voucherType);
 
         $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom());
         $discountGeneralTransfer->setValidTo($discountEntity->getValidTo());
@@ -129,21 +125,6 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected function createDiscountConfiguratorTransfer()
     {
         return new DiscountConfiguratorTransfer();
-    }
-
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     *
-     * @return string
-     */
-    protected function getVoucherType(SpyDiscount $discountEntity)
-    {
-        $voucherType = DiscountConstants::TYPE_CART_RULE;
-        if ($discountEntity->getFkDiscountVoucherPool()) {
-            $voucherType = DiscountConstants::TYPE_VOUCHER;
-        }
-
-        return $voucherType;
     }
 
 }

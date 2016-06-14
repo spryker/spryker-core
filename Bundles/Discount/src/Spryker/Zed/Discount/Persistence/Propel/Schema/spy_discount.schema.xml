@@ -12,6 +12,7 @@
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
         <column name="calculator_plugin" type="VARCHAR" size="255"/>
+        <column name="discount_type" type="VARCHAR" size="255"/>
         <column name="decision_rule_query_string" type="VARCHAR" required="false"/>
         <column name="collector_query_string" type="VARCHAR" required="false"/>
 

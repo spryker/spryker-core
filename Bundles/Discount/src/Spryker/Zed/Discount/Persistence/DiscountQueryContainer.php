@@ -11,6 +11,7 @@ use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -48,20 +49,21 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryActiveAndRunningDiscounts()
     {
         $now = new \DateTime();
+        $dateFormatted = $now->format('Y-m-d H:i:s');
 
         $query = $this->getFactory()
             ->createDiscountQuery()
             ->filterByIsActive(true)
             ->where(
-                '(' . SpyDiscountTableMap::COL_VALID_FROM . ' <= ? AND '
-                . SpyDiscountTableMap::COL_VALID_TO . ' >= ? )',
+                '(' . SpyDiscountTableMap::COL_VALID_FROM . ' <= ? AND ' . SpyDiscountTableMap::COL_VALID_TO . ' >= ? )',
                 [
-                    $now->format('Y-m-d H:i:s'),
-                    $now->format('Y-m-d H:i:s'),
+                    $dateFormatted,
+                    $dateFormatted,
                 ]
-            )->_or()->where(
-                SpyDiscountTableMap::COL_VALID_FROM . ' IS NULL AND '
-                . SpyDiscountTableMap::COL_VALID_TO . ' IS NULL'
+            )
+            ->_or()
+            ->where(
+                '(' . SpyDiscountTableMap::COL_VALID_FROM . ' IS NULL AND ' . SpyDiscountTableMap::COL_VALID_TO . ' IS NULL )'
             );
 
         return $query;
@@ -81,11 +83,13 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
                 ->useDiscountVoucherQuery()
                     ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_VOUCHER_CODE)
                     ->filterByCode(array_unique($voucherCodes))
+
                 ->endUse()
             ->endUse()
             ->_or()
             ->filterByFkDiscountVoucherPool(null)
             ->filterByIsActive(true);
+
     }
 
     /**
