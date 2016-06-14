@@ -204,7 +204,7 @@ class MatrixGenerator
             ->fromArray($productAbstractTransfer->toArray(), true)
             ->setSku($concreteSku)
             ->setProductAbstractSku($productAbstractTransfer->getSku())
-            ->setIdProductAbstract($productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract())
+            ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->setAttributes($attributeTokens);
     }
 

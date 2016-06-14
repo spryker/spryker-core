@@ -396,7 +396,6 @@ class ProductManager implements ProductManagerInterface
 
         $jsonAttributes = $this->encodeAttributes($productConcreteTransfer->getAttributes());
 
-        $productConcreteEntity = new SpyProduct();
         $productConcreteEntity
             ->setSku($sku)
             ->setFkProductAbstract($idProductAbstract)
