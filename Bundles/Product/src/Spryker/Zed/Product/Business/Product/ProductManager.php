@@ -803,7 +803,7 @@ class ProductManager implements ProductManagerInterface
         $transferGenerator = new ProductTransferGenerator();  //TODO inject
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
 
-        $productAbstractTransfer = $this->loadProductAbstractAttributes($productAbstractTransfer);
+        $productAbstractTransfer = $this->loadProductAbstractLocalizedAttributes($productAbstractTransfer);
 
         return $productAbstractTransfer;
     }
@@ -815,10 +815,10 @@ class ProductManager implements ProductManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function loadProductAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer)
+    protected function loadProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer)
     {
         $productAttributeCollection = $this->productQueryContainer
-            ->queryProductAbstractAttributes($productAbstractTransfer->getIdProductAbstract())
+            ->queryProductAbstractLocalizedAttributes($productAbstractTransfer->getIdProductAbstract())
             ->find();
 
         foreach ($productAttributeCollection as $attribute) {
@@ -854,7 +854,7 @@ class ProductManager implements ProductManagerInterface
         $transferGenerator = new ProductTransferGenerator();
         $productTransfer = $transferGenerator->convertProduct($productEntity);
 
-        $productTransfer = $this->loadProductAttributes($productTransfer);
+        $productTransfer = $this->loadProductLocalizedAttributes($productTransfer);
 
         return $productTransfer;
     }
@@ -866,10 +866,10 @@ class ProductManager implements ProductManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function loadProductAttributes(ProductConcreteTransfer $productTransfer)
+    protected function loadProductLocalizedAttributes(ProductConcreteTransfer $productTransfer)
     {
         $productAttributeCollection = $this->productQueryContainer
-            ->queryProductAttributes($productTransfer->getIdProductConcrete())
+            ->queryProductLocalizedAttributes($productTransfer->getIdProductConcrete())
             ->find();
 
         foreach ($productAttributeCollection as $attribute) {
@@ -1022,7 +1022,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract)
     {
@@ -1035,7 +1035,7 @@ class ProductManager implements ProductManagerInterface
         $transferCollection = $transferGenerator->convertProductCollection($entityCollection);
 
         for ($a=0; $a<count($transferCollection); $a++) {
-            $transferCollection[$a] = $this->loadProductAttributes($transferCollection[$a]);
+            $transferCollection[$a] = $this->loadProductLocalizedAttributes($transferCollection[$a]);
         }
 
         return $transferCollection;

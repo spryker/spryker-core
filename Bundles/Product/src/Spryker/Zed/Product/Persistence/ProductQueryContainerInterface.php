@@ -64,7 +64,7 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryProductAbstractAttributes($idProductAbstract);
+    public function queryProductAbstractLocalizedAttributes($idProductAbstract);
 
     /**
      * @api
@@ -73,7 +73,7 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
      */
-    public function queryProductAttributes($idProduct);
+    public function queryProductLocalizedAttributes($idProduct);
 
     /**
      * @api

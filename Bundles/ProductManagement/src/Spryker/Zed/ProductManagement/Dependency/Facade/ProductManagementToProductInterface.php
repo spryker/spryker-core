@@ -79,4 +79,13 @@ interface ProductManagementToProductInterface
      */
     public function getAttributeManager();
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract);
+
 }

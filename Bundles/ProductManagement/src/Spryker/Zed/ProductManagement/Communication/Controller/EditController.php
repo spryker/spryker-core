@@ -82,19 +82,23 @@ class EditController extends AddController
             )
             ->handleRequest($request);
 
-        $concreteProductCollection = [];
+        $matrixGenerator = new MatrixGenerator();
+        $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
+        $concreteProductCollection = $this->getFactory()
+            ->getProductFacade()
+            ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
         if ($form->isValid()) {
             try {
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-                
+
                 $matrixGenerator = new MatrixGenerator();
-                $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
+                $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductFacade()
-                    ->saveProduct($productAbstractTransfer, $concreteProductCollection);
+                    ->saveProduct($productAbstractTransfer, $matrix);
 
                 $this->addSuccessMessage(sprintf(
                     'The product [%s] was saved successfully.',
@@ -115,7 +119,8 @@ class EditController extends AddController
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
-            'matrix' => $concreteProductCollection
+            'matrix' => $matrix,
+            'concretes' => $concreteProductCollection
         ]);
     }
 

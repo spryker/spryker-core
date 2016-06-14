@@ -391,4 +391,18 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()->createAttributeManager();
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->getConcreteProductsByAbstractProductId($idProductAbstract);
+    }
+
 }

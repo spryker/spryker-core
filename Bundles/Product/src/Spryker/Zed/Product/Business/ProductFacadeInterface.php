@@ -257,4 +257,13 @@ interface ProductFacadeInterface
      */
     public function getAttributeManager();
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract);
+
 }

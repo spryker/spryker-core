@@ -113,4 +113,16 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
         return $this->productFacade->getAttributeManager();
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract)
+    {
+        return $this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract);
+    }
+
 }

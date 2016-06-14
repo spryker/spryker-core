@@ -194,7 +194,7 @@ interface ProductManagerInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract);
 

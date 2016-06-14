@@ -150,7 +150,7 @@ class AddController extends AbstractController
         $productAbstractTransfer = new ProductAbstractTransfer();
 
         $productAbstractTransfer->setSku(
-            $data[ProductFormAdd::FIELD_SKU]
+            $this->slugify($data[ProductFormAdd::FIELD_SKU])
         );
 
         return $productAbstractTransfer;
@@ -171,6 +171,24 @@ class AddController extends AbstractController
         $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
 
         return $localizedAttributesTransfer;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    public function slugify($value)
+    {
+        if (function_exists('iconv')) {
+            $value = iconv('UTF-8', 'ASCII//TRANSLIT', $value);
+        }
+
+        $value = preg_replace("/[^a-zA-Z0-9 -]/", "", trim($value));
+        $value = strtolower($value);
+        $value = str_replace(' ', '-', $value);
+
+        return $value;
     }
 
 }

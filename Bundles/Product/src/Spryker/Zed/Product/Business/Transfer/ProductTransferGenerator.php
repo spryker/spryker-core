@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\Library\Json;
 
 class ProductTransferGenerator implements ProductTransferGeneratorInterface
 {
@@ -23,8 +24,13 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
      */
     public function convertProductAbstract(SpyProductAbstract $productAbstractEntity)
     {
-        return (new ProductAbstractTransfer())
+        $productAbstractTransfer = (new ProductAbstractTransfer())
             ->fromArray($productAbstractEntity->toArray(), true);
+
+        $attributes = $this->decodeAttributes($productAbstractEntity->getAttributes());
+        $productAbstractTransfer->setAttributes($attributes);
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -49,8 +55,13 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
      */
     public function convertProduct(SpyProduct $productEntity)
     {
-        return (new ProductConcreteTransfer())
+        $productTransfer = (new ProductConcreteTransfer())
             ->fromArray($productEntity->toArray(), true);
+
+        $attributes = $this->decodeAttributes($productEntity->getAttributes());
+        $productTransfer->setAttributes($attributes);
+
+        return $productTransfer;
     }
 
     /**
@@ -66,6 +77,16 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
         }
 
         return $transferList;
+    }
+
+    /**
+     * @param string $json
+     *
+     * @return array
+     */
+    protected function decodeAttributes($json)
+    {
+        return Json::decode($json, true);
     }
 
 }
