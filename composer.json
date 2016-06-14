@@ -457,7 +457,12 @@
       "Spryker\\Shared\\StateMachine\\": "Bundles/StateMachine/src",
       "Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/src",
       "Unit\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests",
-      "Functional\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests"
+      "Functional\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests",
+
+      "Spryker\\Shared\\ProductManagement\\": "Bundles/ProductManagement/src",
+      "Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/src",
+      "Unit\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests",
+      "Functional\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests"
     },
     "psr-4": {
       "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",
