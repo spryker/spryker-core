@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
+use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -72,40 +73,9 @@ class CalculatorForm extends AbstractType
             ->addCollectorQueryString($builder);
 
 
-        $builder->addModelTransformer(new CallbackTransformer(
-            function(DiscountCalculatorTransfer $databaseData = null){
-                if ($databaseData !== null) {
-
-                    $calculatorPlugin = $this->getCalculatorPlugin($databaseData->getCalculatorPlugin());
-                    $transformedAmount = $calculatorPlugin->transformFromPersistence($databaseData->getAmount());
-
-                    $databaseData->setAmount($transformedAmount);
-                }
-
-                return $databaseData;
-            },
-            function(DiscountCalculatorTransfer $databaseData){
-
-                return $databaseData;
-            }
-        ));
-
-        $builder->addViewTransformer(new CallbackTransformer(
-            function($databaseData){
-
-                return $databaseData;
-            },
-            function(DiscountCalculatorTransfer $submittedData = null){
-                if ($submittedData !== null) {
-                    $calculatorPlugin = $this->getCalculatorPlugin($submittedData->getCalculatorPlugin());
-                    $transformedAmount = $calculatorPlugin->transformForPersistence($submittedData->getAmount());
-
-                    $submittedData->setAmount($transformedAmount);
-                }
-
-                return $submittedData;
-            }
-        ));
+        $builder->addModelTransformer(
+            new CalculatorAmountTransformer($this->calculatorPlugins)
+        );
 
         $builder
             ->addEventListener(
