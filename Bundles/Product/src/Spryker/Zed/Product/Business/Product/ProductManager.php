@@ -151,7 +151,7 @@ class ProductManager implements ProductManagerInterface
     public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
         $sku = $productAbstractTransfer->getSku();
-        $idProductAbstract = (int)$productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
+        $idProductAbstract = $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
 
         $productAbstract = $this->productQueryContainer
             ->queryProductAbstract()
@@ -165,12 +165,17 @@ class ProductManager implements ProductManagerInterface
             ));
         }
 
-        $existingProductAbstractId = (int)$this->getProductAbstractIdBySku($productAbstractTransfer->getSku());
-        if ($existingProductAbstractId !== $idProductAbstract) {
-            throw new ProductAbstractExistsException(sprintf(
-                'Tried to create an product abstract with sku %s that already exists',
-                $sku
-            ));
+        $existingAbstractSku = $this->productQueryContainer
+            ->queryProductAbstractBySku($sku)
+            ->findOne();
+
+        if ($existingAbstractSku) {
+            if ($idProductAbstract !== (int)$existingAbstractSku->getIdProductAbstract()) {
+                throw new ProductAbstractExistsException(sprintf(
+                    'Tried to create an product abstract with sku %s that already exists',
+                    $sku
+                ));
+            }
         }
 
         $jsonAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
@@ -394,12 +399,18 @@ class ProductManager implements ProductManagerInterface
             ));
         }
 
-        $existingProductId = (int)$this->getProductConcreteIdBySku($sku);
-        if ($existingProductId !== $idProduct) {
-            throw new ProductAbstractExistsException(sprintf(
-                'Tried to create an product concrete with sku %s that already exists',
-                $sku
-            ));
+        $existingSku = $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku($sku)
+            ->findOne();
+
+        if ($existingSku) {
+            if ($idProduct !== (int)$existingSku->getIdProduct()) {
+                throw new ProductAbstractExistsException(sprintf(
+                    'Tried to create an product concrete with sku %s that already exists',
+                    $sku
+                ));
+            }
         }
 
         $jsonAttributes = $this->encodeAttributes($productConcreteTransfer->getAttributes());

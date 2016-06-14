@@ -92,7 +92,7 @@ class AddController extends AbstractController
      */
     protected function buildProductAbstractTransferFromData(array $formData)
     {
-        $productAbstractTransfer = $this->createProductTransfer($formData);
+        $productAbstractTransfer = $this->createProductAbstractTransfer($formData);
 
         $attributeData = $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES];
         foreach ($attributeData as $localeCode => $localizedAttributesData) {
@@ -145,15 +145,13 @@ class AddController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function createProductTransfer(array $data)
+    protected function createProductAbstractTransfer(array $data)
     {
         $productAbstractTransfer = new ProductAbstractTransfer();
 
         $productAbstractTransfer->setSku(
             $data[ProductFormAdd::FIELD_SKU]
         );
-
-        $productAbstractTransfer->setIsActive(false);
 
         return $productAbstractTransfer;
     }

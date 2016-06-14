@@ -33,11 +33,11 @@ class EditController extends AddController
             self::PARAM_ID_PRODUCT_ABSTRACT
         ));
 
-        $productAbstract = $this->getFactory()
+        $productAbstractTransfer = $this->getFactory()
             ->getProductFacade()
             ->getProductAbstractById($idProductAbstract);
 
-        if (!$productAbstract) {
+        if (!$productAbstractTransfer) {
             $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProductAbstract));
 
             return new RedirectResponse('/product-management');
@@ -86,12 +86,15 @@ class EditController extends AddController
 
         if ($form->isValid()) {
             try {
+                $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
+                $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+                
                 $matrixGenerator = new MatrixGenerator();
-                $concreteProductCollection = $matrixGenerator->generate($productAbstract, $attributeCollection);
+                $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductFacade()
-                    ->saveProduct($productAbstract, $concreteProductCollection);
+                    ->saveProduct($productAbstractTransfer, $concreteProductCollection);
 
                 $this->addSuccessMessage(sprintf(
                     'The product [%s] was saved successfully.',
@@ -111,7 +114,7 @@ class EditController extends AddController
         return $this->viewResponse([
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
-            'currentProduct' => $productAbstract->toArray(),
+            'currentProduct' => $productAbstractTransfer->toArray(),
             'matrix' => $concreteProductCollection
         ]);
     }
