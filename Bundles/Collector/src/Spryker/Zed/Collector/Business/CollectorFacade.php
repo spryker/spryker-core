@@ -133,24 +133,6 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Composes filename for given collector type
-     *
-     * @api
-     *
-     * @param string $type
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return string
-     */
-    public function getCsvFileName($type, LocaleTransfer $locale)
-    {
-        return $this->getFactory()
-            ->createFileWriterBuilder()
-            ->getFullExportPath($type, $locale);
-    }
-
-    /**
      * @api
      *
      * @param array $keys

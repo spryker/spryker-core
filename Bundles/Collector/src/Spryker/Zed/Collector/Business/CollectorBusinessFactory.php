@@ -13,11 +13,14 @@ use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
 use Spryker\Zed\Collector\Business\Exporter\FileExporter;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
+use Spryker\Zed\Collector\Business\Exporter\Reader\File\FileReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
 use Spryker\Zed\Collector\Business\Exporter\StorageExporter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\CsvFileWriterAdapter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
@@ -127,7 +130,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         $fileExporter = new FileExporter(
             $this->getTouchQueryContainer(),
-            $this->createFileWriterBuilder(),
+            $this->createFileReader(),
+            $this->createFileWriter(),
             $this->createStorageMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
@@ -139,19 +143,40 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter
+     */
+    public function createFileWriter()
+    {
+        $csvFileWriterAdapter = $this->createCsvFileWriterAdapter();
+        $fileWriter = new FileWriter($csvFileWriterAdapter);
+
+        return $fileWriter;
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\File\FileReader
+     */
+    public function createFileReader()
+    {
+        $fileReader = new FileReader();
+
+        return $fileReader;
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\CsvFileWriterAdapter
+     */
+    protected function createCsvFileWriterAdapter()
+    {
+        return new CsvFileWriterAdapter($this->getConfig()->getFileExporterOutputDir());
+    }
+
+    /**
      * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
      */
     protected function getCollectorFileExporterPlugins()
     {
         return $this->getProvidedDependency(CollectorDependencyProvider::FILE_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilderInterface
-     */
-    public function createFileWriterBuilder()
-    {
-        return new FileWriterBuilder($this->getConfig()->getFileExporterOutputDir());
     }
 
     /**

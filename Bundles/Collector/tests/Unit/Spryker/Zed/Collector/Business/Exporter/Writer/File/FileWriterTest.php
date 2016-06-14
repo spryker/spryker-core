@@ -10,7 +10,14 @@ namespace Unit\Spryker\Zed\Collector\Business\Exporter\Writer\File;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder;
 
-class FileWriterBuilderTest extends \PHPUnit_Framework_TestCase
+/**
+ * @group Spryker
+ * @group Zed
+ * @group Collector
+ * @group Business
+ * @group FileWriterBuilder
+ */
+class FileWriterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**

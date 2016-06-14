@@ -7,25 +7,34 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\File;
 
-use Spryker\Shared\Library\Writer\Csv\CsvWriterInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-
-class FileWriter implements WriterInterface
+class FileWriter implements FileWriterInterface
 {
 
     /**
-     * @var \Spryker\Shared\Library\Writer\Csv\CsvWriterInterface
+     * @var FileWriterAdapterInterface
      */
     protected $fileWriterAdapter;
 
     /**
-     * FileWriter constructor.
-     * @param \Spryker\Shared\Library\Writer\Csv\CsvWriterInterface $fileWriterAdapter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterAdapterInterface $fileWriterAdapter
      */
-    public function __construct(CsvWriterInterface $fileWriterAdapter)
+    public function __construct(FileWriterAdapterInterface $fileWriterAdapter)
     {
         $this->fileWriterAdapter = $fileWriterAdapter;
     }
+
+    /**
+     * @param string $fileName
+     *
+     * @return $this
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileWriterAdapter->setFileName($fileName);
+
+        return $this;
+    }
+
 
     /**
      * @param array $dataSet
@@ -35,7 +44,7 @@ class FileWriter implements WriterInterface
      */
     public function write(array $dataSet, $type = '')
     {
-        return (bool)$this->fileWriterAdapter->write($dataSet);
+        return (bool)$this->fileWriterAdapter->write($dataSet, $type);
     }
 
     /**

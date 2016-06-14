@@ -44,7 +44,7 @@ class CollectorBusinessFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateFileWriterBuilderShouldReturnFullyConfiguredInstance()
     {
-        $fileWriterBuilder = $this->getFactory()->createFileWriterBuilder();
+        $fileWriterBuilder = $this->getFactory()->createFileWriter();
 
         $this->assertInstanceOf(FileWriterBuilderInterface::class, $fileWriterBuilder);
     }
