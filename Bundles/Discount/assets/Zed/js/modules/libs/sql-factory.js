@@ -4,9 +4,15 @@ var SprykerQueryBuilder = require('./spryker-query-builder');
 
 module.exports = function (inputElementId, targetElementId) {
     var inputElement = $(inputElementId);
-    var sqlRules = inputElement.val();
-    var ajaxUrl = inputElement.data('url');
     $(inputElement).parent().addClass('hidden');
 
-    return new SprykerQueryBuilder(sqlRules, ajaxUrl, inputElement, targetElementId);
+    var options = {
+        inputElement: inputElement,
+        sqlQuery: inputElement.val(),
+        ajaxUrl: inputElement.data('url'),
+        label: inputElement.data('label'),
+        targetElement: targetElementId
+    };
+
+    return new SprykerQueryBuilder(options);
 };

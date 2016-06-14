@@ -48,7 +48,6 @@ class CalculatorForm extends AbstractType
 
     /**
      * @param \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider $calculatorFormDataProvider
-     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
     public function __construct(
@@ -143,7 +142,7 @@ class CalculatorForm extends AbstractType
     protected function addCalculatorType(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
-            'label' => 'Calculator type',
+            'label' => 'Calculator type*',
             'placeholder' => 'Select one',
             'choices' => $this->calculatorFormDataProvider->getData()[self::FIELD_CALCULATOR_PLUGIN],
             'constraints' => [
@@ -161,8 +160,10 @@ class CalculatorForm extends AbstractType
      */
     protected function addCollectorQueryString(FormBuilderInterface $builder)
     {
+        $label = 'Apply to*';
+
         $builder->add(self::FIELD_COLLECTOR_QUERY_STRING, 'textarea', [
-            'label' => 'Apply to*',
+            'label' => $label,
             'constraints' => [
                 new NotBlank(),
                 new QueryString([
@@ -171,6 +172,7 @@ class CalculatorForm extends AbstractType
                 ]),
             ],
             'attr' => [
+                'data-label' => $label,
                 'data-url' => Url::generate(
                     '/discount/query-string/rule-fields',
                     [

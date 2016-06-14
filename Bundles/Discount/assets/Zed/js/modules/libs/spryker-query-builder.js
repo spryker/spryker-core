@@ -3,14 +3,15 @@
 window.SQLParser = require('sql-parser/browser/sql-parser');
 require('jquery-query-builder');
 
-function SprykerQueryBuilder(sqlQuery, ajaxUrl, inputElement, targetElement){
+function SprykerQueryBuilder(options) {
     var self = this;
     this.builder = null;
-    this.getFiltersUrl = ajaxUrl;
-    this.sql = sqlQuery;
     this.displayQueryBuilder = true;
-    this.inputElement = inputElement;
-    this.targetElement = targetElement;
+    this.getFiltersUrl = options.ajaxUrl;
+    this.sql = options.sqlQuery;
+    this.inputElement = options.inputElement;
+    this.targetElement = options.targetElement;
+    this.label = options.label || 'Build Query';
     this.init = function(){
         self.builder = $(self.targetElement);
         self.createBuilder();
@@ -28,7 +29,7 @@ SprykerQueryBuilder.prototype.createBuilder = function(){
             sqlOperators: self.getSqlOperators(),
             sqlRuleOperator: self.getSqlRuleOperators()
         });
-        self.builder.prepend('<label class="control-label query-builder-label">Build Query</label>');
+        self.builder.prepend('<label class="control-label query-builder-label">' + self.label + '</label>');
         if (typeof self.sql !== 'undefined' && self.sql !== '') {
             self.builder.queryBuilder('setRulesFromSQL', self.sql);
         }

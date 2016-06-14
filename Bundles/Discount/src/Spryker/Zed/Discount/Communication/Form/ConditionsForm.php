@@ -49,8 +49,10 @@ class ConditionsForm extends AbstractType
      */
     protected function addDecisionRuleQueryString(FormBuilderInterface $builder)
     {
+        $label = 'Apply when';
+
         $builder->add(self::FIELD_DECISION_RULE_QUERY_STRING, 'textarea', [
-            'label' => 'Apply when',
+            'label' => $label,
             'constraints' => [
                 new QueryString([
                     QueryString::OPTION_DISCOUNT_FACADE => $this->discountFacade,
@@ -58,6 +60,7 @@ class ConditionsForm extends AbstractType
                 ]),
             ],
             'attr' => [
+                'data-label' => $label,
                 'data-url' => Url::generate(
                     '/discount/query-string/rule-fields',
                     [
