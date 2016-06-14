@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Kernel\ClassResolver\DependencyInjector;
 
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollection;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
+use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollection;
 
 class DependencyInjectorResolver extends AbstractClassResolver
 {
@@ -118,7 +118,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollection
+     * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollection
      */
     protected function getDependencyInjectorCollection()
     {
