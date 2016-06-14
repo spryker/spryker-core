@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Braintree\Business;
 
 use Spryker\Zed\Braintree\Business\Api\Adapter\BraintreeAdapter;
+use Spryker\Zed\Braintree\Business\Hook\PostSaveHook;
 use Spryker\Zed\Braintree\Business\Log\TransactionStatusLog;
 use Spryker\Zed\Braintree\Business\Order\Saver;
 use Spryker\Zed\Braintree\Business\Payment\Handler\Transaction\Transaction;
@@ -55,6 +56,16 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
     public function createTransactionStatusLog()
     {
         return new TransactionStatusLog($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Braintree\Business\Hook\PostSaveHookInterface
+     */
+    public function createPostSaveHook()
+    {
+        return new PostSaveHook(
+            $this->getQueryContainer()
+        );
     }
 
 }

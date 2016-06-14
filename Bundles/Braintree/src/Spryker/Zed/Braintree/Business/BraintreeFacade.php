@@ -206,4 +206,19 @@ class BraintreeFacade extends AbstractFacade implements BraintreeFacadeInterface
             ->isRefundApproved($orderTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        return $this->getFactory()
+            ->createPostSaveHook()
+            ->postSaveHook($quoteTransfer, $checkoutResponse);
+    }
+
 }
