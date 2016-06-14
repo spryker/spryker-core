@@ -10,7 +10,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
 {
 
     /**
-     * @var array
+     * @var DiscountCalculatorPluginInterface[]
      */
     protected $calculatorPlugins = [];
 
@@ -29,13 +29,13 @@ class CalculatorAmountTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if ($value !== null) {
-
-            $calculatorPlugin = $this->getCalculatorPlugin($value->getCalculatorPlugin());
-            $transformedAmount = $calculatorPlugin->transformFromPersistence($value->getAmount());
-
-            $value->setAmount($transformedAmount);
+        if ($value === null) {
+            return null;
         }
+
+        $calculatorPlugin = $this->getCalculatorPlugin($value->getCalculatorPlugin());
+        $transformedAmount = $calculatorPlugin->transformFromPersistence($value->getAmount());
+        $value->setAmount($transformedAmount);
 
         return $value;
     }
@@ -47,12 +47,13 @@ class CalculatorAmountTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if ($value !== null) {
-            $calculatorPlugin = $this->getCalculatorPlugin($value->getCalculatorPlugin());
-            $transformedAmount = $calculatorPlugin->transformForPersistence($value->getAmount());
-
-            $value->setAmount($transformedAmount);
+        if ($value === null) {
+            return null;
         }
+
+        $calculatorPlugin = $this->getCalculatorPlugin($value->getCalculatorPlugin());
+        $transformedAmount = $calculatorPlugin->transformForPersistence($value->getAmount());
+        $value->setAmount($transformedAmount);
 
         return $value;
     }

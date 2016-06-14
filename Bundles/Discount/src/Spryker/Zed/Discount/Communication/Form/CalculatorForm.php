@@ -72,9 +72,8 @@ class CalculatorForm extends AbstractType
             ->addAmountField($builder)
             ->addCollectorQueryString($builder);
 
-
         $builder->addModelTransformer(
-            new CalculatorAmountTransformer($this->calculatorPlugins)
+            $this->getCalculatorAmountTransfer()
         );
 
         $builder
@@ -84,7 +83,14 @@ class CalculatorForm extends AbstractType
                     $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
                 }
             );
+    }
 
+    /**
+     * @return CalculatorAmountTransformer
+     */
+    protected function getCalculatorAmountTransfer()
+    {
+        return new CalculatorAmountTransformer($this->calculatorPlugins);
     }
 
     /**
