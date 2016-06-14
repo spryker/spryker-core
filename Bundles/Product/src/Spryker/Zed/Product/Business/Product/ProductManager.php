@@ -20,7 +20,7 @@ use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistExcepti
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
-use Spryker\Zed\Product\Business\Transfer\AbstractProductTransferGenerator;
+use Spryker\Zed\Product\Business\Transfer\ProductTransferGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
@@ -134,6 +134,44 @@ class ProductManager implements ProductManagerInterface
         $idProductAbstract = $productAbstract->getPrimaryKey();
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
         $this->createProductAbstractAttributes($productAbstractTransfer);
+
+        return $idProductAbstract;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @return int
+     */
+    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $sku = $productAbstractTransfer->getSku();
+
+        $encodedAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
+
+        $productAbstract = $this->productQueryContainer
+            ->queryProductAbstract()
+            ->filterByIdProductAbstract($productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract())
+            ->findOne();
+
+        if (!$productAbstract) {
+            throw new MissingProductException(sprintf(
+                'Tried to retrieve an product abstract with id %s, but it does not exist.',
+                $productAbstractTransfer->getIdProductAbstract()
+            ));
+        }
+
+        $productAbstract
+            ->setAttributes($encodedAttributes)
+            ->setSku($sku);
+
+        $productAbstract->save();
+
+        $idProductAbstract = $productAbstract->getPrimaryKey();
+        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $this->saveProductAbstractAttributes($productAbstractTransfer);
 
         return $idProductAbstract;
     }
@@ -611,7 +649,7 @@ class ProductManager implements ProductManagerInterface
             return null;
         }
 
-        $transferGenerator = new AbstractProductTransferGenerator();
+        $transferGenerator = new ProductTransferGenerator();
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
 
         $productAttributeCollection = $this->productQueryContainer
@@ -624,9 +662,47 @@ class ProductManager implements ProductManagerInterface
             $localizedAttributesTransfer = $this->attributeManager
                 ->createLocalizedAttributesTransfer($attribute->getName(), $attribute->getAttributes(), $localeTransfer);
 
+            $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function getProductById($idProduct)
+    {
+        $productEntity = $this->productQueryContainer
+            ->queryProduct()
+            ->filterByIdProduct($idProduct)
+            ->findOne();
+
+        if (!$productEntity) {
+            return null;
+        }
+
+        $transferGenerator = new ProductTransferGenerator();
+        $productTransfer = $transferGenerator->convertProduct($productEntity);
+
+        $productAttributeCollection = $this->productQueryContainer
+            ->queryProductAttributes($idProduct)
+            ->find();
+
+        foreach ($productAttributeCollection as $attribute) {
+            $localeTransfer = $this->localeFacade->getLocaleById($attribute->getFkLocale());
+
+            $localizedAttributesTransfer = $this->attributeManager
+                ->createLocalizedAttributesTransfer($attribute->getName(), $attribute->getAttributes(), $localeTransfer);
+
+            $productTransfer->addLocalizedAttributes($localizedAttributesTransfer);
+        }
+
+        return $productTransfer;
     }
 
     /**

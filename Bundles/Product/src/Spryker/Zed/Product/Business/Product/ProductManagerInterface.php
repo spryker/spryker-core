@@ -148,6 +148,15 @@ interface ProductManagerInterface
     public function getProductAbstractById($idProductAbstract);
 
     /**
+     * @param int $idProduct
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function getProductById($idProduct);
+
+    /**
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException

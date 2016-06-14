@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Product\Business\Attribute;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface AttributeManagerInterface
 {
 
@@ -46,5 +48,14 @@ interface AttributeManagerInterface
      * @return int
      */
     public function createAttributeType($name, $inputType, $fkParentAttributeType = null);
+
+    /**
+     * @param string $name
+     * @param string $attributeJson
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
+     */
+    public function createLocalizedAttributesTransfer($name, $attributeJson, LocaleTransfer $localeTransfer);
 
 }
