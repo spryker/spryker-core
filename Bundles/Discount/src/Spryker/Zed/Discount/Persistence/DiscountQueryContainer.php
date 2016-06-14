@@ -11,6 +11,7 @@ use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -82,8 +83,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->useVoucherPoolQuery()
                 ->useDiscountVoucherQuery()
                     ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_VOUCHER_CODE)
-                    ->filterByCode(array_unique($voucherCodes))
-
+                    ->filterByCode(array_unique($voucherCodes), Criteria::IN)
                 ->endUse()
             ->endUse()
             ->_or()

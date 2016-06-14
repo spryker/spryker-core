@@ -30,6 +30,10 @@
             <unique-column name="display_name" />
         </unique>
 
+        <index name="spy_discount-index-discount_type">
+            <index-column name="discount_type" />
+        </index>
+
         <id-method-parameter value="spy_discount_pk_seq"/>
     </table>
 
