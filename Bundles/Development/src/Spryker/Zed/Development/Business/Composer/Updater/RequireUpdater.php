@@ -52,10 +52,10 @@ class RequireUpdater implements UpdaterInterface
         $bundleName = $this->getBundleName($composerJson);
         $dependentBundles = $this->getDependentBundles($bundleName);
 
-        $composerRequireVersion = Config::get(DevelopmentConstants::COMPOSER_REQUIRE_VERSION);
-        if ($composerRequireVersion === null) {
+        if (!Config::hasValue(DevelopmentConstants::COMPOSER_REQUIRE_VERSION)) {
             return $composerJson;
         }
+        $composerRequireVersion = Config::get(DevelopmentConstants::COMPOSER_REQUIRE_VERSION);
 
         if (preg_match('/^[0-9]/', $composerRequireVersion)) {
             $composerRequireVersion = self::RELEASE_OPERATOR . $composerRequireVersion;

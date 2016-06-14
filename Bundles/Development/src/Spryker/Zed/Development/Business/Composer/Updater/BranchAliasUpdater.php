@@ -24,10 +24,10 @@ class BranchAliasUpdater implements UpdaterInterface
      */
     public function update(array $composerJson)
     {
-        $alias = Config::get(DevelopmentConstants::COMPOSER_BRANCH_ALIAS);
-        if ($alias === null) {
+        if (!Config::hasValue(DevelopmentConstants::COMPOSER_BRANCH_ALIAS)) {
             return $composerJson;
         }
+        $alias = Config::get(DevelopmentConstants::COMPOSER_BRANCH_ALIAS);
 
         $composerJson[self::KEY_EXTRA] = [
           self::KEY_BRANCH_ALIAS => [

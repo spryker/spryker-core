@@ -59,10 +59,10 @@ class RequireExternalUpdater implements UpdaterInterface
 
         $dependentBundles = $this->getExternalBundles($bundleName);
 
-        $composerRequireVersion = Config::get(DevelopmentConstants::COMPOSER_REQUIRE_VERSION_EXTERNAL);
-        if ($composerRequireVersion === null) {
+        if (!Config::hasValue(DevelopmentConstants::COMPOSER_REQUIRE_VERSION_EXTERNAL)) {
             return $composerJson;
         }
+        $composerRequireVersion = Config::get(DevelopmentConstants::COMPOSER_REQUIRE_VERSION_EXTERNAL);
 
         if (preg_match('/^[0-9]/', $composerRequireVersion)) {
             $composerRequireVersion = self::RELEASE_OPERATOR . $composerRequireVersion;
