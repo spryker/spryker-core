@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
@@ -14,7 +13,6 @@ use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -44,6 +42,11 @@ class CalculatorForm extends AbstractType
     protected $calculatorPlugins;
 
     /**
+     * @var CalculatorAmountTransformer
+     */
+    protected $calculatorAmountTransformer;
+
+    /**
      * @param \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider $calculatorFormDataProvider
      * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
@@ -51,12 +54,14 @@ class CalculatorForm extends AbstractType
     public function __construct(
         CalculatorFormDataProvider $calculatorFormDataProvider,
         DiscountFacade $discountFacade,
-        array $calculatorPlugins
+        array $calculatorPlugins,
+        CalculatorAmountTransformer $calculatorAmountTransformer
     ) {
 
         $this->calculatorFormDataProvider = $calculatorFormDataProvider;
         $this->discountFacade = $discountFacade;
         $this->calculatorPlugins = $calculatorPlugins;
+        $this->calculatorAmountTransformer = $calculatorAmountTransformer;
     }
 
 
@@ -72,9 +77,7 @@ class CalculatorForm extends AbstractType
             ->addAmountField($builder)
             ->addCollectorQueryString($builder);
 
-        $builder->addModelTransformer(
-            $this->getCalculatorAmountTransfer()
-        );
+        $builder->addModelTransformer($this->calculatorAmountTransformer);
 
         $builder
             ->addEventListener(
@@ -83,14 +86,6 @@ class CalculatorForm extends AbstractType
                     $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
                 }
             );
-    }
-
-    /**
-     * @return CalculatorAmountTransformer
-     */
-    protected function getCalculatorAmountTransfer()
-    {
-        return new CalculatorAmountTransformer($this->calculatorPlugins);
     }
 
     /**
