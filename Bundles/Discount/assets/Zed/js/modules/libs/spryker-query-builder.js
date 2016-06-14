@@ -112,8 +112,11 @@ SprykerQueryBuilder.prototype.getSqlRuleOperators = function(){
     };
 };
 
-
 SprykerQueryBuilder.prototype.saveQuery = function(){
+
+    if (!this.inputElement.parent().hasClass('hidden')) {
+        return;
+    }
 
     var result = this.builder.queryBuilder('getSQL', false);
 

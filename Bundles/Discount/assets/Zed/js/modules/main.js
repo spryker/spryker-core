@@ -18,7 +18,6 @@ $(document).ready(function(){
     $('#create-discount-button').on('click', function(element) {
         element.preventDefault();
         sqlCalculationBuilder.saveQuery();
-
         sqlConditionBuilder.saveQuery();
 
         $('#discount-form').submit();
