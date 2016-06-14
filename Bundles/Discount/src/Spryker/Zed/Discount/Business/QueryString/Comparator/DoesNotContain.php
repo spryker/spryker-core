@@ -27,7 +27,7 @@ class DoesNotContain implements ComparatorInterface
             throw new ComparatorException('Only scalar value can be used together with "does not contain" comparator.');
         }
 
-        return (stripos($clauseTransfer->getValue(), trim($withValue))  === false);
+        return (stripos(trim($withValue), $clauseTransfer->getValue())  === false);
     }
 
     /**

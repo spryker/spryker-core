@@ -117,7 +117,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                     if ($leftNode === null) {
                         $leftNode = $childTree;
                     } else {
-                        $compositeNode = $this->createCompositeNode($lastLogicalComparator, $leftNode, $childTree);
+                        $compositeNode = $this->createCompositeNode($lastLogicalComparator, $leftNode, $childTree, $compositeNode);
                     }
                     break;
 
@@ -157,7 +157,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                         $leftNode = $this->specificationProvider->getSpecificationContext($clauseTransfer);
                     } else {
                         $rightNode = $this->specificationProvider->getSpecificationContext($clauseTransfer);
-                        $compositeNode = $this->createCompositeNode($lastLogicalComparator, $leftNode, $rightNode);
+                        $compositeNode = $this->createCompositeNode($lastLogicalComparator, $leftNode, $rightNode, $compositeNode);
                     }
 
                     break;
@@ -200,16 +200,19 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      * @param string $logicalComparator
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $leftNode
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $rightNode
-     *
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $compositeNode
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected function createCompositeNode(
         $logicalComparator,
         $leftNode,
-        $rightNode
+        $rightNode,
+        $compositeNode
     ) {
 
-        $compositeNode = $leftNode;
+        if ($compositeNode !== null) {
+            $leftNode = $compositeNode;
+        }
         if ($logicalComparator === LogicalComparators::COMPARATOR_AND) {
             $compositeNode = $this->specificationProvider->createAnd($leftNode, $rightNode);
         } elseif ($logicalComparator === LogicalComparators::COMPARATOR_OR) {

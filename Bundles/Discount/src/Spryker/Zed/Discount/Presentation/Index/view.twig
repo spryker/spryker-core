@@ -55,7 +55,7 @@
           <table class="table">
               <tr>
                   <td>{{ 'Type:' | trans }}</td>
-                  <td>{{ discountConfigurator.discountCalculator.calculatorPlugin }}</td>
+                  <td>{{ discountConfigurator.discountCalculator.calculatorPlugin|replace({'_' :' ', 'PLUGIN' : ''})|capitalize }}</td>
               </tr>
               <tr>
                   <td>{{ 'Amount:' | trans }}</td>

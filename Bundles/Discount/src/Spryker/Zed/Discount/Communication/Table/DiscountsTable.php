@@ -71,7 +71,8 @@ class DiscountsTable extends AbstractTable
         ]);
 
         $config->setSearchable([
-            SpyDiscountTableMap::COL_DISPLAY_NAME
+            SpyDiscountTableMap::COL_DISPLAY_NAME,
+            SpyDiscountTableMap::COL_ID_DISCOUNT,
         ]);
 
         $config->setSortable([

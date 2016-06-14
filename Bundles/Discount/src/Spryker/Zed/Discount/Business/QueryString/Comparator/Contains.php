@@ -27,7 +27,7 @@ class Contains implements ComparatorInterface
             throw new ComparatorException('Only scalar value can be used together with "contains" comparator.');
         }
 
-        return (stripos($clauseTransfer->getValue(), trim($withValue)) !== false);
+        return (stripos(trim($withValue), $clauseTransfer->getValue()) !== false);
     }
 
     /**
