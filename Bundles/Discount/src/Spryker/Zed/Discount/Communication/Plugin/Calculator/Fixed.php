@@ -32,14 +32,39 @@ class Fixed extends AbstractPlugin implements DiscountCalculatorPluginInterface
     }
 
     /**
+     * @return CurrencyManager
+     */
+    protected function getCurrencyManager()
+    {
+        return CurrencyManager::getInstance();
+    }
+
+    /**
+     * @param int $value
+     * @return float
+     */
+    public function transformForPersistence($value)
+    {
+        return $this->getCurrencyManager()->convertDecimalToCent($value);
+    }
+
+    /**
+     * @param int $value
+     * @return int
+     */
+    public function transformFromPersistence($value)
+    {
+        return $this->getCurrencyManager()->convertCentToDecimal($value);
+    }
+
+    /**
      * @return string
      */
     public function getFormattedAmount($amount)
     {
-        $currencyManager = CurrencyManager::getInstance();
-        $discountAmount = $currencyManager->convertCentToDecimal($amount);
+        $discountAmount = $this->transformFromPersistence($amount);
 
-        return $currencyManager->format($discountAmount);
+        return $this->getCurrencyManager()->format($discountAmount);
     }
 
     /**

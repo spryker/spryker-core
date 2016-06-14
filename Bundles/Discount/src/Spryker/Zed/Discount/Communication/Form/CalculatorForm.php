@@ -75,8 +75,11 @@ class CalculatorForm extends AbstractType
         $builder->addModelTransformer(new CallbackTransformer(
             function(DiscountCalculatorTransfer $databaseData = null){
                 if ($databaseData !== null) {
-                    $convertedAmount = $databaseData->getAmount() / 100;
-                    $databaseData->setAmount($convertedAmount);
+
+                    $calculatorPlugin = $this->getCalculatorPlugin($databaseData->getCalculatorPlugin());
+                    $transformedAmount = $calculatorPlugin->transformFromPersistence($databaseData->getAmount());
+
+                    $databaseData->setAmount($transformedAmount);
                 }
 
                 return $databaseData;
@@ -94,8 +97,10 @@ class CalculatorForm extends AbstractType
             },
             function(DiscountCalculatorTransfer $submittedData = null){
                 if ($submittedData !== null) {
-                    $convertedAmount = $submittedData->getAmount() * 100;
-                    $submittedData->setAmount($convertedAmount);
+                    $calculatorPlugin = $this->getCalculatorPlugin($submittedData->getCalculatorPlugin());
+                    $transformedAmount = $calculatorPlugin->transformForPersistence($submittedData->getAmount());
+
+                    $submittedData->setAmount($transformedAmount);
                 }
 
                 return $submittedData;
