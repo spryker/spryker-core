@@ -56,7 +56,7 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productCollection
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function convertProductCollection(ObjectCollection $productCollection)
     {

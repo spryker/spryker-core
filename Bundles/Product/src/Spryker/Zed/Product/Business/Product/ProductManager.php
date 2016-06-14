@@ -14,6 +14,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
+use Spryker\Shared\Library\Json;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException;
@@ -123,11 +124,11 @@ class ProductManager implements ProductManagerInterface
         $sku = $productAbstractTransfer->getSku();
         $this->checkProductAbstractDoesNotExist($sku);
 
-        $encodedAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
+        $jsonAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
 
         $productAbstract = new SpyProductAbstract();
         $productAbstract
-            ->setAttributes($encodedAttributes)
+            ->setAttributes($jsonAttributes)
             ->setSku($sku);
 
         $productAbstract->save();
@@ -230,6 +231,8 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * TODO move to AttributeManager
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException
@@ -260,8 +263,9 @@ class ProductManager implements ProductManagerInterface
         }
     }
 
-
     /**
+     * TODO move to AttributeManager
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException
@@ -292,6 +296,8 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * TODO move to AttributeManager
+     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -313,6 +319,8 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * TODO move to AttributeManager
+     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -466,6 +474,8 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * TODO move to AttributeManager
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException
@@ -480,20 +490,23 @@ class ProductManager implements ProductManagerInterface
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
             $this->checkProductConcreteAttributesDoNotExist($idProductConcrete, $locale);
-            $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
+
+            $jsonAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
             $productAttributeEntity = new SpyProductLocalizedAttributes();
             $productAttributeEntity
                 ->setFkProduct($idProductConcrete)
                 ->setFkLocale($locale->getIdLocale())
                 ->setName($localizedAttributes->getName())
-                ->setAttributes($encodedAttributes);
+                ->setAttributes($jsonAttributes);
 
             $productAttributeEntity->save();
         }
     }
 
     /**
+     * TODO move to AttributeManager
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException
@@ -507,7 +520,7 @@ class ProductManager implements ProductManagerInterface
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
-            $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
+            $jsonAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
             $localizedProductAttributesEntity = $this->productQueryContainer
                 ->queryProductConcreteAttributeCollection($idProductConcrete, $locale->getIdLocale())
@@ -517,13 +530,15 @@ class ProductManager implements ProductManagerInterface
                 ->setFkProduct($idProductConcrete)
                 ->setFkLocale($locale->getIdLocale())
                 ->setName($localizedAttributes->getName())
-                ->setAttributes($encodedAttributes);
+                ->setAttributes($jsonAttributes);
 
             $localizedProductAttributesEntity->save();
         }
     }
 
     /**
+     * TODO move to AttributeManager
+     *
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -543,6 +558,8 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * TODO move to AttributeManager
+     *
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -772,11 +789,25 @@ class ProductManager implements ProductManagerInterface
             return null;
         }
 
-        $transferGenerator = new ProductTransferGenerator();
+        $transferGenerator = new ProductTransferGenerator();  //TODO inject
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
 
+        $productAbstractTransfer = $this->loadProductAbstractAttributes($productAbstractTransfer);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * TODO move to AttributeManager
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function loadProductAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer)
+    {
         $productAttributeCollection = $this->productQueryContainer
-            ->queryProductAbstractAttributes($idProductAbstract)
+            ->queryProductAbstractAttributes($productAbstractTransfer->getIdProductAbstract())
             ->find();
 
         foreach ($productAttributeCollection as $attribute) {
@@ -812,8 +843,22 @@ class ProductManager implements ProductManagerInterface
         $transferGenerator = new ProductTransferGenerator();
         $productTransfer = $transferGenerator->convertProduct($productEntity);
 
+        $productTransfer = $this->loadProductAttributes($productTransfer);
+
+        return $productTransfer;
+    }
+
+    /**
+     * TODO move to AttributeManager
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function loadProductAttributes(ProductConcreteTransfer $productTransfer)
+    {
         $productAttributeCollection = $this->productQueryContainer
-            ->queryProductAttributes($idProduct)
+            ->queryProductAttributes($productTransfer->getIdProductConcrete())
             ->find();
 
         foreach ($productAttributeCollection as $attribute) {
@@ -852,13 +897,15 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * TODO move to AttributeManager
+     *
      * @param array $attributes
      *
      * @return string
      */
     protected function encodeAttributes(array $attributes)
     {
-        return json_encode($attributes);
+        return Json::encode($attributes);
     }
 
     /**
@@ -943,6 +990,8 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * TODO move to AttributeManager
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
@@ -957,6 +1006,28 @@ class ProductManager implements ProductManagerInterface
             ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->filterByAttributes($jsonAttributes)
             ->findOne();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract)
+    {
+        $entityCollection = $this->productQueryContainer
+            ->queryProduct()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->find();
+
+        $transferGenerator = new ProductTransferGenerator(); //TODO inject
+        $transferCollection = $transferGenerator->convertProductCollection($entityCollection);
+
+        for ($a=0; $a<count($transferCollection); $a++) {
+            $transferCollection[$a] = $this->loadProductAttributes($transferCollection[$a]);
+        }
+
+        return $transferCollection;
     }
 
 }

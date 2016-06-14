@@ -191,4 +191,11 @@ interface ProductManagerInterface
      */
     public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract);
+
 }

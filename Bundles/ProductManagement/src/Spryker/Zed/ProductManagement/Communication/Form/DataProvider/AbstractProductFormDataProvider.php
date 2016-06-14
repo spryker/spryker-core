@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
-use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class AbstractProductFormDataProvider
 {
@@ -71,23 +71,19 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return array
      */
-    public function getAttributes($idProductAbstract)
+    public function getLocalizedAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $attributeCollection = $this->productQueryContainer
-            ->queryProductAbstractAttributes($idProductAbstract)
-            ->innerJoinLocale()
-            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE_NAME)
-            ->find();
-
         $localizedAttributes = [];
-        foreach ($attributeCollection as $attribute) {
-            $data = $attribute->toArray();
-            $localizedAttributes[$data[self::LOCALE_NAME]] = $data;
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $attribute) {
+            $localizedAttributes[$attribute->getLocale()->getLocaleName()] = $attribute->toArray();
         }
+
+        $formData = $productAbstractTransfer->toArray(true);
+        $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $localizedAttributes;
 
         return $localizedAttributes;
     }

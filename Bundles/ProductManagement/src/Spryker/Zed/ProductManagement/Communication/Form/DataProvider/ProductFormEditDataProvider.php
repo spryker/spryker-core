@@ -22,11 +22,10 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $formData = [];
         $defaults = $this->getDefaultFormFields();
 
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
         $productAbstractTransfer = $this->productFacade->getProductAbstractById($idProductAbstract);
         if ($productAbstractTransfer) {
-            $formData = $productAbstractTransfer->toArray();
-            $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $this->getAttributes($idProductAbstract);
+            $formData = $productAbstractTransfer->toArray(true);
+            $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $this->getLocalizedAbstractAttributes($productAbstractTransfer);
         }
 
         return array_merge($defaults, $formData);
