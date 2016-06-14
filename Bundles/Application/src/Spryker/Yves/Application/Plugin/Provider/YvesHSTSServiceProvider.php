@@ -9,16 +9,21 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Application\Communication\Plugin\ServiceProvider\AbstractHSTSServiceProvider;
+use Spryker\Shared\Application\Communication\Plugin\ServiceProvider\AbstractHstsServiceProvider;
 use Spryker\Shared\Config\Config;
 
-class YvesHSTSServiceProvider extends AbstractHSTSServiceProvider implements ServiceProviderInterface
+/**
+ * HTTP Strict Transport Security support as a ServiceProvider
+ *
+ * @see https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
+ */
+class YvesHstsServiceProvider extends AbstractHstsServiceProvider implements ServiceProviderInterface
 {
 
     /**
-     * @return boolean
+     * @return bool
      */
-    protected function getIsHSTSEnabled()
+    protected function getIsHstsEnabled()
     {
         return Config::hasKey(ApplicationConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED)
             && Config::get(ApplicationConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED) === true;
@@ -27,7 +32,7 @@ class YvesHSTSServiceProvider extends AbstractHSTSServiceProvider implements Ser
     /**
      * @return array
      */
-    protected function getHSTSConfig()
+    protected function getHstsConfig()
     {
         $config = [];
         if (Config::hasKey(ApplicationConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG)) {

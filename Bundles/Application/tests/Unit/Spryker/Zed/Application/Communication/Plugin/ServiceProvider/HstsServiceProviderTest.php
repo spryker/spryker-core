@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\ZedHSTSServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\ZedHstsServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -28,7 +28,7 @@ class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function testDisabledHstsServiceProviderMustNotReturnHeader()
     {
         $eventMock = $this->getMock(FilterResponseEvent::class, ['isMasterRequest', 'getResponse'], [], '', false);
-        $hstsMock = $this->getMock(ZedHSTSServiceProvider::class, ['getIsHSTSEnabled', 'getHSTSConfig']);
+        $hstsMock = $this->getMock(ZedHstsServiceProvider::class, ['getIsHstsEnabled', 'getHstsConfig']);
 
         $eventMock->expects($this->once())
             ->method('isMasterRequest')
@@ -38,7 +38,7 @@ class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
             ->method('getResponse');
 
         $hstsMock->expects($this->once())
-            ->method('getIsHSTSEnabled')
+            ->method('getIsHstsEnabled')
             ->willReturn(false);
 
         $hstsMock->onKernelResponse($eventMock);
@@ -50,7 +50,7 @@ class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function testHstsServiceProviderGeneratesHeader()
     {
         $eventMock = $this->getMock(FilterResponseEvent::class, ['isMasterRequest', 'getResponse'], [], '', false);
-        $hstsMock = $this->getMock(ZedHSTSServiceProvider::class, ['getIsHSTSEnabled', 'getHSTSConfig']);
+        $hstsMock = $this->getMock(ZedHstsServiceProvider::class, ['getIsHstsEnabled', 'getHstsConfig']);
         $responseMock = $this->getMock(Response::class);
         $headersMock = $this->getMock(ResponseHeaderBag::class, ['set']);
 
@@ -73,14 +73,14 @@ class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         $headersMock->expects($this->once())
             ->method('set')
-            ->with(ZedHSTSServiceProvider::HEADER_HSTS, $hstsString);
+            ->with(ZedHstsServiceProvider::HEADER_HSTS, $hstsString);
 
         $hstsMock->expects($this->once())
-            ->method('getIsHSTSEnabled')
+            ->method('getIsHstsEnabled')
             ->willReturn(true);
 
         $hstsMock->expects($this->once())
-            ->method('getHSTSConfig')
+            ->method('getHstsConfig')
             ->willReturn($hstsConfig);
 
         $hstsMock->onKernelResponse($eventMock);

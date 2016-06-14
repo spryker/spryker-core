@@ -9,16 +9,21 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Application\Communication\Plugin\ServiceProvider\AbstractHSTSServiceProvider;
+use Spryker\Shared\Application\Communication\Plugin\ServiceProvider\AbstractHstsServiceProvider;
 use Spryker\Shared\Config\Config;
 
-class ZedHSTSServiceProvider extends AbstractHSTSServiceProvider implements ServiceProviderInterface
+/**
+ * HTTP Strict Transport Security support as a ServiceProvider
+ *
+ * @see https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
+ */
+class ZedHstsServiceProvider extends AbstractHstsServiceProvider implements ServiceProviderInterface
 {
 
     /**
-     * @return boolean
+     * @return bool
      */
-    protected function getIsHSTSEnabled()
+    protected function getIsHstsEnabled()
     {
         return Config::hasKey(ApplicationConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED)
             && Config::get(ApplicationConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED) === true;
@@ -27,7 +32,7 @@ class ZedHSTSServiceProvider extends AbstractHSTSServiceProvider implements Serv
     /**
      * @return array
      */
-    protected function getHSTSConfig()
+    protected function getHstsConfig()
     {
         $config = [];
         if (Config::hasKey(ApplicationConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG)) {

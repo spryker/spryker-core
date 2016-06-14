@@ -12,7 +12,12 @@ use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-abstract class AbstractHSTSServiceProvider implements ServiceProviderInterface
+/**
+ * HTTP Strict Transport Security support as a ServiceProvider
+ *
+ * @see https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
+ */
+abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
 {
 
     /**
@@ -24,14 +29,14 @@ abstract class AbstractHSTSServiceProvider implements ServiceProviderInterface
     const HSTS_CONFIG_PRELOAD = 'preload';
 
     /**
-     * @return boolean
+     * @return bool
      */
-    abstract protected function getIsHSTSEnabled();
+    abstract protected function getIsHstsEnabled();
 
     /**
      * @return array
      */
-    abstract protected function getHSTSConfig();
+    abstract protected function getHstsConfig();
 
     /**
      * @param \Silex\Application $app
@@ -61,11 +66,11 @@ abstract class AbstractHSTSServiceProvider implements ServiceProviderInterface
      */
     public function onKernelResponse(FilterResponseEvent $event)
     {
-        if (!$event->isMasterRequest() || !$this->getIsHSTSEnabled()) {
+        if (!$event->isMasterRequest() || !$this->getIsHstsEnabled()) {
             return;
         }
-        $headerBody = $this->renderHeaderBody($this->getHSTSConfig());
-        if (strlen($headerBody)) {
+        $headerBody = $this->renderHeaderBody($this->getHstsConfig());
+        if ($headerBody !== '') {
             $event->getResponse()->headers->set(static::HEADER_HSTS, $headerBody);
         }
     }
@@ -90,7 +95,7 @@ abstract class AbstractHSTSServiceProvider implements ServiceProviderInterface
             $headerParts[] = "preload";
         }
 
-        if (!empty($headerParts)) {
+        if ($headerParts) {
             return implode('; ', $headerParts);
         }
 
