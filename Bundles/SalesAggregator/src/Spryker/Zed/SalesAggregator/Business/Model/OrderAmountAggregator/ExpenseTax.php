@@ -19,11 +19,6 @@ class ExpenseTax implements OrderAmountAggregatorInterface
     protected $taxFacade;
 
     /**
-     * @var float
-     */
-    protected $roundingError;
-
-    /**
      * @param \Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface $taxFacade
      */
     public function __construct(SalesAggregatorToTaxInterface $taxFacade)
@@ -78,14 +73,7 @@ class ExpenseTax implements OrderAmountAggregatorInterface
      */
     protected function calculateTaxAmount($price, $taxRate)
     {
-        $taxAmount = $this->taxFacade->getTaxAmountFromGrossPrice($price, $taxRate, false);
-
-        $taxAmount += $this->roundingError;
-
-        $taxAmountRounded = round($taxAmount, 4);
-        $this->roundingError = $taxAmount - $taxAmountRounded;
-
-        return $taxAmountRounded;
+        return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($price, $taxRate);
     }
 
 }

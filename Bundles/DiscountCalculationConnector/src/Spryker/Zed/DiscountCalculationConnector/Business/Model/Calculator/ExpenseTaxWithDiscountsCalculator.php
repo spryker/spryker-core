@@ -13,11 +13,6 @@ class ExpenseTaxWithDiscountsCalculator implements CalculatorInterface
 {
 
     /**
-     * @var int
-     */
-    protected $roundingError = 0;
-
-    /**
      * @var DiscountCalculationToTaxInterface
      */
     protected $taxFacade;
@@ -76,13 +71,6 @@ class ExpenseTaxWithDiscountsCalculator implements CalculatorInterface
      */
     protected function calculateTaxAmount($price, $taxRate)
     {
-        $taxAmount = $this->taxFacade->getTaxAmountFromGrossPrice($price, $taxRate, false);
-
-        $taxAmount += $this->roundingError;
-
-        $taxAmountRounded = round($taxAmount, 4);
-        $this->roundingError = $taxAmount - $taxAmountRounded;
-
-        return $taxAmountRounded;
+        return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($price, $taxRate);
     }
 }

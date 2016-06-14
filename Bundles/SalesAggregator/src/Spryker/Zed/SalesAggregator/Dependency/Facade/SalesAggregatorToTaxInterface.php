@@ -19,4 +19,14 @@ interface SalesAggregatorToTaxInterface
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate, $round = true);
 
+    /**
+     * @api
+     *
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
 }

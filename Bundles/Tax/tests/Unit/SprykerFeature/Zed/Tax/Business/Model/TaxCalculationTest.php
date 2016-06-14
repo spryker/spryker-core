@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 
 class TaxCalculationTest extends \PHPUnit_Framework_TestCase
@@ -22,119 +21,22 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testCalculateTaxAmountWhenRateIsFixed()
-    {
-        $priceCalculationMock = $this->createPriceCalculationMock();
-
-        $priceCalculationMock
-            ->expects($this->once())
-            ->method('getTaxValueFromPrice')
-            ->willReturn(16);
-
-        $taxCalculation = $this->createTaxCalculation($priceCalculationMock);
-        $quoteTransfer = $this->createQuoteTransferWithFixtureData(self::TAX_RATE, self::GRAND_TOTAL);
-        $taxCalculation->recalculate($quoteTransfer);
-
-        $this->assertEquals(16, $quoteTransfer->getTotals()->getTaxTotal()->getAmount());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCalculateTaxRateWhenRateIsFixed()
-    {
-        $priceCalculationMock = $this->createPriceCalculationMock();
-
-        $priceCalculationMock
-            ->expects($this->once())
-            ->method('getTaxValueFromPrice')
-            ->willReturn(16);
-
-        $taxCalculation = $this->createTaxCalculation($priceCalculationMock);
-        $quoteTransfer = $this->createQuoteTransferWithFixtureData(self::TAX_RATE, self::GRAND_TOTAL);
-        $taxCalculation->recalculate($quoteTransfer);
-
-        $this->assertEquals(self::TAX_RATE, $quoteTransfer->getTotals()->getTaxTotal()->getTaxRate());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCalculateTaxRateWhenRateIsVariedShouldReturnAverage()
-    {
-        $priceCalculationMock = $this->createPriceCalculationMock();
-
-        $priceCalculationMock
-            ->expects($this->once())
-            ->method('getTaxValueFromPrice');
-
-        $taxCalculation = $this->createTaxCalculation($priceCalculationMock);
-        $quoteTransfer = $this->createQuoteTransferWithFixtureData(self::TAX_RATE, self::GRAND_TOTAL);
-        $quoteTransfer->getItems()[0]->setTaxRate(7);
-        $taxCalculation->recalculate($quoteTransfer);
-
-        $this->assertEquals(15, $quoteTransfer->getTotals()->getTaxTotal()->getTaxRate());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCalculateTaxRateWhenRateIsNotSetShouldReturnEmptyRate()
-    {
-        $priceCalculationMock = $this->createPriceCalculationMock();
-
-        $taxCalculation = $this->createTaxCalculation($priceCalculationMock);
-        $quoteTransfer = $this->createQuoteTransfer();
-        $quoteTransfer->setTotals($this->createTotalsTransfer()->setGrandTotal(100));
-        $taxCalculation->recalculate($quoteTransfer);
-
-        $this->assertEquals(0, $quoteTransfer->getTotals()->getTaxTotal()->getTaxRate());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCalculateTaxRateWhenRateIsNotSetShouldReturnEmptyTaxAmount()
-    {
-        $priceCalculationMock = $this->createPriceCalculationMock();
-
-        $taxCalculation = $this->createTaxCalculation($priceCalculationMock);
-        $quoteTransfer = $this->createQuoteTransfer();
-        $quoteTransfer->setTotals($this->createTotalsTransfer()->setGrandTotal(100));
-        $taxCalculation->recalculate($quoteTransfer);
-
-        $this->assertEquals(0, $quoteTransfer->getTotals()->getTaxTotal()->getAmount());
-    }
-
-    /**
-     * @param int $taxRate
-     * @param int $grandTotal
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function createQuoteTransferWithFixtureData($taxRate, $grandTotal)
+    public function testCalculateTaxAmountShouldSumUpAllTaxes()
     {
         $quoteTransfer = $this->createQuoteTransfer();
-
+        $quoteTransfer->setTotals($this->createTotalsTransfer());
         $itemTransfer = $this->createItemTransfer();
-        $itemTransfer->setTaxRate($taxRate);
-
-        $productOptionTransfer = $this->createProductOptionTransfer();
-        $productOptionTransfer->setTaxRate($taxRate);
-
-        $itemTransfer->addProductOption($productOptionTransfer);
+        $itemTransfer->setSumTaxAmount(25);
         $quoteTransfer->addItem($itemTransfer);
 
         $expenseTransfer = $this->createExpenseTransfer();
-        $expenseTransfer->setTaxRate($taxRate);
+        $expenseTransfer->setSumTaxAmount(25);
         $quoteTransfer->addExpense($expenseTransfer);
 
-        $totalsTransfer = $this->createTotalsTransfer();
-        $totalsTransfer->setGrandTotal($grandTotal);
+        $taxCalculation = $this->createTaxCalculation();
+        $taxCalculation->recalculate($quoteTransfer);
 
-        $quoteTransfer->setTotals($totalsTransfer);
-
-        return $quoteTransfer;
+        $this->assertEquals(50, $quoteTransfer->getTotals()->getTaxTotal()->getAmount());
     }
 
     /**
@@ -146,26 +48,14 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationMock
      *
      * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
      */
-    protected function createTaxCalculation(PriceCalculationHelperInterface $priceCalculationMock)
+    protected function createTaxCalculation()
     {
-        return new TaxCalculation($priceCalculationMock);
+        return new TaxCalculation();
     }
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
-     */
-    protected function createPriceCalculationMock()
-    {
-        $priceCalculationMock = $this->getMockBuilder(PriceCalculationHelperInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return $priceCalculationMock;
-    }
 
     /**
      * @return \Generated\Shared\Transfer\ItemTransfer

@@ -12,21 +12,16 @@ class ItemTaxCalculator implements CalculatorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
+     * @var \Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface $accruedTaxCalculator
      */
-    protected $priceCalculationHelper;
+    protected $accruedTaxCalculator;
 
     /**
-     * @var int
+     * @param \Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface $accruedTaxCalculator
      */
-    protected $roundingError = 0;
-
-    /**
-     * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
-     */
-    public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
+    public function __construct(AccruedTaxCalculatorInterface $accruedTaxCalculator)
     {
-        $this->priceCalculationHelper = $priceCalculationHelper;
+        $this->accruedTaxCalculator = $accruedTaxCalculator;
     }
 
     /**
@@ -60,13 +55,6 @@ class ItemTaxCalculator implements CalculatorInterface
      */
     protected function calculateTaxAmount($price, $taxRate)
     {
-        $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($price, $taxRate, false);
-
-        $taxAmount += $this->roundingError;
-
-        $taxAmountRounded = round($taxAmount, 4);
-        $this->roundingError = $taxAmount - $taxAmountRounded;
-
-        return $taxAmountRounded;
+        return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate);
     }
 }

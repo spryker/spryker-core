@@ -62,8 +62,6 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
      */
     public function createOrderTotalWithDiscountsTaxCalculator()
     {
-        return new OrderTaxAmountWithDiscounts(
-            $this->getProvidedDependency(ProductOptionDiscountConnectorDependencyProvider::FACADE_TAX)
-        );
+        return new OrderTaxAmountWithDiscounts();
     }
 }

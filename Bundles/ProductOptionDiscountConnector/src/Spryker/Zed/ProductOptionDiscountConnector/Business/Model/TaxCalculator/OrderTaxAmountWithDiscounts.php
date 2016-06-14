@@ -12,24 +12,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderAmountAggregatorInterface;
-use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\Calculator\CalculatorInterface;
 
 class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface, CalculatorInterface
 {
-
-    /**
-     * @var \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface
-     */
-    protected $taxFacade;
-
-    /**
-     * @param \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface $taxFacade
-     */
-    public function __construct(ProductOptionToTaxBridgeInterface $taxFacade)
-    {
-        $this->taxFacade = $taxFacade;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

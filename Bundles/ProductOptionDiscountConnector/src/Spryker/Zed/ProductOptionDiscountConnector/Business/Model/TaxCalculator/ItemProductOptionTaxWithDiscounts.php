@@ -23,11 +23,6 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
     protected $taxFacade;
 
     /**
-     * @var int
-     */
-    protected $roundingError = 0;
-
-    /**
      * @param \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface $taxFacade
      */
     public function __construct(ProductOptionToTaxBridgeInterface $taxFacade)
@@ -138,14 +133,7 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
      */
     protected function calculateTaxAmount($price, $taxRate)
     {
-        $taxAmount = $this->taxFacade->getTaxAmountFromGrossPrice($price, $taxRate, false);
-
-        $taxAmount += $this->roundingError;
-
-        $taxAmountRounded = round($taxAmount, 4);
-        $this->roundingError = $taxAmount - $taxAmountRounded;
-
-        return $taxAmountRounded;
+        return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($price, $taxRate);
     }
 
 }

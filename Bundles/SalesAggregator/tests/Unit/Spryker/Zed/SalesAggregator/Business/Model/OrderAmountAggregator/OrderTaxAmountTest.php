@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderTaxAmount;
-use Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface;
 
 class OrderTaxAmountTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,19 +25,7 @@ class OrderTaxAmountTest extends \PHPUnit_Framework_TestCase
         $orderTransfer = $this->createOrderTransfer();
         $orderTaxAmountAggregator->aggregate($orderTransfer);
 
-        $this->assertEquals(26, $orderTransfer->getTotals()->getTaxTotal()->getAmount());
-    }
-
-    /**
-     * @return void
-     */
-    public function testTaxEffectiveTaxRateShouldBeSet()
-    {
-        $orderTaxAmountAggregator = $this->createOrderTaxAmountAggregator();
-        $orderTransfer = $this->createOrderTransfer();
-        $orderTaxAmountAggregator->aggregate($orderTransfer);
-
-        $this->assertEquals(19, $orderTransfer->getTotals()->getTaxTotal()->getTaxRate());
+        $this->assertEquals(50, $orderTransfer->getTotals()->getTaxTotal()->getAmount());
     }
 
     /**
@@ -46,23 +33,7 @@ class OrderTaxAmountTest extends \PHPUnit_Framework_TestCase
      */
     protected function createOrderTaxAmountAggregator()
     {
-        $taxFacadeMock = $this->createTaxFacadeMock();
-
-        $taxFacadeMock->expects($this->exactly(1))->method('getTaxAmountFromGrossPrice')->willReturnCallback(
-            function ($grosPrice, $taxRate) {
-                return round($grosPrice / $taxRate); //not testing calculation. just make sure it was applied.
-            }
-        );
-
-        return new OrderTaxAmount($taxFacadeMock);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface
-     */
-    protected function createTaxFacadeMock()
-    {
-        return $this->getMockBuilder(SalesAggregatorToTaxInterface::class)->disableOriginalConstructor()->getMock();
+        return new OrderTaxAmount();
     }
 
     /**
@@ -72,17 +43,18 @@ class OrderTaxAmountTest extends \PHPUnit_Framework_TestCase
     {
         $orderTransfer = new OrderTransfer();
 
-        $totalTransfer = new TotalsTransfer();
-        $totalTransfer->setGrandTotal(500);
-        $orderTransfer->setTotals($totalTransfer);
+        $orderTransfer->setTotals(new TotalsTransfer());
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setTaxRate(19);
+        $itemTransfer->setSumTaxAmount(25);
         $orderTransfer->addItem($itemTransfer);
 
-        $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setTaxRate(19);
-        $orderTransfer->addExpense($expenseTransfer);
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setTaxRate(19);
+        $itemTransfer->setSumTaxAmount(25);
+        $orderTransfer->addItem($itemTransfer);
+
 
         return $orderTransfer;
     }

@@ -15,19 +15,6 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
 {
 
     /**
-     * @var \Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface
-     */
-    protected $taxFacade;
-
-    /**
-     * @param \Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface $taxFacade
-     */
-    public function __construct(SalesAggregatorToTaxInterface $taxFacade)
-    {
-        $this->taxFacade = $taxFacade;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -57,7 +44,6 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
     protected function assertOrderTaxAmountRequirements(OrderTransfer $orderTransfer)
     {
         $orderTransfer->requireTotals();
-        $orderTransfer->getTotals()->requireGrandTotal();
     }
 
 }

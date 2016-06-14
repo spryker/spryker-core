@@ -14,24 +14,6 @@ class TaxCalculation implements CalculatorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
-     */
-    protected $priceCalculationHelper;
-
-    /**
-     * @var int
-     */
-    protected $roundingError = 0;
-
-    /**
-     * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
-     */
-    public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
-    {
-        $this->priceCalculationHelper = $priceCalculationHelper;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -58,24 +40,6 @@ class TaxCalculation implements CalculatorInterface
         $taxTotalTransfer->setAmount(round($taxAmount));
 
         $quoteTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
-    }
-
-    /**
-     * @param int $price
-     * @param float $taxRate
-     *
-     * @return float
-     */
-    protected function calculateTaxAmount($price, $taxRate)
-    {
-        $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($price, $taxRate, false);
-
-        $taxAmount += $this->roundingError;
-
-        $taxAmountRounded = round($taxAmount, 4);
-        $this->roundingError = $taxAmount - $taxAmountRounded;
-
-        return $taxAmountRounded;
     }
 
     /**

@@ -105,7 +105,7 @@ class SalesAggregatorBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderTaxAmountAggregator()
     {
-        return new OrderTaxAmount($this->getTaxFacade());
+        return new OrderTaxAmount();
     }
 
     /**

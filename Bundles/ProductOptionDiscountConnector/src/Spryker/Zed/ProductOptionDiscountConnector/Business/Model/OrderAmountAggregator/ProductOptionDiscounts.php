@@ -250,7 +250,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
         $productOptionSumTotalDiscountAmount = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
 
-            $productOptionSumDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount(
+            $productOptionSumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount(
                 $productOptionTransfer->getCalculatedDiscounts()
             );
 

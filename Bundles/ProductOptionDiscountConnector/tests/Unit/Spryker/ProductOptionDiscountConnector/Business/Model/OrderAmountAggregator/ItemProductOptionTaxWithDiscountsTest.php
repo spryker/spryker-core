@@ -26,7 +26,7 @@ class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
         $itemProductOptionTaxWithDiscountsAggregator->aggregate($orderTransfer);
 
         $this->assertEquals(
-            round(200 / $this->getEffectiveTaxRateForTestData()),
+            13,
             $orderTransfer->getItems()[0]->getUnitTaxAmountWithProductOptionAndDiscountAmounts()
         );
     }
@@ -41,32 +41,9 @@ class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
         $itemProductOptionTaxWithDiscountsAggregator->aggregate($orderTransfer);
 
         $this->assertEquals(
-            round(400 / $this->getEffectiveTaxRateForTestData()),
+            26,
             $orderTransfer->getItems()[0]->getSumTaxAmountWithProductOptionAndDiscountAmounts()
         );
-    }
-
-    /**
-     * @return void
-     */
-    public function testTax()
-    {
-        $itemProductOptionTaxWithDiscountsAggregator = $this->createItemProductOptionTaxWithDiscountsAggregator();
-        $orderTransfer = $this->createOrderTransfer();
-        $itemProductOptionTaxWithDiscountsAggregator->aggregate($orderTransfer);
-
-        $this->assertEquals(
-            round(400 / $this->getEffectiveTaxRateForTestData()),
-            $orderTransfer->getItems()[0]->getSumTaxAmountWithProductOptionAndDiscountAmounts()
-        );
-    }
-
-    /**
-     * @return float
-     */
-    protected function getEffectiveTaxRateForTestData()
-    {
-        return ((19 + 7 + 7) / 3);
     }
 
     /**
@@ -78,15 +55,19 @@ class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setTaxRate(19);
-        $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(200);
-        $itemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(400);
+        $itemTransfer->setUnitGrossPriceWithDiscounts(200);
+        $itemTransfer->setSumGrossPriceWithDiscounts(400);
 
         $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setUnitGrossPriceWithDiscounts(10);
+        $productOptionTransfer->setSumGrossPriceWithDiscounts(20);
         $productOptionTransfer->setTaxRate(7);
         $itemTransfer->addProductOption($productOptionTransfer);
 
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->setTaxRate(10);
+        $productOptionTransfer->setUnitGrossPriceWithDiscounts(10);
+        $productOptionTransfer->setSumGrossPriceWithDiscounts(20);
         $itemTransfer->addProductOption($productOptionTransfer);
 
         $orderTransfer->addItem($itemTransfer);
@@ -95,12 +76,12 @@ class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\ItemProductOptionTaxWithDiscounts
      */
     protected function createItemProductOptionTaxWithDiscountsAggregator()
     {
         $taxFacadeBridgeMock = $this->createTaxFacadeBridgeMock();
-        $taxFacadeBridgeMock->method('getTaxAmountFromGrossPrice')->willReturnCallback(
+        $taxFacadeBridgeMock->method('getAccruedTaxAmountFromGrossPrice')->willReturnCallback(
             function ($grossSum, $taxRate) {
                 return round($grossSum / $taxRate); //tax formula is not important, in this test we are testing if tax was calculated.
             }
