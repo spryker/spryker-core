@@ -1,5 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
+{% block section_title 'Overview' %}
+
 {% block action %}
     {{ createActionButton(url('/discount/index/create'), 'Create new Discount' | trans) }}
 {% endblock %}

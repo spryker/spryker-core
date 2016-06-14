@@ -9,13 +9,29 @@
         <action>list</action>
         <pages>
             <create>
-                <label>Discounts</label>
-                <title>Discounts</title>
+                <label>Create Discount</label>
+                <title>Create Discount</title>
                 <bundle>discount</bundle>
                 <controller>index</controller>
                 <action>create</action>
                 <visible>0</visible>
             </create>
+            <edit>
+                <label>Edit Discount</label>
+                <title>Edit Discount</title>
+                <bundle>discount</bundle>
+                <controller>index</controller>
+                <action>edit</action>
+                <visible>0</visible>
+            </edit>
+            <view>
+                <label>View Discount</label>
+                <title>View Discount</title>
+                <bundle>discount</bundle>
+                <controller>index</controller>
+                <action>edit</action>
+                <visible>0</visible>
+            </view>
         </pages>
     </discount>
 </config>
