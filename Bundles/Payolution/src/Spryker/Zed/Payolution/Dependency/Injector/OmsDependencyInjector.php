@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Payolution\Dependency\Injector;
 
-use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
@@ -23,15 +23,15 @@ use Spryker\Zed\Payolution\Communication\Plugin\Oms\Condition\IsReAuthorizationA
 use Spryker\Zed\Payolution\Communication\Plugin\Oms\Condition\IsRefundApprovedPlugin;
 use Spryker\Zed\Payolution\Communication\Plugin\Oms\Condition\IsReversalApprovedPlugin;
 
-class OmsDependencyInjector implements DependencyInjectorInterface
+class OmsDependencyInjector extends AbstractDependencyInjector
 {
 
     /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container
+     * @return \Spryker\Zed\Kernel\Container
      */
-    public function inject(ContainerInterface $container)
+    public function injectBusinessLayerDependencies(Container $container)
     {
         $container = $this->injectCommands($container);
         $container = $this->injectConditions($container);
@@ -40,11 +40,11 @@ class OmsDependencyInjector implements DependencyInjectorInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function injectCommands(ContainerInterface $container)
+    protected function injectCommands(Container $container)
     {
         $container->extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
             $commandCollection
@@ -61,11 +61,11 @@ class OmsDependencyInjector implements DependencyInjectorInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function injectConditions(ContainerInterface $container)
+    protected function injectConditions(Container $container)
     {
         $container->extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
             $conditionCollection
