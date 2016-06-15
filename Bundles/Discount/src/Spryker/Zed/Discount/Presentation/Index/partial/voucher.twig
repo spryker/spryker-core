@@ -1,6 +1,7 @@
 <h3>{{ 'Create voucher codes for the discount' | trans }}</h3>
 <hr />
 
+{{ form_start(voucherForm) }}
 <div class="form-group">
     {{ form_errors(voucherForm.quantity) }}
     {{ form_label(voucherForm.quantity) }}
@@ -24,6 +25,8 @@
 </div>
 
 {{ form_rest(voucherForm) }}
+
+{{ form_end(voucherForm) }}
 
 {% if discountConfigurator.discountVoucher.fkDiscountVoucherPool %}
  {{ viewActionButton(url('/discount/voucher/export', {'id-pool' : discountConfigurator.discountVoucher.fkDiscountVoucherPool}), 'Export' | trans) }}
