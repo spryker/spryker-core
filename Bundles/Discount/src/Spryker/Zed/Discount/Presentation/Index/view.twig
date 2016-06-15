@@ -3,7 +3,6 @@
 {% block section_title 'View discount' %}
 
 {% block action %}
-    {{ createActionButton(url('/discount/index/create'), 'Create new Discount' | trans) }}
     {{ editActionButton(url('/discount/index/edit', {'id-discount' : discountConfigurator.discountGeneral.idDiscount}), 'Edit' | trans, {'id': 'create-discount-button'}) }}
     {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
 {% endblock %}
@@ -19,9 +18,9 @@
                    <td>{{ 'Discount Type:' | trans }}</td>
                    <td>
                        {% if discountConfigurator.discountVoucher %}
-                           Voucher code
+                           {{ 'Voucher code' | trans }}
                        {% else %}
-                           Cart rule
+                           {{ 'Cart rule' | trans }}
                        {% endif %}
                    </td>
                </tr>
@@ -83,7 +82,9 @@
               </tr>
           </table>
 
-          {{ voucherCodesTable | raw }}
+        {% if discountConfigurator.discountVoucher %}
+            {{ voucherCodesTable | raw }}
+        {% endif %}
 
         {% endblock %}
 

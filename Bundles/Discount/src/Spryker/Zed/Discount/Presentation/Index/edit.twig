@@ -3,7 +3,6 @@
 {% block section_title 'Edit discount' %}
 
 {% block action %}
-    {{ createActionButton(url('/discount/index/create'), 'Create new Discount' | trans) }}
     {% if discountConfigurator.getDiscountGeneral.isActive %}
         {{ removeActionButton(url('/discount/index/toggle-discount-visibility', {'id-discount': idDiscount, 'visibility': 'deactivate'}), 'Deactivate' | trans) }}
     {% else %}
