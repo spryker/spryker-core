@@ -128,9 +128,6 @@ class CmsBlockForm extends AbstractType
             ])
             ->add(self::FIELD_VALUE, 'hidden', [
                 'label' => 'Value',
-            ])
-            ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
-                'label' => 'Active',
             ]);
     }
 

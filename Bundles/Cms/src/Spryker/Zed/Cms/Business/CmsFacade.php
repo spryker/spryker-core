@@ -394,4 +394,40 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
         return $blockManager->getCmsBlocksByIdCategoryNode($idCategoryNode);
     }
 
+    /**
+     * Specification:
+     * - Delete Cms Page and it's relations (urls, glossary key mappings) from database
+     * - Touch deleted Cms Page to notify collector about the change
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    public function deletePageById($idCmsPage)
+    {
+        $this->getFactory()
+            ->createPageRemover()
+            ->delete($idCmsPage);
+    }
+
+    /**
+     * Specification:
+     * - Delete Cms Block and it's relations (cms page, glossary key mappings) from database
+     * - Touch deleted Cms Block to notify collector about the change
+     *
+     * @api
+     *
+     * @param int $idCmsBlock
+     *
+     * @return void
+     */
+    public function deleteBlockById($idCmsBlock)
+    {
+        $this->getFactory()
+            ->createBlockRemover()
+            ->delete($idCmsBlock);
+    }
+
 }

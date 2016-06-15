@@ -127,7 +127,7 @@ class PageManager implements PageManagerInterface
     protected function updatePage(PageTransfer $pageTransfer)
     {
         $pageEntity = $this->getPageById($pageTransfer->getIdCmsPage());
-        $pageEntity->fromArray($pageTransfer->toArray());
+        $pageEntity->fromArray($pageTransfer->modifiedToArray());
 
         if ($pageTransfer->getUrl() !== null) {
             $this->updatePageUrl($pageTransfer);
