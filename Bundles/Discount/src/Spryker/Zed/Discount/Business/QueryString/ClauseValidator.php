@@ -57,12 +57,14 @@ class ClauseValidator implements ClauseValidatorInterface
      */
     protected function validateComparatorOperators(ClauseTransfer $clauseTransfer)
     {
-        if ($this->comparatorOperators->isValidComparator($clauseTransfer) === false) {
+        if ($this->comparatorOperators->isExistingComparator($clauseTransfer) === false) {
             throw new QueryStringException(sprintf(
                 'Could not find value "%s" as comparator operator.',
                 $clauseTransfer->getOperator()
             ));
         }
+
+        $this->comparatorOperators->isValidComparatorValue($clauseTransfer);
     }
 
     /**

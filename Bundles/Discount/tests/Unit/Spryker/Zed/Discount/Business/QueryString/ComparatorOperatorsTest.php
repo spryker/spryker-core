@@ -216,7 +216,7 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
 
         $clauseTransfer = new ClauseTransfer();
 
-        $isValid = $comparatorOperators->isValidComparator($clauseTransfer);
+        $isValid = $comparatorOperators->isExistingComparator($clauseTransfer);
 
         $this->assertTrue($isValid);
     }
@@ -235,7 +235,7 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
 
         $clauseTransfer = new ClauseTransfer();
 
-        $isValid = $comparatorOperators->isValidComparator($clauseTransfer);
+        $isValid = $comparatorOperators->isExistingComparator($clauseTransfer);
 
         $this->assertFalse($isValid);
     }

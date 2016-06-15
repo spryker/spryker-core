@@ -300,7 +300,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setOperator($token);
-        return $this->comparatorOperators->isValidComparator($clauseTransfer);
+        return $this->comparatorOperators->isExistingComparator($clauseTransfer);
     }
 
 

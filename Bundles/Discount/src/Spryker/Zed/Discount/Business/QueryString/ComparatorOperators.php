@@ -101,7 +101,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
      *
      * @return bool
      */
-    public function isValidComparator(ClauseTransfer $clauseTransfer)
+    public function isExistingComparator(ClauseTransfer $clauseTransfer)
     {
         foreach ($this->operators as $operator) {
             if ($operator->accept($clauseTransfer) === true) {
@@ -128,6 +128,26 @@ class ComparatorOperators implements ComparatorOperatorsInterface
         }
 
         return array_unique($combinedOperators);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     */
+    public function isValidComparatorValue(ClauseTransfer $clauseTransfer)
+    {
+        foreach ($this->operators as $operator) {
+            if (!$operator->accept($clauseTransfer)) {
+                continue;
+            }
+
+            $operator->isValidValue($clauseTransfer->getValue());
+        }
+
+        return true;
     }
 
     /**

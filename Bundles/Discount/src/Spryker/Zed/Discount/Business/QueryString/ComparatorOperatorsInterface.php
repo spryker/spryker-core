@@ -41,6 +41,15 @@ interface ComparatorOperatorsInterface
      *
      * @return bool
      */
-    public function isValidComparator(ClauseTransfer $clauseTransfer);
+    public function isExistingComparator(ClauseTransfer $clauseTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     */
+    public function isValidComparatorValue(ClauseTransfer $clauseTransfer);
 
 }
