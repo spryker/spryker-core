@@ -85,9 +85,9 @@
         {# ============================ VARIANT ============================ #}
         <div id="tab_variant" class="tab-pane">
             <div class="panel-body">
-
-                variants
-
+                {% for product in concretes %}
+                    {{ product.sku }}</br>
+                {% endfor %}
             </div>
         </div>
         {# ============================ END ============================ #}
