@@ -154,7 +154,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         if ($this->productManager === null) {
             $this->productManager = new ProductManager(
-                $this->createAttributeManager(),
                 $this->getQueryContainer(),
                 $this->getTouchFacade(),
                 $this->getUrlFacade(),
