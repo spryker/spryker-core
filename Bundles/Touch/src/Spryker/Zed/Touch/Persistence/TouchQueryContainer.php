@@ -10,9 +10,9 @@ namespace Spryker\Zed\Touch\Persistence;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 
 /**
  * @method \Spryker\Zed\Touch\Persistence\TouchPersistenceFactory getFactory()
