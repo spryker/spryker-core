@@ -133,6 +133,9 @@ class GeneralForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
+            'attr' => [
+                'class' => 'inline-radio'
+            ]
         ]);
 
         return $this;

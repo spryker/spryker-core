@@ -62,3 +62,28 @@ table.dataTable.gui-table-data {
         }
     }
 }
+
+#discount-form .form-group {
+    overflow: hidden;
+}
+
+.inline-radio,
+.inline-checkbox {
+    display: block;
+
+    &:after {
+        clear: right;
+    }
+
+    > .radio {
+        padding-right: 10px;
+        display: inline;
+
+        > label {
+
+            input {
+                margin-right: 5px;
+            }
+        }
+    }
+}
