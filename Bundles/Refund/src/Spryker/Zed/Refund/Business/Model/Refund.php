@@ -86,7 +86,7 @@ class Refund
         }
 
         $orderItems = $this->salesQueryContainer->querySalesOrderItem()
-            ->filterByIdSalesOrderItem($orderItemsIds)
+            ->filterByIdSalesOrderItem($orderItemsIds, Criteria::IN)
             ->find();
         $this->omsFacade->triggerEvent('start refund', $orderItems, []);
 

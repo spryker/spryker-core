@@ -183,7 +183,7 @@ class OrdersTable extends AbstractTable
             ->find()
             ->toArray();
 
-        $query->filterByIdSalesOrder($orders);
+        $query->filterByIdSalesOrder($orders, Criteria::IN);
 
         return $query;
     }
