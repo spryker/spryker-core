@@ -368,7 +368,9 @@ class ProductManager implements ProductManagerInterface
 
         $idProductConcrete = $productConcreteEntity->getPrimaryKey();
         $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
+
         $this->createProductConcreteLocalizedAttributes($productConcreteTransfer);
+        $this->loadTaxRate($productConcreteTransfer);
 
         return $idProductConcrete;
     }
@@ -425,6 +427,7 @@ class ProductManager implements ProductManagerInterface
 
         $idProductConcrete = $productConcreteEntity->getPrimaryKey();
         $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
+
         $this->saveProductConcreteLocalizedAttributes($productConcreteTransfer);
 
         return $idProductConcrete;
@@ -665,6 +668,8 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * TODO Move to TaxManager
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -735,7 +740,7 @@ class ProductManager implements ProductManagerInterface
             ->setIdProductAbstract($productConcrete[self::COL_ID_PRODUCT_ABSTRACT])
             ->setName($productConcrete[self::COL_NAME]);
 
-        $this->addTaxRate($productConcreteTransfer);
+        $this->loadTaxRate($productConcreteTransfer);
 
         return $productConcreteTransfer;
     }
@@ -743,20 +748,22 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function addTaxRate(ProductConcreteTransfer $productConcreteTransfer)
+    protected function loadTaxRate(ProductConcreteTransfer $productConcreteTransfer)
     {
         $taxSetEntity = $this->productQueryContainer
             ->queryTaxSetForProductAbstract($productConcreteTransfer->getIdProductAbstract())
             ->findOne();
 
         if ($taxSetEntity === null) {
-            return;
+            return $productConcreteTransfer;
         }
 
         $effectiveTaxRate = $this->getEffectiveTaxRate($taxSetEntity->getSpyTaxRates());
         $productConcreteTransfer->setTaxRate($effectiveTaxRate);
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -855,6 +862,7 @@ class ProductManager implements ProductManagerInterface
         $productTransfer = $transferGenerator->convertProduct($productEntity);
 
         $productTransfer = $this->loadProductLocalizedAttributes($productTransfer);
+        $this->loadTaxRate($productTransfer);
 
         return $productTransfer;
     }
@@ -1029,6 +1037,7 @@ class ProductManager implements ProductManagerInterface
         $entityCollection = $this->productQueryContainer
             ->queryProduct()
             ->filterByFkProductAbstract($idProductAbstract)
+            ->joinSpyProductAbstract()
             ->find();
 
         $transferGenerator = new ProductTransferGenerator(); //TODO inject
@@ -1036,6 +1045,7 @@ class ProductManager implements ProductManagerInterface
 
         for ($a=0; $a<count($transferCollection); $a++) {
             $transferCollection[$a] = $this->loadProductLocalizedAttributes($transferCollection[$a]);
+            $transferCollection[$a] = $this->loadTaxRate($transferCollection[$a]);
         }
 
         return $transferCollection;

@@ -20,6 +20,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 {
 
     /**
+     * @deprecated Use Project level importers
+     *
      * @api
      *
      * @param \SplFileInfo $file
