@@ -9,7 +9,6 @@ namespace Functional\Spryker\Zed\Collector\Business;
 
 use Spryker\Zed\Collector\Business\CollectorBusinessFactory;
 use Spryker\Zed\Collector\Business\Exporter\CollectorExporter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilderInterface;
 
 /**
  * @group Spryker

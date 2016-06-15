@@ -18,4 +18,5 @@ interface FileWriterInterface extends WriterInterface
      * @return $this
      */
     public function setFileName($fileName);
+
 }

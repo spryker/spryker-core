@@ -9,5 +9,4 @@ namespace Spryker\Zed\Collector\Business\Exporter\Exception;
 
 class FileWriterException extends \Exception
 {
-
 }

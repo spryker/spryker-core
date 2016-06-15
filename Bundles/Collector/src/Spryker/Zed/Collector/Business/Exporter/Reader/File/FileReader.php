@@ -31,5 +31,4 @@ class FileReader implements ReaderInterface
         return 'file-reader';
     }
 
-
 }

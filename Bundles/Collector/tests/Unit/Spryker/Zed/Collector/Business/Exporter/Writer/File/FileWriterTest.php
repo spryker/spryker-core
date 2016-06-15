@@ -21,7 +21,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterInterface;
  */
 class FileWriterTest extends \PHPUnit_Framework_TestCase
 {
-    
+
     const BYTES_WRITTEN_TO_FILE = 12;
 
     /**
@@ -93,10 +93,11 @@ class FileWriterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AdapterInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\AdapterInterface
      */
     protected function getWriterAdapter()
     {
         return $this->getMock(AdapterInterface::class);
     }
+
 }
