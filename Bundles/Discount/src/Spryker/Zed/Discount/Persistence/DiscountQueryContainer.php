@@ -77,19 +77,29 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    public function queryCartRulesIncludingSpecifiedVouchers(array $voucherCodes = [])
+    public function queryDiscountsBySpecifiedVouchers(array $voucherCodes = [])
     {
-        return $this->queryActiveAndRunningDiscounts()
+        $query = $this->queryActiveAndRunningDiscounts()
             ->useVoucherPoolQuery()
                 ->useDiscountVoucherQuery()
                     ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_VOUCHER_CODE)
                     ->filterByCode(array_unique($voucherCodes), Criteria::IN)
                 ->endUse()
-            ->endUse()
-            ->_or()
-            ->filterByFkDiscountVoucherPool(null)
-            ->filterByIsActive(true);
+            ->endUse();
 
+        return $query;
+
+    }
+
+    /**
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryActiveCartRules()
+    {
+        $query = $this->queryActiveAndRunningDiscounts()
+            ->filterByDiscountType(DiscountConstants::TYPE_CART_RULE);
+
+        return $query;
     }
 
     /**

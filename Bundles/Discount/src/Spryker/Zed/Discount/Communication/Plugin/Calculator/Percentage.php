@@ -58,7 +58,7 @@ class Percentage extends AbstractPlugin implements DiscountCalculatorPluginInter
      */
     public function getFormattedAmount($amount)
     {
-        return $amount . ' %';
+        return $this->transformFromPersistence($amount) . ' %';
     }
 
     /**

@@ -99,9 +99,21 @@ class Discount implements DiscountInterface
      */
     protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes = [])
     {
-        return $this->queryContainer
-            ->queryCartRulesIncludingSpecifiedVouchers($voucherCodes)
-            ->find();
+        $discounts = $this->queryContainer->queryActiveCartRules()->find();
+        if (count($voucherCodes) > 0) {
+            $voucherDiscounts = $this->queryContainer->queryDiscountsBySpecifiedVouchers($voucherCodes)->find();
+            if (count($discounts) == 0) {
+                return $voucherDiscounts;
+            }
+
+            foreach ($voucherDiscounts as $discount) {
+                $discounts->append($discount);
+            }
+
+        }
+
+        return $discounts;
+
     }
 
     /**
@@ -170,8 +182,8 @@ class Discount implements DiscountInterface
      */
     protected function isDiscountApplicable(QuoteTransfer $quoteTransfer, SpyDiscount $discountEntity)
     {
-        $voucherCode = $discountEntity->getVoucherCode();
         if ($discountEntity->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
+            $voucherCode = $discountEntity->getVoucherCode();
             if ($this->voucherValidator->isUsable($voucherCode) === false) {
                 return false;
             }

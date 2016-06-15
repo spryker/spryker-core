@@ -66,7 +66,7 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    public function queryCartRulesIncludingSpecifiedVouchers(array $voucherCodes = []);
+    public function queryDiscountsBySpecifiedVouchers(array $voucherCodes = []);
 
     /**
      * @api
@@ -119,5 +119,10 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
      */
     public function querySalesDiscount();
+
+    /**
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryActiveCartRules();
 
 }
