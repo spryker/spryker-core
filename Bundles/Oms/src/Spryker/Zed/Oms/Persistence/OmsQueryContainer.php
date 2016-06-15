@@ -282,7 +282,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $this->getFactory()
             ->createOmsStateMachineLockQuery()
             ->filterByIdentifier($identifier)
-            ->filterByExpires(['min' => $expirationDate]);
+            ->filterByExpires(['min' => $expirationDate], SprykerCriteria::BETWEEN);
     }
 
     /**
