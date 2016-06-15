@@ -5,49 +5,98 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+
 namespace Unit\Spryker\Zed\Collector\Business\Exporter\Writer\File;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\AdapterInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterInterface;
 
 /**
  * @group Spryker
  * @group Zed
  * @group Collector
  * @group Business
- * @group FileWriterBuilder
+ * @group FileWriter
  */
 class FileWriterTest extends \PHPUnit_Framework_TestCase
 {
+    
+    const BYTES_WRITTEN_TO_FILE = 12;
 
     /**
      * @return void
      */
-    public function testFileWriterBuilderShouldReturnInstance()
+    public function testInstantiation()
     {
-        $builder = new FileWriterBuilder('/test/export/dir');
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName('de_DE');
+        $writerAdapter = $this->getWriterAdapter();
+        $fileWriter = new FileWriter($writerAdapter);
 
-        $this->assertInstanceOf(
-            'Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter',
-            $builder->build('test', $localeTransfer)
-        );
+        $this->assertInstanceOf(FileWriterInterface::class, $fileWriter);
     }
 
     /**
      * @return void
      */
-    public function testGetFullExportPath()
+    public function testSetFileNameShouldSetFileNameInAdapter()
     {
-        $builder = new FileWriterBuilder('/test/export/dir');
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName('de_DE');
-
-        $this->assertEquals(
-            '/test/export/dir/test_de_DE.csv',
-            $builder->getFullExportPath('test', $localeTransfer)
-        );
+        $writerAdapter = $this->getWriterAdapter();
+        $writerAdapter->expects($this->once())->method('setFileName');
+        $fileWriter = new FileWriter($writerAdapter);
+        $fileWriter->setFileName('foo');
     }
 
+    /**
+     * @return void
+     */
+    public function testWriteShouldReturnTrueWhenDataWrittenToFile()
+    {
+        $writerAdapter = $this->getWriterAdapter();
+        $writerAdapter->expects($this->once())->method('write')->willReturn(self::BYTES_WRITTEN_TO_FILE);
+        $fileWriter = new FileWriter($writerAdapter);
+
+        $this->assertTrue($fileWriter->write(['data' => 'for file']));
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteShouldReturnFalseWhenDataNotWrittenToFile()
+    {
+        $writerAdapter = $this->getWriterAdapter();
+        $writerAdapter->expects($this->once())->method('write')->willReturn(0);
+        $fileWriter = new FileWriter($writerAdapter);
+
+        $this->assertFalse($fileWriter->write(['data' => 'for file']));
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteShouldAlwaysReturnFalse()
+    {
+        $writerAdapter = $this->getWriterAdapter();
+        $fileWriter = new FileWriter($writerAdapter);
+
+        $this->assertFalse($fileWriter->delete([]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetNameShouldReturnString()
+    {
+        $writerAdapter = $this->getWriterAdapter();
+        $fileWriter = new FileWriter($writerAdapter);
+
+        $this->assertInternalType('string', $fileWriter->getName());
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|AdapterInterface
+     */
+    protected function getWriterAdapter()
+    {
+        return $this->getMock(AdapterInterface::class);
+    }
 }

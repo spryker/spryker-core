@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Exporter\Writer\File;
+namespace Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter;
 
-class CsvFileWriterAdapter extends AbstractFileWriterAdapter
+class CsvAdapter extends AbstractAdapter
 {
 
     /**
@@ -54,8 +54,7 @@ class CsvFileWriterAdapter extends AbstractFileWriterAdapter
     public function write(array $data, $type = '')
     {
         $result = 0;
-        $csvFile = $this->createCsvFile();
-        $this->initializeHeaderColumns($csvFile, current($data));
+        $csvFile = $this->getCsvFile($data);
 
         foreach ($data as $key => $row) {
             $result = $csvFile->fputcsv($row);
@@ -76,14 +75,22 @@ class CsvFileWriterAdapter extends AbstractFileWriterAdapter
     }
 
     /**
+     * @param array $data
+     *
+     * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\FileWriterException
+     *
      * @return \SplFileObject
      */
-    protected function createCsvFile()
+    protected function getCsvFile(array $data)
     {
-        $csvFile = new \SplFileObject($this->getAbsolutePath(), 'w');
-        $csvFile->setCsvControl($this->delimiter, $this->enclosure, $this->escape);
+        if (!$this->csvFile) {
+            $this->csvFile = new \SplFileObject($this->getAbsolutePath(), 'w');
+            $this->csvFile->setCsvControl($this->delimiter, $this->enclosure, $this->escape);
 
-        return $csvFile;
+            $this->initializeHeaderColumns($this->csvFile, current($data));
+        }
+
+        return $this->csvFile;
     }
 
 }

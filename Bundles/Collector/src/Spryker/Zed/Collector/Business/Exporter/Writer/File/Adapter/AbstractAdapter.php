@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Business\Exporter\Writer\File;
+namespace Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter;
 
 use Spryker\Zed\Collector\Business\Exporter\Exception\FileWriterException;
 
-abstract class AbstractFileWriterAdapter implements FileWriterAdapterInterface
+abstract class AbstractAdapter implements AdapterInterface
 {
 
     /**
@@ -28,6 +28,18 @@ abstract class AbstractFileWriterAdapter implements FileWriterAdapterInterface
     public function __construct($directory)
     {
         $this->directory = $directory;
+    }
+
+    /**
+     * @param string $directory
+     *
+     * @return $this
+     */
+    public function setDirectory($directory)
+    {
+        $this->directory = $directory;
+
+        return $this;
     }
 
     /**

@@ -19,9 +19,8 @@ use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
 use Spryker\Zed\Collector\Business\Exporter\StorageExporter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\CsvFileWriterAdapter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\CsvAdapter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter;
-use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
@@ -164,11 +163,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\CsvFileWriterAdapter
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\CsvAdapter
      */
     protected function createCsvFileWriterAdapter()
     {
-        return new CsvFileWriterAdapter($this->getConfig()->getFileExporterOutputDir());
+        return new CsvAdapter($this->getConfig()->getFileExporterOutputDir());
     }
 
     /**

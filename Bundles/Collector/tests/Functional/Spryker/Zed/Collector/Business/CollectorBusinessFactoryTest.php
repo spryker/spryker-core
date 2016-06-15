@@ -39,14 +39,4 @@ class CollectorBusinessFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(CollectorExporter::class, $yvesFileExporter);
     }
 
-    /**
-     * @return void
-     */
-    public function testCreateFileWriterBuilderShouldReturnFullyConfiguredInstance()
-    {
-        $fileWriterBuilder = $this->getFactory()->createFileWriter();
-
-        $this->assertInstanceOf(FileWriterBuilderInterface::class, $fileWriterBuilder);
-    }
-
 }

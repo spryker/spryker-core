@@ -7,18 +7,20 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\File;
 
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\AdapterInterface;
+
 class FileWriter implements FileWriterInterface
 {
 
     /**
-     * @var FileWriterAdapterInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\AdapterInterface
      */
     protected $fileWriterAdapter;
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterAdapterInterface $fileWriterAdapter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\AdapterInterface $fileWriterAdapter
      */
-    public function __construct(FileWriterAdapterInterface $fileWriterAdapter)
+    public function __construct(AdapterInterface $fileWriterAdapter)
     {
         $this->fileWriterAdapter = $fileWriterAdapter;
     }
