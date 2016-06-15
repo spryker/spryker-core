@@ -10,12 +10,11 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\Product\Business\Product\MatrixGenerator;
+use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -48,9 +47,14 @@ class AddController extends AbstractController
             'size' => [
                 '40' => '40',
                 '41' => '41',
+                '42' => '42',
+                '43' => '43',
+                '44' => '44',
             ],
             'color' => [
                 'blue' => 'Blue',
+                'red' => 'Red',
+                'white' => 'White',
             ],
             'flavour' => [
                 'spicy' => 'Mexican Food',

@@ -16,7 +16,7 @@ interface ProductManagementFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $productConcreteCollection
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
      *
      * @throws \Exception
      *
@@ -28,7 +28,7 @@ interface ProductManagementFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $productConcreteCollection
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
      *
      * @throws \Exception
      *

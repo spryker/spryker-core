@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
-use Spryker\Zed\Product\Business\Product\MatrixGenerator;
+use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
