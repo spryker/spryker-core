@@ -23,9 +23,7 @@ class DoesNotContain implements ComparatorInterface
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
-        if (!is_scalar($withValue)) {
-            throw new ComparatorException('Only scalar value can be used together with "does not contain" comparator.');
-        }
+        $this->isValidValue($withValue);
 
         return (stripos(trim($withValue), $clauseTransfer->getValue())  === false);
     }
@@ -57,6 +55,23 @@ class DoesNotContain implements ComparatorInterface
             ComparatorOperators::TYPE_STRING,
             ComparatorOperators::TYPE_INTEGER
         ];
+    }
+
+    /**
+     * @param string $withValue
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     *
+     */
+    public function isValidValue($withValue)
+    {
+        if (!is_scalar($withValue)) {
+            throw new ComparatorException('Only scalar value can be used together with "does not contain" comparator.');
+        }
+
+        return true;
     }
 
 }

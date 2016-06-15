@@ -23,9 +23,7 @@ class Contains implements ComparatorInterface
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
-        if (!is_scalar($withValue)) {
-            throw new ComparatorException('Only scalar value can be used together with "contains" comparator.');
-        }
+        $this->isValidValue($withValue);
 
         return (stripos(trim($withValue), $clauseTransfer->getValue()) !== false);
     }
@@ -60,4 +58,20 @@ class Contains implements ComparatorInterface
         ];
     }
 
+    /**
+     * @param string $withValue
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     *
+     */
+    public function isValidValue($withValue)
+    {
+        if (!is_scalar($withValue)) {
+            throw new ComparatorException('Only scalar value can be used together with "contains" comparator.');
+        }
+
+        return true;
+    }
 }

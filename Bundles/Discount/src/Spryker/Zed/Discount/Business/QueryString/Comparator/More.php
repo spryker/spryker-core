@@ -24,9 +24,7 @@ class More implements ComparatorInterface
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
-        if (!is_numeric($withValue)) {
-            throw new ComparatorException('Only numeric value can be used together with ">" comparator.');
-        }
+        $this->isValidValue($withValue);
 
         return $withValue > $clauseTransfer->getValue();
     }
@@ -57,6 +55,23 @@ class More implements ComparatorInterface
         return [
             ComparatorOperators::TYPE_INTEGER,
         ];
+    }
+
+    /**
+     * @param string $withValue
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     *
+     */
+    public function isValidValue($withValue)
+    {
+        if (!is_numeric($withValue)) {
+            throw new ComparatorException('Only numeric value can be used together with ">" comparator.');
+        }
+
+        return true;
     }
 
 }

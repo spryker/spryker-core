@@ -23,9 +23,7 @@ class IsNotIn implements ComparatorInterface
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
-        if (!is_scalar($withValue)) {
-            throw new ComparatorException('Only scalar value can be used together with "is not in" comparator.');
-        }
+        $this->isValidValue($withValue);
 
         $values = explode(',', $clauseTransfer->getValue());
 
@@ -60,6 +58,23 @@ class IsNotIn implements ComparatorInterface
         return [
             ComparatorOperators::TYPE_LIST,
         ];
+    }
+
+    /**
+     * @param string $withValue
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     *
+     */
+    public function isValidValue($withValue)
+    {
+        if (!is_scalar($withValue)) {
+            throw new ComparatorException('Only scalar value can be used together with "is not in" comparator.');
+        }
+
+        return true;
     }
 
 }

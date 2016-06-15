@@ -20,6 +20,13 @@ interface ComparatorInterface
     public function compare(ClauseTransfer $clauseTransfer, $withValue);
 
     /**
+     * @param string $withValue
+     *
+     * @return bool
+     */
+    public function isValidValue($withValue);
+
+    /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool

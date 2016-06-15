@@ -24,9 +24,7 @@ class Equal implements ComparatorInterface
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
-        if (!is_scalar($withValue)) {
-            throw new ComparatorException('Only scalar value can be used together with "=" comparator.');
-        }
+        $this->isValidValue($withValue);
 
         return strcasecmp($clauseTransfer->getValue(), $withValue) === 0;
     }
@@ -58,6 +56,23 @@ class Equal implements ComparatorInterface
             ComparatorOperators::TYPE_INTEGER,
             ComparatorOperators::TYPE_STRING,
         ];
+    }
+
+    /**
+     * @param string $withValue
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     *
+     */
+    public function isValidValue($withValue)
+    {
+        if (!is_scalar($withValue)) {
+            throw new ComparatorException('Only scalar value can be used together with "=" comparator.');
+        }
+
+        return true;
     }
 
 }
