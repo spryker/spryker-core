@@ -8,6 +8,7 @@ namespace Spryker\Zed\Tax\Business\Model;
 
 class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
 {
+
     /**
      * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
@@ -16,7 +17,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
     /**
      * @var float
      */
-    static $roundingError = 0;
+    protected static $roundingError = 0;
 
     /**
      * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper

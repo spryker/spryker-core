@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Zed\Tax\Business\Model\OrderAmountAggregator;
 
-use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -54,7 +53,6 @@ class OrderTaxAmountTest extends \PHPUnit_Framework_TestCase
         $itemTransfer->setTaxRate(19);
         $itemTransfer->setSumTaxAmount(25);
         $orderTransfer->addItem($itemTransfer);
-
 
         return $orderTransfer;
     }

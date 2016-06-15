@@ -7,6 +7,7 @@ namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
 interface DiscountCalculationToTaxInterface
 {
+
     /**
      * @param int $grossPrice
      * @param float $taxRate
@@ -24,4 +25,5 @@ interface DiscountCalculationToTaxInterface
      * @return int
      */
     public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
 }

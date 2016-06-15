@@ -27,4 +27,5 @@ class ItemTaxCalculatorPlugin extends AbstractPlugin implements CalculatorPlugin
     {
         $this->getFacade()->recalculateTaxItemAmount($quoteTransfer);
     }
+
 }

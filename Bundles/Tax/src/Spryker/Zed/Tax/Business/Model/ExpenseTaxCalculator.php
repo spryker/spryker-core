@@ -57,4 +57,5 @@ class ExpenseTaxCalculator implements CalculatorInterface
     {
         return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate);
     }
+
 }

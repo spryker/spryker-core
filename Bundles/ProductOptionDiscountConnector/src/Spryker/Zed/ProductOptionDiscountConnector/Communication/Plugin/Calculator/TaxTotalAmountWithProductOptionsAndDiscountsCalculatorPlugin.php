@@ -28,4 +28,5 @@ class TaxTotalAmountWithProductOptionsAndDiscountsCalculatorPlugin extends Abstr
     {
         $this->getFacade()->recalculateOrderTotalTaxAmountWithDiscounts($quoteTransfer);
     }
+
 }

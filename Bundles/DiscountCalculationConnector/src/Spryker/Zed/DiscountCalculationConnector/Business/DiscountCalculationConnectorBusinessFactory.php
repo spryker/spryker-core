@@ -12,7 +12,6 @@ use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\ExpenseTa
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator;
-use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToTaxInterface;
 use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -60,7 +59,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return DiscountCalculationToTaxInterface
+     * @return \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToTaxInterface
      */
     public function getTaxFacade()
     {

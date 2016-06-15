@@ -28,4 +28,5 @@ class ItemsWithProductOptionsAndDiscountsTaxCalculatorPlugin extends AbstractDis
     {
         $this->getFacade()->recalculateItemWithProductOptionsAndDiscountsTaxAmount($quoteTransfer);
     }
+
 }

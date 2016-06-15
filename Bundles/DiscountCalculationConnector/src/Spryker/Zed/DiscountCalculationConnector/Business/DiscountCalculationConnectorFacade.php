@@ -65,6 +65,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

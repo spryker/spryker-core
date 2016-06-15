@@ -57,4 +57,5 @@ class ItemTaxCalculator implements CalculatorInterface
     {
         return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate);
     }
+
 }

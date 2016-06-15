@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator;
 
-use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderAmountAggregatorInterface;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderAmountAggregatorInterface;
 
 class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface, CalculatorInterface
 {
@@ -51,7 +50,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface, Cal
     /**
      * @param int $totalTaxAmount
      *
-     * @return TaxTotalTransfer
+     * @return \Generated\Shared\Transfer\TaxTotalTransfer
      */
     protected function getTaxTotals($totalTaxAmount)
     {
@@ -62,7 +61,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface, Cal
     }
 
     /**
-     * @param \ArrayObject|ExpenseTransfer[] $expenses
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
      *
      * @return int
      */

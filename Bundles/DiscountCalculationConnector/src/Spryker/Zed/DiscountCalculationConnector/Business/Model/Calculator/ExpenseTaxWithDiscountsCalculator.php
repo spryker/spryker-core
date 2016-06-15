@@ -13,12 +13,12 @@ class ExpenseTaxWithDiscountsCalculator implements CalculatorInterface
 {
 
     /**
-     * @var DiscountCalculationToTaxInterface
+     * @var \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToTaxInterface
      */
     protected $taxFacade;
 
     /**
-     * @param DiscountCalculationToTaxInterface $taxFacade
+     * @param \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToTaxInterface $taxFacade
      */
     public function __construct(DiscountCalculationToTaxInterface $taxFacade)
     {
@@ -73,4 +73,5 @@ class ExpenseTaxWithDiscountsCalculator implements CalculatorInterface
     {
         return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($price, $taxRate);
     }
+
 }

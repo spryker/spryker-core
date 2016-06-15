@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ExpenseTaxCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
+
     /**
      * This plugin makes calculations based on the given quote. The result is added to the quote.
      *
@@ -26,4 +27,5 @@ class ExpenseTaxCalculatorPlugin extends AbstractPlugin implements CalculatorPlu
     {
         $this->getFacade()->recalculateExpenseTaxAmount($quoteTransfer);
     }
+
 }

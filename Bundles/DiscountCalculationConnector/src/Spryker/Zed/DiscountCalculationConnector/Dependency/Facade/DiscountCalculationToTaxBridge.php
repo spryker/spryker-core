@@ -6,18 +6,16 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
-use Spryker\Zed\Tax\Business\TaxFacade;
-
 class DiscountCalculationToTaxBridge implements DiscountCalculationToTaxInterface
 {
 
     /**
-     * @var TaxFacade
+     * @var \Spryker\Zed\Tax\Business\TaxFacade
      */
     protected $taxFacade;
 
     /**
-     * @param TaxFacade $taxFacade
+     * @param \Spryker\Zed\Tax\Business\TaxFacade $taxFacade
      */
     public function __construct($taxFacade)
     {
@@ -45,6 +43,7 @@ class DiscountCalculationToTaxBridge implements DiscountCalculationToTaxInterfac
      */
     public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate)
     {
-       return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
+        return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
     }
+
 }

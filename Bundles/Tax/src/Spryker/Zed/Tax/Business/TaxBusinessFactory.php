@@ -73,7 +73,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
      */
     public function createExpenseTaxCalculator()
     {
-       return new ExpenseTaxCalculator($this->createAccruedTaxCalculator());
+        return new ExpenseTaxCalculator($this->createAccruedTaxCalculator());
     }
 
     /**

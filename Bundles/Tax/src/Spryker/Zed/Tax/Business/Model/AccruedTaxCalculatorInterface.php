@@ -7,6 +7,7 @@ namespace Spryker\Zed\Tax\Business\Model;
 
 interface AccruedTaxCalculatorInterface
 {
+
     /**
      *
      * @param int $price Price as integer (e. g 15508 for 155.08)
@@ -15,4 +16,5 @@ interface AccruedTaxCalculatorInterface
      * @return int
      */
     public function getTaxValueFromPrice($price, $taxRate);
+
 }

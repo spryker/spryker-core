@@ -9,7 +9,6 @@ namespace Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
-use Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface;
 
 class OrderTaxAmount implements OrderAmountAggregatorInterface
 {

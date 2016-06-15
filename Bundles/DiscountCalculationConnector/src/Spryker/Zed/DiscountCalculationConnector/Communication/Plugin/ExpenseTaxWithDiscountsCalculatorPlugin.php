@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-
 /**
  * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade getFacade()
  * @method \Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory getFactory()
@@ -29,4 +28,5 @@ class ExpenseTaxWithDiscountsCalculatorPlugin extends AbstractPlugin implements 
     {
         $this->getFacade()->calculateExpenseTaxWithDiscounts($quoteTransfer);
     }
+
 }
