@@ -85,9 +85,49 @@
         {# ============================ VARIANT ============================ #}
         <div id="tab_variant" class="tab-pane">
             <div class="panel-body">
-                {% for product in concretes %}
-                    {{ product.sku }}</br>
-                {% endfor %}
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-example" >
+                        <thead>
+                        <tr>
+                            <th>Sku</th>
+                            {% set break1 = false %}
+                            {% for product in concretes if not break1 %}
+                                {% for attrName, attrValue in product.attributes %}
+                                    {% set break1 = true %}
+                                    <th>{{ attrName }}</th>
+                                {% endfor %}
+                            {% endfor %}
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in concretes %}
+                            <tr class="gradeX">
+                                <td>{{ product.sku }}</td>
+                                {% for attr in product.attributes %}
+                                    <td>{{ attr }}</td>
+                                {% endfor %}
+                                <td class="center">[activate]</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Sku</th>
+                            {% set break1 = false %}
+                            {% for product in concretes if not break1 %}
+                                {% for attrName, attrValue in product.attributes %}
+                                    {% set break1 = true %}
+                                    <th>{{ attrName }}</th>
+                                {% endfor %}
+                            {% endfor %}
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
             </div>
         </div>
         {# ============================ END ============================ #}

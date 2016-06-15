@@ -88,10 +88,6 @@ class EditController extends AddController
             ->getProductManagementFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
-        echo "<pre>";
-        print_r($concreteProductCollection);
-
-
         if ($form->isValid()) {
             try {
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
@@ -101,7 +97,7 @@ class EditController extends AddController
                 $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
 
                 $idProductAbstract = $this->getFactory()
-                    ->getProductFacade()
+                    ->getProductManagementFacade()
                     ->saveProduct($productAbstractTransfer, $matrix);
 
                 $this->addSuccessMessage(sprintf(
