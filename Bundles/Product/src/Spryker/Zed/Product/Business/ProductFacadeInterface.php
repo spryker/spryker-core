@@ -27,17 +27,6 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param int $idProductAbstract
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
-     */
-    public function getProductAbstractById($idProductAbstract);
-
-    /**
-     * @api
-     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -241,29 +230,8 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $productConcreteCollection
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
-
-    /**
-     * @api
-     *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
     public function getAttributeManager();
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
-     */
-    public function getConcreteProductsByAbstractProductId($idProductAbstract);
 
 }
