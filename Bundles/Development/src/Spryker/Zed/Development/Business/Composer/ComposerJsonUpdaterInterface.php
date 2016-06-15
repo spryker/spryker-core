@@ -11,8 +11,10 @@ interface ComposerJsonUpdaterInterface
 {
 
     /**
+     * @param array $bundles
+     *
      * @return void
      */
-    public function update();
+    public function update(array $bundles);
 
 }

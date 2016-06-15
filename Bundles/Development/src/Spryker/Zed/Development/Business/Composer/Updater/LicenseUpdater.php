@@ -15,7 +15,7 @@ class LicenseUpdater implements UpdaterInterface
     /**
      * @var string
      */
-    private $license;
+    protected $license;
 
     /**
      * @param string $license

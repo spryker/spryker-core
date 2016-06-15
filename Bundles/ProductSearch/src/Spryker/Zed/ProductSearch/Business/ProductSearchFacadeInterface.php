@@ -7,43 +7,34 @@
 
 namespace Spryker\Zed\ProductSearch\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Generated\Shared\Transfer\PageMapTransfer;
+use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 interface ProductSearchFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Iterates through the given product attribute associative array where the key is the name and the value is the value of the attributes
+     * - If an attribute is configured to be mapped in the page map builder, then it's value will be added to the page map
+     * - The data of the returned page map represents a hydrated Elasticsearch document with all the necessary attribute values
+     *
      * @api
      *
-     * @param array $productsRaw
-     * @param array $processedProducts
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param array $attributes
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function enrichProductsWithSearchAttributes(array $productsRaw, array $processedProducts);
+    public function mapDynamicProductAttributes(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes);
 
     /**
-     * @api
+     * Specification:
+     * - Marks the given product to be searchable
+     * - Touches the product so next time the collector runs it will process it
      *
-     * @param array $productsRaw
-     * @param array $processedProducts
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return array
-     */
-    public function createSearchProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return void
-     */
-    public function install(MessengerInterface $messenger);
-
-    /**
      * @api
      *
      * @param int $idProduct
@@ -54,6 +45,10 @@ interface ProductSearchFacadeInterface
     public function activateProductSearch($idProduct, array $localeCollection);
 
     /**
+     * Specification:
+     * - Marks the given product to not to be searchable
+     * - Touches the product so next time the collector will process it
+     *
      * @api
      *
      * @param int $idProduct
@@ -62,5 +57,17 @@ interface ProductSearchFacadeInterface
      * @return void
      */
     public function deactivateProductSearch($idProduct, array $localeCollection);
+
+    /**
+     * Specification:
+     * - For the given product attribute the search preferences will be updated
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     *
+     * @return void
+     */
+    public function saveProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 
 }

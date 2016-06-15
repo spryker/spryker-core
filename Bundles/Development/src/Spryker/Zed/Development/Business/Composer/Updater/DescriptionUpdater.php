@@ -29,7 +29,7 @@ class DescriptionUpdater implements UpdaterInterface
      *
      * @return string
      */
-    private function getBundleName(array $composerJsonData)
+    protected function getBundleName(array $composerJsonData)
     {
         $nameParts = explode('/', $composerJsonData['name']);
         $bundleName = array_pop($nameParts);
