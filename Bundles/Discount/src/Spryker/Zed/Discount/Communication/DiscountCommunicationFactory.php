@@ -35,9 +35,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      *
+     * @param int $idDiscount
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createDiscountForm($idDiscount = 0)
+    public function createDiscountForm($idDiscount = null)
     {
         $discountDataProvider = $this->createDiscountDataProvider();
 
