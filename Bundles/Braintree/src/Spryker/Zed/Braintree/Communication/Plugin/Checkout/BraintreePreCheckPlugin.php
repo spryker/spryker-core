@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\BraintreeTransactionResponseTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 
 /**
  * @method \Spryker\Zed\Braintree\Business\BraintreeFacade getFacade()
  */
-class BraintreePreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionInterface
+class BraintreePreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreCheckPluginInterface
 {
 
     /**
@@ -26,7 +26,7 @@ class BraintreePreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreC
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function checkCondition(
+    public function execute(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {

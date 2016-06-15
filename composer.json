@@ -45,6 +45,7 @@
       "Spryker\\Zed\\AvailabilityCartConnector\\": "Bundles/AvailabilityCartConnector/src",
       "Unit\\Spryker\\Zed\\AvailabilityCartConnector\\": "Bundles/AvailabilityCartConnector/tests",
 
+      "Spryker\\Yves\\Braintree\\": "Bundles/Braintree/src",
       "Spryker\\Client\\Braintree\\": "Bundles/Braintree/src",
       "Unit\\Spryker\\Client\\Braintree\\": "Bundles/Braintree/tests",
       "Functional\\Spryker\\Client\\Braintree\\": "Bundles/Braintree/tests",

@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Yves\Braintree\Handler;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Braintree\BraintreeClientInterface;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Shared\Braintree\BraintreeConstants;
+use Spryker\Zed\Braintree\BraintreeConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class BraintreeHandler
@@ -18,16 +22,8 @@ class BraintreeHandler
      * @var array
      */
     protected static $paymentMethods = [
-        PaymentTransfer::BRAINTREE_PAY_PAL => 'pay_pal',
-        PaymentTransfer::BRAINTREE_CREDIT_CARD => 'credit_card',
-    ];
-
-    /**
-     * @var array
-     */
-    protected static $braintreePaymentMethodMapper = [
-        PaymentTransfer::BRAINTREE_PAY_PAL => 'pay_pal',
-        PaymentTransfer::BRAINTREE_CREDIT_CARD => 'credit_card',
+        BraintreeConfig::PAYMENT_METHOD_PAY_PAL => 'pay_pal',
+        BraintreeConfig::PAYMENT_METHOD_CREDIT_CARD => 'credit_card',
     ];
 
     /**
@@ -36,11 +32,18 @@ class BraintreeHandler
     protected $braintreeClient;
 
     /**
-     * @param \Spryker\Client\Braintree\BraintreeClientInterface $braintreeClient
+     * @var CurrencyManager
      */
-    public function __construct(BraintreeClientInterface $braintreeClient)
+    protected $currencyManager;
+
+    /**
+     * @param \Spryker\Client\Braintree\BraintreeClientInterface $braintreeClient
+     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     */
+    public function __construct(BraintreeClientInterface $braintreeClient, CurrencyManager $currencyManager)
     {
         $this->braintreeClient = $braintreeClient;
+        $this->currencyManager = $currencyManager;
     }
 
     /**
@@ -89,7 +92,7 @@ class BraintreeHandler
 
         $billingAddress = $quoteTransfer->getBillingAddress();
         $braintreePaymentTransfer
-            ->setAccountBrand(self::$braintreePaymentMethodMapper[$paymentSelection])
+            ->setAccountBrand(self::$paymentMethods[$paymentSelection])
             ->setBillingAddress($billingAddress)
             ->setShippingAddress($quoteTransfer->getShippingAddress())
             ->setEmail($quoteTransfer->getCustomer()->getEmail())
@@ -106,7 +109,7 @@ class BraintreeHandler
      */
     protected function getCurrency()
     {
-        return CurrencyManager::getInstance()->getDefaultCurrency()->getIsoCode();
+        return $this->currencyManager->getDefaultCurrency()->getIsoCode();
     }
 
     /**

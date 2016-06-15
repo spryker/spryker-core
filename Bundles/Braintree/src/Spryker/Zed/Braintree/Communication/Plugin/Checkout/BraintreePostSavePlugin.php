@@ -7,13 +7,13 @@ namespace Spryker\Zed\Braintree\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 
 /**
  * @method \Spryker\Zed\Braintree\Business\BraintreeFacade getFacade()
  */
-class BraintreePostSavePlugin extends BaseAbstractPlugin implements CheckoutPostSaveHookInterface
+class BraintreePostSavePlugin extends BaseAbstractPlugin implements CheckoutPostCheckPluginInterface
 {
 
     /**
@@ -22,7 +22,7 @@ class BraintreePostSavePlugin extends BaseAbstractPlugin implements CheckoutPost
      *
      * @return void
      */
-    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $this->getFacade()->postSaveHook($quoteTransfer, $checkoutResponse);
     }

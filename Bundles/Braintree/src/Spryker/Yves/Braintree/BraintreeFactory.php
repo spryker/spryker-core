@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Yves\Braintree;
 
+use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Yves\Braintree\Form\CreditCardSubForm;
 use Spryker\Yves\Braintree\Form\DataProvider\CreditCardDataProvider;
 use Spryker\Yves\Braintree\Form\DataProvider\PayPalDataProvider;
@@ -52,7 +58,15 @@ class BraintreeFactory extends AbstractFactory
      */
     public function createBraintreeHandler()
     {
-        return new BraintreeHandler($this->getClient());
+        return new BraintreeHandler($this->getClient(), $this->getCurrencyManager());
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     */
+    protected function getCurrencyManager()
+    {
+        return CurrencyManager::getInstance();
     }
 
 }

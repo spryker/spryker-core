@@ -1,17 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Yves\Braintree\Form;
 
-use Generated\Shared\Transfer\BraintreePaymentTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
-use Spryker\Yves\Checkout\Dependency\CheckoutAbstractSubFormType;
-use Spryker\Yves\Checkout\Dependency\SubFormInterface;
-use Spryker\Shared\Braintree\BraintreeConstants;
-use Spryker\Shared\Config\Config;
-use Symfony\Component\Form\FormBuilderInterface;
+use Spryker\Zed\Braintree\BraintreeConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PayPalSubForm extends AbstractSubForm
 {
@@ -23,7 +21,7 @@ class PayPalSubForm extends AbstractSubForm
      */
     public function getName()
     {
-        return self::PAYMENT_PROVIDER . '_' . self::PAYMENT_METHOD;
+        return BraintreeConfig::PAYMENT_METHOD_PAY_PAL;
     }
 
     /**
@@ -31,7 +29,7 @@ class PayPalSubForm extends AbstractSubForm
      */
     public function getPropertyPath()
     {
-        return PaymentTransfer::BRAINTREE_PAY_PAL;
+        return BraintreeConfig::PAYMENT_METHOD_PAY_PAL;
     }
 
     /**
@@ -39,7 +37,7 @@ class PayPalSubForm extends AbstractSubForm
      */
     public function getTemplatePath()
     {
-        return BraintreeConstants::BRAINTREE . '/' . self::PAYMENT_METHOD;
+        return BraintreeConfig::PROVIDER_NAME . '/' . self::PAYMENT_METHOD;
     }
 
     /**

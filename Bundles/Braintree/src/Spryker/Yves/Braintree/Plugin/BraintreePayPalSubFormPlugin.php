@@ -1,14 +1,19 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Yves\Braintree\Plugin;
 
-use Spryker\Yves\Checkout\Dependency\Plugin\CheckoutSubFormPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 
 /**
  * @method \Spryker\Yves\Braintree\BraintreeFactory getFactory()
  */
-class BraintreePayPalSubFormPlugin extends AbstractPlugin implements CheckoutSubFormPluginInterface
+class BraintreePayPalSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
 
     /**
@@ -20,7 +25,7 @@ class BraintreePayPalSubFormPlugin extends AbstractPlugin implements CheckoutSub
     }
 
     /**
-     * @return \Spryker\Yves\Checkout\Dependency\DataProvider\DataProviderInterface
+     * @return \Spryker\Yves\Braintree\Form\DataProvider\PayPalDataProvider
      */
     public function createSubFormDataProvider()
     {
