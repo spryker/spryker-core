@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Development\DevelopmentConstants;
+
 class BranchAliasUpdater implements UpdaterInterface
 {
 
@@ -15,28 +18,20 @@ class BranchAliasUpdater implements UpdaterInterface
     const KEY_MASTER_BRANCH = 'dev-master';
 
     /**
-     * @var string
-     */
-    private $version;
-
-    /**
-     * @param string $version
-     */
-    public function __construct($version)
-    {
-        $this->version = $version;
-    }
-
-    /**
      * @param array $composerJson
      *
      * @return array
      */
     public function update(array $composerJson)
     {
+        if (!Config::hasValue(DevelopmentConstants::COMPOSER_BRANCH_ALIAS)) {
+            return $composerJson;
+        }
+        $alias = Config::get(DevelopmentConstants::COMPOSER_BRANCH_ALIAS);
+
         $composerJson[self::KEY_EXTRA] = [
           self::KEY_BRANCH_ALIAS => [
-              self::KEY_MASTER_BRANCH => $this->version,
+              self::KEY_MASTER_BRANCH => $alias,
           ],
         ];
 

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Kernel\Business;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 
 abstract class AbstractBusinessFactory extends AbstractFactory implements BusinessFactoryInterface
 {
@@ -25,6 +26,19 @@ abstract class AbstractBusinessFactory extends AbstractFactory implements Busine
         Container $container
     ) {
         $dependencyProvider->provideBusinessLayerDependencies($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector $dependencyInjector
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Shared\Kernel\ContainerInterface
+     */
+    protected function injectExternalDependencies(
+        DependencyInjector $dependencyInjector,
+        Container $container
+    ) {
+        return $dependencyInjector->injectBusinessLayerDependencies($container);
     }
 
 }

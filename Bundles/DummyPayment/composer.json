@@ -7,7 +7,7 @@
   },
   "require": {
     "spryker/checkout": "^2.1.0",
-    "spryker/kernel": "^2.0.0",
+    "spryker/kernel": "^2.4.2",
     "spryker/library": "^2.0.0",
     "spryker/payment": "^2.0.0",
     "spryker/step-engine": "^1.0.0",

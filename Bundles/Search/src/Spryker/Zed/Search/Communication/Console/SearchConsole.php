@@ -41,15 +41,7 @@ class SearchConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        try {
-            $this->getFacade()->install($this->getMessenger());
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
-
-            return self::EXIT_CODE_ERROR;
-        }
-
-        return self::EXIT_CODE_SUCCESS;
+        $this->getFacade()->install($this->getMessenger());
     }
 
 }

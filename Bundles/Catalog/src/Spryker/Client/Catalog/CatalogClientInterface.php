@@ -7,42 +7,22 @@
 
 namespace Spryker\Client\Catalog;
 
-use Symfony\Component\HttpFoundation\Request;
-
 interface CatalogClientInterface
 {
 
     /**
+     * Specification:
+     * - A query based on the given search string and request parameters will be executed
+     * - The query will also create facet aggregations, pagination and sorting based on the request parameters
+     * - The result is a formatted associative array where the used result formatters' name are the keys and their results are the values
+     *
      * @api
      *
-     * @return \Spryker\Client\Catalog\Model\Catalog
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return array
      */
-    public function createCatalogModel();
-
-    /**
-     * @api
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $category
-     *
-     * @return \Spryker\Client\Catalog\Model\FacetSearch
-     */
-    public function createFacetSearch(Request $request, array $category);
-
-    /**
-     * @api
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Client\Catalog\Model\FulltextSearch
-     */
-    public function createFulltextSearch(Request $request);
-
-    /**
-     * @api
-     *
-     * @return \Spryker\Client\Catalog\Model\FacetConfig
-     */
-    public function createFacetConfig();
+    public function catalogSearch($searchString, array $requestParameters);
 
 }

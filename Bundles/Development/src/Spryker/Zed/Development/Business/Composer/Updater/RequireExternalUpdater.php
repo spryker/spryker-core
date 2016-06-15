@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Development\DevelopmentConstants;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\DashToCamelCase;
@@ -21,17 +23,17 @@ class RequireExternalUpdater implements UpdaterInterface
     /**
      * @var array
      */
-    private $externalDependencyTree;
+    protected $externalDependencyTree;
 
     /**
      * @var array
      */
-    private $externalToInternalMap;
+    protected $externalToInternalMap;
 
     /**
      * @var array
      */
-    private $ignorableDependencies;
+    protected $ignorableDependencies;
 
     /**
      * @param array $externalDependencyTree
@@ -57,6 +59,15 @@ class RequireExternalUpdater implements UpdaterInterface
 
         $dependentBundles = $this->getExternalBundles($bundleName);
 
+        if (!Config::hasValue(DevelopmentConstants::COMPOSER_REQUIRE_VERSION_EXTERNAL)) {
+            return $composerJson;
+        }
+        $composerRequireVersion = Config::get(DevelopmentConstants::COMPOSER_REQUIRE_VERSION_EXTERNAL);
+
+        if (preg_match('/^[0-9]/', $composerRequireVersion)) {
+            $composerRequireVersion = self::RELEASE_OPERATOR . $composerRequireVersion;
+        }
+
         foreach ($dependentBundles as $dependentBundle) {
             if (empty($dependentBundle) || $dependentBundle === $composerJson[self::KEY_NAME]) {
                 continue;
@@ -64,7 +75,7 @@ class RequireExternalUpdater implements UpdaterInterface
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
 
-            $composerJson[self::KEY_REQUIRE][$dependentBundle] = self::RELEASE_OPERATOR . '2.0.0-RC2';
+            $composerJson[self::KEY_REQUIRE][$dependentBundle] = self::RELEASE_OPERATOR . $composerRequireVersion;
         }
 
         return $composerJson;
@@ -75,7 +86,7 @@ class RequireExternalUpdater implements UpdaterInterface
      *
      * @return string
      */
-    private function getBundleName(array $composerJsonData)
+    protected function getBundleName(array $composerJsonData)
     {
         $nameParts = explode('/', $composerJsonData[self::KEY_NAME]);
         $bundleName = array_pop($nameParts);
@@ -89,7 +100,7 @@ class RequireExternalUpdater implements UpdaterInterface
      *
      * @return array
      */
-    private function getExternalBundles($bundleName)
+    protected function getExternalBundles($bundleName)
     {
         $dependentBundles = [];
         foreach ($this->externalDependencyTree as $dependency) {
@@ -110,7 +121,7 @@ class RequireExternalUpdater implements UpdaterInterface
      *
      * @return string
      */
-    private function mapExternalToInternal($composerName)
+    protected function mapExternalToInternal($composerName)
     {
         foreach ($this->externalToInternalMap as $external => $internal) {
             if ($external[0] === '/') {

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <search-and-filters>
+
+        <label>Search and Filters</label>
+        <title>Search and Filters</title>
+        <bundle>product-search</bundle>
+        <controller>filters</controller>
+        <action>index</action>
+        <icon>fa-search</icon>
+        <visible>0</visible><!-- These features are incomplete, so they are not published yet -->
+        <pages>
+            <search-preferences>
+                <label>Search Preferences</label>
+                <title>Search Preferences</title>
+                <bundle>product-search</bundle>
+                <controller>search-preferences</controller>
+                <action>index</action>
+            </search-preferences>
+            <filter-preferences>
+                <label>Filter Preferences</label>
+                <title>Filter Preferences</title>
+                <bundle>product-search</bundle>
+                <controller>filter-preferences</controller>
+                <action>index</action>
+            </filter-preferences>
+        </pages>
+    </search-and-filters>
+</config>

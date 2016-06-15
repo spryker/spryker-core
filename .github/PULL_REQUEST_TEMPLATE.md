@@ -5,11 +5,11 @@
 
 - Bundles to release:
 
-   Bundle       | Expected Release Type
-   :----------- | :------------
-   BundleA      | major or new (requires 3 reviewers)
-   BundleB      | minor (requires 2 reviewers)
-   BundleC      | patch (requires 1 reviewer)
+   Bundle       | Expected Release Type               | Constraints     
+   :----------- | :------------                       | :------------
+   BundleA      | major or new (requires 3 reviewers) | 
+   BundleB      | minor (requires 2 reviewers)        | BundleA: new major
+   BundleC      | patch (requires 1 reviewer)         | BundleD: 2.2.0
 
 - Recommended reviewers: @reviewer_names
 
