@@ -55,13 +55,14 @@ $(document).ready(function(){
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,
-        minDate: 0,
+        defaultData: 0,
         onClose: function(selectedDate){
             $('#discount_discountGeneral_valid_to').datepicker('option', 'minDate', selectedDate);
         }
     });
 
     $('#discount_discountGeneral_valid_to').datepicker({
+        defaultData: 0,
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,
