@@ -17,11 +17,7 @@
                <tr>
                    <td>{{ 'Discount Type:' | trans }}</td>
                    <td>
-                       {% if discountConfigurator.discountVoucher %}
-                           {{ 'Voucher code' | trans }}
-                       {% else %}
-                           {{ 'Cart rule' | trans }}
-                       {% endif %}
+                       {{ discountConfigurator.discountGeneral.discountType|replace('_', ' ')|trans  }}
                    </td>
                </tr>
                <tr>
@@ -70,6 +66,7 @@
           </table>
 
           <h4>{{ 'Conditions' | trans }}</h4>
+
           <table class="table">
               <tr>
                   <td>
@@ -82,9 +79,10 @@
               </tr>
           </table>
 
-        {% if discountConfigurator.discountVoucher %}
-            {{ voucherCodesTable | raw }}
-        {% endif %}
+            {% if discountConfigurator.discountGeneral.discountType == 'voucher_code' %}
+                {{ voucherCodesTable | raw }}
+            {% endif %}
+
 
         {% endblock %}
 
