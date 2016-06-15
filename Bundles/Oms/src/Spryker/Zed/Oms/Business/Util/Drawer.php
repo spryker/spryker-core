@@ -105,11 +105,11 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * Convert array to collection for BC
+     * Converts array to collection for BC
      *
      * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
      *
-     * @return $this
+     * @return void
      */
     protected function setConditions($conditions)
     {
@@ -126,11 +126,11 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * Convert array to collection for BC
+     * Converts array to collection for BC
      *
      * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
      *
-     * @return $this
+     * @return void
      */
     protected function setCommands($commands)
     {

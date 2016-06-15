@@ -71,11 +71,11 @@ class ConditionCollection implements ConditionCollectionInterface, \ArrayAccess
     /**
      * @param string $offset
      *
-     * @return null|\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
+     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
      */
     public function offsetGet($offset)
     {
-        return ($this->has($offset)) ? $this->get($offset) : null;
+        return $this->get($offset);
     }
 
     /**
