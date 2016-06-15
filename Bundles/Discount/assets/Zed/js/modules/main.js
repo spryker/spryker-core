@@ -7,6 +7,7 @@
 
 require('ZedGui');
 var SqlFactory = require('./libs/sql-factory');
+var showHideNavigationButtons = require('./libs/navigation');
 
 require('../../sass/main.scss');
 
@@ -31,7 +32,8 @@ $(document).ready(function(){
         sqlConditionBuilder.toggleButton(event);
     });
 
-    $('.tabs-manager .btn-tab-previous').on('click', function(){
+    $('#btn-tab-previous').on('click', function(event){
+        event.preventDefault();
         $(this).
             closest('.tabs-manager').
             children('.nav').
@@ -39,9 +41,12 @@ $(document).ready(function(){
             prev('li').
             find('a').
             trigger('click');
+
+        showHideNavigationButtons();
     });
 
-    $('.tabs-manager .btn-tab-next').on('click', function(){
+    $('#btn-tab-next').on('click', function(event){
+        event.preventDefault();
         $(this).
             closest('.tabs-manager').
             children('.nav').
@@ -49,6 +54,8 @@ $(document).ready(function(){
             next('li').
             find('a').
             trigger('click');
+
+        showHideNavigationButtons();
     });
 
     $('#discount_discountGeneral_valid_from').datepicker({
