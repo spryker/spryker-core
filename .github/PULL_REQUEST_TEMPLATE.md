@@ -5,7 +5,7 @@
 
 - Bundles to release:
 
-   Bundle       | Expected Release Type               | Bundle Constraints     
+   Bundle       | Expected Release Type               | Constraints     
    :----------- | :------------                       | :------------
    BundleA      | major or new (requires 3 reviewers) | 
    BundleB      | minor (requires 2 reviewers)        | BundleA: new major
