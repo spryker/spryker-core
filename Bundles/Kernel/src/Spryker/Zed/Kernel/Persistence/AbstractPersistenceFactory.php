@@ -10,6 +10,7 @@ namespace Spryker\Zed\Kernel\Persistence;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 
 abstract class AbstractPersistenceFactory extends AbstractFactory implements PersistenceFactoryInterface
 {
@@ -25,6 +26,19 @@ abstract class AbstractPersistenceFactory extends AbstractFactory implements Per
         Container $container
     ) {
         $dependencyProvider->providePersistenceLayerDependencies($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector $dependencyInjector
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Shared\Kernel\ContainerInterface
+     */
+    protected function injectExternalDependencies(
+        DependencyInjector $dependencyInjector,
+        Container $container
+    ) {
+        return $dependencyInjector->injectPersistenceLayerDependencies($container);
     }
 
 }
