@@ -22,7 +22,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $formData = [];
         $defaults = $this->getDefaultFormFields();
 
-        $productAbstractTransfer = $this->productFacade->getProductAbstractById($idProductAbstract);
+        $productAbstractTransfer = $this->productManagementFacade->getProductAbstractById($idProductAbstract);
         if ($productAbstractTransfer) {
             $formData = $productAbstractTransfer->toArray(true);
             $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $this->getLocalizedAbstractAttributes($productAbstractTransfer);

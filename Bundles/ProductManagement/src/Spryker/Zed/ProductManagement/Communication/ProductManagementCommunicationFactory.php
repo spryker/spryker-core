@@ -17,6 +17,7 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  */
 class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -56,6 +57,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getProductFacade(),
+            $this->getProductManagementFacade(),
             $this->getLocaleFacade()
         );
     }
@@ -69,6 +71,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getProductFacade(),
+            $this->getProductManagementFacade(),
             $this->getLocaleFacade()
         );
     }
@@ -98,10 +101,19 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
+     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
     public function getProductFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT);
     }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface
+     */
+    public function getProductManagementFacade()
+    {
+        return $this->getFacade();
+    }
+
 }

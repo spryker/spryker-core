@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlBridge;
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -19,6 +21,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_CATEGORY = 'FACADE_LOCALE';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    const FACADE_TOUCH = 'FACADE_TOUCH';
+    const FACADE_URL = 'FACADE_URL';
 
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
@@ -31,6 +35,34 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container[self::FACADE_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->product()->facade();
+        };
+
+        $container[self::FACADE_CATEGORY] = function (Container $container) {
+            return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
+        };
+
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return new ProductManagementToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
+        $container[self::FACADE_TOUCH] = function (Container $container) {
+            return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
+        };
+
+        $container[self::FACADE_URL] = function (Container $container) {
+            return new ProductManagementToUrlBridge($container->getLocator()->url()->facade());
+        };
+
+        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->category()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->product()->queryContainer();
+        };
+
         return $container;
     }
 
@@ -42,7 +74,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_PRODUCT] = function (Container $container) {
-            return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
+            return $container->getLocator()->product()->facade();
         };
 
         $container[self::FACADE_CATEGORY] = function (Container $container) {
@@ -51,6 +83,14 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_LOCALE] = function (Container $container) {
             return new ProductManagementToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
+        $container[self::FACADE_TOUCH] = function (Container $container) {
+            return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
+        };
+
+        $container[self::FACADE_URL] = function (Container $container) {
+            return new ProductManagementToUrlBridge($container->getLocator()->url()->facade());
         };
 
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {

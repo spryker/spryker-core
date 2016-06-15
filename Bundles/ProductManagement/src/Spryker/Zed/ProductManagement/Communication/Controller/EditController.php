@@ -34,7 +34,7 @@ class EditController extends AddController
         ));
 
         $productAbstractTransfer = $this->getFactory()
-            ->getProductFacade()
+            ->getProductManagementFacade()
             ->getProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
@@ -85,7 +85,7 @@ class EditController extends AddController
         $matrixGenerator = new MatrixGenerator();
         $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
         $concreteProductCollection = $this->getFactory()
-            ->getProductFacade()
+            ->getProductManagementFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
         echo "<pre>";

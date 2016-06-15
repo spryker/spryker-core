@@ -32,4 +32,13 @@ interface ProductManagementToLocaleInterface
      */
     public function getLocaleCollection();
 
+    /**
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale);
+
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -64,7 +65,7 @@ class AddController extends AbstractController
                 $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
 
                 $idProductAbstract = $this->getFactory()
-                    ->getProductFacade()
+                    ->getProductManagementFacade()
                     ->addProduct($productAbstractTransfer, $concreteProductCollection);
 
                 $this->addSuccessMessage('The product was added successfully.');
@@ -120,11 +121,12 @@ class AddController extends AbstractController
      */
     protected function buildProductConcreteTransferFromData(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
-        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer = new ZedProductConcreteTransfer();
         $productConcreteTransfer->setAttributes([]);
         $productConcreteTransfer->setSku($productAbstractTransfer->getSku() . '-' . rand(1,999));
         $productConcreteTransfer->setIsActive(false);
-        $productConcreteTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+        $productConcreteTransfer->setAbstractSku($productAbstractTransfer->getSku());
+        $productConcreteTransfer->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
 
         $attributeData = $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES];
         foreach ($attributeData as $localeCode => $localizedAttributesData) {
