@@ -24,11 +24,11 @@ $(document).ready(function(){
         $('#discount-form').submit();
     });
 
-    $('#btn-calculation-get').click(function(event){
+    $('#btn-calculation-get').on('click', function(event){
         sqlCalculationBuilder.toggleButton(event);
     });
 
-    $('#btn-condition-get').click(function(event){
+    $('#btn-condition-get').on('click', function(event){
         sqlConditionBuilder.toggleButton(event);
     });
 
@@ -56,6 +56,17 @@ $(document).ready(function(){
             trigger('click');
 
         showHideNavigationButtons();
+    });
+
+    $('#discount_discountCalculator_calculator_plugin').on('change', function(){
+        var value = $(this).val();
+        var $amountAddon = $('#discount_discountCalculator_amount + .input-group-addon');
+
+        if (/percent/i.test(value)) {
+            $amountAddon.html('&#37;');
+        } else {
+            $amountAddon.html('&euro;');
+        }
     });
 
     $('#discount_discountGeneral_valid_from').datepicker({

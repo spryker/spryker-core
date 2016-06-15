@@ -120,6 +120,9 @@ class CalculatorForm extends AbstractType
     {
         $defaultOptions = [
             'label' => 'Amount*',
+            'attr' => [
+                'class' => 'input-group'
+            ],
             'constraints' => [
                 new NotBlank(),
             ],
