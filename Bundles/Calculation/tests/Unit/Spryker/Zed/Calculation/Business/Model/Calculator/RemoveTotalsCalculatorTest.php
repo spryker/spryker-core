@@ -57,6 +57,7 @@ class RemoveTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     {
         $totalsTransfer = $this->getCleanedTotals();
         $this->assertEmpty($totalsTransfer->getTaxTotal()->getAmount());
+        $this->assertEmpty($totalsTransfer->getTaxTotal()->getTaxRate());
     }
 
     /**

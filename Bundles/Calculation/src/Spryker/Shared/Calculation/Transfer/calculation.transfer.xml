@@ -25,6 +25,7 @@
     </transfer>
 
     <transfer name="TaxTotal">
+        <property name="taxRate" type="float" />
         <property name="amount" type="int" />
     </transfer>
 
