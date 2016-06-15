@@ -26,13 +26,12 @@ class DiscountToTaxBridge implements DiscountToTaxBridgeInterface
     /**
      * @param int $grossPrice
      * @param int $taxRate
-     * @param bool $round
      *
      * @return int
      */
-    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate, $round = true)
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
     {
-        return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate, $round);
+        return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate);
     }
 
     /**

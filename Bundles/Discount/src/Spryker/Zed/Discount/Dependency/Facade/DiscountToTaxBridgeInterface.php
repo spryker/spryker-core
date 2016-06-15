@@ -13,11 +13,10 @@ interface DiscountToTaxBridgeInterface
     /**
      * @param int $grossPrice
      * @param int $taxRate
-     * @param bool $round
      *
      * @return int
      */
-    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate, $round = true);
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
 
     /**
      * @api

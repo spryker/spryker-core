@@ -13,11 +13,10 @@ interface ProductOptionToTaxBridgeInterface
     /**
      * @param int $grossPrice
      * @param float $taxRate
-     * @param bool $round
      *
      * @return int
      */
-    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate, $round = true);
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
 
     /**
      * @api
