@@ -63,6 +63,13 @@ table.dataTable.gui-table-data {
     }
 }
 
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+    background: #1c84c6;
+    color: #fff;
+}
+
 #discount-form .form-group {
     overflow: hidden;
 }
