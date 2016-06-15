@@ -27,8 +27,7 @@ class Percentage extends AbstractPlugin implements DiscountCalculatorPluginInter
      */
     public function calculate(array $discountableItems, $percentage)
     {
-        return $this->getFacade()
-            ->calculatePercentage($discountableItems, $percentage);
+        return $this->getFacade()->calculatePercentage($discountableItems, $percentage);
     }
 
     /**
@@ -38,7 +37,7 @@ class Percentage extends AbstractPlugin implements DiscountCalculatorPluginInter
      */
     public function transformForPersistence($value)
     {
-        return $value;
+        return $value * 100;
     }
 
     /**
@@ -48,7 +47,7 @@ class Percentage extends AbstractPlugin implements DiscountCalculatorPluginInter
      */
     public function transformFromPersistence($value)
     {
-        return $value;
+        return $value / 100;
     }
 
     /**

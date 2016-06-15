@@ -24,6 +24,8 @@ class Percentage implements CalculatorInterface
 
         $discountAmount = 0;
 
+        $value = $value / 100;
+
         if ($value > 100) {
             $value = 100;
         }
