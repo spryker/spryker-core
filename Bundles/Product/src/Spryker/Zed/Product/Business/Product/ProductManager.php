@@ -828,11 +828,14 @@ class ProductManager implements ProductManagerInterface
             ->queryProductAbstractLocalizedAttributes($productAbstractTransfer->getIdProductAbstract())
             ->find();
 
-        foreach ($productAttributeCollection as $attribute) {
-            $localeTransfer = $this->localeFacade->getLocaleById($attribute->getFkLocale());
+        foreach ($productAttributeCollection as $attributeEntity) {
+            $localeTransfer = $this->localeFacade->getLocaleById($attributeEntity->getFkLocale());
 
-            $localizedAttributesTransfer = $this->attributeManager
-                ->createLocalizedAttributesTransfer($attribute->getName(), $attribute->getAttributes(), $localeTransfer);
+            $localizedAttributesTransfer = $this->attributeManager->createLocalizedAttributesTransfer(
+                $attributeEntity->getName(),
+                $attributeEntity->getAttributes(),
+                $localeTransfer
+            );
 
             $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
@@ -861,7 +864,7 @@ class ProductManager implements ProductManagerInterface
         $transferGenerator = new ProductTransferGenerator();
         $productTransfer = $transferGenerator->convertProduct($productEntity);
 
-        $productTransfer = $this->loadProductLocalizedAttributes($productTransfer);
+        $productTransfer = $this->loadProductConcreteLocalizedAttributes($productTransfer);
         $this->loadTaxRate($productTransfer);
 
         return $productTransfer;
@@ -874,17 +877,20 @@ class ProductManager implements ProductManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function loadProductLocalizedAttributes(ProductConcreteTransfer $productTransfer)
+    protected function loadProductConcreteLocalizedAttributes(ProductConcreteTransfer $productTransfer)
     {
         $productAttributeCollection = $this->productQueryContainer
             ->queryProductLocalizedAttributes($productTransfer->getIdProductConcrete())
             ->find();
 
-        foreach ($productAttributeCollection as $attribute) {
-            $localeTransfer = $this->localeFacade->getLocaleById($attribute->getFkLocale());
+        foreach ($productAttributeCollection as $attributeEntity) {
+            $localeTransfer = $this->localeFacade->getLocaleById($attributeEntity->getFkLocale());
 
-            $localizedAttributesTransfer = $this->attributeManager
-                ->createLocalizedAttributesTransfer($attribute->getName(), $attribute->getAttributes(), $localeTransfer);
+            $localizedAttributesTransfer = $this->attributeManager->createLocalizedAttributesTransfer(
+                $attributeEntity->getName(),
+                $attributeEntity->getAttributes(),
+                $localeTransfer
+            );
 
             $productTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
@@ -1044,7 +1050,7 @@ class ProductManager implements ProductManagerInterface
         $transferCollection = $transferGenerator->convertProductCollection($entityCollection);
 
         for ($a=0; $a<count($transferCollection); $a++) {
-            $transferCollection[$a] = $this->loadProductLocalizedAttributes($transferCollection[$a]);
+            $transferCollection[$a] = $this->loadProductConcreteLocalizedAttributes($transferCollection[$a]);
             $transferCollection[$a] = $this->loadTaxRate($transferCollection[$a]);
         }
 

@@ -88,6 +88,10 @@ class EditController extends AddController
             ->getProductFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
+        echo "<pre>";
+        print_r($concreteProductCollection);
+
+
         if ($form->isValid()) {
             try {
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());

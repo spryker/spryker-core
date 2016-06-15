@@ -60,6 +60,7 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
 
         $attributes = $this->decodeAttributes($productEntity->getAttributes());
         $productTransfer->setAttributes($attributes);
+        $productTransfer->setIdProductConcrete($productEntity->getIdProduct());
 
         if ($productEntity->getSpyProductAbstract()) {
             $abstractTransfer = $this->convertProductAbstract($productEntity->getSpyProductAbstract());
