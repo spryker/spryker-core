@@ -3,7 +3,6 @@
 {% block section_title 'Create new discount' %}
 
 {% block action %}
-    {#{{ createActionButton('#', 'Save' | trans, {'id': 'create-discount-button'}) }}#}
     {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
 {% endblock %}
 
@@ -37,15 +36,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
-                    <div class="col-xs-6">
-                        <button class="btn btn-create">{{ 'Save' | trans }}</button>
-                    </div>
-                    <div class="col-xs-6 text-right">
-                        <a href="#" id="btn-tab-previous" class="btn btn-tab-previous btn-outline btn-view hidden"><i class="fa fa-chevron-left"></i> {{ 'Previous' | trans }}</a>
-                        <a href="#" id="btn-tab-next" class="btn btn-outline btn-tab-next btn-view">{{ 'Next' | trans }} <i class="fa fa-chevron-right"></i></a>
-                    </div>
-                </div>
+                {% include '@Discount/Index/_form-submit.twig' %}
             </div>
             {{ form_end(discountForm) }}
         {% endblock %}

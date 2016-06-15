@@ -3,6 +3,7 @@
 {% block section_title 'View discount' %}
 
 {% block action %}
+    {{ createActionButton(url('/discount/index/create'), 'Create new Discount' | trans) }}
     {{ editActionButton(url('/discount/index/edit', {'id-discount' : discountConfigurator.discountGeneral.idDiscount}), 'Edit' | trans, {'id': 'create-discount-button'}) }}
     {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
 {% endblock %}
