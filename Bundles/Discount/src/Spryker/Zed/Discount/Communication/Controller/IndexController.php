@@ -306,10 +306,14 @@ class IndexController extends AbstractController
     {
         $discountForm->handleRequest($request);
 
-        if ($discountForm->isValid()) {
-            $isUpdated = $this->getFacade()->updateDiscount($discountForm->getData());
-            if ($isUpdated === true) {
-                $this->addSuccessMessage('Discount successfully updated.');
+        if ($discountForm->isSubmitted()) {
+            if ($discountForm->isValid()) {
+                $isUpdated = $this->getFacade()->updateDiscount($discountForm->getData());
+                if ($isUpdated === true) {
+                    $this->addSuccessMessage('Discount successfully updated.');
+                }
+            } else {
+                $this->addErrorMessage('Mandatory Information missing');
             }
         }
     }
