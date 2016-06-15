@@ -29,7 +29,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if ($value === null) {
+        if (!$value || !$value->getCalculatorPlugin()) {
             return null;
         }
 
@@ -47,7 +47,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if ($value === null) {
+        if (!$value || !$value->getCalculatorPlugin()) {
             return null;
         }
 

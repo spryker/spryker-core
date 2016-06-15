@@ -69,7 +69,7 @@ class IndexController extends AbstractController
         $discountConfiguratorTransfer = $this->getFacade()
             ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
 
-        $discountForm = $this->getFactory()->createDiscountForm();
+        $discountForm = $this->getFactory()->createDiscountForm($idDiscount);
         $discountForm->setData($discountConfiguratorTransfer);
         $this->handleDiscountForm($request, $discountForm);
 

@@ -145,6 +145,7 @@ class CalculatorForm extends AbstractType
             'label' => 'Calculator type*',
             'placeholder' => 'Select one',
             'choices' => $this->calculatorFormDataProvider->getData()[self::FIELD_CALCULATOR_PLUGIN],
+            'required' => true,
             'constraints' => [
                 new NotBlank(),
             ],

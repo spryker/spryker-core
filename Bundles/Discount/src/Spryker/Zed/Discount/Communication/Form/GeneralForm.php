@@ -23,6 +23,8 @@ class GeneralForm extends AbstractType
     const FIELD_VALID_FROM = 'valid_from';
     const FIELD_VALID_TO = 'valid_to';
     const FIELD_IS_EXCLUSIVE = 'is_exclusive';
+    const NON_EXCLUSIVE = 'Non-Exclusive';
+    const EXCLUSIVE = 'Exclusive';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -49,7 +51,7 @@ class GeneralForm extends AbstractType
             ->addDiscountType($builder)
             ->addDisplayNameField($builder)
             ->addDescriptionField($builder)
-            ->addExclusive($builder)
+            ->addExclusive($builder, $options)
             ->addValidFromField($builder)
             ->addValidToField($builder);
     }
@@ -117,18 +119,19 @@ class GeneralForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addExclusive(FormBuilderInterface $builder)
+    protected function addExclusive(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_IS_EXCLUSIVE, 'choice', [
             'expanded' => true,
             'multiple' => false,
             'label' => false,
             'choices' => [
-                'Non-Exclusive',
-                'Exclusive',
+                self::NON_EXCLUSIVE,
+                self::EXCLUSIVE,
             ],
             'constraints' => [
                 new NotBlank(),

@@ -13,6 +13,7 @@ use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 use Spryker\Zed\Discount\Communication\Form\ConditionsForm;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
+use Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DiscountForm;
 use Spryker\Zed\Discount\Communication\Form\GeneralForm;
@@ -36,8 +37,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createDiscountForm()
+    public function createDiscountForm($idDiscount = 0)
     {
+        $discountDataProvider = $this->createDiscountDataProvider();
+
         $discountFormType = new DiscountForm(
             $this->createGeneralFormType(),
             $this->createCalculatorFormType(),
@@ -46,7 +49,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getFormFactory()->create(
             $discountFormType,
-            null,
+            $discountDataProvider->getData($idDiscount),
             [
               'data_class'  => DiscountConfiguratorTransfer::class
             ]
@@ -186,6 +189,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createJavascriptQueryBuilderTransformer()
     {
         return new JavascriptQueryBuilderTransformer($this->getFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvider
+     */
+    protected function createDiscountDataProvider()
+    {
+        return new DiscountFormDataProvider();
     }
 
 }
