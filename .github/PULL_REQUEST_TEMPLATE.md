@@ -36,7 +36,7 @@ Changes go here as list items and with a header (Improvements/Bugfixes). Those w
 - [ ] Legal check for external dependencies
 
 ###### Change log
-Features
+Improvements
 - I added this.
 
 -----------------------------------------
