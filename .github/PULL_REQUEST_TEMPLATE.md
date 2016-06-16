@@ -15,7 +15,7 @@
 
 -----------------------------------------
 
-#### MajorBundleA (e.g. Cms)
+#### Bundle MajorBundleA (e.g. "Bundle Cms")
 - [ ] API contract checked
 - [ ] Unit tests
 - [ ] Functional (Facade) tests
@@ -29,7 +29,7 @@ Changes go here as list items and with a header (Improvements/Bugfixes). Those w
 
 -----------------------------------------
 
-#### MinorBundleB
+#### Bundle MinorBundleB
 - [ ] Tests for the feature
 - [ ] Scrutinizer score is not worse
 - [ ] No open tickets that could be in minor release
@@ -41,7 +41,7 @@ Features
 
 -----------------------------------------
 
-#### PatchBundleC
+#### Bundle PatchBundleC
 - [ ] Tests for the patch
 - [ ] Scrutinizer score is not worse
 
