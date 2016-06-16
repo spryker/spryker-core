@@ -10,7 +10,6 @@ namespace Spryker\Zed\Discount\Communication\Table;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -28,6 +27,8 @@ class DiscountsTable extends AbstractTable
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     const DATE_FORMAT = 'Y-m-d';
+    const BUTTON_ACTIVATE = 'Activate';
+    const BUTTON_DEACTIVATE = 'Deactivate';
 
     /**
      * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
@@ -217,9 +218,9 @@ class DiscountsTable extends AbstractTable
      */
     protected function createToggleDiscountVisibilityButton(SpyDiscount $discountEntity)
     {
-        $visibility = 'Activate';
+        $visibility = self::BUTTON_ACTIVATE;
         if ($discountEntity->getIsActive()) {
-            $visibility = 'Deactivate';
+            $visibility = self::BUTTON_DEACTIVATE;
         }
 
         $viewDiscountUrl = Url::generate(
@@ -231,7 +232,22 @@ class DiscountsTable extends AbstractTable
             ]
         );
 
-        return $this->generateViewButton($viewDiscountUrl, $visibility);
+        return $this->generateStatusButton($viewDiscountUrl, $visibility);
+    }
+
+    /**
+     * @param Url $viewDiscountUrl
+     * @param string $visibility
+     *
+     * @return string
+     */
+    protected function generateStatusButton(Url $viewDiscountUrl, $visibility)
+    {
+        if ($visibility === self::BUTTON_ACTIVATE) {
+            return $this->generateViewButton($viewDiscountUrl, $visibility);
+        }
+
+        return $this->generateRemoveButton($viewDiscountUrl, $visibility);
     }
 
     /**
