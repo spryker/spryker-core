@@ -54,7 +54,7 @@ class IndexController extends AbstractController
 
         return array_merge([
             'discountForm' => $discountForm->createView(),
-        ], $this->getQueryStringMetData());
+        ]);
     }
 
     /**
@@ -85,13 +85,13 @@ class IndexController extends AbstractController
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);
 
-        return array_merge([
+        return [
             'discountForm' => $discountForm->createView(),
             'idDiscount' => $idDiscount,
             'voucherCodesTable' => $voucherCodesTable,
             'voucherForm' => $voucherForm->createView(),
             'discountConfigurator' => $discountConfiguratorTransfer,
-        ], $this->getQueryStringMetData());
+        ];
     }
 
     /**
@@ -131,22 +131,11 @@ class IndexController extends AbstractController
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);
 
+        $this->setFormattedCalculatorDiscountAmount($discountConfiguratorTransfer);
+
         return [
             'discountConfigurator' => $discountConfiguratorTransfer,
             'voucherCodesTable' => $voucherCodesTable,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getQueryStringMetData()
-    {
-        return [
-            'collectorTypes' => $this->getFacade()->getQueryStringFieldsByType(MetaProviderFactory::TYPE_COLLECTOR),
-            'decisionRuleTypes' => $this->getFacade()->getQueryStringFieldsByType(MetaProviderFactory::TYPE_DECISION_RULE),
-            'booleanComparators' => $this->getFacade()->getQueryStringLogicalComparators(MetaProviderFactory::TYPE_COLLECTOR),
-            'comparatorExpressions' => $this->getFacade()->getQueryStringComparatorExpressions(MetaProviderFactory::TYPE_COLLECTOR),
         ];
     }
 
@@ -316,6 +305,24 @@ class IndexController extends AbstractController
                 $this->addErrorMessage('Mandatory Information missing');
             }
         }
+    }
+
+    /**
+     * @param DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return void
+     */
+    protected function setFormattedCalculatorDiscountAmount(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    {
+        $calculatorPlugins = $this->getFactory()->getCalculatorPlugins();
+        $calculatorPluginName = $discountConfiguratorTransfer->getDiscountCalculator()->getCalculatorPlugin();
+        if (!isset($calculatorPlugins[$calculatorPluginName])) {
+            return;
+        }
+        $calculatorPlugin = $calculatorPlugins[$calculatorPluginName];
+
+        $formatterAmount = $calculatorPlugin->getFormattedAmount($discountConfiguratorTransfer->getDiscountCalculator()->getAmount());
+        $discountConfiguratorTransfer->getDiscountCalculator()->setAmount($formatterAmount);
     }
 
 }
