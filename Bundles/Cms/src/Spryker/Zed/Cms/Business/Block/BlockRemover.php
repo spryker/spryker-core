@@ -47,7 +47,7 @@ class BlockRemover implements BlockRemoverInterface
         $this->cmsQueryContainer->getConnection()->beginTransaction();
 
         try {
-            $cmsBlockEntity = $this->getCmsBlockEntity($idCmsBlock);
+            $cmsBlockEntity = $this->findCmsBlockEntity($idCmsBlock);
 
             if ($cmsBlockEntity) {
                 $this->deleteBlockWithRelations($cmsBlockEntity);
@@ -66,7 +66,7 @@ class BlockRemover implements BlockRemoverInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsBlock|null
      */
-    protected function getCmsBlockEntity($idCmsBlock)
+    protected function findCmsBlockEntity($idCmsBlock)
     {
         $cmsBlockEntity = $this
             ->cmsQueryContainer

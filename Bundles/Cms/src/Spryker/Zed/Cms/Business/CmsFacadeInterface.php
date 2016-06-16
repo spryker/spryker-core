@@ -270,8 +270,8 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
-     * - Delete Cms Page and it's relations (urls, glossary key mappings) from database
-     * - Touch deleted Cms Page to notify collector about the change
+     * - Deletes Cms Page and its relations (urls, glossary key mappings) from database
+     * - Touches deleted Cms Page to notify collector about the change
      *
      * @api
      *
@@ -283,8 +283,8 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
-     * - Delete Cms Block and it's relations (cms page, glossary key mappings) from database
-     * - Touch deleted Cms Block to notify collector about the change
+     * - Deletes Cms Block and its relations (cms page, glossary key mappings) from database
+     * - Touches deleted Cms Block to notify collector about the change
      *
      * @api
      *

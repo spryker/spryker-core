@@ -47,7 +47,7 @@ class PageRemover implements PageRemoverInterface
         $this->cmsQueryContainer->getConnection()->beginTransaction();
 
         try {
-            $cmsPageEntity = $this->getCmsPageEntity($idCmsPage);
+            $cmsPageEntity = $this->findCmsPageEntity($idCmsPage);
 
             if ($cmsPageEntity) {
                 $this->deletePageWithRelations($cmsPageEntity);
@@ -66,7 +66,7 @@ class PageRemover implements PageRemoverInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|null
      */
-    protected function getCmsPageEntity($idCmsPage)
+    protected function findCmsPageEntity($idCmsPage)
     {
         $cmsPageEntity = $this
             ->cmsQueryContainer
