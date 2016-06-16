@@ -10,8 +10,10 @@ namespace Spryker\Zed\Tax\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 use Spryker\Zed\Tax\Business\Model\TaxCalculation;
+use Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
 use Spryker\Zed\Tax\Business\Model\TaxWriter;
+use Spryker\Zed\Tax\TaxDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
@@ -58,11 +60,27 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator
+     */
+    public function createProductItemTaxRateCalculator()
+    {
+        return new ProductItemTaxRateCalculator($this->getQueryContainer(), $this->getStore());
+    }
+
+    /**
      * @return \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     public function createPriceCalculationHelper()
     {
         return new PriceCalculationHelper();
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(TaxDependencyProvider::STORE_CONFIG);
     }
 
 }

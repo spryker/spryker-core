@@ -547,13 +547,13 @@ class ProductManager implements ProductManagerInterface
             ->setIdProductAbstract($productConcrete[self::COL_ID_PRODUCT_ABSTRACT])
             ->setName($productConcrete[self::COL_NAME]);
 
-        $this->addTaxRate($productConcreteTransfer);
-
         return $productConcreteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @deprecated It handles by TaxProductItemCalculatorPlugin in TaxBundle 2.1.0
      *
      * @return void
      */

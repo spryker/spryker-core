@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax\Persistence;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTaxTableMap;
@@ -19,6 +20,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContainerInterface
 {
+
+    const COL_SUM_TAX_RATE = 'SumTaxRate';
+    const COL_ID_ABSTRACT_PRODUCT = 'IdProductAbstract';
 
     /**
      * @api
@@ -96,6 +100,35 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
             );
 
         return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $idsProductAbstract
+     * @param string $iso2Code
+     *
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     */
+    public function queryTaxSetByProductAbstractAndCountry($idsProductAbstract, $iso2Code)
+    {
+        return $this->getFactory()->createTaxSetQuery()
+            ->useSpyProductAbstractQuery()
+                ->filterByIdProductAbstract($idsProductAbstract)
+                ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, self::COL_ID_ABSTRACT_PRODUCT)
+                ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
+            ->endUse()
+                ->useSpyTaxSetTaxQuery()
+                    ->useSpyTaxRateQuery()
+                        ->useCountryQuery()
+                        ->filterByIso2Code($iso2Code)
+                    ->endUse()
+                ->endUse()
+            ->leftJoinSpyTaxRate()
+            ->withColumn('SUM('.SpyTaxRateTableMap::COL_RATE.')', self::COL_SUM_TAX_RATE)
+            ->endUse()
+            ->select([self::COL_SUM_TAX_RATE])
+            ;
     }
 
 }

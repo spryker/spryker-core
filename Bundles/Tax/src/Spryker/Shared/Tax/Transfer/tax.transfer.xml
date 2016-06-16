@@ -21,6 +21,7 @@
         <property name="idTaxRate" type="int" />
         <property name="name" type="string" />
         <property name="rate" type="float" />
+        <property name="fkCountry" type="int" />
     </transfer>
 
     <transfer name="Item">
