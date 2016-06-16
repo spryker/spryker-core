@@ -14,7 +14,8 @@
 - Recommended reviewers: @reviewer_names
 
 -----------------------------------------
-#### [Major] BundleA
+
+#### BundleA
 - [ ] API contract checked
 - [ ] Unit tests
 - [ ] Functional (Facade) tests
@@ -24,22 +25,26 @@
 - [ ] Legal check for external dependencies
 
 ###### Change log
-Changes go here. Those will be copied to the release log for this bundle.
+Changes go here as list items and with a header (Improvements/Bugfixes). Those will be copied to the release log for this bundle.
 
 -----------------------------------------
-#### [Minor] BundleB
+
+#### BundleB
 - [ ] Tests for the feature
 - [ ] Scrutinizer score is not worse
 - [ ] No open tickets that could be in minor release
 - [ ] Legal check for external dependencies
 
 ###### Change log
-Changes go here. Those will be copied to the release log for this bundle.
+Features
+- I added this.
 
 -----------------------------------------
-#### [Patch] BundleC
+
+#### BundleC
 - [ ] Tests for the patch
 - [ ] Scrutinizer score is not worse
 
 ###### Change log
-Changes go here. Those will be copied to the release log for this bundle. Please use full sentences.
+Bugfixes
+- I fixed this.
