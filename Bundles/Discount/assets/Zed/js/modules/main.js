@@ -7,11 +7,13 @@
 
 require('ZedGui');
 var SqlFactory = require('./libs/sql-factory');
-var showHideNavigationButtons = require('./libs/navigation');
+var DiscountNavigation = require('./libs/navigation');
 
 require('../../sass/main.scss');
 
 $(document).ready(function(){
+
+    new DiscountNavigation();
 
     var sqlCalculationBuilder = SqlFactory('#discount_discountCalculator_collector_query_string', '#builder_calculation');
     var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition');
@@ -32,31 +34,6 @@ $(document).ready(function(){
         sqlConditionBuilder.toggleButton(event);
     });
 
-    $('#btn-tab-previous').on('click', function(event){
-        event.preventDefault();
-        $(this).
-            closest('.tabs-manager').
-            children('.nav').
-            children('.active').
-            prev('li').
-            find('a').
-            trigger('click');
-
-        showHideNavigationButtons();
-    });
-
-    $('#btn-tab-next').on('click', function(event){
-        event.preventDefault();
-        $(this).
-            closest('.tabs-manager').
-            children('.nav').
-            children('.active').
-            next('li').
-            find('a').
-            trigger('click');
-
-        showHideNavigationButtons();
-    });
 
     $('#discount_discountCalculator_calculator_plugin').on('change', function(){
         var value = $(this).val();

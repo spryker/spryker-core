@@ -19,29 +19,29 @@
         {% block widget_content %}
 
             <div class="tabs-container tabs-manager">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a class="tab-item" data-toggle="tab" href="#tab-1">{{ 'General information' | trans }}</a></li>
-                    <li><a class="tab-item" data-toggle="tab" href="#tab-2">{{ 'Discount calculation' | trans }}</a></li>
-                    <li><a class="tab-item" data-toggle="tab" href="#tab-3">{{ 'Conditions' | trans }}</a></li>
+                <ul id="discount-tabs" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a class="tab-item" data-toggle="tab" href="#general">{{ 'General information' | trans }}</a></li>
+                    <li role="presentation"><a class="tab-item" data-toggle="tab" href="#discount">{{ 'Discount calculation' | trans }}</a></li>
+                    <li role="presentation"><a class="tab-item" data-toggle="tab" href="#conditions">{{ 'Conditions' | trans }}</a></li>
                     {% if  discountConfigurator.discountGeneral.discountType == 'voucher' %}
-                       <li><a class="tab-item" data-toggle="tab" href="#tab-4">{{ 'Voucher codes' | trans }}</a></li>
+                       <li role="presentation"><a class="tab-item" data-toggle="tab" href="#codes">{{ 'Voucher codes' | trans }}</a></li>
                     {% endif %}
                 </ul>
 
                 <div class="tab-content ">
 
-                    <div id="tab-1" class="tab-pane active">
+                    <div id="general" class="tab-pane active">
                         <div class="panel-body">
                             {{ form_start(discountForm, {attr: {'id' : 'discount-form'}}) }}
                             {% include '@Discount/Index/partial/general.twig' %}
                         </div>
                     </div>
-                    <div id="tab-2" class="tab-pane">
+                    <div id="discount" class="tab-pane">
                         <div class="panel-body">
                             {% include '@Discount/Index/partial/calculation.twig' %}
                         </div>
                     </div>
-                    <div id="tab-3" class="tab-pane">
+                    <div id="conditions" class="tab-pane">
                         <div class="panel-body">
                             {% include '@Discount/Index/partial/condition.twig' %}
                             {{ form_end(discountForm) }}
@@ -49,7 +49,7 @@
                     </div>
 
                     {% if  discountConfigurator.discountGeneral.discountType == 'voucher' %}
-                    <div id="tab-4" class="tab-pane">
+                    <div id="codes" class="tab-pane">
                         <div class="panel-body">
                             {% include '@Discount/Index/partial/voucher.twig' %}
                         </div>
