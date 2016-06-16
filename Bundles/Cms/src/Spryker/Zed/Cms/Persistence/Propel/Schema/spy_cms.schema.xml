@@ -19,7 +19,7 @@
         <column name="fk_template" type="INTEGER" required="true"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
-        <column name="is_active" type="BOOLEAN" required="true" default="true"/>
+        <column name="is_active" type="BOOLEAN" required="true" default="false"/>
         <foreign-key name="spy_cms_page-fk_template" foreignTable="spy_cms_template" phpName="CmsTemplate" onDelete="CASCADE">
             <reference foreign="id_cms_template" local="fk_template"/>
         </foreign-key>
