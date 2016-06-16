@@ -79,7 +79,9 @@
               </tr>
           </table>
 
-            {% if discountConfigurator.discountGeneral.discountType == 'voucher_code' %}
+            {% if discountConfigurator.discountGeneral.discountType == 'voucher' %}
+                <hr>
+                <p><strong>Generated Discount Codes</strong></p>
                 {{ voucherCodesTable | raw }}
             {% endif %}
 
