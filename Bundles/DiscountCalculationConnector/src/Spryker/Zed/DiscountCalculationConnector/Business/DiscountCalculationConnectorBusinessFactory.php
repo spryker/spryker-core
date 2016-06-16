@@ -53,6 +53,9 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
         return new SumGrossCalculatedDiscountAmountCalculator();
     }
 
+    /**
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\ExpenseTaxWithDiscountsCalculator
+     */
     public function createExpenseTaxWithDiscountsCalculator()
     {
         return new ExpenseTaxWithDiscountsCalculator($this->getTaxFacade());

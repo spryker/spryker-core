@@ -5,18 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
+namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderAmountAggregatorInterface;
 
-class ProductOptionDiscounts implements OrderAmountAggregatorInterface
+class ProductOptionDiscounts implements OrderAmountAggregatorInterface, CalculatorInterface
 {
 
     /**
@@ -42,13 +45,23 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
         $salesOrderDiscounts = $this->getSalesOrderDiscounts($orderTransfer);
 
         if (count($salesOrderDiscounts) === 0) {
-            $this->addProductOptionWithDiscountsGrossPriceAmountDefaults($orderTransfer);
-
+            $this->addProductOptionWithDiscountsGrossPriceAmountDefaults($orderTransfer->getItems());
             return;
         }
 
         $this->populateProductOptionDiscountsFromSalesOrderDiscounts($orderTransfer, $salesOrderDiscounts);
-        $this->addProductOptionWithDiscountsGrossPriceAmounts($orderTransfer);
+        $this->addProductOptionWithDiscountsGrossPriceAmounts($orderTransfer->getItems());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function recalculate(QuoteTransfer $quoteTransfer)
+    {
+        $this->setCalculatedProductOptionCalculatedDiscounts($quoteTransfer->getItems());
+        $this->addProductOptionWithDiscountsGrossPriceAmounts($quoteTransfer->getItems());
     }
 
     /**
@@ -63,8 +76,103 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
     ) {
         foreach ($salesOrderDiscounts as $salesOrderDiscountEntity) {
             foreach ($orderTransfer->getItems() as $itemTransfer) {
-                $this->addProductOptionCalculatedDiscounts($itemTransfer, $salesOrderDiscountEntity);
+                $this->addSalesProductOptionCalculatedDiscounts($itemTransfer, $salesOrderDiscountEntity);
             }
+        }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return void
+     */
+    protected function setCalculatedProductOptionCalculatedDiscounts(\ArrayObject $items)
+    {
+        foreach ($items as $itemTransfer) {
+            $totalDiscountUnitGrossAmount = $this->getProductOptionGrossUnitTotalAmount($itemTransfer->getProductOptions());
+            $totalDiscountSumGrossAmount = $this->getProductOptionGrossSumTotalAmount($itemTransfer->getProductOptions());
+
+            $itemTransfer->setUnitTotalDiscountAmountWithProductOption(
+                $itemTransfer->getUnitTotalDiscountAmount() + $totalDiscountUnitGrossAmount
+            );
+            $itemTransfer->setSumTotalDiscountAmountWithProductOption(
+                $itemTransfer->getSumTotalDiscountAmount() + $totalDiscountSumGrossAmount
+            );
+
+            $itemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(
+                $itemTransfer->getSumGrossPriceWithProductOptions() - $itemTransfer->getSumTotalDiscountAmountWithProductOption()
+            );
+
+            $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
+                $itemTransfer->getUnitGrossPriceWithProductOptions() - $itemTransfer->getUnitTotalDiscountAmountWithProductOption()
+            );
+        }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
+     *
+     * @return int
+     */
+    protected function getProductOptionGrossUnitTotalAmount(\ArrayObject $productOptionTransfer)
+    {
+        $totalDiscountUnitGrossAmount = 0;
+        foreach ($productOptionTransfer as $optionTransfer) {
+            $this->setCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
+
+            $unitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount($optionTransfer->getCalculatedDiscounts());
+            $optionTransfer->setUnitGrossPriceWithDiscounts($optionTransfer->getUnitGrossPrice() - $unitDiscountAmount);
+            $totalDiscountUnitGrossAmount += $unitDiscountAmount;
+        }
+
+        return $totalDiscountUnitGrossAmount;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
+     *
+     * @return int
+     */
+    protected function getProductOptionGrossSumTotalAmount(\ArrayObject $productOptionTransfer)
+    {
+        $totalDiscountSumGrossAmount = 0;
+        foreach ($productOptionTransfer as $optionTransfer) {
+            $this->setCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
+
+            $sumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount($optionTransfer->getCalculatedDiscounts());
+            $optionTransfer->setSumGrossPriceWithDiscounts($optionTransfer->getSumGrossPrice() - $sumDiscountAmount);
+            $totalDiscountSumGrossAmount += $sumDiscountAmount;
+        }
+
+        return $totalDiscountSumGrossAmount;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculatedDiscounts
+     *
+     * @return int
+     */
+    protected function getCalculatedDiscountsUnitGrossAmount(\ArrayObject $calculatedDiscounts)
+    {
+        $totalDiscountUnitGrossAmount = 0;
+        foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
+            $totalDiscountUnitGrossAmount += $calculatedDiscountTransfer->getUnitGrossAmount();
+        }
+
+        return $totalDiscountUnitGrossAmount;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculatedDiscounts
+     *
+     * @return void
+     */
+    protected function setCalculatedDiscountsSumGrossAmount(\ArrayObject $calculatedDiscounts)
+    {
+        foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
+            $calculatedDiscountTransfer->setSumGrossAmount(
+                $calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity()
+            );
         }
     }
 
@@ -74,7 +182,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
      *
      * @return void
      */
-    protected function addProductOptionCalculatedDiscounts(
+    protected function addSalesProductOptionCalculatedDiscounts(
         ItemTransfer $itemTransfer,
         SpySalesDiscount $salesOrderDiscountEntity
     ) {
@@ -146,21 +254,26 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return void
      */
-    protected function addProductOptionWithDiscountsGrossPriceAmounts(OrderTransfer $orderTransfer)
+    protected function addProductOptionWithDiscountsGrossPriceAmounts(\ArrayObject $items)
     {
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $totalItemUnitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
+        foreach ($items as $itemTransfer) {
             $totalItemSumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount($itemTransfer->getCalculatedDiscounts());
+            $totalItemUnitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
 
             $productOptionUnitAmount = $this->getProductOptionUnitAmount($itemTransfer);
             $productOptionSumAmount = $this->getProductOptionSumAmount($itemTransfer);
 
             $unitDiscountAmountWithOptions = $totalItemUnitDiscountAmount + $productOptionUnitAmount;
             $sumDiscountAmountWithOptions = $totalItemSumDiscountAmount + $productOptionSumAmount;
+
+            if (!$sumDiscountAmountWithOptions) {
+                $this->setItemDiscountDefaults($itemTransfer);
+                continue;
+            }
 
             $itemTransfer->setUnitTotalDiscountAmountWithProductOption($unitDiscountAmountWithOptions);
             $itemTransfer->setSumTotalDiscountAmountWithProductOption($sumDiscountAmountWithOptions);
@@ -179,28 +292,14 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \ArrayObject $items|ItemTransfer[] $orderTransfer
      *
      * @return void
      */
-    protected function addProductOptionWithDiscountsGrossPriceAmountDefaults(OrderTransfer $orderTransfer)
+    protected function addProductOptionWithDiscountsGrossPriceAmountDefaults(\ArrayObject $items)
     {
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $totalItemUnitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
-            $totalItemSumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount($itemTransfer->getCalculatedDiscounts());
-
-            $this->setItemProductOptionDefaults($itemTransfer);
-
-            $itemTransfer->setUnitTotalDiscountAmountWithProductOption($totalItemUnitDiscountAmount);
-            $itemTransfer->setSumTotalDiscountAmountWithProductOption($totalItemSumDiscountAmount);
-
-            $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
-                $itemTransfer->getUnitGrossPriceWithProductOptions() - $totalItemUnitDiscountAmount
-            );
-
-            $itemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(
-                $itemTransfer->getSumGrossPriceWithProductOptions() - $totalItemSumDiscountAmount
-            );
+        foreach ($items as $itemTransfer) {
+            $this->setItemDiscountDefaults($itemTransfer);
         }
     }
 
@@ -298,6 +397,27 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
             ->filterByFkSalesOrderItem($saleOrderItemIds)
             ->where(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM_OPTION . Criteria::ISNOTNULL)
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function setItemDiscountDefaults(ItemTransfer $itemTransfer)
+    {
+        $this->setItemProductOptionDefaults($itemTransfer);
+
+        $itemTransfer->setUnitTotalDiscountAmountWithProductOption($itemTransfer->getUnitTotalDiscountAmount());
+        $itemTransfer->setSumTotalDiscountAmountWithProductOption($itemTransfer->getSumTotalDiscountAmount());
+
+        $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
+            $itemTransfer->getUnitGrossPriceWithProductOptions() - $itemTransfer->getUnitTotalDiscountAmount()
+        );
+
+        $itemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(
+            $itemTransfer->getSumGrossPriceWithProductOptions() - $itemTransfer->getSumTotalDiscountAmount()
+        );
     }
 
 }

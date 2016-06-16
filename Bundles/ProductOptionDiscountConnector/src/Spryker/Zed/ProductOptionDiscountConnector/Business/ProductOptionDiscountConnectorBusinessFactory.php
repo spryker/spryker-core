@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderDiscounts;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\DiscountTotalAmount;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\ProductOptionDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\ItemProductOptionTaxWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\OrderTaxAmountWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorDependencyProvider;
@@ -22,9 +22,9 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
 {
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\DiscountTotalAmount
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\DiscountTotalAmount
      */
-    public function createDiscountTotalAmountAggregator()
+    public function createDiscountTotalWithProductOptionsCalculator()
     {
         return new DiscountTotalAmount();
     }
@@ -38,9 +38,9 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\ProductOptionDiscounts
      */
-    public function createProductOptionDiscountAggregator()
+    public function createProductOptionDiscountCalculator()
     {
         return new ProductOptionDiscounts(
             $this->getProvidedDependency(ProductOptionDiscountConnectorDependencyProvider::QUERY_CONTAINER_DISCOUNT)

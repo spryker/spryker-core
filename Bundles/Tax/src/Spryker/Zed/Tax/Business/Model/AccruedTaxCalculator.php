@@ -39,10 +39,10 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
     {
         $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($price, $taxRate, false);
 
-        $taxAmount += self::$roundingError;
+        $taxAmount += static::$roundingError;
 
         $taxAmountRounded = round($taxAmount, 4);
-        self::$roundingError = $taxAmount - $taxAmountRounded;
+        static::$roundingError = $taxAmount - $taxAmountRounded;
 
         return $taxAmountRounded;
     }
@@ -52,7 +52,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
      */
     public static function resetRoundingErrorCounter()
     {
-        self::$roundingError = 0;
+        static::$roundingError = 0;
     }
 
 }

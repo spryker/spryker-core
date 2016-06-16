@@ -14,7 +14,7 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\ProductOptionDiscounts;
 
 class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
 {
@@ -59,7 +59,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\ProductOptionDiscounts
      */
     protected function createProductOptionsAggregator()
     {
@@ -67,19 +67,19 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
 
         $salesDiscountQueryMock = $this->createDiscountQueryMock();
 
-        $objectColletion = new ObjectCollection();
+        $objectCollection = new ObjectCollection();
 
         $salesDiscountEntity = new SpySalesDiscount();
         $salesDiscountEntity->setFkSalesOrderItem(1);
         $salesDiscountEntity->setAmount(100);
         $salesDiscountEntity->setFkSalesOrderItemOption(1);
-        $objectColletion->append($salesDiscountEntity);
+        $objectCollection->append($salesDiscountEntity);
 
         $salesDiscountEntity = new SpySalesDiscount();
         $salesDiscountEntity->setFkSalesOrderItem(1);
         $salesDiscountEntity->setAmount(200);
         $salesDiscountEntity->setFkSalesOrderItemOption(1);
-        $objectColletion->append($salesDiscountEntity);
+        $objectCollection->append($salesDiscountEntity);
 
         $salesDiscountQueryMock->expects($this->once())
             ->method('filterByFkSalesOrderItem')
@@ -93,7 +93,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
         $salesDiscountQueryMock
             ->expects($this->once())
             ->method('find')
-            ->willReturn($objectColletion);
+            ->willReturn($objectCollection);
 
         $discountQueryContainerMock
             ->expects($this->once())

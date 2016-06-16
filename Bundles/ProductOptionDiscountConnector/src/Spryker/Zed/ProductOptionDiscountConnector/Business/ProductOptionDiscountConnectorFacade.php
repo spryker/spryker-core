@@ -38,7 +38,7 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
      */
     public function aggregateOrderTotalDiscountAmount(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createDiscountTotalAmountAggregator()->aggregate($orderTransfer);
+        $this->getFactory()->createDiscountTotalWithProductOptionsCalculator()->aggregate($orderTransfer);
     }
 
     /**
@@ -50,7 +50,7 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
      */
     public function aggregateItemWithProductOptionsDiscounts(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createProductOptionDiscountAggregator()->aggregate($orderTransfer);
+        $this->getFactory()->createProductOptionDiscountCalculator()->aggregate($orderTransfer);
     }
 
     /**
@@ -99,6 +99,30 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
     public function recalculateOrderTotalTaxAmountWithDiscounts(QuoteTransfer $quoteTransfer)
     {
         $this->getFactory()->createOrderTotalWithDiscountsTaxCalculator()->recalculate($quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function recalculateItemWithProductOptionsAndDiscountsGrossPrice(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createProductOptionDiscountCalculator()->recalculate($quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function recalculateDiscountTotalsWithProductOptions(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createDiscountTotalWithProductOptionsCalculator()->recalculate($quoteTransfer);
     }
 
 }

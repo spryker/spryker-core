@@ -10,7 +10,6 @@ namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Cal
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
 
@@ -28,19 +27,6 @@ class RemoveAllCalculatedDiscountsCalculatorTest extends \PHPUnit_Framework_Test
         $removeAllCalculatedDiscountsCalculator->recalculate($quoteTransfer);
 
         $this->assertEmpty($quoteTransfer->getItems()[0]->getCalculatedDiscounts());
-    }
-
-    /**
-     * @return void
-     */
-    public function testRemoveCalculatedDiscountsShouldEmptyItemOptionsCalculatedDiscountCollections()
-    {
-        $removeAllCalculatedDiscountsCalculator = $this->createRemoveAllCalculatedDiscountsCalculator();
-
-        $quoteTransfer = $this->createQuoteTransferWithFixtureData();
-        $removeAllCalculatedDiscountsCalculator->recalculate($quoteTransfer);
-
-        $this->assertEmpty($quoteTransfer->getItems()[0]->getProductOptions()[0]->getCalculatedDiscounts());
     }
 
     /**
@@ -67,10 +53,6 @@ class RemoveAllCalculatedDiscountsCalculatorTest extends \PHPUnit_Framework_Test
 
         $calculatedDiscountTransfer = $this->createCalculatedDiscountTransfer();
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $productOptionTransfer = $this->createProductOptionTransfer();
-        $productOptionTransfer->addCalculatedDiscount(clone $calculatedDiscountTransfer);
-        $itemTransfer->addProductOption($productOptionTransfer);
 
         $quoteTransfer->addItem($itemTransfer);
 
@@ -112,14 +94,6 @@ class RemoveAllCalculatedDiscountsCalculatorTest extends \PHPUnit_Framework_Test
     protected function createCalculatedDiscountTransfer()
     {
         return new CalculatedDiscountTransfer();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer
-     */
-    protected function createProductOptionTransfer()
-    {
-        return new ProductOptionTransfer();
     }
 
     /**
