@@ -23,9 +23,6 @@
 - [ ] No open tickets that requires a major release
 - [ ] Legal check for external dependencies
 
-###### Optional
-- [ ] Project integration [PR](https://github.com/spryker/project/pull/pr_number)
-
 ###### Change log
 Changes go here. Those will be copied to the release log for this bundle.
 
@@ -36,10 +33,6 @@ Changes go here. Those will be copied to the release log for this bundle.
 - [ ] No open tickets that could be in minor release
 - [ ] Legal check for external dependencies
 
-###### Optional
-- [ ] Documentation updated [PR](https://github.com/spryker/spryker.github.io/pull/pr_number)
-- [ ] Project integration [PR](https://github.com/spryker/project/pull/pr_number)
-
 ###### Change log
 Changes go here. Those will be copied to the release log for this bundle.
 
@@ -47,10 +40,6 @@ Changes go here. Those will be copied to the release log for this bundle.
 #### [Patch] BundleC
 - [ ] Tests for the patch
 - [ ] Scrutinizer score is not worse
-
-###### Optional
-- [ ] Documentation updated [PR](https://github.com/spryker/spryker.github.io/pull/pr_number)
-- [ ] Project integration [PR](https://github.com/spryker/project/pull/pr_number)
 
 ###### Change log
 Changes go here. Those will be copied to the release log for this bundle. Please use full sentences.
