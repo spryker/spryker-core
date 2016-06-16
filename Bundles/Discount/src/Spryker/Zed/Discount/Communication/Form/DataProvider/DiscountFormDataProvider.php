@@ -24,6 +24,9 @@ class DiscountFormDataProvider
             $discountGeneralTransfer = new DiscountGeneralTransfer();
             $discountGeneralTransfer->setIdDiscount($idDiscount);
             $discountGeneralTransfer->setIsExclusive(false);
+            $discountGeneralTransfer->setValidFrom(new \DateTime());
+            $discountGeneralTransfer->setValidTo(new \DateTime());
+
             $discountConfiguratorTransfer->setDiscountGeneral($discountGeneralTransfer);
         }
 
