@@ -21,7 +21,7 @@
 - [ ] Functional (Facade) tests
 - [ ] Scrutinizer score (>= 9.7)
 - [ ] Documentation [PR](https://github.com/spryker/spryker.github.io/pull/pr_number)
-- [ ] No open tickets that requires a major release
+- [ ] No open tickets that require a major release (also checked cleanups)
 - [ ] Legal check for external dependencies
 
 ###### Change log
