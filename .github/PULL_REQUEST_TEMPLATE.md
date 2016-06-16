@@ -11,12 +11,11 @@
    BundleB      | minor                 | BundleA: new major
    BundleC      | patch                 | BundleD: 2.2.0
 
-
    `patch` requires 1, `minor` 2 and `major` 3 reviewers.
 
 -----------------------------------------
 
-#### BundleA
+#### MajorBundleA (e.g. Cms)
 - [ ] API contract checked
 - [ ] Unit tests
 - [ ] Functional (Facade) tests
@@ -30,7 +29,7 @@ Changes go here as list items and with a header (Improvements/Bugfixes). Those w
 
 -----------------------------------------
 
-#### BundleB
+#### MinorBundleB
 - [ ] Tests for the feature
 - [ ] Scrutinizer score is not worse
 - [ ] No open tickets that could be in minor release
@@ -42,7 +41,7 @@ Features
 
 -----------------------------------------
 
-#### BundleC
+#### PatchBundleC
 - [ ] Tests for the patch
 - [ ] Scrutinizer score is not worse
 
