@@ -88,15 +88,13 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     /**
      * @param array|string[] $tokens
      * @param int $currentTokenIndex
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
+     * @param int $parenthesisDepth
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
+     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      */
-    protected function buildTree(array $tokens, &$currentTokenIndex = 0)
+    protected function buildTree(array $tokens, &$currentTokenIndex = 0, &$parenthesisDepth = 0)
     {
-        static $parenthesisDepth = 0;
-
         $leftNode = null;
         $compositeNode = null;
         $lastLogicalComparator = null;
@@ -112,7 +110,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                 case self::OPEN_PARENTHESIS === $token:
                     $parenthesisDepth++;
                     $currentTokenIndex++;
-                    $childTree = $this->buildTree($tokens, $currentTokenIndex);
+                    $childTree = $this->buildTree($tokens, $currentTokenIndex, $parenthesisDepth);
 
                     if ($leftNode === null) {
                         $leftNode = $childTree;

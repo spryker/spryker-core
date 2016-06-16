@@ -38,12 +38,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Business\QueryString\Validator;
-use Spryker\Zed\Discount\Business\SalesAggregator\DiscountTotalAmount;
-use Spryker\Zed\Discount\Business\SalesAggregator\GrandTotalWithDiscounts;
-use Spryker\Zed\Discount\Business\SalesAggregator\ItemDiscounts;
-use Spryker\Zed\Discount\Business\SalesAggregator\OrderDiscounts;
-use Spryker\Zed\Discount\Business\SalesAggregator\OrderExpensesWithDiscounts;
-use Spryker\Zed\Discount\Business\SalesAggregator\OrderExpenseTaxWithDiscounts;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
@@ -183,56 +177,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     protected function getStoreConfig()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\SalesAggregator\DiscountTotalAmount
-     */
-    public function createOrderDiscountTotalAmount()
-    {
-        return new DiscountTotalAmount();
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\SalesAggregator\ItemDiscounts
-     */
-    public function createItemTotalOrderAggregator()
-    {
-        return new ItemDiscounts($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\SalesAggregator\OrderDiscounts
-     */
-    public function createSalesOrderTotalsAggregator()
-    {
-        return new OrderDiscounts();
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\SalesAggregator\GrandTotalWithDiscounts
-     */
-    public function createSalesOrderGrandTotalAggregator()
-    {
-        return new GrandTotalWithDiscounts();
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\SalesAggregator\OrderExpenseTaxWithDiscounts
-     */
-    public function createOrderExpenseTaxWithDiscountsAggregator()
-    {
-        return new OrderExpenseTaxWithDiscounts(
-            $this->getProvidedDependency(DiscountDependencyProvider::FACADE_TAX)
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\SalesAggregator\OrderExpensesWithDiscounts
-     */
-    public function createOrderExpenseWithDiscountsAggregator()
-    {
-        return new OrderExpensesWithDiscounts($this->getQueryContainer());
     }
 
     /**

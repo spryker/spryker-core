@@ -528,7 +528,7 @@ class DiscountFacadeTest extends Test
 
         $discountFacade = $this->createDiscountFacade();
 
-        $amount = $discountFacade->calculatePercentage($discountableItems, 10);
+        $amount = $discountFacade->calculatePercentage($discountableItems, 10 * 100);
 
         $this->assertEquals(9, $amount);
     }
@@ -541,7 +541,7 @@ class DiscountFacadeTest extends Test
         $discountFacade = $this->createDiscountFacade();
         $amount = $discountFacade->calculateFixed([], 50);
 
-        $this->assertEquals(5000, $amount);
+        $this->assertEquals(50, $amount);
     }
 
     /**

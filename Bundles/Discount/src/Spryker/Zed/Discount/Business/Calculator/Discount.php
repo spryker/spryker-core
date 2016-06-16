@@ -99,9 +99,15 @@ class Discount implements DiscountInterface
      */
     protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes = [])
     {
-        $discounts = $this->queryContainer->queryActiveCartRules()->find();
+        $discounts = $this->queryContainer
+            ->queryActiveCartRules()
+            ->find();
+
         if (count($voucherCodes) > 0) {
-            $voucherDiscounts = $this->queryContainer->queryDiscountsBySpecifiedVouchers($voucherCodes)->find();
+            $voucherDiscounts = $this->queryContainer
+                ->queryDiscountsBySpecifiedVouchers($voucherCodes)
+                ->find();
+
             if (count($discounts) == 0) {
                 return $voucherDiscounts;
             }

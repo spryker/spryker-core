@@ -1,0 +1,24 @@
+{
+  "name": "spryker/discount-sales-aggregator-connector",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Unit": "tests/",
+    }
+  },
+  "require": {
+    "spryker/discount": "^2.0.0",
+    "spryker/kernel": "^2.0.0",
+    "spryker/sales-aggregator": "^2.0.0",
+    "spryker/tax": "^2.0.0"
+  },
+  "description": "discount sales aggregator connector bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

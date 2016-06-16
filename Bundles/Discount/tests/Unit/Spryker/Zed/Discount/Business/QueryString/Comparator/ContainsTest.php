@@ -37,9 +37,9 @@ class ContainsTest extends \PHPUnit_Framework_TestCase
         $contains = $this->createContains();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('oNe TwO');
+        $clauseTransfer->setValue('TwO');
 
-        $isMatching = $contains->compare($clauseTransfer, ' TwO ');
+        $isMatching = $contains->compare($clauseTransfer, 'oNe TwO');
 
         $this->assertTrue($isMatching);
     }
@@ -52,9 +52,9 @@ class ContainsTest extends \PHPUnit_Framework_TestCase
         $contains = $this->createContains();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('oNe TwO');
+        $clauseTransfer->setValue('zero');
 
-        $isMatching = $contains->compare($clauseTransfer, ' zero ');
+        $isMatching = $contains->compare($clauseTransfer, ' oNe TwO ');
 
         $this->assertFalse($isMatching);
     }

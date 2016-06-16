@@ -36,9 +36,9 @@ class DoesNotContainTest extends \PHPUnit_Framework_TestCase
         $doesNotContain = $this->createDoesNotContains();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('oNe TwO');
+        $clauseTransfer->setValue('not');
 
-        $isMatching = $doesNotContain->compare($clauseTransfer, ' not ');
+        $isMatching = $doesNotContain->compare($clauseTransfer, ' oNe TwO ');
 
         $this->assertTrue($isMatching);
     }
@@ -51,9 +51,9 @@ class DoesNotContainTest extends \PHPUnit_Framework_TestCase
         $contains = $this->createDoesNotContains();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('oNe TwO');
+        $clauseTransfer->setValue('no');
 
-        $isMatching = $contains->compare($clauseTransfer, ' one ');
+        $isMatching = $contains->compare($clauseTransfer, ' no TwO ');
 
         $this->assertFalse($isMatching);
     }

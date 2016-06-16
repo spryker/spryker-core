@@ -31,7 +31,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->createDecisionRuleContextMock());
 
         $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $createComparatorOperatorsMock->method('isValidComparator')
+        $createComparatorOperatorsMock->method('isExistingComparator')
             ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
                 return $clauseTransfer->getOperator() === '=' ? true : false;
             });
@@ -56,7 +56,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('createOr');
 
         $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $createComparatorOperatorsMock->method('isValidComparator')
+        $createComparatorOperatorsMock->method('isExistingComparator')
             ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
                 return $clauseTransfer->getOperator() === '=' ? true : false;
             });
@@ -81,7 +81,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('createAnd');
 
         $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $createComparatorOperatorsMock->method('isValidComparator')
+        $createComparatorOperatorsMock->method('isExistingComparator')
             ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
                 return $clauseTransfer->getOperator() === '=' ? true : false;
             });
@@ -111,7 +111,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->createDecisionRuleSpecificationMock());
 
         $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $createComparatorOperatorsMock->method('isValidComparator')
+        $createComparatorOperatorsMock->method('isExistingComparator')
             ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
                 if ($clauseTransfer->getOperator() === '=' || $clauseTransfer->getOperator() === 'is in') {
                     return true;
@@ -139,7 +139,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->createDecisionRuleContextMock());
 
         $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $createComparatorOperatorsMock->method('isValidComparator')
+        $createComparatorOperatorsMock->method('isExistingComparator')
             ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
                 if ($clauseTransfer->getOperator() === '=') {
                     return true;
@@ -164,7 +164,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
         $this->expectException(QueryStringException::class);
 
         $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $createComparatorOperatorsMock->method('isValidComparator')
+        $createComparatorOperatorsMock->method('isExistingComparator')
             ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
                 if ($clauseTransfer->getOperator() === '=') {
                     return true;
@@ -203,7 +203,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
         $this->expectException(QueryStringException::class);
 
         $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $createComparatorOperatorsMock->method('isValidComparator')
+        $createComparatorOperatorsMock->method('isExistingComparator')
             ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
                 if ($clauseTransfer->getOperator() === '=') {
                     return true;

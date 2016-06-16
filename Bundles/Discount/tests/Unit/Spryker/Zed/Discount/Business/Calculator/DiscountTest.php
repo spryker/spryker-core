@@ -35,7 +35,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
         $discountQueryMock->method('find')->willReturn([]);
 
         $queryContainerMock->expects($this->once())
-            ->method('queryCartRulesIncludingSpecifiedVouchers')
+            ->method('queryActiveCartRules')
             ->willReturn($discountQueryMock);
 
         $discount = $this->createDiscount($queryContainerMock);
@@ -58,8 +58,9 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
         $discountQueryMock->method('find')->willReturn($discounts);
 
         $queryContainerMock->expects($this->once())
-            ->method('queryCartRulesIncludingSpecifiedVouchers')
+            ->method('queryActiveCartRules')
             ->willReturn($discountQueryMock);
+
 
         $decisionRuleSpecificationMock = $this->createDecisionRuleSpecificationMock();
         $decisionRuleSpecificationMock->method('isSatisfiedBy')
@@ -95,14 +96,20 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
     {
         $queryContainerMock = $this->createDiscountQueryContainerMock();
 
-        $discounts[] = $this->createDiscountEntity(100, 123);
-
         $discountQueryMock = $this->createDiscountQueryMock();
-        $discountQueryMock->method('find')->willReturn($discounts);
+        $discountQueryMock->method('find')->willReturn([]);
 
         $queryContainerMock->expects($this->once())
-            ->method('queryCartRulesIncludingSpecifiedVouchers')
+            ->method('queryActiveCartRules')
             ->willReturn($discountQueryMock);
+
+        $discountQueryMock2 = $this->createDiscountQueryMock();
+        $discountQueryMock2->method('find')->willReturn([]);
+
+        $discounts[] = $this->createDiscountEntity(100, 123);
+        $queryContainerMock->expects($this->once())
+            ->method('queryDiscountsBySpecifiedVouchers')
+            ->willReturn($discountQueryMock2);
 
         $decisionRuleSpecificationMock = $this->createDecisionRuleSpecificationMock();
         $decisionRuleSpecificationMock->method('isSatisfiedBy')
@@ -153,7 +160,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
         $discountQueryMock->method('find')->willReturn($discounts);
 
         $queryContainerMock->expects($this->once())
-            ->method('queryCartRulesIncludingSpecifiedVouchers')
+            ->method('queryActiveCartRules')
             ->willReturn($discountQueryMock);
 
         $decisionRuleSpecificationMock = $this->createDecisionRuleSpecificationMock();
@@ -191,7 +198,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
         $discountQueryMock->method('find')->willReturn($discounts);
 
         $queryContainerMock->expects($this->once())
-            ->method('queryCartRulesIncludingSpecifiedVouchers')
+            ->method('queryActiveCartRules')
             ->willReturn($discountQueryMock);
 
         $specificationBuilderMock = $this->createSpecificationBuilderMock();
@@ -225,7 +232,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
         $discountQueryMock->method('find')->willReturn($discounts);
 
         $queryContainerMock->expects($this->once())
-            ->method('queryCartRulesIncludingSpecifiedVouchers')
+            ->method('queryActiveCartRules')
             ->willReturn($discountQueryMock);
 
         $decisionRuleSpecificationMock = $this->createDecisionRuleSpecificationMock();
@@ -279,7 +286,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
         $discountQueryMock->method('find')->willReturn($discounts);
 
         $queryContainerMock->expects($this->once())
-            ->method('queryCartRulesIncludingSpecifiedVouchers')
+            ->method('queryActiveCartRules')
             ->willReturn($discountQueryMock);
 
         $calculatorMock = $this->createCalculatorMock();

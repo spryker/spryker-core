@@ -461,7 +461,11 @@
       "Spryker\\Shared\\StateMachine\\": "Bundles/StateMachine/src",
       "Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/src",
       "Unit\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests",
-      "Functional\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests"
+      "Functional\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests",
+      "Spryker\\Shared\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/src",
+      "Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/src",
+      "Unit\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
+      "Functional\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests"
     },
     "psr-4": {
       "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",

@@ -12,8 +12,6 @@
   },
   "require": {
     "spryker/application": "^2.0.0",
-    "spryker/calculation": "^2.0.0",
-    "spryker/cart": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
@@ -24,8 +22,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/zend": "^2.0.0",
     "spryker/url": "^2.0.0",
-    "spryker/config": "^2.0.0",
-    "spryker/tax": "^2.0.0"
+    "spryker/config": "^2.0.0"
   },
   "description": "discount bundle",
   "license": "proprietary",

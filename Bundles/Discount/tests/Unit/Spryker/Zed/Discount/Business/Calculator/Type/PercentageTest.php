@@ -20,9 +20,9 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
 {
 
     const ITEM_GROSS_PRICE_1000 = 1000;
-    const DISCOUNT_PERCENTAGE_10 = 10;
-    const DISCOUNT_PERCENTAGE_100 = 100;
-    const DISCOUNT_PERCENTAGE_200 = 200;
+    const DISCOUNT_PERCENTAGE_10 = 1000;
+    const DISCOUNT_PERCENTAGE_100 = 10000;
+    const DISCOUNT_PERCENTAGE_200 = 20000;
 
     /**
      * @return void

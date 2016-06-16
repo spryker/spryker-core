@@ -23,7 +23,7 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
         $this->expectException(QueryStringException::class);
 
         $comparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $comparatorOperatorsMock->method('isValidComparator')
+        $comparatorOperatorsMock->method('isExistingComparator')
             ->willReturn(false);
 
         $clauseValidator = $this->createClauseValidator($comparatorOperatorsMock);
@@ -39,7 +39,7 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
         $this->expectException(QueryStringException::class);
 
         $comparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $comparatorOperatorsMock->method('isValidComparator')
+        $comparatorOperatorsMock->method('isExistingComparator')
             ->willReturn(true);
 
         $clauseValidator = $this->createClauseValidator($comparatorOperatorsMock);
@@ -57,7 +57,7 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
         $this->expectException(QueryStringException::class);
 
         $comparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $comparatorOperatorsMock->method('isValidComparator')
+        $comparatorOperatorsMock->method('isExistingComparator')
             ->willReturn(true);
 
         $metaDataProviderMock = $this->createMetaDataProviderMock();
@@ -76,7 +76,7 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
     public function testValidateWhenFieldIsValidShouldNotThrowExceptions()
     {
         $comparatorOperatorsMock = $this->createComparatorOperatorsMock();
-        $comparatorOperatorsMock->method('isValidComparator')
+        $comparatorOperatorsMock->method('isExistingComparator')
             ->willReturn(true);
 
         $metaDataProviderMock = $this->createMetaDataProviderMock();

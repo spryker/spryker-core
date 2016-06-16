@@ -34,7 +34,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
     const STORE_CONFIG = 'STORE_CONFIG';
     const FACADE_MESSENGER = 'MESSENGER_FACADE';
-    const FACADE_TAX = 'TAX_FACADE';
 
     const PLUGIN_PROPEL_CONNECTION = 'PROPEL_CONNECTION_PLUGIN';
     const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
@@ -76,10 +75,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::COLLECTOR_PLUGINS] = function () {
             return $this->getCollectorPlugins();
-        };
-
-        $container[self::FACADE_TAX] = function (Container $container) {
-            return new DiscountToTaxBridge($container->getLocator()->tax()->facade());
         };
 
         $container[self::CURRENCY_MANAGER] = function () {

@@ -36,7 +36,7 @@ class DiscountsTable extends AbstractTable
     protected $discountQuery;
 
     /**
-     * @var array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @var array|\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected $calculatorPlugins = [];
 

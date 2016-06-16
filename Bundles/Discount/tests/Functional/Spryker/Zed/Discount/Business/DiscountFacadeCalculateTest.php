@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
@@ -54,7 +55,7 @@ class DiscountFacadeCalculateTest extends Test
         $this->assertCount(1, $cartRuleDiscounts);
 
         $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertEquals($discountEntity->getAmount() * 100, $discountTransfer->getAmount());
+        $this->assertEquals($discountEntity->getAmount(), $discountTransfer->getAmount());
     }
 
     /**
@@ -77,7 +78,7 @@ class DiscountFacadeCalculateTest extends Test
         $this->assertCount(1, $cartRuleDiscounts);
 
         $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertEquals($discountEntity->getAmount() * 100, $discountTransfer->getAmount());
+        $this->assertEquals($discountEntity->getAmount(), $discountTransfer->getAmount());
     }
 
     /**
@@ -140,6 +141,7 @@ class DiscountFacadeCalculateTest extends Test
 
         $discountEntity->setDisplayName('display name');
         $discountEntity->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
+        $discountEntity->setDiscountType(DiscountConstants::TYPE_CART_RULE);
         $discountEntity->setIsActive(1);
         $discountEntity->setValidFrom(new \DateTime('yesterday'));
         $discountEntity->setValidTo(new \DateTime('tomorrow'));
