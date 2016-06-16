@@ -15,7 +15,7 @@
            <h4>{{ 'General Information' | trans }}</h4>
            <table class="table">
                <tr>
-                   <td>{{ 'Discount Type:' | trans }}</td>
+                   <td style="width: 150px;">{{ 'Discount Type:' | trans }}</td>
                    <td>
                        {{ discountConfigurator.discountGeneral.discountType|replace('_', ' ')|trans  }}
                    </td>
@@ -52,7 +52,7 @@
           <h4>{{ 'Discount calculation' | trans }}</h4>
           <table class="table">
               <tr>
-                  <td>{{ 'Type:' | trans }}</td>
+                  <td style="width: 150px;">{{ 'Type:' | trans }}</td>
                   <td>{{ discountConfigurator.discountCalculator.calculatorPlugin|replace({'_' :' ', 'PLUGIN' : ''})|capitalize }}</td>
               </tr>
               <tr>
