@@ -49,7 +49,7 @@ class OmsFacadeTest extends Test
         $matrix = $omsFacade->getOrderItemMatrix();
 
         $this->assertNotEmpty($matrix);
-        $this->assertEquals('', $matrix[0]['COL_STATE']);
+        $this->assertSame('', $matrix[0]['COL_STATE']);
     }
 
     /**
@@ -75,7 +75,7 @@ class OmsFacadeTest extends Test
         $omsFacade = $this->createOmsFacade();
         $items = $omsFacade->getReservedOrderItemsForSku('non-existent-sku');
 
-        $this->assertEquals(0, $items->count());
+        $this->assertSame(0, $items->count());
     }
 
 }
