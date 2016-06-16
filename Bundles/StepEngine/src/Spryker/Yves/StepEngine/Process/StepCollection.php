@@ -10,6 +10,7 @@ namespace Spryker\Yves\StepEngine\Process;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
+use Spryker\Yves\StepEngine\Dependency\Step\StepWithPostConditionErrorRouteInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -194,6 +195,10 @@ class StepCollection implements StepCollectionInterface
             $nextStep = $this->getNextStep($currentStep);
 
             return $nextStep->getStepRoute();
+        }
+
+        if (($currentStep instanceof StepWithPostConditionErrorRouteInterface) && !empty($currentStep->getPostConditionErrorRoute())) {
+            return $currentStep->getPostConditionErrorRoute();
         }
 
         if ($currentStep->requireInput($dataTransfer)) {
