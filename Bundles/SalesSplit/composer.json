@@ -17,7 +17,7 @@
     "spryker/sales": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
-  "description": "sales split bundle",
+  "description": "SalesSplit bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

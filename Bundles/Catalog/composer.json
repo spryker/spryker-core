@@ -21,7 +21,7 @@
     "spryker/storage": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
-  "description": "catalog bundle",
+  "description": "Catalog bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

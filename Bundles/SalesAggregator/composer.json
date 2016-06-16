@@ -18,7 +18,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/tax": "^2.0.0"
   },
-  "description": "sales aggregator bundle",
+  "description": "SalesAggregator bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

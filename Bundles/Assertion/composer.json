@@ -10,7 +10,7 @@
     "spryker/kernel": "^2.0.0",
     "spryker/silex": "^2.0.0"
   },
-  "description": "assertion bundle",
+  "description": "Assertion bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

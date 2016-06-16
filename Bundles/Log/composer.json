@@ -12,7 +12,7 @@
     "spryker/monolog": "^2.0.0",
     "spryker/silex": "^2.0.0"
   },
-  "description": "log bundle",
+  "description": "Log bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

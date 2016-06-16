@@ -14,7 +14,7 @@
     "spryker/kernel": "^2.0.0",
     "spryker/stock": "^2.0.0"
   },
-  "description": "stock sales connector bundle",
+  "description": "StockSalesConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

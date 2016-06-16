@@ -68,7 +68,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
         $composerJson = json_decode($composerJsonFile->getContents(), true);
 
-        $composerJson = $this->updater->update($composerJson);
+        $composerJson = $this->updater->update($composerJson, $composerJsonFile);
 
         $composerJson = $this->clean($composerJson);
 
@@ -95,7 +95,12 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         return !in_array($folder, $bundles);
     }
 
-    private function clean($composerJson)
+    /**
+     * @param array $composerJson
+     *
+     * @return array
+     */
+    protected function clean($composerJson)
     {
         if  (!empty($composerJson[self::KEY_REQUIRE])) {
             ksort($composerJson[self::KEY_REQUIRE]);

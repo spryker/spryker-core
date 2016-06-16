@@ -16,7 +16,7 @@
     "spryker/console": "^2.0.1",
     "spryker/testify": "^2.0.0"
   },
-  "description": "step engine bundle",
+  "description": "StepEngine bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

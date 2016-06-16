@@ -15,7 +15,7 @@
     "spryker/tax": "^2.0.0",
     "spryker/touch": "^2.0.0"
   },
-  "description": "tax product connector bundle",
+  "description": "TaxProductConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

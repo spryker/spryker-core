@@ -22,7 +22,7 @@
     "spryker/touch": "^2.0.0",
     "spryker/twig": "^2.0.0"
   },
-  "description": "price bundle",
+  "description": "Price bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

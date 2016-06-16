@@ -25,7 +25,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/touch": "^2.0.0"
   },
-  "description": "collector bundle",
+  "description": "Collector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

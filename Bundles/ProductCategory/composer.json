@@ -23,7 +23,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/touch": "^2.0.0"
   },
-  "description": "product category bundle",
+  "description": "ProductCategory bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

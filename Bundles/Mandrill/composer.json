@@ -3,7 +3,7 @@
   "require": {
     "mandrill/mandrill": "~1.0.55"
   },
-  "description": "mandrill bundle",
+  "description": "Mandrill bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

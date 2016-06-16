@@ -15,7 +15,7 @@
     "spryker/kernel": "^2.0.0",
     "spryker/mail": "^2.0.0"
   },
-  "description": "customer mail connector bundle",
+  "description": "CustomerMailConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

@@ -15,7 +15,7 @@
     "spryker/oms": "^2.0.0 || ^3.0.0",
     "spryker/sales": "^2.0.0"
   },
-  "description": "nopayment bundle",
+  "description": "Nopayment bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

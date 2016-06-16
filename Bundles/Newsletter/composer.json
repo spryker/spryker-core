@@ -19,7 +19,7 @@
     "spryker/mail": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
   },
-  "description": "newsletter bundle",
+  "description": "Newsletter bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

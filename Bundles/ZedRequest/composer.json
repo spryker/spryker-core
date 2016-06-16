@@ -20,7 +20,7 @@
     "spryker/library": "^2.0.0",
     "spryker/transfer": "^2.0.0"
   },
-  "description": "zed request bundle",
+  "description": "ZedRequest bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

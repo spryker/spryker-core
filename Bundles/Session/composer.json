@@ -16,7 +16,7 @@
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
-  "description": "session bundle",
+  "description": "Session bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

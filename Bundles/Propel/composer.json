@@ -25,7 +25,7 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "^2.0.0"
   },
-  "description": "propel bundle",
+  "description": "Propel bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

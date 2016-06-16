@@ -31,7 +31,7 @@
     "symfony/var-dumper": "~2.6.13",
     "symfony/yaml": "~2.6.13"
   },
-  "description": "symfony bundle",
+  "description": "Symfony bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

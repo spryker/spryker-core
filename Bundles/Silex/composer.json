@@ -3,7 +3,7 @@
   "require": {
     "silex/silex": "~1.3.5"
   },
-  "description": "silex bundle",
+  "description": "Silex bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

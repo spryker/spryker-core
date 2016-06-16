@@ -13,7 +13,7 @@
   "require": {
     "spryker/kernel": "^2.0.0"
   },
-  "description": "item grouper bundle",
+  "description": "ItemGrouper bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

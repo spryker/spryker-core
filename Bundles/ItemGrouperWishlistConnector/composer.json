@@ -14,7 +14,7 @@
     "spryker/item-grouper": "^2.0.0",
     "spryker/kernel": "^2.0.0"
   },
-  "description": "item grouper wishlist connector bundle",
+  "description": "ItemGrouperWishlistConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

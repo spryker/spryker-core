@@ -13,7 +13,7 @@
     "spryker/step-engine": "^1.0.0",
     "spryker/symfony": "^2.0.0"
   },
-  "description": "dummy payment bundle",
+  "description": "DummyPayment bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

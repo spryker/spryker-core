@@ -30,7 +30,7 @@
     "spryker/console": "^2.0.1",
     "spryker/testify": "^2.0.0"
   },
-  "description": "kernel bundle",
+  "description": "Kernel bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

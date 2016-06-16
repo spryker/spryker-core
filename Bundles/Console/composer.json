@@ -22,7 +22,7 @@
   "bin": [
     "bin/console"
   ],
-  "description": "console bundle",
+  "description": "Console bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

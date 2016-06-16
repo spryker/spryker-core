@@ -17,7 +17,7 @@
     "spryker/product": "^2.0.0",
     "spryker/stock": "^2.0.0"
   },
-  "description": "availability bundle",
+  "description": "Availability bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

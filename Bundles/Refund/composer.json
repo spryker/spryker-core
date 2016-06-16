@@ -24,7 +24,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/url": "^2.0.0"
   },
-  "description": "refund bundle",
+  "description": "Refund bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

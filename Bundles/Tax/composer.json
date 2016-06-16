@@ -14,7 +14,7 @@
     "spryker/kernel": "^2.0.0",
     "spryker/propel": "^2.0.0"
   },
-  "description": "tax bundle",
+  "description": "Tax bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

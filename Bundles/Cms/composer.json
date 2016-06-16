@@ -24,7 +24,7 @@
     "spryker/touch": "^2.0.0",
     "spryker/url": "^2.0.0"
   },
-  "description": "cms bundle",
+  "description": "Cms bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

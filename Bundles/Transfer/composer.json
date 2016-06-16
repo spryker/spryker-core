@@ -22,7 +22,7 @@
     "spryker/twig": "^2.0.0",
     "spryker/zend": "^2.0.0"
   },
-  "description": "transfer bundle",
+  "description": "Transfer bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

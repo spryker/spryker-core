@@ -13,7 +13,7 @@
     "spryker/sales": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
-  "description": "payment bundle",
+  "description": "Payment bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

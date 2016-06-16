@@ -27,7 +27,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/user": "^2.0.0"
   },
-  "description": "installer bundle",
+  "description": "Installer bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

@@ -22,7 +22,7 @@
   "require-dev": {
     "spryker/library": "^2.0.0"
   },
-  "description": "product search bundle",
+  "description": "ProductSearch bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
