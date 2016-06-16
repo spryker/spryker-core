@@ -12,7 +12,7 @@ function SprykerQueryBuilder(options) {
     this.inputElement = options.inputElement;
     this.targetElement = options.targetElement;
     this.label = options.label || 'Build Query';
-    this.init = function(){
+    this.init = function() {
         self.builder = $(self.targetElement);
         self.createBuilder();
     };
@@ -20,14 +20,16 @@ function SprykerQueryBuilder(options) {
     this.init();
 }
 
-SprykerQueryBuilder.prototype.createBuilder = function(){
-
+SprykerQueryBuilder.prototype.createBuilder = function() {
     var self = this;
-    $.get(self.getFiltersUrl).done(function(filters){
+
+    $.get(self.getFiltersUrl).done(function(filters) {
         self.builder.queryBuilder({
             filters: filters,
             sqlOperators: self.getSqlOperators(),
-            sqlRuleOperator: self.getSqlRuleOperators()
+            sqlRuleOperator: self.getSqlRuleOperators(),
+            allow_empty: true,
+            display_empty_filter: true
         });
         self.builder.prepend('<label class="control-label query-builder-label">' + self.label + '</label>');
         if (typeof self.sql !== 'undefined' && self.sql !== '') {
@@ -36,13 +38,13 @@ SprykerQueryBuilder.prototype.createBuilder = function(){
     });
 };
 
-SprykerQueryBuilder.prototype.toggleButton = function(event){
+SprykerQueryBuilder.prototype.toggleButton = function(event) {
     var self = this;
     var inputElementContainer = $(self.inputElement).parent();
     var label = '';
     var button = $(event.target);
 
-    if (self.displayQueryBuilder === true) {
+    if (!!self.displayQueryBuilder) {
         self.saveQuery();
         inputElementContainer.removeClass('hidden');
         self.builder.addClass('hidden');
@@ -62,28 +64,28 @@ SprykerQueryBuilder.prototype.toggleButton = function(event){
     button.text(label);
 };
 
-SprykerQueryBuilder.prototype.getSqlOperators = function(){
+SprykerQueryBuilder.prototype.getSqlOperators = function() {
     return {
         contains: {
-            op : 'CONTAINS ?',
+            op: 'CONTAINS ?',
             mod: '{0}'
         },
         not_contains: {
-            op : 'DOES NOT CONTAIN ?',
+            op: 'DOES NOT CONTAIN ?',
             mod: '{0}'
         },
-        in: {
-            op : 'IS IN ?',
+        in : {
+            op: 'IS IN ?',
             sep: ', '
         },
         not_in: {
-            op : 'IS NOT IN ?',
+            op: 'IS NOT IN ?',
             sep: ', '
         }
     };
 };
 
-SprykerQueryBuilder.prototype.getSqlRuleOperators = function(){
+SprykerQueryBuilder.prototype.getSqlRuleOperators = function() {
     return {
         'CONTAINS': function(v) {
             return {
@@ -112,17 +114,19 @@ SprykerQueryBuilder.prototype.getSqlRuleOperators = function(){
     };
 };
 
-SprykerQueryBuilder.prototype.saveQuery = function(){
-
+SprykerQueryBuilder.prototype.saveQuery = function() {
     if (!this.inputElement.parent().hasClass('hidden')) {
         return;
     }
 
-    var result = this.builder.queryBuilder('getSQL', false);
+    var status = this.builder.queryBuilder('getRules') || {};
 
-    if (result.sql.length) {
-        this.inputElement.val(result.sql);
+    if (!status.rules || !status.rules.length) {
+        return this.inputElement.val('');
     }
+
+    var result = this.builder.queryBuilder('getSQL', false);
+    this.inputElement.val(result.sql);
 };
 
 module.exports = SprykerQueryBuilder;
