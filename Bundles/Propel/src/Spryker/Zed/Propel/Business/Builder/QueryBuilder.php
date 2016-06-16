@@ -222,15 +222,15 @@ SCRIPT;
         if (is_array(\$$variableName)) {
             \$useMinMax = false;
             if (isset(\${$variableName}['min'])) {
-                if (\$comparison != SprykerCriteria::BETWEEN) {
-                    throw new AmbiguousComparisonException('\\'min\\' requires explicit SprykerCriteria::BETWEEN as comparison criteria.');
+                if (\$comparison != SprykerCriteria::BETWEEN && \$comparison != Criteria::GREATER_EQUAL) {
+                    throw new AmbiguousComparisonException('\\'min\\' requires explicit Criteria::GREATER_EQUAL or SprykerCriteria::BETWEEN when \\'max\\' is also needed as comparison criteria.');
                 }
                 \$this->addUsingAlias($qualifiedName, \${$variableName}['min'], Criteria::GREATER_EQUAL);
                 \$useMinMax = true;
             }
             if (isset(\${$variableName}['max'])) {
-                if (\$comparison != SprykerCriteria::BETWEEN) {
-                    throw new AmbiguousComparisonException('\\'max\\' requires explicit SprykerCriteria::BETWEEN as comparison criteria.');
+                if (\$comparison != SprykerCriteria::BETWEEN && \$comparison != Criteria::LESS_EQUAL) {
+                    throw new AmbiguousComparisonException('\\'max\\' requires explicit Criteria::LESS_EQUAL or SprykerCriteria::BETWEEN when \\'min\\' is also needed as comparison criteria.');
                 }
                 \$this->addUsingAlias($qualifiedName, \${$variableName}['max'], Criteria::LESS_EQUAL);
                 \$useMinMax = true;

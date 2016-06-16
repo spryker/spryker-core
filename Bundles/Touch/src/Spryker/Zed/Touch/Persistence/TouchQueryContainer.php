@@ -12,7 +12,6 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
-use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 
 /**
  * @method \Spryker\Zed\Touch\Persistence\TouchPersistenceFactory getFactory()
@@ -94,7 +93,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
-            ->filterByTouched(['min' => $lastTouchedAt], SprykerCriteria::BETWEEN);
+            ->filterByTouched(['min' => $lastTouchedAt], Criteria::GREATER_EQUAL);
 
         return $query;
     }

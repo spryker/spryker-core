@@ -13,7 +13,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Oms\OmsDependencyProvider;
-use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory getFactory()
@@ -282,7 +281,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $this->getFactory()
             ->createOmsStateMachineLockQuery()
             ->filterByIdentifier($identifier)
-            ->filterByExpires(['min' => $expirationDate], SprykerCriteria::BETWEEN);
+            ->filterByExpires(['min' => $expirationDate], Criteria::GREATER_EQUAL);
     }
 
     /**
@@ -296,7 +295,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     {
         return $this->getFactory()
             ->createOmsStateMachineLockQuery()
-            ->filterByExpires(['max' => $expirationDate], SprykerCriteria::BETWEEN);
+            ->filterByExpires(['max' => $expirationDate], Criteria::LESS_EQUAL);
     }
 
     /**
