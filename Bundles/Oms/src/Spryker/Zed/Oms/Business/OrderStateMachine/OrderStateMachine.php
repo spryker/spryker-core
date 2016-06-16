@@ -20,8 +20,10 @@ use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class OrderStateMachine implements OrderStateMachineInterface
@@ -123,16 +125,18 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function setConditions($conditions)
     {
-        $this->conditions = $conditions;
+        if ($conditions instanceof ConditionCollectionInterface) {
+            $this->conditions = $conditions;
 
-        if (is_array($conditions)) {
-            $conditionCollection = new ConditionCollection();
-            foreach ($conditions as $name => $condition) {
-                $conditionCollection->add($condition, $name);
-            }
-
-            $this->conditions = $conditionCollection;
+            return;
         }
+
+        $conditionCollection = new ConditionCollection();
+        foreach ($conditions as $name => $condition) {
+            $conditionCollection->add($condition, $name);
+        }
+
+        $this->conditions = $conditionCollection;
     }
 
     /**
@@ -144,16 +148,18 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function setCommands($commands)
     {
-        $this->commands = $commands;
+        if ($commands instanceof CommandCollectionInterface) {
+            $this->commands = $commands;
 
-        if (is_array($commands)) {
-            $commandCollection = new CommandCollection();
-            foreach ($commands as $name => $command) {
-                $commandCollection->add($command, $name);
-            }
-
-            $this->commands = $commandCollection;
+            return;
         }
+
+        $commandCollection = new CommandCollection();
+        foreach ($commands as $name => $command) {
+            $commandCollection->add($command, $name);
+        }
+
+        $this->commands = $commandCollection;
     }
 
     /**

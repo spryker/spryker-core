@@ -71,11 +71,11 @@ class CommandCollection implements CommandCollectionInterface, \ArrayAccess
     /**
      * @param string $offset
      *
-     * @return null|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface
+     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface
      */
     public function offsetGet($offset)
     {
-        return ($this->has($offset)) ? $this->get($offset) : null;
+        return $this->get($offset);
     }
 
     /**
