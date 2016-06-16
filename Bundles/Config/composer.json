@@ -34,5 +34,8 @@
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
-  ]
+  ],
+  "config": {
+    "sort-packages": true
+  }
 }

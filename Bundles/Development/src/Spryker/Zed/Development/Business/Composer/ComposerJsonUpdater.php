@@ -109,6 +109,8 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
             unset($composerJson[self::KEY_REQUIRE_DEV]);
         }
 
+        $composerJson['config']['sort-packages'] = true;
+
         return $composerJson;
     }
 
