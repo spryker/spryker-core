@@ -85,6 +85,17 @@
         {# ============================ VARIANT ============================ #}
         <div id="tab_variant" class="tab-pane">
             <div class="panel-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Attributes
+                        </div>
+                        <div class="panel-body">
+                            {% for type,attributeCollection in form.attributes %}
+                                {{ form_row(attributeCollection.type) }}
+                                {{ type }}: {{ form_row(attributeCollection.value) }}
+                            {% endfor %}
+                        </div>
+                    </div>
 
                 {% for type,attributeCollection in form.attributes %}
                     <div class="panel panel-default">
