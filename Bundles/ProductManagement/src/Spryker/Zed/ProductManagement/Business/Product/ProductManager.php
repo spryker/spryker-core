@@ -370,18 +370,18 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      * @throws \Propel\Runtime\Exception\PropelException
      * @return int
      */
-    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
+    public function saveProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
     {
         $sku = $productConcreteTransfer->requireSku()->getSku();
         $idProduct = (int)$productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete();
-        $idProductAbstract = (int)$productConcreteTransfer->requireIdProductAbstract()->getIdProductAbstract();
+        $idProductAbstract = (int)$productConcreteTransfer->requireFkProductAbstract()->getFkProductAbstract();
 
         $productConcreteEntity = $this->productQueryContainer
             ->queryProduct()
@@ -942,7 +942,7 @@ class ProductManager implements ProductManagerInterface
             $idProductAbstract = $this->saveProductAbstract($productAbstractTransfer);
 
             foreach ($productConcreteCollection as $productConcreteTransfer) {
-                $productConcreteTransfer->setIdProductAbstract($idProductAbstract);
+                $productConcreteTransfer->setFkProductAbstract($idProductAbstract);
 
                 $productConcreteEntity = $this->findProductConcreteByAttributes($productAbstractTransfer, $productConcreteTransfer);
                 if ($productConcreteEntity) {
