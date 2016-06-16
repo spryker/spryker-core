@@ -19,13 +19,14 @@ class ProductFormAdd extends AbstractType
     const FIELD_SKU = 'sku';
 
     const LOCALIZED_ATTRIBUTES = 'localized_attributes';
+    const ATTRIBUTES = 'attributes';
 
     /**
      * @return string
      */
     public function getName()
     {
-        return 'product';
+        return 'productAdd';
     }
 
     /**
@@ -73,4 +74,20 @@ class ProductFormAdd extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAttributesForm(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::ATTRIBUTES, 'collection', [
+                'type' => new ProductAttributesForm()
+            ]);
+
+        return $this;
+    }
+
 }

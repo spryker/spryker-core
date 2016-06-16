@@ -28,7 +28,11 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $this->getLocalizedAbstractAttributes($productAbstractTransfer);
         }
 
-        return array_merge($defaults, $formData);
+        $formData[ProductFormAdd::ATTRIBUTES] = $this->getAttributes($productAbstractTransfer);
+
+        $formData = array_merge($defaults, $formData);
+
+        return $formData;
     }
 
     /**
@@ -38,7 +42,8 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     {
         return [
             ProductFormAdd::FIELD_SKU => null,
-            ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getAttributesDefaultFields()
+            ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields(),
+            ProductFormAdd::ATTRIBUTES => $this->getAttributesDefaultFields()
         ];
     }
 

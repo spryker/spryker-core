@@ -30,7 +30,7 @@ class ProductFormAddDataProvider extends AbstractProductFormDataProvider
     {
         return [
             ProductFormAdd::FIELD_SKU => null,
-            ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getAttributesDefaultFields()
+            ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields()
         ];
     }
 

@@ -83,6 +83,32 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
+    public function getAttributes(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        //product[attributes][size][type]
+        //product[attributes][size][value][]
+        return [
+            'size' => [
+                '40' => '40',
+                '41' => '41',
+            ],
+            'color' => [
+                'blue' => 'Blue',
+                'red' => 'Red',
+                'white' => 'White',
+            ],
+            'flavour' => [
+                'spicy' => 'Mexican Food',
+                'sweet' => 'Cakes'
+            ]
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return array
+     */
     public function getLocalizedAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer)
     {
         $localizedAttributes = [];
@@ -90,16 +116,13 @@ class AbstractProductFormDataProvider
             $localizedAttributes[$attribute->getLocale()->getLocaleName()] = $attribute->toArray();
         }
 
-        $formData = $productAbstractTransfer->toArray(true);
-        $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $localizedAttributes;
-
         return $localizedAttributes;
     }
 
     /**
      * @return array
      */
-    public function getAttributesDefaultFields()
+    public function getLocalizedAttributesDefaultFields()
     {
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
@@ -112,6 +135,18 @@ class AbstractProductFormDataProvider
         }
 
         return $fields;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributesDefaultFields()
+    {
+        return [
+            'color' => [],
+            'size' => [],
+            'flavour' => [],
+        ];
     }
 
 }

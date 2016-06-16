@@ -12,7 +12,6 @@
         <property name="abstractSku" type="string" />
         <property name="localizedAttributes" type="LocalizedAttributes[]" />
         <property name="taxRate" type="float" />
-        <property name="locale" type="Locale" />
     </transfer>
 
 </transfers>
