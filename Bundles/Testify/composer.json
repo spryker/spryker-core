@@ -12,7 +12,6 @@
   "require": {
     "codeception/codeception": "~2.1.5"
   },
-  "require-dev": {},
   "description": "testify bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

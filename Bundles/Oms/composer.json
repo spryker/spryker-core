@@ -25,8 +25,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "^2.0.0",
-    "spryker/config": "^2.1.0"
+    "spryker/config": "^2.1.0",
+    "spryker/testify": "^2.0.0"
   },
   "description": "oms bundle",
   "license": "proprietary",

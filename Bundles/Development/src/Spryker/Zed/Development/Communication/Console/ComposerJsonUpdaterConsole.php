@@ -46,7 +46,11 @@ class ComposerJsonUpdaterConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundles = explode(',', $this->input->getOption(self::OPTION_BUNDLE));
+        $bundles = [];
+        $bundleList = $this->input->getOption(self::OPTION_BUNDLE);
+        if ($bundleList) {
+            $bundles = explode(',', $this->input->getOption(self::OPTION_BUNDLE));
+        }
 
         $this->getFacade()->updateComposerJsonInBundles($bundles);
     }

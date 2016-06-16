@@ -11,9 +11,9 @@
     }
   },
   "require": {
+    "spryker/collector": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/propel": "^2.0.0",
-    "spryker/collector": "^2.0.0 || ^3.0.0"
+    "spryker/propel": "^2.0.0"
   },
   "description": "touch bundle",
   "license": "proprietary",

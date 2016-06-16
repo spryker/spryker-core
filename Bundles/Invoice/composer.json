@@ -10,7 +10,9 @@
       "YvesUnit": "tests/"
     }
   },
-  "require": {},
+  "require": {
+    "spryker/library": "^2.0.0"
+  },
   "description": "invoice bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

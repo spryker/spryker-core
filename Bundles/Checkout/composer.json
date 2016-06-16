@@ -8,20 +8,20 @@
     }
   },
   "require": {
+    "spryker/availability": "^2.0.0",
     "spryker/calculation": "^2.0.0",
+    "spryker/country": "^2.0.0",
+    "spryker/customer": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
     "spryker/oms": "^2.0.0 || ^3.0.0",
-    "spryker/zed-request": "^2.0.0",
-    "spryker/propel": "^2.0.0",
-    "spryker/country": "^2.0.0",
-    "spryker/customer": "^2.0.0",
     "spryker/product": "^2.0.0",
+    "spryker/propel": "^2.0.0",
     "spryker/sales": "^2.0.0",
-    "spryker/stock": "^2.0.0",
+    "spryker/sequence-number": "^2.0.0",
     "spryker/step-engine": "^1.0.0",
-    "spryker/availability": "^2.0.0",
-    "spryker/sequence-number": "^2.0.0"
+    "spryker/stock": "^2.0.0",
+    "spryker/zed-request": "^2.0.0"
   },
   "description": "checkout bundle",
   "license": "proprietary",

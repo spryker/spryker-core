@@ -11,11 +11,11 @@
     }
   },
   "require": {
+    "spryker/checkout": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/oms": "^2.0.0 || ^3.0.0",
-    "spryker/stock": "^2.0.0",
     "spryker/product": "^2.0.0",
-    "spryker/checkout": "^2.0.0"
+    "spryker/stock": "^2.0.0"
   },
   "description": "availability bundle",
   "license": "proprietary",

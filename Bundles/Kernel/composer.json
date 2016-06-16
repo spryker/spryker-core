@@ -27,8 +27,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "^2.0.0",
-    "spryker/console": "^2.0.1"
+    "spryker/console": "^2.0.1",
+    "spryker/testify": "^2.0.0"
   },
   "description": "kernel bundle",
   "license": "proprietary",
@@ -39,10 +39,10 @@
       "dev-master": "2.0.x-dev"
     }
   },
-  "repositories": {
-    "0": {
+  "repositories": [
+    {
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
-  }
+  ]
 }
