@@ -11,14 +11,16 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductAttributeDecisionRuleInterface
 {
+
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $currentItemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $currentItemTransfer, ClauseTransfer $clauseTransfer);
+
 }

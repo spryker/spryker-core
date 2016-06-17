@@ -166,7 +166,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductVariant
+     * @return \Spryker\Zed\Product\Business\Product\ProductVariant
      */
     public function createProductVariant()
     {

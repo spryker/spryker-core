@@ -5,14 +5,14 @@
  */
 namespace Spryker\Zed\Product\Business\Product;
 
-use Generated\Shared\Transfer\ProductVariantTransfer;
-
 interface ProductVariantInterface
 {
+
     /**
      * @param string $abstractSku
      *
-     * @return ProductVariantTransfer[]
+     * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
      */
     public function getProductVariantsByAbstractSku($abstractSku);
+
 }

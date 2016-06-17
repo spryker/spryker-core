@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -308,7 +307,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
      * @return void
      */

@@ -5,12 +5,12 @@
  */
 namespace Spryker\Shared\Library\Currency;
 
-
 /**
  * This class is the central math class for currency arithmetic operations
  */
 interface CurrencyManagerInterface
 {
+
     /**
      * This method should never return a number with a thousands separator, otherwise
      * the next call to number_format will leeds to an error
@@ -44,4 +44,5 @@ interface CurrencyManagerInterface
      * @return string
      */
     public function formatByIsoCode($isoCode, $value, $includeSymbol = true);
+
 }

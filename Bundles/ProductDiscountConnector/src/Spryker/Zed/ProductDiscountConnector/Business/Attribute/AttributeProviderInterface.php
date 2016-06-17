@@ -7,8 +7,10 @@ namespace Spryker\Zed\ProductDiscountConnector\Business\Attribute;
 
 interface AttributeProviderInterface
 {
+
     /**
      * @return array|string[]
      */
     public function getAllAttributeTypes();
+
 }

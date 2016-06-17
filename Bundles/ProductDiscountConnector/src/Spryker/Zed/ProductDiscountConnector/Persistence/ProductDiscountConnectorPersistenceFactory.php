@@ -9,8 +9,13 @@ namespace Spryker\Zed\ProductDiscountConnector\Persistence;
 use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainer getQueryContainer()
+ */
 class ProductDiscountConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
+
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
      */
@@ -18,4 +23,5 @@ class ProductDiscountConnectorPersistenceFactory extends AbstractPersistenceFact
     {
         return SpyProductAttributesMetadataQuery::create();
     }
+
 }

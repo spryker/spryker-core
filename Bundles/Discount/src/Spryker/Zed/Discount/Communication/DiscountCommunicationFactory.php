@@ -116,7 +116,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CalculatorAmountTransformer
+     * @return \Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer
      */
     public function createCalculatorAmountTransformer()
     {

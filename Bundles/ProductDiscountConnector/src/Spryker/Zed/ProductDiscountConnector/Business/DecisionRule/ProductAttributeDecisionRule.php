@@ -14,19 +14,20 @@ use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnec
 
 class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterface
 {
+
     /**
-     * @var ProductDiscountConnectorToProductInterface
+     * @var \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface
      */
     protected $productFacade;
 
     /**
-     * @var ProductDiscountConnectorToDiscountInterface
+     * @var \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface
      */
     protected $discountFacade;
 
     /**
-     * @param ProductDiscountConnectorToProductInterface $productFacade
-     * @param ProductDiscountConnectorToDiscountInterface $discountFacade
+     * @param \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface $discountFacade
      */
     public function __construct(
         ProductDiscountConnectorToProductInterface $productFacade,
@@ -38,9 +39,9 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
 
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $currentItemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      *
@@ -50,8 +51,8 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
         QuoteTransfer $quoteTransfer,
         ItemTransfer $currentItemTransfer,
         ClauseTransfer $clauseTransfer
-    )
-    {
+    ) {
+
         $productVariants = $this->productFacade
             ->getProductVariantsByAbstractSku($currentItemTransfer->getAbstractSku());
 
@@ -59,7 +60,7 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
             $attributes = $productVariantTransfer->getAttributes();
             foreach ($attributes as $attribute => $value) {
                 if ($clauseTransfer->getAttribute() !== $attribute) {
-                   continue;
+                    continue;
                 }
 
                 if ($this->discountFacade->queryStringCompare($clauseTransfer, $value)) {
@@ -71,4 +72,5 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
         return false;
 
     }
+
 }

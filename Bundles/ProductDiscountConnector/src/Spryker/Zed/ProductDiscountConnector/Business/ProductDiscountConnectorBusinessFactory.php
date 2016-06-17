@@ -10,18 +10,17 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductDiscountConnector\Business\Attribute\AttributeProvider;
 use Spryker\Zed\ProductDiscountConnector\Business\Collector\ProductAttributeCollector;
 use Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRule;
-use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface;
-use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvider;
-use Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainerInterface;
 
 /**
- * @method ProductDiscountConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorConfig getConfig()
  */
 class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
 {
+
     /**
-     * @return ProductAttributeDecisionRule
+     * @return \Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRule
      */
     public function createProductAttributeDecisionRule()
     {
@@ -32,7 +31,7 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductAttributeCollector
+     * @return \Spryker\Zed\ProductDiscountConnector\Business\Collector\ProductAttributeCollector
      */
     public function createProductAttributeCollector()
     {
@@ -48,7 +47,7 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductDiscountConnectorToProductInterface
+     * @return \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface
      */
     protected function getProductFacade()
     {
@@ -56,10 +55,11 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductDiscountConnectorToDiscountInterface
+     * @return \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface
      */
     protected function getDiscountFacade()
     {
         return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::FACADE_DISCOUNT);
     }
+
 }

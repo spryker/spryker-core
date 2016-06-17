@@ -7,16 +7,14 @@
 
 namespace Spryker\Zed\DiscountSalesAggregatorConnector\Business;
 
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\DiscountTotalAmount;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\GrandTotalWithDiscounts;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\ItemDiscounts;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderDiscounts;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderExpensesWithDiscounts;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderExpenseTaxWithDiscounts;
-use Spryker\Zed\DiscountSalesAggregatorConnector\Dependency\Facade\DiscountSalesAggregatorConnectorToTaxInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\DiscountSalesAggregatorConnector\DiscountSalesAggregatorConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\DiscountSalesAggregatorConnector\DiscountSalesAggregatorConnectorConfig getConfig()
@@ -77,7 +75,7 @@ class DiscountSalesAggregatorConnectorBusinessFactory extends AbstractBusinessFa
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return DiscountQueryContainerInterface
+     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function getDiscountQueryContainer()
     {
@@ -87,7 +85,7 @@ class DiscountSalesAggregatorConnectorBusinessFactory extends AbstractBusinessFa
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return DiscountSalesAggregatorConnectorToTaxInterface
+     * @return \Spryker\Zed\DiscountSalesAggregatorConnector\Dependency\Facade\DiscountSalesAggregatorConnectorToTaxInterface
      */
     protected function getTaxFacade()
     {

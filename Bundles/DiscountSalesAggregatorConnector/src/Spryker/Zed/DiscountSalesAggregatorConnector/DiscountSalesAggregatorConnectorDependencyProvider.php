@@ -36,8 +36,4 @@ class DiscountSalesAggregatorConnectorDependencyProvider extends AbstractBundleD
         return $container;
     }
 
-
-
-
-
 }

@@ -74,4 +74,5 @@ class Contains implements ComparatorInterface
 
         return true;
     }
+
 }

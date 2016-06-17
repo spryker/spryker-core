@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountGeneralTransfer;
 
 class DiscountFormDataProvider
 {
+
     /**
      * @param int $idDiscount
      *
@@ -40,4 +41,5 @@ class DiscountFormDataProvider
     {
         return [];
     }
+
 }

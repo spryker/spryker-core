@@ -21,14 +21,14 @@ interface DiscountCalculatorPluginInterface
     /**
      * @param int $value
      *
-     * @return double
+     * @return float
      */
     public function transformForPersistence($value);
 
     /**
      * @param int $value
      *
-     * @return double
+     * @return float
      */
     public function transformFromPersistence($value);
 

@@ -21,9 +21,9 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -66,4 +66,5 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
     {
         return $this->getFacade()->getAttributeTypes();
     }
+
 }

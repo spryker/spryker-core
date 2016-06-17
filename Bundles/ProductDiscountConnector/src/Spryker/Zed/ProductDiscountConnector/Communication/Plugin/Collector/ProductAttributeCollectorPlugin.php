@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductDiscountConnector\Communication\Plugin\Collector;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
@@ -23,9 +22,9 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return DiscountableItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
@@ -63,4 +62,5 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
     {
         return $this->getFacade()->getAttributeTypes();
     }
+
 }

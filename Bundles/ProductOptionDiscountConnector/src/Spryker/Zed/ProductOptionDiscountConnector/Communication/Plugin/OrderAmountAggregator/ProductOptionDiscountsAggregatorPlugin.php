@@ -13,6 +13,7 @@ use Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInte
 
 /**
  * @method \Spryker\Zed\ProductOptionDiscountConnector\Business\ProductOptionDiscountConnectorFacade getFacade()
+ * @method \Spryker\Zed\ProductOptionDiscountConnector\Communication\ProductOptionDiscountConnectorCommunicationFactory getFactory()
  */
 class ProductOptionDiscountsAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
 {

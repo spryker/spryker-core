@@ -121,6 +121,8 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function querySalesDiscount();
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryActiveCartRules();

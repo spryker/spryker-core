@@ -14,12 +14,12 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
 {
 
     /**
-     * @var DiscountSalesAggregatorConnectorToTaxInterface
+     * @var \Spryker\Zed\DiscountSalesAggregatorConnector\Dependency\Facade\DiscountSalesAggregatorConnectorToTaxInterface
      */
     protected $taxFacade;
 
     /**
-     * @param DiscountSalesAggregatorConnectorToTaxInterface $taxFacade
+     * @param \Spryker\Zed\DiscountSalesAggregatorConnector\Dependency\Facade\DiscountSalesAggregatorConnectorToTaxInterface $taxFacade
      */
     public function __construct(DiscountSalesAggregatorConnectorToTaxInterface $taxFacade)
     {

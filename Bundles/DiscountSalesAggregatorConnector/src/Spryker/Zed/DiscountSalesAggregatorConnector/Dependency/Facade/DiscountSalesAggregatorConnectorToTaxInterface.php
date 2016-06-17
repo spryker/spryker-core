@@ -7,6 +7,7 @@ namespace Spryker\Zed\DiscountSalesAggregatorConnector\Dependency\Facade;
 
 interface DiscountSalesAggregatorConnectorToTaxInterface
 {
+
     /**
      * @param int $grossPrice
      * @param int $taxRate
@@ -14,4 +15,5 @@ interface DiscountSalesAggregatorConnectorToTaxInterface
      * @return int
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
 }

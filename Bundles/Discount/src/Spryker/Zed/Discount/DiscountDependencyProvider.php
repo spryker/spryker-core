@@ -25,7 +25,6 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRuleP
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 

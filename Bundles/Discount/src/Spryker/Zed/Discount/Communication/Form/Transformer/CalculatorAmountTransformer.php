@@ -1,16 +1,19 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Discount\Communication\Form\Transformer;
 
-use Generated\Shared\Transfer\DiscountCalculatorTransfer;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class CalculatorAmountTransformer implements DataTransformerInterface
 {
 
     /**
-     * @var DiscountCalculatorPluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected $calculatorPlugins = [];
 
@@ -23,9 +26,9 @@ class CalculatorAmountTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param DiscountCalculatorTransfer|null $value
+     * @param \Generated\Shared\Transfer\DiscountCalculatorTransfer|null $value
      *
-     * @return DiscountCalculatorTransfer|null
+     * @return \Generated\Shared\Transfer\DiscountCalculatorTransfer|null
      */
     public function transform($value)
     {
@@ -41,9 +44,9 @@ class CalculatorAmountTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param DiscountCalculatorTransfer|null $value
+     * @param \Generated\Shared\Transfer\DiscountCalculatorTransfer|null $value
      *
-     * @return DiscountCalculatorTransfer|null
+     * @return \Generated\Shared\Transfer\DiscountCalculatorTransfer|null
      */
     public function reverseTransform($value)
     {
@@ -61,7 +64,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
     /**
      * @param string $pluginName
      *
-     * @return DiscountCalculatorPluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
     protected function getCalculatorPlugin($pluginName)
     {
@@ -74,4 +77,5 @@ class CalculatorAmountTransformer implements DataTransformerInterface
             $pluginName
         ));
     }
+
 }

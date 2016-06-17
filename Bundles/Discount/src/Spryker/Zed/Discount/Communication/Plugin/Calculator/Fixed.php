@@ -32,7 +32,7 @@ class Fixed extends AbstractPlugin implements DiscountCalculatorPluginInterface
     }
 
     /**
-     * @return CurrencyManager
+     * @return \Spryker\Shared\Library\Currency\CurrencyManager
      */
     protected function getCurrencyManager()
     {

@@ -19,12 +19,12 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
 {
 
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
     /**
-     * @param DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
     public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {

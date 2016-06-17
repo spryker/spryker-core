@@ -101,6 +101,8 @@ class ProductDiscountConnectorFacadeTest extends Test
 
     /**
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
     protected function createAbstractProductWithAttributes()
     {
@@ -146,9 +148,9 @@ class ProductDiscountConnectorFacadeTest extends Test
     }
 
     /**
-     * @param SpyProductAbstract $abstractProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer(SpyProductAbstract $abstractProductEntity)
     {
@@ -176,5 +178,5 @@ class ProductDiscountConnectorFacadeTest extends Test
         ]);
         return $clauseTransfer;
     }
-}
 
+}

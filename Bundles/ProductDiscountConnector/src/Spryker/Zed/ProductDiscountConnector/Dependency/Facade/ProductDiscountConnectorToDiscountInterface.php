@@ -9,11 +9,13 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 interface ProductDiscountConnectorToDiscountInterface
 {
+
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param mixed $compareWith
      *
      * @return bool
      */
     public function queryStringCompare(ClauseTransfer $clauseTransfer, $compareWith);
+
 }

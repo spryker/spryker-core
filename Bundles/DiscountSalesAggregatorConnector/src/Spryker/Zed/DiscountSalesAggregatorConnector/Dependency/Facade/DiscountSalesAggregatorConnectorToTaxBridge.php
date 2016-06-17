@@ -9,6 +9,7 @@ namespace Spryker\Zed\DiscountSalesAggregatorConnector\Dependency\Facade;
 
 class DiscountSalesAggregatorConnectorToTaxBridge implements DiscountSalesAggregatorConnectorToTaxInterface
 {
+
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
@@ -32,4 +33,5 @@ class DiscountSalesAggregatorConnectorToTaxBridge implements DiscountSalesAggreg
     {
         return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate);
     }
+
 }

@@ -13,6 +13,7 @@ use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnec
 
 class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
     const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';

@@ -205,6 +205,4 @@ class ComparatorOperators implements ComparatorOperatorsInterface
         return false;
     }
 
-
-
 }

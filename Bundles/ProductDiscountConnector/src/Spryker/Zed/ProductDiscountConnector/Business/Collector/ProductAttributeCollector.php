@@ -15,13 +15,14 @@ use Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeD
 
 class ProductAttributeCollector implements ProductAttributeCollectorInterface
 {
+
     /**
-     * @var ProductAttributeDecisionRuleInterface
+     * @var \Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRuleInterface
      */
     protected $productAttributeDecisionRule;
 
     /**
-     * @param ProductAttributeDecisionRuleInterface $productAttributeDecisionRule
+     * @param \Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRuleInterface $productAttributeDecisionRule
      */
     public function __construct(ProductAttributeDecisionRuleInterface $productAttributeDecisionRule)
     {
@@ -30,9 +31,9 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return DiscountableItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
@@ -51,9 +52,9 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return DiscountableItemTransfer
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer
      */
     protected function createDiscountableItemTransfer(ItemTransfer $itemTransfer)
     {
@@ -63,4 +64,5 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
 
         return $discountableItemTransfer;
     }
+
 }

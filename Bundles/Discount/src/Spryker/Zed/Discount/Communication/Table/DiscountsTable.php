@@ -236,7 +236,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param Url $viewDiscountUrl
+     * @param \Spryker\Shared\Url\Url $viewDiscountUrl
      * @param string $visibility
      *
      * @return string

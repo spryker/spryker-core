@@ -42,7 +42,7 @@ class CalculatorForm extends AbstractType
     protected $calculatorPlugins;
 
     /**
-     * @var CalculatorAmountTransformer
+     * @var \Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer
      */
     protected $calculatorAmountTransformer;
 

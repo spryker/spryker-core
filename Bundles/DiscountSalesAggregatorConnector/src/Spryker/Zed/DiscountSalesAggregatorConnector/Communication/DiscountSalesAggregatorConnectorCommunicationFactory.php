@@ -14,5 +14,4 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class DiscountSalesAggregatorConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
 }

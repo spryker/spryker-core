@@ -9,18 +9,19 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\ProductVariantTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Shared\Library\Json;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductVariant implements ProductVariantInterface
 {
+
     /**
-     * @var ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
 
     /**
-     * @param ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     public function __construct(ProductQueryContainerInterface $productQueryContainer)
     {
@@ -30,7 +31,7 @@ class ProductVariant implements ProductVariantInterface
     /**
      * @param string $abstractSku
      *
-     * @return ProductVariantTransfer[]
+     * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
      */
     public function getProductVariantsByAbstractSku($abstractSku)
     {
@@ -49,7 +50,7 @@ class ProductVariant implements ProductVariantInterface
     }
 
     /**
-     * @param SpyProductAbstract $abstractProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
      *
      * @return array
      */
@@ -78,7 +79,7 @@ class ProductVariant implements ProductVariantInterface
     }
 
     /**
-     * @param SpyProductAbstract $abstractProduct
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProduct
      * @param array $abstractProductVariants
      *
      * @return array
@@ -121,9 +122,9 @@ class ProductVariant implements ProductVariantInterface
 
     /**
      * @param array $abstractProductVariants
-     * @param SpyProductLocalizedAttributes $localizedAttributeEntity
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductLocalizedAttributes $localizedAttributeEntity
      *
-     * @return ProductVariantTransfer
+     * @return \Generated\Shared\Transfer\ProductVariantTransfer
      */
     protected function getProductVariantTransfer(
         array $abstractProductVariants,
@@ -140,4 +141,5 @@ class ProductVariant implements ProductVariantInterface
 
         return $productVariantTransfer;
     }
+
 }

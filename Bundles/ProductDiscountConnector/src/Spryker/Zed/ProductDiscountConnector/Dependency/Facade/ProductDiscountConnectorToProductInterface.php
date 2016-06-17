@@ -5,14 +5,14 @@
  */
 namespace Spryker\Zed\ProductDiscountConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductVariantTransfer;
-
 interface ProductDiscountConnectorToProductInterface
 {
+
     /**
      * @param string $abstractSku
      *
-     * @return ProductVariantTransfer[]
+     * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
      */
     public function getProductVariantsByAbstractSku($abstractSku);
+
 }

@@ -320,7 +320,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function getProductVariantsByAbstractSku($abstractSku)
     {
-       return $this->getFactory()
+        return $this->getFactory()
            ->createProductVariant()
            ->getProductVariantsByAbstractSku($abstractSku);
     }

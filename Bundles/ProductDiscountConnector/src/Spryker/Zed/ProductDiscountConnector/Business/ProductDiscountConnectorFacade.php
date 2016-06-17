@@ -17,10 +17,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductDiscountConnectorFacade extends AbstractFacade
 {
+
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ItemTransfer $itemTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -28,16 +31,18 @@ class ProductDiscountConnectorFacade extends AbstractFacade
         QuoteTransfer $quoteTransfer,
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
-    )
-    {
+    ) {
+
         return $this->getFactory()
             ->createProductAttributeDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
@@ -49,6 +54,8 @@ class ProductDiscountConnectorFacade extends AbstractFacade
     }
 
     /**
+     * @api
+     *
      * @return array|string[]
      */
     public function getAttributeTypes()
@@ -58,4 +65,5 @@ class ProductDiscountConnectorFacade extends AbstractFacade
             ->getAllAttributeTypes();
 
     }
+
 }

@@ -61,7 +61,6 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
             ->method('queryActiveCartRules')
             ->willReturn($discountQueryMock);
 
-
         $decisionRuleSpecificationMock = $this->createDecisionRuleSpecificationMock();
         $decisionRuleSpecificationMock->method('isSatisfiedBy')
             ->willReturn(true);

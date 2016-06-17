@@ -7,17 +7,16 @@
 
 namespace Spryker\Zed\ProductDiscountConnector\Dependency\Facade;
 
-use Spryker\Zed\Product\Business\ProductFacade;
-
 class ProductDiscountConnectorToProductBridge implements ProductDiscountConnectorToProductInterface
 {
+
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 
     /**
-     * @param ProductFacade $productFacade
+     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
      */
     public function __construct($productFacade)
     {
@@ -32,4 +31,5 @@ class ProductDiscountConnectorToProductBridge implements ProductDiscountConnecto
     {
         return $this->productFacade->getProductVariantsByAbstractSku($abstractSku);
     }
+
 }

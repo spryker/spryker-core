@@ -15,7 +15,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductDiscountConnectorQueryContainer extends AbstractQueryContainer implements ProductDiscountConnectorQueryContainerInterface
 {
+
     /**
+     * @api
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
      */
     public function queryProductAttributeKeys()

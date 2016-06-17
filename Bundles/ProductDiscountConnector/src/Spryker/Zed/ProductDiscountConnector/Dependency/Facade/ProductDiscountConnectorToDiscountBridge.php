@@ -7,17 +7,17 @@
 namespace Spryker\Zed\ProductDiscountConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Zed\Discount\Business\DiscountFacade;
 
 class ProductDiscountConnectorToDiscountBridge implements ProductDiscountConnectorToDiscountInterface
 {
+
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @param DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      */
     public function __construct($discountFacade)
     {
@@ -25,7 +25,7 @@ class ProductDiscountConnectorToDiscountBridge implements ProductDiscountConnect
     }
 
     /**
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param mixed $compareWith
      *
      * @return bool
@@ -34,4 +34,5 @@ class ProductDiscountConnectorToDiscountBridge implements ProductDiscountConnect
     {
         return $this->discountFacade->queryStringCompare($clauseTransfer, $compareWith);
     }
+
 }

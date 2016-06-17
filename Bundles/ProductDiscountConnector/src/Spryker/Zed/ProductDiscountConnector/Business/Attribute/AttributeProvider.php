@@ -11,13 +11,14 @@ use \Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQu
 
 class AttributeProvider implements AttributeProviderInterface
 {
+
     /**
      * @var \Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * AttributeProvider constructor.
+     * @param \Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainerInterface $queryContainer
      */
     public function __construct(ProductDiscountConnectorQueryContainerInterface $queryContainer)
     {
@@ -36,4 +37,5 @@ class AttributeProvider implements AttributeProviderInterface
         return $attributeMetaData->toArray();
 
     }
+
 }

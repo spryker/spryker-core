@@ -92,6 +92,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryActiveCartRules()
