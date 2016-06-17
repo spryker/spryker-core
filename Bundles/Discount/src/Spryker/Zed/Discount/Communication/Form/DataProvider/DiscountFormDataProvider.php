@@ -6,8 +6,11 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DiscountFormDataProvider
 {
@@ -22,13 +25,12 @@ class DiscountFormDataProvider
         $discountConfiguratorTransfer = null;
         if (!$idDiscount) {
             $discountConfiguratorTransfer = new DiscountConfiguratorTransfer();
-            $discountGeneralTransfer = new DiscountGeneralTransfer();
-            $discountGeneralTransfer->setIdDiscount($idDiscount);
-            $discountGeneralTransfer->setIsExclusive(false);
-            $discountGeneralTransfer->setValidFrom(new \DateTime());
-            $discountGeneralTransfer->setValidTo(new \DateTime());
 
+            $discountGeneralTransfer = $this->createDiscountGeneralTransferDefaults();
             $discountConfiguratorTransfer->setDiscountGeneral($discountGeneralTransfer);
+
+            $calculatedDiscountTransfer = $this->createDiscountCalculatorTransfer();
+            $discountConfiguratorTransfer->setDiscountCalculator($calculatedDiscountTransfer);
         }
 
         return $discountConfiguratorTransfer;
@@ -40,6 +42,29 @@ class DiscountFormDataProvider
     public function getOptions()
     {
         return [];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DiscountGeneralTransfer
+     */
+    protected function createDiscountGeneralTransferDefaults()
+    {
+        $discountGeneralTransfer = new DiscountGeneralTransfer();
+        $discountGeneralTransfer->setIsExclusive(false);
+        $discountGeneralTransfer->setValidFrom(new \DateTime());
+        $discountGeneralTransfer->setValidTo(new \DateTime());
+        return $discountGeneralTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DiscountCalculatorTransfer
+     */
+    protected function createDiscountCalculatorTransfer()
+    {
+        $calculatedDiscountTransfer = new DiscountCalculatorTransfer();
+        $calculatedDiscountTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
+
+        return $calculatedDiscountTransfer;
     }
 
 }

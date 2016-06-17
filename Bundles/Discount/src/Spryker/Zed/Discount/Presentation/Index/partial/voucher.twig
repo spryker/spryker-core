@@ -28,7 +28,7 @@
 
 {{ form_end(voucherForm) }}
 
-{% if discountConfigurator.discountVoucher.fkDiscountVoucherPool %}
+{% if discountConfigurator.discountVoucher and discountConfigurator.discountVoucher.fkDiscountVoucherPool %}
  {{ viewActionButton(url('/discount/voucher/export', {'id-pool' : discountConfigurator.discountVoucher.fkDiscountVoucherPool}), 'Export' | trans) }}
  {{ removeActionButton(url('/discount/voucher/delete-discount-vouchers', {'id-pool': discountConfigurator.discountVoucher.fkDiscountVoucherPool, 'id-discount' : idDiscount }), 'Delete codes' | trans ) }}
 {% endif %}
