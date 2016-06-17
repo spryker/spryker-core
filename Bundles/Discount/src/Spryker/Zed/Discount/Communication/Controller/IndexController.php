@@ -43,11 +43,12 @@ class IndexController extends AbstractController
         if ($discountForm->isValid()) {
             $idDiscount = $this->getFacade()
                 ->saveDiscount($discountForm->getData());
+            $discountType = $discountForm->getData()->getDiscountGeneral()->getDiscountType();
 
             $this->addSuccessMessage('Discount successfully created, but not activated.');
 
             return new RedirectResponse(
-                $this->createEditRedirectUrl($idDiscount)
+                $this->createEditRedirectUrl($idDiscount, $discountType)
             );
         }
 
@@ -248,17 +249,22 @@ class IndexController extends AbstractController
 
     /**
      * @param int $idDiscount
+     * @param string $discountType
      *
      * @return string
      */
-    protected function createEditRedirectUrl($idDiscount)
+    protected function createEditRedirectUrl($idDiscount, $discountType = '')
     {
+        $hash = '';
+        if ($discountType === DiscountConstants::TYPE_VOUCHER) {
+            $hash = '#codes';
+        }
         $redirectUrl = Url::generate(
             '/discount/index/edit',
             [
                 self::URL_PARAM_ID_DISCOUNT => $idDiscount
             ]
-        )->build();
+        )->build() . $hash;
 
         return $redirectUrl;
     }
