@@ -16,7 +16,7 @@ $(document).ready(function(){
     new DiscountNavigation();
 
     var sqlCalculationBuilder = SqlFactory('#discount_discountCalculator_collector_query_string', '#builder_calculation');
-    var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition');
+    var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition', true);
 
     $('#create-discount-button').on('click', function(element) {
         element.preventDefault();

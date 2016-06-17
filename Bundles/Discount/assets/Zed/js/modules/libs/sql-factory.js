@@ -2,7 +2,7 @@
 
 var SprykerQueryBuilder = require('./spryker-query-builder');
 
-module.exports = function (inputElementId, targetElementId) {
+module.exports = function (inputElementId, targetElementId, disableValidation) {
     var inputElement = $(inputElementId);
     $(inputElement).parent().addClass('hidden');
 
@@ -11,7 +11,8 @@ module.exports = function (inputElementId, targetElementId) {
         sqlQuery: inputElement.val(),
         ajaxUrl: inputElement.data('url'),
         label: inputElement.data('label'),
-        targetElement: targetElementId
+        targetElement: targetElementId,
+        disableValidation: disableValidation || false
     };
 
     return new SprykerQueryBuilder(options);

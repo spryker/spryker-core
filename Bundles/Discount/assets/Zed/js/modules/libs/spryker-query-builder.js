@@ -18,6 +18,12 @@ function SprykerQueryBuilder(options) {
     };
 
     this.init();
+
+    if (options.disableValidation === true) {
+        self.builder.on('validationError.queryBuilder', function(e, rule, error, value){
+            e.preventDefault();
+        });
+    }
 }
 
 SprykerQueryBuilder.prototype.createBuilder = function() {
