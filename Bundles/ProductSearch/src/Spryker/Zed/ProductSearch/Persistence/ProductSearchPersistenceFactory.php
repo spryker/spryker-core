@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\ProductSearch\Persistence;
 
-use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery;
+use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeMapQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
@@ -21,29 +22,11 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryExpanderInterface
-     */
-    public function createProductSearchQueryExpander()
-    {
-        return new ProductSearchQueryExpander(
-            $this->getProductQueryContainer()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected function getProductQueryContainer()
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::QUERY_CONTAINER_PRODUCT);
-    }
-
-    /**
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
-     */
-    public function createProductSearchAttributesOperationQuery()
-    {
-        return SpyProductSearchAttributesOperationQuery::create();
     }
 
     /**
@@ -60,6 +43,22 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
     public function createProductSearchQuery()
     {
         return SpyProductSearchQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
+     */
+    public function createProductSearchAttributeMapQuery()
+    {
+        return SpyProductSearchAttributeMapQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     */
+    public function createProductAttributesMetadataQuery()
+    {
+        return SpyProductAttributesMetadataQuery::create();
     }
 
 }

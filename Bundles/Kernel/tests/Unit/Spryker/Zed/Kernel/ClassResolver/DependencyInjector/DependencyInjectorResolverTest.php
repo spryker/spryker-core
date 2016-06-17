@@ -8,9 +8,9 @@
 namespace Unit\Spryker\Zed\Kernel\ClassResolver\DependencyInjector;
 
 use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
+use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
+use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -208,11 +208,10 @@ class DependencyInjectorResolverTest extends \PHPUnit_Framework_TestCase
         $class = array_pop($classNameParts);
         $fileContent = '<?php'
             . PHP_EOL . 'namespace ' . implode('\\', $classNameParts) . ';'
-            . PHP_EOL . 'use ' . DependencyInjectorInterface::class . ';'
+            . PHP_EOL . 'use ' . AbstractDependencyInjector::class . ';'
             . PHP_EOL . 'use ' . ContainerInterface::class . ';'
-            . PHP_EOL . 'class ' . $class . ' implements DependencyInjectorInterface'
+            . PHP_EOL . 'class ' . $class . ' extends AbstractDependencyInjector'
             . PHP_EOL . '{'
-            . PHP_EOL . 'public function inject(ContainerInterface $container){}'
             . PHP_EOL . '}';
 
         $directoryParts = [

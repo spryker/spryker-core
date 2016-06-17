@@ -1,6 +1,6 @@
 {% extends '@Cms/Layout/layout.twig' %}
 
-{% set widget_title = 'Add a Cms block' %}
+{% set widget_title = 'Add a Cms block' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -13,7 +13,7 @@
     <div id="spy-cms" class="glossary">
         {% if isSynced %}
             <div class="alert">
-                <div class="green">New template(s) detected and added to the template list.</div>
+                <div class="green">{{ 'New template(s) detected and added to the template list.' | trans }}</div>
             </div>
         {% endif %}
 
@@ -34,7 +34,7 @@
         <div class="itemListCanvas"></div>
         <div class="loading block-loading">
             <img src="/assets/img/cms-loader.gif">
-            Loading...
+            {{ 'Loading...' | trans }}
         </div>
     </div>
 {% endblock %}

@@ -37,6 +37,9 @@ $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
     'Payment' => [
         'Payolution',
     ],
+    'Oms' => [
+        'Payolution',
+    ],
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [

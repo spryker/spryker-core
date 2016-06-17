@@ -3,7 +3,7 @@
   "require": {
     "league/csv": "~8.0.0"
   },
-  "description": "csv bundle",
+  "description": "Csv bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -11,5 +11,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

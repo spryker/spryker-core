@@ -7,17 +7,15 @@
 
 namespace Spryker\Shared\Search\Provider;
 
-use Elastica\Client;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\AbstractClientProvider;
 
 /**
  * Class ClientStorageProvider
  *
  * @method \Elastica\Index getInstance()
  */
-abstract class AbstractIndexClientProvider extends AbstractClientProvider
+abstract class AbstractIndexClientProvider extends AbstractSearchClientProvider
 {
 
     /**
@@ -27,19 +25,9 @@ abstract class AbstractIndexClientProvider extends AbstractClientProvider
      */
     protected function createZedClient()
     {
-        $config = [
-            'transport' => ucfirst(Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT)),
-            'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
-            'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
-        ];
+        $client = parent::createZedClient();
 
-        if (Config::hasValue(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
-            $config['headers'] = [
-                'Authorization' => 'Basic ' . Config::get(ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER)
-            ];
-        }
-
-        return (new Client($config))->getIndex(Config::get(ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME));
+        return $client->getIndex(Config::get(ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME));
     }
 
 }

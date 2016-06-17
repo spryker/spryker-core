@@ -8,18 +8,10 @@
 namespace Spryker\Zed\ProductSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductSearchQueryContainerInterface extends QueryContainerInterface
 {
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
-     */
-    public function queryFieldOperations();
 
     /**
      * @api
@@ -29,27 +21,7 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function getExportableProductsByLocale(array $productIds, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param int $idAttribute
-     * @param string $copyTarget
-     *
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
-     */
-    public function queryAttributeOperation($idAttribute, $copyTarget);
-
-    /**
-     * @api
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale);
+    public function queryExportableProductsByLocale(array $productIds, LocaleTransfer $locale);
 
     /**
      * @api
@@ -60,5 +32,28 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
      */
     public function queryByProductAndLocale($idProduct, $idLocale);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
+     */
+    public function queryProductSearchAttributeMap();
+
+    /**
+     * @api
+     *
+     * @param int $fkProductAttributesMetadata
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
+     */
+    public function queryProductSearchAttributeMapByFkProductAttributesMetadata($fkProductAttributesMetadata);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     */
+    public function querySearchPreferencesTable();
 
 }

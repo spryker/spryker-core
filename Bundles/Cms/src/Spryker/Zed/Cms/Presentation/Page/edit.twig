@@ -1,6 +1,6 @@
 {% extends '@Cms/Layout/layout.twig' %}
 
-{% set widget_title = 'Edit a Cms page' %}
+{% set widget_title = 'Edit a Cms page' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -8,14 +8,19 @@
 {% block action %}
     {{ backActionButton('/cms/page', 'Back to CMS' | trans) }}
     {{ createActionButton('/cms/page/add', 'Add CMS Page' | trans) }}
+    {% if isActive %}
+        {{ viewActionButton('/cms/page/deactivate?id-page=' ~ idCmsPage, 'Deactivate' | trans) }}
+    {% else %}
+        {{ viewActionButton('/cms/page/activate?id-page=' ~ idCmsPage, 'Activate' | trans) }}
+    {% endif %}
+    {{ removeActionButton('/cms/page/delete?id-page=' ~ idCmsPage, 'Delete CMS Page' | trans) }}
 {% endblock %}
-
 
 {% block content %}
 <div id="spy-cms" class="glossary">
     {% if isSynced %}
         <div class="alert">
-            <div class="green">New template(s) detected and added to the template list.</div>
+            <div class="green">{{ 'New template(s) detected and added to the template list.' | trans }}</div>
         </div>
     {% endif %}
 

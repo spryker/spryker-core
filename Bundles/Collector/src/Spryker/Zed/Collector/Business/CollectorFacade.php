@@ -15,7 +15,6 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -81,18 +80,6 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
         $exporter = $this->getFactory()->createYvesSearchUpdateExporter();
 
         return $exporter->exportStorageByLocale($locale, $output);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return void
-     */
-    public function install(MessengerInterface $messenger)
-    {
-        $this->getFactory()->createInstaller($messenger)->install();
     }
 
     /**

@@ -3,7 +3,7 @@
   "require": {
     "phpdocumentor/graphviz": "~1.0.4"
   },
-  "description": "graphviz bundle",
+  "description": "Graphviz bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -11,5 +11,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

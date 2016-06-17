@@ -7,12 +7,11 @@
 
 namespace Unit\Spryker\Zed\Kernel;
 
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollection;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollection;
+use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Unit\Spryker\Zed\Kernel\Fixtures\Factory;
 
@@ -112,11 +111,13 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $container[self::CONTAINER_KEY] = self::CONTAINER_VALUE;
 
-        $dependencyInjectorMock = $this->getMock(DependencyInjectorInterface::class, ['inject']);
-        $dependencyInjectorMock->expects($this->once())->method('inject')->willReturn($container);
+        $dependencyInjectorMock = $this->getMock(DependencyInjectorInterface::class);
+        $dependencyInjectorMock->expects($this->once())->method('injectBusinessLayerDependencies')->willReturn($container);
+        $dependencyInjectorMock->expects($this->once())->method('injectCommunicationLayerDependencies')->willReturn($container);
+        $dependencyInjectorMock->expects($this->once())->method('injectPersistenceLayerDependencies')->willReturn($container);
 
         $dependencyInjectorCollectionMock = $this->getMock(DependencyInjectorCollection::class, ['getDependencyInjector']);
-        $dependencyInjectorCollectionMock->expects($this->once())->method('getDependencyInjector')->willReturn(
+        $dependencyInjectorCollectionMock->method('getDependencyInjector')->willReturn(
             [$dependencyInjectorMock]
         );
         $dependencyInjectorResolverMock = $this->getMock(DependencyInjectorResolver::class, ['resolve']);
@@ -132,8 +133,7 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFactoryMock(array $methods)
     {
-        $methods[] = 'provideExternalDependencies';
-        $factoryMock = $this->getMock(AbstractFactory::class, $methods);
+        $factoryMock = $this->getMock(Factory::class, $methods);
 
         return $factoryMock;
     }

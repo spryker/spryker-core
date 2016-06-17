@@ -39,6 +39,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const KEY = 'keyname';
     const LABEL = 'label';
     const VALUE = 'value';
+    const IS_ACTIVE = 'is_active';
 
     /**
      * @api
@@ -130,7 +131,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->leftJoinCmsTemplate()
             ->innerJoinSpyUrl()
             ->withColumn(self::TEMPLATE_NAME)
-            ->withColumn(self::URL);
+            ->withColumn(self::URL)
+            ->withColumn(self::IS_ACTIVE);
     }
 
     /**
@@ -165,7 +167,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             )
             ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
-            ->withColumn(SpyCmsBlockTableMap::COL_NAME);
+            ->withColumn(SpyCmsBlockTableMap::COL_NAME)
+            ->withColumn(self::IS_ACTIVE);
     }
 
     /**
@@ -512,6 +515,20 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->queryBlocks()
             ->filterByType(CmsConstants::RESOURCE_TYPE_CATEGORY_NODE)
             ->filterByValue($idCategoryNode);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
+     */
+    public function queryBlockById($idCmsBlock)
+    {
+        return $this
+            ->queryBlocks()
+            ->filterByIdCmsBlock($idCmsBlock);
     }
 
 }

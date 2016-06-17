@@ -9,29 +9,29 @@
   },
   "require": {
     "spryker/application": "^2.0.1",
+    "spryker/assertion": "^2.0.0",
+    "spryker/checkout": "^2.0.0",
     "spryker/country": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/installer": "^2.0.0",
     "spryker/kernel": "^2.0.0",
+    "spryker/library": "^2.0.0",
     "spryker/locale": "^2.0.0",
     "spryker/mail": "^2.0.0",
+    "spryker/propel": "^2.1.0",
     "spryker/sequence-number": "^2.0.0",
     "spryker/session": "^2.0.0",
-    "spryker/transfer": "^2.0.0",
-    "spryker/zed-request": "^2.0.0",
-    "spryker/propel": "^2.1.0",
     "spryker/symfony": "^2.0.0",
-    "spryker/assertion": "^2.0.0",
-    "spryker/checkout": "^2.0.0",
-    "spryker/library": "^2.0.0"
+    "spryker/transfer": "^2.0.0",
+    "spryker/zed-request": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "^2.0.0",
+    "spryker/config": "^2.1.0",
     "spryker/console": "^2.0.1",
-    "spryker/config": "^2.1.0"
+    "spryker/testify": "^2.0.0"
   },
-  "description": "customer bundle",
+  "description": "Customer bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -45,5 +45,8 @@
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
-  ]
+  ],
+  "config": {
+    "sort-packages": true
+  }
 }

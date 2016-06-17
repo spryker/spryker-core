@@ -3,7 +3,7 @@
   "require": {
     "monolog/monolog": "~1.17.2"
   },
-  "description": "monolog bundle",
+  "description": "Monolog bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -11,5 +11,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

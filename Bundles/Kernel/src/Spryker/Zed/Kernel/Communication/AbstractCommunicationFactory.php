@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 
 abstract class AbstractCommunicationFactory extends AbstractFactory
 {
@@ -64,6 +65,19 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
         Container $container
     ) {
         $dependencyProvider->provideCommunicationLayerDependencies($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector $dependencyInjector
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Shared\Kernel\ContainerInterface
+     */
+    protected function injectExternalDependencies(
+        DependencyInjector $dependencyInjector,
+        Container $container
+    ) {
+        return $dependencyInjector->injectCommunicationLayerDependencies($container);
     }
 
     /**

@@ -16,7 +16,7 @@
     "spryker/price": "^2.0.0",
     "spryker/transfer": "^2.0.0"
   },
-  "description": "price cart connector bundle",
+  "description": "PriceCartConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -24,5 +24,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }
