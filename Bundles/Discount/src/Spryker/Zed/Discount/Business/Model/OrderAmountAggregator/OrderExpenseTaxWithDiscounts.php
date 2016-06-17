@@ -74,4 +74,5 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
     {
         return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($price, $taxRate);
     }
+
 }
