@@ -10,16 +10,15 @@ namespace Spryker\Zed\Oms;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CONDITION_PLUGINS = 'CONDITION_PLUGINS';
-
     const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
-
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
-
     const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
 
     /**
@@ -45,28 +44,23 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * Overwrite in project
-     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface[]
+     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection
      */
     protected function getConditionPlugins(Container $container)
     {
-        return [];
+        return new ConditionCollection();
     }
 
     /**
-     * Overwrite in project
-     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface[]
+     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection
      */
     protected function getCommandPlugins(Container $container)
     {
-        return [
-        ];
+        return new CommandCollection();
     }
 
     /**

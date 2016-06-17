@@ -1,14 +1,14 @@
 {
   "name": "spryker/zend",
   "require": {
-    "zendframework/zend-http": "~2.5.3",
-    "zendframework/zend-config": "~2.5.1",
     "zendframework/zend-code": "~2.6.2",
+    "zendframework/zend-config": "~2.5.1",
+    "zendframework/zend-eventmanager": "~2.6.2",
     "zendframework/zend-filter": "~2.5.1",
-    "zendframework/zend-servicemanager": "~2.7.4",
-    "zendframework/zend-eventmanager": "~2.6.2"
+    "zendframework/zend-http": "~2.5.3",
+    "zendframework/zend-servicemanager": "~2.7.4"
   },
-  "description": "zend bundle",
+  "description": "Zend bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -16,5 +16,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

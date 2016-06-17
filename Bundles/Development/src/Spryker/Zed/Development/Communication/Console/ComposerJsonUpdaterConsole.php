@@ -9,6 +9,7 @@ namespace Spryker\Zed\Development\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -18,6 +19,8 @@ class ComposerJsonUpdaterConsole extends Console
 {
 
     const COMMAND_NAME = 'dev:composer-json:update';
+    const OPTION_BUNDLE = 'bundle';
+    const VERBOSE = 'verbose';
 
     /**
      * @return void
@@ -29,7 +32,9 @@ class ComposerJsonUpdaterConsole extends Console
         $this
             ->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Update composer.json of all bundles');
+            ->setDescription('Update composer.json of core bundles');
+
+        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle (comma separated for multiple ones)');
     }
 
     /**
@@ -42,7 +47,19 @@ class ComposerJsonUpdaterConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->updateComposerJsonInBundles();
+        $bundles = [];
+        $bundleList = $this->input->getOption(self::OPTION_BUNDLE);
+        if ($bundleList) {
+            $bundles = explode(',', $this->input->getOption(self::OPTION_BUNDLE));
+        }
+
+        if ($this->input->getOption(self::VERBOSE)) {
+            foreach ($bundles as $bundle) {
+                $this->output->write('- '. $bundle);
+            }
+        }
+
+        $this->getFacade()->updateComposerJsonInBundles($bundles);
     }
 
 }

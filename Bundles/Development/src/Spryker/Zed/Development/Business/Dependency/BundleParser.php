@@ -135,6 +135,8 @@ class BundleParser
             }
         }
 
+        ksort($bundleDependencies);
+
         return $bundleDependencies;
     }
 

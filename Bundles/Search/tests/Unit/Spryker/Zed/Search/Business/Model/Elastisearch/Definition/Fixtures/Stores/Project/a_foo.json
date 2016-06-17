@@ -1,0 +1,5 @@
+{
+  "settings": {
+    "number_of_shards": 10
+  }
+}

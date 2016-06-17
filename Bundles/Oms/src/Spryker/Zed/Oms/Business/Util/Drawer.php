@@ -14,6 +14,10 @@ use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
 
 class Drawer implements DrawerInterface
 {
@@ -75,22 +79,12 @@ class Drawer implements DrawerInterface
     protected $fontSizeSmall = null;
 
     /**
-     * @var array
-     */
-    protected $conditionModels = [];
-
-    /**
-     * @var array
-     */
-    protected $commandModels = [];
-
-    /**
-     * @var array
+     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection
      */
     protected $conditions;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection
      */
     protected $commands;
 
@@ -100,15 +94,62 @@ class Drawer implements DrawerInterface
     protected $graph;
 
     /**
-     * @param array $commands
-     * @param array $conditions
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
      * @param \Spryker\Shared\Graph\GraphInterface $graph
      */
-    public function __construct(array $commands, array $conditions, GraphInterface $graph)
+    public function __construct($commands, $conditions, GraphInterface $graph)
     {
-        $this->commandModels = $commands;
-        $this->conditionModels = $conditions;
+        $this->setCommands($commands);
+        $this->setConditions($conditions);
+
         $this->graph = $graph;
+    }
+
+    /**
+     * Converts array to collection for BC
+     *
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
+     *
+     * @return void
+     */
+    protected function setConditions($conditions)
+    {
+        if ($conditions instanceof ConditionCollectionInterface) {
+            $this->conditions = $conditions;
+
+            return;
+        }
+
+        $conditionCollection = new ConditionCollection();
+        foreach ($conditions as $name => $condition) {
+            $conditionCollection->add($condition, $name);
+        }
+
+        $this->conditions = $conditionCollection;
+    }
+
+    /**
+     * Converts array to collection for BC
+     *
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
+     *
+     * @return void
+     */
+    protected function setCommands($commands)
+    {
+        if ($commands instanceof CommandCollectionInterface) {
+            $this->commands = $commands;
+
+            return;
+        }
+
+        $commandCollection = new CommandCollection();
+        foreach ($commands as $name => $command) {
+            $commandCollection->add($command, $name);
+        }
+
+        $this->commands = $commandCollection;
     }
 
     /**
@@ -332,7 +373,7 @@ class Drawer implements DrawerInterface
         if ($transition->hasCondition()) {
             $conditionLabel = $transition->getCondition();
 
-            if (!isset($this->conditionModels[$transition->getCondition()])) {
+            if (!$this->conditions->has($transition->getCondition())) {
                 $conditionLabel .= ' ' . $this->notImplemented;
             }
 
@@ -366,8 +407,8 @@ class Drawer implements DrawerInterface
             if ($event->hasCommand()) {
                 $commandLabel = 'c:' . $event->getCommand();
 
-                if (isset($this->commandModels[$event->getCommand()])) {
-                    $commandModel = $this->commandModels[$event->getCommand()];
+                if ($this->commands->has($event->getCommand())) {
+                    $commandModel = $this->commands->get($event->getCommand());
                     if ($commandModel instanceof CommandByOrderInterface) {
                         $commandLabel .= ' (by order)';
                     } else {

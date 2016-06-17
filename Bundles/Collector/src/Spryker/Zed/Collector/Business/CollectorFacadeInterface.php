@@ -14,7 +14,6 @@ use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 interface CollectorFacadeInterface
@@ -49,15 +48,6 @@ interface CollectorFacadeInterface
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
     public function updateSearchByLocale(LocaleTransfer $locale, OutputInterface $output);
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     *
-     * @return void
-     */
-    public function install(MessengerInterface $messenger);
 
     /**
      * @api

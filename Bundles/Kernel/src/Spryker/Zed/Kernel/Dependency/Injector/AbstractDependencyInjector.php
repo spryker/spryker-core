@@ -7,45 +7,39 @@
 
 namespace Spryker\Zed\Kernel\Dependency\Injector;
 
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Zed\Kernel\Container;
 
-abstract class AbstractDependencyInjector implements DependencyInjectorInterface
+class AbstractDependencyInjector implements DependencyInjectorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Kernel\AbstractFactory
-     */
-    private $factory;
-
-    /**
-     * @return \Spryker\Zed\Kernel\AbstractFactory
-     */
-    protected function getFactory()
-    {
-        if ($this->factory === null) {
-            $this->factory = $this->resolveFactory();
-        }
-
-        return $this->factory;
-    }
-
-    /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\AbstractFactory
+     * @return \Spryker\Zed\Kernel\Container
      */
-    private function resolveFactory()
+    public function injectBusinessLayerDependencies(Container $container)
     {
-        return $this->getFactoryResolver()->resolve($this);
+        return $container;
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
      */
-    private function getFactoryResolver()
+    public function injectCommunicationLayerDependencies(Container $container)
     {
-        return new FactoryResolver();
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function injectPersistenceLayerDependencies(Container $container)
+    {
+        return $container;
     }
 
 }

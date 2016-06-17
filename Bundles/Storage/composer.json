@@ -13,14 +13,15 @@
   "require": {
     "spryker/application": "^2.3.0",
     "spryker/collector": "^2.0.0 || ^3.0.0",
+    "spryker/config": "^2.2.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
     "spryker/redis": "^2.0.0",
     "spryker/symfony": "^2.0.0",
-    "spryker/config": "^2.2.0"
+    "spryker/url": "^2.0.0"
   },
-  "description": "storage bundle",
+  "description": "Storage bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -28,5 +29,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

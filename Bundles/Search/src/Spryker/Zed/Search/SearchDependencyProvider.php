@@ -9,15 +9,14 @@ namespace Spryker\Zed\Search;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductSearch\Communication\Plugin\Installer;
 use Spryker\Zed\Search\Dependency\Facade\SearchToCollectorBridge;
 
 class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CLIENT_SEARCH = 'search client';
+    const CLIENT_STORAGE = 'storage client';
     const FACADE_COLLECTOR = 'collector facade';
-    const INSTALLERS = 'installers';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,10 +26,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $this->addSearchClient($container);
-
-        $container[self::INSTALLERS] = function ($container) {
-            return $this->getInstallers($container);
-        };
+        $this->addStorageClient($container);
 
         return $container;
     }
@@ -65,23 +61,23 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addCollectorFacade(Container $container)
+    protected function addStorageClient(Container $container)
     {
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
-            return new SearchToCollectorBridge($container->getLocator()->collector()->facade());
+        $container[self::CLIENT_STORAGE] = function (Container $container) {
+            return $container->getLocator()->storage()->client();
         };
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return array
+     * @return void
      */
-    protected function getInstallers(Container $container)
+    protected function addCollectorFacade(Container $container)
     {
-        return [
-            new Installer(),
-        ];
+        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+            return new SearchToCollectorBridge($container->getLocator()->collector()->facade());
+        };
     }
 
 }

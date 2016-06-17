@@ -19,6 +19,8 @@ class CmsPageTable extends AbstractTable
 
     const ACTIONS = 'Actions';
     const REQUEST_ID_PAGE = 'id-page';
+    const URL_CMS_PAGE_ACTIVATE = '/cms/page/activate';
+    const URL_CMS_PAGE_DEACTIVATE = '/cms/page/deactivate';
 
     /**
      * @var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
@@ -44,6 +46,7 @@ class CmsPageTable extends AbstractTable
             SpyCmsPageTableMap::COL_ID_CMS_PAGE => 'Page Id',
             CmsQueryContainer::URL => 'url',
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
+            CmsQueryContainer::IS_ACTIVE => 'Active',
             self::ACTIONS => self::ACTIONS,
         ]);
 
@@ -51,7 +54,12 @@ class CmsPageTable extends AbstractTable
 
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
+            CmsQueryContainer::URL,
+            CmsQueryContainer::TEMPLATE_NAME,
+            CmsQueryContainer::IS_ACTIVE,
         ]);
+
+        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         $config->setSearchable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
@@ -78,6 +86,7 @@ class CmsPageTable extends AbstractTable
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
                 CmsQueryContainer::TEMPLATE_NAME => $item[CmsQueryContainer::TEMPLATE_NAME],
                 CmsQueryContainer::URL => $item[CmsQueryContainer::URL],
+                CmsQueryContainer::IS_ACTIVE => $item[CmsQueryContainer::IS_ACTIVE],
                 self::ACTIONS => implode(' ', $this->buildLinks($item)),
             ];
         }
@@ -91,7 +100,7 @@ class CmsPageTable extends AbstractTable
      *
      * @return array
      */
-    private function buildLinks($item)
+    protected function buildLinks($item)
     {
         $buttons = [];
 
@@ -107,8 +116,32 @@ class CmsPageTable extends AbstractTable
             ]),
             'Edit Page'
         );
+        $buttons[] = $this->generateStateChangeButton($item);
 
         return $buttons;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function generateStateChangeButton(array $item)
+    {
+        if ($item[CmsQueryContainer::IS_ACTIVE]) {
+            $name = 'Deactivate';
+            $url = self::URL_CMS_PAGE_DEACTIVATE;
+        } else {
+            $name = 'Activate';
+            $url = self::URL_CMS_PAGE_ACTIVATE;
+        }
+
+        return $this->generateViewButton(
+            Url::generate($url, [
+                self::REQUEST_ID_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            $name
+        );
     }
 
 }

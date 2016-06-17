@@ -55,7 +55,12 @@ abstract class AbstractTable
     /**
      * @var int
      */
-    protected $total;
+    protected $total = 0;
+
+    /**
+     * @var int
+     */
+    protected $limit = 0;
 
     /**
      * @var int
@@ -246,6 +251,9 @@ abstract class AbstractTable
         $result = [];
 
         foreach ($headers as $key => $value) {
+            if (!array_key_exists($key, $row)) {
+                continue;
+            }
             $result[$key] = $row[$key];
         }
 
@@ -418,11 +426,26 @@ abstract class AbstractTable
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getLimit()
     {
-        return $this->request->query->get('length', $this->defaultLimit);
+        if (!$this->limit) {
+            $this->limit = $this->request->query->getInt('length', $this->defaultLimit);
+        }
+
+        return $this->limit;
+    }
+
+    /**
+     * @param int $limit
+     *
+     * @return $this
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = (int)$limit;
+        return $this;
     }
 
     /**
@@ -470,6 +493,21 @@ abstract class AbstractTable
     }
 
     /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
+     *
+     * @return string
+     */
+    protected function getFirstAvailableColumnInQuery(ModelCriteria $criteria)
+    {
+        $tableMap = $criteria->getTableMap();
+        $columns = array_keys($tableMap->getColumns());
+
+        $firstColumnName = $tableMap->getColumn($columns[0])->getName();
+
+        return $tableMap->getName() . '.' . $firstColumnName;
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param array $order
@@ -479,11 +517,16 @@ abstract class AbstractTable
     {
         $columns = $this->getColumnsList($query, $config);
 
-        if (!isset($order[0]) || !isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
-            return reset($columns);
+        if (isset($order[0]) && (int)($order[0][self::SORT_BY_COLUMN]) > 0 && isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
+
+            $selectedColumn = $columns[$order[0][self::SORT_BY_COLUMN]];
+
+            if (in_array($selectedColumn, $config->getSortable(), true)) {
+                return $selectedColumn;
+            }
         }
 
-        return $columns[$order[0][self::SORT_BY_COLUMN]];
+        return $this->getFirstAvailableColumnInQuery($query);
     }
 
     /**

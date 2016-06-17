@@ -5,52 +5,46 @@
 
 - Bundles to release:
 
-   Bundle       | Expected Release Type
-   :----------- | :------------
-   BundleA      | major or new (requires 3 reviewers)
-   BundleB      | minor (requires 2 reviewers)
-   BundleC      | patch (requires 1 reviewer)
+   Bundle       | Expected Release Type | Constraints
+   :----------- | :------------         | :------------
+   BundleA      | major or new          | 
+   BundleB      | minor                 | BundleA: new major
+   BundleC      | patch                 | BundleD: 2.2.0
 
-- Recommended reviewers: @reviewer_names
+   `patch` requires 1, `minor` 2 and `major` 3 reviewers.
 
 -----------------------------------------
-#### [Major] BundleA
+
+#### Bundle MajorBundleA (e.g. "Bundle Cms")
 - [ ] API contract checked
 - [ ] Unit tests
 - [ ] Functional (Facade) tests
 - [ ] Scrutinizer score (>= 9.7)
 - [ ] Documentation [PR](https://github.com/spryker/spryker.github.io/pull/pr_number)
-- [ ] No open tickets that requires a major release
+- [ ] No open tickets that require a major release (also checked cleanups)
 - [ ] Legal check for external dependencies
 
-###### Optional
-- [ ] Project integration [PR](https://github.com/spryker/project/pull/pr_number)
-
 ###### Change log
-Changes go here. Those will be copied to the release log for this bundle.
+Changes go here as list items and with a header (Improvements/Bugfixes). Those will be copied to the release log for this bundle.
 
 -----------------------------------------
-#### [Minor] BundleB
+
+#### Bundle MinorBundleB
 - [ ] Tests for the feature
 - [ ] Scrutinizer score is not worse
 - [ ] No open tickets that could be in minor release
 - [ ] Legal check for external dependencies
 
-###### Optional
-- [ ] Documentation updated [PR](https://github.com/spryker/spryker.github.io/pull/pr_number)
-- [ ] Project integration [PR](https://github.com/spryker/project/pull/pr_number)
-
 ###### Change log
-Changes go here. Those will be copied to the release log for this bundle.
+Improvements
+- I added this.
 
 -----------------------------------------
-#### [Patch] BundleC
+
+#### Bundle PatchBundleC
 - [ ] Tests for the patch
 - [ ] Scrutinizer score is not worse
 
-###### Optional
-- [ ] Documentation updated [PR](https://github.com/spryker/spryker.github.io/pull/pr_number)
-- [ ] Project integration [PR](https://github.com/spryker/project/pull/pr_number)
-
 ###### Change log
-Changes go here. Those will be copied to the release log for this bundle. Please use full sentences.
+Bugfixes
+- I fixed this.

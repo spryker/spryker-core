@@ -28,7 +28,7 @@ class OmsConfig extends AbstractBundleConfig
      */
     public function getActiveProcesses()
     {
-        return [];
+        return $this->get(OmsConstants::ACTIVE_PROCESSES, []);
     }
 
     /**

@@ -12,17 +12,17 @@
   },
   "require": {
     "spryker/application": "^2.0.0",
+    "spryker/config": "^2.0.0",
     "spryker/installer": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
     "spryker/messenger": "^2.0.0",
     "spryker/product": "^2.0.0",
+    "spryker/silex": "^2.0.0",
     "spryker/touch": "^2.0.0",
-    "spryker/twig": "^2.0.0",
-    "spryker/config": "^2.0.0",
-    "spryker/silex": "^2.0.0"
+    "spryker/twig": "^2.0.0"
   },
-  "description": "price bundle",
+  "description": "Price bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -30,5 +30,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

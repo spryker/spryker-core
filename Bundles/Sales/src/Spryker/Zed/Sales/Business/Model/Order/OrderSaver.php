@@ -190,17 +190,28 @@ class OrderSaver implements OrderSaverInterface
         SpySalesOrderItem $salesOrderItemEntity,
         ItemTransfer $itemTransfer
     ) {
-
-        $processName = $this->salesConfiguration->determineProcessForOrderItem($quoteTransfer, $itemTransfer);
-        $omsOrderProcessEntity = $this->omsFacade->getProcessEntity($processName);
+        $processEntity = $this->getProcessEntity($quoteTransfer, $itemTransfer);
+        $initialStateEntity = $this->omsFacade->getInitialStateEntity();
 
         $salesOrderItemEntity->fromArray($itemTransfer->toArray());
         $salesOrderItemEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
-        $salesOrderItemEntity->setFkOmsOrderItemState(
-            $this->omsFacade->getInitialStateEntity()->getIdOmsOrderItemState()
-        );
+        $salesOrderItemEntity->setFkOmsOrderItemState($initialStateEntity->getIdOmsOrderItemState());
         $salesOrderItemEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
-        $salesOrderItemEntity->setProcess($omsOrderProcessEntity);
+        $salesOrderItemEntity->setProcess($processEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
+     */
+    protected function getProcessEntity(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
+    {
+        $processName = $this->salesConfiguration->determineProcessForOrderItem($quoteTransfer, $itemTransfer);
+        $processEntity = $this->omsFacade->getProcessEntity($processName);
+
+        return $processEntity;
     }
 
     /**

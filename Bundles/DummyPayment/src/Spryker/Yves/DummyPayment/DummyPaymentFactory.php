@@ -13,9 +13,6 @@ use Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentCreditCardFormDataPr
 use Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentInvoiceFormDataProvider;
 use Spryker\Yves\DummyPayment\Form\InvoiceSubForm;
 use Spryker\Yves\DummyPayment\Handler\DummyPaymentHandler;
-use Spryker\Yves\DummyPayment\Plugin\DummyPaymentCreditCardSubFormPlugin;
-use Spryker\Yves\DummyPayment\Plugin\DummyPaymentHandlerPlugin;
-use Spryker\Yves\DummyPayment\Plugin\DummyPaymentInvoiceSubFormPlugin;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class DummyPaymentFactory extends AbstractFactory
@@ -38,14 +35,6 @@ class DummyPaymentFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\DummyPayment\Plugin\DummyPaymentCreditCardSubFormPlugin
-     */
-    public function createCreditCardSubFormPlugin()
-    {
-        return new DummyPaymentCreditCardSubFormPlugin();
-    }
-
-    /**
      * @return \Spryker\Yves\DummyPayment\Form\InvoiceSubForm
      */
     public function createInvoiceForm()
@@ -62,27 +51,11 @@ class DummyPaymentFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\DummyPayment\Plugin\DummyPaymentInvoiceSubFormPlugin
-     */
-    public function createInvoiceSubFormPlugin()
-    {
-        return new DummyPaymentInvoiceSubFormPlugin();
-    }
-
-    /**
      * @return \Spryker\Yves\DummyPayment\Handler\DummyPaymentHandler
      */
     public function createDummyPaymentHandler()
     {
         return new DummyPaymentHandler($this->getCurrencyManager());
-    }
-
-    /**
-     * @return \Spryker\Yves\DummyPayment\Plugin\DummyPaymentHandlerPlugin
-     */
-    public function createDummyPaymentHandlerPlugin()
-    {
-        return new DummyPaymentHandlerPlugin();
     }
 
     /**

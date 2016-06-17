@@ -23,7 +23,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface
      */
     public function getCheckoutPlugins()
     {

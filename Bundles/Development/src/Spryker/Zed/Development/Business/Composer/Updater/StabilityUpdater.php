@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Symfony\Component\Finder\SplFileInfo;
+
 class StabilityUpdater implements UpdaterInterface
 {
 
@@ -16,7 +18,7 @@ class StabilityUpdater implements UpdaterInterface
     /**
      * @var string
      */
-    private $stability;
+    protected $stability;
 
     /**
      * @param string $stability
@@ -28,10 +30,11 @@ class StabilityUpdater implements UpdaterInterface
 
     /**
      * @param array $composerJson
+     * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
      * @return array
      */
-    public function update(array $composerJson)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile)
     {
         $composerJson = $this->updateMinimumStability($composerJson);
         $composerJson = $this->updatePreferStable($composerJson);
@@ -44,7 +47,7 @@ class StabilityUpdater implements UpdaterInterface
      *
      * @return array
      */
-    private function updateMinimumStability(array $composerJson)
+    protected function updateMinimumStability(array $composerJson)
     {
         $composerJson[self::KEY_MINIMUM_STABILITY] = $this->stability;
 
@@ -56,7 +59,7 @@ class StabilityUpdater implements UpdaterInterface
      *
      * @return array
      */
-    private function updatePreferStable(array $composerJson)
+    protected function updatePreferStable(array $composerJson)
     {
         $composerJson[self::KEY_PREFER_STABLE] = true;
 

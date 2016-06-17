@@ -31,6 +31,14 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return array
+     */
+    protected function getPaymentMethodStatemachineMapping()
+    {
+        return $this->get(SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING, []);
+    }
+
+    /**
      * Defines the prefix for the sequence number which is the public id of an order.
      *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer

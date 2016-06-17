@@ -7,29 +7,20 @@
 
 namespace Spryker\Zed\Search\Business\Model;
 
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-
 class SearchInstaller implements SearchInstallerInterface
 {
 
     /**
-     * @var \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
+     * @var \Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
      */
-    private $installer;
+    protected $installerStack = [];
 
     /**
-     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @param \Spryker\Zed\Search\Business\Model\SearchInstallerInterface[] $installerStack
      */
-    private $messenger;
-
-    /**
-     * @param array $installer
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
-     */
-    public function __construct(array $installer, MessengerInterface $messenger)
+    public function __construct(array $installerStack)
     {
-        $this->installer = $installer;
-        $this->messenger = $messenger;
+        $this->installerStack = $installerStack;
     }
 
     /**
@@ -37,9 +28,8 @@ class SearchInstaller implements SearchInstallerInterface
      */
     public function install()
     {
-        foreach ($this->installer as $installerPlugin) {
-            $installerPlugin->setMessenger($this->messenger);
-            $installerPlugin->run();
+        foreach ($this->installerStack as $installer) {
+            $installer->install();
         }
     }
 

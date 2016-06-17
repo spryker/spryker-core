@@ -9,6 +9,7 @@ namespace Spryker\Zed\Payment;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 
 class PaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -26,23 +27,10 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::CHECKOUT_PLUGINS] = function (Container $container) {
-            return $this->getCheckoutPlugins($container);
+            return new CheckoutPluginCollection();
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     * @return array
-     */
-    protected function getCheckoutPlugins(Container $container)
-    {
-        return [
-            self::CHECKOUT_PRE_CHECK_PLUGINS => [],
-            self::CHECKOUT_ORDER_SAVER_PLUGINS => [],
-            self::CHECKOUT_POST_SAVE_PLUGINS => [],
-        ];
     }
 
 }
