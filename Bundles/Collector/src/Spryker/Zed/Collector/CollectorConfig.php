@@ -20,6 +20,7 @@ class CollectorConfig extends AbstractBundleConfig
     const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
     const COLLECTOR_STORAGE_KEY = 'collector_storage_key';
     const COLLECTOR_SEARCH_KEY = 'collector_search_key';
+    const COLLECTOR_IMAGE_KEY = 'collector_image_key';
 
     const COLLECTOR_TYPE_PRODUCT_ABSTRACT = 'product_abstract';
     const COLLECTOR_TYPE_CATEGORYNODE = 'categorynode';

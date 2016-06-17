@@ -45,8 +45,6 @@
         <column name="fk_product_image" type="INTEGER" required="true"/>
 
         <column name="sort" type="INTEGER" required="true"/>
-        <column name="display_in_cart" type="BOOLEAN" required="false" default="false"/>
-        <column name="display_in_catalog" type="BOOLEAN" required="false" default="false"/>
 
         <behavior name="timestampable"/>
 

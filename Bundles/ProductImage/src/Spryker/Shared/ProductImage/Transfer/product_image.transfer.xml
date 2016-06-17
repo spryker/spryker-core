@@ -15,8 +15,6 @@
         <property name="idProductImageSetToProductImage" type="int" />
 
         <property name="sort" type="int" />
-        <property name="displayInCart" type="bool" />
-        <property name="displayInCatalog" type="bool" />
         <property name="externalUrlSmall" type="string" />
         <property name="externalUrlLarge" type="string" />
     </transfer>
