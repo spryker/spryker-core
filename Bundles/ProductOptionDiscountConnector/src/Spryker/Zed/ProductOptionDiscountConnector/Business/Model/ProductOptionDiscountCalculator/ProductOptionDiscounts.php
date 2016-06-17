@@ -292,7 +292,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
     }
 
     /**
-     * @param \ArrayObject $items|ItemTransfer[] $orderTransfer
+     * @param \ArrayObject|ItemTransfer[] $items
      *
      * @return void
      */

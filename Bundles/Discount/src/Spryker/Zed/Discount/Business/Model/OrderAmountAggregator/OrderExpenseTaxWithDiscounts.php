@@ -73,6 +73,5 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
     protected function calculateTaxAmount($price, $taxRate)
     {
         return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($price, $taxRate);
-
     }
 }
