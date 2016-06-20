@@ -175,4 +175,28 @@ interface TaxFacadeInterface
      */
     public function deleteTaxSet($id);
 
+    /**
+     * @api
+     *
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultTaxCountry();
+
+    /**
+     * @api
+     *
+     * @return float
+     */
+    public function getDefaultTaxRate();
+
 }

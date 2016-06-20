@@ -23,18 +23,18 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     /**
      * @var ShipmentToTaxInterface
      */
-    protected $shipmentToTax;
+    protected $taxFacade;
 
     /**
      * ShipmentTaxRateCalculator constructor.
      *
      * @param ShipmentQueryContainerInterface $shipmentQueryContainer
-     * @param ShipmentToTaxInterface $shipmentToTax
+     * @param ShipmentToTaxInterface $taxFacade
      */
-    public function __construct(ShipmentQueryContainerInterface $shipmentQueryContainer, ShipmentToTaxInterface $shipmentToTax)
+    public function __construct(ShipmentQueryContainerInterface $shipmentQueryContainer, ShipmentToTaxInterface $taxFacade)
     {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
-        $this->shipmentToTax = $shipmentToTax;
+        $this->taxFacade = $taxFacade;
     }
 
     /**
@@ -48,7 +48,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
             return;
         }
 
-        $taxRate = $this->shipmentToTax->getDefaultTaxRate();
+        $taxRate = $this->taxFacade->getDefaultTaxRate();
 
         $taxSetEntity = $this->shipmentQueryContainer->queryTaxSetByShipmentMethodAndCountry(
             $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),

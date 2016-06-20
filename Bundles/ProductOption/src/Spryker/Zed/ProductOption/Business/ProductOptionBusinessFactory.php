@@ -13,6 +13,8 @@ use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOp
 use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;
+use Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridgeInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -63,6 +65,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return ProductOptionTaxRateCalculator
+     */
+    public function createProductOptionTaxRateCalculator()
+    {
+        return new ProductOptionTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected function getSalesQueryContainer()
@@ -84,6 +94,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return ProductOptionToTaxBridgeInterface
+     */
+    protected function getTaxFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_TAX);
     }
 
 }

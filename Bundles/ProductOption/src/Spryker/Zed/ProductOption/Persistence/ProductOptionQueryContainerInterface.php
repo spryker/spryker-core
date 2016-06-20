@@ -256,4 +256,14 @@ interface ProductOptionQueryContainerInterface
      */
     public function queryEffectiveTaxRateForTypeUsage($idProductOptionTypeUsage);
 
+    /**
+     * @api
+     *
+     * @param int[] $idsProductOptionTypeUsage
+     * @param string $iso2Code
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryTaxSetByProductOptionTypeUsageAndCountry($idsProductOptionTypeUsage, $iso2Code);
+
 }

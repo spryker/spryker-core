@@ -260,6 +260,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultTaxCountry()
@@ -268,6 +270,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @return float
      */
     public function getDefaultTaxRate()

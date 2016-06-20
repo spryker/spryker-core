@@ -18,4 +18,14 @@ interface ProductOptionToTaxBridgeInterface
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
 
+    /**
+     * @return string
+     */
+    public function getDefaultTaxCountry();
+
+    /**
+     * @return float
+     */
+    public function getDefaultTaxRate();
+
 }

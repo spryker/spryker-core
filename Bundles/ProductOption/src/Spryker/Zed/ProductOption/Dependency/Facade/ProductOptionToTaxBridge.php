@@ -34,4 +34,20 @@ class ProductOptionToTaxBridge implements ProductOptionToTaxBridgeInterface
         return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate);
     }
 
+    /**
+     * @return string
+     */
+    public function getDefaultTaxCountry()
+    {
+        return $this->taxFacade->getDefaultTaxCountry();
+    }
+
+    /**
+     * @return float
+     */
+    public function getDefaultTaxRate()
+    {
+        return $this->taxFacade->getDefaultTaxRate();
+    }
+
 }

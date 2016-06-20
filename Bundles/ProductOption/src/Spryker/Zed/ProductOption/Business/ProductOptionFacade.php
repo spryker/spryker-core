@@ -310,4 +310,16 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
         $this->getFactory()->createSubtotalWithProductOption()->aggregate($orderTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateProductOptionTaxRate(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createProductOptionTaxRateCalculator()->recalculate($quoteTransfer);
+    }
+
 }
