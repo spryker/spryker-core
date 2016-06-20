@@ -12,7 +12,6 @@ use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
 use Spryker\Zed\Product\Business\Importer\FileImporter;
-use Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter;
 use Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator;
 use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductAbstractWriter;
 use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductConcreteWriter;
@@ -33,16 +32,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      * @var \Spryker\Zed\Product\Business\Product\ProductManager
      */
     protected $productManager;
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter
-     */
-    public function createHttpFileImporter()
-    {
-        return new UploadedFileImporter(
-            $this->getConfig()->getDestinationDirectoryForUploads()
-        );
-    }
 
     /**
      * @return string
