@@ -220,30 +220,63 @@ class ProductManager implements ProductManagerInterface
         $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
 
         foreach ($productAbstractTransfer->getProductImagesSets() as $productImagesSet) {
-            $productImageSetEntity = new SpyProductImageSet();
-            $productImageSetEntity->setFkProductAbstract($idProductAbstract);
-            $productImageSetEntity->setName($productImagesSet->getName());
-            $productImageSetEntity->setFkLocale($productImagesSet->getLocale()->getIdLocale());
-
-            $productImageSetEntity->save();
-            $idProductImageSet = $productImageSetEntity->getIdProductImageSet();
-
-            foreach ($productImagesSet->getProductImages() as $productImage) {
-                $productImageEntity = new SpyProductImage();
-                $productImageEntity->setExternalUrlLarge($productImage->getExternalUrlLarge());
-                $productImageEntity->setExternalUrlSmall($productImage->getExternalUrlSmall());
-
-                $productImageEntity->save();
-                $idProductImage = $productImageEntity->getIdProductImage();
-
-                $productImageSetToProductImageEntity = new SpyProductImageSetToProductImage();
-                $productImageSetToProductImageEntity->setFkProductImageSet($idProductImageSet);
-                $productImageSetToProductImageEntity->setFkProductImage($idProductImage);
-                $productImageSetToProductImageEntity->setSort($productImage->getSort());
-
-                $productImageSetToProductImageEntity->save();
-            }
+            $this->saveProductImageSet($idProductAbstract, $productImagesSet);
         }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImagesSet
+     *
+     * @return void
+     */
+    protected function saveProductImageSet($idProductAbstract, $productImagesSet)
+    {
+        $productImageSetEntity = new SpyProductImageSet();
+        $productImageSetEntity->setFkProductAbstract($idProductAbstract);
+        $productImageSetEntity->setName($productImagesSet->getName());
+        $productImageSetEntity->setFkLocale($productImagesSet->getLocale()->getIdLocale());
+
+        $productImageSetEntity->save();
+
+        $idProductImageSet = $productImageSetEntity->getIdProductImageSet();
+
+        foreach ($productImagesSet->getProductImages() as $productImage) {
+            $this->saveProductImage($idProductImageSet, $productImage);
+        }
+    }
+
+    /**
+     * @param int $idProductImageSet
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImage
+     *
+     * @return void
+     */
+    protected function saveProductImage($idProductImageSet, $productImage) {
+        $productImageEntity = new SpyProductImage();
+        $productImageEntity->setExternalUrlLarge($productImage->getExternalUrlLarge());
+        $productImageEntity->setExternalUrlSmall($productImage->getExternalUrlSmall());
+
+        $productImageEntity->save();
+        $idProductImage = $productImageEntity->getIdProductImage();
+
+        $this->saveProductImageSetToProductImage($idProductImageSet, $idProductImage, $productImage);
+    }
+
+    /**
+     * @param int $idProductImageSet
+     * @param int $idProductImage
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImage
+     *
+     * @return void
+     */
+    protected function saveProductImageSetToProductImage($idProductImageSet, $idProductImage, $productImage) {
+        $productImageSetToProductImageEntity = new SpyProductImageSetToProductImage();
+        $productImageSetToProductImageEntity->setFkProductImageSet($idProductImageSet);
+        $productImageSetToProductImageEntity->setFkProductImage($idProductImage);
+        $productImageSetToProductImageEntity->setSort($productImage->getSort());
+
+        $productImageSetToProductImageEntity->save();
     }
 
     /**
