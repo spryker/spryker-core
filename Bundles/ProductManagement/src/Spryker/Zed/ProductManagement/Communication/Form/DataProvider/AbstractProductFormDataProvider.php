@@ -71,26 +71,13 @@ class AbstractProductFormDataProvider
      */
     public function getOptions()
     {
-        $formOptions = [
-
-        ];
-
-        return $formOptions;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return array
-     */
-    public function getAttributes(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        //product[attributes][size][type]
-        //product[attributes][size][value][]
-        return [
+        $attributeCollection = [
             'size' => [
                 '40' => '40',
                 '41' => '41',
+                '42' => '42',
+                '43' => '43',
+                '44' => '44',
             ],
             'color' => [
                 'blue' => 'Blue',
@@ -102,6 +89,24 @@ class AbstractProductFormDataProvider
                 'sweet' => 'Cakes'
             ]
         ];
+
+        $formOptions = [
+            ProductFormAdd::ATTRIBUTES => $attributeCollection
+        ];
+
+        return $formOptions;
+    }
+
+    /**
+     * @param array $attributeCollection
+     *
+     * @return array
+     */
+    public function getAttributes(array $attributeCollection)
+    {
+        //product[attributes][size][type]
+        //product[attributes][size][value][]
+        return $attributeCollection;
     }
 
     /**
@@ -120,9 +125,11 @@ class AbstractProductFormDataProvider
     }
 
     /**
+     * @param array $attributeCollection
+     *
      * @return array
      */
-    public function getLocalizedAttributesDefaultFields()
+    public function getLocalizedAttributesDefaultFields(array $attributeCollection)
     {
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
@@ -138,15 +145,13 @@ class AbstractProductFormDataProvider
     }
 
     /**
+     * @param array $attributeCollection
+     *
      * @return array
      */
-    public function getAttributesDefaultFields()
+    public function getAttributesDefaultFields(array $attributeCollection)
     {
-        return [
-            'color' => [],
-            'size' => [],
-            'flavour' => [],
-        ];
+        return $attributeCollection;
     }
 
 }

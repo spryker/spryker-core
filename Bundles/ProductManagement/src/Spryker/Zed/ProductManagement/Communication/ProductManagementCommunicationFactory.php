@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributes;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -28,7 +29,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductFormAdd(array $formData, array $formOptions = [])
+    public function createProductFormAdd(array $formData, array $formOptions = [], array $attributes = [])
     {
         $formType = new ProductFormAdd();
 
@@ -41,7 +42,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductFormEdit(array $formData, array $formOptions = [])
+    public function createProductFormEdit(array $formData, array $formOptions = [], array $attributes = [])
     {
         $formType = new ProductFormEdit();
 

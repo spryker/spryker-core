@@ -59,28 +59,23 @@ class EditController extends AddController
             ]
         ];
 
-        $attributeCollection = [
-            'size' => [
-                '40' => '40',
-                '41' => '41',
-            ],
-            'color' => [
-                'blue' => 'Blue',
-            ],
-            'flavour' => [
-                'spicy' => 'Mexican Food',
-                'sweet' => 'Cakes'
-            ]
-        ];
-
         $dataProvider = $this->getFactory()->createProductFormEditDataProvider();
         $form = $this
             ->getFactory()
             ->createProductFormEdit(
-                $dataProvider->getData($idProductAbstract),
+                $dataProvider->getData($idProductAbstract, $attributeCollection),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
+
+        //$dataProvider = $this->getFactory()->createProductFormAttributesDataProvider();
+        /*$attributesForm = $this
+            ->getFactory()
+            ->createProductFormAttributes(
+                $dataProvider->getData($idProductAbstract, $attributeCollection),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);*/
 
         $matrixGenerator = new MatrixGenerator();
         $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);

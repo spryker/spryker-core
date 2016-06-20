@@ -30,8 +30,7 @@ class ProductFormEdit extends ProductFormAdd
     {
         parent::buildForm($builder, $options);
 
-        $this
-            ->addAttributesForm($builder);
+        $this->addAttributesForm($builder, $options);
     }
 
 }

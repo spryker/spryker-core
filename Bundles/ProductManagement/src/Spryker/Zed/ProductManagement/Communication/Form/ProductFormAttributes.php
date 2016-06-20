@@ -12,11 +12,24 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ProductAttributesForm extends AbstractType
+class ProductFormAttributes extends AbstractType
 {
 
-    const FIELD_TYPE = 'type';
     const FIELD_VALUE = 'value';
+
+    /**
+     * @var array
+     */
+    protected $attributes;
+
+    /**
+     * ProductFormAttributes constructor.
+     */
+    public function __construct(array $attributes=[])
+    {
+        $this->attributes = $attributes;
+    }
+
 
     /**
      * @return string
@@ -35,7 +48,6 @@ class ProductAttributesForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addTypeField($builder)
             ->addValueField($builder, $options);
     }
 
@@ -44,32 +56,16 @@ class ProductAttributesForm extends AbstractType
      *
      * @return $this
      */
-    protected function addTypeField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::FIELD_TYPE, 'text', [
-                'read_only' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
     protected function addValueField(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(self::FIELD_VALUE, new Select2ComboBoxType(), [
-                'choices' => [],
-                'multiple' => true
-            ]);
+        $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [
+            'label' => $builder->getName(),
+            'choices' => $this->attributes[$builder->getName()],
+            'multiple' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
 
         return $this;
     }

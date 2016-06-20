@@ -90,24 +90,14 @@
                             Attributes
                         </div>
                         <div class="panel-body">
-                            {% for type,attributeCollection in form.attributes %}
-                                {{ form_row(attributeCollection.type) }}
-                                {{ type }}: {{ form_row(attributeCollection.value) }}
+                            {% for type,attributes in form.attributes %}
+                                <li>
+                                    {{ form_errors(attributes.value) }}
+                                    {{ form_row(attributes.value) }}
+                                </li>
                             {% endfor %}
                         </div>
                     </div>
-
-                {% for type,attributeCollection in form.attributes %}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            {{ type }}
-                        </div>
-                        <div class="panel-body">
-                            {{ form_row(attributeCollection.type) }}
-                            {{ form_row(attributeCollection.value) }}
-                        </div>
-                    </div>
-                {% endfor %}
 
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover dataTables-example" >

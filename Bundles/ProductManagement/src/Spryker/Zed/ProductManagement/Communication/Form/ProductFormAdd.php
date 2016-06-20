@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductFormAdd extends AbstractType
@@ -18,8 +21,10 @@ class ProductFormAdd extends AbstractType
     const FIELD_NAME = 'name';
     const FIELD_SKU = 'sku';
 
+    const OPTION_PRODUCT_ATTRIBUTES = 'option_product_attributes';
     const LOCALIZED_ATTRIBUTES = 'localized_attributes';
     const ATTRIBUTES = 'attributes';
+
 
     /**
      * @return string
@@ -27,6 +32,18 @@ class ProductFormAdd extends AbstractType
     public function getName()
     {
         return 'productAdd';
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setRequired(self::ATTRIBUTES);
     }
 
     /**
@@ -80,11 +97,11 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributesForm(FormBuilderInterface $builder)
+    protected function addAttributesForm(FormBuilderInterface $builder, $options)
     {
         $builder
             ->add(self::ATTRIBUTES, 'collection', [
-                'type' => new ProductAttributesForm()
+                'type' => new ProductFormAttributes($options[self::ATTRIBUTES])
             ]);
 
         return $this;
