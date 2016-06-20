@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
+use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 
 class ShipmentTaxRateCalculator implements CalculatorInterface
 {
@@ -20,13 +21,20 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     protected $shipmentQueryContainer;
 
     /**
+     * @var ShipmentToTaxInterface
+     */
+    protected $shipmentToTax;
+
+    /**
      * ShipmentTaxRateCalculator constructor.
      *
      * @param ShipmentQueryContainerInterface $shipmentQueryContainer
+     * @param ShipmentToTaxInterface $shipmentToTax
      */
-    public function __construct(ShipmentQueryContainerInterface $shipmentQueryContainer)
+    public function __construct(ShipmentQueryContainerInterface $shipmentQueryContainer, ShipmentToTaxInterface $shipmentToTax)
     {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
+        $this->shipmentToTax = $shipmentToTax;
     }
 
     /**
@@ -40,8 +48,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
             return;
         }
 
-        //TODO: Fix Me with Tax Default class!!!
-        $taxRate = 19.00;
+        $taxRate = $this->shipmentToTax->getDefaultTaxRate();
 
         $taxSetEntity = $this->shipmentQueryContainer->queryTaxSetByShipmentMethodAndCountry(
             $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),

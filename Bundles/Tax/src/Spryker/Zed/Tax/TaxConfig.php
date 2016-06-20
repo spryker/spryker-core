@@ -7,8 +7,17 @@
 
 namespace Spryker\Zed\Tax;
 
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TaxConfig extends AbstractBundleConfig
 {
+
+    /**
+     * @return float
+     */
+    public function getDefaultTaxRate()
+    {
+        return $this->get(TaxConstants::DEFAULT_TAX_RATE, 19);
+    }
 }

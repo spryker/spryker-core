@@ -20,9 +20,9 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected $taxQueryContainer;
 
     /**
-     * @var Store
+     * @var TaxDefaultInterface
      */
-    protected $store;
+    protected $taxDefault;
 
     /**
      * @var array
@@ -33,12 +33,12 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      * TaxProductItemCalculator constructor.
      *
      * @param TaxQueryContainerInterface $taxQueryContainer
-     * @param Store $store
+     * @param TaxDefaultInterface $taxDefault
      */
-    public function __construct(TaxQueryContainerInterface $taxQueryContainer, Store $store)
+    public function __construct(TaxQueryContainerInterface $taxQueryContainer, TaxDefaultInterface $taxDefault)
     {
         $this->taxQueryContainer = $taxQueryContainer;
-        $this->store = $store;
+        $this->taxDefault = $taxDefault;
     }
 
     /**
@@ -68,8 +68,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected function getShippingCountryIsoCode(QuoteTransfer $quoteTransfer)
     {
         if ($quoteTransfer->getShippingAddress() === null) {
-            //TODO: Default should come from TaxDefault
-            return $this->store->getCurrentCountry();
+            return $this->taxDefault->getDefaultCountry();
         }
 
         return $quoteTransfer->getShippingAddress()->getIso2Code();
@@ -115,7 +114,6 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
             }
         }
 
-        //TODO: Default should come from TaxDefault
-        return 19.00;
+        return $this->taxDefault->getDefaultTaxRate();
     }
 }

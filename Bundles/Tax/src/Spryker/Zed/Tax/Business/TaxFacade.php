@@ -259,4 +259,20 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
         return $this->getFactory()->createPriceCalculationHelper()->getTaxValueFromPrice($grossPrice, $taxRate);
     }
 
+    /**
+     * @return string
+     */
+    public function getDefaultTaxCountry()
+    {
+        return $this->getFactory()->createTaxDefault()->getDefaultCountry();
+    }
+
+    /**
+     * @return float
+     */
+    public function getDefaultTaxRate()
+    {
+        return $this->getFactory()->createTaxDefault()->getDefaultTaxRate();
+    }
+
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -17,6 +18,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
     const PRICE_PLUGINS = 'PRICE_PLUGINS';
     const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
+    const FACADE_TAX = 'facade tax';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
@@ -55,6 +57,10 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
+        };
+
+        $container[self::FACADE_TAX] = function (Container $container) {
+            return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
         };
 
         return $container;
