@@ -61,6 +61,19 @@ table.dataTable.gui-table-data {
             color: #fff;
         }
     }
+
+    .error-tab{
+        color: red !important;
+        border-color: red !important;
+        border-bottom: none !important;
+    }
+    .error-tab:hover {
+        border-color: red !important;
+        border-bottom: none;
+    }
+    .active .error-tab  {
+        color: #fff !important;
+    }
 }
 
 .ui-state-highlight,

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
@@ -75,7 +76,7 @@ class Fixed extends AbstractPlugin implements DiscountCalculatorPluginInterface
         return [
             new Regex([
                 'pattern' => '/[0-9\.]+/'
-            ])
+            ]),
         ];
     }
 

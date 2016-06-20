@@ -5,6 +5,7 @@ function DiscountNavigation(){
     this.currentUrlHash = window.location.hash;
     this.tabUrls = $('#discount-tabs').find('li a');
 
+    this.markValidationFailedTabs();
     this.checkActivatedTab();
     this.changeTabsOnClick();
     this.showHideNavigationButtons();
@@ -36,6 +37,22 @@ DiscountNavigation.prototype.listenNavigationButtons = function(){
         self.activateTab(element, hash);
         self.navigateElement();
         self.showHideNavigationButtons();
+    });
+};
+
+DiscountNavigation.prototype.markValidationFailedTabs = function() {
+    $('.tab-content .tab-pane').each(function(index, tabContent) {
+        var hasErrors = $(tabContent).find('.has-error');
+        if (hasErrors.length == 0) {
+            return;
+        }
+        var tabContentElementId = $(tabContent).attr('id');
+        $('#discount-tabs').find('li a').each(function(index, tabElement) {
+            var elementHref = $(tabElement).attr('href');
+            if (elementHref.indexOf(tabContentElementId) > -1) {
+                $(tabElement).addClass('error-tab');
+            }
+        })
     });
 };
 
