@@ -116,9 +116,7 @@ abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWi
      *
      * @return void
      */
-    protected function setCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
-    }
+    abstract protected function setCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
      * @return string
