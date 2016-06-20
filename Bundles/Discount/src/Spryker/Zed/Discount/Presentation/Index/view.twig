@@ -81,7 +81,7 @@
 
             {% if discountConfigurator.discountGeneral.discountType == 'voucher' %}
                 <hr>
-                <p><strong>Generated Discount Codes</strong></p>
+                <p><strong>{{ 'Generated Discount Codes' | trans }}</strong></p>
                 {{ voucherCodesTable | raw }}
             {% endif %}
 
