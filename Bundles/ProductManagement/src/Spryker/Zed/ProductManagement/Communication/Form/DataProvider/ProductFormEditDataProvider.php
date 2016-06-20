@@ -14,14 +14,13 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
     /**
      * @param int $idProductAbstract
-     * @param array $attributeCollection
      *
      * @return array
      */
-    public function getData($idProductAbstract, array $attributeCollection)
+    public function getData($idProductAbstract)
     {
         $formData = [];
-        $defaults = $this->getDefaultFormFields($attributeCollection);
+        $defaults = $this->getDefaultFormFields();
 
         $productAbstractTransfer = $this->productManagementFacade->getProductAbstractById($idProductAbstract);
         if ($productAbstractTransfer) {
@@ -29,28 +28,12 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $this->getLocalizedAbstractAttributes($productAbstractTransfer);
         }
 
-        $formData[ProductFormAdd::ATTRIBUTES] = $this->getAttributes($attributeCollection);
-
-        //productEdit[attributes][size][value][]
+        $formData[ProductFormAdd::ATTRIBUTES] = $this->getAttributes();
         $formData[ProductFormAdd::ATTRIBUTES] = array_merge($defaults[ProductFormAdd::ATTRIBUTES], $formData[ProductFormAdd::ATTRIBUTES]);
+
         $formData = array_merge($defaults, $formData);
-        dump($formData);
 
         return $formData;
-    }
-
-    /**
-     * @param array $attributeCollection
-     *
-     * @return array
-     */
-    protected function getDefaultFormFields(array $attributeCollection)
-    {
-        return [
-            ProductFormAdd::FIELD_SKU => null,
-            ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields($attributeCollection),
-            ProductFormAdd::ATTRIBUTES => $this->getAttributesDefaultFields($attributeCollection)
-        ];
     }
 
 }

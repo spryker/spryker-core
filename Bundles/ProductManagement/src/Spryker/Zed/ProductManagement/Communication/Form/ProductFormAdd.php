@@ -56,7 +56,8 @@ class ProductFormAdd extends AbstractType
     {
         $this
             ->addSkuField($builder)
-            ->addLocalizedForm($builder);
+            ->addLocalizedForm($builder)
+            ->addAttributesForm($builder, $options);
     }
 
     /**

@@ -18,20 +18,11 @@ class ProductFormAddDataProvider extends AbstractProductFormDataProvider
     public function getData()
     {
         $formData = [];
-        $fields = $this->getDefaultFormFields();
+        $defaults = $this->getDefaultFormFields();
 
-        return array_merge($formData, $fields);
-    }
+        $formData = array_merge($defaults, $formData);
 
-    /**
-     * @return array
-     */
-    protected function getDefaultFormFields()
-    {
-        return [
-            ProductFormAdd::FIELD_SKU => null,
-            ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields()
-        ];
+        return $formData;
     }
 
 }
