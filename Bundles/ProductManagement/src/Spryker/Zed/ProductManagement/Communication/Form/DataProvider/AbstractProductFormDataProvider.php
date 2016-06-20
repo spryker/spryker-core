@@ -104,9 +104,11 @@ class AbstractProductFormDataProvider
      */
     public function getAttributes(array $attributeCollection)
     {
-        //product[attributes][size][type]
-        //product[attributes][size][value][]
-        return $attributeCollection;
+        return [
+            'size' => [
+                'value' => [40, 42]
+            ]
+        ];
     }
 
     /**

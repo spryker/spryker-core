@@ -31,8 +31,9 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         $formData[ProductFormAdd::ATTRIBUTES] = $this->getAttributes($attributeCollection);
 
+        //productEdit[attributes][size][value][]
+        $formData[ProductFormAdd::ATTRIBUTES] = array_merge($defaults[ProductFormAdd::ATTRIBUTES], $formData[ProductFormAdd::ATTRIBUTES]);
         $formData = array_merge($defaults, $formData);
-        
         dump($formData);
 
         return $formData;

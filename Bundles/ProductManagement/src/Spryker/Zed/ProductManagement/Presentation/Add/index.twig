@@ -91,10 +91,10 @@
                         </div>
                         <div class="panel-body">
                             {% for type,attributes in form.attributes %}
-                                <li>
+                                <div>
                                     {{ form_errors(attributes.value) }}
                                     {{ form_row(attributes.value) }}
-                                </li>
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
