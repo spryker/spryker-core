@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'Overview' %}
+{% block section_title 'Overview' | trans %}
 
 {% block action %}
     {{ createActionButton(url('/discount/index/create'), 'Create new Discount' | trans) }}
@@ -8,7 +8,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Discount List' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Discount List' | trans } %}
 
         {% block widget_content %}
                {{ discountsTable | raw }}

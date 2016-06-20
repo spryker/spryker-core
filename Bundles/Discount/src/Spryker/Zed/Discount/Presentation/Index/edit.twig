@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'Edit discount' %}
+{% block section_title 'Edit discount' | trans %}
 
 {% block action %}
     {% if discountConfigurator.getDiscountGeneral.isActive %}
@@ -14,7 +14,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit Discount' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit Discount' | trans } %}
 
         {% block widget_content %}
 
