@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -14,6 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface
 {
+    const COL_SUM_TAX_RATE = 'SumTaxRate';
 
     /**
      * @api
@@ -70,4 +74,31 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
         return $query;
     }
 
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     * @param string $iso2Code
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryTaxSetByShipmentMethodAndCountry($idShipmentMethod, $iso2Code)
+    {
+        return $this->getFactory()->createShipmentMethodQuery()
+            ->filterByIdShipmentMethod($idShipmentMethod)
+            ->useTaxSetQuery()
+                ->useSpyTaxSetTaxQuery()
+                    ->useSpyTaxRateQuery()
+                        ->useCountryQuery()
+                            ->filterByIso2Code($iso2Code)
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+                ->withColumn(SpyTaxSetTableMap::COL_NAME)
+                ->groupBy(SpyTaxSetTableMap::COL_NAME)
+                ->withColumn('SUM('.SpyTaxRateTableMap::COL_RATE.')', self::COL_SUM_TAX_RATE)
+            ->endUse()
+            ->select([self::COL_SUM_TAX_RATE])
+            ;
+    }
 }

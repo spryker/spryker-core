@@ -49,4 +49,14 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      */
     public function queryMethodByIdMethod($idMethod);
 
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     * @param string $iso2Code
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryTaxSetByShipmentMethodAndCountry($idShipmentMethod, $iso2Code);
+
 }

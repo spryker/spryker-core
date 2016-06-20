@@ -124,7 +124,6 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
                         ->filterByIso2Code($iso2Code)
                     ->endUse()
                 ->endUse()
-            ->leftJoinSpyTaxRate()
             ->withColumn('SUM('.SpyTaxRateTableMap::COL_RATE.')', self::COL_SUM_TAX_RATE)
             ->endUse()
             ->select([self::COL_SUM_TAX_RATE])

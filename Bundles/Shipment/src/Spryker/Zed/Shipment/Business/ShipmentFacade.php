@@ -118,6 +118,16 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateShipmentTaxRate(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createShipmentTaxCalculator()->recalculate($quoteTransfer);
+    }
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
