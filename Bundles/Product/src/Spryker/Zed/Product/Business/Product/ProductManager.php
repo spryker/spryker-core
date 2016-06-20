@@ -232,6 +232,8 @@ class ProductManager implements ProductManagerInterface
      */
     protected function saveProductImageSet($idProductAbstract, $productImagesSet)
     {
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
         $productImageSetEntity = new SpyProductImageSet();
         $productImageSetEntity->setFkProductAbstract($idProductAbstract);
         $productImageSetEntity->setName($productImagesSet->getName());
@@ -244,6 +246,8 @@ class ProductManager implements ProductManagerInterface
         foreach ($productImagesSet->getProductImages() as $productImage) {
             $this->saveProductImage($idProductImageSet, $productImage);
         }
+
+        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**
@@ -252,7 +256,8 @@ class ProductManager implements ProductManagerInterface
      *
      * @return void
      */
-    protected function saveProductImage($idProductImageSet, $productImage) {
+    protected function saveProductImage($idProductImageSet, $productImage)
+    {
         $productImageEntity = new SpyProductImage();
         $productImageEntity->setExternalUrlLarge($productImage->getExternalUrlLarge());
         $productImageEntity->setExternalUrlSmall($productImage->getExternalUrlSmall());
@@ -270,7 +275,8 @@ class ProductManager implements ProductManagerInterface
      *
      * @return void
      */
-    protected function saveProductImageSetToProductImage($idProductImageSet, $idProductImage, $productImage) {
+    protected function saveProductImageSetToProductImage($idProductImageSet, $idProductImage, $productImage)
+    {
         $productImageSetToProductImageEntity = new SpyProductImageSetToProductImage();
         $productImageSetToProductImageEntity->setFkProductImageSet($idProductImageSet);
         $productImageSetToProductImageEntity->setFkProductImage($idProductImage);
