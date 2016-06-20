@@ -13,6 +13,8 @@
 
    `patch` requires 1, `minor` 2 and `major` 3 reviewers.
 
+- Recommended reviewers: @reviewer_names
+
 -----------------------------------------
 
 #### Bundle MajorBundleA (e.g. "Bundle Cms")
