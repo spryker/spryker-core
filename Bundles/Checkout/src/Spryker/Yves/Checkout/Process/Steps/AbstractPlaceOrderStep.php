@@ -47,18 +47,18 @@ abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWi
      * @param \Spryker\Client\Checkout\CheckoutClientInterface $checkoutClient
      * @param string $stepRoute
      * @param string $escapeRoute
-     * @param array $errorCodeToEscapeRouteMatching
+     * @param array $errorCodeToRouteMatching
      */
     public function __construct(
         CheckoutClientInterface $checkoutClient,
         $stepRoute,
         $escapeRoute,
-        $errorCodeToEscapeRouteMatching = []
+        array $errorCodeToRouteMatching = []
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->checkoutClient = $checkoutClient;
-        $this->errorCodeToRouteMatching = $errorCodeToEscapeRouteMatching;
+        $this->errorCodeToRouteMatching = $errorCodeToRouteMatching;
     }
 
     /**
