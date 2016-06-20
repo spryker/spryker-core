@@ -37,7 +37,7 @@ class CollectorContext implements CollectorSpecificationInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer)
     {
@@ -46,7 +46,7 @@ class CollectorContext implements CollectorSpecificationInterface
     }
 
     /**
-     * @return $this
+     * @return \Generated\Shared\Transfer\ClauseTransfer
      */
     protected function setAcceptedDataTypes()
     {

@@ -17,6 +17,6 @@ interface DistributorInterface
      *
      * @return void
      */
-    public function distribute(CollectedDiscountTransfer $collectedDiscountTransfer);
+    public function distributeDiscountAmountToDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer);
 
 }

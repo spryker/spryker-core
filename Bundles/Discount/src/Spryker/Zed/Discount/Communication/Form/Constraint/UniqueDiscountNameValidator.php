@@ -19,7 +19,6 @@ class UniqueDiscountNameValidator extends ConstraintValidator
      * @param mixed $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
-     * @api
      * @return void
      */
     public function validate($value, Constraint $constraint)

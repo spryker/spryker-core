@@ -50,6 +50,7 @@ class JavascriptQueryBuilderTransformer
         $transformed = [];
         foreach ($ruleFields as $ruleField) {
 
+            $fieldTransformed = [];
             $fieldTransformed['id'] = $ruleField;
             $fieldTransformed['label'] = $ruleField;
             $fieldTransformed['type'] = 'string';

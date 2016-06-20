@@ -7,8 +7,9 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
+use Spryker\Zed\Discount\Business\Exception\QueryBuilderException;
 
-class MetaProviderFactory
+class MetaProviderFactory implements MetaProviderFactoryInterface
 {
 
     const TYPE_COLLECTOR = 'collector';
@@ -39,10 +40,9 @@ class MetaProviderFactory
                 return $this->createDecisionRuleMetaProvider();
             case self::TYPE_COLLECTOR:
                 return $this->createCollectorMetaProvider();
-
         }
 
-        throw new \InvalidArgumentException(
+        throw new QueryBuilderException(
             sprintf(
                 'Meta provider for type "%s" not found.',
                 $type

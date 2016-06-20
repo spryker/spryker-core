@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Library\Error\ErrorLogger;
+use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -210,7 +211,7 @@ class Discount implements DiscountInterface
                 }
             }
 
-        } catch (\Exception $e) {
+        } catch (QueryStringException $e) {
             ErrorLogger::log($e);
         }
 

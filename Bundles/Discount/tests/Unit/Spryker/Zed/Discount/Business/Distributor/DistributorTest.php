@@ -40,7 +40,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
         $collectedDiscountTransfer->setDiscount($discountTransfer);
         $collectedDiscountTransfer->setDiscountableItems($discountableObjects);
 
-        $distributor->distribute($collectedDiscountTransfer);
+        $distributor->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
 
         $totalAmount = 0;
         foreach ($discountableObjects as $discountableObject) {
@@ -72,7 +72,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
         $collectedDiscountTransfer = new CollectedDiscountTransfer();
         $collectedDiscountTransfer->setDiscountableItems($discountableObjects);
 
-        $distributor->distribute($collectedDiscountTransfer);
+        $distributor->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
 
         $totalAmount = 0;
         foreach ($discountableObjects as $discountableObject) {
@@ -103,7 +103,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
         $collectedDiscountTransfer->setDiscount($discountTransfer);
         $collectedDiscountTransfer->setDiscountableItems($discountableObjects);
 
-        $distributor->distribute($collectedDiscountTransfer);
+        $distributor->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
 
         $totalAmount = 0;
         foreach ($discountableObjects as $discountableObject) {
@@ -134,7 +134,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
         $collectedDiscountTransfer->setDiscount($discountTransfer);
         $collectedDiscountTransfer->setDiscountableItems($discountableObjects);
 
-        $distributor->distribute($collectedDiscountTransfer);
+        $distributor->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
 
         $totalAmount = 0;
         foreach ($discountableObjects as $discountableObject) {
@@ -164,7 +164,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
         $collectedDiscountTransfer->setDiscount($discountTransfer);
         $collectedDiscountTransfer->setDiscountableItems(new \ArrayObject($discountableObjects));
 
-        $distributor->distribute($collectedDiscountTransfer);
+        $distributor->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
 
         $totalAmount = 0;
         foreach ($discountableObjects as $discountableObject) {

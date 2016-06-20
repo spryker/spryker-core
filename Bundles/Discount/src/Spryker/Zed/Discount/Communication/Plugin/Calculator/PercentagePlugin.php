@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class Percentage extends AbstractPlugin implements DiscountCalculatorPluginInterface
+class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface
 {
 
     /**
@@ -62,7 +62,7 @@ class Percentage extends AbstractPlugin implements DiscountCalculatorPluginInter
     }
 
     /**
-     * @return \Symfony\Component\Validator\ValidatorInterface
+     * @return \Symfony\Component\Validator\Constraint
      */
     public function getAmountValidators()
     {

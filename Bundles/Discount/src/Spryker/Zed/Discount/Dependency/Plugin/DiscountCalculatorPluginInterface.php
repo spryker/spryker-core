@@ -40,7 +40,7 @@ interface DiscountCalculatorPluginInterface
     public function getFormattedAmount($amount);
 
     /**
-     * @return \Symfony\Component\Validator\ValidatorInterface
+     * @return array
      */
     public function getAmountValidators();
 

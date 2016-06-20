@@ -109,7 +109,7 @@ class DiscountsTable extends AbstractTable
             $result[] = [
                 SpyDiscountTableMap::COL_ID_DISCOUNT => $discountEntity->getIdDiscount(),
                 SpyDiscountTableMap::COL_DISPLAY_NAME => $discountEntity->getDisplayName(),
-                SpyDiscountTableMap::COL_AMOUNT => $this->createFormatterAmount($discountEntity),
+                SpyDiscountTableMap::COL_AMOUNT => $this->getFormattedAmount($discountEntity),
                 self::TABLE_COL_TYPE => $this->getDiscountType($discountEntity),
                 self::TYPE_COL_PERIOD => $this->createTimePeriod($discountEntity),
                 SpyDiscountTableMap::COL_IS_ACTIVE => $this->getStatus($discountEntity),
@@ -128,6 +128,7 @@ class DiscountsTable extends AbstractTable
      */
     protected function getActionButtons(SpyDiscount $discountEntity)
     {
+        $buttons = [];
         $buttons[] = $this->createEditButton($discountEntity);
         $buttons[] = $this->createViewButton($discountEntity);
         $buttons[] = $this->createAddVoucherCodeButton($discountEntity);
@@ -265,7 +266,7 @@ class DiscountsTable extends AbstractTable
      *
      * @return string
      */
-    protected function createFormatterAmount(SpyDiscount $discountEntity)
+    protected function getFormattedAmount(SpyDiscount $discountEntity)
     {
         return $this->getCalculatorPlugin(
             $discountEntity->getCalculatorPlugin()

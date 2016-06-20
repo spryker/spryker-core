@@ -92,21 +92,21 @@ class VoucherEngine implements VoucherEngineInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoInterface
+     * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoTransfer
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
-    protected function acceptVoucherCodesTransaction(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
+    protected function acceptVoucherCodesTransaction(VoucherCreateInfoTransfer $voucherCreateInfoTransfer)
     {
-        if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_SUCCESS) {
+        if ($voucherCreateInfoTransfer->getType() === DiscountConstants::MESSAGE_TYPE_SUCCESS) {
             $this->getConnection()->commit();
 
-            return $voucherCreateInfoInterface;
+            return $voucherCreateInfoTransfer;
         }
 
         $this->getConnection()->rollBack();
 
-        return $voucherCreateInfoInterface;
+        return $voucherCreateInfoTransfer;
     }
 
     /**

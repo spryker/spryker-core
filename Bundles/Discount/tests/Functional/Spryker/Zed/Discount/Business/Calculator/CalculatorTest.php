@@ -21,7 +21,7 @@ use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
-use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
@@ -231,11 +231,11 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage
+     * @return \Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin
      */
     protected function createPercentageCalculator()
     {
-        return new Percentage();
+        return new PercentagePlugin();
     }
 
     /**

@@ -5,7 +5,7 @@
  */
 namespace Spryker\Zed\Product\Business\Product;
 
-interface ProductVariantInterface
+interface ProductVariantBuilderInterface
 {
 
     /**

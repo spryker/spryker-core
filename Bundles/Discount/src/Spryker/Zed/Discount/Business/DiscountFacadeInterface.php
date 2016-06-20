@@ -1,10 +1,8 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-
 namespace Spryker\Zed\Discount\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -14,12 +12,11 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
  */
-class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
+interface DiscountFacadeInterface
 {
 
     /**
@@ -37,12 +34,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function calculateDiscounts(QuoteTransfer $quoteTransfer)
-    {
-        return $this->getFactory()
-            ->createDiscount()
-            ->calculate($quoteTransfer);
-    }
+    public function calculateDiscounts(QuoteTransfer $quoteTransfer);
 
     /**
      *
@@ -57,15 +49,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function isItemSkuSatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-        return $this->getFactory()
-            ->createSkuDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-    }
+    public function isItemSkuSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      *
@@ -80,15 +64,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function isQuoteGrandTotalSatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-        return $this->getFactory()
-            ->createGrandTotalDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-    }
+    public function isQuoteGrandTotalSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      *  Specification:
@@ -102,15 +78,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function isTotalQuantitySatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-        return $this->getFactory()
-            ->createTotalQuantityDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-    }
+    public function isTotalQuantitySatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      *  Specification:
@@ -124,16 +92,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function isSubTotalSatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-
-        return $this->getFactory()
-            ->createSubTotalDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-    }
+    public function isSubTotalSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      *  Specification:
@@ -147,12 +106,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return array
      */
-    public function collectBySku(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
-    {
-        return $this->getFactory()
-            ->createSkuCollector()
-            ->collect($quoteTransfer, $clauseTransfer);
-    }
+    public function collectBySku(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      * Specification:
@@ -166,16 +120,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function isItemQuantitySatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-
-        return $this->getFactory()
-            ->createItemQuantityDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-    }
+    public function isItemQuantitySatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      * Specification:
@@ -188,12 +133,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
-    public function collectByItemQuantity(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
-    {
-        return $this->getFactory()
-            ->createItemQuantityCollector()
-            ->collect($quoteTransfer, $clauseTransfer);
-    }
+    public function collectByItemQuantity(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      * Specification:
@@ -207,15 +147,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function isItemPriceSatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-        return $this->getFactory()
-            ->createItemPriceDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-    }
+    public function isItemPriceSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      *
@@ -229,12 +161,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
-    public function collectByItemPrice(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
-    {
-        return $this->getFactory()
-            ->createItemPriceCollector()
-            ->collect($quoteTransfer, $clauseTransfer);
-    }
+    public function collectByItemPrice(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      *
@@ -249,15 +176,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function isCalendarWeekSatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-        return $this->getFactory()
-           ->createCalendarWeekDecisionRule()
-           ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-    }
+    public function isCalendarWeekSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      *
@@ -272,15 +191,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function isDayOfTheWeekSatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-        return $this->getFactory()
-            ->createDayOfWeekDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-    }
+    public function isDayOfTheWeekSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      * Specification:
@@ -294,16 +205,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function isMonthSatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-
-        return $this->getFactory()
-            ->createMonthDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-    }
+    public function isMonthSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      * Specification:
@@ -317,15 +219,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return boolean
      */
-    public function isTimeSatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    ) {
-        return $this->getFactory()
-            ->createTimeDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-    }
+    public function isTimeSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
      *
@@ -339,13 +233,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return array|string[]
      */
-    public function getQueryStringFieldsByType($type)
-    {
-        return $this->getFactory()
-            ->createQueryStringMetaDataProviderFactory()
-            ->createMetaProviderByType($type)
-            ->getAvailableFields();
-    }
+    public function getQueryStringFieldsByType($type);
 
     /**
      *
@@ -360,13 +248,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return array|string[]
      */
-    public function getQueryStringFieldExpressionsForField($type, $fieldName)
-    {
-        return $this->getFactory()
-            ->createQueryStringMetaDataProviderFactory()
-            ->createMetaProviderByType($type)
-            ->getAvailableOperatorExpressionsForField($fieldName);
-    }
+    public function getQueryStringFieldExpressionsForField($type, $fieldName);
 
     /**
      *
@@ -380,13 +262,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return array|string[]
      */
-    public function getQueryStringComparatorExpressions($type)
-    {
-        return $this->getFactory()
-            ->createQueryStringMetaDataProviderFactory()
-            ->createMetaProviderByType($type)
-            ->getAvailableComparatorExpressions();
-    }
+    public function getQueryStringComparatorExpressions($type);
 
     /**
      *
@@ -400,13 +276,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return array|string[]
      */
-    public function getQueryStringLogicalComparators($type)
-    {
-        return $this->getFactory()
-            ->createQueryStringMetaDataProviderFactory()
-            ->createMetaProviderByType($type)
-            ->getLogicalComparators();
-    }
+    public function getQueryStringLogicalComparators($type);
 
     /**
      *
@@ -423,12 +293,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function queryStringCompare(ClauseTransfer $clauseTransfer, $compareWith)
-    {
-        return $this->getFactory()
-            ->createComparatorOperators()
-            ->compare($clauseTransfer, $compareWith);
-    }
+    public function queryStringCompare(ClauseTransfer $clauseTransfer, $compareWith);
 
     /**
      *
@@ -444,13 +309,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return array|string[]
      */
-    public function validateQueryStringByType($type, $queryString)
-    {
-        return $this->getFactory()
-            ->createQueryStringValidator()
-            ->validateByType($type, $queryString);
-    }
-
+    public function validateQueryStringByType($type, $queryString);
 
     /**
      * Specification:
@@ -464,12 +323,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return int
      */
-    public function saveDiscount(DiscountConfiguratorTransfer $discountConfigurator)
-    {
-        return $this->getFactory()
-            ->createDiscountPersist()
-            ->save($discountConfigurator);
-    }
+    public function saveDiscount(DiscountConfiguratorTransfer $discountConfigurator);
 
     /**
      *
@@ -484,12 +338,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function updateDiscount(DiscountConfiguratorTransfer $discountConfigurator)
-    {
-        return $this->getFactory()
-            ->createDiscountPersist()
-            ->update($discountConfigurator);
-    }
+    public function updateDiscount(DiscountConfiguratorTransfer $discountConfigurator);
 
     /**
      * Specification:
@@ -504,12 +353,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
-    public function getHydratedDiscountConfiguratorByIdDiscount($idDiscount)
-    {
-        return $this->getFactory()
-            ->createDiscountConfiguratorHydrate()
-            ->getByIdDiscount($idDiscount);
-    }
+    public function getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
 
     /**
      *
@@ -525,13 +369,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function toggleDiscountVisibility($idDiscount, $isActive = false)
-    {
-        return $this->getFactory()
-            ->createDiscountPersist()
-            ->toggleDiscountVisibility($idDiscount, $isActive);
-    }
-
+    public function toggleDiscountVisibility($idDiscount, $isActive = false);
 
     /**
      *
@@ -549,12 +387,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
-    public function saveVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer)
-    {
-        return $this->getFactory()
-            ->createDiscountPersist()
-            ->saveVoucherCodes($discountVoucherTransfer);
-    }
+    public function saveVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer);
 
     /**
      *
@@ -572,12 +405,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return float
      */
-    public function calculatePercentage(array $discountableObjects, $percentage)
-    {
-        return $this->getFactory()
-            ->createCalculatorPercentage()
-            ->calculate($discountableObjects, $percentage);
-    }
+    public function calculatePercentage(array $discountableObjects, $percentage);
 
     /**
      *
@@ -593,12 +421,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return float
      */
-    public function calculateFixed(array $discountableObjects, $amount)
-    {
-        return $this->getFactory()
-            ->createCalculatorFixed()
-            ->calculate($discountableObjects, $amount);
-    }
+    public function calculateFixed(array $discountableObjects, $amount);
 
     /**
      *
@@ -614,12 +437,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return void
      */
-    public function distributeAmount(CollectedDiscountTransfer $collectedDiscountTransfer)
-    {
-        $this->getFactory()
-            ->createDistributor()
-            ->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
-    }
+    public function distributeAmount(CollectedDiscountTransfer $collectedDiscountTransfer);
 
     /**
      *
@@ -634,12 +452,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function releaseUsedVoucherCodes(array $voucherCodes)
-    {
-        return $this->getFactory()
-            ->createVoucherCode()
-            ->releaseUsedCodes($voucherCodes);
-    }
+    public function releaseUsedVoucherCodes(array $voucherCodes);
 
     /**
      *
@@ -654,12 +467,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function useVoucherCodes(array $voucherCodes)
-    {
-        return $this->getFactory()
-            ->createVoucherCode()
-            ->useCodes($voucherCodes);
-    }
+    public function useVoucherCodes(array $voucherCodes);
 
     /**
      *
@@ -676,11 +484,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return void
      */
-    public function saveOrderDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
-        $this->getFactory()
-            ->createDiscountOrderSaver()
-            ->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
-    }
+    public function saveOrderDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
 }

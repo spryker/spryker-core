@@ -10,14 +10,13 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class Fixed extends AbstractPlugin implements DiscountCalculatorPluginInterface
+class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface
 {
 
     /**
@@ -69,7 +68,7 @@ class Fixed extends AbstractPlugin implements DiscountCalculatorPluginInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Validator\ValidatorInterface
+     * @return \Symfony\Component\Validator\Constraint
      */
     public function getAmountValidators()
     {

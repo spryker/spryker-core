@@ -198,11 +198,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
      */
     protected function isMatchAllValue($withValue)
     {
-        if ($withValue === self::MATCH_ALL_IDENTIFIER) {
-            return true;
-        }
-
-        return false;
+        return ($withValue === self::MATCH_ALL_IDENTIFIER);
     }
 
 }

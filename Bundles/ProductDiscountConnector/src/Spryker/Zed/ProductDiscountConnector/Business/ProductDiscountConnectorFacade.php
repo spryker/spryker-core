@@ -19,6 +19,11 @@ class ProductDiscountConnectorFacade extends AbstractFacade
 {
 
     /**
+     *
+     * Specification:
+     * - Build all product variants by abstract sku
+     * - Look for attribute in any variants
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -39,6 +44,11 @@ class ProductDiscountConnectorFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     * - Build all product variants by abstract sku
+     * - Look for attribute in any variants
+     * - Collect all matching items
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -54,6 +64,10 @@ class ProductDiscountConnectorFacade extends AbstractFacade
     }
 
     /**
+     *
+     *  Specification:
+     * - Query and return array list of attributes
+     *
      * @api
      *
      * @return array|string[]

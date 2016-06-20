@@ -8,22 +8,22 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
-use Spryker\Zed\Discount\Business\QueryString\Comparator\More;
+use Spryker\Zed\Discount\Business\QueryString\Comparator\GreaterEqual;
 
-class MoreTest extends \PHPUnit_Framework_TestCase
+class GreaterEqualTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
      * @return void
      */
-    public function testAcceptShouldReturnTrueWhenMoreExpressionProvided()
+    public function testAcceptShouldReturnTrueWhenMoreEqualExpressionProvided()
     {
-        $more = $this->createMore();
+        $moreEqual = $this->createMoreEqual();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setOperator('>');
+        $clauseTransfer->setOperator('>=');
 
-        $isAccepted = $more->accept($clauseTransfer);
+        $isAccepted = $moreEqual->accept($clauseTransfer);
 
         $this->assertTrue($isAccepted);
     }
@@ -33,12 +33,12 @@ class MoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testCompareWhenClauseValueIsBiggerThanProvidedShouldReturnTrue()
     {
-        $more = $this->createMore();
+        $moreEqual = $this->createMoreEqual();
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setValue('1');
 
-        $isMatching = $more->compare($clauseTransfer, '2');
+        $isMatching = $moreEqual->compare($clauseTransfer, '2');
 
         $this->assertTrue($isMatching);
     }
@@ -48,14 +48,29 @@ class MoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testCompareWhenClauseValueIsSmallerThanProvidedShouldReturnFalse()
     {
-        $more = $this->createMore();
+        $moreEqual = $this->createMoreEqual();
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setValue('2');
 
-        $isMatching = $more->compare($clauseTransfer, '1');
+        $isMatching = $moreEqual->compare($clauseTransfer, '1');
 
         $this->assertFalse($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCompareWhenClauseValueIsEqualShouldReturnTrue()
+    {
+        $moreEqual = $this->createMoreEqual();
+
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue('1');
+
+        $isMatching = $moreEqual->compare($clauseTransfer, '1');
+
+        $this->assertTrue($isMatching);
     }
 
     /**
@@ -65,19 +80,19 @@ class MoreTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(ComparatorException::class);
 
-        $more = $this->createMore();
+        $moreEqual = $this->createMoreEqual();
 
         $clauseTransfer = new ClauseTransfer();
 
-        $more->compare($clauseTransfer, 'as');
+        $moreEqual->compare($clauseTransfer, 'as');
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\More
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\GreaterEqual
      */
-    protected function createMore()
+    protected function createMoreEqual()
     {
-        return new More();
+        return new GreaterEqual();
     }
 
 }

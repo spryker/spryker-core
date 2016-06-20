@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\Transformer;
 
+use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class CalculatorAmountTransformer implements DataTransformerInterface
@@ -64,6 +65,8 @@ class CalculatorAmountTransformer implements DataTransformerInterface
     /**
      * @param string $pluginName
      *
+     * @throws \Spryker\Zed\Discount\Business\Exception\CalculatorException
+     *
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
     protected function getCalculatorPlugin($pluginName)
@@ -72,8 +75,9 @@ class CalculatorAmountTransformer implements DataTransformerInterface
             return $this->calculatorPlugins[$pluginName];
         }
 
-        throw new \InvalidArgumentException(sprintf(
-            'Calculator plugin with name "%s" not found',
+        throw new CalculatorException(sprintf(
+            'Calculator plugin with name "%s" not found. 
+            Have you added it to DiscountDependencyProvider::getAvailableCalculatorPlugins plugin stack?',
             $pluginName
         ));
     }

@@ -12,7 +12,6 @@ use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
 use Spryker\Zed\Product\Business\Importer\FileImporter;
-use Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter;
 use Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator;
 use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductAbstractWriter;
 use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductConcreteWriter;
@@ -20,7 +19,7 @@ use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
 use Spryker\Zed\Product\Business\Internal\Install;
 use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Product\Business\Product\ProductManager;
-use Spryker\Zed\Product\Business\Product\ProductVariant;
+use Spryker\Zed\Product\Business\Product\ProductVariantBuilder;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
@@ -34,16 +33,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      * @var \Spryker\Zed\Product\Business\Product\ProductManager
      */
     protected $productManager;
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter
-     */
-    public function createHttpFileImporter()
-    {
-        return new UploadedFileImporter(
-            $this->getConfig()->getDestinationDirectoryForUploads()
-        );
-    }
 
     /**
      * @return string
@@ -166,11 +155,11 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductVariant
+     * @return \Spryker\Zed\Product\Business\Product\ProductVariantBuilder
      */
-    public function createProductVariant()
+    public function createProductVariantBuilder()
     {
-         return new ProductVariant($this->getQueryContainer());
+         return new ProductVariantBuilder($this->getQueryContainer());
     }
 
     /**

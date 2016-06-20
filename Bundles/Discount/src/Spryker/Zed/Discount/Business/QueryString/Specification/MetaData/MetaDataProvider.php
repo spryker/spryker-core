@@ -30,7 +30,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     protected $logicalComparators;
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface $specificationPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[] $specificationPlugins
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators $comparatorOperators
      * @param \Spryker\Zed\Discount\Business\QueryString\LogicalComparators $logicalComparators
      */

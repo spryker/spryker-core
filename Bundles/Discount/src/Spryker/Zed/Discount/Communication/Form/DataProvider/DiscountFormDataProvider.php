@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;

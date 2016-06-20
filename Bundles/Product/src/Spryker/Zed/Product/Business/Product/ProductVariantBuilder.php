@@ -8,11 +8,13 @@ namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductVariantTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductLocalizedAttributes;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Spryker\Shared\Library\Json;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-class ProductVariant implements ProductVariantInterface
+class ProductVariantBuilder implements ProductVariantBuilderInterface
 {
 
     /**
@@ -61,16 +63,11 @@ class ProductVariant implements ProductVariantInterface
 
         $abstractProductVariants = [];
         foreach ($abstractLocalizedAttributes as $localizedAttributeEntity) {
-            $productVariantTransfer = new ProductVariantTransfer();
-            $productVariantTransfer->fromArray($abstractProductEntity->toArray(), true);
-            $productVariantTransfer->fromArray($localizedAttributeEntity->toArray(), true);
-            $productVariantTransfer->setLocaleName($localizedAttributeEntity->getLocale()->getLocaleName());
-
-            $localizedAttributes = array_merge(
-                $abstractProductAttributes,
-                Json::decode($localizedAttributeEntity->getAttributes(), true)
+            $productVariantTransfer = $this->hydrateAbstractProductVariant(
+                $abstractProductEntity,
+                $localizedAttributeEntity,
+                $abstractProductAttributes
             );
-            $productVariantTransfer->setAttributes($localizedAttributes);
 
             $abstractProductVariants[$localizedAttributeEntity->getFkLocale()] = $productVariantTransfer;
         }
@@ -91,34 +88,55 @@ class ProductVariant implements ProductVariantInterface
         $productVariants = [];
         $concreteProducts = $abstractProduct->getSpyProducts();
         foreach ($concreteProducts as $concreteProductEntity) {
-            $concreteProductAttributes = Json::decode($concreteProductEntity->getAttributes(), true);
-            $concreteLocalizedConcreteProductAttributes = $concreteProductEntity->getSpyProductLocalizedAttributess();
-
-            foreach ($concreteLocalizedConcreteProductAttributes as $localizedAttributeEntity) {
-                $productVariantTransfer = $this->getProductVariantTransfer(
-                    $abstractProductVariants,
-                    $localizedAttributeEntity
-                );
-                $mergedAbstractAttributes = $productVariantTransfer->getAttributes();
-
-                $productVariantTransfer->fromArray($concreteProductEntity->toArray(), true);
-                $productVariantTransfer->fromArray($localizedAttributeEntity->toArray(), true);
-
-                $localizedConcreteProductAttributes = Json::decode($localizedAttributeEntity->getAttributes(), true);
-
-                $concreteMergedAttributes = array_merge(
-                    $mergedAbstractAttributes,
-                    $concreteProductAttributes,
-                    $localizedConcreteProductAttributes
-                );
-
-                $productVariantTransfer->setAttributes($concreteMergedAttributes);
-                $productVariants[] = $productVariantTransfer;
-
-            }
+            $concreteProductVariants = $this->createConcreteProductLocalizedVariants(
+                $abstractProductVariants,
+                $concreteProductEntity
+            );
+            $productVariants = array_merge($productVariants, $concreteProductVariants);
         }
         return $productVariants;
     }
+
+    /**
+     * @param array $abstractProductVariants
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $concreteProductEntity
+     *
+     * @return array
+     */
+    protected function createConcreteProductLocalizedVariants(
+        array $abstractProductVariants,
+        SpyProduct $concreteProductEntity
+    ) {
+
+        $productVariants = [];
+        $concreteProductAttributes = Json::decode($concreteProductEntity->getAttributes(), true);
+        $concreteLocalizedConcreteProductAttributes = $concreteProductEntity->getSpyProductLocalizedAttributess();
+
+        foreach ($concreteLocalizedConcreteProductAttributes as $localizedAttributeEntity) {
+            $productVariantTransfer = $this->getProductVariantTransfer(
+                $abstractProductVariants,
+                $localizedAttributeEntity
+            );
+            $mergedAbstractAttributes = $productVariantTransfer->getAttributes();
+
+            $productVariantTransfer->fromArray($concreteProductEntity->toArray(), true);
+            $productVariantTransfer->fromArray($localizedAttributeEntity->toArray(), true);
+
+            $localizedConcreteProductAttributes = Json::decode($localizedAttributeEntity->getAttributes(), true);
+
+            $concreteMergedAttributes = array_merge(
+                $mergedAbstractAttributes,
+                $concreteProductAttributes,
+                $localizedConcreteProductAttributes
+            );
+
+            $productVariantTransfer->setAttributes($concreteMergedAttributes);
+            $productVariants[] = $productVariantTransfer;
+
+        }
+        return $productVariants;
+    }
+
 
     /**
      * @param array $abstractProductVariants
@@ -138,6 +156,32 @@ class ProductVariant implements ProductVariantInterface
             $productVariantTransfer = new ProductVariantTransfer();
             $productVariantTransfer->setLocaleName($localizedAttributeEntity->getLocale()->getLocaleName());
         }
+
+        return $productVariantTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $localizedAttributeEntity
+     * @param array $abstractProductAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductVariantTransfer
+     */
+    protected function hydrateAbstractProductVariant(
+        SpyProductAbstract $abstractProductEntity,
+        SpyProductAbstractLocalizedAttributes $localizedAttributeEntity,
+        array $abstractProductAttributes
+    ) {
+        $productVariantTransfer = new ProductVariantTransfer();
+        $productVariantTransfer->fromArray($abstractProductEntity->toArray(), true);
+        $productVariantTransfer->fromArray($localizedAttributeEntity->toArray(), true);
+        $productVariantTransfer->setLocaleName($localizedAttributeEntity->getLocale()->getLocaleName());
+
+        $localizedAttributes = array_merge(
+            $abstractProductAttributes,
+            Json::decode($localizedAttributeEntity->getAttributes(), true)
+        );
+        $productVariantTransfer->setAttributes($localizedAttributes);
 
         return $productVariantTransfer;
     }

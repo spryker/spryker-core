@@ -9,12 +9,12 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Equal;
+use Spryker\Zed\Discount\Business\QueryString\Comparator\Greater;
+use Spryker\Zed\Discount\Business\QueryString\Comparator\GreaterEqual;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Less;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\LessEqual;
-use Spryker\Zed\Discount\Business\QueryString\Comparator\More;
-use Spryker\Zed\Discount\Business\QueryString\Comparator\MoreEqual;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
 
 class OperatorProvider
@@ -33,8 +33,8 @@ class OperatorProvider
             $this->createIsNotIn(),
             $this->createLess(),
             $this->createLessEqual(),
-            $this->createMore(),
-            $this->createMoreEqual(),
+            $this->createGreater(),
+            $this->createGreaterEqual(),
             $this->createNotEqual()
         ];
     }
@@ -96,19 +96,19 @@ class OperatorProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\More
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Greater
      */
-    protected function createMore()
+    protected function createGreater()
     {
-        return new More();
+        return new Greater();
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\MoreEqual
+     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\GreaterEqual
      */
-    protected function createMoreEqual()
+    protected function createGreaterEqual()
     {
-        return new MoreEqual();
+        return new GreaterEqual();
     }
 
     /**

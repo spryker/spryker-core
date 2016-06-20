@@ -7,6 +7,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
+use Spryker\Zed\Discount\Business\Exception\QueryBuilderException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
@@ -126,7 +127,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateCollectorShouldThrowExceptionWhenNonExistingTypeUsed()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(QueryBuilderException::class);
 
         $validator = $this->createValidator();
 

@@ -22,11 +22,12 @@ class Distributor implements DistributorInterface
 
     /**
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
+     *
      * @throws \Spryker\Zed\Discount\Business\Exception\DistributorException
      *
      * @return void
      */
-    public function distribute(CollectedDiscountTransfer $collectedDiscountTransfer)
+    public function distributeDiscountAmountToDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer)
     {
         $totalGrossAmount = $this->getTotalGrossAmountOfDiscountableObjects($collectedDiscountTransfer);
         if ($totalGrossAmount <= 0) {

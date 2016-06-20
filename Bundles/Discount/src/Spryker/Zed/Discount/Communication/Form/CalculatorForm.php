@@ -8,6 +8,7 @@ namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
@@ -56,7 +57,6 @@ class CalculatorForm extends AbstractType
         array $calculatorPlugins,
         CalculatorAmountTransformer $calculatorAmountTransformer
     ) {
-
         $this->calculatorFormDataProvider = $calculatorFormDataProvider;
         $this->discountFacade = $discountFacade;
         $this->calculatorPlugins = $calculatorPlugins;
@@ -90,6 +90,7 @@ class CalculatorForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $data
+     *
      * @return void
      */
     protected function addCalculatorPluginAmountValidators(FormInterface $form, array $data)
@@ -192,7 +193,10 @@ class CalculatorForm extends AbstractType
     /**
      * @param string $pluginName
      *
+     * @throws \Spryker\Zed\Discount\Business\Exception\CalculatorException
+     *
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
+     *
      */
     protected function getCalculatorPlugin($pluginName)
     {
@@ -200,8 +204,9 @@ class CalculatorForm extends AbstractType
             return $this->calculatorPlugins[$pluginName];
         }
 
-        throw new \InvalidArgumentException(sprintf(
-            'Calculator plugin with name "%s" not found',
+        throw new CalculatorException(sprintf(
+            'Calculator plugin with name "%s" not found. 
+            Have you added it to DiscountDependencyProvider::getAvailableCalculatorPlugins plugin stack?',
             $pluginName
         ));
 

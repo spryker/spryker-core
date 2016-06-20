@@ -10,21 +10,22 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
-class MoreEqual implements ComparatorInterface
+class Greater implements ComparatorInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
-     * @return bool
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
         $this->isValidValue($withValue);
 
-        return $withValue >= $clauseTransfer->getValue();
+        return $withValue > $clauseTransfer->getValue();
     }
 
     /**
@@ -42,7 +43,7 @@ class MoreEqual implements ComparatorInterface
      */
     public function getExpression()
     {
-        return '>=';
+        return '>';
     }
 
     /**
@@ -66,7 +67,7 @@ class MoreEqual implements ComparatorInterface
     public function isValidValue($withValue)
     {
         if (!is_numeric($withValue)) {
-            throw new ComparatorException('Only numeric value can be used together with ">=" comparator.');
+            throw new ComparatorException('Only numeric value can be used together with ">" comparator.');
         }
 
         return true;

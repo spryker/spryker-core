@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Discount\Business\QueryString;
 
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
+use Spryker\Zed\Discount\Business\Exception\QueryBuilderException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 
@@ -39,7 +40,10 @@ class Validator implements ValidatorInterface
      * @param string $type
      * @param string $queryString
      *
-     * @return array|string[]
+     * @throws \Spryker\Zed\Discount\Business\Exception\QueryBuilderException
+     *
+     * @return array|\string[]
+     *
      */
     public function validateByType($type, $queryString)
     {
@@ -55,9 +59,9 @@ class Validator implements ValidatorInterface
                     break;
 
                 default:
-                    throw new \InvalidArgumentException(
+                    throw new QueryBuilderException(
                         sprintf(
-                            'Invalid type "%s" for validation request.',
+                            'Meta data provider with name "%s" is not provided for configuration in validator class. ',
                             $type
                         )
                     );

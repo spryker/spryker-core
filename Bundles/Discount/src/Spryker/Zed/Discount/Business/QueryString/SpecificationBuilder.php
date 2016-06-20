@@ -207,10 +207,10 @@ class SpecificationBuilder implements SpecificationBuilderInterface
         $rightNode,
         $compositeNode
     ) {
-
         if ($compositeNode !== null) {
             $leftNode = $compositeNode;
         }
+
         if ($logicalComparator === LogicalComparators::COMPARATOR_AND) {
             $compositeNode = $this->specificationProvider->createAnd($leftNode, $rightNode);
         } elseif ($logicalComparator === LogicalComparators::COMPARATOR_OR) {
@@ -271,7 +271,6 @@ class SpecificationBuilder implements SpecificationBuilderInterface
         }
 
         return false;
-
     }
 
     /**

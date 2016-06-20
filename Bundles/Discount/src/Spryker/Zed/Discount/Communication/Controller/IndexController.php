@@ -307,7 +307,7 @@ class IndexController extends AbstractController
                     $this->addSuccessMessage('Discount successfully updated.');
                 }
             } else {
-                $this->addErrorMessage('Mandatory Information missing');
+                $this->addErrorMessage('Please fill all required fields.');
             }
         }
     }

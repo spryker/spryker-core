@@ -25,7 +25,8 @@ class ProductDiscountConnectorToProductBridge implements ProductDiscountConnecto
 
     /**
      * @param string $abstractSku
-     * @return
+     *
+     * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
      */
     public function getProductVariantsByAbstractSku($abstractSku)
     {

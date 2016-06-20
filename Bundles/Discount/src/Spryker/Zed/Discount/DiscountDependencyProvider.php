@@ -9,8 +9,8 @@ namespace Spryker\Zed\Discount;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
-use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemByPriceCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemByQuantityCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
@@ -115,8 +115,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     public function getAvailableCalculatorPlugins()
     {
         return [
-            self::PLUGIN_CALCULATOR_PERCENTAGE => new Percentage(),
-            self::PLUGIN_CALCULATOR_FIXED => new Fixed(),
+            self::PLUGIN_CALCULATOR_PERCENTAGE => new PercentagePlugin(),
+            self::PLUGIN_CALCULATOR_FIXED => new FixedPlugin(),
         ];
     }
 
