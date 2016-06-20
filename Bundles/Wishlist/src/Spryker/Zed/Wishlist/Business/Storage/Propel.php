@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
-use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Wishlist\Business\Model\Customer;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
@@ -42,7 +42,7 @@ class Propel implements StorageInterface
     protected $customer;
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
     protected $facadeProduct;
 
@@ -51,14 +51,14 @@ class Propel implements StorageInterface
      * @param \Spryker\Zed\Wishlist\Business\Model\Customer $customer
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Spryker\Zed\Product\Business\ProductFacade $facadeProduct
+     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $facadeProduct
      */
     public function __construct(
         WishlistQueryContainerInterface $wishlistQueryContainer,
         Customer $customer,
         WishlistTransfer $wishlistTransfer,
         CustomerTransfer $customerTransfer,
-        ProductFacade $facadeProduct
+        ProductFacadeInterface $facadeProduct
     ) {
         $this->wishlistQueryContainer = $wishlistQueryContainer;
         $this->customerTransfer = $customerTransfer;
