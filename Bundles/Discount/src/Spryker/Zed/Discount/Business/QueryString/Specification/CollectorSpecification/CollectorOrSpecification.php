@@ -41,7 +41,7 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
         $leftCollectedItems = $this->left->collect($quoteTransfer);
         $rightCollectedItems = $this->right->collect($quoteTransfer);
 
-        return $this->array_merge_by_object($leftCollectedItems, $rightCollectedItems);
+        return $this->arrayMergeByObject($leftCollectedItems, $rightCollectedItems);
     }
 
     /**
@@ -50,7 +50,7 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
-    protected function array_merge_by_object(array $leftArray, array $rightArray)
+    protected function arrayMergeByObject(array $leftArray, array $rightArray)
     {
         if (count($leftArray) === 0) {
             return $rightArray;

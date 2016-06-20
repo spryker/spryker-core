@@ -85,7 +85,7 @@ class MetaDataProvider implements MetaDataProviderInterface
         }
 
         throw new QueryStringException(sprintf(
-            'No specification plugin found for "%s" field.',
+            'No specification plugin found for "%s" field. Have you added it to DiscountDependencyProvider::getCollectorPlugins or getDecisionRulePlugins respectively?',
             $fieldName
         ));
     }
