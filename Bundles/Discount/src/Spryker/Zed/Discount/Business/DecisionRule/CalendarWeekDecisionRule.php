@@ -17,7 +17,7 @@ class CalendarWeekDecisionRule implements DecisionRuleInterface
     const DATE_FORMAT = 'W';
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
+     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
     protected $comparators;
 

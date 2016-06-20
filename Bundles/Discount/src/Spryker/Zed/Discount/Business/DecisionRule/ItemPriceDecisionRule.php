@@ -16,7 +16,7 @@ class ItemPriceDecisionRule implements DecisionRuleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
+     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
     protected $comparators;
 

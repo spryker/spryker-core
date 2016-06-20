@@ -15,7 +15,7 @@ class ItemPriceCollector extends BaseCollector implements CollectorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
+     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
     protected $comparators;
 

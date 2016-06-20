@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
 class Percentage implements CalculatorInterface
 {
@@ -60,21 +61,21 @@ class Percentage implements CalculatorInterface
     /**
      * @param float $number
      *
-     * @throws \InvalidArgumentException
+     * @throws \Spryker\Zed\Discount\Business\Exception\CalculatorException
      *
      * @return void
      */
     protected function ensureIsValidNumber($number)
     {
         if (!is_float($number) && !is_int($number)) {
-            throw new \InvalidArgumentException('Wrong value number, only float or integer is allowed.');
+            throw new CalculatorException('Wrong value number, only float or integer is allowed.');
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
      *
-     * @return mixed
+     * @return int
      */
     protected function getDiscountableObjectQuantity(DiscountableItemTransfer $discountableItemTransfer)
     {

@@ -17,7 +17,7 @@ class TimeDecisionRule implements DecisionRuleInterface
     const TIME_FORMAT = 'H:i';
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
+     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
     protected $comparators;
 
