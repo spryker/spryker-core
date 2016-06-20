@@ -1,0 +1,34 @@
+{
+  "name": "spryker/product-image",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/",
+      "YvesUnit": "tests/"
+    }
+  },
+  "require": {
+    "spryker/kernel": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/product": "^2.0.0"
+  },
+  "suggest": {
+    "spryker/product": "Product bundle recommended"
+  },
+  "description": "ProductImage bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
