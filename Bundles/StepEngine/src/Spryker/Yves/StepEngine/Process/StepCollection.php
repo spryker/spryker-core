@@ -174,7 +174,7 @@ class StepCollection implements StepCollectionInterface
      */
     public function getNextUrl(StepInterface $currentStep, AbstractTransfer $dataTransfer)
     {
-        if (($currentStep instanceof StepWithExternalRedirectInterface) && !empty($currentStep->getExternalRedirectUrl())) {
+        if (($currentStep instanceof StepWithExternalRedirectInterface) && $currentStep->getExternalRedirectUrl()) {
             return $currentStep->getExternalRedirectUrl();
         }
 
@@ -197,7 +197,7 @@ class StepCollection implements StepCollectionInterface
             return $nextStep->getStepRoute();
         }
 
-        if (($currentStep instanceof StepWithPostConditionErrorRouteInterface) && !empty($currentStep->getPostConditionErrorRoute())) {
+        if (($currentStep instanceof StepWithPostConditionErrorRouteInterface) && $currentStep->getPostConditionErrorRoute()) {
             return $currentStep->getPostConditionErrorRoute();
         }
 
