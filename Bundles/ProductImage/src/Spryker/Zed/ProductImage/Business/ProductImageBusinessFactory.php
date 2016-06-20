@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductImage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductImage\ProductImageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
@@ -16,13 +15,4 @@ use Spryker\Zed\ProductImage\ProductImageDependencyProvider;
  */
 class ProductImageBusinessFactory extends AbstractBusinessFactory
 {
-
-    /**
-     * @return \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToProductInterface
-     */
-    protected function getProductFacade()
-    {
-        return $this->getProvidedDependency(ProductImageDependencyProvider::FACADE_PRODUCT);
-    }
-
 }
