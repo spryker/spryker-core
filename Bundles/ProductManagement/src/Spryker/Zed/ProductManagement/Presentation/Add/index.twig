@@ -85,19 +85,23 @@
         {# ============================ VARIANT ============================ #}
         <div id="tab_variant" class="tab-pane">
             <div class="panel-body">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Attributes
-                        </div>
-                        <div class="panel-body">
-                            {% for type,attributes in form.attributes %}
-                                <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Attributes
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                {% for type,attributes in form.attributes %}
+                                <div class="well">
                                     {{ form_errors(attributes.value) }}
                                     {{ form_row(attributes.value) }}
                                 </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
+                </div>
 
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover dataTables-example" >
