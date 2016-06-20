@@ -11,9 +11,13 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0",
-    "spryker/product": "^2.0.0",
-    "spryker/propel": "^2.0.0"
+    "spryker/kernel": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/product": "^2.0.0"
+  },
+  "suggest": {
+    "spryker/product": "Product bundle recommended"
   },
   "description": "ProductImage bundle",
   "license": "proprietary",
