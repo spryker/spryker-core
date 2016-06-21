@@ -7,16 +7,8 @@
 
 namespace Spryker\Zed\Installer;
 
-use Spryker\Zed\Acl\Communication\Plugin\Installer as AclInstallerPlugin;
-use Spryker\Zed\Country\Communication\Plugin\Installer as CountryInstallerPlugin;
-use Spryker\Zed\Glossary\Communication\Plugin\Installer as GlossaryInstallerPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Locale\Communication\Plugin\Installer as LocaleInstallerPlugin;
-use Spryker\Zed\Newsletter\Communication\Plugin\Installer as NewsletterInstallerPlugin;
-use Spryker\Zed\Price\Communication\Plugin\Installer as PriceInstallerPlugin;
-use Spryker\Zed\Product\Communication\Plugin\Installer as ProductInstallerPlugin;
-use Spryker\Zed\User\Communication\Plugin\Installer as UserInstallerPlugin;
 
 class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -46,16 +38,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function getInstallerPlugins()
     {
-        return [
-            new ProductInstallerPlugin(),
-            new PriceInstallerPlugin(),
-            new LocaleInstallerPlugin(),
-            new CountryInstallerPlugin(),
-            new UserInstallerPlugin(),
-            new AclInstallerPlugin(),
-            new NewsletterInstallerPlugin(),
-            new GlossaryInstallerPlugin(),
-        ];
+        return [];
     }
 
 }
