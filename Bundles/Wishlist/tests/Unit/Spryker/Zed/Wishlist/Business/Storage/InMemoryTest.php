@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Wishlist\Business\Storage\InMemory;
+use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductBridge;
 
 class InMemoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -174,7 +175,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface
      */
     public function createProductFacadeProductConcreteMock()
     {
@@ -182,7 +183,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
         $concreateProductTransfer->setIdProductAbstract(1);
 
         $productFacadeMock = $this
-            ->getMockBuilder('Spryker\Zed\Product\Business\ProductFacade')
+            ->getMockBuilder(WishlistToProductBridge::class)
             ->disableOriginalConstructor()
             ->getMock();
 
