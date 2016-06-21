@@ -52,7 +52,7 @@ class Greater implements ComparatorInterface
     public function getAcceptedTypes()
     {
         return [
-            ComparatorOperators::TYPE_INTEGER,
+            ComparatorOperators::TYPE_NUMBER,
         ];
     }
 

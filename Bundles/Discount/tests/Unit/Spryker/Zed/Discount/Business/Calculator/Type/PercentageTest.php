@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
+use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
 /**
  * Class PercentageTest
@@ -76,7 +77,7 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         );
 
         $calculator = new Percentage();
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(CalculatorException::class);
         $discountAmount = $calculator->calculate($items, 'string');
     }
 

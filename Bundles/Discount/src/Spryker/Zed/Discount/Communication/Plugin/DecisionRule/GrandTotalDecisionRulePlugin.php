@@ -55,7 +55,7 @@ class GrandTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRul
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_INTEGER,
+            ComparatorOperators::TYPE_NUMBER,
         ];
     }
 

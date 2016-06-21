@@ -91,7 +91,7 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
         $equalComparatorMock->expects($this->once())
             ->method('getAcceptedTypes')
             ->willReturn([
-                ComparatorOperators::TYPE_INTEGER,
+                ComparatorOperators::TYPE_NUMBER,
             ]);
 
         $comparatorOperators = $this->createComparatorOperators([$equalComparatorMock]);
@@ -118,7 +118,7 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
         $equalComparatorMock->expects($this->once())
             ->method('getAcceptedTypes')
             ->willReturn([
-                ComparatorOperators::TYPE_INTEGER,
+                ComparatorOperators::TYPE_NUMBER,
                 ComparatorOperators::TYPE_STRING
             ]);
         $equalComparatorMock->expects($this->once())
@@ -129,7 +129,7 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
         $moreComparatorMock->expects($this->once())
             ->method('getAcceptedTypes')
             ->willReturn([
-                ComparatorOperators::TYPE_INTEGER,
+                ComparatorOperators::TYPE_NUMBER,
             ]);
 
         $moreComparatorMock->expects($this->once())
@@ -145,7 +145,7 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
 
         $comparatorOperators = $this->createComparatorOperators([$equalComparatorMock, $moreComparatorMock, $lessComparatorMock]);
 
-        $expressions = $comparatorOperators->getOperatorExpressionsByTypes([ComparatorOperators::TYPE_INTEGER]);
+        $expressions = $comparatorOperators->getOperatorExpressionsByTypes([ComparatorOperators::TYPE_NUMBER]);
 
         $this->assertCount(2, $expressions);
         $this->assertEquals('=', $expressions[0]);

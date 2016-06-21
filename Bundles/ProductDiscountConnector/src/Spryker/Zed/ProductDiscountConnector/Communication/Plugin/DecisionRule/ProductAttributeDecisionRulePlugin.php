@@ -54,7 +54,7 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
     {
         return [
             ComparatorOperators::TYPE_STRING,
-            ComparatorOperators::TYPE_INTEGER,
+            ComparatorOperators::TYPE_NUMBER,
             ComparatorOperators::TYPE_LIST,
         ];
     }

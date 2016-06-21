@@ -9,8 +9,8 @@ namespace Unit\Spryker\Zed\Discount\Business;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
+use Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverterInterface;
 
 class BaseRuleTester extends \PHPUnit_Framework_TestCase
 {
@@ -24,11 +24,11 @@ class BaseRuleTester extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverterInterface
      */
-    protected function createCurrencyManagerMock()
+    protected function createCurrencyCoverterMock()
     {
-        return $this->getMock(CurrencyManagerInterface::class);
+        return $this->getMock(CurrencyConverterInterface::class);
     }
 
     /**

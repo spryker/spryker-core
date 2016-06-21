@@ -50,9 +50,9 @@ class ItemPriceDecisionRuleTest extends BaseRuleTester
         }
 
         if ($currencyManagerMock === null) {
-            $currencyManagerMock = $this->createCurrencyManagerMock();
-            $currencyManagerMock->method('convertDecimalToCent')->willReturnCallback(function ($amount) {
-                return $amount * 100;
+            $currencyManagerMock = $this->createCurrencyCoverterMock();
+            $currencyManagerMock->method('convertDecimalToCent')->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
+                return $clauseTransfer->setValue($clauseTransfer->getValue() * 100);
             });
         }
 

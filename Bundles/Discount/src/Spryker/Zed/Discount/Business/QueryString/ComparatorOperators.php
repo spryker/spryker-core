@@ -14,7 +14,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
 {
 
     const MATCH_ALL_IDENTIFIER = '*';
-    const TYPE_INTEGER  = 'integer';
+    const TYPE_NUMBER  = 'number';
     const TYPE_STRING  = 'string';
     const TYPE_LIST = 'list';
 

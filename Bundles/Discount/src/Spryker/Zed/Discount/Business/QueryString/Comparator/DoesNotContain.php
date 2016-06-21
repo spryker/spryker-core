@@ -53,7 +53,7 @@ class DoesNotContain implements ComparatorInterface
     {
         return [
             ComparatorOperators::TYPE_STRING,
-            ComparatorOperators::TYPE_INTEGER
+            ComparatorOperators::TYPE_NUMBER
         ];
     }
 

@@ -48,14 +48,14 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
 
         $decisionRulePluginMock->expects($this->once())
             ->method('acceptedDataTypes')
-            ->willReturn([ComparatorOperators::TYPE_INTEGER]);
+            ->willReturn([ComparatorOperators::TYPE_NUMBER]);
 
         $metaDataProvider = $this->createMetaDataProvider($decisionRulePluginMock);
 
         $acceptedDataTypes = $metaDataProvider->getAcceptedTypesByFieldName($fieldName);
 
         $this->assertCount(1, $acceptedDataTypes);
-        $this->assertEquals(ComparatorOperators::TYPE_INTEGER, $acceptedDataTypes[0]);
+        $this->assertEquals(ComparatorOperators::TYPE_NUMBER, $acceptedDataTypes[0]);
     }
 
     /**
@@ -72,14 +72,14 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
 
         $decisionRulePluginMock->expects($this->once())
             ->method('acceptedDataTypes')
-            ->willReturn([ComparatorOperators::TYPE_INTEGER]);
+            ->willReturn([ComparatorOperators::TYPE_NUMBER]);
 
         $comparatorOperatorsMock = $this->createComparatorOperatorsMock();
 
         $comparatorExpression = '=';
         $comparatorOperatorsMock->expects($this->once())
             ->method('getOperatorExpressionsByTypes')
-            ->with([ComparatorOperators::TYPE_INTEGER])
+            ->with([ComparatorOperators::TYPE_NUMBER])
             ->willReturn([$comparatorExpression]);
 
         $metaDataProvider = $this->createMetaDataProvider($decisionRulePluginMock, $comparatorOperatorsMock);

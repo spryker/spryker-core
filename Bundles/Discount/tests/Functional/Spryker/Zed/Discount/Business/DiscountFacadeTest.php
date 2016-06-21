@@ -69,7 +69,7 @@ class DiscountFacadeTest extends Test
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue(10);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_INTEGER
+            ComparatorOperators::TYPE_NUMBER
         ]);
 
         $isSatisfied = $discountFacade->isQuoteGrandTotalSatisfiedBy(
@@ -101,7 +101,7 @@ class DiscountFacadeTest extends Test
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue(5);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_INTEGER
+            ComparatorOperators::TYPE_NUMBER
         ]);
 
         $isSatisfied = $discountFacade->isTotalQuantitySatisfiedBy(
@@ -129,7 +129,7 @@ class DiscountFacadeTest extends Test
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue(50);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_INTEGER
+            ComparatorOperators::TYPE_NUMBER
         ]);
 
         $isSatisfied = $discountFacade->isSubTotalSatisfiedBy(
@@ -157,7 +157,7 @@ class DiscountFacadeTest extends Test
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('sku');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_INTEGER
+            ComparatorOperators::TYPE_NUMBER
         ]);
 
         $collected = $discountFacade->collectBySku($quoteTransfer, $clauseTransfer);

@@ -8,8 +8,8 @@ namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
+use Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverterInterface;
 
 class ItemPriceCollector extends BaseCollector implements CollectorInterface
 {
@@ -20,20 +20,20 @@ class ItemPriceCollector extends BaseCollector implements CollectorInterface
     protected $comparators;
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManager
+     * @var \Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverterInterface
      */
-    protected $currencyManager;
+    protected $currencyConverter;
 
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparators
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManager
+     * @param \Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverterInterface $currencyConverter
      */
     public function __construct(
         ComparatorOperatorsInterface $comparators,
-        CurrencyManagerInterface $currencyManager
+        CurrencyConverterInterface $currencyConverter
     ) {
         $this->comparators = $comparators;
-        $this->currencyManager = $currencyManager;
+        $this->currencyConverter = $currencyConverter;
     }
 
     /**
@@ -44,11 +44,9 @@ class ItemPriceCollector extends BaseCollector implements CollectorInterface
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
+        $this->currencyConverter->convertDecimalToCent($clauseTransfer);
+
         $discountableItems = [];
-
-        $amountInCents = $this->currencyManager->convertDecimalToCent($clauseTransfer->getValue());
-        $clauseTransfer->setValue($amountInCents);
-
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($this->comparators->compare($clauseTransfer, $itemTransfer->getUnitGrossPrice()) === false) {
                 continue;

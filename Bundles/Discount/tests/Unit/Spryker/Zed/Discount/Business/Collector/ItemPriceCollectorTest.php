@@ -59,7 +59,7 @@ class ItemPriceRuleTest extends BaseRuleTester
         }
 
         if (!$currencyManagerMock) {
-            $currencyManagerMock = $this->createCurrencyManagerMock();
+            $currencyManagerMock = $this->createCurrencyCoverterMock();
         }
 
         return new ItemPriceCollector($comparatorMock, $currencyManagerMock);

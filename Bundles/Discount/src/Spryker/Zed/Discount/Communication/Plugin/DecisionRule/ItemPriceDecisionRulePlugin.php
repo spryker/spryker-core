@@ -48,7 +48,7 @@ class ItemPriceDecisionRulePlugin extends AbstractPlugin implements DecisionRule
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_INTEGER
+            ComparatorOperators::TYPE_NUMBER
         ];
     }
 

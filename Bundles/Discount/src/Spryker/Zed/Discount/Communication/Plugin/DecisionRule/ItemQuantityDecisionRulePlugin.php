@@ -48,7 +48,7 @@ class ItemQuantityDecisionRulePlugin extends AbstractPlugin implements DecisionR
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_INTEGER,
+            ComparatorOperators::TYPE_NUMBER,
         ];
     }
 

@@ -48,7 +48,7 @@ class MonthDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlug
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_INTEGER
+            ComparatorOperators::TYPE_NUMBER
         ];
     }
 

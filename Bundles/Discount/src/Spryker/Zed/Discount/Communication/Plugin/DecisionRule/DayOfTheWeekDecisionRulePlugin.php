@@ -55,7 +55,7 @@ class DayOfTheWeekDecisionRulePlugin extends AbstractPlugin implements DecisionR
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_INTEGER,
+            ComparatorOperators::TYPE_NUMBER,
         ];
     }
 
