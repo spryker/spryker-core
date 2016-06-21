@@ -10,7 +10,7 @@ namespace Spryker\Zed\Wishlist\Business\Storage;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Spryker\Zed\Product\Business\ProductFacadeInterface;
+use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface;
 
 class InMemory implements StorageInterface
 {
@@ -21,15 +21,15 @@ class InMemory implements StorageInterface
     protected $wishlistTransfer;
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     * @var \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface
      */
     protected $productFacade;
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface $productFacade
      */
-    public function __construct(WishlistTransfer $wishlistTransfer, ProductFacadeInterface $productFacade)
+    public function __construct(WishlistTransfer $wishlistTransfer, WishlistToProductInterface $productFacade)
     {
         $this->wishlistTransfer = $wishlistTransfer;
         $this->productFacade = $productFacade;
