@@ -66,7 +66,7 @@ class LessEqual implements ComparatorInterface
      */
     public function isValidValue($withValue)
     {
-        if (!is_numeric($withValue)) {
+        if (preg_match(ComparatorOperators::NUMBER_REGEXP, $withValue) === 0) {
             throw new ComparatorException('Only numeric value can be used together with "<=" comparator.');
         }
 

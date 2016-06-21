@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class IsIn implements ComparatorInterface
 {
+
     const EXPRESSION = 'is in';
 
     /**

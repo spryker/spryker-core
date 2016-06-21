@@ -14,6 +14,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
 
 class CurrencyConverter implements CurrencyConverterInterface
 {
+
     /**
      * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
      */
@@ -34,14 +35,15 @@ class CurrencyConverter implements CurrencyConverterInterface
      */
     public function convertDecimalToCent(ClauseTransfer $clauseTransfer)
     {
-        if ($clauseTransfer->getOperator() == IsNotIn::EXPRESSION ||
-            $clauseTransfer->getOperator() == IsIn::EXPRESSION) {
+        if ($clauseTransfer->getOperator() === IsNotIn::EXPRESSION ||
+            $clauseTransfer->getOperator() === IsIn::EXPRESSION) {
             $this->convertListPrice($clauseTransfer);
         } else {
             $this->convertSinglePrice($clauseTransfer);
         }
 
     }
+
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -86,4 +88,5 @@ class CurrencyConverter implements CurrencyConverterInterface
     {
         return str_replace(',', '.', $value);
     }
+
 }

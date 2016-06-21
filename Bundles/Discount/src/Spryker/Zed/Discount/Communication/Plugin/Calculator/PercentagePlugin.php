@@ -62,13 +62,13 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint
+     * @return array
      */
     public function getAmountValidators()
     {
         return [
             new Regex([
-                'pattern' => '/[0-9\.]+/'
+                'pattern' => '/[0-9\.\,]+/'
             ]),
             new Range([
                 'min' => 1,

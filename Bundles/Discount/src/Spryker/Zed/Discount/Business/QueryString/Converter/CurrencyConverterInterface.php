@@ -9,10 +9,12 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 interface CurrencyConverterInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return void
      */
     public function convertDecimalToCent(ClauseTransfer $clauseTransfer);
+
 }

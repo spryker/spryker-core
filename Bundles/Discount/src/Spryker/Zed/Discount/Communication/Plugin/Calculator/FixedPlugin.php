@@ -27,8 +27,7 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
      */
     public function calculate(array $discountableItems, $percentage)
     {
-        return $this->getFacade()
-            ->calculateFixed($discountableItems, $percentage);
+        return $this->getFacade()->calculateFixed($discountableItems, $percentage);
     }
 
     /**
@@ -41,20 +40,27 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
 
     /**
      * @param int $value
+     *
      * @return float
      */
     public function transformForPersistence($value)
     {
-        return $this->getCurrencyManager()->convertDecimalToCent($value);
+        return $this->getCurrencyManager()->convertDecimalToCent(
+            str_replace(',', '.', $value)
+        );
     }
 
     /**
      * @param int $value
+     *
      * @return int
      */
     public function transformFromPersistence($value)
     {
-        return $this->getCurrencyManager()->convertCentToDecimal($value);
+        return $this->getCurrencyManager()->format(
+            $this->getCurrencyManager()->convertCentToDecimal($value),
+            false
+        );
     }
 
     /**
@@ -62,19 +68,19 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
      */
     public function getFormattedAmount($amount)
     {
-        $discountAmount = $this->transformFromPersistence($amount);
+        $discountAmount = $this->getCurrencyManager()->convertCentToDecimal($amount);
 
         return $this->getCurrencyManager()->format($discountAmount);
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint
+     * @return array
      */
     public function getAmountValidators()
     {
         return [
             new Regex([
-                'pattern' => '/[0-9\.]+/'
+                'pattern' => '/[0-9\.\,]+/'
             ]),
         ];
     }
