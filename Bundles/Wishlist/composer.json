@@ -2,7 +2,8 @@
   "name": "spryker/wishlist",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/"
+      "Spryker": "src/",
+      "Unit": "tests/"
     }
   },
   "require": {
