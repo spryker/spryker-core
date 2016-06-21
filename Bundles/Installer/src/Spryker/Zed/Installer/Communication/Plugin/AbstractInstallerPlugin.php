@@ -46,7 +46,6 @@ abstract class AbstractInstallerPlugin extends AbstractPlugin implements Install
     public function run()
     {
         if (!($this->messenger instanceof MessengerInterface)) {
-            //TODO add logging
             return;
         }
 
