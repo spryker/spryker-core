@@ -10,10 +10,12 @@ namespace Spryker\Zed\Tax;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridge;
 
 class TaxDependencyProvider extends AbstractBundleDependencyProvider
 {
     const STORE_CONFIG = 'store config';
+    const FACADE_COUNTRY = 'facade country';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,5 +29,17 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[self::FACADE_COUNTRY] = function (Container $container) {
+            return new TaxToCountryBridge($container->getLocator()->country()->facade());
+        };
     }
 }

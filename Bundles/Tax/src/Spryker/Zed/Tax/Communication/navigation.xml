@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <discount>
+        <label>Tax</label>
+        <title>Tax</title>
+        <uri>#</uri>
+        <icon>fa-credit-card</icon>
+        <bundle>tax</bundle>
+        <pages>
+            <pool>
+                <label>Tax Rates</label>
+                <title>Tax Rates</title>
+                <bundle>tax</bundle>
+                <controller>rate</controller>
+                <action>list</action>
+                <icon>fa-file-code-o</icon>
+            </pool>
+            <cart-rules>
+                <label>Tax Sets</label>
+                <title>Tax Sets</title>
+                <bundle>tax</bundle>
+                <controller>set</controller>
+                <action>list</action>
+                <icon>fa-thumb-tack</icon>
+            </cart-rules>
+        </pages>
+    </discount>
+</config>

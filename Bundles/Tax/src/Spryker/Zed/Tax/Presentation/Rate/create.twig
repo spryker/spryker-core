@@ -1,0 +1,21 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Create new tax rate' %}
+
+{% block action %}
+    {{ backActionButton('/tax/rate/list', 'Back to list' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tax rate list' } %}
+
+        {% block widget_content %}
+            {{ form(form) }}
+        {% endblock %}
+
+    {% endembed %}
+
+
+{% endblock %}
