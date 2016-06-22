@@ -34,6 +34,7 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $attributeCollection = $this->getFactory()->getProductAttributeCollection();
         $dataProvider = $this->getFactory()->createProductFormAddDataProvider();
         $form = $this
             ->getFactory()
@@ -42,25 +43,6 @@ class AddController extends AbstractController
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
-
-        $attributeCollection = [
-            'size' => [
-                '40' => '40',
-                '41' => '41',
-                '42' => '42',
-                '43' => '43',
-                '44' => '44',
-            ],
-            'color' => [
-                'blue' => 'Blue',
-                'red' => 'Red',
-                'white' => 'White',
-            ],
-            'flavour' => [
-                'spicy' => 'Mexican Food',
-                'sweet' => 'Cakes'
-            ]
-        ];
 
         if ($form->isValid()) {
             try {

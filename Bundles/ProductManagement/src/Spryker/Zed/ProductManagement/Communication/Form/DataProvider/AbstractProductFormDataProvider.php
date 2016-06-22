@@ -50,13 +50,19 @@ class AbstractProductFormDataProvider
      */
     protected $productManagementFacade;
 
+    /**
+     * @var array
+     */
+    protected $attributeCollection = [];
+
 
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
         ProductFacadeInterface $productFacade,
         ProductManagementFacadeInterface $productManagementFacade,
-        ProductManagementToLocaleInterface $localeFacade
+        ProductManagementToLocaleInterface $localeFacade,
+        array $attributeCollection
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
@@ -64,6 +70,7 @@ class AbstractProductFormDataProvider
         $this->productFacade = $productFacade;
         $this->productManagementFacade = $productManagementFacade;
         $this->locale = $localeFacade->getCurrentLocale();
+        $this->attributeCollection = $attributeCollection;
     }
 
     /**
@@ -72,10 +79,34 @@ class AbstractProductFormDataProvider
     public function getOptions()
     {
         $formOptions = [
-
+            ProductFormAdd::ATTRIBUTES => $this->attributeCollection
         ];
 
         return $formOptions;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return [
+            'size' => [
+                'value' => [40, 42]
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultFormFields()
+    {
+        return [
+            ProductFormAdd::FIELD_SKU => null,
+            ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields(),
+            ProductFormAdd::ATTRIBUTES => $this->getAttributesDefaultFields()
+        ];
     }
 
     /**
@@ -90,16 +121,13 @@ class AbstractProductFormDataProvider
             $localizedAttributes[$attribute->getLocale()->getLocaleName()] = $attribute->toArray();
         }
 
-        $formData = $productAbstractTransfer->toArray(true);
-        $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $localizedAttributes;
-
         return $localizedAttributes;
     }
 
     /**
      * @return array
      */
-    public function getAttributesDefaultFields()
+    public function getLocalizedAttributesDefaultFields()
     {
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
@@ -112,6 +140,19 @@ class AbstractProductFormDataProvider
         }
 
         return $fields;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributesDefaultFields()
+    {
+        $defaults = [];
+        foreach ($this->attributeCollection as $type => $values) {
+            $defaults[$type] = [];
+        }
+
+        return $defaults;
     }
 
 }

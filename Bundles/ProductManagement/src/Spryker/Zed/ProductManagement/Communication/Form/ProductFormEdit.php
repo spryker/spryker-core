@@ -13,6 +13,14 @@ class ProductFormEdit extends ProductFormAdd
 {
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'productEdit';
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -20,6 +28,9 @@ class ProductFormEdit extends ProductFormAdd
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
+
+        $this->addAttributesForm($builder, $options);
     }
 
 }
