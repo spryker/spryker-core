@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Tax\Business\Model\Calculator;
+namespace Unit\Spryker\Zed\Tax\Business\Model;
 
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 

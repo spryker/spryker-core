@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Tax\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
@@ -23,11 +22,6 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      * @var TaxDefaultInterface
      */
     protected $taxDefault;
-
-    /**
-     * @var array
-     */
-    protected $taxRates;
 
     /**
      * TaxProductItemCalculator constructor.
@@ -51,13 +45,9 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         $country = $this->getShippingCountryIsoCode($quoteTransfer);
         $idsProductAbstract = $this->getIdsAbstractProduct($quoteTransfer);
 
-        $this->taxRates = $this->taxQueryContainer
-            ->queryTaxSetByProductAbstractAndCountry(
-                $idsProductAbstract,
-                $country
-            )->find();
+        $taxRates = $this->findTaxRatesByCountry($idsProductAbstract, $country);
 
-        $this->setItemsTax($quoteTransfer);
+        $this->setItemsTax($quoteTransfer, $taxRates);
     }
 
     /**
@@ -91,29 +81,44 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param QuoteTransfer $quoteTransfer
+     * @param array $taxRates
      *
      * @return void
      */
-    protected function setItemsTax(QuoteTransfer $quoteTransfer)
+    protected function setItemsTax(QuoteTransfer $quoteTransfer, array $taxRates)
     {
         foreach ($quoteTransfer->getItems() as $item) {
-            $item->setTaxRate($this->getEffectiveTaxRate($item->getIdProductAbstract()));
+            $item->setTaxRate($this->getEffectiveTaxRate($taxRates, $item->getIdProductAbstract()));
         }
     }
 
     /**
+     * @param array $taxRates
      * @param $idProductAbstract
      *
      * @return float
      */
-    protected function getEffectiveTaxRate($idProductAbstract)
+    protected function getEffectiveTaxRate(array $taxRates, $idProductAbstract)
     {
-        foreach ($this->taxRates as $taxRate) {
+        foreach ($taxRates as $taxRate) {
             if ($taxRate[TaxQueryContainer::COL_ID_ABSTRACT_PRODUCT] === $idProductAbstract) {
                 return (float) $taxRate[TaxQueryContainer::COL_SUM_TAX_RATE];
             }
         }
 
         return $this->taxDefault->getDefaultTaxRate();
+    }
+
+    /**
+     * @param $idsProductAbstract
+     * @param $country
+     *
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findTaxRatesByCountry($idsProductAbstract, $country)
+    {
+        return $this->taxQueryContainer->queryTaxSetByProductAbstractAndCountry($idsProductAbstract, $country)
+            ->find()
+        ;
     }
 }

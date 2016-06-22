@@ -49,11 +49,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         }
 
         $taxRate = $this->taxFacade->getDefaultTaxRate();
-
-        $taxSetEntity = $this->shipmentQueryContainer->queryTaxSetByShipmentMethodAndCountry(
-            $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),
-            $quoteTransfer->getBillingAddress()->getIso2Code()
-        )->findOne();
+        $taxSetEntity = $this->findTaxSetByShipmentMethodAndCountry($quoteTransfer);
 
         if ($taxSetEntity !== null) {
             $taxRate = (float) $taxSetEntity[ShipmentQueryContainer::COL_SUM_TAX_RATE];
@@ -93,5 +89,18 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
             ->getMethod()
             ->setTaxRate($taxRate)
         ;
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
+     */
+    protected function findTaxSetByShipmentMethodAndCountry(QuoteTransfer $quoteTransfer)
+    {
+        return $this->shipmentQueryContainer->queryTaxSetByShipmentMethodAndCountry(
+            $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),
+            $quoteTransfer->getBillingAddress()->getIso2Code()
+        )->findOne();
     }
 }
