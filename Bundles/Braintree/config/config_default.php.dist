@@ -5,7 +5,6 @@ use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Sales\SalesConstants;
-use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Oms\OmsConfig;
 
 $config[BraintreeConstants::MERCHANT_ID] = '';
@@ -27,6 +26,9 @@ $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
     'Payment' => [
         'Braintree',
     ],
+    'Oms' => [
+        'Braintree',
+    ],
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [
@@ -40,6 +42,7 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [
 ];
 
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
-    BraintreeConfig::BRAINTREE_CREDIT_CARD => 'BraintreeCreditCard01',
-    BraintreeConfig::BRAINTREE_PAY_PAL => 'BraintreePayPal01',
+    BraintreeConstants::PAYMENT_METHOD_CREDIT_CARD => 'BraintreeCreditCard01',
+    BraintreeConstants::PAYMENT_METHOD_PAY_PAL => 'BraintreePayPal01',
 ];
+

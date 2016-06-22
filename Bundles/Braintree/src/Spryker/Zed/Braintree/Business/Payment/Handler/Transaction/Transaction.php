@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintree;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLog;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLog;
-use Pyz\Yves\Braintree\Handler\BraintreeHandler;
+use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Braintree\Business\Payment\Handler\AbstractPaymentHandler;
 use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
@@ -85,11 +85,11 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
 
         if ($paymentTransfer->getPaymentType() === \Braintree\PaymentInstrumentType::PAYPAL_ACCOUNT) {
             $quoteTransfer->getPayment()->setPaymentMethod(PaymentTransfer::BRAINTREE_PAY_PAL);
-            $quoteTransfer->getPayment()->setPaymentProvider(BraintreeHandler::PAYMENT_PROVIDER);
+            $quoteTransfer->getPayment()->setPaymentProvider(BraintreeConstants::PROVIDER_NAME);
             $quoteTransfer->getPayment()->setPaymentSelection(PaymentTransfer::BRAINTREE_PAY_PAL);
         } elseif ($paymentTransfer->getPaymentType() === \Braintree\PaymentInstrumentType::CREDIT_CARD) {
             $quoteTransfer->getPayment()->setPaymentMethod(PaymentTransfer::BRAINTREE_CREDIT_CARD);
-            $quoteTransfer->getPayment()->setPaymentProvider(BraintreeHandler::PAYMENT_PROVIDER);
+            $quoteTransfer->getPayment()->setPaymentProvider(BraintreeConstants::PROVIDER_NAME);
             $quoteTransfer->getPayment()->setPaymentSelection(PaymentTransfer::BRAINTREE_CREDIT_CARD);
         } else {
             $responseTransfer->setIsSuccess(false);

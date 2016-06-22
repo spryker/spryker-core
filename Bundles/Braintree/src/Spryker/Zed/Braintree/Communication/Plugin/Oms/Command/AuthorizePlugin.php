@@ -29,13 +29,15 @@ class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $customerEntity = $orderEntity->getCustomer();
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($customerEntity->toArray(), true);
-
         $orderTransfer = $this->getOrderTransfer($orderEntity);
-        $orderTransfer->setCustomer($customerTransfer);
         $paymentEntity = $this->getPaymentEntity($orderEntity);
+
+        $customerEntity = $orderEntity->getCustomer();
+        if ($customerEntity) {
+            $customerTransfer = new CustomerTransfer();
+            $customerTransfer->fromArray($customerEntity->toArray(), true);
+            $orderTransfer->setCustomer($customerTransfer);
+        }
 
         $this->getFacade()->authorizePayment(
             $orderTransfer,

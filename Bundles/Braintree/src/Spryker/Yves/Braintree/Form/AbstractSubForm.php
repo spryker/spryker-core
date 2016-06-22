@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Yves\Braintree\Form;
 
 use Generated\Shared\Transfer\BraintreePaymentTransfer;
@@ -12,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInterface
 {
 
-    const PAYMENT_PROVIDER = BraintreeConstants::BRAINTREE;
     const CLIENT_TOKEN = 'clientToken';
 
     /**
@@ -57,7 +61,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
         \Braintree\Configuration::privateKey($privateKey);
 
         static::$clientToken = \Braintree\ClientToken::generate();
-        
+
         return static::$clientToken;
     }
 

@@ -27,7 +27,7 @@ class PayPalDataProvider implements StepEngineFormDataProviderInterface
             $paymentTransfer->setBraintree(new BraintreePaymentTransfer());
             $quoteTransfer->setPayment($paymentTransfer);
         }
-        
+
         return $quoteTransfer;
     }
 

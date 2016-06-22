@@ -10,7 +10,10 @@ namespace Spryker\Shared\Braintree;
 interface BraintreeConstants
 {
 
-    const BRAINTREE = 'braintree';
+    const PROVIDER_NAME = 'Braintree';
+
+    const PAYMENT_METHOD_PAY_PAL = 'braintreePayPal';
+    const PAYMENT_METHOD_CREDIT_CARD = 'braintreeCreditCard';
 
     const MERCHANT_ID = 'BRAINTREE_MERCHANT_ID';
     const PUBLIC_KEY = 'BRAINTREE_PUBLIC_KEY';

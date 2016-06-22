@@ -7,24 +7,24 @@
 
 namespace Spryker\Zed\Braintree\Dependency\Injector;
 
-use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
-use Spryker\Zed\Braintree\BraintreeConfig;
+use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Zed\Braintree\Communication\Plugin\Checkout\BraintreePostSavePlugin;
 use Spryker\Zed\Braintree\Communication\Plugin\Checkout\BraintreePreCheckPlugin;
 use Spryker\Zed\Braintree\Communication\Plugin\Checkout\BraintreeSaveOrderPlugin;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
-class PaymentDependencyInjector implements DependencyInjectorInterface
+class PaymentDependencyInjector extends AbstractDependencyInjector
 {
 
     /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container
+     * @return \Spryker\Zed\Kernel\Container
      */
-    public function inject(ContainerInterface $container)
+    public function injectBusinessLayerDependencies(Container $container)
     {
         $container = $this->injectPaymentPlugin($container);
 
@@ -32,16 +32,16 @@ class PaymentDependencyInjector implements DependencyInjectorInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function injectPaymentPlugin(ContainerInterface $container)
+    protected function injectPaymentPlugin(Container $container)
     {
         $container->extend(PaymentDependencyProvider::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) {
-            $pluginCollection->add(new BraintreePreCheckPlugin(), BraintreeConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
-            $pluginCollection->add(new BraintreeSaveOrderPlugin(), BraintreeConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS);
-            $pluginCollection->add(new BraintreePostSavePlugin(), BraintreeConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS);
+            $pluginCollection->add(new BraintreePreCheckPlugin(), BraintreeConstants::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
+            $pluginCollection->add(new BraintreeSaveOrderPlugin(), BraintreeConstants::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS);
+            $pluginCollection->add(new BraintreePostSavePlugin(), BraintreeConstants::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS);
 
             return $pluginCollection;
         });

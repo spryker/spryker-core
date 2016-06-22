@@ -9,8 +9,8 @@ namespace Spryker\Yves\Braintree\Handler;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Braintree\BraintreeClientInterface;
+use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Zed\Braintree\BraintreeConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class BraintreeHandler
@@ -22,8 +22,8 @@ class BraintreeHandler
      * @var array
      */
     protected static $paymentMethods = [
-        BraintreeConfig::PAYMENT_METHOD_PAY_PAL => 'pay_pal',
-        BraintreeConfig::PAYMENT_METHOD_CREDIT_CARD => 'credit_card',
+        BraintreeConstants::PAYMENT_METHOD_PAY_PAL => 'pay_pal',
+        BraintreeConstants::PAYMENT_METHOD_CREDIT_CARD => 'credit_card',
     ];
 
     /**
@@ -32,7 +32,7 @@ class BraintreeHandler
     protected $braintreeClient;
 
     /**
-     * @var CurrencyManager
+     * @var \Spryker\Shared\Library\Currency\CurrencyManager
      */
     protected $currencyManager;
 
@@ -71,7 +71,7 @@ class BraintreeHandler
     protected function setPaymentProviderAndMethod(QuoteTransfer $quoteTransfer, $paymentSelection)
     {
         $quoteTransfer->getPayment()
-            ->setPaymentProvider(self::PAYMENT_PROVIDER)
+            ->setPaymentProvider(BraintreeConstants::PROVIDER_NAME)
             ->setPaymentMethod(self::$paymentMethods[$paymentSelection]);
     }
 

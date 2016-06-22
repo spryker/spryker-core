@@ -13,10 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class BraintreeConfig extends AbstractBundleConfig
 {
 
-    const PROVIDER_NAME = 'Braintree';
-    const PAYMENT_METHOD_PAY_PAL = 'braintreePayPal';
-    const PAYMENT_METHOD_CREDIT_CARD = 'braintreeCreditCard';
-
     /**
      * @return string
      */
