@@ -112,7 +112,8 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|null $decisionRulePluginMock
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators|null $comparatorOperators
      * @param \Spryker\Zed\Discount\Business\QueryString\LogicalComparators|null $logicalComparatorsMock
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaDataProvider
+     *
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
      */
     protected function createMetaDataProvider($decisionRulePluginMock = null, $comparatorOperators = null, $logicalComparatorsMock = null)
     {

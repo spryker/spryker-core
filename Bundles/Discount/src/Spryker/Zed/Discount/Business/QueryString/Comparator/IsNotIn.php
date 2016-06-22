@@ -27,7 +27,7 @@ class IsNotIn implements ComparatorInterface
     {
         $this->isValidValue($withValue);
 
-        $values = explode(',', $clauseTransfer->getValue());
+        $values = explode(ComparatorOperators::LIST_DELIMITER, $clauseTransfer->getValue());
 
         $values = array_map('trim', $values);
 

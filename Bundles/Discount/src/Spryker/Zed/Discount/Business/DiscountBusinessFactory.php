@@ -30,7 +30,7 @@ use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
-use Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverter;
+use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
@@ -325,7 +325,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createGrandTotalDecisionRule()
     {
-        return new GrandTotalDecisionRule($this->createComparatorOperators(), $this->createCurrencyConverter());
+        return new GrandTotalDecisionRule($this->createComparatorOperators(), $this->createMoneyValueConverter());
     }
 
     /**
@@ -341,7 +341,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createSubTotalDecisionRule()
     {
-        return new SubTotalDecisionRule($this->createComparatorOperators(), $this->createCurrencyConverter());
+        return new SubTotalDecisionRule($this->createComparatorOperators(), $this->createMoneyValueConverter());
     }
 
     /**
@@ -365,7 +365,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemPriceDecisionRule()
     {
-        return new ItemPriceDecisionRule($this->createComparatorOperators(), $this->createCurrencyConverter());
+        return new ItemPriceDecisionRule($this->createComparatorOperators(), $this->createMoneyValueConverter());
     }
 
     /**
@@ -373,7 +373,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemPriceCollector()
     {
-        return new ItemPriceCollector($this->createComparatorOperators(), $this->createCurrencyConverter());
+        return new ItemPriceCollector($this->createComparatorOperators(), $this->createMoneyValueConverter());
     }
 
     /**
@@ -430,11 +430,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverter
+     * @return \Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter
      */
-    protected function createCurrencyConverter()
+    protected function createMoneyValueConverter()
     {
-        return new CurrencyConverter($this->getCurrencyManager());
+        return new MoneyValueConverter($this->getCurrencyManager());
     }
 
 }

@@ -7,7 +7,7 @@ namespace Spryker\Zed\Discount\Business\QueryString\Converter;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 
-interface CurrencyConverterInterface
+interface MoneyValueConverterInterface
 {
 
     /**

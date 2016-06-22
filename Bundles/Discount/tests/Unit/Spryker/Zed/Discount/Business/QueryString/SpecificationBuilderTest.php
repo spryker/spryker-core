@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext;
@@ -122,7 +123,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
 
         $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
         $compositeSpecification = $specificationBuilder->buildFromQueryString(
-            '((sku = "123" and (quantity is in "321,321" or sku = "123"))) or color = "red"'
+            '((sku = "123" and (quantity is in "321' . ComparatorOperators::LIST_DELIMITER . '321" or sku = "123"))) or color = "red"'
         );
 
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);

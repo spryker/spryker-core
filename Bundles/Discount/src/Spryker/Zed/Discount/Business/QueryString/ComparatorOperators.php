@@ -18,6 +18,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     const TYPE_STRING  = 'string';
     const TYPE_LIST = 'list';
     const NUMBER_REGEXP = '/[0-9\.\,]+/';
+    const LIST_DELIMITER = ';';
 
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[]

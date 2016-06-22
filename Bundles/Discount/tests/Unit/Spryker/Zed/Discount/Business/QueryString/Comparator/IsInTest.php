@@ -8,6 +8,7 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
 
 class IsInTest extends \PHPUnit_Framework_TestCase
@@ -36,7 +37,9 @@ class IsInTest extends \PHPUnit_Framework_TestCase
         $isIn = $this->createIsIn();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('1, 2,3');
+        $list = implode(ComparatorOperators::LIST_DELIMITER, [1, 2, 3]);
+
+        $clauseTransfer->setValue($list);
 
         $isMatching = $isIn->compare($clauseTransfer, '1');
 
@@ -51,7 +54,9 @@ class IsInTest extends \PHPUnit_Framework_TestCase
         $isIn = $this->createIsIn();
 
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('2,3');
+
+        $list = implode(ComparatorOperators::LIST_DELIMITER, [2, 3]);
+        $clauseTransfer->setValue($list);
 
         $isMatching = $isIn->compare($clauseTransfer, '1');
 

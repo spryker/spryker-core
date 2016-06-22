@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
-use Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverterInterface;
+use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface;
 
 class BaseRuleTester extends \PHPUnit_Framework_TestCase
 {
@@ -24,11 +24,11 @@ class BaseRuleTester extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverterInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface
      */
     protected function createCurrencyCoverterMock()
     {
-        return $this->getMock(CurrencyConverterInterface::class);
+        return $this->getMock(MoneyValueConverterInterface::class);
     }
 
     /**

@@ -45,7 +45,9 @@ class SpecificationBuilderTest extends Test
     {
         $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
 
-        $specification = $decisionRuleSpecificationBuilder->buildFromQueryString('sku is in "123,321" and sku  is in  "321, 123"');
+        $specification = $decisionRuleSpecificationBuilder->buildFromQueryString(
+            'sku is in "123' . ComparatorOperators::LIST_DELIMITER . '321" and sku  is in  "321' . ComparatorOperators::LIST_DELIMITER . ' 123"'
+        );
 
         $this->assertInstanceOf(DecisionRuleAndSpecification::class, $specification);
 
@@ -58,7 +60,9 @@ class SpecificationBuilderTest extends Test
     {
         $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
 
-        $specification = $decisionRuleSpecificationBuilder->buildFromQueryString('sku is in "123,321" or sku  is in  "321, 123"');
+        $specification = $decisionRuleSpecificationBuilder->buildFromQueryString(
+            'sku is in "123' . ComparatorOperators::LIST_DELIMITER . '321" or sku  is in  "321' . ComparatorOperators::LIST_DELIMITER . ' 123"'
+        );
 
         $this->assertInstanceOf(DecisionRuleOrSpecification::class, $specification);
 
@@ -71,7 +75,9 @@ class SpecificationBuilderTest extends Test
     {
         $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
 
-        $specification = $decisionRuleSpecificationBuilder->buildFromQueryString('(sku = "231" or (sku = "1" and  sku = "2")) and sku = "3") ');
+        $specification = $decisionRuleSpecificationBuilder->buildFromQueryString(
+            '(sku = "231" or (sku = "1" and  sku = "2")) and sku = "3") '
+        );
 
         $this->assertInstanceOf(DecisionRuleAndSpecification::class, $specification);
 

@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
-use Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverterInterface;
+use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface;
 
 class ItemPriceDecisionRule implements DecisionRuleInterface
 {
@@ -21,20 +21,20 @@ class ItemPriceDecisionRule implements DecisionRuleInterface
     protected $comparators;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverterInterface
+     * @var \Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface
      */
-    protected $currencyConverter;
+    protected $moneyValueConverter;
 
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparators
-     * @param \Spryker\Zed\Discount\Business\QueryString\Converter\CurrencyConverterInterface $currencyConverter
+     * @param \Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface $moneyValueConverter
      */
     public function __construct(
         ComparatorOperatorsInterface $comparators,
-        CurrencyConverterInterface $currencyConverter
+        MoneyValueConverterInterface $moneyValueConverter
     ) {
         $this->comparators = $comparators;
-        $this->currencyConverter = $currencyConverter;
+        $this->moneyValueConverter = $moneyValueConverter;
     }
 
     /**
@@ -53,7 +53,7 @@ class ItemPriceDecisionRule implements DecisionRuleInterface
         ClauseTransfer $clauseTransfer
     ) {
 
-        $this->currencyConverter->convertDecimalToCent($clauseTransfer);
+        $this->moneyValueConverter->convertDecimalToCent($clauseTransfer);
 
         return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getUnitGrossPrice());
     }

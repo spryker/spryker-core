@@ -9,10 +9,11 @@ namespace Spryker\Zed\Discount\Business\QueryString\Converter;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
 
-class CurrencyConverter implements CurrencyConverterInterface
+class MoneyValueConverter implements MoneyValueConverterInterface
 {
 
     /**
@@ -21,7 +22,7 @@ class CurrencyConverter implements CurrencyConverterInterface
     protected $currencyManager;
 
     /**
-     * CurrencyConverter constructor.
+     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManger
      */
     public function __construct(CurrencyManagerInterface $currencyManger)
     {
@@ -51,14 +52,14 @@ class CurrencyConverter implements CurrencyConverterInterface
      */
     protected function convertListPrice(ClauseTransfer $clauseTransfer)
     {
-        $prices = explode(',', $clauseTransfer->getValue());
+        $prices = explode(ComparatorOperators::LIST_DELIMITER, $clauseTransfer->getValue());
         $amountInCentsList = '';
         foreach ($prices as $price) {
             if ($amountInCentsList) {
-                $amountInCentsList .= ',';
+                $amountInCentsList .= ComparatorOperators::LIST_DELIMITER;
             }
 
-            $amountInCents = $this->currencyManager->convertDecimalToCent($price);
+            $amountInCents = $this->currencyManager->convertDecimalToCent($this->formatValue($price));
             $amountInCentsList .= $amountInCents;
         }
 
@@ -86,7 +87,7 @@ class CurrencyConverter implements CurrencyConverterInterface
      */
     protected function formatValue($value)
     {
-        return str_replace(',', '.', $value);
+        return str_replace(',', '.', trim($value));
     }
 
 }

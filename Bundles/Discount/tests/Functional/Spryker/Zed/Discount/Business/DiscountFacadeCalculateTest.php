@@ -14,6 +14,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DiscountFacadeCalculateTest extends Test
@@ -42,7 +43,7 @@ class DiscountFacadeCalculateTest extends Test
     {
         $discountEntity = $this->createDiscountFixtures(
             '(sku = "123" or sku = "431")',
-            'sku = "123" or sku is in "123,431"'
+            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
         );
 
         $quoteTransfer = $this->createQuoteTransfer();
@@ -65,7 +66,7 @@ class DiscountFacadeCalculateTest extends Test
     {
         $discountEntity = $this->createDiscountFixtures(
             '',
-            'sku = "123" or sku is in "123,431"'
+            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
         );
 
         $quoteTransfer = $this->createQuoteTransfer();
@@ -88,7 +89,7 @@ class DiscountFacadeCalculateTest extends Test
     {
         $this->createDiscountFixtures(
             'alskdhas jkashdj asjkdhjashdjs ahjdhas1293820',
-            'sku = "123" or sku is in "123,431"'
+            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
         );
 
         $quoteTransfer = $this->createQuoteTransfer();
