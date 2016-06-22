@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Braintree\Business;
 
-use Spryker\Zed\Braintree\Business\Api\Adapter\BraintreeAdapter;
 use Spryker\Zed\Braintree\Business\Hook\PostSaveHook;
 use Spryker\Zed\Braintree\Business\Log\TransactionStatusLog;
 use Spryker\Zed\Braintree\Business\Order\Saver;
@@ -32,14 +31,6 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
         );
 
         return $paymentTransactionHandler;
-    }
-
-    /**
-     * @return \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface
-     */
-    protected function createAdapter()
-    {
-        return new BraintreeAdapter();
     }
 
     /**

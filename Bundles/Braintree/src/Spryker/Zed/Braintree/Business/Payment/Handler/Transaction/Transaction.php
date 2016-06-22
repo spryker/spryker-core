@@ -354,8 +354,8 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     protected function isValidPaymentType($postedSelection, $returnedType)
     {
         $matching = [
-            'braintreePayPal' => PaymentInstrumentType::PAYPAL_ACCOUNT,
-            'braintreeCreditCard' => PaymentInstrumentType::CREDIT_CARD,
+            BraintreeConstants::PAYMENT_METHOD_PAY_PAL => PaymentInstrumentType::PAYPAL_ACCOUNT,
+            BraintreeConstants::PAYMENT_METHOD_CREDIT_CARD => PaymentInstrumentType::CREDIT_CARD,
         ];
         return ($matching[$postedSelection] === $returnedType);
     }

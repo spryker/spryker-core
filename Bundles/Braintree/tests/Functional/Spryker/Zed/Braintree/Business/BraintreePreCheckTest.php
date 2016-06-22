@@ -10,6 +10,7 @@ namespace Functional\Spryker\Zed\Braintree\Business;
 use Generated\Shared\Transfer\BraintreePaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Braintree\Business\BraintreeBusinessFactory;
 use Spryker\Zed\Braintree\Business\BraintreeFacade;
@@ -37,7 +38,7 @@ class BraintreeFacadePreCheckTest extends AbstractFacadeTest
         $quoteTransfer->setTotals($orderTransfer->getTotals());
 
         $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentSelection('braintreePayPal');
+        $paymentTransfer->setPaymentSelection(BraintreeConstants::PAYMENT_METHOD_PAY_PAL);
 
         $paymentTransfer->setBraintree(new BraintreePaymentTransfer());
         $quoteTransfer->setPayment($paymentTransfer);
