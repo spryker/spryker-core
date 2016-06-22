@@ -22,7 +22,8 @@ class BulkDeleteTouchByIdQuery extends AbstractBulkTouchQuery implements BulkDel
      */
     public function addQuery($tableName, $idColumnName, array $idsToDelete)
     {
-        $this->queries[] = sprintf($this->getQueryTemplate(),
+        $this->queries[] = sprintf(
+            $this->getQueryTemplate(),
             $tableName,
             $idColumnName,
             $this->arrayToSqlValueString($idsToDelete)

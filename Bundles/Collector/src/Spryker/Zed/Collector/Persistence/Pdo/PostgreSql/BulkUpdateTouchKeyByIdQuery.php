@@ -23,7 +23,8 @@ class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements Bulk
      */
     public function addQuery($tableName, $keyValue, $idColumnName, $idValue)
     {
-        $this->queries[] = sprintf($this->getQueryTemplate(),
+        $this->queries[] = sprintf(
+            $this->getQueryTemplate(),
             $tableName,
             $keyValue,
             $idColumnName,

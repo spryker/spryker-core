@@ -50,7 +50,7 @@ abstract class AbstractBulkTouchQuery
      *
      * @return string
      */
-    protected function arrayToSqlValueString(array $data, $separator=',')
+    protected function arrayToSqlValueString(array $data, $separator = ',')
     {
         return rtrim(
             implode($separator, $data),
