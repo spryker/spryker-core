@@ -65,7 +65,7 @@ class EditController extends AddController
                 $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
                 $matrixGenerator = new MatrixGenerator();
-                $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
+                $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributes);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductManagementFacade()
@@ -94,5 +94,7 @@ class EditController extends AddController
             'concretes' => $concreteProductCollection
         ]);
     }
+
+
 
 }

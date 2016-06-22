@@ -34,7 +34,6 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $attributeCollection = $this->getFactory()->getProductAttributeCollection();
         $dataProvider = $this->getFactory()->createProductFormAddDataProvider();
         $form = $this
             ->getFactory()
@@ -46,9 +45,11 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             try {
+                $attributeCollection = $this->getFactory()->getProductAttributeCollection();
+                $attributes = $this->getAttributesFromData($form->getData(), $attributeCollection);
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $matrixGenerator = new MatrixGenerator();
-                $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
+                $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributes);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductManagementFacade()
@@ -179,6 +180,29 @@ class AddController extends AbstractController
         $value = str_replace(' ', '-', $value);
 
         return $value;
+    }
+
+    protected function getAttributesFromData(array $data, array $attributeCollection)
+    {
+        s($data, $attributeCollection);
+
+        $attributes = [];
+        foreach ($data[ProductFormAdd::ATTRIBUTES] as $type => $values) {
+            $values = $this->getAttributeValues($type, $values['value'], $attributeCollection);
+            $attributes[$type] = $values;
+        }
+
+        sd($attributes);
+        
+        
+        return $attributeCollection;
+    }
+
+    protected function getAttributeValues($type, array $values, array $attributeCollection)
+    {
+        return array_combine(array_keys($values), array_values($attributeCollection[$type]))
+
+        return $a;
     }
 
 }
