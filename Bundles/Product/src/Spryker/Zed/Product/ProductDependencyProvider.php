@@ -66,6 +66,9 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductToUrlBridge($container->getLocator()->url()->facade());
         };
 
+        /**
+         * @deprecated Use getQueryContainer() directly for the own bundle's query container
+         */
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
         };
