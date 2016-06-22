@@ -45,11 +45,10 @@ abstract class AbstractInstallerPlugin extends AbstractPlugin implements Install
      */
     public function run()
     {
-        if (!($this->messenger instanceof MessengerInterface)) {
-            return;
+        if ($this->messenger instanceof MessengerInterface) {
+            $this->messenger->debug('Running installer plugin: ' . get_class($this));
         }
 
-        $this->messenger->debug('Running installer plugin: ' . get_class($this));
         $this->install();
     }
 
