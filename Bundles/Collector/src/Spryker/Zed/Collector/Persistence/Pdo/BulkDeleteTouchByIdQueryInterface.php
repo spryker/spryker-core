@@ -17,7 +17,7 @@ interface BulkDeleteTouchByIdQueryInterface
      *
      * @return $this
      */
-    public function addQuery($tableName, $idColumnName, $idsToDelete);
+    public function addQuery($tableName, $idColumnName, array $idsToDelete);
 
     /**
      * @return string

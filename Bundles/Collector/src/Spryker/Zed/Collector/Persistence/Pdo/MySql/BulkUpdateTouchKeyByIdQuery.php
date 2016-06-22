@@ -5,28 +5,30 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Persistence\Pdo\PostgreSql;
+namespace Spryker\Zed\Collector\Persistence\Pdo\MySql;
 
 use Spryker\Zed\Collector\Persistence\Pdo\AbstractBulkTouchQuery;
-use Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface;
+use Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface;
 
-class BulkDeleteTouchByIdQuery extends AbstractBulkTouchQuery implements BulkDeleteTouchByIdQueryInterface
+class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements BulkUpdateTouchKeyByIdQueryInterface
 {
 
     /**
      * @param string $tableName
+     * @param string $keyValue
      * @param string $idColumnName
-     * @param array $idsToDelete
+     * @param int $idValue
      *
      * @return $this
      */
-    public function addQuery($tableName, $idColumnName, array $idsToDelete)
+    public function addQuery($tableName, $keyValue, $idColumnName, $idValue)
     {
         $this->queries[] = sprintf(
             $this->getQueryTemplate(),
             $tableName,
+            $keyValue,
             $idColumnName,
-            $this->arrayToSqlValueString($idsToDelete)
+            $idValue
         );
 
         return $this;
@@ -37,7 +39,7 @@ class BulkDeleteTouchByIdQuery extends AbstractBulkTouchQuery implements BulkDel
      */
     protected function getQueryTemplate()
     {
-        return "DELETE FROM %s WHERE %s IN (%s)";
+        return "UPDATE `%s` SET `key` = '%s' WHERE `%s` = '%s'";
     }
 
 }
