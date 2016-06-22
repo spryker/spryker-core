@@ -25,8 +25,8 @@ class InitializeDatabaseConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME)
-            ->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME)
+            ->setDescription(static::DESCRIPTION);
     }
 
     /**
@@ -53,10 +53,10 @@ class InitializeDatabaseConsole extends Console
         } catch (\Exception $e) {
             $this->error($e->getMessage());
 
-            return self::CODE_ERROR;
+            return static::CODE_ERROR;
         }
 
-        return self::CODE_SUCCESS;
+        return static::CODE_SUCCESS;
     }
 
     /**

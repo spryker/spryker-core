@@ -24,7 +24,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container[self::INSTALLER_PLUGINS] = function (Container $container) {
+        $container[static::INSTALLER_PLUGINS] = function (Container $container) {
             return $this->getInstallerPlugins();
         };
 
