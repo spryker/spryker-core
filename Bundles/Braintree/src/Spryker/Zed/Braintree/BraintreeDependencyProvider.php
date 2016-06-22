@@ -23,7 +23,7 @@ class BraintreeDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
+        $container[static::FACADE_SALES_AGGREGATOR] = function (Container $container) {
             return new BraintreeToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
 

@@ -37,7 +37,7 @@ class PayPalSubForm extends AbstractSubForm
      */
     public function getTemplatePath()
     {
-        return BraintreeConstants::PROVIDER_NAME . '/' . self::PAYMENT_METHOD;
+        return BraintreeConstants::PROVIDER_NAME . '/' . static::PAYMENT_METHOD;
     }
 
     /**
@@ -51,7 +51,7 @@ class PayPalSubForm extends AbstractSubForm
     {
         parent::buildView($view, $form, $options);
 
-        $view->vars[self::CLIENT_TOKEN] = $this->generateClientToken();
+        $view->vars[static::CLIENT_TOKEN] = $this->generateClientToken();
     }
 
 }

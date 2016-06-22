@@ -72,7 +72,7 @@ class BraintreeHandler
     {
         $quoteTransfer->getPayment()
             ->setPaymentProvider(BraintreeConstants::PROVIDER_NAME)
-            ->setPaymentMethod(self::$paymentMethods[$paymentSelection]);
+            ->setPaymentMethod(static::$paymentMethods[$paymentSelection]);
     }
 
     /**
@@ -92,7 +92,7 @@ class BraintreeHandler
 
         $billingAddress = $quoteTransfer->getBillingAddress();
         $braintreePaymentTransfer
-            ->setAccountBrand(self::$paymentMethods[$paymentSelection])
+            ->setAccountBrand(static::$paymentMethods[$paymentSelection])
             ->setBillingAddress($billingAddress)
             ->setShippingAddress($quoteTransfer->getShippingAddress())
             ->setEmail($quoteTransfer->getCustomer()->getEmail())

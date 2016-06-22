@@ -69,7 +69,7 @@ class StatusLog extends AbstractTable
     private function getHeaderFields()
     {
         $headerFields = [];
-        foreach (self::$includeFields as $fieldName) {
+        foreach (static::$includeFields as $fieldName) {
             $translatedFieldName = SpyPaymentBraintreeTransactionStatusLogTableMap::translateFieldName(
                 $fieldName,
                 SpyPaymentBraintreeTransactionStatusLogTableMap::TYPE_COLNAME,
@@ -80,7 +80,7 @@ class StatusLog extends AbstractTable
             $headerFields[$translatedFieldName] = $fieldLabel;
         }
 
-        $headerFields[self::FIELD_DETAILS] = 'Details';
+        $headerFields[static::FIELD_DETAILS] = 'Details';
 
         return $headerFields;
     }
@@ -112,7 +112,7 @@ class StatusLog extends AbstractTable
     private function getFieldMatchedResultArrayFromLogItem(array $logItem)
     {
         $resultArray = [];
-        foreach (self::$includeFields as $fieldName) {
+        foreach (static::$includeFields as $fieldName) {
             $translatedFieldName = SpyPaymentBraintreeTransactionStatusLogTableMap::translateFieldName(
                 $fieldName,
                 SpyPaymentBraintreeTransactionStatusLogTableMap::TYPE_COLNAME,
@@ -122,7 +122,7 @@ class StatusLog extends AbstractTable
             $resultArray[$translatedFieldName] = $logItem[$fieldName];
         }
 
-        $resultArray[self::FIELD_DETAILS] = $this->getDetailsFieldValue($logItem);
+        $resultArray[static::FIELD_DETAILS] = $this->getDetailsFieldValue($logItem);
 
         return $resultArray;
     }
@@ -141,7 +141,7 @@ class StatusLog extends AbstractTable
         );
         $tupleRows = [];
         foreach ($fieldNames as $fieldName) {
-            if (in_array($fieldName, self::$includeFields)) {
+            if (in_array($fieldName, static::$includeFields)) {
                 continue;
             }
 

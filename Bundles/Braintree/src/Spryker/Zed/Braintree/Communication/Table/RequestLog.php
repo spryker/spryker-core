@@ -71,7 +71,7 @@ class RequestLog extends AbstractTable
         );
         $headerFields = [];
         foreach ($fieldNames as $fieldName) {
-            if (in_array($fieldName, self::$excludeFields)) {
+            if (in_array($fieldName, static::$excludeFields)) {
                 continue;
             }
 
@@ -118,7 +118,7 @@ class RequestLog extends AbstractTable
         );
         $resultArray = [];
         foreach ($fieldNames as $fieldName) {
-            if (in_array($fieldName, self::$excludeFields)) {
+            if (in_array($fieldName, static::$excludeFields)) {
                 continue;
             }
 
