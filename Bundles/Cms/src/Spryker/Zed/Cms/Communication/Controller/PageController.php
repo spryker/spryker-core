@@ -95,10 +95,12 @@ class PageController extends AbstractController
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $dataProvider = $this->getFactory()->createCmsPageFormDataProvider();
+        $data = $dataProvider->getData($idPage);
+
         $form = $this
             ->getFactory()
             ->createCmsPageForm(
-                $dataProvider->getData($idPage),
+                $data,
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
@@ -125,7 +127,52 @@ class PageController extends AbstractController
         return $this->viewResponse([
             'form' => $form->createView(),
             'isSynced' => $isSynced,
+            'idCmsPage' => $idPage,
+            'isActive' => $data[CmsPageForm::FIELD_IS_ACTIVE],
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(Request $request)
+    {
+        $idPage = $this->castId($request->query->get(CmsPageTable::REQUEST_ID_PAGE));
+
+        $this->getFacade()->deletePageById($idPage);
+        $this->addSuccessMessage('CMS Page deleted successfully.');
+
+        return $this->redirectResponse('/cms/page');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function activateAction(Request $request)
+    {
+        $idPage = $this->castId($request->query->get(CmsPageTable::REQUEST_ID_PAGE));
+
+        $this->updatePageState($idPage, true);
+
+        return $this->redirectResponse($request->headers->get('referer'));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deactivateAction(Request $request)
+    {
+        $idPage = $this->castId($request->query->get(CmsPageTable::REQUEST_ID_PAGE));
+
+        $this->updatePageState($idPage, false);
+
+        return $this->redirectResponse($request->headers->get('referer'));
     }
 
     /**
@@ -168,6 +215,23 @@ class PageController extends AbstractController
         $urlTransfer->setUrl($data['url']);
 
         return $urlTransfer;
+    }
+
+    /**
+     * @param int $idPage
+     * @param bool $isActive
+     *
+     * @return void
+     */
+    protected function updatePageState($idPage, $isActive)
+    {
+        $dataProvider = $this->getFactory()->createCmsPageFormDataProvider();
+        $data = $dataProvider->getData($idPage);
+        $data[CmsPageForm::FIELD_IS_ACTIVE] = $isActive;
+
+        $pageTransfer = $this->createPageTransfer($data);
+
+        $this->getFacade()->savePage($pageTransfer);
     }
 
 }

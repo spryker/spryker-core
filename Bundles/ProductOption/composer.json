@@ -11,15 +11,19 @@
     }
   },
   "require": {
+    "spryker/checkout": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/locale": "^2.0.0",
     "spryker/product": "^2.0.0",
     "spryker/propel": "^2.0.0",
+    "spryker/sales": "^2.0.0",
     "spryker/tax": "^2.0.0",
-    "spryker/touch": "^2.0.0",
-    "spryker/sales": "^2.0.0"
+    "spryker/touch": "^2.0.0"
   },
-  "description": "product option bundle",
+  "require-dev": {
+    "spryker/sales-aggretagor": "^2.0.0"
+  },
+  "description": "ProductOption bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -27,5 +31,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

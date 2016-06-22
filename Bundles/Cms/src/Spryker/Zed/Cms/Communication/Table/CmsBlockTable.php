@@ -23,6 +23,8 @@ class CmsBlockTable extends AbstractTable
     const REQUEST_ID_PAGE = 'id-page';
     const PARAM_CMS_GLOSSARY = '/cms/glossary';
     const PARAM_CMS_BLOCK_EDIT = '/cms/block/edit';
+    const URL_CMS_BLOCK_DEACTIVATE = '/cms/block/deactivate';
+    const URL_CMS_BLOCK_ACTIVATE = '/cms/block/activate';
 
     /**
      * @var \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
@@ -50,6 +52,7 @@ class CmsBlockTable extends AbstractTable
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
             SpyCmsBlockTableMap::COL_TYPE => 'Type',
             SpyCmsBlockTableMap::COL_VALUE => 'Value',
+            CmsQueryContainer::IS_ACTIVE => 'Active',
             self::ACTIONS => self::ACTIONS,
         ]);
 
@@ -57,7 +60,14 @@ class CmsBlockTable extends AbstractTable
 
         $config->setSortable([
             SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
+            SpyCmsBlockTableMap::COL_NAME,
+            CmsQueryContainer::TEMPLATE_NAME,
+            SpyCmsBlockTableMap::COL_TYPE,
+            SpyCmsBlockTableMap::COL_VALUE,
+            CmsQueryContainer::IS_ACTIVE,
         ]);
+
+        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         $config->setSearchable([
             SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
@@ -90,6 +100,7 @@ class CmsBlockTable extends AbstractTable
                 SpyCmsBlockTableMap::COL_NAME => $item[SpyCmsBlockTableMap::COL_NAME],
                 SpyCmsBlockTableMap::COL_TYPE => $item[SpyCmsBlockTableMap::COL_TYPE],
                 SpyCmsBlockTableMap::COL_VALUE => $this->buildValueItem($item),
+                CmsQueryContainer::IS_ACTIVE => $item[CmsQueryContainer::IS_ACTIVE],
                 self::ACTIONS => implode(' ', $this->buildLinks($item)),
             ];
         }
@@ -103,7 +114,7 @@ class CmsBlockTable extends AbstractTable
      *
      * @return array
      */
-    private function buildLinks(array $item)
+    protected function buildLinks(array $item)
     {
         $buttons = [];
         $buttons[] = $this->generateEditButton(
@@ -120,6 +131,8 @@ class CmsBlockTable extends AbstractTable
             'Edit Block'
         );
 
+        $buttons[] = $this->generateStateChangeButton($item);
+
         return $buttons;
     }
 
@@ -128,11 +141,34 @@ class CmsBlockTable extends AbstractTable
      *
      * @return string
      */
-    private function buildValueItem(array $item)
+    protected function buildValueItem(array $item)
     {
         $result = $item[CmsQueryContainer::CATEGORY_NAME] . '<br><div style="font-size:.8em">' . $item[CmsQueryContainer::URL] . '<div>';
 
         return $result;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function generateStateChangeButton(array $item)
+    {
+        if ($item[CmsQueryContainer::IS_ACTIVE]) {
+            $name = 'Deactivate';
+            $url = self::URL_CMS_BLOCK_DEACTIVATE;
+        } else {
+            $name = 'Activate';
+            $url = self::URL_CMS_BLOCK_ACTIVATE;
+        }
+
+        return $this->generateViewButton(
+            Url::generate($url, [
+                self::REQUEST_ID_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
+            ]),
+            $name
+        );
     }
 
 }

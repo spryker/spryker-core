@@ -15,7 +15,9 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\Wishlist\Business\Model\CustomerInterface;
 use Spryker\Zed\Wishlist\Business\Storage\Propel;
+use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductBridge;
 
 class PropelTest extends \PHPUnit_Framework_TestCase
 {
@@ -167,7 +169,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
      */
     protected function getWishlistQueryContainerMock(
         WishlistSpy $wishlistSpy = null,
@@ -237,12 +239,13 @@ class PropelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @param \Generated\Shared\Transfer\WishlistTransfer|null $value
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Wishlist\Business\Model\CustomerInterface
      */
     protected function getCustomerMock($value = null)
     {
         $customerMock = $this
-            ->getMockBuilder('Spryker\Zed\Wishlist\Business\Model\Customer')
+            ->getMockBuilder(CustomerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -252,12 +255,12 @@ class PropelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface
      */
     protected function getProductFacadeMock()
     {
         $productFacadeMock = $this
-            ->getMockBuilder('Spryker\Zed\Product\Business\ProductFacade')
+            ->getMockBuilder(WishlistToProductBridge::class)
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -3,7 +3,7 @@
   "require": {
     "pimple/pimple": "~1.1.1"
   },
-  "description": "pimple bundle",
+  "description": "Pimple bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -11,5 +11,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

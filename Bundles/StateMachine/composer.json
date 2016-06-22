@@ -9,20 +9,18 @@
   },
   "require": {
     "spryker/application": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/propel": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
     "spryker/console": "^2.0.0",
     "spryker/graph": "^2.0.0",
-    "spryker/library": "^2.0.0"
+    "spryker/kernel": "^2.0.0",
+    "spryker/library": "^2.0.0",
+    "spryker/propel": "^2.0.0",
+    "spryker/symfony": "^2.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "0.3.1",
-    "spryker/testify": "^2.0.0",
-    "spryker/console": "^2.0.1",
-    "spryker/config": "^2.1.2"
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "^2.0.0"
   },
-  "description": "state machine bundle",
+  "description": "StateMachine bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -36,5 +34,8 @@
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
-  ]
+  ],
+  "config": {
+    "sort-packages": true
+  }
 }

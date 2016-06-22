@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Symfony\Component\Finder\SplFileInfo;
+
 class DescriptionUpdater implements UpdaterInterface
 {
 
@@ -14,27 +16,16 @@ class DescriptionUpdater implements UpdaterInterface
 
     /**
      * @param array $composerJson
+     * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
      * @return array
      */
-    public function update(array $composerJson)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile)
     {
-        $composerJson[self::KEY_DESCRIPTION] = $this->getBundleName($composerJson) . ' bundle';
+        $bundleName = $composerJsonFile->getRelativePath();
+        $composerJson[self::KEY_DESCRIPTION] = $bundleName . ' bundle';
 
         return $composerJson;
-    }
-
-    /**
-     * @param array $composerJsonData
-     *
-     * @return string
-     */
-    private function getBundleName(array $composerJsonData)
-    {
-        $nameParts = explode('/', $composerJsonData['name']);
-        $bundleName = array_pop($nameParts);
-
-        return str_replace('-', ' ', $bundleName);
     }
 
 }

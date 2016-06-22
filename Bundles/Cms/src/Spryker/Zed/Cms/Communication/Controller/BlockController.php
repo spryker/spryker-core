@@ -98,9 +98,11 @@ class BlockController extends AbstractController
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $dataProvider = $this->getFactory()->createCmsBlockFormDataProvider();
+        $data = $dataProvider->getData($idBlock);
+
         $form = $this->getFactory()
             ->createCmsBlockForm(
-                $dataProvider->getData($idBlock),
+                $data,
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
@@ -109,7 +111,6 @@ class BlockController extends AbstractController
             $data = $form->getData();
 
             $pageTransfer = $this->createPageTransfer($data);
-            $pageTransfer->setIdCmsPage($data[CmsBlockForm::FIELD_FK_PAGE]);
 
             $this->updatePageAndBlock($data, $pageTransfer);
 
@@ -121,7 +122,52 @@ class BlockController extends AbstractController
         return $this->viewResponse([
             'form' => $form->createView(),
             'isSynced' => $isSynced,
+            'idCmsBlock' => $idBlock,
+            'isActive' => $data[CmsBlockForm::FIELD_IS_ACTIVE],
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(Request $request)
+    {
+        $idBlock = $this->castId($request->query->get(CmsBlockTable::REQUEST_ID_BLOCK));
+
+        $this->getFacade()->deleteBlockById($idBlock);
+        $this->addSuccessMessage('CMS Block deleted successfully.');
+
+        return $this->redirectResponse('/cms/block');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function activateAction(Request $request)
+    {
+        $idBlock = $this->castId($request->query->get(CmsBlockTable::REQUEST_ID_BLOCK));
+
+        $this->updateBlockState($idBlock, true);
+
+        return $this->redirectResponse($request->headers->get('referer'));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deactivateAction(Request $request)
+    {
+        $idBlock = $this->castId($request->query->get(CmsBlockTable::REQUEST_ID_BLOCK));
+
+        $this->updateBlockState($idBlock, false);
+
+        return $this->redirectResponse($request->headers->get('referer'));
     }
 
     /**
@@ -133,6 +179,10 @@ class BlockController extends AbstractController
     {
         $pageTransfer = new PageTransfer();
         $pageTransfer->fromArray($data, true);
+
+        if (isset($data[CmsBlockForm::FIELD_FK_PAGE])) {
+            $pageTransfer->setIdCmsPage($data[CmsBlockForm::FIELD_FK_PAGE]);
+        }
 
         return $pageTransfer;
     }
@@ -201,6 +251,22 @@ class BlockController extends AbstractController
     {
         $localeFacade = $this->getFactory()->getLocaleFacade();
         return $localeFacade->getCurrentLocale()->getIdLocale();
+    }
+
+    /**
+     * @param int $idBlock
+     * @param bool $isActive
+     *
+     * @return void
+     */
+    protected function updateBlockState($idBlock, $isActive)
+    {
+        $dataProvider = $this->getFactory()->createCmsBlockFormDataProvider();
+        $data = $dataProvider->getData($idBlock);
+        $data[CmsBlockForm::FIELD_IS_ACTIVE] = $isActive;
+
+        $pageTransfer = $this->createPageTransfer($data);
+        $this->updatePageAndBlock($data, $pageTransfer);
     }
 
 }

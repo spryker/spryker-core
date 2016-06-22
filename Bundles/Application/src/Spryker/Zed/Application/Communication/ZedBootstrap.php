@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
+use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 use Symfony\Component\HttpFoundation\Request;
 
 class ZedBootstrap
@@ -175,6 +176,19 @@ class ZedBootstrap
         $dependencyProvider->provideBusinessLayerDependencies($container);
         $dependencyProvider->provideCommunicationLayerDependencies($container);
         $dependencyProvider->providePersistenceLayerDependencies($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector $dependencyInjector
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Zed\Kernel\Container
+     */
+    protected function injectExternalDependencies(DependencyInjector $dependencyInjector, Container $container)
+    {
+        $container = $dependencyInjector->injectCommunicationLayerDependencies($container);
+
+        return $container;
     }
 
     /**

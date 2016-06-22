@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ProductSearch\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
+use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchBusinessFactory getFactory()
@@ -18,37 +19,32 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 {
 
     /**
+     * Specification:
+     * - Iterates through the given product attribute associative array where the key is the name and the value is the value of the attributes
+     * - If an attribute is configured to be mapped in the page map builder, then it's value will be added to the page map
+     * - The data of the returned page map represents a hydrated Elasticsearch document with all the necessary attribute values
+     *
      * @api
      *
-     * @param array $productsRaw
-     * @param array $processedProducts
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param array $attributes
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function enrichProductsWithSearchAttributes(array $productsRaw, array $processedProducts)
+    public function mapDynamicProductAttributes(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes)
     {
-        return $this->getFactory()
-            ->createProductAttributesTransformer()
-            ->buildProductAttributes($productsRaw, $processedProducts);
+        return $this
+            ->getFactory()
+            ->createSearchProductAttributeMapper()
+            ->mapDynamicProductAttributes($pageMapBuilder, $pageMapTransfer, $attributes);
     }
 
     /**
-     * @api
+     * Specification:
+     * - Marks the given product to be searchable
+     * - Touches the product so next time the collector runs it will process it
      *
-     * @param array $productsRaw
-     * @param array $processedProducts
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return array
-     */
-    public function createSearchProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale)
-    {
-        return $this->getFactory()
-            ->createProductSearchProcessor()
-            ->buildProducts($productsRaw, $processedProducts, $locale);
-    }
-
-    /**
      * @api
      *
      * @param int $idProduct
@@ -64,6 +60,10 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
+     * Specification:
+     * - Marks the given product to not to be searchable
+     * - Touches the product so next time the collector will process it
+     *
      * @api
      *
      * @param int $idProduct
@@ -79,15 +79,21 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
+     * Specification:
+     * - For the given product attribute the search preferences will be updated
+     *
      * @api
      *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
      * @return void
      */
-    public function install(MessengerInterface $messenger)
+    public function saveProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
     {
-        $this->getFactory()->createInstaller($messenger)->install();
+        $this
+            ->getFactory()
+            ->createSearchPreferencesSaver()
+            ->save($productSearchPreferencesTransfer);
     }
 
 }

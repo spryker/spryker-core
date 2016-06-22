@@ -1,0 +1,127 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 1
+    }
+  },
+  "mappings": {
+    "page": {
+      "dynamic_templates": [
+        {
+          "search-result-data": {
+            "mapping": {
+              "type": "string",
+              "index": "no"
+            },
+            "path_match": "search-result-data.*"
+          }
+        },
+        {
+          "string_sort": {
+            "mapping": {
+              "analyzer": "lowercase_keyword_analyzer",
+              "type": "string"
+            },
+            "path_match": "string_sort.*"
+          }
+        },
+        {
+          "integer_sort": {
+            "mapping": {
+              "index": "not_analyzed",
+              "type": "integer"
+            },
+            "path_match": "integer_sort.*"
+          }
+        }
+      ],
+      "properties": {
+        "search-result-data": {
+          "type": "object",
+          "include_in_all": false,
+          "properties": {
+
+          }
+        },
+        "store": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "locale": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "full-text": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "full-text-boosted": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "string-facet": {
+          "type": "nested",
+          "include_in_all": false,
+          "properties": {
+            "facet-name": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "facet-value": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "integer-facet": {
+          "type": "nested",
+          "include_in_all": false,
+          "properties": {
+            "facet-name": {
+              "type": "string",
+              "index": "not_analyzed"
+            },
+            "facet-value": {
+              "type": "integer"
+            }
+          }
+        },
+        "completion-terms": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "suggestion-terms": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "string-sort": {
+          "type": "object",
+          "include_in_all": false,
+          "properties": {
+
+          }
+        },
+        "integer-sort": {
+          "type": "object",
+          "include_in_all": false,
+          "properties": {
+
+          }
+        },
+        "category": {
+          "type": "object",
+          "include_in_all": false,
+          "properties": {
+            "direct-parents": {
+              "type": "integer"
+            },
+            "all-parents": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

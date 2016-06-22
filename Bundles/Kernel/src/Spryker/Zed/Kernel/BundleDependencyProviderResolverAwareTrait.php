@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
+use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
+use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
 trait BundleDependencyProviderResolverAwareTrait
@@ -64,15 +64,15 @@ trait BundleDependencyProviderResolverAwareTrait
         $dependencyProvider = $this->resolveDependencyProvider();
 
         $this->provideExternalDependencies($dependencyProvider, $container);
-        $container = $dependencyInjector->inject($container);
+        $this->injectExternalDependencies($dependencyInjector, $container);
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
+     * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
      *
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector
+     * @return \Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector
      */
     protected function getDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
     {
@@ -109,6 +109,17 @@ trait BundleDependencyProviderResolverAwareTrait
     );
 
     /**
+     * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector $dependencyInjector
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    abstract protected function injectExternalDependencies(
+        DependencyInjector $dependencyInjector,
+        Container $container
+    );
+
+    /**
      * @return \Spryker\Zed\Kernel\Container
      */
     protected function getContainer()
@@ -117,7 +128,7 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
+     * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
     protected function resolveDependencyInjectorCollection()
     {

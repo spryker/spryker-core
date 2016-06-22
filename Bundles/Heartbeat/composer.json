@@ -8,14 +8,14 @@
   },
   "require": {
     "spryker/application": "^2.3.0",
+    "spryker/config": "^2.2.0",
+    "spryker/elastica": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/elastica": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/redis": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/config": "^2.2.0"
+    "spryker/symfony": "^2.0.0"
   },
-  "description": "heartbeat bundle",
+  "description": "Heartbeat bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -23,5 +23,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

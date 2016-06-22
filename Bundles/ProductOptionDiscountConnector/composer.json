@@ -13,12 +13,11 @@
   "require": {
     "spryker/discount": "^2.0.0",
     "spryker/kernel": "^2.0.0",
+    "spryker/propel": "^2.0.0",
     "spryker/sales": "^2.0.0",
-    "spryker/tax": "^2.0.0",
-    "spryker/propel": "^2.0.0"
+    "spryker/tax": "^2.0.0"
   },
-  "require-dev": {},
-  "description": "product option discount connector bundle",
+  "description": "ProductOptionDiscountConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -26,5 +25,8 @@
     "branch-alias": {
       "dev-master": "1.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

@@ -4,7 +4,7 @@
     "guzzle/guzzle": "~3.8.0",
     "guzzlehttp/guzzle": "~6.1.1"
   },
-  "description": "guzzle bundle",
+  "description": "Guzzle bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -12,5 +12,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

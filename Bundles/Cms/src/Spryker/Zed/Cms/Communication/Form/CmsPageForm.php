@@ -94,8 +94,7 @@ class CmsPageForm extends AbstractType
             ->addCurrentTemplateField($builder)
             ->addFkTemplateField($builder, $options[self::OPTION_TEMPLATE_CHOICES])
             ->addUrlField($builder)
-            ->addLocaleField($builder, $options[self::OPTION_LOCALES_CHOICES])
-            ->addIsActiveField($builder);
+            ->addLocaleField($builder, $options[self::OPTION_LOCALES_CHOICES]);
     }
 
     /**
@@ -176,20 +175,6 @@ class CmsPageForm extends AbstractType
         $builder->add(self::FIELD_FK_LOCALE, 'choice', [
             'label' => 'Locale',
             'choices' => $availableLocales,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIsActiveField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox', [
-            'label' => 'Active',
         ]);
 
         return $this;

@@ -26,6 +26,7 @@ $(document).ready(function() {
     });
 
     $('.gui-table-data-category').dataTable({
+        bFilter: false,
         "createdRow": function(row, data, index){
             if (triggeredFirstEvent === false) {
                 categoryHelper.showLoaderBar();

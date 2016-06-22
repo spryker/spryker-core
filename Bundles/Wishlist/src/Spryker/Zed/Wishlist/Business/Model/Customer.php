@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
-class Customer
+class Customer implements CustomerInterface
 {
 
     /**
