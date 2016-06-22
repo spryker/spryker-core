@@ -29,7 +29,7 @@
     "spryker/twig": "^2.0.0",
     "spryker/zend": "^2.0.0"
   },
-  "description": "library bundle",
+  "description": "Library bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -37,5 +37,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

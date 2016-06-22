@@ -24,7 +24,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/transfer": "^2.0.0"
   },
-  "description": "setup bundle",
+  "description": "Setup bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -32,5 +32,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

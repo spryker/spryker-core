@@ -15,7 +15,7 @@
     "spryker/product": "^2.0.0",
     "spryker/product-option": "^2.0.0"
   },
-  "description": "product option exporter bundle",
+  "description": "ProductOptionExporter bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -23,5 +23,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

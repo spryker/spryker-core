@@ -17,7 +17,7 @@
     "spryker/log": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
-  "description": "messenger bundle",
+  "description": "Messenger bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -25,5 +25,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

@@ -1,6 +1,6 @@
 {% extends '@Cms/Layout/layout.twig' %}
 
-{% set widget_title = 'Edit a Cms Block' %}
+{% set widget_title = 'Edit a Cms Block' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -8,13 +8,19 @@
 {% block action %}
     {{ backActionButton('/cms/block', 'Back to CMS' | trans) }}
     {{ createActionButton('/cms/block/add', 'Add CMS Block' | trans) }}
+    {% if isActive %}
+        {{ viewActionButton('/cms/block/deactivate?id-block=' ~ idCmsBlock, 'Deactivate' | trans) }}
+    {% else %}
+        {{ viewActionButton('/cms/block/activate?id-block=' ~ idCmsBlock, 'Activate' | trans) }}
+    {% endif %}
+    {{ removeActionButton('/cms/block/delete?id-block=' ~ idCmsBlock, 'Delete CMS Block' | trans) }}
 {% endblock %}
 
 {% block content %}
     <div id="spy-cms" class="glossary">
         {% if isSynced %}
             <div class="alert">
-                <div class="green">New template(s) detected and added to the template list.</div>
+                <div class="green">{{ 'New template(s) detected and added to the template list.' | trans }}</div>
             </div>
         {% endif %}
 
@@ -36,7 +42,7 @@
         <div class="itemListCanvas"></div>
         <div class="loading block-loading">
             <img src="/assets/img/cms-loader.gif">
-            Loading...
+            {{ 'Loading...' | trans }}
         </div>
     </div>
 {% endblock %}

@@ -3,11 +3,8 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
       "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Unit": "tests/"
     }
   },
   "require": {
@@ -17,7 +14,7 @@
     "spryker/customer": "^2.0.0",
     "spryker/graph": "^2.0.0",
     "spryker/gui": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
+    "spryker/kernel": "^2.4.3",
     "spryker/library": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/sales": "^2.0.0",
@@ -25,10 +22,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "^2.0.0",
-    "spryker/config": "^2.1.0"
+    "spryker/config": "^2.1.0",
+    "spryker/testify": "^2.0.0"
   },
-  "description": "oms bundle",
+  "description": "Oms bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -42,5 +39,8 @@
       "type": "composer",
       "url": "https://code.spryker.com/repo/private"
     }
-  ]
+  ],
+  "config": {
+    "sort-packages": true
+  }
 }

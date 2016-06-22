@@ -23,7 +23,7 @@
   "require-dev": {
     "spryker/sales-aggretagor": "^2.0.0"
   },
-  "description": "product option bundle",
+  "description": "ProductOption bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -31,5 +31,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

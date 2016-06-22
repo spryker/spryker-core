@@ -3,7 +3,7 @@
   "require": {
     "ruflin/elastica": "~3.2.0"
   },
-  "description": "elastica bundle",
+  "description": "Elastica bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -11,5 +11,8 @@
     "branch-alias": {
       "dev-master": "3.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

@@ -3,7 +3,7 @@
   "require": {
     "predis/predis": "~1.0.3"
   },
-  "description": "redis bundle",
+  "description": "Redis bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -11,5 +11,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

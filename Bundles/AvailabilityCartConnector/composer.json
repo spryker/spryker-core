@@ -14,7 +14,7 @@
     "spryker/availability": "^2.0.0",
     "spryker/kernel": "^2.0.0"
   },
-  "description": "availability cart connector bundle",
+  "description": "AvailabilityCartConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -22,5 +22,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

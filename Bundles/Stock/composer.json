@@ -12,14 +12,14 @@
   },
   "require": {
     "spryker/application": "^2.0.0",
+    "spryker/guzzle": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/product": "^2.0.0",
-    "spryker/touch": "^2.0.0",
-    "spryker/guzzle": "^2.0.0",
     "spryker/propel": "^2.0.0",
-    "spryker/symfony": "^2.0.0"
+    "spryker/symfony": "^2.0.0",
+    "spryker/touch": "^2.0.0"
   },
-  "description": "stock bundle",
+  "description": "Stock bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -27,5 +27,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

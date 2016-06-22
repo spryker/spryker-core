@@ -14,6 +14,8 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
 
     const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
+    const KEY_REQUIRE = 'require';
+    const KEY_REQUIRE_DEV = 'require-dev';
 
     /**
      * @var \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
@@ -66,9 +68,9 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
         $composerJson = json_decode($composerJsonFile->getContents(), true);
 
-        $composerJson = $this->updater->update($composerJson);
+        $composerJson = $this->updater->update($composerJson, $composerJsonFile);
 
-        ksort($composerJson['require']);
+        $composerJson = $this->clean($composerJson);
 
         $composerJson = json_encode($composerJson, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 
@@ -91,6 +93,30 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
         $folder = $composerJsonFile->getRelativePath();
         return !in_array($folder, $bundles);
+    }
+
+    /**
+     * @param array $composerJson
+     *
+     * @return array
+     */
+    protected function clean($composerJson)
+    {
+        if  (!empty($composerJson[self::KEY_REQUIRE])) {
+            ksort($composerJson[self::KEY_REQUIRE]);
+        } elseif (isset($composerJson[self::KEY_REQUIRE])) {
+            unset($composerJson[self::KEY_REQUIRE]);
+        }
+
+        if  (!empty($composerJson[self::KEY_REQUIRE_DEV])) {
+            ksort($composerJson[self::KEY_REQUIRE_DEV]);
+        } elseif (isset($composerJson[self::KEY_REQUIRE_DEV])) {
+            unset($composerJson[self::KEY_REQUIRE_DEV]);
+        }
+
+        $composerJson['config']['sort-packages'] = true;
+
+        return $composerJson;
     }
 
 }
