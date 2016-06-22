@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\Braintree\Form;
 
+use Braintree\ClientToken;
+use Braintree\Configuration;
 use Generated\Shared\Transfer\BraintreePaymentTransfer;
 use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Shared\Config\Config;
@@ -55,12 +57,12 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
         $merchantId = Config::get(BraintreeConstants::MERCHANT_ID);
         $publicKey = Config::get(BraintreeConstants::PUBLIC_KEY);
         $privateKey = Config::get(BraintreeConstants::PRIVATE_KEY);
-        \Braintree\Configuration::environment($environment);
-        \Braintree\Configuration::merchantId($merchantId);
-        \Braintree\Configuration::publicKey($publicKey);
-        \Braintree\Configuration::privateKey($privateKey);
+        Configuration::environment($environment);
+        Configuration::merchantId($merchantId);
+        Configuration::publicKey($publicKey);
+        Configuration::privateKey($privateKey);
 
-        static::$clientToken = \Braintree\ClientToken::generate();
+        static::$clientToken = ClientToken::generate();
 
         return static::$clientToken;
     }

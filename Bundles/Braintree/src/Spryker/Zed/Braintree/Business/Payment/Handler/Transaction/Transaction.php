@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Braintree\Business\Payment\Handler\Transaction;
 
+use Braintree\Configuration;
 use Braintree\Exception\NotFound;
+use Braintree\PaymentInstrumentType;
+use Braintree\Transaction as BraintreeTransaction;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\BraintreeTransactionResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -83,11 +86,11 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
             return $responseTransfer;
         }
 
-        if ($paymentTransfer->getPaymentType() === \Braintree\PaymentInstrumentType::PAYPAL_ACCOUNT) {
+        if ($paymentTransfer->getPaymentType() === PaymentInstrumentType::PAYPAL_ACCOUNT) {
             $quoteTransfer->getPayment()->setPaymentMethod(PaymentTransfer::BRAINTREE_PAY_PAL);
             $quoteTransfer->getPayment()->setPaymentProvider(BraintreeConstants::PROVIDER_NAME);
             $quoteTransfer->getPayment()->setPaymentSelection(PaymentTransfer::BRAINTREE_PAY_PAL);
-        } elseif ($paymentTransfer->getPaymentType() === \Braintree\PaymentInstrumentType::CREDIT_CARD) {
+        } elseif ($paymentTransfer->getPaymentType() === PaymentInstrumentType::CREDIT_CARD) {
             $quoteTransfer->getPayment()->setPaymentMethod(PaymentTransfer::BRAINTREE_CREDIT_CARD);
             $quoteTransfer->getPayment()->setPaymentProvider(BraintreeConstants::PROVIDER_NAME);
             $quoteTransfer->getPayment()->setPaymentSelection(PaymentTransfer::BRAINTREE_CREDIT_CARD);
@@ -150,7 +153,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
 
         /*
         $customerTransfer = $orderTransfer->getCustomer();
-        $customerId = \Braintree\Customer::create([
+        $customerId = Customer::create([
             'firstName' => $customerTransfer->getFirstName(),
             'lastName' => $customerTransfer->getLastName(),
             'company' => $customerTransfer->getCompany(),
@@ -160,7 +163,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $customerId = $customerId->customer->id;
 
 
-        $result = \Braintree\PaymentMethod::create([
+        $result = PaymentMethod::create([
             'customerId' => $customerId,
             'paymentMethodNonce' => $paymentEntity->getNonce()
         ]);
@@ -356,10 +359,10 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
      */
     protected function initializeBraintree()
     {
-        \Braintree\Configuration::environment($this->config->getEnvironment());
-        \Braintree\Configuration::merchantId($this->config->getMerchantId());
-        \Braintree\Configuration::publicKey($this->config->getPublicKey());
-        \Braintree\Configuration::privateKey($this->config->getPrivateKey());
+        Configuration::environment($this->config->getEnvironment());
+        Configuration::merchantId($this->config->getMerchantId());
+        Configuration::publicKey($this->config->getPublicKey());
+        Configuration::privateKey($this->config->getPrivateKey());
     }
 
     /**
@@ -371,8 +374,8 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     protected function isValidPaymentType($postedSelection, $returnedType)
     {
         $matching = [
-            'braintreePayPal' => \Braintree\PaymentInstrumentType::PAYPAL_ACCOUNT,
-            'braintreeCreditCard' => \Braintree\PaymentInstrumentType::CREDIT_CARD,
+            'braintreePayPal' => PaymentInstrumentType::PAYPAL_ACCOUNT,
+            'braintreeCreditCard' => PaymentInstrumentType::CREDIT_CARD,
         ];
         return ($matching[$postedSelection] === $returnedType);
     }
@@ -380,14 +383,14 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
      *
-     * @return \Braintree\Transaction|null
+     * @return BraintreeTransaction|null
      */
     protected function authorize(SpyPaymentBraintree $paymentEntity)
     {
         $this->initializeBraintree();
 
         try {
-            $transaction = \Braintree\Transaction::find($paymentEntity->getTransactionId());
+            $transaction = BraintreeTransaction::find($paymentEntity->getTransactionId());
         } catch (NotFound $e) {
             return null;
         }
@@ -406,7 +409,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     {
         $this->initializeBraintree();
 
-        return \Braintree\Transaction::void($paymentEntity->getTransactionId());
+        return BraintreeTransaction::void($paymentEntity->getTransactionId());
     }
 
     /**
@@ -418,7 +421,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     {
         $this->initializeBraintree();
 
-        return \Braintree\Transaction::submitForSettlement($paymentEntity->getTransactionId());
+        return BraintreeTransaction::submitForSettlement($paymentEntity->getTransactionId());
     }
 
     /**
@@ -432,11 +435,11 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
 
         $this->initializeBraintree();
 
-        $transaction = \Braintree\Transaction::find($transactionId);
+        $transaction = BraintreeTransaction::find($transactionId);
         if ($transaction->status === ApiConstants::STATUS_CODE_CAPTURE_SUBMITTED) {
-            $response = \Braintree\Transaction::void($transactionId);
+            $response = BraintreeTransaction::void($transactionId);
         } else {
-            $response = \Braintree\Transaction::refund($transactionId);
+            $response = BraintreeTransaction::refund($transactionId);
         }
 
         return $response;
@@ -452,7 +455,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $paymentTransfer = $quoteTransfer->getPayment()->getBraintree();
         $this->initializeBraintree();
 
-        return \Braintree\Transaction::sale([
+        return BraintreeTransaction::sale([
             'amount' => $quoteTransfer->getTotals()->getGrandTotal() / 100,
             'paymentMethodNonce' => $paymentTransfer->getNonce(),
             'options' => $this->getRequestOptions(),
@@ -468,7 +471,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     protected function getRequestOptions()
     {
         return [
-            \Braintree\Transaction::THREE_D_SECURE => [
+            BraintreeTransaction::THREE_D_SECURE => [
                 'required' => $this->config->getIs3DSecure()
             ],
             'storeInVault' => $this->config->getIsVaulted()
