@@ -26,8 +26,6 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     protected $taxFacade;
 
     /**
-     * ShipmentTaxRateCalculator constructor.
-     *
      * @param ShipmentQueryContainerInterface $shipmentQueryContainer
      * @param ShipmentToTaxInterface $taxFacade
      */
@@ -44,7 +42,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getShipment() === null) {
+        if ($quoteTransfer->getShipment() === null || $quoteTransfer->getShipment()->getMethod() === null) {
             return;
         }
 

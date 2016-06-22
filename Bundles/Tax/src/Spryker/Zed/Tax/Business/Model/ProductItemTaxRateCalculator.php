@@ -24,8 +24,6 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected $taxDefault;
 
     /**
-     * TaxProductItemCalculator constructor.
-     *
      * @param TaxQueryContainerInterface $taxQueryContainer
      * @param TaxDefaultInterface $taxDefault
      */
@@ -94,7 +92,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param array $taxRates
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      *
      * @return float
      */
@@ -113,12 +111,13 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      * @param $idsProductAbstract
      * @param $country
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return array
      */
     protected function findTaxRatesByCountry($idsProductAbstract, $country)
     {
         return $this->taxQueryContainer->queryTaxSetByProductAbstractAndCountry($idsProductAbstract, $country)
             ->find()
+            ->toArray()
         ;
     }
 }

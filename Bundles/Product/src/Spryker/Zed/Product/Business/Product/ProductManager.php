@@ -547,6 +547,8 @@ class ProductManager implements ProductManagerInterface
             ->setIdProductAbstract($productConcrete[self::COL_ID_PRODUCT_ABSTRACT])
             ->setName($productConcrete[self::COL_NAME]);
 
+        $this->addTaxRate($productConcreteTransfer);
+
         return $productConcreteTransfer;
     }
 
