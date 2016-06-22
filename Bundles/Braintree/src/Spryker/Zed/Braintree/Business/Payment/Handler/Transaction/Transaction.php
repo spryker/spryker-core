@@ -37,13 +37,9 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
      * @param \Spryker\Zed\Braintree\Persistence\BraintreeQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Braintree\BraintreeConfig $config
      */
-    public function __construct(
-        BraintreeQueryContainerInterface $queryContainer,
-        BraintreeConfig $config
-    ) {
-        parent::__construct(
-            $config
-        );
+    public function __construct(BraintreeQueryContainerInterface $queryContainer, BraintreeConfig $config)
+    {
+        parent::__construct($config);
 
         $this->queryContainer = $queryContainer;
     }
@@ -62,6 +58,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         if ($paymentTransfer === null) {
             $responseTransfer->setIsSuccess(false);
             $responseTransfer->setMessage('Invalid Payment Method');
+
             return $responseTransfer;
         }
 
@@ -83,6 +80,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
             $responseTransfer->setIsSuccess(false);
             $paymentTransfer->setNonce('');
             $responseTransfer->setMessage('Invalid Payment method type selected');
+
             return $responseTransfer;
         }
 
@@ -98,6 +96,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
             $responseTransfer->setIsSuccess(false);
             $paymentTransfer->setNonce('');
             $responseTransfer->setMessage('Invalid Payment type: ' . $paymentTransfer->getPaymentType());
+
             return $responseTransfer;
         }
 
@@ -150,25 +149,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
         $this->logApiResponse($responseTransfer, $idPayment, $transaction->statusHistory);
 
         return $responseTransfer;
-
-        /*
-        $customerTransfer = $orderTransfer->getCustomer();
-        $customerId = Customer::create([
-            'firstName' => $customerTransfer->getFirstName(),
-            'lastName' => $customerTransfer->getLastName(),
-            'company' => $customerTransfer->getCompany(),
-            'email' => $customerTransfer->getEmail(),
-        ]);
-
-        $customerId = $customerId->customer->id;
-
-
-        $result = PaymentMethod::create([
-            'customerId' => $customerId,
-            'paymentMethodNonce' => $paymentEntity->getNonce()
-        ]);
-        $token = $result->paymentMethod->token;
-        */
     }
 
     /**
