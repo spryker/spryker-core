@@ -44,4 +44,18 @@ abstract class AbstractBulkTouchQuery
         return "; \n";
     }
 
+    /**
+     * @param array $data
+     * @param string $separator
+     *
+     * @return string
+     */
+    protected function arrayToSqlValueString(array $data, $separator=',')
+    {
+        return rtrim(
+            implode($separator, $data),
+            $separator
+        );
+    }
+
 }

@@ -105,7 +105,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      */
     public function bulkDelete(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
     {
-        $idsToDelete = '';
+        $idsToDelete = [];
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
             $idTouch = $touchData[CollectorConfig::COLLECTOR_TOUCH_ID];
 

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Persistence\Pdo\PostgreSql;
+namespace Spryker\Zed\Collector\Persistence\Pdo\MySql;
 
 use Spryker\Zed\Collector\Persistence\Pdo\AbstractBulkTouchQuery;
 use Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface;
@@ -23,7 +23,8 @@ class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements Bulk
      */
     public function addQuery($tableName, $keyValue, $idColumnName, $idValue)
     {
-        $this->queries[] = sprintf($this->getQueryTemplate(),
+        $this->queries[] = sprintf(
+            $this->getQueryTemplate(),
             $tableName,
             $keyValue,
             $idColumnName,
@@ -38,7 +39,7 @@ class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements Bulk
      */
     protected function getQueryTemplate()
     {
-        return "UPDATE %s SET key = '%s' WHERE %s = '%s'";
+        return "UPDATE `%s` SET `key` = '%s' WHERE `%s` = '%s'";
     }
 
 }

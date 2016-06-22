@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Collector\Persistence\Pdo\PostgreSql;
+namespace Spryker\Zed\Collector\Persistence\Pdo\MySql;
 
 use Spryker\Zed\Collector\Persistence\Pdo\AbstractBulkTouchQuery;
 use Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface;
@@ -36,7 +36,7 @@ class BulkDeleteTouchByIdQuery extends AbstractBulkTouchQuery implements BulkDel
      */
     protected function getQueryTemplate()
     {
-        return "DELETE FROM %s WHERE %s IN (%s)";
+        return "DELETE FROM `%s` WHERE `%s` IN (%s)";
     }
 
 }
