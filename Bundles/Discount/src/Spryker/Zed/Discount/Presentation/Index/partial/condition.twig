@@ -3,8 +3,9 @@
 
 {{ form_row(discountForm.discountCondition) }}
 
-<div id="builder_condition" class="query-builder-container"></div>
-{{ form_errors(discountForm.discountCondition.decision_rule_query_string) }}
+<div id="builder_condition" class="query-builder-container {% if discountForm.discountCondition.decision_rule_query_string.vars.errors|length > 0 %}has-error{% endif %}">
+    {{ form_errors(discountForm.discountCondition.decision_rule_query_string) }}
+</div>
 
 <button type="button" class="btn btn-sm btn-success" id="btn-condition-get" data-label-plain-query="{{ 'Plain query' | trans }}" data-label-query-builder="{{ 'Query builder' | trans }}">
     {{  'Plain query' | trans }}

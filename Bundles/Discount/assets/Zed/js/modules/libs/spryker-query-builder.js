@@ -132,6 +132,9 @@ SprykerQueryBuilder.prototype.saveQuery = function() {
     }
 
     var result = this.builder.queryBuilder('getSQL', false);
+    if (result != '') {
+        this.builder.queryBuilder('validate');
+    }
     this.inputElement.val(result.sql);
 };
 
