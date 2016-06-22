@@ -21,6 +21,7 @@
     "spryker/locale": "^2.0.0",
     "spryker/messenger": "^2.0.0",
     "spryker/product-image": "^1.0.0",
+    "spryker/product-option": "^2.0.0",
     "spryker/url": "^2.0.0"
   },
   "require-dev": {
