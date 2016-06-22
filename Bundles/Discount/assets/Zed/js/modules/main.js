@@ -11,7 +11,18 @@ var DiscountNavigation = require('./libs/navigation');
 
 require('../../sass/main.scss');
 
-$(document).ready(function(){
+function setDiscountAmountSymbol() {
+    var value = $(this).val();
+    var $amountAddon = $('#discount_discountCalculator_amount + .input-group-addon');
+
+    if (/percent/i.test(value)) {
+        $amountAddon.html('&#37;');
+    } else {
+        $amountAddon.html('&euro;');
+    }
+}
+
+$(document).ready(function() {
 
     new DiscountNavigation();
 
@@ -26,32 +37,23 @@ $(document).ready(function(){
         $('#discount-form').submit();
     });
 
-    $('#btn-calculation-get').on('click', function(event){
+    $('#btn-calculation-get').on('click', function(event) {
         sqlCalculationBuilder.toggleButton(event);
     });
 
-    $('#btn-condition-get').on('click', function(event){
+    $('#btn-condition-get').on('click', function(event) {
         sqlConditionBuilder.toggleButton(event);
     });
 
-
-    $('#discount_discountCalculator_calculator_plugin').on('change', function(){
-        var value = $(this).val();
-        var $amountAddon = $('#discount_discountCalculator_amount + .input-group-addon');
-
-        if (/percent/i.test(value)) {
-            $amountAddon.html('&#37;');
-        } else {
-            $amountAddon.html('&euro;');
-        }
-    });
+    setDiscountAmountSymbol.apply($('#discount_discountCalculator_calculator_plugin'));
+    $('#discount_discountCalculator_calculator_plugin').on('change', setDiscountAmountSymbol);
 
     $('#discount_discountGeneral_valid_from').datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,
         defaultData: 0,
-        onClose: function(selectedDate){
+        onClose: function(selectedDate) {
             $('#discount_discountGeneral_valid_to').datepicker('option', 'minDate', selectedDate);
         }
     });
@@ -61,7 +63,7 @@ $(document).ready(function(){
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,
-        onClose: function(selectedDate){
+        onClose: function(selectedDate) {
             $('#discount_discountGeneral_valid_from').datepicker('option', 'maxDate', selectedDate);
         }
     });
