@@ -363,7 +363,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree $paymentEntity
      *
-     * @return BraintreeTransaction|null
+     * @return \Braintree\Transaction|null
      */
     protected function authorize(SpyPaymentBraintree $paymentEntity)
     {
