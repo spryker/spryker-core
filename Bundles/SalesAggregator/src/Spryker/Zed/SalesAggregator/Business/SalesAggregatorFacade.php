@@ -17,6 +17,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
 {
 
     /**
+     * Specification:
+     *  - Reads order from database and stores in order transfer
+     *  - Run all aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
      *
@@ -31,6 +34,10 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
 
     /**
      *
+     * Specification:
+     *  - Reads order from database and stores in order transfer
+     *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
+     *
      * @api
      *
      * @param int $idSalesOrderItem
@@ -43,6 +50,10 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
+     *
+     *  Specification:
+     *  - Use existing OrderTransfer instead fo quering database
+     *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
      *
@@ -57,6 +68,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
 
     /**
      *
+     * Specification:
+     *  - Iterate order exepenses and sum up amounts
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -69,6 +83,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
+     *
+     *  Specification:
+     *  - Sum up expenses and subtotals
      *
      * @api
      *
@@ -83,6 +100,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
 
     /**
      *
+     * Specification:
+     *  - Sum up item amounts before discounts
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -95,6 +115,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
+     *
+     * Specification:
+     *  - Sum up order subtotal
      *
      * @api
      *
@@ -109,6 +132,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
 
     /**
      *
+     * Specification:
+     *  - Calculate item tax amount
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -122,6 +148,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
 
     /**
      *
+     * Specification:
+     *  - Calculate order total tax amount
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -134,6 +163,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
+     *
+     * Specification:
+     *  - Calculate order expense tax amount
      *
      * @api
      *

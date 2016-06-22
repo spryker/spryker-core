@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -15,6 +14,9 @@ interface SalesAggregatorFacadeInterface
 {
 
     /**
+     * Specification:
+     *  - Reads order from database and stores in order transfer
+     *  - Run all aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
      *
@@ -26,6 +28,10 @@ interface SalesAggregatorFacadeInterface
 
     /**
      *
+     * Specification:
+     *  - Reads order from database and stores in order transfer
+     *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
+     *
      * @api
      *
      * @param int $idSalesOrderItem
@@ -35,6 +41,10 @@ interface SalesAggregatorFacadeInterface
     public function getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem);
 
     /**
+     *
+     *  Specification:
+     *  - Use existing OrderTransfer instead fo quering database
+     *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
      *
@@ -46,6 +56,9 @@ interface SalesAggregatorFacadeInterface
 
     /**
      *
+     * Specification:
+     *  - Iterate order exepenses and sum up amounts
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -56,6 +69,9 @@ interface SalesAggregatorFacadeInterface
 
     /**
      *
+     *  Specification:
+     *  - Sum up expenses and subtotals
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -65,6 +81,9 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderGrandTotal(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     *  - Sum up item amounts before discounts
+     *
      *
      * @api
      *
@@ -76,6 +95,9 @@ interface SalesAggregatorFacadeInterface
 
     /**
      *
+     * Specification:
+     *  - Sum up order subtotal
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -85,6 +107,9 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderSubtotal(OrderTransfer $orderTransfer);
 
     /**
+     *
+     * Specification:
+     *  - Calculate item tax amount
      *
      * @api
      *
@@ -96,6 +121,9 @@ interface SalesAggregatorFacadeInterface
 
     /**
      *
+     * Specification:
+     *  - Calculate order total tax amount
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -105,6 +133,9 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer);
 
     /**
+     *
+     * Specification:
+     *  - Calculate order expense tax amount
      *
      * @api
      *

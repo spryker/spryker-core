@@ -23,8 +23,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface, Cal
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $totalTaxAmount = 0;
-        $totalTaxAmount += $this->sumItemTax($orderTransfer->getItems());
+        $totalTaxAmount = $this->sumItemTax($orderTransfer->getItems());
         $totalTaxAmount += $this->sumExpenseTax($orderTransfer->getExpenses());
 
         $taxTotalsTransfer = $this->getTaxTotals($totalTaxAmount);
@@ -39,8 +38,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface, Cal
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $totalTaxAmount = 0;
-        $totalTaxAmount += $this->sumItemTax($quoteTransfer->getItems());
+        $totalTaxAmount = $this->sumItemTax($quoteTransfer->getItems());
         $totalTaxAmount += $this->sumExpenseTax($quoteTransfer->getExpenses());
 
         $taxTotalsTransfer = $this->getTaxTotals($totalTaxAmount);
