@@ -232,11 +232,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return void
      */
-    public function touchProductInActive($idProductAbstract)
+    public function touchProductInactive($idProductAbstract)
     {
         $productManager = $this->getFactory()->createProductManager();
 
-        $productManager->touchProductInActive($idProductAbstract);
+        $productManager->touchProductInactive($idProductAbstract);
     }
 
     /**

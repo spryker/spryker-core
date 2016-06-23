@@ -18,9 +18,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductTouchConsole extends Console
 {
-    const ACTION_ACTIVATE_SHORT = 'activate';
-    const ACTION_INACTIVATE_SHORT = 'inactivate';
-    const ACTION_DELETE_SHORT = 'delete';
+    const ACTION_ACTIVATE = 'activate';
+    const ACTION_ACTIVATE_SHORT = 'a';
+    const ACTION_INACTIVATE = 'inactivate';
+    const ACTION_INACTIVATE_SHORT = 'i';
+    const ACTION_DELETE = 'delete';
+    const ACTION_DELETE_SHORT = 'd';
 
     const COMMAND_NAME = 'product:touch';
     const DESCRIPTION = 'product:touch <activate|inactivate|delete> <id>';
@@ -67,14 +70,17 @@ class ProductTouchConsole extends Console
         $action = strtolower($input->getArgument(self::ARGUMENT_TOUCH_ACTION));
 
         switch ($action) {
+            case self::ACTION_ACTIVATE:
             case self::ACTION_ACTIVATE_SHORT:
                 $this->getFacade()->touchProductActive($idProductAbstract);
                 break;
 
+            case self::ACTION_INACTIVATE:
             case self::ACTION_INACTIVATE_SHORT:
-                $this->getFacade()->touchProductInActive($idProductAbstract);
+                $this->getFacade()->touchProductInactive($idProductAbstract);
                 break;
 
+            case self::ACTION_DELETE:
             case self::ACTION_DELETE_SHORT:
                 $this->getFacade()->touchProductDeleted($idProductAbstract);
                 break;

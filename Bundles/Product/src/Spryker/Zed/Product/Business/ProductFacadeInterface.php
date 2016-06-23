@@ -166,7 +166,7 @@ interface ProductFacadeInterface
      *
      * @return void
      */
-    public function touchProductInActive($idProductAbstract);
+    public function touchProductInactive($idProductAbstract);
 
     /**
      * @api

@@ -40,7 +40,7 @@ class ProductToTouchBridge implements ProductToTouchInterface
      *
      * @return bool
      */
-    public function touchInActive($itemType, $itemId)
+    public function touchInactive($itemType, $itemId)
     {
         return $this->touchFacade->touchInactive($itemType, $itemId);
     }

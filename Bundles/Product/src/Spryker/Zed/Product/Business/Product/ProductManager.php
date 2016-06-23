@@ -492,9 +492,9 @@ class ProductManager implements ProductManagerInterface
      *
      * @return void
      */
-    public function touchProductInActive($idProductAbstract)
+    public function touchProductInactive($idProductAbstract)
     {
-        $this->touchFacade->touchInActive('product_abstract', $idProductAbstract);
+        $this->touchFacade->touchInactive('product_abstract', $idProductAbstract);
     }
 
     /**
