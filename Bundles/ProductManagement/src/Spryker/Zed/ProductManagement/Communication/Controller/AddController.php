@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
