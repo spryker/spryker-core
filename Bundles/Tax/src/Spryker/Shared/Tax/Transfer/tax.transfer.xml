@@ -11,6 +11,8 @@
         <property name="idTaxSet" type="int" />
         <property name="name" type="string" />
         <property name="taxRates" type="TaxRate[]" singular="taxRate" />
+        <property name="createdAt" type="string" />
+        <property name="updatedAt" type="string" />
     </transfer>
 
     <transfer name="TaxRateCollection">
@@ -22,6 +24,9 @@
         <property name="name" type="string" />
         <property name="rate" type="float" />
         <property name="fkCountry" type="int" />
+        <property name="country" type="Country" />
+        <property name="createdAt" type="string" />
+        <property name="updatedAt" type="string" />
     </transfer>
 
     <transfer name="Item">
@@ -32,6 +37,15 @@
     <transfer name="Expense">
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
+    </transfer>
+
+    <transfer name="Country">
+        <property name="idCountry" type="int" />
+        <property name="iso2Code" type="string" />
+        <property name="iso3Code" type="string" />
+        <property name="name" type="string" />
+        <property name="postalCodeMandatory" type="bool" />
+        <property name="postalCodeRegex" type="string" />
     </transfer>
 
 </transfers>

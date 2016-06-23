@@ -1,0 +1,39 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title ' View' | trans %}
+
+{% block action %}
+    {{ backActionButton('/tax/rate/list', 'Back to list' | trans) }}
+    {{ removeActionButton(url('/tax/rate/delete', {'id-tax-rate': taxRate.idTaxRate}), 'Delete' | trans) }}
+    {{ editActionButton(url('/tax/rate/edit', {'id-tax-rate': taxRate.idTaxRate}), 'Edit' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View' | trans } %}
+
+        {% block widget_content %}
+            <table class="table">
+                <tr>
+                    <td>Name</td>
+                    <td>{{ taxRate.name }}</td>
+                </tr>
+                <tr>
+                    <td>Id</td>
+                    <td>{{ taxRate.idTaxRate }}</td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>{{ taxRate.country.name }}</td>
+                </tr>
+                <tr>
+                    <td>Percentage</td>
+                    <td>{{ taxRate.rate }} %</td>
+                </tr>
+            </table>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

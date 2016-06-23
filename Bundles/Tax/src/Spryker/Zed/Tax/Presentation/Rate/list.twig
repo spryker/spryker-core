@@ -9,10 +9,10 @@
 
 {% block content %}
 
-     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tax rate list' | trans } %}
+     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tax Rate List' | trans } %}
 
         {% block widget_content %}
-              123
+            {{ taxRateTable | raw }}
         {% endblock %}
 
      {% endembed %}

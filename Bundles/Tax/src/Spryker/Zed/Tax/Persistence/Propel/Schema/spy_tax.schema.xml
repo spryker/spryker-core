@@ -4,6 +4,9 @@
     <table name="spy_tax_set" idMethod="native" allowPkInsert="true" phpName="SpyTaxSet">
         <column name="id_tax_set" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
+
+        <behavior name="timestampable"/>
+
         <id-method-parameter value="spy_tax_set_pk_seq"/>
     </table>
 
@@ -16,6 +19,8 @@
         <foreign-key name="spy_tax_rate-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="SpyTaxRate">
             <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
+
+        <behavior name="timestampable"/>
 
         <id-method-parameter value="spy_tax_rate_pk_seq"/>
     </table>

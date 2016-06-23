@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\TaxRateTransfer;
 use Spryker\Zed\Tax\Communication\Form\TaxRateForm;
 use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface;
 
@@ -18,23 +19,36 @@ class TaxRateFormDataProvider
     protected $countryFacade;
 
     /**
-     * @param \Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface $countryFacade
+     * @var \Generated\Shared\Transfer\TaxRateTransfer
      */
-    public function __construct(TaxToCountryBridgeInterface $countryFacade)
+    protected $taxRateTransfer;
+
+    /**
+     * @param \Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface $countryFacade
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
+     */
+    public function __construct(TaxToCountryBridgeInterface $countryFacade, TaxRateTransfer $taxRateTransfer = null)
     {
         $this->countryFacade = $countryFacade;
+        $this->taxRateTransfer = $taxRateTransfer;
     }
 
     /**
-     * @param int $idTaxRate
-     *
+     * @return TaxRateTransfer
+     */
+    public function getData()
+    {
+        return $this->taxRateTransfer;
+    }
+
+    /**
      * @return array
      */
-    public function getData($idTaxRate = null)
+    public function getOptions()
     {
-       return [
-           TaxRateForm::FIELD_COUNTRY => $this->createCountryList()
-       ];
+        return [
+            TaxRateForm::FIELD_COUNTRY => $this->createCountryList(),
+        ];
     }
 
     /**

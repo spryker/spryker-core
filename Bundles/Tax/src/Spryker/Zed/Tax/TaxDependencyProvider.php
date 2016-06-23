@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax;
 
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -16,6 +17,7 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
 {
     const STORE_CONFIG = 'store config';
     const FACADE_COUNTRY = 'facade country';
+    const SERVICE_DATE_FORMATTER = 'date formatter';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,6 +42,10 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_COUNTRY] = function (Container $container) {
             return new TaxToCountryBridge($container->getLocator()->country()->facade());
+        };
+
+        $container[self::SERVICE_DATE_FORMATTER] = function () {
+            return (new Pimple())->getApplication()['dateFormatter'];
         };
     }
 }

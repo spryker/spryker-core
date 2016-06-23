@@ -4,7 +4,9 @@
 {% block section_title 'Create new tax rate' | trans %}
 
 {% block action %}
-    {{ backActionButton('/tax/rate/list', 'Back to list' | trans) }}
+    {{ backActionButton(url('/tax/rate/list'), 'Back to list' | trans) }}
+
+
 {% endblock %}
 
 {% block content %}
