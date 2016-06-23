@@ -78,7 +78,6 @@ class ProductTouchConsole extends Console
 
             default:
                 throw new Exception('Unknown touch action: ' . $action);
-                break;
         }
 
         return self::CODE_SUCCESS;
