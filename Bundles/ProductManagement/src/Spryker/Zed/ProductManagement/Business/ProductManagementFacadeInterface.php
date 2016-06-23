@@ -56,4 +56,11 @@ interface ProductManagementFacadeInterface
      */
     public function getProductAbstractById($idProductAbstract);
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductAttributesByAbstractProductId($idProductAbstract);
+
 }

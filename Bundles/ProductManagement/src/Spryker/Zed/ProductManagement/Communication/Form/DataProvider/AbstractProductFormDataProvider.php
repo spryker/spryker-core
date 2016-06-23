@@ -86,15 +86,25 @@ class AbstractProductFormDataProvider
     }
 
     /**
+     * @param int $idProductAbstract
+     *
      * @return array
      */
-    public function getAttributes()
+    public function getAttributes($idProductAbstract=null)
     {
-        return [
-            'size' => [
-                'value' => [40, 42]
-            ]
-        ];
+        if ($idProductAbstract === null) {
+            return [];
+        }
+
+        $attributeCollection = $this->productManagementFacade
+            ->getProductAttributesByAbstractProductId($idProductAbstract);
+
+        $result = [];
+        foreach ($attributeCollection as $type => $valueSet) {
+            $result[$type]['value'] = $valueSet;
+        }
+
+        return $result;
     }
 
     /**

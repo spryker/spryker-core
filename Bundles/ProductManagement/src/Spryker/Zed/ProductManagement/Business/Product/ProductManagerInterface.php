@@ -191,4 +191,11 @@ interface ProductManagerInterface
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract);
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductAttributesByAbstractProductId($idProductAbstract);
+
 }

@@ -78,5 +78,16 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
             ->createProductManager()
             ->getProductAbstractById($idProductAbstract);
     }
-    
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductAttributesByAbstractProductId($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->getProductAttributesByAbstractProductId($idProductAbstract);
+    }
 }

@@ -52,9 +52,6 @@ class EditController extends AddController
             )
             ->handleRequest($request);
 
-        $attributeCollection = $this->getFactory()->getProductAttributeCollection();
-        $matrixGenerator = new MatrixGenerator();
-        $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
         $concreteProductCollection = $this->getFactory()
             ->getProductManagementFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
@@ -63,6 +60,8 @@ class EditController extends AddController
             try {
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+                $attributeCollection = $this->getFactory()->getProductAttributeCollection();
+                $attributes = $this->getAttributesFromData($form->getData(), $attributeCollection);
 
                 $matrixGenerator = new MatrixGenerator();
                 $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributes);
@@ -90,7 +89,7 @@ class EditController extends AddController
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
-            'matrix' => $matrix,
+            'matrix' => [],
             'concretes' => $concreteProductCollection
         ]);
     }

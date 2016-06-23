@@ -1007,4 +1007,21 @@ class ProductManager implements ProductManagerInterface
         return $transferCollection;
     }
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductAttributesByAbstractProductId($idProductAbstract)
+    {
+        $concreteProductCollection = $this->getConcreteProductsByAbstractProductId($idProductAbstract);
+
+        $attributes = [];
+        foreach ($concreteProductCollection as $productTransfer) {
+            $attributes = array_merge_recursive($attributes, $productTransfer->getAttributes());
+        }
+
+        return $attributes;
+    }
+
 }

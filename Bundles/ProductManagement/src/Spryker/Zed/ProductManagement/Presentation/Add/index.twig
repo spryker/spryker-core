@@ -39,7 +39,6 @@
         {# ============================ GENERAL ============================ #}
         <div id="tab_general" class="tab-pane active">
             <div class="panel-body">
-
                 {{ form_row(form.sku) }}
 
                 <div class="tabs-container">
@@ -86,12 +85,12 @@
         {# ============================ VARIANT ============================ #}
         <div id="tab_variant" class="tab-pane">
             <div class="panel-body">
+                {{ form_errors(form) }}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Attributes
                     </div>
                     <div class="panel-body">
-                        {{ form_errors(form) }}
                         <div class="row">
                             <div class="col-lg-4">
                                 {% for type,attributes in form.attributes %}
