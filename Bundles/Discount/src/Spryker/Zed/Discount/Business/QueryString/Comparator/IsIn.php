@@ -31,7 +31,7 @@ class IsIn implements ComparatorInterface
 
         $values = array_map('trim', $values);
 
-        return in_array($withValue, $values);
+        return in_array(strtolower($withValue), $values);
     }
 
     /**
