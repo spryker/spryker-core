@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
 
 class ProductFormAttributes extends AbstractType
 {
@@ -23,18 +25,18 @@ class ProductFormAttributes extends AbstractType
     protected $attributes;
 
     /**
-     * @var array
+     * @var string
      */
-    protected $validationGroups = [];
+    protected $validationGroup;
 
     /**
      * @param array $attributes
-     * @param array $validationGroups
+     * @param array $validationGroup
      */
-    public function __construct(array $attributes = [], array $validationGroups = [])
+    public function __construct(array $attributes = [], $validationGroup)
     {
         $this->attributes = $attributes;
-        $this->validationGroups = $validationGroups;
+        $this->validationGroup = $validationGroup;
     }
 
     /**
@@ -56,7 +58,7 @@ class ProductFormAttributes extends AbstractType
 
         $resolver->setDefaults([
             'required' => false,
-            'validation_groups' => $this->validationGroups
+            'validation_groups' => [$this->validationGroup]
         ]);
     }
 

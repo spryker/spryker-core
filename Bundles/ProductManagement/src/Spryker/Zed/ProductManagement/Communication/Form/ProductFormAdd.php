@@ -9,7 +9,9 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductFormAdd extends AbstractType
@@ -47,7 +49,22 @@ class ProductFormAdd extends AbstractType
         $resolver->setDefaults([
             'cascade_validation' => true,
             'required' => false,
+            'validation_groups' => function (FormInterface $form) {
+                $defaultData = $form->getConfig()->getData();
+                $formData = $form->getData();
+
+                if (!$this->validateAttributes($form->getData())) {
+                    return [Constraint::DEFAULT_GROUP, self::VALIDATION_GROUP_ATTRIBUTES];
+                }
+
+                return [Constraint::DEFAULT_GROUP];
+            }
         ]);
+    }
+
+    protected function validateAttributes(array $formData)
+    {
+        return true;
     }
 
     /**
@@ -108,11 +125,12 @@ class ProductFormAdd extends AbstractType
             ->add(self::ATTRIBUTES, 'collection', [
                 'type' => new ProductFormAttributes(
                     $options[self::ATTRIBUTES],
-                    [self::VALIDATION_GROUP_ATTRIBUTES]
+                    self::VALIDATION_GROUP_ATTRIBUTES
                 )
             ]);
 
         return $this;
     }
+
 
 }
