@@ -1,7 +1,7 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'Create new tax rate' | trans %}
+{% block section_title 'Update tax rate' | trans %}
 
 {% block action %}
     {{ backActionButton('/tax/rate/list', 'Back to list' | trans) }}
@@ -9,7 +9,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create new tax rate' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Update tax rate' | trans } %}
 
         {% block widget_content %}
             {{ form_start(form) }}
@@ -26,7 +26,7 @@
                     {{ form_errors(form.rate) }}
                 </div>
 
-               <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}" />
+                <input type="submit" class="btn btn-primary" value="{{ 'Update' | trans }}" />
             {{ form_end(form) }}
         {% endblock %}
 

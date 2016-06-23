@@ -1,7 +1,7 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'Tax rate list' %}
+{% block section_title 'Tax rate list' | trans %}
 
 {% block action %}
     {{ createActionButton('/tax/rate/create', 'Create' | trans) }}
@@ -9,7 +9,7 @@
 
 {% block content %}
 
-     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tax rate list' } %}
+     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tax rate list' | trans } %}
 
         {% block widget_content %}
               123

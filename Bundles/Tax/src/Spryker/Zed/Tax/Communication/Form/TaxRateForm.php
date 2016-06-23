@@ -10,12 +10,14 @@ namespace Spryker\Zed\Tax\Communication\Form;
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
 
 class TaxRateForm extends AbstractType
 {
     const FIELD_NAME = 'name';
-    const FIELD_PERCENTAGE = 'percentage';
-    const FIELD_COUNTRY = 'country';
+    const FIELD_RATE = 'rate';
+    const FIELD_COUNTRY = 'fkCountry';
 
     /**
      * @var \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider
@@ -50,7 +52,15 @@ class TaxRateForm extends AbstractType
      */
     protected function addName(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, 'text');
+        $builder->add(
+            self::FIELD_NAME,
+            'text',
+            [
+                'constraints' => [
+                    new NotBlank()
+                ]
+            ]
+        );
 
         return $this;
     }
@@ -65,9 +75,11 @@ class TaxRateForm extends AbstractType
         $builder->add(self::FIELD_COUNTRY, 'choice', [
             'expanded' => false,
             'multiple' => false,
-            'label' => false,
+            'label' => 'Country',
             'choices' => $this->taxRateFormDataProvider->getData()[self::FIELD_COUNTRY],
-            'constraints' => [],
+            'constraints' => [
+                new NotBlank()
+            ],
             'attr' => []
         ]);
 
@@ -82,7 +94,19 @@ class TaxRateForm extends AbstractType
      */
     protected function addPercentage(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PERCENTAGE, 'text');
+        $builder->add(
+            self::FIELD_RATE,
+            'text',
+            [
+                'constraints' => [
+                    new Range([
+                        'min' => 0.1,
+                        'max' => 100
+                    ]),
+
+                ]
+            ]
+        );
 
         return $this;
     }
