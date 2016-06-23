@@ -16,7 +16,7 @@
     "spryker/console": "^2.0.0",
     "spryker/elastica": "^3.0.0",
     "spryker/gui": "^2.0.0",
-    "spryker/installer": "^2.0.0",
+    "spryker/installer": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.4.0",
     "spryker/library": "^2.0.0",
     "spryker/messenger": "^2.0.0",

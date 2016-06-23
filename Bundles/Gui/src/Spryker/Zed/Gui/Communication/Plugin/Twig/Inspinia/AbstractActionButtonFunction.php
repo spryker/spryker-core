@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\AbstractActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\AbstractActionButtonFunction as TwigAbstractActionButtonFunction;
 
 /**
- * @deprecated use Spryker\Zed\Gui\Communication\Plugin\Twig\ActionButtons\AbstractActionButtonFunction
+ * @deprecated use \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\AbstractActionButtonFunction
  */
-abstract class AbstractActionButtonFunction extends AbstractActionButtonFunction
+abstract class AbstractActionButtonFunction extends TwigAbstractActionButtonFunction
 {
 }
