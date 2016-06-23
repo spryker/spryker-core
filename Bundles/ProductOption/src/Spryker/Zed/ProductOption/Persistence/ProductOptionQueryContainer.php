@@ -41,7 +41,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     const PRICE = 'price';
 
     const COL_SUM_TAX_RATE = 'SumTaxRate';
-    const COL_ID_PRODUCT_OPTION_TYPE_USAGE = 'IdProductOptionTypeUsage';
+    const COL_ID_PRODUCT_OPTION_VALUE_USAGE = 'IdProductOptionValueUsage';
 
 
     /**
@@ -597,32 +597,34 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
-     * @param int[] $idsProductOptionTypeUsage
+     * @param int[] $allIdOptionValueUsages
      * @param string $iso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
-    public function queryTaxSetByProductOptionTypeUsageAndCountry($idsProductOptionTypeUsage, $iso2Code)
+    public function queryTaxSetByIdProductOptionValueUsagesAndCountry($allIdOptionValueUsages, $iso2Code)
     {
-        return $this->getFactory()->createProductOptionTypeUsageQuery()
-            ->filterByIdProductOptionTypeUsage($idsProductOptionTypeUsage)
-            ->withColumn(SpyProductOptionTypeUsageTableMap::COL_ID_PRODUCT_OPTION_TYPE_USAGE, self::COL_ID_PRODUCT_OPTION_TYPE_USAGE)
-            ->groupBy(SpyProductOptionTypeUsageTableMap::COL_ID_PRODUCT_OPTION_TYPE_USAGE)
-            ->useSpyProductOptionTypeQuery()
-                ->useSpyTaxSetQuery()
-                    ->useSpyTaxSetTaxQuery()
-                        ->useSpyTaxRateQuery()
-                            ->useCountryQuery()
-                                ->filterByIso2Code($iso2Code)
+        return $this->getFactory()->createProductOptionValueUsageQuery()
+            ->filterByIdProductOptionValueUsage($allIdOptionValueUsages)
+            ->withColumn(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE, self::COL_ID_PRODUCT_OPTION_VALUE_USAGE)
+            ->groupBy(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE)
+            ->useSpyProductOptionTypeUsageQuery()
+                ->useSpyProductOptionTypeQuery()
+                    ->useSpyTaxSetQuery()
+                        ->useSpyTaxSetTaxQuery()
+                            ->useSpyTaxRateQuery()
+                                ->useCountryQuery()
+                                    ->filterByIso2Code($iso2Code)
+                                ->endUse()
                             ->endUse()
                         ->endUse()
+                        ->withColumn(SpyTaxSetTableMap::COL_NAME)
+                        ->groupBy(SpyTaxSetTableMap::COL_NAME)
                     ->endUse()
-                    ->withColumn(SpyTaxSetTableMap::COL_NAME)
-                    ->groupBy(SpyTaxSetTableMap::COL_NAME)
+                    ->withColumn('SUM(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_SUM_TAX_RATE)
                 ->endUse()
-                ->withColumn('SUM('.SpyTaxRateTableMap::COL_RATE.')', self::COL_SUM_TAX_RATE)
             ->endUse()
-            ->select([self::COL_SUM_TAX_RATE])
-            ;
+            ->select([self::COL_SUM_TAX_RATE]);
     }
+
 }

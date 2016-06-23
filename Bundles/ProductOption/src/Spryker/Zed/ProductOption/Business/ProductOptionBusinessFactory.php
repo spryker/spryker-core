@@ -14,7 +14,6 @@ use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithP
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridgeInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -65,7 +64,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionTaxRateCalculator
+     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator
      */
     public function createProductOptionTaxRateCalculator()
     {
@@ -97,7 +96,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionToTaxBridgeInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridgeInterface
      */
     protected function getTaxFacade()
     {

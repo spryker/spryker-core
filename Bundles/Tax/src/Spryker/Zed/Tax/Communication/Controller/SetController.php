@@ -11,5 +11,4 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 class SetController extends AbstractController
 {
-
 }

@@ -39,4 +39,5 @@ class ShipmentToTaxBridge implements ShipmentToTaxInterface
     {
         return $this->taxFacade->getDefaultTaxRate();
     }
+
 }

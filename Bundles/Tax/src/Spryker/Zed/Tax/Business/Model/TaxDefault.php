@@ -13,18 +13,18 @@ class TaxDefault implements TaxDefaultInterface
 {
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @var TaxConfig
+     * @var \Spryker\Zed\Tax\TaxConfig
      */
     protected $config;
 
     /**
-     * @param Store $store
-     * @param TaxConfig $config
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\Tax\TaxConfig $config
      */
     public function __construct(Store $store, TaxConfig $config)
     {
@@ -47,4 +47,5 @@ class TaxDefault implements TaxDefaultInterface
     {
         return $this->config->getDefaultTaxRate();
     }
+
 }

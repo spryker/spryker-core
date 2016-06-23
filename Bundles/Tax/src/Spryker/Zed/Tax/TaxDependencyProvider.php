@@ -14,6 +14,7 @@ use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridge;
 
 class TaxDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const STORE_CONFIG = 'store config';
     const FACADE_COUNTRY = 'facade country';
 
@@ -42,4 +43,5 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
             return new TaxToCountryBridge($container->getLocator()->country()->facade());
         };
     }
+
 }

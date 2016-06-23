@@ -313,7 +313,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     /**
      * @api
      *
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */

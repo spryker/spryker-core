@@ -8,26 +8,26 @@ namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
-use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 
 class ShipmentTaxRateCalculator implements CalculatorInterface
 {
 
     /**
-     * @var ShipmentQueryContainerInterface
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
     protected $shipmentQueryContainer;
 
     /**
-     * @var ShipmentToTaxInterface
+     * @var \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
      */
     protected $taxFacade;
 
     /**
-     * @param ShipmentQueryContainerInterface $shipmentQueryContainer
-     * @param ShipmentToTaxInterface $taxFacade
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
+     * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      */
     public function __construct(ShipmentQueryContainerInterface $shipmentQueryContainer, ShipmentToTaxInterface $taxFacade)
     {
@@ -47,10 +47,10 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         }
 
         $taxRate = $this->taxFacade->getDefaultTaxRate();
-        $taxSetEntity = $this->findTaxSetByShipmentMethodAndCountry($quoteTransfer);
+        $taxSetEntity = $this->findTaxSetByIdShipmentMethodAndCountry($quoteTransfer);
 
         if ($taxSetEntity !== null) {
-            $taxRate = (float) $taxSetEntity[ShipmentQueryContainer::COL_SUM_TAX_RATE];
+            $taxRate = (float)$taxSetEntity[ShipmentQueryContainer::COL_SUM_TAX_RATE];
         }
 
         $this->setShipmentTaxRate($quoteTransfer, $taxRate);
@@ -58,7 +58,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param float $taxRate
      *
      * @return void
@@ -66,9 +66,8 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     protected function setQuoteExpenseTaxRate(QuoteTransfer $quoteTransfer, $taxRate)
     {
         foreach ($quoteTransfer->getExpenses() as $expense) {
-            if ($expense->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE && $expense->getName() === $quoteTransfer->getShipment()
-                    ->getMethod()
-                    ->getName()
+            if ($expense->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE &&
+                $expense->getName() === $quoteTransfer->getShipment()->getMethod()->getName()
             ) {
                 $expense->setTaxRate($taxRate);
             }
@@ -76,7 +75,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param float $taxRate
      *
      * @return void
@@ -85,20 +84,20 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     {
         $quoteTransfer->getShipment()
             ->getMethod()
-            ->setTaxRate($taxRate)
-        ;
+            ->setTaxRate($taxRate);
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
      */
-    protected function findTaxSetByShipmentMethodAndCountry(QuoteTransfer $quoteTransfer)
+    protected function findTaxSetByIdShipmentMethodAndCountry(QuoteTransfer $quoteTransfer)
     {
-        return $this->shipmentQueryContainer->queryTaxSetByShipmentMethodAndCountry(
+        return $this->shipmentQueryContainer->queryTaxSetByIdShipmentMethodAndCountry(
             $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),
             $quoteTransfer->getBillingAddress()->getIso2Code()
         )->findOne();
     }
+
 }

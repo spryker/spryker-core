@@ -16,18 +16,18 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
 {
 
     /**
-     * @var ProductOptionQueryContainerInterface
+     * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var ProductOptionToTaxBridgeInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridgeInterface
      */
     protected $taxFacade;
 
     /**
-     * @param ProductOptionQueryContainerInterface $queryContainer
-     * @param ProductOptionToTaxBridgeInterface $taxFacade
+     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridgeInterface $taxFacade
      */
     public function __construct(ProductOptionQueryContainerInterface $queryContainer, ProductOptionToTaxBridgeInterface $taxFacade)
     {
@@ -43,15 +43,15 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         $country = $this->getShippingCountryIsoCode($quoteTransfer);
-        $idsProductOption = $this->getIdsProductOption($quoteTransfer);
+        $allIdOptionValueUsages = $this->getAllIdOptionValueUsages($quoteTransfer);
 
-        $taxRates = $this->findTaxRatesByCountry($idsProductOption, $country);
+        $taxRates = $this->findTaxRatesByIdOptionValueUsageAndCountry($allIdOptionValueUsages, $country);
 
-        $this->setItemsTax($quoteTransfer, $taxRates);
+        $this->setItemsTaxRate($quoteTransfer, $taxRates);
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
@@ -65,27 +65,27 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    protected function getIdsProductOption(QuoteTransfer $quoteTransfer)
+    protected function getAllIdOptionValueUsages(QuoteTransfer $quoteTransfer)
     {
-        $idsProductOption = [];
+        $allIdOptionValueUsages = [];
         foreach ($quoteTransfer->getItems() as $item) {
-            $idsProductOption = array_merge($idsProductOption, $this->getIdsProductOptionPerItem($item));
+            $allIdOptionValueUsages = array_merge($allIdOptionValueUsages, $this->getAllIdOptionValueUsagesPerItem($item));
         }
 
-        return $idsProductOption;
+        return $allIdOptionValueUsages;
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param array $taxRates
      *
      * @return void
      */
-    protected function setItemsTax(QuoteTransfer $quoteTransfer, array $taxRates)
+    protected function setItemsTaxRate(QuoteTransfer $quoteTransfer, array $taxRates)
     {
         foreach ($quoteTransfer->getItems() as $item) {
             $this->setProductOptionTaxRate($item, $taxRates);
@@ -94,15 +94,15 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param array $taxRates
-     * @param int $idProductOptionTypeUsage
+     * @param int $idOptionValueUsage
      *
      * @return float
      */
-    protected function getEffectiveTaxRate(array $taxRates, $idProductOptionTypeUsage)
+    protected function getEffectiveTaxRate(array $taxRates, $idOptionValueUsage)
     {
         foreach ($taxRates as $taxRate) {
-            if ($taxRate[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_TYPE_USAGE] === $idProductOptionTypeUsage) {
-                return (float) $taxRate[ProductOptionQueryContainer::COL_SUM_TAX_RATE];
+            if ($taxRate[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE] === $idOptionValueUsage) {
+                return (float)$taxRate[ProductOptionQueryContainer::COL_SUM_TAX_RATE];
             }
         }
 
@@ -110,22 +110,22 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return array
      */
-    protected function getIdsProductOptionPerItem(ItemTransfer $item)
+    protected function getAllIdOptionValueUsagesPerItem(ItemTransfer $item)
     {
-        $idsProductOptionPerItem = [];
+        $allIdOptionValueUsagesPerItem = [];
         foreach ($item->getProductOptions() as $productOption) {
-            $idsProductOptionPerItem[] = $productOption->getIdOptionValueUsage();
+            $allIdOptionValueUsagesPerItem[] = $productOption->getIdOptionValueUsage();
         }
 
-        return $idsProductOptionPerItem;
+        return $allIdOptionValueUsagesPerItem;
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      * @param array $taxRates
      *
      * @return void
@@ -138,16 +138,16 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param int[] $idsProductOption
+     * @param int[] $allIdOptionValueUsages
      * @param string $country
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function findTaxRatesByCountry($idsProductOption, $country)
+    protected function findTaxRatesByIdOptionValueUsageAndCountry($allIdOptionValueUsages, $country)
     {
-        return $this->queryContainer->queryTaxSetByProductOptionTypeUsageAndCountry($idsProductOption, $country)
+        return $this->queryContainer->queryTaxSetByIdProductOptionValueUsagesAndCountry($allIdOptionValueUsages, $country)
             ->find()
-            ->toArray()
-        ;
+            ->toArray();
     }
+
 }

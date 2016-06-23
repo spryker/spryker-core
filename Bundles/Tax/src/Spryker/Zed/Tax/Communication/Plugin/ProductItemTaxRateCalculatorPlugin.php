@@ -12,12 +12,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
+ * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  */
 class ProductItemTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -25,4 +26,5 @@ class ProductItemTaxRateCalculatorPlugin extends AbstractPlugin implements Calcu
     {
         $this->getFacade()->calculateProductItemTaxRate($quoteTransfer);
     }
+
 }

@@ -10,4 +10,5 @@ interface TaxConstants
 {
 
     const DEFAULT_TAX_RATE = 'DEFAULT_TAX_RATE';
+
 }

@@ -555,8 +555,6 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @deprecated It handles by TaxProductItemCalculatorPlugin in TaxBundle 2.1.0
-     *
      * @return void
      */
     protected function addTaxRate(ProductConcreteTransfer $productConcreteTransfer)

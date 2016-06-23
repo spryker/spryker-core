@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\Tax\Business\Model\TaxDefault;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
-use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 /**
  * @group TaxRate
@@ -44,14 +43,14 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return float
      */
     protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $mockData)
     {
         $productItemTaxRateCalculatorMock = $this->createProductItemTaxRateCalculator();
-        $productItemTaxRateCalculatorMock->method('findTaxRatesByCountry')->willReturn($mockData);
+        $productItemTaxRateCalculatorMock->method('findTaxRatesByIdOptionValueUsageAndCountry')->willReturn($mockData);
 
         $productItemTaxRateCalculatorMock->recalculate($quoteTransfer);
         $taxAverage = $this->getProductItemsTaxRateAverage($quoteTransfer);
@@ -60,18 +59,18 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductItemTaxRateCalculator
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator
      */
     protected function createProductItemTaxRateCalculator()
     {
-        return $productItemTaxRateCalculatorMock = $this->getMock(ProductItemTaxRateCalculator::class, ['findTaxRatesByCountry'], [
+        return $productItemTaxRateCalculatorMock = $this->getMock(ProductItemTaxRateCalculator::class, ['findTaxRatesByIdOptionValueUsageAndCountry'], [
             $this->createQueryContainerMock(),
             $this->createTaxDefault(),
         ]);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|TaxDefault
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\TaxDefault
      */
     public function createTaxDefault()
     {
@@ -93,7 +92,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|TaxQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
      */
     protected function createQueryContainerMock()
     {
@@ -103,7 +102,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return float
      */
@@ -120,7 +119,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithoutShippingAddress()
     {
@@ -132,7 +131,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithShippingAddress()
     {
@@ -149,7 +148,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -165,7 +164,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     /**
      * @param $id
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createProductItemTransfer($id)
     {

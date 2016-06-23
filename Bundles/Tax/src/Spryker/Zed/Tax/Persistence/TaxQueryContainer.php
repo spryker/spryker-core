@@ -105,16 +105,16 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     /**
      * @api
      *
-     * @param int[] $idsProductAbstract
+     * @param int[] $allIdProductAbstracts
      * @param string $iso2Code
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
-    public function queryTaxSetByProductAbstractAndCountry($idsProductAbstract, $iso2Code)
+    public function queryTaxSetByIdProductAbstractAndCountry($allIdProductAbstracts, $iso2Code)
     {
         return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
-                ->filterByIdProductAbstract($idsProductAbstract)
+                ->filterByIdProductAbstract($allIdProductAbstracts)
                 ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, self::COL_ID_ABSTRACT_PRODUCT)
                 ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->endUse()
@@ -124,10 +124,9 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
                         ->filterByIso2Code($iso2Code)
                     ->endUse()
                 ->endUse()
-            ->withColumn('SUM('.SpyTaxRateTableMap::COL_RATE.')', self::COL_SUM_TAX_RATE)
+            ->withColumn('SUM(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_SUM_TAX_RATE)
             ->endUse()
-            ->select([self::COL_SUM_TAX_RATE])
-            ;
+            ->select([self::COL_SUM_TAX_RATE]);
     }
 
 }

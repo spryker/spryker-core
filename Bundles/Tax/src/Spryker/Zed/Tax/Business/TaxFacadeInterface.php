@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 
@@ -184,6 +185,15 @@ interface TaxFacadeInterface
      * @return int
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateProductItemTaxRate(QuoteTransfer $quoteTransfer);
 
     /**
      * @api

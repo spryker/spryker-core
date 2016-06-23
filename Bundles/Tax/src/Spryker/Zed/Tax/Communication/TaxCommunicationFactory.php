@@ -11,11 +11,15 @@ use Generated\Shared\Transfer\TaxRateTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider;
 use Spryker\Zed\Tax\Communication\Form\TaxRateForm;
-use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface;
 use Spryker\Zed\Tax\TaxDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\Tax\TaxConfig getConfig()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
+ */
 class TaxCommunicationFactory extends AbstractCommunicationFactory
 {
+
     /**
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
@@ -43,10 +47,11 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return TaxToCountryBridgeInterface
+     * @return \Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface
      */
     protected function getCountryFacade()
     {
         return $this->getProvidedDependency(TaxDependencyProvider::FACADE_COUNTRY);
     }
+
 }

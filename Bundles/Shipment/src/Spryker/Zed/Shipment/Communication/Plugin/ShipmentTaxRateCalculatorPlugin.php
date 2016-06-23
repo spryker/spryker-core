@@ -9,10 +9,10 @@ namespace Spryker\Zed\Shipment\Communication\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
 /**
- * @method ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  */
 class ShipmentTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
@@ -28,4 +28,5 @@ class ShipmentTaxRateCalculatorPlugin extends AbstractPlugin implements Calculat
     {
         $this->getFacade()->calculateShipmentTaxRate($quoteTransfer);
     }
+
 }

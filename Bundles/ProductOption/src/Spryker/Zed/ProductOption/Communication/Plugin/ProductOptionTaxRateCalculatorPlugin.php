@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductOption\Communication\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 
 /**
- * @method ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
  */
 class ProductOptionTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
@@ -28,4 +28,5 @@ class ProductOptionTaxRateCalculatorPlugin extends AbstractPlugin implements Cal
     {
         $this->getFacade()->calculateProductOptionTaxRate($quoteTransfer);
     }
+
 }

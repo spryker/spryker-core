@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
  * @group ProductOptionTaxRate
@@ -45,14 +43,14 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return float
      */
     protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $mockData)
     {
         $productItemTaxRateCalculatorMock = $this->createProductItemTaxRateCalculator();
-        $productItemTaxRateCalculatorMock->method('findTaxRatesByCountry')->willReturn($mockData);
+        $productItemTaxRateCalculatorMock->method('findTaxRatesByIdOptionValueUsageAndCountry')->willReturn($mockData);
 
         $productItemTaxRateCalculatorMock->recalculate($quoteTransfer);
         $taxAverage = $this->getProductItemsTaxRateAverage($quoteTransfer);
@@ -61,18 +59,18 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductOptionTaxRateCalculator
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator
      */
     protected function createProductItemTaxRateCalculator()
     {
-        return $productItemTaxRateCalculatorMock = $this->getMock(ProductOptionTaxRateCalculator::class, ['findTaxRatesByCountry'], [
+        return $productItemTaxRateCalculatorMock = $this->getMock(ProductOptionTaxRateCalculator::class, ['findTaxRatesByIdOptionValueUsageAndCountry'], [
             $this->createQueryContainerMock(),
-            new ProductOptionToTaxBridge(new TaxFacade())
+            $this->createProductOptionToTaxBridgeMock()
         ]);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductOptionQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected function createQueryContainerMock()
     {
@@ -82,26 +80,29 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     *
-     * @return float
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge
      */
-    protected function getProductItemsTaxRateAverage(QuoteTransfer $quoteTransfer)
+    protected function createProductOptionToTaxBridgeMock()
     {
-        $taxSum = 0;
-        $productOptionCount = 0;
-        foreach ($quoteTransfer->getItems() as $item) {
-            $taxSum += $this->getEffectiveProductOptionTaxRate($item);
-            $productOptionCount += count($item->getProductOptions());
-        }
+        $bridgeMock = $this->getMockBuilder(ProductOptionToTaxBridge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $taxAverage = $taxSum / $productOptionCount;
+        $bridgeMock
+            ->expects($this->any())
+            ->method('getDefaultTaxCountry')
+            ->willReturn('DE');
 
-        return $taxAverage;
+        $bridgeMock
+            ->expects($this->any())
+            ->method('getDefaultTaxRate')
+            ->willReturn(19);
+
+        return $bridgeMock;
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithoutShippingAddress()
     {
@@ -113,7 +114,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithShippingAddress()
     {
@@ -130,7 +131,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -148,7 +149,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     /**
      * @param $id
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createProductItemTransfer($id)
     {
@@ -181,7 +182,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [
-                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_TYPE_USAGE => 1,
+                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE => 1,
                 ProductOptionQueryContainer::COL_SUM_TAX_RATE => 11,
             ]
         ];
@@ -194,11 +195,11 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [
-                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_TYPE_USAGE => 1,
+                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE => 1,
                 ProductOptionQueryContainer::COL_SUM_TAX_RATE => 20,
             ],
             [
-                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_TYPE_USAGE => 2,
+                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE => 2,
                 ProductOptionQueryContainer::COL_SUM_TAX_RATE => 14,
             ],
         ];
@@ -207,7 +208,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     /**
      * @param int $idOptionValueUsage
      *
-     * @return ProductOptionTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     protected function createProductOption($idOptionValueUsage)
     {
@@ -218,7 +219,26 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return float
+     */
+    protected function getProductItemsTaxRateAverage(QuoteTransfer $quoteTransfer)
+    {
+        $taxSum = 0;
+        $productOptionCount = 0;
+        foreach ($quoteTransfer->getItems() as $item) {
+            $taxSum += $this->getEffectiveProductOptionTaxRate($item);
+            $productOptionCount += count($item->getProductOptions());
+        }
+
+        $taxAverage = $taxSum / $productOptionCount;
+
+        return $taxAverage;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return float
      */

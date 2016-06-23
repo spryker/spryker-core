@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface ProductOptionFacadeInterface
 {
 
@@ -210,5 +212,14 @@ interface ProductOptionFacadeInterface
      * @return void
      */
     public function flushBuffer();
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateProductOptionTaxRate(QuoteTransfer $quoteTransfer);
 
 }

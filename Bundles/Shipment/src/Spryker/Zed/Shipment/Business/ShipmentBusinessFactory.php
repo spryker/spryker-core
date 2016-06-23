@@ -12,9 +12,7 @@ use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
-use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
@@ -51,7 +49,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ShipmentTaxRateCalculator
+     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator
      */
     public function createShipmentTaxCalculator()
     {
@@ -59,7 +57,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ShipmentToTaxInterface
+     * @return \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
      */
     public function getTaxFacade()
     {
