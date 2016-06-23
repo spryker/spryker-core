@@ -50,7 +50,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $mockData)
     {
         $productItemTaxRateCalculatorMock = $this->createProductItemTaxRateCalculator();
-        $productItemTaxRateCalculatorMock->method('findTaxRatesByIdOptionValueUsageAndCountry')->willReturn($mockData);
+        $productItemTaxRateCalculatorMock->method('findTaxRatesByAllIdProductAbstractsAndCountry')->willReturn($mockData);
 
         $productItemTaxRateCalculatorMock->recalculate($quoteTransfer);
         $taxAverage = $this->getProductItemsTaxRateAverage($quoteTransfer);
@@ -63,7 +63,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
      */
     protected function createProductItemTaxRateCalculator()
     {
-        return $productItemTaxRateCalculatorMock = $this->getMock(ProductItemTaxRateCalculator::class, ['findTaxRatesByIdOptionValueUsageAndCountry'], [
+        return $productItemTaxRateCalculatorMock = $this->getMock(ProductItemTaxRateCalculator::class, ['findTaxRatesByAllIdProductAbstractsAndCountry'], [
             $this->createQueryContainerMock(),
             $this->createTaxDefault(),
         ]);
