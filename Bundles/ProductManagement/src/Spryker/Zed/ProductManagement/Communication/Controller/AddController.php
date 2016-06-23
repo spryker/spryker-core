@@ -200,15 +200,15 @@ class AddController extends AbstractController
     }
 
     /**
-     * @param array $keyCollection
+     * @param array $keys
      * @param array $attributes
      *
      * @return array
      */
-    protected function getAttributeValues(array $keyCollection, array $attributes)
+    protected function getAttributeValues(array $keys, array $attributes)
     {
         $values = [];
-        foreach ($keyCollection as $key) {
+        foreach ($keys as $key) {
             $values[$key] =  $attributes[$key];
         }
 
