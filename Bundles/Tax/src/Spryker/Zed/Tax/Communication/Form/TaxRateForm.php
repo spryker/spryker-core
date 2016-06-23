@@ -19,6 +19,7 @@ class TaxRateForm extends AbstractType
     const FIELD_NAME = 'name';
     const FIELD_RATE = 'rate';
     const FIELD_COUNTRY = 'fkCountry';
+    const FIELD_ID_TAX_RATE = 'idTaxRate';
 
     /**
      * @var \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider
@@ -42,6 +43,7 @@ class TaxRateForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addName($builder)
+            ->adIdTaxRate($builder)
             ->addCountry($builder)
             ->addPercentage($builder);
     }
@@ -71,13 +73,38 @@ class TaxRateForm extends AbstractType
      *
      * @return $this
      */
+    protected function adIdTaxRate(FormBuilderInterface $builder)
+    {
+        $taxRateTransfer = $this->taxRateFormDataProvider->getData();
+        if (!$taxRateTransfer || !$taxRateTransfer->getIdTaxRate()) {
+            return $this;
+        }
+
+        $builder->add(
+            self::FIELD_ID_TAX_RATE,
+            'text',
+            [
+                'attr' => [
+                    'disabled' => 'disabled'
+                ]
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
     protected function addCountry(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_COUNTRY, 'choice', [
             'expanded' => false,
             'multiple' => false,
             'label' => 'Country',
-            'choices' => $this->taxRateFormDataProvider->getData()[self::FIELD_COUNTRY],
+            'choices' => $this->taxRateFormDataProvider->getOptions()[self::FIELD_COUNTRY],
             'constraints' => [
                 new NotBlank()
             ],

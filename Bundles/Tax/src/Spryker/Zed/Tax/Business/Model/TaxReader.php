@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\TaxRateCollectionTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetCollectionTransfer;
@@ -59,13 +60,22 @@ class TaxReader implements TaxReaderInterface
      */
     public function getTaxRate($id)
     {
-        $taxRateEntity = $this->queryContainer->queryTaxRate($id)->findOne();
+        $taxRateEntity = $this->queryContainer
+            ->queryTaxRate($id)
+            ->findOne();
 
         if ($taxRateEntity === null) {
             throw new ResourceNotFoundException();
         }
 
-        return (new TaxRateTransfer())->fromArray($taxRateEntity->toArray());
+        $taxRateTransfer = new TaxRateTransfer();
+        $taxRateTransfer->fromArray($taxRateEntity->toArray());
+
+        $countryTransfer = new CountryTransfer();
+        $countryTransfer->fromArray($taxRateEntity->getCountry()->toArray(), true);
+        $taxRateTransfer->setCountry($countryTransfer);
+
+        return $taxRateTransfer;
     }
 
     /**
