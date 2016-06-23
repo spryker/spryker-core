@@ -130,7 +130,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
               ->filterByName($processName)
             ->endUse()
             ->joinProcess()
-            ->filterByName($states);
+            ->filterByName($states, Criteria::IN);
     }
 
     /**
@@ -152,6 +152,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     /**
      * @api
      *
+     * @deprecated Not used, will be removed in the next major release.
+     *
      * @param string $identifier
      * @param \DateTime $expirationDate
      *
@@ -162,7 +164,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
         return $this->getFactory()
             ->createStateMachineLockQuery()
             ->filterByIdentifier($identifier)
-            ->filterByExpires(['min' => $expirationDate]);
+            ->filterByExpires(['min' => $expirationDate], Criteria::GREATER_EQUAL);
     }
 
     /**
@@ -176,7 +178,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     {
         return $this->getFactory()
             ->createStateMachineLockQuery()
-            ->filterByExpires(['max' => $expirationDate]);
+            ->filterByExpires(['max' => $expirationDate], Criteria::LESS_EQUAL);
     }
 
     /**

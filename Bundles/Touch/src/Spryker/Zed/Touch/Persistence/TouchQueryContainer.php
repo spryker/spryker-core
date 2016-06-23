@@ -9,6 +9,7 @@ namespace Spryker\Zed\Touch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
@@ -92,7 +93,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
-            ->filterByTouched(['min' => $lastTouchedAt]);
+            ->filterByTouched(['min' => $lastTouchedAt], Criteria::GREATER_EQUAL);
 
         return $query;
     }
@@ -130,7 +131,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->setQueryKey(self::TOUCH_ENTRIES_QUERY_KEY)
             ->filterByItemType($itemType)
             ->filterByItemEvent($itemEvent)
-            ->filterByItemId($itemIds);
+            ->filterByItemId($itemIds, Criteria::IN);
 
         return $query;
     }
@@ -150,7 +151,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     {
         $query = $this->getFactory()->createTouchQuery()
             ->filterByItemType($itemType)
-            ->filterByItemId($itemIds);
+            ->filterByItemId($itemIds, Criteria::IN);
 
         return $query;
     }
@@ -198,7 +199,12 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     public function queryTouchSearchByTouchIds($touchIds)
     {
         $query = $this->getFactory()->createTouchSearchQuery();
-        $query->filterByFkTouch($touchIds);
+        if (is_array($touchIds)) {
+            $query->filterByFkTouch($touchIds, Criteria::IN);
+            return $query;
+        }
+
+        $query->filterByFkTouch($touchIds, Criteria::EQUAL);
 
         return $query;
     }
@@ -213,7 +219,12 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     public function queryTouchStorageByTouchIds($touchIds)
     {
         $query = $this->getFactory()->createTouchStorageQuery();
-        $query->filterByFkTouch($touchIds);
+        if (is_array($touchIds)) {
+            $query->filterByFkTouch($touchIds, Criteria::IN);
+            return $query;
+        }
+
+        $query->filterByFkTouch($touchIds, Criteria::EQUAL);
 
         return $query;
     }

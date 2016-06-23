@@ -91,4 +91,14 @@ class TouchTest extends Test
         $this->assertTrue($touchCountAfterTouch > $touchCountBeforeTouch);
     }
 
+    /**
+     * @return void
+     */
+    public function testDeleteDeleted()
+    {
+        $this->touchFacade->touchDeleted('ProductTranslationWhatever', 3);
+        $number = $this->touchFacade->removeTouchEntriesMarkedAsDeleted();
+        $this->assertGreaterThan(0, $number);
+    }
+
 }
