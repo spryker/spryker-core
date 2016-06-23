@@ -13,7 +13,7 @@
   "require": {
     "spryker/collector": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/propel": "^2.0.0"
+    "spryker/propel": "^2.2.0"
   },
   "description": "Touch bundle",
   "license": "proprietary",
