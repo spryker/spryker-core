@@ -228,6 +228,34 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductInActive($idProductAbstract)
+    {
+        $productManager = $this->getFactory()->createProductManager();
+
+        $productManager->touchProductInActive($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductAbstract)
+    {
+        $productManager = $this->getFactory()->createProductManager();
+
+        $productManager->touchProductDeleted($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale

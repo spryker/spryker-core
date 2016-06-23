@@ -488,6 +488,26 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductInActive($idProductAbstract)
+    {
+        $this->touchFacade->touchInActive('product_abstract', $idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductAbstract)
+    {
+        $this->touchFacade->touchDeleted('product_abstract', $idProductAbstract);
+    }
+
+    /**
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale

@@ -34,4 +34,26 @@ class ProductToTouchBridge implements ProductToTouchInterface
         return $this->touchFacade->touchActive($itemType, $itemId);
     }
 
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchInActive($itemType, $itemId)
+    {
+        return $this->touchFacade->touchInactive($itemType, $itemId);
+    }
+
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchDeleted($itemType, $itemId)
+    {
+        return $this->touchFacade->touchDeleted($itemType, $itemId);
+    }
+
 }

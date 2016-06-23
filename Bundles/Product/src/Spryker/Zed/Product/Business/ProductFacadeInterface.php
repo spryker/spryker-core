@@ -162,6 +162,24 @@ interface ProductFacadeInterface
     /**
      * @api
      *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductInActive($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductAbstract);
+
+    /**
+     * @api
+     *
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
