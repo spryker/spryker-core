@@ -182,27 +182,37 @@ class AddController extends AbstractController
         return $value;
     }
 
+    /**
+     * @param array $data
+     * @param array $attributeCollection
+     *
+     * @return array
+     */
     protected function getAttributesFromData(array $data, array $attributeCollection)
     {
-        s($data, $attributeCollection);
-
         $attributes = [];
         foreach ($data[ProductFormAdd::ATTRIBUTES] as $type => $values) {
-            $values = $this->getAttributeValues($type, $values['value'], $attributeCollection);
+            $values = $this->getAttributeValues($values['value'], $attributeCollection[$type]);
             $attributes[$type] = $values;
         }
 
-        sd($attributes);
-        
-        
-        return $attributeCollection;
+        return $attributes;
     }
 
-    protected function getAttributeValues($type, array $values, array $attributeCollection)
+    /**
+     * @param array $keyCollection
+     * @param array $attributes
+     *
+     * @return array
+     */
+    protected function getAttributeValues(array $keyCollection, array $attributes)
     {
-        return array_combine(array_keys($values), array_values($attributeCollection[$type]))
+        $values = [];
+        foreach ($keyCollection as $key) {
+            $values[$key] =  $attributes[$key];
+        }
 
-        return $a;
+        return $values;
     }
 
 }
