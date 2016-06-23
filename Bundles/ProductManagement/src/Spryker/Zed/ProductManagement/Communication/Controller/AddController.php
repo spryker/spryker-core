@@ -45,8 +45,6 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             try {
-                die('wtf');
-
                 $attributeCollection = $this->getFactory()->getProductAttributeCollection();
                 $attributes = $this->getAttributesFromData($form->getData(), $attributeCollection);
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
