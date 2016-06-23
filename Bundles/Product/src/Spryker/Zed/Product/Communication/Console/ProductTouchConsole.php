@@ -18,9 +18,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductTouchConsole extends Console
 {
+    const ACTION_ACTIVE = 'active';
+    const ACTION_INACTIVE = 'inactive';
+    const ACTION_DELETED = 'deleted';
 
     const COMMAND_NAME = 'product:touch';
-    const DESCRIPTION = 'product:touch <active|inactive|delete> <id>';
+    const DESCRIPTION = 'product:touch <active|inactive|deleted> <id>';
 
     const ARGUMENT_ID_ABSTRACT_PRODUCT = 'id_product_abstract';
     const ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION = 'The `id_product_abstract` id of the record to be touched.';
@@ -64,15 +67,15 @@ class ProductTouchConsole extends Console
         $action = strtolower($input->getArgument(self::ARGUMENT_TOUCH_ACTION));
 
         switch ($action) {
-            case 'active':
+            case self::ACTION_ACTIVE:
                 $this->getFacade()->touchProductActive($idProductAbstract);
                 break;
 
-            case 'inactive':
+            case self::ACTION_INACTIVE:
                 $this->getFacade()->touchProductInActive($idProductAbstract);
                 break;
 
-            case 'delete':
+            case self::ACTION_DELETED:
                 $this->getFacade()->touchProductDeleted($idProductAbstract);
                 break;
 
