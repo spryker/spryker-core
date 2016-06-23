@@ -340,6 +340,12 @@
       "Unit\\Spryker\\Shared\\Refund\\": "Bundles/Refund/tests",
       "Spryker\\Zed\\Refund\\": "Bundles/Refund/src",
       "Unit\\Spryker\\Zed\\Refund\\": "Bundles/Refund/tests",
+
+      "Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/src",
+      "Spryker\\Yves\\Ratepay\\": "Bundles/Ratepay/src",
+      "Spryker\\Shared\\Ratepay\\": "Bundles/Ratepay/src",
+      "Spryker\\Client\\Ratepay\\": "Bundles/Ratepay/src",
+
       "Spryker\\Client\\Sales\\": "Bundles/Sales/src",
       "Unit\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",
       "Functional\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",

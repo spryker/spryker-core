@@ -1,0 +1,205 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Yves\Ratepay\Handler;
+
+use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Ratepay\RatepayClientInterface;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Ratepay\RatepayConstants;
+use Symfony\Component\HttpFoundation\Request;
+
+class RatepayHandler
+{
+
+    const INSTALLMENT_CALCULATOR_ERROR_HASH = 0;
+    const CHECKOUT_PARTIAL_SUMMARY_PATH = 'Ratepay/partial/summary';
+
+    /**
+     * @var \Spryker\Client\Ratepay\RatepayClientInterface
+     */
+    protected $ratepayClient;
+
+    /**
+     * @var array
+     */
+    protected static $paymentMethodMapper = [
+        PaymentTransfer::RATEPAY_INVOICE => RatepayConstants::METHOD_INVOICE,
+        PaymentTransfer::RATEPAY_ELV => RatepayConstants::METHOD_ELV,
+        PaymentTransfer::RATEPAY_PREPAYMENT => RatepayConstants::METHOD_PREPAYMENT,
+        PaymentTransfer::RATEPAY_INSTALLMENT => RatepayConstants::METHOD_INSTALLMENT,
+    ];
+
+    /**
+     * @var array
+     */
+    protected static $genderMapper = [
+        'Mr' => RatepayConstants::GENDER_MALE,
+        'Mrs' => RatepayConstants::GENDER_FEMALE,
+    ];
+
+    /**
+     * @param \Spryker\Client\Ratepay\RatepayClientInterface $ratepayClient
+     */
+    public function __construct(RatepayClientInterface $ratepayClient)
+    {
+        $this->ratepayClient = $ratepayClient;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addPaymentToQuote(Request $request, QuoteTransfer $quoteTransfer)
+    {
+        $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
+        $this->setPaymentProviderAndMethod($quoteTransfer, $paymentSelection);
+        $this->setRatepayPayment($request, $quoteTransfer, $paymentSelection);
+        $quoteTransfer->getPayment()->setTotalHash(null);
+        $this->calculateInstallmentPlan($quoteTransfer);
+        $this->setPaymentSuccessPartialPath($quoteTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $paymentSelection
+     *
+     * @return void
+     */
+    protected function setPaymentProviderAndMethod(QuoteTransfer $quoteTransfer, $paymentSelection)
+    {
+        $quoteTransfer->getPayment()
+            ->setPaymentProvider(RatepayConstants::PROVIDER_NAME)
+            ->setPaymentMethod(static::$paymentMethodMapper[$paymentSelection]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $paymentSelection
+     *
+     * @return void
+     */
+    protected function setRatepayPayment(Request $request, QuoteTransfer $quoteTransfer, $paymentSelection)
+    {
+        $ratepayPaymentTransfer = $this->getPaymentTransfer($quoteTransfer, $paymentSelection);
+        $ratepayPaymentTransfer->setPaymentType(static::$paymentMethodMapper[$paymentSelection]);
+
+        $billingAddress = $quoteTransfer->getBillingAddress();
+
+        $ratepayPaymentTransfer
+            ->setGender(static::$genderMapper[$billingAddress->getSalutation()])
+            ->setCurrencyIso3($this->getCurrency())
+            ->setIpAddress($request->getClientIp())
+            ->setDeviceFingerprint(
+                md5(
+                    $quoteTransfer->getCustomer()->getIdCustomer()
+                    . "_"
+                    . microtime()
+                )
+            )
+            ->setDeviceIdentSId(Config::get(RatepayConstants::SNIPPET_ID));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrency()
+    {
+        return CurrencyManager::getInstance()->getDefaultCurrency()->getIsoCode();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $paymentSelection
+     *
+     * @return \Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer
+     */
+    protected function getPaymentTransfer(QuoteTransfer $quoteTransfer, $paymentSelection)
+    {
+        $method = 'get' . ucfirst($paymentSelection);
+        $paymentTransfer = $quoteTransfer->getPayment()->$method();
+
+        return $paymentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function calculateInstallmentPlan(QuoteTransfer $quoteTransfer)
+    {
+        if ($quoteTransfer->getPayment()->getPaymentSelection() === PaymentTransfer::RATEPAY_INSTALLMENT) {
+            $calculationResponse = $this->ratepayClient->installmentCalculation($quoteTransfer);
+            if ($calculationResponse->getBaseResponse()->getSuccessful()) {
+                $this->setInstallmentPlanDetailToQuote($quoteTransfer, $calculationResponse);
+            } else {
+                $this->setInstallmentCalculatorError($quoteTransfer, $calculationResponse);
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function setPaymentSuccessPartialPath(QuoteTransfer $quoteTransfer)
+    {
+        $quoteTransfer->requirePayment()
+            ->getPayment()->setSummaryPartialPath(self::CHECKOUT_PARTIAL_SUMMARY_PATH);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer $calculationResponse
+     *
+     * @return void
+     */
+    protected function setInstallmentPlanDetailToQuote(QuoteTransfer $quoteTransfer, $calculationResponse)
+    {
+        $quoteTransfer->getPayment()
+            ->setTotalHash($quoteTransfer->getTotals()->getHash())
+            ->getRatepayInstallment()
+            ->setInstallmentAnnualPercentageRate($calculationResponse->getAnnualPercentageRate())
+            ->setInstallmentInterestRate($calculationResponse->getInterestRate())
+            ->setInstallmentLastRate($calculationResponse->getLastRate())
+            ->setInstallmentServiceCharge($calculationResponse->getServiceCharge())
+            ->setInstallmentNumberRates($calculationResponse->getNumberOfRates())
+            ->setInstallmentRate($calculationResponse->getRate())
+            ->setInstallmentInterestAmount($calculationResponse->getInterestAmount())
+            ->setInstallmentGrandTotalAmount($calculationResponse->getTotalAmount());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer $calculationResponse
+     *
+     * @return void
+     */
+    protected function setInstallmentCalculatorError(QuoteTransfer $quoteTransfer, $calculationResponse)
+    {
+        $quoteTransfer->getPayment()
+            ->setTotalHash(self::INSTALLMENT_CALCULATOR_ERROR_HASH);
+
+//        $this->flashMessenger->addErrorMessage(
+//            $calculationResponse
+//                ->requireBaseResponse()
+//                ->getBaseResponse()
+//                ->requireReasonText()
+//                ->getReasonText()
+//        );
+    }
+
+}
