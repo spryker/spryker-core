@@ -71,9 +71,11 @@ class TaxReader implements TaxReaderInterface
         $taxRateTransfer = new TaxRateTransfer();
         $taxRateTransfer->fromArray($taxRateEntity->toArray());
 
-        $countryTransfer = new CountryTransfer();
-        $countryTransfer->fromArray($taxRateEntity->getCountry()->toArray(), true);
-        $taxRateTransfer->setCountry($countryTransfer);
+        if ($taxRateEntity->getCountry()) {
+            $countryTransfer = new CountryTransfer();
+            $countryTransfer->fromArray($taxRateEntity->getCountry()->toArray(), true);
+            $taxRateTransfer->setCountry($countryTransfer);
+        }
 
         return $taxRateTransfer;
     }

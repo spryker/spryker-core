@@ -18,14 +18,14 @@ interface TaxQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $id
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function queryTaxRate($id);
 
     /**
      * @api
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function queryAllTaxRates();
 

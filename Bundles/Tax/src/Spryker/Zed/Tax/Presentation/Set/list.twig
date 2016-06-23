@@ -1,0 +1,20 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Tax set list' | trans %}
+
+{% block action %}
+    {{ createActionButton('/tax/set/create', 'Create' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tax Set List' | trans } %}
+
+        {% block widget_content %}
+            {{ taxSetTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
