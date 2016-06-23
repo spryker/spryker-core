@@ -58,7 +58,7 @@ class ProductFormAttributes extends AbstractType
 
         $resolver->setDefaults([
             'required' => false,
-            'validation_groups' => [$this->validationGroup]
+            'cascade_validation' => true,
         ]);
     }
 
@@ -84,7 +84,7 @@ class ProductFormAttributes extends AbstractType
         $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [
             'label' => $builder->getName(),
             'choices' => $this->attributes[$builder->getName()],
-            'multiple' => true,
+            'multiple' => true
         ]);
 
         return $this;

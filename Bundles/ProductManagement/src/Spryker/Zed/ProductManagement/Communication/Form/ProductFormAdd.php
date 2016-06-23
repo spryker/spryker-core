@@ -12,7 +12,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormAdd extends AbstractType
 {
@@ -50,21 +52,9 @@ class ProductFormAdd extends AbstractType
             'cascade_validation' => true,
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
-                $defaultData = $form->getConfig()->getData();
-                $formData = $form->getData();
-
-                if (!$this->validateAttributes($form->getData())) {
-                    return [Constraint::DEFAULT_GROUP, self::VALIDATION_GROUP_ATTRIBUTES];
-                }
-
-                return [Constraint::DEFAULT_GROUP];
+                return [self::VALIDATION_GROUP_ATTRIBUTES];
             }
         ]);
-    }
-
-    protected function validateAttributes(array $formData)
-    {
-        return true;
     }
 
     /**
@@ -123,10 +113,28 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTES, 'collection', [
+                'label' => 'FooBar',
                 'type' => new ProductFormAttributes(
                     $options[self::ATTRIBUTES],
                     self::VALIDATION_GROUP_ATTRIBUTES
-                )
+                ),
+                'constraints' => [new Callback([
+                    'methods' => [
+                        function ($attributes, ExecutionContextInterface $context) {
+                            $selectedAttributes = [];
+                            foreach ($attributes as $type => $valueSet) {
+                                if (!empty($valueSet['value'])) {
+                                    $selectedAttributes[] = $valueSet['value'];
+                                }
+                            }
+
+                            if (empty($selectedAttributes)) {
+                                $context->addViolation('Please select at least one attribute and its value');
+                            }
+                        },
+                    ],
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTES]
+                ])]
             ]);
 
         return $this;
