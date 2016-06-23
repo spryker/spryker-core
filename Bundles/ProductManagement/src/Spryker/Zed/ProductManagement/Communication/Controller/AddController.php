@@ -193,7 +193,9 @@ class AddController extends AbstractController
         $attributes = [];
         foreach ($data[ProductFormAdd::ATTRIBUTES] as $type => $values) {
             $values = $this->getAttributeValues($values['value'], $attributeCollection[$type]);
-            $attributes[$type] = $values;
+            if (!empty($values)) {
+                $attributes[$type] = $values;
+            }
         }
 
         return $attributes;

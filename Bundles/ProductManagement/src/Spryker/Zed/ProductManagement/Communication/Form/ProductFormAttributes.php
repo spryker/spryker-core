@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProductFormAttributes extends AbstractType
 {
@@ -23,13 +23,19 @@ class ProductFormAttributes extends AbstractType
     protected $attributes;
 
     /**
-     * ProductFormAttributes constructor.
+     * @var array
      */
-    public function __construct(array $attributes=[])
+    protected $validationGroups = [];
+
+    /**
+     * @param array $attributes
+     * @param array $validationGroups
+     */
+    public function __construct(array $attributes = [], array $validationGroups = [])
     {
         $this->attributes = $attributes;
+        $this->validationGroups = $validationGroups;
     }
-
 
     /**
      * @return string
@@ -37,6 +43,21 @@ class ProductFormAttributes extends AbstractType
     public function getName()
     {
         return 'productAttributes';
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults([
+            'required' => false,
+            'validation_groups' => $this->validationGroups
+        ]);
     }
 
     /**
@@ -62,9 +83,6 @@ class ProductFormAttributes extends AbstractType
             'label' => $builder->getName(),
             'choices' => $this->attributes[$builder->getName()],
             'multiple' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
         ]);
 
         return $this;

@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -25,6 +23,7 @@ class ProductFormAdd extends AbstractType
     const LOCALIZED_ATTRIBUTES = 'localized_attributes';
     const ATTRIBUTES = 'attributes';
 
+    const VALIDATION_GROUP_ATTRIBUTES = 'validation_group_attributes';
 
     /**
      * @return string
@@ -44,6 +43,11 @@ class ProductFormAdd extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::ATTRIBUTES);
+
+        $resolver->setDefaults([
+            'cascade_validation' => true,
+            'required' => false,
+        ]);
     }
 
     /**
@@ -102,7 +106,10 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTES, 'collection', [
-                'type' => new ProductFormAttributes($options[self::ATTRIBUTES])
+                'type' => new ProductFormAttributes(
+                    $options[self::ATTRIBUTES],
+                    [self::VALIDATION_GROUP_ATTRIBUTES]
+                )
             ]);
 
         return $this;

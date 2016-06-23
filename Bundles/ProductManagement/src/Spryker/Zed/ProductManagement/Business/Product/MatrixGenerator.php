@@ -170,6 +170,10 @@ class MatrixGenerator
      */
     public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
+        if (empty($productAbstractTransfer)) {
+            return [];
+        }
+
         $tokenCollection = $this->generateTokens(
             $this->convertAttributesIntoTokens($attributeCollection)
         );
