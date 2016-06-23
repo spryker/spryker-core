@@ -19,8 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductTouchConsole extends Console
 {
 
-    const COMMAND_NAME = 'touch:product';
-    const DESCRIPTION = 'Touch an Abstract Product';
+    const COMMAND_NAME = 'product:touch';
+    const DESCRIPTION = 'product:touch <active|inactive|delete> <id>';
 
     const ARGUMENT_ID_ABSTRACT_PRODUCT = 'id_product_abstract';
     const ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION = 'The `id_product_abstract` id of the record to be touched.';
@@ -39,16 +39,17 @@ class ProductTouchConsole extends Console
         $this->setDescription(self::DESCRIPTION);
 
         $this->addArgument(
+            self::ARGUMENT_TOUCH_ACTION,
+            InputArgument::REQUIRED,
+            self::ARGUMENT_TOUCH_ACTION_DESCRIPTION
+        );
+
+        $this->addArgument(
             self::ARGUMENT_ID_ABSTRACT_PRODUCT,
             InputArgument::REQUIRED,
             self::ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION
         );
 
-        $this->addArgument(
-            self::ARGUMENT_TOUCH_ACTION,
-            InputArgument::REQUIRED,
-            self::ARGUMENT_TOUCH_ACTION_DESCRIPTION
-        );
     }
 
     /**
@@ -59,16 +60,18 @@ class ProductTouchConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $idProductAbstract = (int) $input->getArgument(self::ARGUMENT_ID_ABSTRACT_PRODUCT);
+        $idProductAbstract = (int)$input->getArgument(self::ARGUMENT_ID_ABSTRACT_PRODUCT);
         $action = strtolower($input->getArgument(self::ARGUMENT_TOUCH_ACTION));
 
         switch ($action) {
             case 'active':
                 $this->getFacade()->touchProductActive($idProductAbstract);
                 break;
+
             case 'inactive':
                 $this->getFacade()->touchProductInActive($idProductAbstract);
                 break;
+
             case 'delete':
                 $this->getFacade()->touchProductDeleted($idProductAbstract);
                 break;
@@ -77,9 +80,6 @@ class ProductTouchConsole extends Console
                 throw new Exception('Unknown touch action: ' . $action);
                 break;
         }
-
-
-
 
         return self::CODE_SUCCESS;
     }
