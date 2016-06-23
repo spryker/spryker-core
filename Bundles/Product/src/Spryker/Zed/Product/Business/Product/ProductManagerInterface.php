@@ -73,6 +73,20 @@ interface ProductManagerInterface
     public function touchProductActive($idProductAbstract);
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductInactive($idProductAbstract);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductAbstract);
+
+    /**
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
