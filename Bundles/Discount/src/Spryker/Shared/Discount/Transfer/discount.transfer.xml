@@ -131,5 +131,18 @@
         <property name="maxNumberOfUses" type="int" />
     </transfer>
 
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CheckoutError[]" singular="error" />
+        <property name="isExternalRedirect" type="bool" />
+        <property name="redirectUrl" type="string" />
+        <property name="saveOrder" type="SaveOrder" />
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="idSalesOrder" type="int" />
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+    </transfer>
+
 </transfers>
 
