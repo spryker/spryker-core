@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax\Persistence;
 
+use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -18,11 +19,11 @@ class TaxPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
      */
     public function createTaxRateQuery()
     {
-        return SpyTaxSetQuery::create();
+        return SpyTaxRateQuery::create();
     }
 
     /**

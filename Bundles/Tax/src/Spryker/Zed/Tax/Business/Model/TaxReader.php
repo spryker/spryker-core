@@ -122,7 +122,9 @@ class TaxReader implements TaxReaderInterface
      */
     public function getTaxSet($id)
     {
-        $taxSetEntity = $this->queryContainer->queryTaxSet($id)->findOne();
+        $taxSetEntity = $this->queryContainer
+            ->queryTaxSet($id)
+            ->findOne();
 
         if ($taxSetEntity === null) {
             throw new ResourceNotFoundException();
@@ -133,6 +135,13 @@ class TaxReader implements TaxReaderInterface
         foreach ($taxSetEntity->getSpyTaxRates() as $taxRateEntity) {
             $taxRateTransfer = new TaxRateTransfer();
             $taxRateTransfer->fromArray($taxRateEntity->toArray());
+
+            if ($taxRateEntity->getCountry()) {
+                $countryTransfer = new CountryTransfer();
+                $countryTransfer->fromArray($taxRateEntity->getCountry()->toArray(), true);
+                $taxRateTransfer->setCountry($countryTransfer);
+            }
+
             $taxSetTransfer->addTaxRate($taxRateTransfer);
         }
 

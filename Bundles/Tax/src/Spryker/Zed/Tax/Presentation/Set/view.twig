@@ -4,9 +4,9 @@
 {% block section_title ' View' | trans %}
 
 {% block action %}
-    {{ backActionButton('/tax/rate/list', 'Back to list' | trans) }}
-    {{ removeActionButton(url('/tax/set/delete', {'id-tax-set': taxRate.idTaxRate}), 'Delete' | trans) }}
-    {{ editActionButton(url('/tax/set/edit', {'id-tax-set': taxRate.idTaxRate}), 'Edit' | trans) }}
+    {{ backActionButton('/tax/set/list', 'Back to list' | trans) }}
+    {{ removeActionButton(url('/tax/set/delete', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}
+    {{ editActionButton(url('/tax/set/edit', {'id-tax-set': taxSet.idTaxSet}), 'Edit' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,22 @@
                 </tr>
                 <tr>
                     <td>Id</td>
-                    <td>{{ taxSet.idTaxRate }}</td>
+                    <td>{{ taxSet.idTaxSet }}</td>
+                </tr>
+                <tr>
+                    <td>Tax rates</td>
+                    <td>
+                        <strong>
+                        {% for tax in taxSet.taxRates %}
+                             {% if tax.country %}
+                                 {{ tax.country.name }}
+                             {% else %}
+                                 {{ 'N/A' | trans }}
+                             {% endif %}
+                               - {{ tax.rate }} % <br />
+                        {% endfor %}
+                        </strong>
+                    </td>
                 </tr>
             </table>
         {% endblock %}

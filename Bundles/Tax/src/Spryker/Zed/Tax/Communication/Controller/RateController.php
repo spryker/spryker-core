@@ -62,14 +62,16 @@ class RateController extends AbstractController
         if ($form->isValid()) {
             $taxRateTransfer = $form->getData();
             $taxRateTransfer->setIdTaxRate($idTaxRate);
-            $affectedRows = $this->getFacade()->updateTaxRate($taxRateTransfer);
-            if ($affectedRows > 0) {
+
+            $rowsAffected = $this->getFacade()->updateTaxRate($taxRateTransfer);
+            if ($rowsAffected > 0) {
                 $this->addSuccessMessage('Tax rate succesfully updated.');
             }
         }
 
         return [
             'form' => $form->createView(),
+            'taxRate' => $taxRateTransfer,
         ];
     }
 
@@ -98,9 +100,14 @@ class RateController extends AbstractController
     {
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
-        $this->getFacade()->deleteTaxRate($idTaxRate);
+        $removed = $this->getFacade()->deleteTaxRate($idTaxRate);
 
-        $this->addSuccessMessage('Tax rate removed.');
+        if ($removed) {
+            $this->addSuccessMessage('Tax rate removed.');
+        } else {
+            $this->addErrorMessage('Failed to remove tax rate.');
+        }
+
 
         return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
     }

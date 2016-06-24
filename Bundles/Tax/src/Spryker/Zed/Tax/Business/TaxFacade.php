@@ -201,11 +201,11 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return void
+     * @return bool
      */
     public function deleteTaxRate($id)
     {
-        $this->getFactory()->createWriterModel()->deleteTaxRate($id);
+        return $this->getFactory()->createWriterModel()->deleteTaxRate($id);
     }
 
     /**
@@ -215,11 +215,11 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return void
+     * @return bool
      */
     public function deleteTaxSet($id)
     {
-        $this->getFactory()->createWriterModel()->deleteTaxSet($id);
+        return $this->getFactory()->createWriterModel()->deleteTaxSet($id);
     }
 
     /**

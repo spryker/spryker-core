@@ -10,7 +10,7 @@ namespace Spryker\Zed\Tax\Communication\Table;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
+use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -32,10 +32,10 @@ class RateTable extends AbstractTable
     protected $dateFormatter;
 
     /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxSetQuery $taxRateQuery
+     * @param \Orm\Zed\Tax\Persistence\SpyTaxRateQuery $taxRateQuery
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      */
-    public function __construct(SpyTaxSetQuery $taxRateQuery, DateFormatterInterface $dateFormatter)
+    public function __construct(SpyTaxRateQuery $taxRateQuery, DateFormatterInterface $dateFormatter)
     {
         $this->taxRateQuery = $taxRateQuery;
         $this->dateFormatter = $dateFormatter;
@@ -90,7 +90,7 @@ class RateTable extends AbstractTable
     {
         $result = [];
         $query = $this->taxRateQuery
-            ->innerJoinCountry();
+            ->leftJoinCountry(SpyCountryTableMap::TABLE_NAME);
 
         $queryResult = $this->runQuery($query, $config, true);
 

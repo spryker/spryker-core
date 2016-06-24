@@ -161,7 +161,7 @@ interface TaxFacadeInterface
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return void
+     * @return bool
      */
     public function deleteTaxRate($id);
 
@@ -172,7 +172,7 @@ interface TaxFacadeInterface
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return void
+     * @return bool
      */
     public function deleteTaxSet($id);
 

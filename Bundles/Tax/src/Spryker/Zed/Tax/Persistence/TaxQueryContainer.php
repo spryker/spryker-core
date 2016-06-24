@@ -29,7 +29,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
      *
      * @param int $id
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
      */
     public function queryTaxRate($id)
     {
@@ -39,7 +39,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     /**
      * @api
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
      */
     public function queryAllTaxRates()
     {

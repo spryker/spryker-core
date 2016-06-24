@@ -82,7 +82,7 @@ interface TaxWriterInterface
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return void
+     * @return bool
      */
     public function deleteTaxRate($id);
 
@@ -91,7 +91,7 @@ interface TaxWriterInterface
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return void
+     * @return bool
      */
     public function deleteTaxSet($id);
 
