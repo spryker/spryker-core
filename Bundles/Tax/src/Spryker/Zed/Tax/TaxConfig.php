@@ -18,7 +18,7 @@ class TaxConfig extends AbstractBundleConfig
      */
     public function getDefaultTaxRate()
     {
-        return $this->get(TaxConstants::DEFAULT_TAX_RATE, 19);
+        return $this->get(TaxConstants::DEFAULT_TAX_RATE, 0);
     }
 
 }
