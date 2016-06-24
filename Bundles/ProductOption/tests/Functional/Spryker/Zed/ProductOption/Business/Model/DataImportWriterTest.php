@@ -21,6 +21,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 
 /**
@@ -225,8 +226,8 @@ class DataImportWriterTest extends Test
         $this->facade->flushBuffer();
 
         $result = SpyProductOptionValueUsageConstraintQuery::create()
-            ->filterByFkProductOptionValueUsageA([$idProductOptionValueUsageSmall, $idProductOptionValueUsageViolet])
-            ->filterByFkProductOptionValueUsageB([$idProductOptionValueUsageSmall, $idProductOptionValueUsageViolet])
+            ->filterByFkProductOptionValueUsageA([$idProductOptionValueUsageSmall, $idProductOptionValueUsageViolet], Criteria::IN)
+            ->filterByFkProductOptionValueUsageB([$idProductOptionValueUsageSmall, $idProductOptionValueUsageViolet], Criteria::IN)
             ->find();
 
         $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');

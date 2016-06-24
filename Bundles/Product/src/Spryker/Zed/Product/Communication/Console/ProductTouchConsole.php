@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,11 +19,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductTouchConsole extends Console
 {
 
+    const ACTION_ACTIVATE = 'activate';
+    const ACTION_ACTIVATE_SHORT = 'a';
+    const ACTION_INACTIVATE = 'inactivate';
+    const ACTION_INACTIVATE_SHORT = 'i';
+    const ACTION_DELETE = 'delete';
+    const ACTION_DELETE_SHORT = 'd';
+
     const COMMAND_NAME = 'product:touch';
-    const DESCRIPTION = 'Touch an Abstract Product';
+    const DESCRIPTION = 'product:touch <activate|inactivate|delete|a|i|d> <id>';
 
     const ARGUMENT_ID_ABSTRACT_PRODUCT = 'id_product_abstract';
     const ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION = 'The `id_product_abstract` id of the record to be touched.';
+
+    const ARGUMENT_TOUCH_ACTION = 'action';
+    const ARGUMENT_TOUCH_ACTION_DESCRIPTION = 'The `touch action` can be one of the following: `active`, `inactive`, `deleted` or just the first letter.';
 
     /**
      * @return void
@@ -35,10 +46,17 @@ class ProductTouchConsole extends Console
         $this->setDescription(self::DESCRIPTION);
 
         $this->addArgument(
+            self::ARGUMENT_TOUCH_ACTION,
+            InputArgument::REQUIRED,
+            self::ARGUMENT_TOUCH_ACTION_DESCRIPTION
+        );
+
+        $this->addArgument(
             self::ARGUMENT_ID_ABSTRACT_PRODUCT,
             InputArgument::REQUIRED,
             self::ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION
         );
+
     }
 
     /**
@@ -49,10 +67,28 @@ class ProductTouchConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $idProductAbstract = $input->getArgument(self::ARGUMENT_ID_ABSTRACT_PRODUCT);
+        $idProductAbstract = (int)$input->getArgument(self::ARGUMENT_ID_ABSTRACT_PRODUCT);
+        $action = strtolower($input->getArgument(self::ARGUMENT_TOUCH_ACTION));
 
-        $product = $this->getFacade();
-        $product->touchProductActive($idProductAbstract);
+        switch ($action) {
+            case self::ACTION_ACTIVATE:
+            case self::ACTION_ACTIVATE_SHORT:
+                $this->getFacade()->touchProductActive($idProductAbstract);
+                break;
+
+            case self::ACTION_INACTIVATE:
+            case self::ACTION_INACTIVATE_SHORT:
+                $this->getFacade()->touchProductInactive($idProductAbstract);
+                break;
+
+            case self::ACTION_DELETE:
+            case self::ACTION_DELETE_SHORT:
+                $this->getFacade()->touchProductDeleted($idProductAbstract);
+                break;
+
+            default:
+                throw new Exception('Unknown touch action: ' . $action);
+        }
 
         return self::CODE_SUCCESS;
     }

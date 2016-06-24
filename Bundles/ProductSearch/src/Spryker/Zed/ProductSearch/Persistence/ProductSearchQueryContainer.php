@@ -35,18 +35,18 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     {
         $query = $this->getFactory()->createProductQuery();
         $query
-            ->filterByIdProduct($productIds)
+            ->filterByIdProduct($productIds, Criteria::IN)
             ->useSpyProductLocalizedAttributesQuery()
-            ->filterByFkLocale($locale->getIdLocale())
+                ->filterByFkLocale($locale->getIdLocale())
             ->endUse()
             ->addSelectColumn(SpyProductTableMap::COL_SKU)
             ->addSelectColumn(SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES)
             ->addSelectColumn(SpyProductLocalizedAttributesTableMap::COL_NAME);
         $query
             ->useSpyProductAbstractQuery()
-            ->useSpyProductAbstractLocalizedAttributesQuery()
-            ->filterByFkLocale($locale->getIdLocale())
-            ->endUse()
+                ->useSpyProductAbstractLocalizedAttributesQuery()
+                        ->filterByFkLocale($locale->getIdLocale())
+                ->endUse()
             ->endUse()
             ->addAsColumn(
                 'abstract_attributes',

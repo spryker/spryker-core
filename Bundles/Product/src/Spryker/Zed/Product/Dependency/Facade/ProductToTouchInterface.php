@@ -18,4 +18,20 @@ interface ProductToTouchInterface
      */
     public function touchActive($itemType, $itemId);
 
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchInactive($itemType, $itemId);
+
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchDeleted($itemType, $itemId);
+
 }
