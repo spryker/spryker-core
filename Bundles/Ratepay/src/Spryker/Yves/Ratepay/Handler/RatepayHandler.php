@@ -7,12 +7,12 @@
 
 namespace Spryker\Yves\Ratepay\Handler;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Ratepay\RatepayClientInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Ratepay\RatepayConstants;
+use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class RatepayHandler
@@ -27,13 +27,18 @@ class RatepayHandler
     protected $ratepayClient;
 
     /**
+     * @var FlashMessengerInterface
+     */
+    protected $flashMessenger;
+
+    /**
      * @var array
      */
     protected static $paymentMethodMapper = [
-        RatepayConstants::PAYMENT_METHOD_INVOICE => RatepayConstants::METHOD_INVOICE,
-        RatepayConstants::PAYMENT_METHOD_ELV => RatepayConstants::METHOD_ELV,
-        RatepayConstants::PAYMENT_METHOD_PREPAYMENT => RatepayConstants::METHOD_PREPAYMENT,
-        RatepayConstants::PAYMENT_METHOD_INSTALLMENT => RatepayConstants::METHOD_INSTALLMENT,
+        RatepayConstants::PAYMENT_METHOD_INVOICE => RatepayConstants::PAYMENT_METHOD_INVOICE,
+        RatepayConstants::PAYMENT_METHOD_ELV => RatepayConstants::PAYMENT_METHOD_ELV,
+        RatepayConstants::PAYMENT_METHOD_PREPAYMENT => RatepayConstants::PAYMENT_METHOD_PREPAYMENT,
+        RatepayConstants::PAYMENT_METHOD_INSTALLMENT => RatepayConstants::PAYMENT_METHOD_INSTALLMENT,
     ];
 
     /**
@@ -55,11 +60,14 @@ class RatepayHandler
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addPaymentToQuote(Request $request, QuoteTransfer $quoteTransfer)
+    public function addPaymentToQuote(Request $request, QuoteTransfer $quoteTransfer, FlashMessengerInterface $flashMessenger)
     {
+        $this->flashMessenger = $flashMessenger;
+
         $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
         $this->setPaymentProviderAndMethod($quoteTransfer, $paymentSelection);
         $this->setRatepayPayment($request, $quoteTransfer, $paymentSelection);
@@ -139,10 +147,12 @@ class RatepayHandler
      */
     protected function calculateInstallmentPlan(QuoteTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getPayment()->getPaymentSelection() === PaymentTransfer::RATEPAY_INSTALLMENT) {
+        if ($quoteTransfer->getPayment()->getPaymentSelection() === RatepayConstants::PAYMENT_METHOD_INSTALLMENT) {
             $calculationResponse = $this->ratepayClient->installmentCalculation($quoteTransfer);
             if ($calculationResponse->getBaseResponse()->getSuccessful()) {
                 $this->setInstallmentPlanDetailToQuote($quoteTransfer, $calculationResponse);
+            } else {
+                $this->setInstallmentCalculatorError($quoteTransfer, $calculationResponse);
             }
         }
     }
@@ -176,6 +186,25 @@ class RatepayHandler
             ->setInstallmentRate($calculationResponse->getRate())
             ->setInstallmentInterestAmount($calculationResponse->getInterestAmount())
             ->setInstallmentGrandTotalAmount($calculationResponse->getTotalAmount());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer $calculationResponse
+     *
+     * @return void
+     */
+    protected function setInstallmentCalculatorError(QuoteTransfer $quoteTransfer, $calculationResponse)
+    {
+        $quoteTransfer->getPayment()->setPaymentProvider(null);
+
+        $this->flashMessenger->addErrorMessage(
+            $calculationResponse
+                ->requireBaseResponse()
+                ->getBaseResponse()
+                ->requireReasonText()
+                ->getReasonText()
+        );
     }
 
 }

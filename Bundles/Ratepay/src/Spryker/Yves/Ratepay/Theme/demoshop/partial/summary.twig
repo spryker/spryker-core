@@ -1,6 +1,6 @@
-{% if quoteTransfer.payment.paymentMethod == 'INVOICE' %}
+{% if quoteTransfer.payment.paymentMethod == 'ratepayInvoice' %}
     {% set ratepayPaymentTransfer = quoteTransfer.payment.ratepayInvoice %}
-{% elseif quoteTransfer.payment.paymentMethod == 'ELV' %}
+{% elseif quoteTransfer.payment.paymentMethod == 'ratepayElv' %}
     {% set ratepayPaymentTransfer = quoteTransfer.payment.ratepayElv %}
     <tr>
         <td>{{ 'payment.ratepay.bank_account' | trans }}:</td>
@@ -10,9 +10,9 @@
             <div>{{ 'payment.ratepay.bank_account.bic' | trans }} - {{ ratepayPaymentTransfer.bankAccountBic }}</div>
         </td>
     </tr>
-{% elseif quoteTransfer.payment.paymentMethod == 'PREPAYMENT' %}
+{% elseif quoteTransfer.payment.paymentMethod == 'ratepayPrepayment' %}
     {% set ratepayPaymentTransfer = quoteTransfer.payment.ratepayPrepayment %}
-{% elseif quoteTransfer.payment.paymentMethod == 'INSTALLMENT' %}
+{% elseif quoteTransfer.payment.paymentMethod == 'ratepayInstallment' %}
     {% set ratepayPaymentTransfer = quoteTransfer.payment.ratepayInstallment %}
     <tr>
         <td>{{ 'summary.ratepay.installment.plan_details' | trans }}:</td>
@@ -20,9 +20,9 @@
             <div>{{ 'summary.ratepay.installment.type' | trans }} - {{ ratepayPaymentTransfer.installmentCalculationType }}</div>
             <div>{{ 'summary.ratepay.installment.rates_number' | trans }} - {{ ratepayPaymentTransfer.installmentNumberRates|number_format }}</div>
             <hr/>
-            <div>{{ 'summary.ratepay.installment.amout_per_month' | trans }} - {{ ratepayPaymentTransfer.installmentRate|price }}</div>
+            <div>{{ 'summary.ratepay.installment.amount_per_month' | trans }} - {{ ratepayPaymentTransfer.installmentRate|price }}</div>
             <div>{{ 'summary.ratepay.installment.last_month_amount' | trans }} - {{ ratepayPaymentTransfer.installmentLastRate|price }}</div>
-            <div>{{ 'summary.ratepay.installment.annual_rercentage_rate' | trans }} - {{ ratepayPaymentTransfer.installmentAnnualPercentageRate|number_format(2, ',') }} &#37;</div>
+            <div>{{ 'summary.ratepay.installment.annual_percentage_rate' | trans }} - {{ ratepayPaymentTransfer.installmentAnnualPercentageRate|number_format(2, ',') }} &#37;</div>
             <hr/>
             <div>{{ 'summary.ratepay.installment.service_charge' | trans }} - {{ ratepayPaymentTransfer.installmentServiceCharge|price }}</div>
             <div>{{ 'summary.ratepay.installment.interest_amount' | trans }}- {{ ratepayPaymentTransfer.installmentInterestAmount|price }}</div>

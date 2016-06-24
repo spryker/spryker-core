@@ -16,7 +16,7 @@ class Elv extends AbstractMapper
     /**
      * @const string Method name.
      */
-    const METHOD = RatepayConstants::METHOD_ELV;
+    const METHOD = RatepayConstants::PAYMENT_METHOD_ELV;
 
     /**
      * @return string

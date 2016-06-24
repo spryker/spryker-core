@@ -14,7 +14,11 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "^2.0.0",
     "spryker/console": "^2.0.1",
-    "spryker/testify": "^2.0.0"
+    "spryker/testify": "^2.0.0",
+    "spryker/messenger": "^2.1.0"
+  },
+  "suggest": {
+    "spryker/messenger": "Allows to use StepHandlerPluginWithMessengerInterface"
   },
   "description": "StepEngine bundle",
   "license": "proprietary",

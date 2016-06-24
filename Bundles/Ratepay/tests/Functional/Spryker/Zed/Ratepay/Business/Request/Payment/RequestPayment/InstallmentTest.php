@@ -56,7 +56,7 @@ class InstallmentTest extends InstallmentAbstractTest
     {
         parent::testPaymentWithSuccessResponse();
 
-        $this->assertEquals(RatepayConstants::METHOD_INSTALLMENT, $this->responseTransfer->getPaymentMethod());
+        $this->assertEquals(RatepayConstants::PAYMENT_METHOD_INSTALLMENT, $this->responseTransfer->getPaymentMethod());
         $this->assertEquals($this->expectedResponseTransfer->getPaymentMethod(), $this->responseTransfer->getPaymentMethod());
     }
 

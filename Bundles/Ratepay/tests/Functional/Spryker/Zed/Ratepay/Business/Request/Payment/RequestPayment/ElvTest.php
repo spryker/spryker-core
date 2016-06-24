@@ -56,7 +56,7 @@ class ElvTest extends ElvAbstractTest
     {
         parent::testPaymentWithSuccessResponse();
 
-        $this->assertEquals(RatepayConstants::METHOD_ELV, $this->responseTransfer->getPaymentMethod());
+        $this->assertEquals(RatepayConstants::PAYMENT_METHOD_ELV, $this->responseTransfer->getPaymentMethod());
         $this->assertEquals($this->expectedResponseTransfer->getPaymentMethod(), $this->responseTransfer->getPaymentMethod());
     }
 

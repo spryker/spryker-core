@@ -20,7 +20,7 @@ class Installment extends AbstractMethod
     /**
      * @const Payment method code.
      */
-    const METHOD = RatepayConstants::METHOD_INSTALLMENT;
+    const METHOD = RatepayConstants::PAYMENT_METHOD_INSTALLMENT;
 
     /**
      * @return string

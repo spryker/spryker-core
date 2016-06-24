@@ -20,6 +20,7 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterfa
  */
 class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {
+    const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -47,14 +48,14 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
     protected function checkForErrors(RatepayResponseTransfer $ratepayResponseTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         if (!$ratepayResponseTransfer->getSuccessful()) {
-
             $errorMessage = $ratepayResponseTransfer->getCustomerMessage() != '' ? $ratepayResponseTransfer->getCustomerMessage() :
                 $ratepayResponseTransfer->getResultText();
 
             $error = new CheckoutErrorTransfer();
             $error
-                ->setErrorCode($ratepayResponseTransfer->getResultCode())
+                ->setErrorCode(self::ERROR_CODE_PAYMENT_FAILED)
                 ->setMessage($errorMessage);
+
             $checkoutResponseTransfer->addError($error);
         }
     }

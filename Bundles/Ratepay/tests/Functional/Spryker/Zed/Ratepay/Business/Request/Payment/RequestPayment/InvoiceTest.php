@@ -57,7 +57,7 @@ class InvoiceTest extends InvoiceAbstractTest
     {
         parent::testPaymentWithSuccessResponse();
 
-        $this->assertEquals(RatepayConstants::METHOD_INVOICE, $this->responseTransfer->getPaymentMethod());
+        $this->assertEquals(RatepayConstants::PAYMENT_METHOD_INVOICE, $this->responseTransfer->getPaymentMethod());
         $this->assertEquals($this->expectedResponseTransfer->getPaymentMethod(), $this->responseTransfer->getPaymentMethod());
     }
 

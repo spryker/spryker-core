@@ -181,6 +181,7 @@
         <property name="ratepayElv" type="RatepayPaymentElv"/>
         <property name="ratepayInstallment" type="RatepayPaymentInstallment"/>
         <property name="ratepayPrepayment" type="RatepayPaymentPrepayment"/>
+        <property name="summaryPartialPath" type="string"/>
     </transfer>
 
     <transfer name="Order">

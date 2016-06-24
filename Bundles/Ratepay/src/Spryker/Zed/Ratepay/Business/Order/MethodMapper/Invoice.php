@@ -15,7 +15,7 @@ class Invoice extends AbstractMapper
     /**
      * @const string Method name.
      */
-    const METHOD = RatepayConstants::METHOD_INVOICE;
+    const METHOD = RatepayConstants::PAYMENT_METHOD_INVOICE;
 
     /**
      * @return string

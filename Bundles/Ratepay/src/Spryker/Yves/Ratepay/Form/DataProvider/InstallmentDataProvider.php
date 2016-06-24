@@ -88,6 +88,7 @@ class InstallmentDataProvider extends DataProviderAbstract
     {
         $configurationResponseTransfer = $this->sessionClient->get(self::INSTALLMENT_CONFIGURATION);
         if (!$configurationResponseTransfer) {
+            $quoteTransfer->getPayment()->setPaymentMethod(RatepayConstants::PAYMENT_METHOD_INSTALLMENT);
             $configurationResponseTransfer = $this->ratepayClient->installmentConfiguration($quoteTransfer);
             $this->sessionClient->set(self::INSTALLMENT_CONFIGURATION, $configurationResponseTransfer);
         }

@@ -16,7 +16,7 @@ class InvoiceSaverTest extends AbstractSaverTest
     /**
      * @const Payment method code.
      */
-    const PAYMENT_METHOD = RatepayConstants::METHOD_INVOICE;
+    const PAYMENT_METHOD = RatepayConstants::PAYMENT_METHOD_INVOICE;
 
     /**
      * @return \Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer

@@ -104,7 +104,7 @@ class BasePaymentTest extends Test
             ->disableOriginalConstructor()
             ->getMock();
         $spyPaymentRatepay->method('getPaymentType')
-            ->willReturn(RatepayConstants::METHOD_INVOICE);
+            ->willReturn(RatepayConstants::PAYMENT_METHOD_INVOICE);
         $spyPaymentRatepay->method('setResultCode')
             ->willReturn($spyPaymentRatepay);
         $spyPaymentRatepay->method('save')
@@ -173,7 +173,7 @@ class BasePaymentTest extends Test
             ->disableOriginalConstructor()
             ->getMock();
         $invoiceMethod->method('getMethodName')
-            ->willReturn(RatepayConstants::METHOD_INVOICE);
+            ->willReturn(RatepayConstants::PAYMENT_METHOD_INVOICE);
         $invoiceMethod->method('paymentInit')
             ->willReturn($paymentInit);
         $invoiceMethod->method('paymentRequest')
@@ -223,7 +223,7 @@ class BasePaymentTest extends Test
             ->disableOriginalConstructor()
             ->getMock();
         $installmentMethod->method('getMethodName')
-            ->willReturn(RatepayConstants::METHOD_INSTALLMENT);
+            ->willReturn(RatepayConstants::PAYMENT_METHOD_INSTALLMENT);
         $installmentMethod->method('paymentInit')
             ->willReturn($payment);
         $installmentMethod->method('paymentRequest')

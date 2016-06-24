@@ -8,6 +8,7 @@ namespace Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
+use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Zed\Ratepay\Business\Request\TransactionHandlerAbstract;
 
 abstract class BaseTransaction extends TransactionHandlerAbstract
@@ -56,10 +57,17 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
     {
         $headData = $request->getHead()->buildData();
 
+        $methodMap = [
+            RatepayConstants::PAYMENT_METHOD_ELV => 'ELV',
+            RatepayConstants::PAYMENT_METHOD_INSTALLMENT => 'INSTALLMENT',
+            RatepayConstants::PAYMENT_METHOD_INVOICE => 'INVOICE',
+            RatepayConstants::PAYMENT_METHOD_PREPAYMENT => 'PREPAYMENT',
+        ];
+
         $context = [
             'order_id' => $entityId,
 
-            'payment_method' => $method,
+            'payment_method' => $methodMap[$method],
             'request_type' => static::TRANSACTION_TYPE,
             'request_transaction_id' =>(isset($headData['transaction-id'])) ? $headData['transaction-id'] : null,
             'request_transaction_short_id' => (isset($headData['transaction-short-id'])) ? $headData['transaction-short-id'] : null,

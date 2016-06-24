@@ -17,7 +17,7 @@ class ElvSubForm extends SubFormAbstract
 {
 
     const PAYMENT_METHOD = 'elv';
-    
+
     const FIELD_BUNK_ACCOUNT_HOLDER = 'bank_account_holder';
     const FIELD_BUNK_ACCOUNT_BIC = 'bank_account_bic';
     const FIELD_BUNK_ACCOUNT_IBAN = 'bank_account_iban';
@@ -70,7 +70,9 @@ class ElvSubForm extends SubFormAbstract
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $this->addBankAccountHolder($builder)->addBankAccountBic($builder)->addBankAccountIban($builder);
+        $this->addBankAccountHolder($builder)
+            ->addBankAccountBic($builder)
+            ->addBankAccountIban($builder);
     }
 
     /**

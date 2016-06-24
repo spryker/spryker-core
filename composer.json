@@ -222,6 +222,7 @@
       "Spryker\\Zed\\Maintenance\\": "Bundles/Maintenance/src",
       "Unit\\Spryker\\Zed\\Maintenance\\": "Bundles/Maintenance/tests",
       "Spryker\\Shared\\Messenger\\": "Bundles/Messenger/src",
+      "Spryker\\Yves\\Messenger\\": "Bundles/Messenger/src",
       "Unit\\Spryker\\Shared\\Messenger\\": "Bundles/Messenger/tests",
       "Spryker\\Zed\\Messenger\\": "Bundles/Messenger/src",
       "Unit\\Spryker\\Zed\\Messenger\\": "Bundles/Messenger/tests",
