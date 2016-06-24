@@ -6,39 +6,9 @@
 
 namespace Spryker\Zed\StateMachine\Communication\Console;
 
-use Spryker\Zed\Console\Business\Model\Console;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
- * @method \Spryker\Zed\StateMachine\Business\StateMachineFacade getFacade()
+ * @deprecated Use \Spryker\Zed\StateMachine\Communication\ClearLocksConsole instead.
  */
-class ClearLocks extends Console
+class ClearLocks extends ClearLocksConsole
 {
-
-    const COMMAND_NAME = 'state-machine:clear-locks';
-    const COMMAND_DESCRIPTION = 'Clear expired locks from lock table';
-
-    /**
-     * @return void
-     */
-    protected function configure()
-    {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::COMMAND_DESCRIPTION);
-
-        parent::configure();
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->getFacade()->clearLocks();
-    }
-
 }
