@@ -19,4 +19,9 @@ interface ShipmentToTaxInterface
      */
     public function getDefaultTaxRate();
 
+    /**
+     * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
+     */
+    public function getTaxSets();
+
 }

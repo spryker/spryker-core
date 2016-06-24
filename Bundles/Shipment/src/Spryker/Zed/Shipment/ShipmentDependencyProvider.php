@@ -37,6 +37,10 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
             ];
         };
 
+        $container[self::FACADE_TAX] = function (Container $container) {
+            return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
         return $container;
     }
 

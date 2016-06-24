@@ -40,4 +40,12 @@ class ShipmentToTaxBridge implements ShipmentToTaxInterface
         return $this->taxFacade->getDefaultTaxRate();
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
+     */
+    public function getTaxSets()
+    {
+        return $this->taxFacade->getTaxSets();
+    }
+
 }

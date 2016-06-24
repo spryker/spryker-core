@@ -51,6 +51,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     {
         return new MethodFormDataProvider(
             $this->getQueryContainer(),
+            $this->getTaxFacade(),
             $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
         );
     }
@@ -66,6 +67,14 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
         $form = new MethodForm();
 
         return $this->getFormFactory()->create($form, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
+     */
+    public function getTaxFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_TAX);
     }
 
 }
