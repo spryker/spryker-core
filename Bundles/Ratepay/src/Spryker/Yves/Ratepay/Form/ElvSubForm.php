@@ -7,16 +7,20 @@
 
 namespace Spryker\Yves\Ratepay\Form;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ElvSubForm extends ElvSubFormAbstract implements SubFormInterface
+class ElvSubForm extends SubFormAbstract
 {
 
     const PAYMENT_METHOD = 'elv';
+    
+    const FIELD_BUNK_ACCOUNT_HOLDER = 'bank_account_holder';
+    const FIELD_BUNK_ACCOUNT_BIC = 'bank_account_bic';
+    const FIELD_BUNK_ACCOUNT_IBAN = 'bank_account_iban';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
@@ -46,7 +50,7 @@ class ElvSubForm extends ElvSubFormAbstract implements SubFormInterface
      */
     public function getName()
     {
-        return RatepayConstants::PROVIDER_NAME . '_' . static::PAYMENT_METHOD;
+        return RatepayConstants::PAYMENT_METHOD_ELV;
     }
 
     /**
@@ -55,6 +59,85 @@ class ElvSubForm extends ElvSubFormAbstract implements SubFormInterface
     public function getTemplatePath()
     {
         return RatepayConstants::PROVIDER_NAME . '/' . static::PAYMENT_METHOD;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+        $this->addBankAccountHolder($builder)->addBankAccountBic($builder)->addBankAccountIban($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    public function addBankAccountHolder($builder)
+    {
+        $builder->add(
+            self::FIELD_BUNK_ACCOUNT_HOLDER,
+            'text',
+            [
+                'label' => false,
+                'required' => true,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    public function addBankAccountBic($builder)
+    {
+        $builder->add(
+            self::FIELD_BUNK_ACCOUNT_BIC,
+            'text',
+            [
+                'label' => false,
+                'required' => true,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    public function addBankAccountIban($builder)
+    {
+        $builder->add(
+            self::FIELD_BUNK_ACCOUNT_IBAN,
+            'text',
+            [
+                'label' => false,
+                'required' => true,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
+
+        return $this;
     }
 
 }

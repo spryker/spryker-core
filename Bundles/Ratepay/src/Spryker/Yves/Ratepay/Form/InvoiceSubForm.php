@@ -7,13 +7,12 @@
 
 namespace Spryker\Yves\Ratepay\Form;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class InvoiceSubForm extends SubFormAbstract implements SubFormInterface
+class InvoiceSubForm extends SubFormAbstract
 {
 
     const PAYMENT_METHOD = 'invoice';
@@ -47,7 +46,7 @@ class InvoiceSubForm extends SubFormAbstract implements SubFormInterface
      */
     public function getName()
     {
-        return RatepayConstants::PROVIDER_NAME . '_' . static::PAYMENT_METHOD;
+        return RatepayConstants::PAYMENT_METHOD_INVOICE;
     }
 
     /**

@@ -1,29 +1,36 @@
 <?php
+
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Ratepay\Form\DataProvider;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
-use Spryker\Yves\Checkout\Dependency\DataProvider\DataProviderInterface;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
-class InvoiceDataProvider extends DataProviderAbstract implements DataProviderInterface
+class InvoiceDataProvider extends DataProviderAbstract
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setRatepayPaymentTransfer(QuoteTransfer $quoteTransfer)
+    public function getData(AbstractTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getPayment()->getRatepayInvoice() === null) {
-            $quoteTransfer->getPayment()->setRatepayInvoice(new RatepayPaymentInvoiceTransfer());
+        if ($quoteTransfer->getPayment() === null) {
+            $paymentTransfer = new PaymentTransfer();
+            $paymentMethodTransfer = new RatepayPaymentInvoiceTransfer();
+            $paymentMethodTransfer->setPhone($this->getPhoneNumber($quoteTransfer));
+            $paymentTransfer->setRatepayInvoice($paymentMethodTransfer);
+
+            $quoteTransfer->setPayment($paymentTransfer);
         }
-        $this->fillPaymentPhoneFromCustomer($quoteTransfer->getPayment()->getRatepayInvoice(), $quoteTransfer);
+
+        return $quoteTransfer;
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Ratepay\Form\DataProvider;
 
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
 use Spryker\Client\Ratepay\RatepayClientInterface;
@@ -41,20 +42,23 @@ class InstallmentDataProvider extends DataProviderAbstract
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setRatepayPaymentTransfer(QuoteTransfer $quoteTransfer)
+    public function getData(AbstractTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getPayment()->getRatepayInstallment() === null) {
-            $quoteTransfer->getPayment()
-                ->setRatepayInstallment(new RatepayPaymentInstallmentTransfer())
-                ->setPaymentMethod(RatepayConstants::METHOD_INSTALLMENT);
-        }
-        $this->fillPaymentPhoneFromCustomer($quoteTransfer->getPayment()->getRatepayInstallment(), $quoteTransfer);
-    }
+        if ($quoteTransfer->getPayment() === null) {
+            $paymentTransfer = new PaymentTransfer();
+            $paymentMethodTransfer = new RatepayPaymentInstallmentTransfer();
+            $paymentMethodTransfer->setPhone($this->getPhoneNumber($quoteTransfer));
+            $paymentTransfer->setRatepayInstallment($paymentMethodTransfer);
 
+            $quoteTransfer->setPayment($paymentTransfer);
+        }
+
+        return $quoteTransfer;
+    }
 
     /**
      * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

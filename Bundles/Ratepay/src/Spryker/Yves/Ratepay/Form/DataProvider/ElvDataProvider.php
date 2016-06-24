@@ -7,23 +7,30 @@
 
 namespace Spryker\Yves\Ratepay\Form\DataProvider;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 class ElvDataProvider extends DataProviderAbstract
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Spryker\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setRatepayPaymentTransfer(QuoteTransfer $quoteTransfer)
+    public function getData(AbstractTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getPayment()->getRatepayElv() === null) {
-            $quoteTransfer->getPayment()->setRatepayElv(new RatepayPaymentElvTransfer());
+        if ($quoteTransfer->getPayment() === null) {
+            $paymentTransfer = new PaymentTransfer();
+            $paymentMethodTransfer = new RatepayPaymentElvTransfer();
+            $paymentMethodTransfer->setPhone($this->getPhoneNumber($quoteTransfer));
+            $paymentTransfer->setRatepayElv($paymentMethodTransfer);
+
+            $quoteTransfer->setPayment($paymentTransfer);
         }
-        $this->fillPaymentPhoneFromCustomer($quoteTransfer->getPayment()->getRatepayElv(), $quoteTransfer);
+
+        return $quoteTransfer;
     }
 
 }

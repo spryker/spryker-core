@@ -13,7 +13,7 @@ use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PrepaymentSubForm extends SubFormAbstract implements SubFormInterface
+class PrepaymentSubForm extends SubFormAbstract
 {
 
     const PAYMENT_METHOD = 'prepayment';
@@ -46,7 +46,7 @@ class PrepaymentSubForm extends SubFormAbstract implements SubFormInterface
      */
     public function getName()
     {
-        return RatepayConstants::PROVIDER_NAME . '_' . static::PAYMENT_METHOD;
+        return RatepayConstants::PAYMENT_METHOD_PREPAYMENT;
     }
 
     /**

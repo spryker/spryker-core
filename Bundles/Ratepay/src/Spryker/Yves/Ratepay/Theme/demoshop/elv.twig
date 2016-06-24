@@ -1,31 +1,32 @@
-<div class="payment-subform ratepay-form ratepay-elv-form">
-    <h3>{{ 'payment.ratepay.elv' | trans }}</h3>
+<div class="payment-subform ratepay-form ratepay-elv-form payment-form" id="ratepayElv">
+    <h3>{{ 'payment.ratepayElv' | trans }}</h3>
 
-    <label>{{ 'payment.ratepay.date_of_birth' | trans }}</label>
+    <label>{{ 'form.ratepayElv.date_of_birth' | trans }}</label>
     <div class="field">
-        {{ form_widget(form.ratepay_elv.date_of_birth, { 'attr': {'placeholder': 'payment.ratepay.date_of_birth' | trans } }) }}
-        {{ form_errors(form.ratepay_elv.date_of_birth) }}
+        {{ form_widget(form.ratepayElv.date_of_birth, { 'attr': {'placeholder': 'payment.ratepay.date_of_birth' | trans } }) }}
+        {{ form_errors(form.ratepayElv.date_of_birth) }}
     </div>
     <label>{{ 'payment.ratepay.phone' | trans }}</label>
     <div class="field">
-        {{ form_widget(form.ratepay_elv.phone, { 'attr': {'placeholder': 'payment.ratepay.phone' | trans } }) }}
-        {{ form_errors(form.ratepay_elv.phone) }}
+        {{ form_widget(form.ratepayElv.phone, { 'attr': {'placeholder': 'payment.ratepay.phone' | trans } }) }}
+        {{ form_errors(form.ratepayElv.phone) }}
     </div>
 
-    <h4>{{ 'payment.ratepay.bank_account' | trans }}</h4>
-    <label>{{ 'payment.ratepay.bank_account.holder' | trans }}</label>
+    <h4>{{ 'form.ratepayElv.bank_account' | trans }}</h4>
+    <label>{{ 'form.ratepayElv.bank_account.holder' | trans }}</label>
     <div class="field">
-        {{ form_widget(form.ratepay_elv.bank_account_holder, { 'attr': {'placeholder': 'payment.ratepay.bank_account.holder' | trans } }) }}
-        {{ form_errors(form.ratepay_elv.bank_account_holder) }}
+        {{ form_widget(form.ratepayElv.bank_account_holder, { 'attr': {'placeholder': 'payment.ratepay.bank_account.holder' | trans } }) }}
+        {{ form_errors(form.ratepayElv.bank_account_holder) }}
     </div>
     <label>{{ 'payment.ratepay.bank_account.iban' | trans }}</label>
     <div class="field">
-        {{ form_widget(form.ratepay_elv.bank_account_iban, { 'attr': {'placeholder': 'payment.ratepay.bank_account.iban' | trans } }) }}
-        {{ form_errors(form.ratepay_elv.bank_account_iban) }}
+        {{ form_widget(form.ratepayElv.bank_account_iban, { 'attr': {'placeholder': 'payment.ratepay.bank_account.iban' | trans } }) }}
+        {{ form_errors(form.ratepayElv.bank_account_iban) }}
     </div>
-    <label>{{ 'payment.ratepay.bank_account.bic' | trans }}</label>
+    <label>{{ 'form.ratepayElv.bank_account.bic' | trans }}</label>
     <div class="field">
-        {{ form_widget(form.ratepay_elv.bank_account_bic, { 'attr': {'placeholder': 'payment.ratepay.bank_account.bic' | trans } }) }}
-        {{ form_errors(form.ratepay_elv.bank_account_bic) }}
+        {{ form_widget(form.ratepayElv.bank_account_bic, { 'attr': {'placeholder': 'payment.ratepay.bank_account.bic' | trans } }) }}
+        {{ form_errors(form.ratepayElv.bank_account_bic) }}
     </div>
+
 </div>

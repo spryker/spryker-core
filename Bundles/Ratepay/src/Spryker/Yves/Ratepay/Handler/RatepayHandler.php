@@ -30,10 +30,10 @@ class RatepayHandler
      * @var array
      */
     protected static $paymentMethodMapper = [
-        PaymentTransfer::RATEPAY_INVOICE => RatepayConstants::METHOD_INVOICE,
-        PaymentTransfer::RATEPAY_ELV => RatepayConstants::METHOD_ELV,
-        PaymentTransfer::RATEPAY_PREPAYMENT => RatepayConstants::METHOD_PREPAYMENT,
-        PaymentTransfer::RATEPAY_INSTALLMENT => RatepayConstants::METHOD_INSTALLMENT,
+        RatepayConstants::PAYMENT_METHOD_INVOICE => RatepayConstants::METHOD_INVOICE,
+        RatepayConstants::PAYMENT_METHOD_ELV => RatepayConstants::METHOD_ELV,
+        RatepayConstants::PAYMENT_METHOD_PREPAYMENT => RatepayConstants::METHOD_PREPAYMENT,
+        RatepayConstants::PAYMENT_METHOD_INSTALLMENT => RatepayConstants::METHOD_INSTALLMENT,
     ];
 
     /**
@@ -63,7 +63,6 @@ class RatepayHandler
         $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
         $this->setPaymentProviderAndMethod($quoteTransfer, $paymentSelection);
         $this->setRatepayPayment($request, $quoteTransfer, $paymentSelection);
-        $quoteTransfer->getPayment()->setTotalHash(null);
         $this->calculateInstallmentPlan($quoteTransfer);
         $this->setPaymentSuccessPartialPath($quoteTransfer);
 
@@ -144,8 +143,6 @@ class RatepayHandler
             $calculationResponse = $this->ratepayClient->installmentCalculation($quoteTransfer);
             if ($calculationResponse->getBaseResponse()->getSuccessful()) {
                 $this->setInstallmentPlanDetailToQuote($quoteTransfer, $calculationResponse);
-            } else {
-                $this->setInstallmentCalculatorError($quoteTransfer, $calculationResponse);
             }
         }
     }
@@ -170,7 +167,6 @@ class RatepayHandler
     protected function setInstallmentPlanDetailToQuote(QuoteTransfer $quoteTransfer, $calculationResponse)
     {
         $quoteTransfer->getPayment()
-            ->setTotalHash($quoteTransfer->getTotals()->getHash())
             ->getRatepayInstallment()
             ->setInstallmentAnnualPercentageRate($calculationResponse->getAnnualPercentageRate())
             ->setInstallmentInterestRate($calculationResponse->getInterestRate())
@@ -180,26 +176,6 @@ class RatepayHandler
             ->setInstallmentRate($calculationResponse->getRate())
             ->setInstallmentInterestAmount($calculationResponse->getInterestAmount())
             ->setInstallmentGrandTotalAmount($calculationResponse->getTotalAmount());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer $calculationResponse
-     *
-     * @return void
-     */
-    protected function setInstallmentCalculatorError(QuoteTransfer $quoteTransfer, $calculationResponse)
-    {
-        $quoteTransfer->getPayment()
-            ->setTotalHash(self::INSTALLMENT_CALCULATOR_ERROR_HASH);
-
-//        $this->flashMessenger->addErrorMessage(
-//            $calculationResponse
-//                ->requireBaseResponse()
-//                ->getBaseResponse()
-//                ->requireReasonText()
-//                ->getReasonText()
-//        );
     }
 
 }
