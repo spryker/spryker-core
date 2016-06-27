@@ -14,16 +14,11 @@ class Installment extends AbstractMapper
 {
 
     /**
-     * @const string Method name.
-     */
-    const METHOD = RatepayConstants::PAYMENT_METHOD_INSTALLMENT;
-
-    /**
      * @return string
      */
     public function getMethodName()
     {
-        return static::METHOD;
+        return RatepayConstants::INSTALLMENT;
     }
 
     /**

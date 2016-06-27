@@ -346,6 +346,8 @@
       "Spryker\\Yves\\Ratepay\\": "Bundles/Ratepay/src",
       "Spryker\\Shared\\Ratepay\\": "Bundles/Ratepay/src",
       "Spryker\\Client\\Ratepay\\": "Bundles/Ratepay/src",
+      "Functional\\Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/tests",
+      "Unit\\Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/tests",
 
       "Spryker\\Client\\Sales\\": "Bundles/Sales/src",
       "Unit\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",

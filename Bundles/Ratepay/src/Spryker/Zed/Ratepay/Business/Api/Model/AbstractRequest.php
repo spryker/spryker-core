@@ -82,6 +82,7 @@ abstract class AbstractRequest implements RequestInterface
         $rootTag = $this->getRootTag();
         $xml = new SimpleXMLElement('<' . $rootTag . '></' . $rootTag . '>');
         $this->arrayToXml($data, $xml);
+        
         return $xml->asXML();
     }
 

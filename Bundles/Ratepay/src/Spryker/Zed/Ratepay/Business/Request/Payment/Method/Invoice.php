@@ -10,23 +10,15 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 
-/**
- * Ratepay Invoice payment method.
- */
 class Invoice extends AbstractMethod
 {
-
-    /**
-     * @const Payment method code.
-     */
-    const METHOD = RatepayConstants::PAYMENT_METHOD_INVOICE;
 
     /**
      * @return string
      */
     public function getMethodName()
     {
-        return static::METHOD;
+        return RatepayConstants::INVOICE;
     }
 
     /**

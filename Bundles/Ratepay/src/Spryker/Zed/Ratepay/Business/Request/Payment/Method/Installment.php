@@ -16,18 +16,13 @@ use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
  */
 class Installment extends AbstractMethod
 {
-
-    /**
-     * @const Payment method code.
-     */
-    const METHOD = RatepayConstants::PAYMENT_METHOD_INSTALLMENT;
-
+    
     /**
      * @return string
      */
     public function getMethodName()
     {
-        return static::METHOD;
+        return RatepayConstants::INSTALLMENT;
     }
 
     /**

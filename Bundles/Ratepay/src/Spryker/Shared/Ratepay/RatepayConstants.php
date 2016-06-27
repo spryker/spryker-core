@@ -17,6 +17,11 @@ interface RatepayConstants
     const PAYMENT_METHOD_INSTALLMENT = 'ratepayInstallment';
     const PAYMENT_METHOD_PREPAYMENT = 'ratepayPrepayment';
 
+    const INVOICE = 'INVOICE';
+    const ELV = 'ELV';
+    const INSTALLMENT = 'INSTALLMENT';
+    const PREPAYMENT = 'PREPAYMENT';
+
     const PROFILE_ID = 'RATEPAY_PROFILE_ID';
     const SECURITY_CODE = 'RATEPAY_SECURITY_CODE';
     const SNIPPET_ID = 'RATEPAY_SNIPPET_ID';

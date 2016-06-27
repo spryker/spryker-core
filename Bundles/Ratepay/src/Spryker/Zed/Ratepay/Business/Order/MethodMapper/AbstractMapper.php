@@ -8,6 +8,7 @@ namespace Spryker\Zed\Ratepay\Business\Order\MethodMapper;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
+use Spryker\Shared\Ratepay\RatepayConstants;
 
 abstract class AbstractMapper implements PaymentMethodMapperInterface
 {
@@ -30,8 +31,9 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     public function mapMethodDataToPayment(QuoteTransfer $quoteTransfer, SpyPaymentRatepay $payment)
     {
         $paymentTransfer = $this->getPaymentTransfer($quoteTransfer);
+        $paymentMethod = $quoteTransfer->requirePayment()->getPayment()->requirePaymentMethod()->getPaymentMethod();
         $payment
-            ->setPaymentType($quoteTransfer->requirePayment()->getPayment()->requirePaymentMethod()->getPaymentMethod())
+            ->setPaymentType($paymentMethod)
             ->setTransactionId($paymentTransfer->requireTransactionId()->getTransactionId())
             ->setTransactionShortId($paymentTransfer->requireTransactionShortId()->getTransactionShortId())
             ->setResultCode($paymentTransfer->requireResultCode()->getResultCode())

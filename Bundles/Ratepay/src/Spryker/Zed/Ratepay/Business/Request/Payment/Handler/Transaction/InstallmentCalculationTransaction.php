@@ -31,8 +31,10 @@ class InstallmentCalculationTransaction extends BaseTransaction implements Quote
         $paymentMethod = $this->getMethodMapper($paymentMethodName);
         $request = $paymentMethod
             ->calculationRequest($quoteTransfer);
+
         $response = $this->sendRequest((string)$request);
         $this->logInfo($request, $response, $paymentMethodName);
+
         $responseTransfer = $this->converterFactory
             ->getInstallmentCalculationResponseConverter($response, $request)
             ->convert();

@@ -29,8 +29,9 @@ class RequestPaymentTransaction extends BaseTransaction implements QuoteTransact
 
         $request = $this->getMethodMapper($paymentMethodName)
             ->paymentRequest($quoteTransfer);
+
         $response = $this->sendRequest((string)$request);
-        $this->logInfo($request, $response, $paymentMethodName);
+        $this->logInfo($request, $response, $quoteTransfer->getPayment()->getPaymentMethod());
 
         $responseTransfer = $this->converterFactory
             ->getTransferObjectConverter($response)

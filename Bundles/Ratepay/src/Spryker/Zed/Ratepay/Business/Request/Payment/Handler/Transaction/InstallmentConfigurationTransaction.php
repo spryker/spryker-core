@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ConfigurationResponse;
 
@@ -30,6 +31,7 @@ class InstallmentConfigurationTransaction extends BaseTransaction implements Quo
 
         $request = $this->getMethodMapper($paymentMethodName)
             ->configurationRequest($quoteTransfer);
+
         $response = $this->sendRequest((string)$request);
         $this->logInfo($request, $response, $paymentMethodName);
 

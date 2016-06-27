@@ -35,10 +35,10 @@ class RatepayHandler
      * @var array
      */
     protected static $paymentMethodMapper = [
-        RatepayConstants::PAYMENT_METHOD_INVOICE => RatepayConstants::PAYMENT_METHOD_INVOICE,
-        RatepayConstants::PAYMENT_METHOD_ELV => RatepayConstants::PAYMENT_METHOD_ELV,
-        RatepayConstants::PAYMENT_METHOD_PREPAYMENT => RatepayConstants::PAYMENT_METHOD_PREPAYMENT,
-        RatepayConstants::PAYMENT_METHOD_INSTALLMENT => RatepayConstants::PAYMENT_METHOD_INSTALLMENT,
+        RatepayConstants::PAYMENT_METHOD_INVOICE => RatepayConstants::INVOICE,
+        RatepayConstants::PAYMENT_METHOD_ELV => RatepayConstants::ELV,
+        RatepayConstants::PAYMENT_METHOD_PREPAYMENT => RatepayConstants::PREPAYMENT,
+        RatepayConstants::PAYMENT_METHOD_INSTALLMENT => RatepayConstants::INSTALLMENT,
     ];
 
     /**

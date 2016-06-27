@@ -9,6 +9,7 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayRequestPaymentTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 
 class PaymentMapper extends BaseMapper
@@ -50,12 +51,13 @@ class PaymentMapper extends BaseMapper
      */
     public function map()
     {
+        $paymentMethod = $this->ratepayPaymentTransfer->requirePaymentType()->getPaymentType();
         $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();
         $grandTotal = $this->centsToDecimal($totalsTransfer->requireGrandTotal()->getGrandTotal());
 
         $this->requestTransfer->setPayment(new RatepayRequestPaymentTransfer())->getPayment()
             ->setCurrency($this->ratepayPaymentTransfer->requireCurrencyIso3()->getCurrencyIso3())
-            ->setMethod($this->ratepayPaymentTransfer->requirePaymentType()->getPaymentType())
+            ->setMethod($paymentMethod)
             ->setAmount($grandTotal);
     }
 

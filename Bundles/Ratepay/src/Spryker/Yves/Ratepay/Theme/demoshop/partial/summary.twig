@@ -1,6 +1,6 @@
-{% if quoteTransfer.payment.paymentMethod == 'ratepayInvoice' %}
+{% if quoteTransfer.payment.paymentMethod == 'INVOICE' %}
     {% set ratepayPaymentTransfer = quoteTransfer.payment.ratepayInvoice %}
-{% elseif quoteTransfer.payment.paymentMethod == 'ratepayElv' %}
+{% elseif quoteTransfer.payment.paymentMethod == 'ELV' %}
     {% set ratepayPaymentTransfer = quoteTransfer.payment.ratepayElv %}
     <tr>
         <td>{{ 'payment.ratepay.bank_account' | trans }}:</td>
@@ -10,9 +10,9 @@
             <div>{{ 'payment.ratepay.bank_account.bic' | trans }} - {{ ratepayPaymentTransfer.bankAccountBic }}</div>
         </td>
     </tr>
-{% elseif quoteTransfer.payment.paymentMethod == 'ratepayPrepayment' %}
+{% elseif quoteTransfer.payment.paymentMethod == 'PREPAYMENT' %}
     {% set ratepayPaymentTransfer = quoteTransfer.payment.ratepayPrepayment %}
-{% elseif quoteTransfer.payment.paymentMethod == 'ratepayInstallment' %}
+{% elseif quoteTransfer.payment.paymentMethod == 'INSTALLMENT' %}
     {% set ratepayPaymentTransfer = quoteTransfer.payment.ratepayInstallment %}
     <tr>
         <td>{{ 'summary.ratepay.installment.plan_details' | trans }}:</td>

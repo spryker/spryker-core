@@ -12,18 +12,13 @@ use Spryker\Shared\Ratepay\RatepayConstants;
 
 class Elv extends AbstractMapper
 {
-
-    /**
-     * @const string Method name.
-     */
-    const METHOD = RatepayConstants::PAYMENT_METHOD_ELV;
-
+    
     /**
      * @return string
      */
     public function getMethodName()
     {
-        return static::METHOD;
+        return RatepayConstants::ELV;
     }
 
     /**

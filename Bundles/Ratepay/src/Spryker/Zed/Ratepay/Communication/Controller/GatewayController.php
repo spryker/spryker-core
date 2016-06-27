@@ -17,16 +17,6 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * TODO is that needed?
-     * 
-     * @return \Generated\Shared\Transfer\RatepayPaymentListResponseTransfer
-     */
-    public function paymentMethodListAction()
-    {
-        return $this->getFacade()->requestPaymentMethodList();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayInstallmentConfigurationResponseTransfer

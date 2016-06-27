@@ -13,16 +13,11 @@ class Prepayment extends AbstractMapper
 {
 
     /**
-     * @const string Method name.
-     */
-    const METHOD = RatepayConstants::PAYMENT_METHOD_PREPAYMENT;
-
-    /**
      * @return string
      */
     public function getMethodName()
     {
-        return static::METHOD;
+        return RatepayConstants::PREPAYMENT;
     }
 
     /**
