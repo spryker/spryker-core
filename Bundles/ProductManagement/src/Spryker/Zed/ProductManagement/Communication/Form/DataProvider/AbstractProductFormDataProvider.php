@@ -74,13 +74,20 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @return array
+     * @param int|null $idProductAbstract|null
+     *
+     * @return mixed
      */
-    public function getOptions()
+    public function getOptions($idProductAbstract=null)
     {
-        $formOptions = [
-            ProductFormAdd::ATTRIBUTES => $this->attributeCollection
-        ];
+        $attributes = $this->getAttributes($idProductAbstract);
+        $attributes = $this->convertAttributesToOptionValues($attributes);
+
+
+        $formOptions[ProductFormAdd::ATTRIBUTES] = $attributes;
+        $formOptions[ProductFormAdd::ATTRIBUTES] = array_merge($formOptions[ProductFormAdd::ATTRIBUTES], $this->attributeCollection);
+
+        //sd($formOptions);
 
         return $formOptions;
     }
@@ -90,18 +97,69 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    public function getAttributes($idProductAbstract=null)
+    public function getAttributes($idProductAbstract=null, $convert=true)
     {
         if ($idProductAbstract === null) {
             return [];
         }
 
-        $attributeCollection = $this->productManagementFacade
+        $attributes = $this->productManagementFacade
             ->getProductAttributesByAbstractProductId($idProductAbstract);
 
+        if (!$convert) {
+            return $attributes;
+        }
+
+        $result = [];
+        foreach ($attributes as $key => $value) {
+            $result[$key] = [$key => $value];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getAttributeValues($idProductAbstract=null)
+    {
+        if ($idProductAbstract === null) {
+            return [];
+        }
+
+        $attributeCollection = $this->getAttributes($idProductAbstract);
+
+        return $this->convertAttributesToFormValues($attributeCollection);
+    }
+
+    /**
+     * @param array $attributeCollection
+     *
+     * @return array
+     */
+    public function convertAttributesToFormValues(array $attributeCollection)
+    {
         $result = [];
         foreach ($attributeCollection as $type => $valueSet) {
             $result[$type]['value'] = $valueSet;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $attributeCollection
+     *
+     * @return array
+     */
+    public function convertAttributesToOptionValues(array $attributeCollection)
+    {
+        $result = [];
+        foreach ($attributeCollection as $type => $valueSet) {
+            $valueSet = is_array($valueSet) ? $valueSet : [$type => $valueSet];
+            $result[$type] = $valueSet;
         }
 
         return $result;
@@ -157,12 +215,12 @@ class AbstractProductFormDataProvider
      */
     public function getAttributesDefaultFields()
     {
-        $defaults = [];
-        foreach ($this->attributeCollection as $type => $values) {
-            $defaults[$type] = [];
+        $result = [];
+        foreach ($this->attributeCollection as $type => $valueSet) {
+            $result[$type]['value'] = [];
         }
 
-        return $defaults;
+        return $result;
     }
 
 }

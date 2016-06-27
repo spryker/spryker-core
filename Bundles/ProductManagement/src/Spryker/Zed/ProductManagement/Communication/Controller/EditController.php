@@ -48,7 +48,7 @@ class EditController extends AddController
             ->getFactory()
             ->createProductFormEdit(
                 $dataProvider->getData($idProductAbstract),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions($idProductAbstract)
             )
             ->handleRequest($request);
 

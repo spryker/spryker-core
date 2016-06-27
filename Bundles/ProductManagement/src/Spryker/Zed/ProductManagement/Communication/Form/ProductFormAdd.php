@@ -113,7 +113,7 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTES, 'collection', [
-                'label' => 'FooBar',
+                'label' => 'Attributes',
                 'type' => new ProductFormAttributes(
                     $options[self::ATTRIBUTES],
                     self::VALIDATION_GROUP_ATTRIBUTES

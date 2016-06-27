@@ -125,6 +125,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductAttributeCollection()
     {
         return [
+            'sku' => ['aha' => 'aha'],
             'size' => [
                 '40' => '40',
                 '41' => '41',
