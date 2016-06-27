@@ -19,6 +19,7 @@ use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueUsageTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -616,6 +617,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                                 ->useCountryQuery()
                                     ->filterByIso2Code($iso2Code)
                                 ->endUse()
+                                ->_or()
+                                ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
                             ->endUse()
                         ->endUse()
                         ->withColumn(SpyTaxSetTableMap::COL_NAME)

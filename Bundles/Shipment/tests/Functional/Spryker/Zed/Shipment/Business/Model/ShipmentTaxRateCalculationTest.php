@@ -29,7 +29,7 @@ class ShipmentTaxRateCalculationTest extends Test
      */
     public function testSetTaxRateWhenExemptTaxRateUsedShouldSetZeroTaxRate()
     {
-        $shipmentMethodEntity = $this->createAbstractProductWithTaxSet(20, 'GB');
+        $shipmentMethodEntity = $this->createShipmentMethodWithTaxSet(20, 'DE');
 
         $quoteTransfer = new QuoteTransfer();
 
@@ -54,7 +54,7 @@ class ShipmentTaxRateCalculationTest extends Test
      */
     public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate()
     {
-        $shipmentMethodEntity = $this->createAbstractProductWithTaxSet(20, 'DE');
+        $shipmentMethodEntity = $this->createShipmentMethodWithTaxSet(20, 'DE');
 
         $quoteTransfer = new QuoteTransfer();
 
@@ -83,7 +83,7 @@ class ShipmentTaxRateCalculationTest extends Test
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
      */
-    protected function createAbstractProductWithTaxSet($taxRate, $iso2Code)
+    protected function createShipmentMethodWithTaxSet($taxRate, $iso2Code)
     {
         $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($iso2Code);
 
