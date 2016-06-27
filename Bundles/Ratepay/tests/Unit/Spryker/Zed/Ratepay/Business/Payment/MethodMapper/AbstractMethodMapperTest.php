@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -17,6 +18,12 @@ use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
 use Spryker\Zed\Ratepay\Business\Api\ApiFactory;
 use Spryker\Zed\Ratepay\Business\Api\Builder\BuilderFactory;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
+use Spryker\Zed\Ratepay\Business\Api\Model\Deliver\Confirm as DeliverConfirm;
+use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Cancel;
+use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Confirm;
+use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Init;
+use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Refund;
+use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 use Unit\Spryker\Zed\Ratepay\Business\Payment\BasePaymentTest;
 
@@ -103,7 +110,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $paymentMethod = $this->getPaymentMethod();
         $request = $paymentMethod->paymentInit($this->getQuoteTransfer());
 
-        $this->assertInstanceOf('\Spryker\Zed\Ratepay\Business\Api\Model\Payment\Init', $request);
+        $this->assertInstanceOf(Init::class, $request);
 
         $this->assertEquals('Spryker www.spryker.dev', $this->requestTransfer->getHead()->getSystemId());
         $this->assertNotNull($this->requestTransfer->getHead()->getProfileId());
@@ -115,7 +122,6 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $this->assertNull($this->requestTransfer->getHead()->getOperationSubstring());
     }
 
-
     /**
      * @return void
      */
@@ -126,7 +132,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
 
         $request = $paymentMethod->paymentRequest($quoteTransfer);
 
-        $this->assertInstanceOf('\Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request', $request);
+        $this->assertInstanceOf(Request::class, $request);
         $this->assertEquals('Spryker www.spryker.dev', $this->requestTransfer->getHead()->getSystemId());
 
         //head
@@ -160,8 +166,6 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
 
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
      * @return void
      */
     public function testPaymentConfirm()
@@ -169,7 +173,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $paymentMethod = $this->getPaymentMethod();
         $request = $paymentMethod->paymentConfirm($this->getOrderTransfer());
 
-        $this->assertInstanceOf('\Spryker\Zed\Ratepay\Business\Api\Model\Payment\Confirm', $request);
+        $this->assertInstanceOf(Confirm::class, $request);
 
         //head
         $this->assertNotNull($this->requestTransfer->getHead()->getProfileId());
@@ -188,7 +192,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $orderTransfer = $this->getOrderTransfer();
         $request = $paymentMethod->deliveryConfirm($orderTransfer, $orderTransfer->getItems()->getArrayCopy());
 
-        $this->assertInstanceOf('\Spryker\Zed\Ratepay\Business\Api\Model\Deliver\Confirm', $request);
+        $this->assertInstanceOf(DeliverConfirm::class, $request);
 
         //head
         $this->assertNotNull($this->requestTransfer->getHead()->getProfileId());
@@ -213,7 +217,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $orderTransfer = $this->getOrderTransfer();
         $request = $paymentMethod->paymentCancel($orderTransfer, $orderTransfer->getItems()->getArrayCopy());
 
-        $this->assertInstanceOf('\Spryker\Zed\Ratepay\Business\Api\Model\Payment\Cancel', $request);
+        $this->assertInstanceOf(Cancel::class, $request);
 
         //head
         $this->assertNotNull($this->requestTransfer->getHead()->getProfileId());
@@ -238,7 +242,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $orderTransfer = $this->getOrderTransfer();
         $request = $paymentMethod->paymentRefund($orderTransfer, $orderTransfer->getItems()->getArrayCopy());
 
-        $this->assertInstanceOf('\Spryker\Zed\Ratepay\Business\Api\Model\Payment\Refund', $request);
+        $this->assertInstanceOf(Refund::class, $request);
 
         //head
         $this->assertNotNull($this->requestTransfer->getHead()->getProfileId());

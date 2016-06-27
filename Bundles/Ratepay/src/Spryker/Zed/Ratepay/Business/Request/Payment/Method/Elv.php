@@ -15,7 +15,7 @@ use Spryker\Shared\Ratepay\RatepayConstants;
  */
 class Elv extends AbstractMethod
 {
-    
+
     /**
      * @return string
      */

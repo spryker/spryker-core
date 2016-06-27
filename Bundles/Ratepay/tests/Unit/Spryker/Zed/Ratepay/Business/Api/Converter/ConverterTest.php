@@ -6,7 +6,10 @@
 
 namespace Unit\Spryker\Zed\Ratepay\Business\Api\Converter;
 
+use Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer;
+use Generated\Shared\Transfer\RatepayInstallmentConfigurationResponseTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Generated\Shared\Transfer\RatepayResponseTransfer;
 use Spryker\Zed\Ratepay\Business\Api\Builder\Head;
 use Spryker\Zed\Ratepay\Business\Api\Builder\InstallmentCalculation;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
@@ -41,15 +44,15 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     public function testConverterData()
     {
         $responseTransfer = $this->getResponseTransferObject((new Response)->getTestPaymentConfirmResponseData());
-        $this->doTestInstance($responseTransfer, '\Generated\Shared\Transfer\RatepayResponseTransfer');
+        $this->doTestInstance($responseTransfer, RatepayResponseTransfer::class);
         $this->doTestConverterData($responseTransfer);
 
         $responseTransfer = $this->getResponseInstallmentConfigurationObject((new Response)->getTestConfigurationResponseData());
-        $this->doTestInstance($responseTransfer, '\Generated\Shared\Transfer\RatepayInstallmentConfigurationResponseTransfer');
+        $this->doTestInstance($responseTransfer, RatepayInstallmentConfigurationResponseTransfer::class);
         $this->doTestConverterData($responseTransfer->getBaseResponse());
 
         $responseTransfer = $this->getResponseInstallmentCalculationObject((new Response)->getTestCalculationResponseData());
-        $this->doTestInstance($responseTransfer, '\Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer');
+        $this->doTestInstance($responseTransfer, RatepayInstallmentCalculationResponseTransfer::class);
         $this->doTestConverterData($responseTransfer->getBaseResponse());
     }
 

@@ -8,8 +8,8 @@
 namespace Spryker\Yves\Ratepay\Plugin;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginWithMessengerInterface;
 use Symfony\Component\HttpFoundation\Request;
 

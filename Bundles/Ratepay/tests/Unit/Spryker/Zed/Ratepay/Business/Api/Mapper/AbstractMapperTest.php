@@ -16,10 +16,6 @@ use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
 
-/**
- * Class AbstractMapperTest
- * @package Unit\Spryker\Zed\Ratepay\Business\Api\Converter
- */
 abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -68,7 +64,7 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
     protected function mockCustomerTransfer()
     {
         $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setEmail("email@site.com");
+        $customerTransfer->setEmail('email@site.com');
 
         return $customerTransfer;
     }
@@ -79,14 +75,14 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
     protected function mockAddressTransfer()
     {
         $address = new AddressTransfer();
-        $address->setFirstName("fn")
-            ->setLastName("ln")
-            ->setPhone("0491234567")
-            ->setCity("Berlin")
-            ->setIso2Code("iso2")
-            ->setAddress1("addr1")
-            ->setAddress2("addr2")
-            ->setZipCode("zip");
+        $address->setFirstName('fn')
+            ->setLastName('ln')
+            ->setPhone('0491234567')
+            ->setCity('Berlin')
+            ->setIso2Code('iso2')
+            ->setAddress1('addr1')
+            ->setAddress2('addr2')
+            ->setZipCode('zip');
         return $address;
     }
 
@@ -96,16 +92,16 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
     protected function mockPaymentElvTransfer()
     {
         $ratepayPaymentTransfer = new RatepayPaymentElvTransfer();
-        $ratepayPaymentTransfer->setBankAccountIban("iban")
-            ->setBankAccountBic("bic")
-            ->setBankAccountHolder("holder")
-            ->setCurrencyIso3("iso3")
-            ->setGender("m")
-            ->setPhone("123456789")
-            ->setDateOfBirth("1980-01-02")
-            ->setIpAddress("127.1.2.3")
+        $ratepayPaymentTransfer->setBankAccountIban('iban')
+            ->setBankAccountBic('bic')
+            ->setBankAccountHolder('holder')
+            ->setCurrencyIso3('iso3')
+            ->setGender('m')
+            ->setPhone('123456789')
+            ->setDateOfBirth('1980-01-02')
+            ->setIpAddress('127.1.2.3')
             ->setCustomerAllowCreditInquiry(true)
-            ->setPaymentType("invoice");
+            ->setPaymentType('invoice');
 
         return $ratepayPaymentTransfer;
     }
@@ -127,19 +123,19 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
             ->setInterestMonth(3)
             ->setInstallmentNumberRates(3)
             ->setInstallmentPaymentFirstDay(28)
-            ->setInstallmentCalculationStart("2016-05-15")
+            ->setInstallmentCalculationStart('2016-05-15')
 
-            ->setBankAccountIban("iban")
-            ->setBankAccountBic("bic")
-            ->setBankAccountHolder("holder")
-            ->setCurrencyIso3("iso3")
-            ->setGender("m")
-            ->setPhone("123456789")
-            ->setDateOfBirth("1980-01-02")
-            ->setIpAddress("127.1.2.3")
+            ->setBankAccountIban('iban')
+            ->setBankAccountBic('bic')
+            ->setBankAccountHolder('holder')
+            ->setCurrencyIso3('iso3')
+            ->setGender('m')
+            ->setPhone('123456789')
+            ->setDateOfBirth('1980-01-02')
+            ->setIpAddress('127.1.2.3')
             ->setCustomerAllowCreditInquiry(true)
-            ->setPaymentType("invoice")
-            ->setDebitPayType("invoice");
+            ->setPaymentType('invoice')
+            ->setDebitPayType('invoice');
 
         return $ratepayPaymentInstallmentTransfer;
     }

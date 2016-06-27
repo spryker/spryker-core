@@ -44,7 +44,7 @@ class RatepayDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::FACADE_PRODUCT] = function (Container $container) {
             return new RatepayToProductBridge($container->getLocator()->product()->facade());
         };
-        
+
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
             return new RatepayToGlossaryBridge($container->getLocator()->glossary()->facade());
         };

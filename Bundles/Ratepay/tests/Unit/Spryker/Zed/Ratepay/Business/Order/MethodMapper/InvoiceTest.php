@@ -22,6 +22,9 @@ class InvoiceTest extends BaseMethodMapperTest
         parent::setUp();
     }
 
+    /**
+     * @return void
+     */
     public function testMapMethodDataToPayment()
     {
         $methodMapper = new Invoice();

@@ -20,6 +20,7 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterfa
  */
 class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {
+
     const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
 
     /**

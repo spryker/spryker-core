@@ -9,7 +9,6 @@
 namespace Unit\Spryker\Yves\Ratepay\Form\DataProvider;
 
 use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
 use Spryker\Yves\Ratepay\Form\DataProvider\InvoiceDataProvider;
 
@@ -43,7 +42,7 @@ class InvoiceDataProviderTest extends AbstractDataProviderTest
     public function testGetDataShouldAddPhoneNumber()
     {
         $invoiceDataProvider = $this->getInvoiceDataProvider();
-        
+
         $quoteTransfer = $this->getQuoteTransfer();
 
         $invoiceDataProvider->getData($quoteTransfer);

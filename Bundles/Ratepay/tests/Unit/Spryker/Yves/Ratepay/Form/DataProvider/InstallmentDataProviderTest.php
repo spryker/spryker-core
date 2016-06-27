@@ -44,7 +44,7 @@ class InstallmentDataProviderTest extends AbstractDataProviderTest
     public function testGetDataShouldAddPhoneNumber()
     {
         $installmentDataProvider = $this->getInstallmentDataProvider();
-        
+
         $quoteTransfer = $this->getQuoteTransfer();
 
         $installmentDataProvider->getData($quoteTransfer);

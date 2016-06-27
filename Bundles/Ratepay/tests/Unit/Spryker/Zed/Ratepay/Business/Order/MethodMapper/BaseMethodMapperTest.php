@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -47,7 +48,7 @@ class BaseMethodMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('200', $this->payment->getResultCode());
         $this->assertEquals('fp', $this->payment->getDeviceFingerprint());
         $this->assertEquals('M', $this->payment->getGender());
-        $this->assertEquals('1980-01-02', $this->payment->getDateOfBirth()->format("Y-m-d"));
+        $this->assertEquals('1980-01-02', $this->payment->getDateOfBirth()->format('Y-m-d'));
         $this->assertEquals(1, $this->payment->getCustomerAllowCreditInquiry());
         $this->assertEquals('127.1.2.3', $this->payment->getIpAddress());
         $this->assertEquals('iso3', $this->payment->getCurrencyIso3());
@@ -74,16 +75,16 @@ class BaseMethodMapperTest extends \PHPUnit_Framework_TestCase
      */
     protected function mockPaymentTransfer($paymentTransfer)
     {
-        $paymentTransfer->setTransactionId("tr1");
-        $paymentTransfer->setTransactionShortId("trsh1");
-        $paymentTransfer->setResultCode("200");
-        $paymentTransfer->setDeviceFingerprint("fp");
-        $paymentTransfer->setGender("M");
-        $paymentTransfer->setPhone("123456789");
-        $paymentTransfer->setDateOfBirth("1980-01-02");
+        $paymentTransfer->setTransactionId('tr1');
+        $paymentTransfer->setTransactionShortId('trsh1');
+        $paymentTransfer->setResultCode('200');
+        $paymentTransfer->setDeviceFingerprint('fp');
+        $paymentTransfer->setGender('M');
+        $paymentTransfer->setPhone('123456789');
+        $paymentTransfer->setDateOfBirth('1980-01-02');
         $paymentTransfer->setCustomerAllowCreditInquiry(1);
-        $paymentTransfer->setIpAddress("127.1.2.3");
-        $paymentTransfer->setCurrencyIso3("iso3");
+        $paymentTransfer->setIpAddress('127.1.2.3');
+        $paymentTransfer->setCurrencyIso3('iso3');
 
         return $paymentTransfer;
     }

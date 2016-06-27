@@ -9,6 +9,9 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Api\Converter;
 class InstallmentCalculationMapperTest extends AbstractMapperTest
 {
 
+    /**
+     * @return void
+     */
     public function testMapper()
     {
         $this->mapperFactory

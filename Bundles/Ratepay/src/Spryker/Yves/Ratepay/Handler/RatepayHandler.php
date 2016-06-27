@@ -27,7 +27,7 @@ class RatepayHandler
     protected $ratepayClient;
 
     /**
-     * @var FlashMessengerInterface
+     * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
     protected $flashMessenger;
 

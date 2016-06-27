@@ -12,7 +12,10 @@ use Spryker\Zed\Ratepay\Business\Api\SimpleXMLElement;
 class SpecialCharactersTest extends \PHPUnit_Framework_TestCase
 {
 
-    protected $characters = array(
+    /**
+     * @var array
+     */
+    protected $characters = [
         "–" => "-",
         "´" => "'",
         "‹" => "<",
@@ -29,10 +32,10 @@ class SpecialCharactersTest extends \PHPUnit_Framework_TestCase
         "―" => "-",
         "—" => "-",
         "™" => "TM",
-        "¼" => "1/4", 
-        "½" => "1/2", 
+        "¼" => "1/4",
+        "½" => "1/2",
         "¾" => "3/4"
-    );
+    ];
 
     /**
      * @return void
@@ -44,4 +47,5 @@ class SpecialCharactersTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($expected, (string)$simpleXmlElement->addCDataChild('test', $character));
         }
     }
+
 }

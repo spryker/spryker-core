@@ -16,7 +16,7 @@ use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
  */
 class Installment extends AbstractMethod
 {
-    
+
     /**
      * @return string
      */

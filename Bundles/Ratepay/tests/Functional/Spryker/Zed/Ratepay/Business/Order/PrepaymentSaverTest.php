@@ -16,7 +16,7 @@ class PrepaymentSaverTest extends AbstractSaverTest
     /**
      * @const Payment method code.
      */
-    const PAYMENT_METHOD = RatepayConstants::PAYMENT_METHOD_PREPAYMENT;
+    const PAYMENT_METHOD = RatepayConstants::PREPAYMENT;
 
     /**
      * @return \Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer

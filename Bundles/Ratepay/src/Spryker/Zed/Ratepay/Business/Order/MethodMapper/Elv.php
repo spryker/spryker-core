@@ -12,7 +12,7 @@ use Spryker\Shared\Ratepay\RatepayConstants;
 
 class Elv extends AbstractMapper
 {
-    
+
     /**
      * @return string
      */

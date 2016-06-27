@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ConfigurationResponse;
 

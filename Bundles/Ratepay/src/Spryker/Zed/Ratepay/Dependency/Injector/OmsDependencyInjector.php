@@ -49,8 +49,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
                 ->add(new CancelPaymentPlugin(), 'Ratepay/CancelOrder')
                 ->add(new ConfirmPaymentPlugin(), 'Ratepay/ConfirmPayment')
                 ->add(new ConfirmDeliveryPlugin(), 'Ratepay/ConfirmDelivery')
-                ->add(new RefundPaymentPlugin(), 'Ratepay/Refund')
-            ;
+                ->add(new RefundPaymentPlugin(), 'Ratepay/Refund');
 
             return $commandCollection;
         });
@@ -70,8 +69,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
                 ->add(new IsCancellationConfirmedPlugin(), 'Ratepay/IsCancellationConfirmed')
                 ->add(new IsPaymentConfirmedPlugin(), 'Ratepay/IsPaymentConfirmed')
                 ->add(new IsDeliveryConfirmedPlugin(), 'Ratepay/IsDeliveryConfirmed')
-                ->add(new IsRefundedPlugin(), 'Ratepay/IsRefunded')
-            ;
+                ->add(new IsRefundedPlugin(), 'Ratepay/IsRefunded');
 
             return $conditionCollection;
         });

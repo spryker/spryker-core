@@ -56,7 +56,7 @@ class PrepaymentTest extends PrepaymentAbstractTest
     {
         parent::testPaymentWithSuccessResponse();
 
-        $this->assertEquals(RatepayConstants::PAYMENT_METHOD_PREPAYMENT, $this->responseTransfer->getPaymentMethod());
+        $this->assertEquals(RatepayConstants::PREPAYMENT, $this->responseTransfer->getPaymentMethod());
         $this->assertEquals($this->expectedResponseTransfer->getPaymentMethod(), $this->responseTransfer->getPaymentMethod());
     }
 

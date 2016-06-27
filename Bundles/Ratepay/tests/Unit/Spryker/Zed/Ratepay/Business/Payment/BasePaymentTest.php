@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -16,8 +17,10 @@ use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
 use Spryker\Shared\Ratepay\RatepayConstants;
+use Spryker\Zed\Ratepay\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Ratepay\Business\Api\Builder\Head;
 use Spryker\Zed\Ratepay\Business\Api\Builder\InstallmentCalculation;
 use Spryker\Zed\Ratepay\Business\Api\Builder\Payment;
@@ -25,6 +28,11 @@ use Spryker\Zed\Ratepay\Business\Api\Constants;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation;
+use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Configuration;
+use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Init;
+use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request;
+use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Installment;
+use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Invoice;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 use Unit\Spryker\Zed\Ratepay\Business\Api\Response\Response;
 
@@ -41,6 +49,9 @@ class BasePaymentTest extends Test
      */
     protected $requestTransfer;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -49,6 +60,9 @@ class BasePaymentTest extends Test
         $this->mapperFactory = new MapperFactory($this->requestTransfer);
     }
 
+    /**
+     * @return void
+     */
     protected function tearDown()
     {
         parent::tearDown();
@@ -66,17 +80,17 @@ class BasePaymentTest extends Test
     protected function getTransactionHandlerObject($className, $additionalMockMethods = [])
     {
 
-        $executionAdapter = $this->getMockBuilder('\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\Guzzle')
+        $executionAdapter = $this->getMockBuilder(Guzzle::class)
             ->disableOriginalConstructor()
             ->setMethods(['sendRequest', 'getMethodMapper'])
             ->getMock();
+
         $executionAdapter->method('sendRequest')
             ->willReturn((new Response())->getTestPaymentConfirmResponseData());
 
         foreach ($additionalMockMethods as $method => $return) {
             $executionAdapter->method($method)
                 ->willReturn($return);
-
         }
 
         $converterFactory = new ConverterFactory();
@@ -89,6 +103,7 @@ class BasePaymentTest extends Test
             ])
             ->setMethods(['logInfo'])
             ->getMock();
+
         $transactionHandler->method('logInfo')
             ->willReturn(null);
 
@@ -100,13 +115,16 @@ class BasePaymentTest extends Test
      */
     protected function mockPaymentRatepay()
     {
-        $spyPaymentRatepay = $this->getMockBuilder('\Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay')
+        $spyPaymentRatepay = $this->getMockBuilder(SpyPaymentRatepay::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $spyPaymentRatepay->method('getPaymentType')
-            ->willReturn(RatepayConstants::PAYMENT_METHOD_INVOICE);
+            ->willReturn(RatepayConstants::INVOICE);
+
         $spyPaymentRatepay->method('setResultCode')
             ->willReturn($spyPaymentRatepay);
+
         $spyPaymentRatepay->method('save')
             ->willReturn(true);
 
@@ -129,6 +147,8 @@ class BasePaymentTest extends Test
     }
 
     /**
+     * @param string $paymentMethod
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function mockQuoteTransfer($paymentMethod = 'INVOICE')
@@ -169,23 +189,31 @@ class BasePaymentTest extends Test
 
         $paymentTransfer = new RatepayPaymentInvoiceTransfer();
 
-        $invoiceMethod = $this->getMockBuilder('\Spryker\Zed\Ratepay\Business\Request\Payment\Method\Invoice')
+        $invoiceMethod = $this->getMockBuilder(Invoice::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $invoiceMethod->method('getMethodName')
-            ->willReturn(RatepayConstants::PAYMENT_METHOD_INVOICE);
+            ->willReturn(RatepayConstants::INVOICE);
+
         $invoiceMethod->method('paymentInit')
             ->willReturn($paymentInit);
+
         $invoiceMethod->method('paymentRequest')
             ->willReturn($paymentInit);
+
         $invoiceMethod->method('paymentConfirm')
             ->willReturn($paymentInit);
+
         $invoiceMethod->method('paymentCancel')
             ->willReturn($paymentInit);
+
         $invoiceMethod->method('deliveryConfirm')
             ->willReturn($paymentInit);
+
         $invoiceMethod->method('paymentRefund')
             ->willReturn($paymentInit);
+
         $invoiceMethod->method('getPaymentData')
             ->willReturn($paymentTransfer);
 
@@ -213,27 +241,36 @@ class BasePaymentTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Ratepay\Business\Request\Payment\Method\Installment
+     * @param string $payment
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\Business\Payment\Method\Installment\Installment
      */
     protected function mockMethodInstallment($payment)
     {
         $paymentTransfer = new RatepayPaymentInvoiceTransfer();
 
-        $installmentMethod = $this->getMockBuilder('\Spryker\Zed\Ratepay\Business\Request\Payment\Method\Installment')
+        $installmentMethod = $this->getMockBuilder(Installment::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $installmentMethod->method('getMethodName')
-            ->willReturn(RatepayConstants::PAYMENT_METHOD_INSTALLMENT);
+            ->willReturn(RatepayConstants::INSTALLMENT);
+
         $installmentMethod->method('paymentInit')
             ->willReturn($payment);
+
         $installmentMethod->method('paymentRequest')
             ->willReturn($payment);
+
         $installmentMethod->method('paymentConfirm')
             ->willReturn($payment);
+
         $installmentMethod->method('configurationRequest')
             ->willReturn($this->mockModelPaymentConfiguration());
+
         $installmentMethod->method('calculationRequest')
             ->willReturn($this->mockModelPaymentCalculation());
+
         $installmentMethod->method('getPaymentData')
             ->willReturn($paymentTransfer);
 
@@ -245,11 +282,13 @@ class BasePaymentTest extends Test
      */
     protected function mockModelPaymentRequest()
     {
-        $modelPaymentRequest = $this->getMockBuilder('\Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request')
+        $modelPaymentRequest = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $modelPaymentRequest->method('getHead')
             ->willReturn($this->mockModelPartHead());
+
         $modelPaymentRequest->method('getPayment')
             ->willReturn($this->mockModelPartPayment());
 
@@ -261,12 +300,14 @@ class BasePaymentTest extends Test
      */
     protected function mockModelPaymentInit()
     {
-        $paymentInit = $this->getMockBuilder('\Spryker\Zed\Ratepay\Business\Api\Model\Payment\Init')
+        $paymentInit = $this->getMockBuilder(Init::class)
             ->disableOriginalConstructor()
             ->setMethods(['getHead', 'getPayment'])
             ->getMock();
+
         $paymentInit->method('getHead')
             ->willReturn($this->mockModelPartHead());
+
         $paymentInit->method('getPayment')
             ->willReturn($this->mockModelPartPayment());
 
@@ -278,12 +319,14 @@ class BasePaymentTest extends Test
      */
     protected function mockModelPaymentConfiguration()
     {
-        $paymentConfiguration = $this->getMockBuilder('\Spryker\Zed\Ratepay\Business\Api\Model\Payment\Configuration')
+        $paymentConfiguration = $this->getMockBuilder(Configuration::class)
             ->disableOriginalConstructor()
             ->setMethods(['getHead', 'getPayment'])
             ->getMock();
+
         $paymentConfiguration->method('getHead')
             ->willReturn($this->mockModelPartHead());
+
         $paymentConfiguration->method('getPayment')
             ->willReturn($this->mockModelPartPayment());
 
@@ -350,6 +393,7 @@ class BasePaymentTest extends Test
                 $this->mockQuoteTransfer(),
                 $this->mockRatepayPaymentInstallmentTransfer()
             )->map();
+
         $this->requestTransfer->getInstallmentCalculation()->setSubType($subType);
 
         return new InstallmentCalculation($this->requestTransfer);
@@ -372,16 +416,16 @@ class BasePaymentTest extends Test
     protected function mockPaymentElvTransfer()
     {
         $ratepayPaymentTransfer = new RatepayPaymentElvTransfer();
-        $ratepayPaymentTransfer->setBankAccountIban("iban")
-            ->setBankAccountBic("bic")
-            ->setBankAccountHolder("holder")
-            ->setCurrencyIso3("iso3")
-            ->setGender("m")
-            ->setPhone("123456789")
-            ->setDateOfBirth("1980-01-02")
-            ->setIpAddress("127.1.2.3")
+        $ratepayPaymentTransfer->setBankAccountIban('iban')
+            ->setBankAccountBic('bic')
+            ->setBankAccountHolder('holder')
+            ->setCurrencyIso3('iso3')
+            ->setGender('m')
+            ->setPhone('123456789')
+            ->setDateOfBirth('1980-01-02')
+            ->setIpAddress('127.1.2.3')
             ->setCustomerAllowCreditInquiry(true)
-            ->setPaymentType("invoice");
+            ->setPaymentType('invoice');
 
         return $ratepayPaymentTransfer;
     }
@@ -405,17 +449,17 @@ class BasePaymentTest extends Test
             ->setInstallmentPaymentFirstDay(28)
             ->setInstallmentCalculationStart("2016-05-15")
 
-            ->setBankAccountIban("iban")
-            ->setBankAccountBic("bic")
-            ->setBankAccountHolder("holder")
-            ->setCurrencyIso3("iso3")
-            ->setGender("m")
-            ->setDateOfBirth("1980-01-02")
-            ->setPhone("123456789")
-            ->setIpAddress("127.1.2.3")
+            ->setBankAccountIban('iban')
+            ->setBankAccountBic('bic')
+            ->setBankAccountHolder('holder')
+            ->setCurrencyIso3('iso3')
+            ->setGender('m')
+            ->setDateOfBirth('1980-01-02')
+            ->setPhone('123456789')
+            ->setIpAddress('127.1.2.3')
             ->setCustomerAllowCreditInquiry(true)
-            ->setPaymentType("invoice")
-            ->setDebitPayType("invoice");
+            ->setPaymentType('invoice')
+            ->setDebitPayType('invoice');
 
         return $ratepayPaymentInstallmentTransfer;
     }

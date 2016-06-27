@@ -9,7 +9,6 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayRequestPaymentTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
-use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 
 class PaymentMapper extends BaseMapper

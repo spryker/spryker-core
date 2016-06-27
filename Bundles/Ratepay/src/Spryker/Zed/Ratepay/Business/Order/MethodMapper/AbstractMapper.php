@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Business\Order\MethodMapper;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
-use Spryker\Shared\Ratepay\RatepayConstants;
 
 abstract class AbstractMapper implements PaymentMethodMapperInterface
 {

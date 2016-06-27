@@ -16,7 +16,7 @@ abstract class ElvAbstractTest extends AbstractFacadeTest
     /**
      * @const Payment method code.
      */
-    const PAYMENT_METHOD = RatepayConstants::PAYMENT_METHOD_ELV;
+    const PAYMENT_METHOD = RatepayConstants::ELV;
 
     /**
      * @return \Generated\Shared\Transfer\RatepayPaymentElvTransfer

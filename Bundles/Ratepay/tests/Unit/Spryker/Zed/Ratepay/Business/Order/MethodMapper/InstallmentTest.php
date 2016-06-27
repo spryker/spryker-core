@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -44,7 +45,7 @@ class InstallmentTest extends BaseMethodMapperTest
         $this->assertEquals(28, $this->payment->getInstallmentPaymentFirstDay());
         $this->assertEquals(3, $this->payment->getInstallmentMonth());
         $this->assertEquals(12, $this->payment->getInstallmentNumberRates());
-        $this->assertEquals("cs", $this->payment->getInstallmentCalculationStart());
+        $this->assertEquals('cs', $this->payment->getInstallmentCalculationStart());
         $this->assertEquals(20, $this->payment->getInstallmentServiceCharge());
         $this->assertEquals(21, $this->payment->getInstallmentAnnualPercentageRate());
         $this->assertEquals(1, $this->payment->getInstallmentMonthAllowed());
@@ -75,10 +76,10 @@ class InstallmentTest extends BaseMethodMapperTest
     {
         $paymentTransfer = parent::mockPaymentTransfer($paymentTransfer);
 
-        $paymentTransfer->setBankAccountBic("bic");
-        $paymentTransfer->setBankAccountHolder("acchold");
-        $paymentTransfer->setBankAccountIban("iban");
-        $paymentTransfer->setDebitPayType("DIRECT-DEBIT");
+        $paymentTransfer->setBankAccountBic('bic');
+        $paymentTransfer->setBankAccountHolder('acchold');
+        $paymentTransfer->setBankAccountIban('iban');
+        $paymentTransfer->setDebitPayType('DIRECT-DEBIT');
         $paymentTransfer->setInstallmentGrandTotalAmount(15);
         $paymentTransfer->setInstallmentInterestAmount(16);
         $paymentTransfer->setInstallmentInterestRate(17);
@@ -87,7 +88,7 @@ class InstallmentTest extends BaseMethodMapperTest
         $paymentTransfer->setInstallmentPaymentFirstDay(28);
         $paymentTransfer->setInstallmentMonth(3);
         $paymentTransfer->setInstallmentNumberRates(12);
-        $paymentTransfer->setInstallmentCalculationStart("cs");
+        $paymentTransfer->setInstallmentCalculationStart('cs');
         $paymentTransfer->setInstallmentServiceCharge(20);
         $paymentTransfer->setInstallmentAnnualPercentageRate(21);
         $paymentTransfer->setInstallmentMonthAllowed(1);

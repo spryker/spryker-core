@@ -11,10 +11,14 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Ratepay\Business\Expander\ProductExpander;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductBridge;
 
 class ProductExpanderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testExpandItems()
     {
         $item = new ItemTransfer();
@@ -38,14 +42,14 @@ class ProductExpanderTest extends \PHPUnit_Framework_TestCase
     {
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute->setAttributes([
-            'short_description' => "sd",
-            'long_description' => "ld",
+            'short_description' => 'sd',
+            'long_description' => 'ld',
         ]);
 
         $product = new ProductConcreteTransfer();
         $product->addLocalizedAttributes($localizedAttribute);
 
-        $ratepayToProductBridge = $this->getMockBuilder('\Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductBridge')
+        $ratepayToProductBridge = $this->getMockBuilder(RatepayToProductBridge::class)
             ->disableOriginalConstructor()
             ->getMock();
         $ratepayToProductBridge->method('getProductConcrete')

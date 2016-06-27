@@ -41,7 +41,6 @@ class InvoiceTest extends AbstractMethodMapperTest
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay|\Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer $ratepayPaymentEntity
      *
      * @return void
