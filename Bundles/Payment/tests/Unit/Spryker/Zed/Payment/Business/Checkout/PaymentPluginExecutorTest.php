@@ -69,21 +69,6 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return void
-     */
-    public function testOrderSaverShouldThrowExceptionWhenNonExistantProviderUsed()
-    {
-        $this->setExpectedException(CheckoutPluginNotFoundException::class);
-
-        $paymentPluginExecutor = $this->createPaymentPluginExecutor(null, null, null);
-        $quoteTransfer = $this->createQuoteTransfer();
-        $quoteTransfer->getPayment()->setPaymentProvider('non existant provider');
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
-
-        $paymentPluginExecutor->executeOrderSaverPlugin($quoteTransfer, $checkoutResponseTransfer);
-    }
-
-    /**
      * @param null $preCheckPluginMock
      * @param null $orderSavePluginMock
      * @param null $postCheckPluginMock
