@@ -37,11 +37,11 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      *
      * @param string $itemType
      * @param string $itemId
-     * @param string $itemEvent
+     * @param string $itemEvent|null
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
-    public function queryUpdateTouchEntry($itemType, $itemId, $itemEvent);
+    public function queryUpdateTouchEntry($itemType, $itemId, $itemEvent = null);
 
     /**
      * Specification:
