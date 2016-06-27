@@ -169,4 +169,13 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      */
     public function queryBlockById($idCmsBlock);
 
+    /**
+     * @api
+     *
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery
+     */
+    public function queryLocalById($idLocale);
+
 }

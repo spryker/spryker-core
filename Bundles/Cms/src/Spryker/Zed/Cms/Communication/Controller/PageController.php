@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Communication\Controller;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
@@ -110,7 +111,9 @@ class PageController extends AbstractController
 
             $pageTransfer = $this->createPageTransfer($data);
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
-            $this->getFacade()->touchPageActive($pageTransfer);
+            $localeTransfer = $this->getLocalTransfer($idPage);
+
+            $this->getFacade()->touchPageActive($pageTransfer, $localeTransfer);
 
             if ((int)$data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int)$data[CmsPageForm::FIELD_FK_TEMPLATE]) {
                 $this->getFacade()->deleteGlossaryKeysByIdPage($idPage);
@@ -230,8 +233,31 @@ class PageController extends AbstractController
         $data[CmsPageForm::FIELD_IS_ACTIVE] = $isActive;
 
         $pageTransfer = $this->createPageTransfer($data);
+        $localeTransfer = $this->getLocalTransfer($idPage);
 
         $this->getFacade()->savePage($pageTransfer);
+        $this->getFacade()->touchPageActive($pageTransfer, $localeTransfer);
+    }
+
+    /**
+     * @param int $idPage
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
+     */
+    protected function getLocalTransfer($idPage)
+    {
+        $localeTransfer = null;
+        $cmsPageEntity = $this->getQueryContainer()->queryPageById($idPage)->findOne();
+
+        if ($cmsPageEntity) {
+            $localeEntity = $cmsPageEntity->getSpyUrls()->getFirst()->getSpyLocale();
+            $localeTransfer = new LocaleTransfer();
+            $localeTransfer->fromArray($localeEntity->toArray());
+
+            return $localeTransfer;
+        }
+
+        return $localeTransfer;
     }
 
 }

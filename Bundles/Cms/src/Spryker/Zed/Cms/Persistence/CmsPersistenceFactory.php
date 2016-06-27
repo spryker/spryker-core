@@ -11,6 +11,7 @@ use Orm\Zed\Cms\Persistence\Base\SpyCmsTemplateQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -50,6 +51,14 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     public function createCmsGlossaryKeyMappingQuery()
     {
         return SpyCmsGlossaryKeyMappingQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     */
+    public function createLocalQuery()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_LOCALE);
     }
 
 }

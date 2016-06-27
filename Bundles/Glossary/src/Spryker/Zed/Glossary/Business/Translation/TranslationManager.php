@@ -651,6 +651,18 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
+     * @param int $idKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return void
+     */
+    public function touchTranslationForKeyId($idKey, LocaleTransfer $locale)
+    {
+        $translation = $this->getTranslationByIds($idKey, $locale->getIdLocale());
+        $this->insertActiveTouchRecord($translation->getIdGlossaryTranslation());
+    }
+
+    /**
      * @param string $keyName
      * @param string $localeName
      *

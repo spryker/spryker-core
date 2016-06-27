@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
+use Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
@@ -203,17 +204,22 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $page)
+    public function touchPageActive(PageTransfer $page, LocaleTransfer $locale = null)
     {
         $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($page->getIdCmsPage())
             ->find();
         foreach ($pageMappings as $pageMapping) {
-            $this->glossaryFacade->touchCurrentTranslationForKeyId($pageMapping->getFkGlossaryKey());
+            if ($locale === null) {
+                $this->glossaryFacade->touchCurrentTranslationForKeyId($pageMapping->getFkGlossaryKey());
+            } else {
+                $this->glossaryFacade->touchTranslationForKeyId($pageMapping->getFkGlossaryKey(), $locale);
+            }
         }
 
         $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
@@ -229,9 +235,11 @@ class PageManager implements PageManagerInterface
     public function createPageUrl(PageTransfer $pageTransfer)
     {
         $this->checkPageExists($pageTransfer->getIdCmsPage());
+        $idLocal = $pageTransfer->getUrl()->getFkLocale();
 
-        return $this->urlFacade->createUrlForCurrentLocale(
+        return $this->urlFacade->createUrl(
             $pageTransfer->getUrl()->getUrl(),
+            $this->getLocalTransfer($idLocal),
             CmsConstants::RESOURCE_TYPE_PAGE,
             $pageTransfer->getIdCmsPage()
         );
@@ -310,6 +318,28 @@ class PageManager implements PageManagerInterface
         $query = $this->cmsQueryContainer->queryPageById($idPage);
 
         return $query->count() > 0;
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getLocalTransfer($idLocale)
+    {
+        $localEntity = $this->cmsQueryContainer->queryLocalById($idLocale)->findOne();
+
+        if ($localEntity === null) {
+            throw new LocaleNotFoundException(
+                sprintf('Locale with id %s not found', $idLocale)
+            );
+        }
+
+        $localTransfer = new LocaleTransfer();
+        $localTransfer->fromArray($localEntity->toArray());
+
+        return $localTransfer;
     }
 
 }

@@ -40,10 +40,11 @@ interface GlossaryKeyMappingManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping);
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping, LocaleTransfer $locale = null);
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $page

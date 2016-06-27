@@ -124,15 +124,16 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping)
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping, LocaleTransfer $locale = null)
     {
         $pageKeyMappingTransfer = $this->savePageKeyMapping($pageKeyMapping);
 
         $pageTransfer = (new PageTransfer())->setIdCmsPage($pageKeyMappingTransfer->getFkPage());
-        $this->pageManager->touchPageActive($pageTransfer);
+        $this->pageManager->touchPageActive($pageTransfer, $locale);
 
         return $pageKeyMappingTransfer;
     }

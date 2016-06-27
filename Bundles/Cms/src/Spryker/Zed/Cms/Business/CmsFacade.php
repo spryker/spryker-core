@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -113,15 +114,16 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer)
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping, LocaleTransfer $locale = null)
     {
         $glossaryKeyMappingManager = $this->getFactory()->createGlossaryKeyMappingManager();
 
-        return $glossaryKeyMappingManager->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
+        return $glossaryKeyMappingManager->savePageKeyMappingAndTouch($pageKeyMapping, $locale);
     }
 
     /**
@@ -259,13 +261,14 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $pageTransfer)
+    public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $locale = null)
     {
         $pageManager = $this->getFactory()->createPageManager();
-        $pageManager->touchPageActive($pageTransfer);
+        $pageManager->touchPageActive($pageTransfer, $locale);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 
@@ -79,11 +80,12 @@ interface CmsFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer);
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping, LocaleTransfer $locale = null);
 
     /**
      * @api
@@ -180,10 +182,11 @@ interface CmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $pageTransfer);
+    public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $locale = null);
 
     /**
      * @api
