@@ -298,7 +298,6 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
         $this->omsQueryContainerMock = $this->getMock(
             OmsQueryContainer::class,
             [
-                'queryLockedItemsByIdentifierAndExpirationDate',
                 'queryLockItemsByIdentifier'
             ]
         );

@@ -29,6 +29,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @api
      *
+     * @deprecated Not used. Will be removed in the next ajor release.
+     *
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param string $skus
@@ -39,7 +41,11 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     public function getProductWithAttributeQuery($skus, LocaleTransfer $locale)
     {
         $query = $this->getFactory()->createProductQuery();
-        $query->filterBySku($skus);
+        if (is_array($skus)) {
+            $query->filterBySku($skus, Criteria::IN);
+        } else {
+            $query->filterBySku($skus);
+        }
         $query->useSpyProductLocalizedAttributesQuery()
                     ->filterByFkLocale($locale->getIdLocale())
                 ->endUse()

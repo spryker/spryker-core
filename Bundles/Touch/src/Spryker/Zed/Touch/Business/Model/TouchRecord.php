@@ -11,6 +11,7 @@ use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Library\BatchIterator\Builder\BatchIteratorBuilderInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -259,7 +260,7 @@ class TouchRecord implements TouchRecordInterface
             $touchIdsToRemove = $batch->toArray();
             $this->removeTouchDataForCollectors($touchIdsToRemove);
             $deletedCount += $query
-                ->filterByIdTouch($touchIdsToRemove)
+                ->filterByIdTouch($touchIdsToRemove, Criteria::IN)
                 ->delete();
         }
 

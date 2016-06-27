@@ -144,7 +144,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             $stateNames[] = $state->getName();
         }
 
-        $query->useStateQuery()->filterByName($stateNames)->endUse();
+        $query->useStateQuery()->filterByName($stateNames, Criteria::IN)->endUse();
         $query->filterBySku($sku);
 
         return $query;
@@ -172,7 +172,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             $stateNames[] = $state->getName();
         }
 
-        $query->useStateQuery()->filterByName($stateNames)->endUse();
+        $query->useStateQuery()->filterByName($stateNames, Criteria::IN)->endUse();
         $query->filterBySku($sku);
 
         return $query;
@@ -188,7 +188,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public function querySalesOrderItems(array $orderItemIds)
     {
         return $this->getSalesQueryContainer()->querySalesOrderItem()
-            ->filterByIdSalesOrderItem($orderItemIds);
+            ->filterByIdSalesOrderItem($orderItemIds, Criteria::IN);
     }
 
     /**
@@ -215,7 +215,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     {
         $query = $this->getFactory()->createOmsOrderProcessQuery();
 
-        return $query->filterByName($activeProcesses);
+        return $query->filterByName($activeProcesses, Criteria::IN);
     }
 
     /**
@@ -229,7 +229,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     {
         $query = $this->getFactory()->createOmsOrderItemStateQuery();
 
-        return $query->filterByIdOmsOrderItemState($orderItemStates);
+        return $query->filterByIdOmsOrderItemState($orderItemStates, Criteria::IN);
     }
 
     /**
@@ -243,7 +243,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public function queryMatrixOrderItems(array $processIds, array $stateBlacklist)
     {
         $query = $this->getFactory()->createSalesOrderItemQuery();
-        $query->filterByFkOmsOrderProcess($processIds);
+        $query->filterByFkOmsOrderProcess($processIds, Criteria::IN);
         if ($stateBlacklist) {
             $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
         }
@@ -261,13 +261,15 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public function querySalesOrderItemStatesByName(array $orderItemStates)
     {
         $query = $this->getFactory()->createOmsOrderItemStateQuery();
-        $query->filterByName($orderItemStates);
+        $query->filterByName($orderItemStates, Criteria::IN);
 
         return $query;
     }
 
     /**
      * @api
+     *
+     * @deprecated Not used, will be removed in the next major release.
      *
      * @param string $identifier
      * @param \DateTime $expirationDate
@@ -279,7 +281,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $this->getFactory()
             ->createOmsStateMachineLockQuery()
             ->filterByIdentifier($identifier)
-            ->filterByExpires(['min' => $expirationDate]);
+            ->filterByExpires(['min' => $expirationDate], Criteria::GREATER_EQUAL);
     }
 
     /**
@@ -293,7 +295,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     {
         return $this->getFactory()
             ->createOmsStateMachineLockQuery()
-            ->filterByExpires(['max' => $expirationDate]);
+            ->filterByExpires(['max' => $expirationDate], Criteria::LESS_EQUAL);
     }
 
     /**

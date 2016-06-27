@@ -258,7 +258,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     public function createTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids)
     {
         $relations = $this->getFactory()->createPaymentPayoneTransactionStatusLogOrderItemQuery()
-            ->filterByIdPaymentPayoneTransactionStatusLog($ids)
+            ->filterByIdPaymentPayoneTransactionStatusLog($ids, Criteria::IN)
             ->filterByIdSalesOrderItem($idSalesOrderItem);
 
         return $relations;
@@ -333,7 +333,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 
         $query = $this->getFactory()->createPaymentPayoneApiLogQuery()
             ->useSpyPaymentPayoneQuery()
-            ->filterByFkSalesOrder($ids)
+            ->filterByFkSalesOrder($ids, Criteria::IN)
             ->endUse()
             ->orderByCreatedAt();
 
@@ -372,7 +372,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 
         $query = $this->getFactory()->createPaymentPayoneTransactionStatusLogQuery()
             ->useSpyPaymentPayoneQuery()
-            ->filterByFkSalesOrder($ids)
+            ->filterByFkSalesOrder($ids, Criteria::IN)
             ->endUse()
             ->orderByCreatedAt();
 
