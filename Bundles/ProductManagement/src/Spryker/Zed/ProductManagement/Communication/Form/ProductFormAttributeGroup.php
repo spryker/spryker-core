@@ -57,6 +57,7 @@ class ProductFormAttributeGroup extends AbstractType
         $resolver->setDefaults([
             'required' => false,
             'cascade_validation' => true,
+            'validation_groups' => [$this->validationGroup]
         ]);
     }
 
