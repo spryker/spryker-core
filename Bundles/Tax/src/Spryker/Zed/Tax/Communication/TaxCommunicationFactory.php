@@ -9,7 +9,6 @@ namespace Spryker\Zed\Tax\Communication;
 
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider;
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider;
@@ -17,15 +16,16 @@ use Spryker\Zed\Tax\Communication\Form\TaxRateForm;
 use Spryker\Zed\Tax\Communication\Form\TaxSetForm;
 use Spryker\Zed\Tax\Communication\Table\RateTable;
 use Spryker\Zed\Tax\Communication\Table\SetTable;
-use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface;
 use Spryker\Zed\Tax\TaxDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
+ * @method \Spryker\Zed\Tax\TaxConfig getConfig()
  */
 class TaxCommunicationFactory extends AbstractCommunicationFactory
 {
+
     /**
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider $taxRateFormDataProvider
      *
@@ -37,9 +37,9 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
         $taxRateForm = new TaxRateForm($taxRateFormDataProvider);
 
         return $this->getFormFactory()->create(
-              $taxRateForm,
-              $taxRateFormDataProvider->getData(),
-              [
+            $taxRateForm,
+            $taxRateFormDataProvider->getData(),
+            [
                  'data_class' => TaxRateTransfer::class
               ]
         );
@@ -84,7 +84,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return TaxToCountryBridgeInterface
+     * @return \Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface
      */
     protected function getCountryFacade()
     {
@@ -114,10 +114,11 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return DateFormatterInterface
+     * @return \Spryker\Shared\Library\DateFormatterInterface
      */
     protected function getDateFormatter()
     {
         return $this->getProvidedDependency(TaxDependencyProvider::SERVICE_DATE_FORMATTER);
     }
+
 }

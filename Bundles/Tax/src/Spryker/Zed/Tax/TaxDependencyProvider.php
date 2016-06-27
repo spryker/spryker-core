@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Tax;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridge;

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Tax\Communication\Form;
 
-use Generated\Shared\Transfer\TaxRateTransfer;
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -112,11 +111,11 @@ class TaxSetForm extends AbstractType
             ->addModelTransformer(new CallbackTransformer(
                 function ($taxRates) {
                     if ($taxRates) {
-                        return (array) $taxRates;
+                        return (array)$taxRates;
                     }
                 },
                 function ($taxRates) {
-                   return new \ArrayObject($taxRates);
+                    return new \ArrayObject($taxRates);
                 }
             ));
 
@@ -133,4 +132,5 @@ class TaxSetForm extends AbstractType
     {
         return 'tax_set';
     }
+
 }

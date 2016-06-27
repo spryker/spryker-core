@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SetController extends AbstractController
 {
+
     const PARAM_URL_ID_TAX_SET = 'id-tax-set';
 
     /**
@@ -67,6 +68,9 @@ class SetController extends AbstractController
             $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
             if ($rowsAffected > 0) {
                 $this->addSuccessMessage('Tax set succefully updated.');
+                return $this->redirectResponse(Url::generate('/tax/set/list')->build());
+            } else {
+                $this->addErrorMessage('No updates saved.');
             }
         }
 
@@ -112,8 +116,6 @@ class SetController extends AbstractController
         return $this->redirectResponse(Url::generate('/tax/set/list')->build());
     }
 
-
-
     /**
      * @return array
      */
@@ -127,11 +129,10 @@ class SetController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function listTableAction(Request $request)
+    public function listTableAction()
     {
         $table = $this->getFactory()->createTaxSetTable();
 

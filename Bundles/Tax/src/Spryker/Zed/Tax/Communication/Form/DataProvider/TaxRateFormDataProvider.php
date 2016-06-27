@@ -13,6 +13,7 @@ use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface;
 
 class TaxRateFormDataProvider
 {
+
     /**
      * @var \Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface
      */
@@ -34,7 +35,7 @@ class TaxRateFormDataProvider
     }
 
     /**
-     * @return TaxRateTransfer
+     * @return \Generated\Shared\Transfer\TaxRateTransfer
      */
     public function getData()
     {
@@ -64,4 +65,5 @@ class TaxRateFormDataProvider
 
         return $countries;
     }
+
 }

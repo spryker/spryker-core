@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RateController extends AbstractController
 {
+
     const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
 
     /**
@@ -66,6 +67,9 @@ class RateController extends AbstractController
             $rowsAffected = $this->getFacade()->updateTaxRate($taxRateTransfer);
             if ($rowsAffected > 0) {
                 $this->addSuccessMessage('Tax rate succesfully updated.');
+                return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
+            } else {
+                $this->addErrorMessage('No updates saved.');
             }
         }
 
@@ -108,7 +112,6 @@ class RateController extends AbstractController
             $this->addErrorMessage('Failed to remove tax rate.');
         }
 
-
         return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
     }
 
@@ -125,11 +128,10 @@ class RateController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function listTableAction(Request $request)
+    public function listTableAction()
     {
         $table = $this->getFactory()->createTaxRateTable();
 
@@ -137,4 +139,5 @@ class RateController extends AbstractController
             $table->fetchData()
         );
     }
+
 }

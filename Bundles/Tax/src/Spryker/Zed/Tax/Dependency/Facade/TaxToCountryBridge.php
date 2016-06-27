@@ -11,6 +11,7 @@ use Spryker\Zed\Country\Business\CountryFacade;
 
 class TaxToCountryBridge implements TaxToCountryBridgeInterface
 {
+
     /**
      * @var \Spryker\Zed\Country\Business\CountryFacade
      */
@@ -33,4 +34,5 @@ class TaxToCountryBridge implements TaxToCountryBridgeInterface
     {
         return $this->countryFacade->getAvailableCountries();
     }
+
 }

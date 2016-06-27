@@ -108,12 +108,12 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param $allIdProductAbstracts
-     * @param $country
+     * @param array $allIdProductAbstracts
+     * @param int $country
      *
      * @return array
      */
-    protected function findTaxRatesByAllIdProductAbstractsAndCountry($allIdProductAbstracts, $country)
+    protected function findTaxRatesByAllIdProductAbstractsAndCountry(array $allIdProductAbstracts, $country)
     {
         return $this->taxQueryContainer->queryTaxSetByIdProductAbstractAndCountry($allIdProductAbstracts, $country)
             ->find()

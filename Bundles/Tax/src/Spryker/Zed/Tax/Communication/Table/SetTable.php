@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Tax\Communication\Table;
 
-use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
@@ -17,6 +16,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class SetTable extends AbstractTable
 {
+
     const TABLE_COL_ACTIONS = 'Actions';
     const URL_PARAM_ID_TAX_SET = 'id-tax-set';
 
@@ -39,7 +39,6 @@ class SetTable extends AbstractTable
         $this->taxSetQuery = $taxSetQuery;
         $this->dateFormatter = $dateFormatter;
     }
-
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -83,7 +82,6 @@ class SetTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $result = [];
-
 
         $queryResult = $this->runQuery($this->taxSetQuery, $config, true);
 
@@ -163,4 +161,5 @@ class SetTable extends AbstractTable
 
         return $this->generateRemoveButton($deleteTaxSetUrl, 'delete');
     }
+
 }

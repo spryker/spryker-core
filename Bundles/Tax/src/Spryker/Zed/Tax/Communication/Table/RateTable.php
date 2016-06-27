@@ -18,6 +18,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RateTable extends AbstractTable
 {
+
     const TABLE_COL_ACTIONS = 'Actions';
     const URL_PARAM_ID_TAX_RATE = 'id-tax-rate';
 
@@ -173,7 +174,7 @@ class RateTable extends AbstractTable
     }
 
     /**
-     * @param SpyTaxRate $taxRateEntity
+     * @param \Orm\Zed\Tax\Persistence\SpyTaxRate $taxRateEntity
      *
      * @return string
      */
@@ -186,4 +187,5 @@ class RateTable extends AbstractTable
 
         return $countryName;
     }
+
 }

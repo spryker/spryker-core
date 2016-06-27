@@ -162,7 +162,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */

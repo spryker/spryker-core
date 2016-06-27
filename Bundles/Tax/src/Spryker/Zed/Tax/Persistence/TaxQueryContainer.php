@@ -110,7 +110,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
-    public function queryTaxSetByIdProductAbstractAndCountry($allIdProductAbstracts, $iso2Code)
+    public function queryTaxSetByIdProductAbstractAndCountry(array $allIdProductAbstracts, $iso2Code)
     {
         return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()

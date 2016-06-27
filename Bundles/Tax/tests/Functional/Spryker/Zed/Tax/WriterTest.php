@@ -10,7 +10,7 @@ namespace Functional\Spryker\Zed\Tax;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
+use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Business\TaxFacade;
@@ -83,7 +83,7 @@ class WriterTest extends Test
 
         $this->taxFacade->createTaxRate($taxRateTransfer);
 
-        $taxRateQuery = SpyTaxSetQuery::create()->filterByIdTaxRate($taxRateTransfer->getIdTaxRate())->findOne();
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($taxRateTransfer->getIdTaxRate())->findOne();
 
         $this->assertNotEmpty($taxRateQuery);
         $this->assertEquals(self::DUMMY_TAX_RATE1_PERCENTAGE, $taxRateQuery->getRate());
@@ -142,7 +142,7 @@ class WriterTest extends Test
 
         $this->taxFacade->updateTaxRate($taxRateTransfer);
 
-        $taxRateQuery = SpyTaxSetQuery::create()->filterByIdTaxRate($id)->findOne();
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($id)->findOne();
 
         $this->assertNotEmpty($taxRateQuery);
         $this->assertEquals(self::DUMMY_TAX_RATE2_PERCENTAGE, $taxRateQuery->getRate());
@@ -283,7 +283,7 @@ class WriterTest extends Test
     {
         $id = $this->taxFacade->createTaxRate($this->createTaxRateTransfer())->getIdTaxRate();
 
-        $taxRateQuery = SpyTaxSetQuery::create()->filterByIdTaxRate($id);
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($id);
 
         $taxRateEntity = $taxRateQuery->findOne();
         $this->assertNotEmpty($taxRateEntity);
@@ -303,7 +303,7 @@ class WriterTest extends Test
         $rateId = $this->taxFacade->createTaxRate($taxRateTransfer)->getIdTaxRate();
         $taxRateTransfer->setIdTaxRate($rateId);
 
-        $taxRateQuery = SpyTaxSetQuery::create()->filterByIdTaxRate($rateId);
+        $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($rateId);
         $taxRateEntity = $taxRateQuery->findOne();
         $this->assertNotEmpty($taxRateEntity);
 

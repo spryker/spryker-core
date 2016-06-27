@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;

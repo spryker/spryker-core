@@ -29,11 +29,11 @@
         <column name="fk_tax_set" type="integer" primaryKey="true"/>
         <column name="fk_tax_rate" type="integer" primaryKey="true"/>
 
-        <foreign-key name="spy_tax_set_tax-fk_tax_set" foreignTable="spy_tax_set" onDelete="CASCADE" refPhpName="SpyTaxSet">
+        <foreign-key name="spy_tax_set_tax-fk_tax_set" foreignTable="spy_tax_set" onDelete="CASCADE">
             <reference local="fk_tax_set" foreign="id_tax_set"/>
         </foreign-key>
 
-        <foreign-key name="spy_tax_set_tax-fk_tax_rate" foreignTable="spy_tax_rate" refPhpName="SpyTaxRate">
+        <foreign-key name="spy_tax_set_tax-fk_tax_rate" foreignTable="spy_tax_rate">
             <reference local="fk_tax_rate" foreign="id_tax_rate"/>
         </foreign-key>
     </table>
