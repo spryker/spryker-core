@@ -64,4 +64,16 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
         $this->getFactory()->createSumGrossCalculatedDiscountAmountCalculator()->recalculate($quoteTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateExpenseTaxWithDiscounts(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createExpenseTaxWithDiscountsCalculator()->recalculate($quoteTransfer);
+    }
+
 }

@@ -20,11 +20,11 @@
     "spryker/locale": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/storage": "^2.0.0",
+    "spryker/symfony": "^2.0.0",
     "spryker/touch": "^2.0.0",
-    "spryker/url": "^2.0.0",
-    "spryker/symfony": "^2.0.0"
+    "spryker/url": "^2.0.0"
   },
-  "description": "cms bundle",
+  "description": "Cms bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -32,5 +32,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

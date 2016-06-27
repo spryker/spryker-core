@@ -18,4 +18,14 @@ interface ProductOptionToTaxBridgeInterface
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
 
+    /**
+     * @api
+     *
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
 }

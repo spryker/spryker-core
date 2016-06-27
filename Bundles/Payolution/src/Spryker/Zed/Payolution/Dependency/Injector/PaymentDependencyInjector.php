@@ -7,23 +7,23 @@
 
 namespace Spryker\Zed\Payolution\Dependency\Injector;
 
-use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionPreCheckPlugin;
 use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionSaveOrderPlugin;
 use Spryker\Zed\Payolution\PayolutionConfig;
 
-class PaymentDependencyInjector implements DependencyInjectorInterface
+class PaymentDependencyInjector extends AbstractDependencyInjector
 {
 
     /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container
+     * @return \Spryker\Zed\Kernel\Container
      */
-    public function inject(ContainerInterface $container)
+    public function injectBusinessLayerDependencies(Container $container)
     {
         $container = $this->injectPaymentPlugins($container);
 
@@ -31,11 +31,11 @@ class PaymentDependencyInjector implements DependencyInjectorInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function injectPaymentPlugins(ContainerInterface $container)
+    protected function injectPaymentPlugins(Container $container)
     {
         $container->extend(PaymentDependencyProvider::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) {
             $pluginCollection->add(new PayolutionPreCheckPlugin(), PayolutionConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);

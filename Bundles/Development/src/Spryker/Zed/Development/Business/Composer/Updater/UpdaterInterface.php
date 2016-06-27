@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Symfony\Component\Finder\SplFileInfo;
+
 interface UpdaterInterface
 {
 
     /**
      * @param array $composerJson
+     * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
      * @return array
      */
-    public function update(array $composerJson);
+    public function update(array $composerJson, SplFileInfo $composerJsonFile);
 
 }

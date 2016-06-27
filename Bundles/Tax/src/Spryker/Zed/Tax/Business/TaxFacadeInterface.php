@@ -189,6 +189,16 @@ interface TaxFacadeInterface
     /**
      * @api
      *
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
+    
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

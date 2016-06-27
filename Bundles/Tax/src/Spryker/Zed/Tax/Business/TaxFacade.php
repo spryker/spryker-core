@@ -249,6 +249,31 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function recalculateTaxItemAmount(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createTaxItemAmountCalculator()->recalculate($quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function recalculateExpenseTaxAmount(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createExpenseTaxCalculator()->recalculate($quoteTransfer);
+    }
+
+
+    /**
+     * @api
+     *
      * @param int $grossPrice
      * @param float $taxRate
      *
@@ -277,6 +302,19 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     public function getDefaultTaxRate()
     {
         return $this->getFactory()->createTaxDefault()->getDefaultTaxRate();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate)
+    {
+        return $this->getFactory()->createAccruedTaxCalculator()->getTaxValueFromPrice($grossPrice, $taxRate);
     }
 
 }

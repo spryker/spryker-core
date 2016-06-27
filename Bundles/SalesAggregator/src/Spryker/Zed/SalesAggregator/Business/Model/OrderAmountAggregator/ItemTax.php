@@ -44,26 +44,21 @@ class ItemTax implements OrderAmountAggregatorInterface
      */
     protected function addTaxAmountToTaxableItems(\ArrayObject $taxableItems)
     {
-        foreach ($taxableItems as $item) {
-            if (!$item->getTaxRate()) {
-                continue;
-            }
-            $item->requireUnitGrossPrice()->requireSumGrossPrice();
-
-            $item->setUnitTaxAmount(
-                $this->taxFacade->getTaxAmountFromGrossPrice(
-                    $item->getUnitGrossPrice(),
-                    $item->getTaxRate()
-                )
+        foreach ($taxableItems as $itemTransfer) {
+            $unitTaxAmount = $this->calculateTaxAmount(
+                $itemTransfer->getUnitGrossPrice(),
+                $itemTransfer->getTaxRate()
             );
 
-            $item->setSumTaxAmount(
-                $this->taxFacade->getTaxAmountFromGrossPrice(
-                    $item->getSumGrossPrice(),
-                    $item->getTaxRate()
-                )
+            $sumTaxAmount = $this->calculateTaxAmount(
+                $itemTransfer->getSumGrossPrice(),
+                $itemTransfer->getTaxRate()
             );
+
+            $itemTransfer->setUnitTaxAmount($unitTaxAmount);
+            $itemTransfer->setSumTaxAmount($sumTaxAmount);
         }
+
     }
 
     /**
@@ -74,6 +69,17 @@ class ItemTax implements OrderAmountAggregatorInterface
     protected function assertItemTaxRequirements(OrderTransfer $orderTransfer)
     {
         $orderTransfer->requireItems();
+    }
+
+    /**
+     * @param int $price
+     * @param float $taxRate
+     *
+     * @return float
+     */
+    protected function calculateTaxAmount($price, $taxRate)
+    {
+        return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($price, $taxRate);
     }
 
 }

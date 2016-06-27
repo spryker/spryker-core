@@ -5,12 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
+namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderAmountAggregatorInterface;
 
-class DiscountTotalAmount implements OrderAmountAggregatorInterface
+class DiscountTotalAmount implements OrderAmountAggregatorInterface, CalculatorInterface
 {
 
     /**
@@ -20,34 +24,55 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $this->assertDisountTotalRequirements($orderTransfer);
+        $this->assertDiscountTotalRequirements($orderTransfer);
 
-        $orderTransfer->getTotals()
-            ->setDiscountTotal($this->getTotalDiscountAmountWithProductOptions($orderTransfer));
+        $orderTransfer->getTotals()->setDiscountTotal(
+            $this->getTotalDiscountAmountWithProductOptions(
+                $orderTransfer->getTotals(),
+                $orderTransfer->getItems()
+            )
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function recalculate(QuoteTransfer $quoteTransfer)
+    {
+        $quoteTransfer->getTotals()->setDiscountTotal(
+            $this->getTotalDiscountAmountWithProductOptions(
+                $quoteTransfer->getTotals(),
+                $quoteTransfer->getItems()
+            )
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return int
+     *
      */
-    protected function getTotalDiscountAmountWithProductOptions(OrderTransfer $orderTransfer)
+    protected function getTotalDiscountAmountWithProductOptions(TotalsTransfer $totalsTransfer, \ArrayObject $items)
     {
-        $currentTotalDiscountAmount = $orderTransfer->getTotals()->getDiscountTotal();
-        $discountTotalAmountForProductOptions = $this->getSumTotalGrossDiscountAmount($orderTransfer);
+        $currentTotalDiscountAmount = $totalsTransfer->getDiscountTotal();
+        $discountTotalAmountForProductOptions = $this->getSumTotalGrossDiscountAmount($items);
 
         return $currentTotalDiscountAmount + $discountTotalAmountForProductOptions;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return int
      */
-    protected function getSumTotalGrossDiscountAmount(OrderTransfer $orderTransfer)
+    protected function getSumTotalGrossDiscountAmount(\ArrayObject $items)
     {
         $totalSumGrossDiscountAmount = 0;
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
+        foreach ($items as $itemTransfer) {
             $totalSumGrossDiscountAmount += $this->getProductOptionCalculatedDiscounts($itemTransfer);
         }
 
@@ -59,7 +84,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
      *
      * @return void
      */
-    protected function assertDisountTotalRequirements(OrderTransfer $orderTransfer)
+    protected function assertDiscountTotalRequirements(OrderTransfer $orderTransfer)
     {
         $orderTransfer->requireTotals();
     }

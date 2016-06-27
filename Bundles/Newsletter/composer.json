@@ -13,13 +13,13 @@
   "require": {
     "spryker/application": "^2.0.0",
     "spryker/glossary": "^2.0.0",
-    "spryker/kernel": "^2.0.0",
-    "spryker/mail": "^2.0.0",
-    "spryker/zed-request": "^2.0.0",
     "spryker/installer": "^2.0.0",
-    "spryker/library": "^2.0.0"
+    "spryker/kernel": "^2.0.0",
+    "spryker/library": "^2.0.0",
+    "spryker/mail": "^2.0.0",
+    "spryker/zed-request": "^2.0.0"
   },
-  "description": "newsletter bundle",
+  "description": "Newsletter bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -27,5 +27,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

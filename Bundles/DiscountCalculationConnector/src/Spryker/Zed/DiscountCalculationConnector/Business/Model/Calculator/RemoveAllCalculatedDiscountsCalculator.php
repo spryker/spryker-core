@@ -21,10 +21,6 @@ class RemoveAllCalculatedDiscountsCalculator implements CalculatorInterface
     {
         foreach ($quoteTransfer->getItems() as $item) {
             $item->setCalculatedDiscounts(new \ArrayObject());
-
-            foreach ($item->getProductOptions() as $option) {
-                $option->setCalculatedDiscounts(new \ArrayObject());
-            }
         }
 
         foreach ($quoteTransfer->getExpenses() as $expense) {

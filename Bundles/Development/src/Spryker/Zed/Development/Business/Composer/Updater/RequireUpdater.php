@@ -12,6 +12,7 @@ use Spryker\Shared\Development\DevelopmentConstants;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
+use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\DashToCamelCase;
 
@@ -44,10 +45,11 @@ class RequireUpdater implements UpdaterInterface
 
     /**
      * @param array $composerJson
+     * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
      * @return array
      */
-    public function update(array $composerJson)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile)
     {
         $bundleName = $this->getBundleName($composerJson);
         $dependentBundles = $this->getDependentBundles($bundleName);

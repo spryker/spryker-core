@@ -12,4 +12,11 @@
         <property name="sumTaxAmountWithProductOptionAndDiscountAmounts" type="int" />
     </transfer>
 
+    <transfer name="ProductOption">
+        <property name="unitGrossPriceWithDiscounts" type="int" />
+        <property name="sumGrossPriceWithDiscounts" type="int" />
+        <property name="unitTaxAmountWithDiscounts" type="int" />
+        <property name="sumTaxAmountWithDiscounts" type="int" />
+    </transfer>
+
 </transfers>

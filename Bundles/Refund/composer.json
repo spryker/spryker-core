@@ -17,14 +17,14 @@
     "spryker/library": "^2.0.0",
     "spryker/oms": "^2.0.0 || ^3.0.0",
     "spryker/payone": "^2.0.0",
-    "spryker/sales": "^2.0.0",
-    "spryker/sql-criteria-builder": "^1.0.0",
-    "spryker/sales-split": "^1.0.0",
     "spryker/propel": "^2.0.0",
+    "spryker/sales": "^2.0.0",
+    "spryker/sales-split": "^1.0.0",
+    "spryker/sql-criteria-builder": "^1.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/url": "^2.0.0"
   },
-  "description": "refund bundle",
+  "description": "Refund bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -32,5 +32,8 @@
     "branch-alias": {
       "dev-master": "2.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

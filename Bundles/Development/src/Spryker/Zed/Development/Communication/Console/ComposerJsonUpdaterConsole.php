@@ -20,6 +20,7 @@ class ComposerJsonUpdaterConsole extends Console
 
     const COMMAND_NAME = 'dev:composer-json:update';
     const OPTION_BUNDLE = 'bundle';
+    const VERBOSE = 'verbose';
 
     /**
      * @return void
@@ -46,7 +47,17 @@ class ComposerJsonUpdaterConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundles = explode(',', $this->input->getOption(self::OPTION_BUNDLE));
+        $bundles = [];
+        $bundleList = $this->input->getOption(self::OPTION_BUNDLE);
+        if ($bundleList) {
+            $bundles = explode(',', $this->input->getOption(self::OPTION_BUNDLE));
+        }
+
+        if ($this->input->getOption(self::VERBOSE)) {
+            foreach ($bundles as $bundle) {
+                $this->output->write('- '. $bundle);
+            }
+        }
 
         $this->getFacade()->updateComposerJsonInBundles($bundles);
     }

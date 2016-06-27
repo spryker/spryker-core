@@ -160,4 +160,13 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      */
     public function queryBlockByIdCategoryNode($idCategoryNode);
 
+    /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
+     */
+    public function queryBlockById($idCmsBlock);
+
 }
