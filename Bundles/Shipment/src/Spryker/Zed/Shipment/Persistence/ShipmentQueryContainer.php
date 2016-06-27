@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Persistence;
 
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -92,6 +93,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
                         ->useCountryQuery()
                             ->filterByIso2Code($iso2Code)
                         ->endUse()
+                        ->_or()
+                        ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
                     ->endUse()
                 ->endUse()
                 ->withColumn(SpyTaxSetTableMap::COL_NAME)

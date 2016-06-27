@@ -180,7 +180,7 @@ class RateTable extends AbstractTable
      */
     protected function getCountryName(SpyTaxRate $taxRateEntity)
     {
-        $countryName = '';
+        $countryName = 'N/A';
         if ($taxRateEntity->getCountry()) {
             $countryName = $taxRateEntity->getCountry()->getName();
         }

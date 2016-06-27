@@ -10,5 +10,6 @@ interface TaxConstants
 {
 
     const DEFAULT_TAX_RATE = 'DEFAULT_TAX_RATE';
+    const TAX_EXEMPT_PLACEHOLDER = 'Tax Exempt';
 
 }

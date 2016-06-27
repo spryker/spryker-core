@@ -58,7 +58,7 @@ class TaxRateFormDataProvider
     protected function createCountryList()
     {
         $countryCollection = $this->countryFacade->getAvailableCountries();
-        $countries = [];
+        $countries = [0 => 'No country'];
         foreach ($countryCollection->getCountries() as $countryTransfer) {
             $countries[$countryTransfer->getIdCountry()] = $countryTransfer->getName();
         }

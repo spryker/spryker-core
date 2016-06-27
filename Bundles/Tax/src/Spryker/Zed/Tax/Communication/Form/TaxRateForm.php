@@ -128,7 +128,7 @@ class TaxRateForm extends AbstractType
             [
                 'constraints' => [
                     new Range([
-                        'min' => 0.1,
+                        'min' => 0,
                         'max' => 100
                     ]),
 

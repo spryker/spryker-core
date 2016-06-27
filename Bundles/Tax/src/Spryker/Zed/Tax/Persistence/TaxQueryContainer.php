@@ -13,6 +13,7 @@ use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTaxTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -118,13 +119,15 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
                 ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, self::COL_ID_ABSTRACT_PRODUCT)
                 ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->endUse()
-                ->useSpyTaxSetTaxQuery()
-                    ->useSpyTaxRateQuery()
-                        ->useCountryQuery()
-                        ->filterByIso2Code($iso2Code)
+            ->useSpyTaxSetTaxQuery()
+                ->useSpyTaxRateQuery()
+                    ->useCountryQuery()
+                       ->filterByIso2Code($iso2Code)
                     ->endUse()
+                    ->_or()
+                    ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
                 ->endUse()
-            ->withColumn('SUM(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_SUM_TAX_RATE)
+                ->withColumn('SUM(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_SUM_TAX_RATE)
             ->endUse()
             ->select([self::COL_SUM_TAX_RATE]);
     }

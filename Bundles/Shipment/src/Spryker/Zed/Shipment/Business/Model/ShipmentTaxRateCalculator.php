@@ -96,7 +96,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     {
         return $this->shipmentQueryContainer->queryTaxSetByIdShipmentMethodAndCountry(
             $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),
-            $quoteTransfer->getBillingAddress()->getIso2Code()
+            $quoteTransfer->getShippingAddress()->getIso2Code()
         )->findOne();
     }
 

@@ -80,6 +80,10 @@ class TaxWriter implements TaxWriterInterface
 
         $taxRateEntity->fromArray($taxRateTransfer->toArray());
 
+        if ($taxRateTransfer->getFkCountry() === 0) {
+            $taxRateEntity->setFkCountry(null);
+        }
+
         foreach ($this->taxChangePlugins as $plugin) {
             $plugin->handleTaxRateChange($taxRateEntity->getIdTaxRate());
         }
@@ -148,6 +152,7 @@ class TaxWriter implements TaxWriterInterface
         foreach ($this->taxChangePlugins as $plugin) {
             $plugin->handleTaxSetChange($taxSetEntity->getIdTaxSet());
         }
+
 
         return $taxSetEntity->save();
     }
@@ -268,6 +273,11 @@ class TaxWriter implements TaxWriterInterface
     {
         $taxRateEntity = new SpyTaxRate();
         $taxRateEntity->fromArray($taxRateTransfer->toArray());
+
+        if ($taxRateTransfer->getFkCountry() === 0) {
+            $taxRateEntity->setFkCountry(null);
+        }
+
         $taxRateEntity->save();
 
         return $taxRateEntity;
