@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductFormAttributes extends AbstractType
+class ProductFormAttributeGroup extends AbstractType
 {
 
     const FIELD_VALUE = 'value';
@@ -20,7 +20,7 @@ class ProductFormAttributes extends AbstractType
     /**
      * @var array
      */
-    protected $attributes;
+    protected $attributeGroups;
 
     /**
      * @var string
@@ -28,12 +28,12 @@ class ProductFormAttributes extends AbstractType
     protected $validationGroup;
 
     /**
-     * @param array $attributes
+     * @param array $attributeGroups
      * @param array $validationGroup
      */
-    public function __construct(array $attributes, $validationGroup)
+    public function __construct(array $attributeGroups, $validationGroup)
     {
-        $this->attributes = $attributes;
+        $this->attributeGroups = $attributeGroups;
         $this->validationGroup = $validationGroup;
     }
 
@@ -42,7 +42,7 @@ class ProductFormAttributes extends AbstractType
      */
     public function getName()
     {
-        return 'productAttributes';
+        return 'productAttributeGroup';
     }
 
     /**
@@ -77,10 +77,10 @@ class ProductFormAttributes extends AbstractType
      *
      * @return $this
      */
-    protected function addValueField(FormBuilderInterface $builder, array $options)
+    protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add(self::FIELD_VALUE, new CheckboxType(), [
-            'label' => $builder->getName(),
+            'label' => $this->attributeGroups[$builder->getName()],
         ]);
 
         return $this;

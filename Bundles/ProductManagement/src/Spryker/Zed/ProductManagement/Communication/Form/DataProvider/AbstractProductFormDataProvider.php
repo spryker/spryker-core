@@ -53,7 +53,7 @@ class AbstractProductFormDataProvider
     /**
      * @var array
      */
-    protected $attributeCollection = [];
+    protected $attributeGroupCollection = [];
 
     /**
      * @var array
@@ -67,7 +67,7 @@ class AbstractProductFormDataProvider
         ProductFacadeInterface $productFacade,
         ProductManagementFacadeInterface $productManagementFacade,
         ProductManagementToLocaleInterface $localeFacade,
-        array $attributeCollection,
+        array $attributeGroupCollection,
         array $attributeValueCollection
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
@@ -76,7 +76,7 @@ class AbstractProductFormDataProvider
         $this->productFacade = $productFacade;
         $this->productManagementFacade = $productManagementFacade;
         $this->locale = $localeFacade->getCurrentLocale();
-        $this->attributeCollection = $attributeCollection;
+        $this->attributeGroupCollection = $attributeGroupCollection;
         $this->attributeValueCollection = $attributeValueCollection;
     }
 
@@ -87,17 +87,8 @@ class AbstractProductFormDataProvider
      */
     public function getOptions($idProductAbstract = null)
     {
-        //$attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
-        //$attributes = $this->convertAttributesToOptionValues($attributes);
-
-        //sd($attributes, $this->attributeCollection);
-
-        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = [];
-        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = array_merge($formOptions[ProductFormAdd::ATTRIBUTE_VALUES], $this->attributeValueCollection);
-
-        $formOptions[ProductFormAdd::ATTRIBUTES] = $this->attributeCollection;
-
-        s($formOptions);
+        $formOptions[ProductFormAdd::ATTRIBUTE_GROUP] = $this->attributeGroupCollection;
+        //$formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->attributeValueCollection;
 
         return $formOptions;
     }
@@ -115,22 +106,6 @@ class AbstractProductFormDataProvider
 
         return $this->productManagementFacade
             ->getProductAttributesByAbstractProductId($idProductAbstract);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return array
-     */
-    public function getAttributeValues($idProductAbstract = null)
-    {
-        if ($idProductAbstract === null) {
-            return [];
-        }
-
-        $attributeCollection = $this->getAttributesForAbstractProduct($idProductAbstract);
-
-        return $this->convertAttributesToFormValues($attributeCollection);
     }
 
     /**
@@ -157,8 +132,7 @@ class AbstractProductFormDataProvider
     {
         $result = [];
         foreach ($attributeCollection as $type => $valueSet) {
-            $valueSet = is_array($valueSet) ? $valueSet : [$type => $valueSet];
-            $result[$type] = $valueSet;
+            $result[$type] = ['value' => true];
         }
 
         return $result;
@@ -172,8 +146,8 @@ class AbstractProductFormDataProvider
         return [
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields(),
-            ProductFormAdd::ATTRIBUTES => $this->getAttributesDefaultFields(),
-            ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields()
+            ProductFormAdd::ATTRIBUTE_GROUP => $this->getAttributesDefaultFields(),
+            //ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields()
         ];
     }
 
@@ -215,27 +189,8 @@ class AbstractProductFormDataProvider
      */
     public function getAttributesDefaultFields()
     {
-        return $this->attributeCollection;
-        sd($this->attributeCollection);
-        $result = [];
-        foreach ($this->attributeCollection as $type => $valueSet) {
-            $result[$type]['value'] = [];
-        }
-
-        return $result;
+        return $this->convertAttributesToFormValues($this->attributeGroupCollection);
     }
 
-    /**
-     * @return array
-     */
-    public function getAttributeValuesDefaultFields()
-    {
-        $result = [];
-        foreach ($this->attributeValueCollection as $type => $valueSet) {
-            $result[$type]['value'] = [];
-        }
-
-        return $result;
-    }
 
 }

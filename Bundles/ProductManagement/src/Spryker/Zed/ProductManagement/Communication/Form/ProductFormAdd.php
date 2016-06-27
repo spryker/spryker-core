@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -24,7 +25,7 @@ class ProductFormAdd extends AbstractType
 
     const OPTION_PRODUCT_ATTRIBUTES = 'option_product_attributes';
     const LOCALIZED_ATTRIBUTES = 'localized_attributes';
-    const ATTRIBUTES = 'attributes';
+    const ATTRIBUTE_GROUP = 'attribute_group';
     const ATTRIBUTE_VALUES = 'attribute_values';
 
     const VALIDATION_GROUP_ATTRIBUTES = 'validation_group_attributes';
@@ -47,14 +48,14 @@ class ProductFormAdd extends AbstractType
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setRequired(self::ATTRIBUTES);
-        $resolver->setRequired(self::ATTRIBUTE_VALUES);
+        $resolver->setRequired(self::ATTRIBUTE_GROUP);
+        //$resolver->setRequired(self::ATTRIBUTE_VALUES);
 
         $resolver->setDefaults([
             'cascade_validation' => true,
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
-                return [self::VALIDATION_GROUP_ATTRIBUTES, self::VALIDATION_GROUP_ATTRIBUTE_VALUES];
+                return [Constraint::DEFAULT_GROUP, self::VALIDATION_GROUP_ATTRIBUTES /*, self::VALIDATION_GROUP_ATTRIBUTE_VALUES */];
             }
         ]);
     }
@@ -70,8 +71,8 @@ class ProductFormAdd extends AbstractType
         $this
             ->addSkuField($builder)
             ->addLocalizedForm($builder)
-            ->addAttributesForm($builder, $options)
-            ->addAttributeValuesForm($builder, $options);
+            ->addAttributeGroupForm($builder, $options[self::ATTRIBUTE_GROUP]);
+            //->addAttributeValuesForm($builder, $options[self::ATTRIBUTE_VALUES]);
     }
 
     /**
@@ -84,6 +85,7 @@ class ProductFormAdd extends AbstractType
         $builder
             ->add(self::FIELD_SKU, 'text', [
                 'label' => 'SKU',
+                'required' => true,
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -108,17 +110,18 @@ class ProductFormAdd extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return $this
+     * @return self
      */
-    protected function addAttributesForm(FormBuilderInterface $builder, $options)
+    protected function addAttributeGroupForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::ATTRIBUTES, 'collection', [
+            ->add(self::ATTRIBUTE_GROUP, 'collection', [
                 'label' => 'Attributes',
-                'type' => new ProductFormAttributes(
-                    $options[self::ATTRIBUTES],
+                'type' => new ProductFormAttributeGroup(
+                    $options,
                     self::VALIDATION_GROUP_ATTRIBUTES
                 ),
                 'constraints' => [new Callback([
@@ -150,6 +153,8 @@ class ProductFormAdd extends AbstractType
      */
     protected function addAttributeValuesForm(FormBuilderInterface $builder, $options)
     {
+        return $this;
+
         $builder
             ->add(self::ATTRIBUTE_VALUES, 'collection', [
                 'label' => 'Attribute Values',

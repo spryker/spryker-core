@@ -198,4 +198,9 @@ interface ProductManagerInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract);
 
+    /**
+     * @return array
+     */
+    public function getProductAttributeCollection();
+
 }

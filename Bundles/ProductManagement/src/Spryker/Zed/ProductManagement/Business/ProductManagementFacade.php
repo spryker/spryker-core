@@ -66,6 +66,18 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     /**
      * @api
      *
+     * @return array
+     */
+    public function getProductAttributeCollection()
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->getProductAttributeCollection();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException

@@ -47,6 +47,7 @@ class ProductLocalizedForm extends AbstractType
     {
         $builder
             ->add(self::FIELD_NAME, 'text', [
+                'required' => true,
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -65,6 +66,7 @@ class ProductLocalizedForm extends AbstractType
         return;
         $builder
             ->add(self::FIELD_DESCRIPTION, 'text', [
+                'required' => true,
                 'constraints' => [
                     new NotBlank(),
                 ],

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributes;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -29,7 +28,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductFormAdd(array $formData, array $formOptions = [], array $attributes = [])
+    public function createProductFormAdd(array $formData, array $formOptions = [])
     {
         $formType = new ProductFormAdd();
 
@@ -42,7 +41,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductFormEdit(array $formData, array $formOptions = [], array $attributes = [])
+    public function createProductFormEdit(array $formData, array $formOptions = [])
     {
         $formType = new ProductFormEdit();
 
@@ -60,8 +59,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
-            $this->getProductAttributeCollection(),
-            $this->getProductAttributeValueCollection()
+            $this->getProductAttributeGroupCollection(),
+            $this->getProductAttributeCollection()
         );
     }
 
@@ -76,8 +75,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
-            $this->getProductAttributeCollection(),
-            $this->getProductAttributeValueCollection()
+            $this->getProductAttributeGroupCollection(),
+            $this->getProductAttributeCollection()
         );
     }
 
@@ -124,37 +123,21 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return array
      */
-    public function getProductAttributeCollection()
+    public function getProductAttributeGroupCollection()
     {
         return [
-            'size' => ['value' => true],
-            'color' => ['value' => true],
-            'flavour' => ['value' => true],
+            'size' => 'Size',
+            'color' => 'Color',
+            'flavour' => 'Flavour',
         ];
     }
 
     /**
      * @return array
      */
-    public function getProductAttributeValueCollection()
+    public function getProductAttributeCollection()
     {
-        return [
-            'size' => [
-                '40' => '40',
-                '41' => '41',
-                '42' => '42',
-                '43' => '43',
-            ],
-            'color' => [
-                'blue' => 'Blue',
-                'red' => 'Red',
-                'white' => 'White',
-            ],
-            'flavour' => [
-                'spicy' => 'Mexican Food',
-                'sweet' => 'Cakes'
-            ]
-        ];
+        return $this->getProductManagementFacade()->getProductAttributeCollection();
     }
 
 }

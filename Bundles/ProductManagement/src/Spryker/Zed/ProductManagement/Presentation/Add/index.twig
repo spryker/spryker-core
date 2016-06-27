@@ -28,7 +28,7 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Specification' } %}
 
         {% block widget_content %}
-
+            {{ form_errors(form) }}
 <div class="tabs-container">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab_general" data-toggle="tab">General</a></li>
@@ -39,10 +39,11 @@
         {# ============================ GENERAL ============================ #}
         <div id="tab_general" class="tab-pane active">
             <div class="panel-body">
-                {{ form_row(form.sku) }}
+                <div class="well">
+                    {{ form_row(form.sku) }}
 
-                <div class="tabs-container">
-                    <ul class="nav nav-tabs">
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
                         {% for locale,localizedAttributes in form.localized_attributes %}
                             {% set activeCss = '' %}
                             {% set invalidCss = '' %}
@@ -59,9 +60,9 @@
 
                             <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
                         {% endfor %}
-                    </ul>
+                        </ul>
 
-                    <div class="tab-content">
+                        <div class="tab-content">
                         {% for locale,localizedAttributes in form.localized_attributes %}
                             {% set active = '' %}
                             {% if currentLocale == locale %}
@@ -75,9 +76,9 @@
                                 </div>
                             </div>
                         {% endfor %}
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
         {# ============================ END ============================ #}
@@ -85,6 +86,7 @@
         {# ============================ CONRETE ============================ #}
         <div id="tab_concrete" class="tab-pane">
             <div class="panel-body">
+            <div class="well">
                 <h3>Manage product attributes and variants</h3>
                 <p><i>Note: Editing generated variants by adding or removing attributes, leads to the creation of new variants. Current configurations must be recreated.</i></p>
 
@@ -99,13 +101,12 @@
                     <div id="tab_conrete_attributes" class="tab-pane active">
                         <div class="panel-body">
                             <p>Select attributes that will define your product.</p>
-                            {{ form_errors(form) }}
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="well">
-                                        {% for type,attributes in form.attributes %}
-                                            {{ form_errors(attributes.value) }}
-                                            {{ form_row(attributes.value) }}
+                            <div class="well">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        {% for type,attribute in form.attribute_group %}
+                                            {{ form_errors(attribute.value) }}
+                                            {{ form_row(attribute.value) }}
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -115,15 +116,14 @@
                     <div id="tab_conrete_values" class="tab-pane">
                         <div class="panel-body">
                             <p>Select attributes and values that define the differences between your variants.</p>
-                            {{ form_errors(form) }}
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    {% for type,aValue in form.attribute_values %}
-                                        <div class="well">
+                            <div class="well">
+                                <div class="row">
+                                    <div class="col-lg-4">
+{#                                        {% for type,aValue in form.attribute_values %}
                                             {{ form_errors(aValue.value) }}
                                             {{ form_row(aValue.value) }}
-                                        </div>
-                                    {% endfor %}
+                                        {% endfor %}#}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -134,6 +134,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
 

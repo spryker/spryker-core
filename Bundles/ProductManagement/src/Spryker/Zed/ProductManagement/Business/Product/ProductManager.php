@@ -1014,14 +1014,49 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract)
     {
+        $attributeCollection = $this->getProductAttributeCollection();
         $concreteProductCollection = $this->getConcreteProductsByAbstractProductId($idProductAbstract);
 
         $attributes = [];
         foreach ($concreteProductCollection as $productTransfer) {
-            $attributes = array_merge_recursive($attributes, $productTransfer->getAttributes());
+            $productAttributes = $productTransfer->getAttributes();
+            foreach ($productAttributes as $name => $value) {
+                $attributes[$name][$value] = $value;
+            }
         }
 
-        return $attributes;
+        $result = [];
+        foreach ($attributes as $type => $valueSet) {
+            foreach ($valueSet as $name => $value) {
+                $result[$type][$name] = $attributeCollection[$type][$name];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductAttributeCollection()
+    {
+        return [
+            'size' => [
+                '40' => '40',
+                '41' => '41',
+                '42' => '42',
+                '43' => '43',
+            ],
+            'color' => [
+                'blue' => 'Blue',
+                'red' => 'Red',
+                'white' => 'White',
+            ],
+            'flavour' => [
+                'spicy' => 'Mexican Food',
+                'sweet' => 'Cakes'
+            ]
+        ];
     }
 
 }

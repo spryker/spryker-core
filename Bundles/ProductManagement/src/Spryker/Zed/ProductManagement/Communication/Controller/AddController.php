@@ -45,15 +45,13 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             try {
-                $attributeCollection = $this->getFactory()->getProductAttributeCollection();
-                $attributeValuesCollection = $this->getFactory()->getProductAttributeValueCollection();
+                $attributeCollection = $this->getFactory()->getProductAttributeGroupCollection();
+                $attributeValuesCollection = $this->getFactory()->getProductAttributeCollection();
                 $attributes = $this->convertAttributesFromData($form->getData(), $attributeCollection);
                 $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeValuesCollection);
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $matrixGenerator = new MatrixGenerator();
                 $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
-
-                sd($attributes, $attributeValues, $concreteProductCollection);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductManagementFacade()
@@ -195,7 +193,7 @@ class AddController extends AbstractController
     protected function convertAttributesFromData(array $data, array $attributeCollection)
     {
         $attributes = [];
-        foreach ($data[ProductFormAdd::ATTRIBUTES] as $type => $values) {
+        foreach ($data[ProductFormAdd::ATTRIBUTE_GROUP] as $type => $values) {
             $attributes[$type] = $values['value'];
         }
 

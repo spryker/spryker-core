@@ -48,6 +48,13 @@ interface ProductManagementFacadeInterface
     /**
      * @api
      *
+     * @return array
+     */
+    public function getProductAttributeCollection();
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
