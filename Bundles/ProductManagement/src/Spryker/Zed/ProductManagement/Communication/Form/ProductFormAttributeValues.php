@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductFormAttributes extends AbstractType
+class ProductFormAttributeValues extends AbstractType
 {
 
     const FIELD_VALUE = 'value';
@@ -42,7 +42,7 @@ class ProductFormAttributes extends AbstractType
      */
     public function getName()
     {
-        return 'productAttributes';
+        return 'productAttributeValues';
     }
 
     /**
@@ -79,8 +79,10 @@ class ProductFormAttributes extends AbstractType
      */
     protected function addValueField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_VALUE, new CheckboxType(), [
+        $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [
             'label' => $builder->getName(),
+            'choices' => $this->attributes[$builder->getName()],
+            'multiple' => true
         ]);
 
         return $this;

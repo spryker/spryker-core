@@ -60,7 +60,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
-            $this->getProductAttributeCollection()
+            $this->getProductAttributeCollection(),
+            $this->getProductAttributeValueCollection()
         );
     }
 
@@ -75,7 +76,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
-            $this->getProductAttributeCollection()
+            $this->getProductAttributeCollection(),
+            $this->getProductAttributeValueCollection()
         );
     }
 
@@ -123,6 +125,18 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      * @return array
      */
     public function getProductAttributeCollection()
+    {
+        return [
+            'size' => ['value' => true],
+            'color' => ['value' => true],
+            'flavour' => ['value' => true],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductAttributeValueCollection()
     {
         return [
             'size' => [

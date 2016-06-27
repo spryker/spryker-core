@@ -30,8 +30,11 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         $formData[ProductFormAdd::ATTRIBUTES] = [];
         $formData[ProductFormAdd::ATTRIBUTES] = array_merge($defaults[ProductFormAdd::ATTRIBUTES], $formData[ProductFormAdd::ATTRIBUTES]);
+        $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $this->attributeCollection;
 
         $formData = array_merge($defaults, $formData);
+
+        sd($formData);
 
         return $formData;
     }

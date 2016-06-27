@@ -29,8 +29,6 @@ class ProductFormEdit extends ProductFormAdd
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-
-        $this->addAttributesForm($builder, $options);
     }
 
 }

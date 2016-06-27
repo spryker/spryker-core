@@ -55,6 +55,11 @@ class AbstractProductFormDataProvider
      */
     protected $attributeCollection = [];
 
+    /**
+     * @var array
+     */
+    protected $attributeValueCollection = [];
+
 
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -62,7 +67,8 @@ class AbstractProductFormDataProvider
         ProductFacadeInterface $productFacade,
         ProductManagementFacadeInterface $productManagementFacade,
         ProductManagementToLocaleInterface $localeFacade,
-        array $attributeCollection
+        array $attributeCollection,
+        array $attributeValueCollection
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
@@ -71,6 +77,7 @@ class AbstractProductFormDataProvider
         $this->productManagementFacade = $productManagementFacade;
         $this->locale = $localeFacade->getCurrentLocale();
         $this->attributeCollection = $attributeCollection;
+        $this->attributeValueCollection = $attributeValueCollection;
     }
 
     /**
@@ -78,15 +85,19 @@ class AbstractProductFormDataProvider
      *
      * @return mixed
      */
-    public function getOptions($idProductAbstract=null)
+    public function getOptions($idProductAbstract = null)
     {
         //$attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
         //$attributes = $this->convertAttributesToOptionValues($attributes);
 
         //sd($attributes, $this->attributeCollection);
 
-        $formOptions[ProductFormAdd::ATTRIBUTES] = [];
-        $formOptions[ProductFormAdd::ATTRIBUTES] = array_merge($formOptions[ProductFormAdd::ATTRIBUTES], $this->attributeCollection);
+        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = [];
+        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = array_merge($formOptions[ProductFormAdd::ATTRIBUTE_VALUES], $this->attributeValueCollection);
+
+        $formOptions[ProductFormAdd::ATTRIBUTES] = $this->attributeCollection;
+
+        s($formOptions);
 
         return $formOptions;
     }
@@ -96,7 +107,7 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    public function getAttributesForAbstractProduct($idProductAbstract=null)
+    public function getAttributesForAbstractProduct($idProductAbstract = null)
     {
         if ($idProductAbstract === null) {
             return [];
@@ -111,7 +122,7 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    public function getAttributeValues($idProductAbstract=null)
+    public function getAttributeValues($idProductAbstract = null)
     {
         if ($idProductAbstract === null) {
             return [];
@@ -161,7 +172,8 @@ class AbstractProductFormDataProvider
         return [
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields(),
-            ProductFormAdd::ATTRIBUTES => $this->getAttributesDefaultFields()
+            ProductFormAdd::ATTRIBUTES => $this->getAttributesDefaultFields(),
+            ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields()
         ];
     }
 
@@ -203,8 +215,23 @@ class AbstractProductFormDataProvider
      */
     public function getAttributesDefaultFields()
     {
+        return $this->attributeCollection;
+        sd($this->attributeCollection);
         $result = [];
         foreach ($this->attributeCollection as $type => $valueSet) {
+            $result[$type]['value'] = [];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributeValuesDefaultFields()
+    {
+        $result = [];
+        foreach ($this->attributeValueCollection as $type => $valueSet) {
             $result[$type]['value'] = [];
         }
 
