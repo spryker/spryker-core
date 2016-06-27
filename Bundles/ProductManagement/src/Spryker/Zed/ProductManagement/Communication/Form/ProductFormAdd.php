@@ -49,13 +49,13 @@ class ProductFormAdd extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::ATTRIBUTE_GROUP);
-        //$resolver->setRequired(self::ATTRIBUTE_VALUES);
+        $resolver->setRequired(self::ATTRIBUTE_VALUES);
 
         $resolver->setDefaults([
             'cascade_validation' => true,
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
-                return [Constraint::DEFAULT_GROUP, self::VALIDATION_GROUP_ATTRIBUTES /*, self::VALIDATION_GROUP_ATTRIBUTE_VALUES */];
+                return [Constraint::DEFAULT_GROUP, self::VALIDATION_GROUP_ATTRIBUTES , self::VALIDATION_GROUP_ATTRIBUTE_VALUES];
             }
         ]);
     }
@@ -71,8 +71,11 @@ class ProductFormAdd extends AbstractType
         $this
             ->addSkuField($builder)
             ->addLocalizedForm($builder)
-            ->addAttributeGroupForm($builder, $options[self::ATTRIBUTE_GROUP]);
-            //->addAttributeValuesForm($builder, $options[self::ATTRIBUTE_VALUES]);
+            ->addAttributeGroupForm($builder, $options[self::ATTRIBUTE_GROUP])
+            ->addAttributeValuesForm($builder, [
+                self::ATTRIBUTE_GROUP => $options[self::ATTRIBUTE_GROUP],
+                self::ATTRIBUTE_VALUES => $options[self::ATTRIBUTE_VALUES]
+            ]);
     }
 
     /**
@@ -110,10 +113,10 @@ class ProductFormAdd extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return self
+     * @return $this
      */
     protected function addAttributeGroupForm(FormBuilderInterface $builder, array $options = [])
     {
@@ -146,20 +149,20 @@ class ProductFormAdd extends AbstractType
         return $this;
     }
 
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addAttributeValuesForm(FormBuilderInterface $builder, $options)
+    protected function addAttributeValuesForm(FormBuilderInterface $builder, array $options = [])
     {
-        return $this;
-
         $builder
             ->add(self::ATTRIBUTE_VALUES, 'collection', [
                 'label' => 'Attribute Values',
                 'type' => new ProductFormAttributeValues(
-                    $options[self::ATTRIBUTE_VALUES],
+                    $options,
                     self::VALIDATION_GROUP_ATTRIBUTE_VALUES
                 ),
                 'constraints' => [new Callback([

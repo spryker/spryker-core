@@ -34,12 +34,15 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $attributeGroupCollection[$type]['value'] = true;
         }
 
+        $attributeValueCollection = [];
+        foreach ($attributes as $type => $valueSet) {
+            $attributeValueCollection[$type]['value'] = array_keys($valueSet);
+        }
+
         $formData[ProductFormAdd::ATTRIBUTE_GROUP] = $attributeGroupCollection;
-        //$formData[ProductFormAdd::ATTRIBUTE_GROUP] = array_merge($defaults[ProductFormAdd::ATTRIBUTE_GROUP], $formData[ProductFormAdd::ATTRIBUTE_GROUP]);
-        //$formData[ProductFormAdd::ATTRIBUTE_VALUES] = $this->convertAttributesToFormValues($this->getAttributeValues($idProductAbstract));
+        $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $attributeValueCollection;
 
         $formData = array_merge($defaults, $formData);
-
 
         return $formData;
     }

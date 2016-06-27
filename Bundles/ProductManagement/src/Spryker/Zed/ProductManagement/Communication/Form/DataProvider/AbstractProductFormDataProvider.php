@@ -88,7 +88,7 @@ class AbstractProductFormDataProvider
     public function getOptions($idProductAbstract = null)
     {
         $formOptions[ProductFormAdd::ATTRIBUTE_GROUP] = $this->attributeGroupCollection;
-        //$formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->attributeValueCollection;
+        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->attributeValueCollection;
 
         return $formOptions;
     }
@@ -109,36 +109,6 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param array $attributeCollection
-     *
-     * @return array
-     */
-    public function convertAttributesToFormValues(array $attributeCollection)
-    {
-        $result = [];
-        foreach ($attributeCollection as $type => $valueSet) {
-            $result[$type]['value'] = $valueSet;
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param array $attributeCollection
-     *
-     * @return array
-     */
-    public function convertAttributesToOptionValues(array $attributeCollection)
-    {
-        $result = [];
-        foreach ($attributeCollection as $type => $valueSet) {
-            $result[$type] = ['value' => true];
-        }
-
-        return $result;
-    }
-
-    /**
      * @return array
      */
     protected function getDefaultFormFields()
@@ -146,8 +116,8 @@ class AbstractProductFormDataProvider
         return [
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields(),
-            ProductFormAdd::ATTRIBUTE_GROUP => $this->getAttributesDefaultFields(),
-            //ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields()
+            ProductFormAdd::ATTRIBUTE_GROUP => $this->getAttributeGroupDefaultFields(),
+            ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields()
         ];
     }
 
@@ -187,10 +157,36 @@ class AbstractProductFormDataProvider
     /**
      * @return array
      */
-    public function getAttributesDefaultFields()
+    public function getAttributeValuesDefaultFields()
     {
-        return $this->convertAttributesToFormValues($this->attributeGroupCollection);
+        return $this->convertToFormValues($this->attributeValueCollection, [], []);
     }
 
+    /**
+     * @return array
+     */
+    public function getAttributeGroupDefaultFields()
+    {
+        return $this->convertToFormValues($this->attributeValueCollection);
+    }
 
+    /**
+     * @param array $data
+     * @param array $values
+     * @param bool $defaultValue
+     *
+     * @return array
+     */
+    protected function convertToFormValues(array $data, array $values = [], $defaultValue = true)
+    {
+        $attributes = [];
+        foreach ($data as $type => $valueSet) {
+            $attributes[$type]['value'] = $defaultValue;
+            if (isset($values[$type])) {
+                $attributes[$type]['value'] = $values[$type];
+            }
+        }
+
+        return $attributes;
+    }
 }

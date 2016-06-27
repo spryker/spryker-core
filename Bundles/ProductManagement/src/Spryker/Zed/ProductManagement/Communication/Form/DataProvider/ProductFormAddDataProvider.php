@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+
 class ProductFormAddDataProvider extends AbstractProductFormDataProvider
 {
 

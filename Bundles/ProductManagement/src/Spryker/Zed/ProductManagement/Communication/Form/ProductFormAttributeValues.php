@@ -20,7 +20,12 @@ class ProductFormAttributeValues extends AbstractType
     /**
      * @var array
      */
-    protected $attributes;
+    protected $attributeValues;
+
+    /**
+     * @var array
+     */
+    protected $attributeGroups;
 
     /**
      * @var string
@@ -29,11 +34,12 @@ class ProductFormAttributeValues extends AbstractType
 
     /**
      * @param array $attributes
-     * @param array $validationGroup
+     * @param $validationGroup
      */
     public function __construct(array $attributes, $validationGroup)
     {
-        $this->attributes = $attributes;
+        $this->attributeValues = $attributes[ProductFormAdd::ATTRIBUTE_VALUES];
+        $this->attributeGroups = $attributes[ProductFormAdd::ATTRIBUTE_GROUP];
         $this->validationGroup = $validationGroup;
     }
 
@@ -80,8 +86,8 @@ class ProductFormAttributeValues extends AbstractType
     protected function addValueField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [
-            'label' => $builder->getName(),
-            'choices' => $this->attributes[$builder->getName()],
+            'label' => $this->attributeGroups[$builder->getName()],
+            'choices' => $this->attributeValues[$builder->getName()],
             'multiple' => true
         ]);
 
