@@ -7,20 +7,18 @@
 
 namespace Spryker\Zed\Ratepay\Dependency\Facade;
 
-use Spryker\Zed\Product\Business\ProductFacadeInterface;
-
 class RatepayToProductBridge implements RatepayToProductInterface
 {
 
     /**
-     * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
+     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
     protected $productFacade;
 
     /**
      * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
      */
-    public function __construct(ProductFacadeInterface $productFacade)
+    public function __construct($productFacade)
     {
         $this->productFacade = $productFacade;
     }

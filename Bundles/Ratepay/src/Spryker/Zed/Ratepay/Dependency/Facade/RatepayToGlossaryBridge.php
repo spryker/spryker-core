@@ -9,7 +9,6 @@ namespace Spryker\Zed\Ratepay\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryFacadeInterface;
 
 class RatepayToGlossaryBridge implements RatepayToGlossaryInterface
 {
@@ -22,7 +21,7 @@ class RatepayToGlossaryBridge implements RatepayToGlossaryInterface
     /**
      * @param \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface $glossaryFacade
      */
-    public function __construct(GlossaryFacadeInterface $glossaryFacade)
+    public function __construct($glossaryFacade)
     {
         $this->glossaryFacade = $glossaryFacade;
     }
