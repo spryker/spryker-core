@@ -45,11 +45,15 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             try {
-                $attributeCollection = $this->getFactory()->getProductAttributeValueCollection();
-                $attributes = $this->getAttributesFromData($form->getData(), $attributeCollection);
+                $attributeCollection = $this->getFactory()->getProductAttributeCollection();
+                $attributeValuesCollection = $this->getFactory()->getProductAttributeValueCollection();
+                $attributes = $this->convertAttributesFromData($form->getData(), $attributeCollection);
+                $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeValuesCollection);
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $matrixGenerator = new MatrixGenerator();
-                $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributes);
+                $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
+
+                sd($attributes, $attributeValues, $concreteProductCollection);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductManagementFacade()
@@ -188,10 +192,26 @@ class AddController extends AbstractController
      *
      * @return array
      */
-    protected function getAttributesFromData(array $data, array $attributeCollection)
+    protected function convertAttributesFromData(array $data, array $attributeCollection)
     {
         $attributes = [];
         foreach ($data[ProductFormAdd::ATTRIBUTES] as $type => $values) {
+            $attributes[$type] = $values['value'];
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param array $data
+     * @param array $attributeCollection
+     *
+     * @return array
+     */
+    protected function convertAttributeValuesFromData(array $data, array $attributeCollection)
+    {
+        $attributes = [];
+        foreach ($data[ProductFormAdd::ATTRIBUTE_VALUES] as $type => $values) {
             $values = $this->getAttributeValues($values['value'], $attributeCollection[$type]);
             if (!empty($values)) {
                 $attributes[$type] = $values;
