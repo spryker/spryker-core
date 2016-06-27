@@ -28,12 +28,10 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $this->getLocalizedAbstractAttributes($productAbstractTransfer);
         }
 
-        $formData[ProductFormAdd::ATTRIBUTES] = $this->getAttributes($idProductAbstract);
+        $formData[ProductFormAdd::ATTRIBUTES] = [];
         $formData[ProductFormAdd::ATTRIBUTES] = array_merge($defaults[ProductFormAdd::ATTRIBUTES], $formData[ProductFormAdd::ATTRIBUTES]);
 
         $formData = array_merge($defaults, $formData);
-
-        //sd($formData);
 
         return $formData;
     }

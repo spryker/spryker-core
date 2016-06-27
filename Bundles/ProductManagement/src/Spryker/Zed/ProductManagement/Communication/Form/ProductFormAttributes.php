@@ -81,7 +81,6 @@ class ProductFormAttributes extends AbstractType
      */
     protected function addValueField(FormBuilderInterface $builder, array $options)
     {
-        //sd($this->attributes, $this->getName());
         $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [
             'label' => $builder->getName(),
             'choices' => $this->attributes[$builder->getName()],
