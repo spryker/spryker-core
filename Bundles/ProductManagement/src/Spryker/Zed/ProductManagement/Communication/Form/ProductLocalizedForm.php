@@ -63,7 +63,7 @@ class ProductLocalizedForm extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $builder
+/*        $builder
             ->add(self::FIELD_DESCRIPTION, 'text', [
                 'required' => true,
                 'constraints' => [
@@ -71,7 +71,7 @@ class ProductLocalizedForm extends AbstractType
                 ],
             ]);
 
-        return $this;
+        return $this;*/
     }
 
 }
