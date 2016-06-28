@@ -29,13 +29,20 @@ class MatrixController extends AbstractController
     const PARAM_LOCALIZED_ATTRIBUTE_VALUES = 'localized_attribute_values';
 
     /**
+     * Request data:
+     * - sku: test-sku
+     * - attribute_collection:  {"size":{"40":"40","41":"41","42":"42","43":"43"},"color":{"blue":"Blue","red":"Red","white":"White"},"flavour":{"spicy":"Mexican Food","sweet":"Cakes"}}
+     * - localized_attribute_values[de_DE]: {"short_description":"Lorem Ipsum","long_description":"Lorem Ipsum de_DE ..."}
+     * - localized_attribute_values[en_US]: {"short_description":"Lorem Ipsum","long_description":"Lorem Ipsum en_US ..."}
+     * - attribute_group: {"size":"Size","color":"Color","flavour":"Flavour"}
+     * - attribute_values: {"size":[40,41],"color":["red"],"flavour":["spicy"]}
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse
      */
     public function indexAction(Request $request)
     {
-
         $sku = trim((string)$request->get(
             self::PARAM_SKU
         ));
