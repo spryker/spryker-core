@@ -63,10 +63,10 @@ class EditController extends AddController
 
                 $attributeGroupCollection = $this->getFactory()->getProductAttributeGroupCollection();
                 $attributeValuesCollection = $this->getFactory()->getProductAttributeCollection();
-                $attributes = $this->convertAttributesFromData($form->getData(), $attributeValuesCollection);
+                $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeValuesCollection);
 
                 $matrixGenerator = new MatrixGenerator();
-                $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributes);
+                $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductManagementFacade()

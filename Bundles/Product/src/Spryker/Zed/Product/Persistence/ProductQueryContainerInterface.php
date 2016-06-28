@@ -107,6 +107,13 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     */
+    public function queryAttributesMetadata();
+
+    /**
+     * @api
+     *
      * @param string $attributeType
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery

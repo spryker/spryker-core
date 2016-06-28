@@ -1040,6 +1040,10 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAttributeCollection()
     {
+        $attr = $this->productQueryContainer
+            ->queryAttributesMetadata()
+            ->find();
+
         return [
             'size' => [
                 '40' => '40',

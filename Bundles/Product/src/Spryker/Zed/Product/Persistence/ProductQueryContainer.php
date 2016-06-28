@@ -225,6 +225,16 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @api
      *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     */
+    public function queryAttributesMetadata()
+    {
+        return $this->getFactory()->createProductAttributesMetadataQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param string $attributeName
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery

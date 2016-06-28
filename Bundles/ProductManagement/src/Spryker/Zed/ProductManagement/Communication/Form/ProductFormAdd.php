@@ -23,7 +23,6 @@ class ProductFormAdd extends AbstractType
     const FIELD_NAME = 'name';
     const FIELD_SKU = 'sku';
 
-    const OPTION_PRODUCT_ATTRIBUTES = 'option_product_attributes';
     const LOCALIZED_ATTRIBUTES = 'localized_attributes';
     const ATTRIBUTE_GROUP = 'attribute_group';
     const ATTRIBUTE_VALUES = 'attribute_values';
