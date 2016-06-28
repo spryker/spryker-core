@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Tax\Business\ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  */
 class ItemTaxCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {

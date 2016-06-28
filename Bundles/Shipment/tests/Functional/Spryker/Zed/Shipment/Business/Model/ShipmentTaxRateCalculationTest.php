@@ -9,7 +9,6 @@ namespace Functional\Spryker\Zed\Shipment\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -24,6 +23,7 @@ use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
 class ShipmentTaxRateCalculationTest extends Test
 {
+
     /**
      * @return void
      */
@@ -132,4 +132,5 @@ class ShipmentTaxRateCalculationTest extends Test
     {
         return new ShipmentFacade();
     }
+
 }

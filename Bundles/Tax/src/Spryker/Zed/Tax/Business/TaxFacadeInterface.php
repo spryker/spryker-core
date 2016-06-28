@@ -195,7 +195,7 @@ interface TaxFacadeInterface
      * @return int
      */
     public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
-    
+
     /**
      * @api
      *

@@ -44,11 +44,11 @@ class ShipmentTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return float
      */
-    protected function getEffectiveTaxRateByQuoteTransfer($quoteTransfer, $mockData)
+    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $mockData)
     {
         $productItemTaxRateCalculatorMock = $this->createShipmentTaxRateCalculator();
         $productItemTaxRateCalculatorMock->method('findTaxSetByIdShipmentMethodAndCountry')->willReturn($mockData);

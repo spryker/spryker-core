@@ -153,7 +153,6 @@ class TaxWriter implements TaxWriterInterface
             $plugin->handleTaxSetChange($taxSetEntity->getIdTaxSet());
         }
 
-
         return $taxSetEntity->save();
     }
 

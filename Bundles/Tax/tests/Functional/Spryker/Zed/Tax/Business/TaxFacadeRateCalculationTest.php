@@ -20,6 +20,7 @@ use Spryker\Zed\Tax\Business\TaxFacade;
 
 class TaxFacadeRateCalculationTest extends Test
 {
+
     /**
      * @return void
      */
@@ -111,4 +112,5 @@ class TaxFacadeRateCalculationTest extends Test
     {
         return new TaxFacade();
     }
+
 }
