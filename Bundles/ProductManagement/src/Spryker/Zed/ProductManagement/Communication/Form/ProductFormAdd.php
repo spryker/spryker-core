@@ -26,9 +26,12 @@ class ProductFormAdd extends AbstractType
     const LOCALIZED_ATTRIBUTES = 'localized_attributes';
     const ATTRIBUTE_GROUP = 'attribute_group';
     const ATTRIBUTE_VALUES = 'attribute_values';
+    const TAX_SET = 'tax_set';
+    const PRICE_AND_STOCK = 'price_and_stock';
 
     const VALIDATION_GROUP_ATTRIBUTES = 'validation_group_attributes';
     const VALIDATION_GROUP_ATTRIBUTE_VALUES = 'validation_group_attribute_values';
+    const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
 
     /**
      * @return string
@@ -49,12 +52,18 @@ class ProductFormAdd extends AbstractType
 
         $resolver->setRequired(self::ATTRIBUTE_GROUP);
         $resolver->setRequired(self::ATTRIBUTE_VALUES);
+        $resolver->setRequired(self::TAX_SET);
 
         $resolver->setDefaults([
             'cascade_validation' => true,
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
-                return [Constraint::DEFAULT_GROUP, self::VALIDATION_GROUP_ATTRIBUTES, self::VALIDATION_GROUP_ATTRIBUTE_VALUES];
+                return [
+                    Constraint::DEFAULT_GROUP,
+                    self::VALIDATION_GROUP_ATTRIBUTES,
+                    self::VALIDATION_GROUP_ATTRIBUTE_VALUES,
+                    self::VALIDATION_GROUP_PRICE_AND_STOCK
+                ];
             }
         ]);
     }
@@ -74,7 +83,9 @@ class ProductFormAdd extends AbstractType
             ->addAttributeValuesForm($builder, [
                 self::ATTRIBUTE_GROUP => $options[self::ATTRIBUTE_GROUP],
                 self::ATTRIBUTE_VALUES => $options[self::ATTRIBUTE_VALUES]
-            ]);
+            ])
+            ->addPriceForm($builder, $options[self::TAX_SET])
+        ;
     }
 
     /**
@@ -148,7 +159,6 @@ class ProductFormAdd extends AbstractType
         return $this;
     }
 
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -180,6 +190,39 @@ class ProductFormAdd extends AbstractType
                         },
                     ],
                     'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUES]
+                ])]
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
+    {
+        $builder
+            ->add(self::PRICE_AND_STOCK, new ProductFormPrice(self::VALIDATION_GROUP_PRICE_AND_STOCK), [
+                'label' => 'Price & Stock',
+                'constraints' => [new Callback([
+                    'methods' => [
+                        function ($attributes, ExecutionContextInterface $context) {
+                            $selectedAttributes = [];
+                            foreach ($attributes as $type => $valueSet) {
+                                if (!empty($valueSet['value'])) {
+                                    $selectedAttributes[] = $valueSet['value'];
+                                }
+                            }
+
+                            if (empty($selectedAttributes)) {
+                                $context->addViolation('Please enter price & stock information');
+                            }
+                        },
+                    ],
+                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_STOCK]
                 ])]
             ]);
 

@@ -60,6 +60,11 @@ class AbstractProductFormDataProvider
      */
     protected $attributeValueCollection = [];
 
+    /**
+     * @var array
+     */
+    protected $taxCollection = [];
+
 
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -68,7 +73,8 @@ class AbstractProductFormDataProvider
         ProductManagementFacadeInterface $productManagementFacade,
         ProductManagementToLocaleInterface $localeFacade,
         array $attributeGroupCollection,
-        array $attributeValueCollection
+        array $attributeValueCollection,
+        array $taxCollection
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
@@ -78,6 +84,7 @@ class AbstractProductFormDataProvider
         $this->locale = $localeFacade->getCurrentLocale();
         $this->attributeGroupCollection = $attributeGroupCollection;
         $this->attributeValueCollection = $attributeValueCollection;
+        $this->taxCollection = $taxCollection;
     }
 
     /**
@@ -89,6 +96,7 @@ class AbstractProductFormDataProvider
     {
         $formOptions[ProductFormAdd::ATTRIBUTE_GROUP] = $this->attributeGroupCollection;
         $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->attributeValueCollection;
+        $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
 
         return $formOptions;
     }
@@ -117,7 +125,8 @@ class AbstractProductFormDataProvider
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields(),
             ProductFormAdd::ATTRIBUTE_GROUP => $this->getAttributeGroupDefaultFields(),
-            ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields()
+            ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields(),
+            ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields()
         ];
     }
 
@@ -168,6 +177,14 @@ class AbstractProductFormDataProvider
     public function getAttributeGroupDefaultFields()
     {
         return $this->convertToFormValues($this->attributeValueCollection);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPriceAndStockDefaultFields()
+    {
+        return $this->convertToFormValues($this->taxCollection);
     }
 
     /**

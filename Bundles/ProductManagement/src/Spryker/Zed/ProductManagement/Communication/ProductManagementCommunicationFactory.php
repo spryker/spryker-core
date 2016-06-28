@@ -60,7 +60,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
             $this->getProductAttributeGroupCollection(),
-            $this->getProductAttributeCollection()
+            $this->getProductAttributeCollection(),
+            $this->getProductTaxCollection()
         );
     }
 
@@ -76,7 +77,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
             $this->getProductAttributeGroupCollection(),
-            $this->getProductAttributeCollection()
+            $this->getProductAttributeCollection(),
+            $this->getProductTaxCollection()
         );
     }
 
@@ -138,6 +140,16 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductAttributeCollection()
     {
         return $this->getProductManagementFacade()->getProductAttributeCollection();
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductTaxCollection()
+    {
+        return [
+            '1' => '19%'
+        ];
     }
 
 }

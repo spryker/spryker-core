@@ -34,6 +34,9 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         $formData[ProductFormAdd::ATTRIBUTE_GROUP] = $attributeGroups;
         $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $attributeValueCollection;
+        $formData[ProductFormAdd::PRICE_AND_STOCK] = [
+            'value' => [22]
+        ];
 
         $formData = array_merge($defaults, $formData);
 

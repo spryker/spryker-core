@@ -34,6 +34,7 @@
         <li class="active"><a href="#tab_general" data-toggle="tab">General</a></li>
         <li class=""><a href="#tab_concrete" data-toggle="tab">Product Matrix</a></li>
         <li class=""><a href="#tab_attribute" data-toggle="tab">Attributes</a></li>
+        <li class=""><a href="#tab_price_and_stock" data-toggle="tab">Price & Stock</a></li>
     </ul>
     <div class="tab-content">
         {# ============================ GENERAL ============================ #}
@@ -203,6 +204,28 @@
 
                 attrubute
 
+            </div>
+        </div>
+        {# ============================ END ============================ #}
+
+        {# ============================ PRICE & STOCK ============================ #}
+        <div id="tab_price_and_stock" class="tab-pane">
+            {{ form_errors(form.price_and_stock) }}
+            <div class="panel-body">
+                <h3>Default Price & Tax</h3>
+                <p>Assign a price and a tax to your product.</p>
+                <div class="well">
+                    {{ form_row(form.price_and_stock.price) }}
+                    {{ form_row(form.price_and_stock.tax_rate) }}
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <h3>Default for your variants</h3>
+                <p>Assign a default stock to your variant and edit individually afterwards if necessary.</p>
+                <div class="well">
+                    {{ form_row(form.price_and_stock.stock) }}
+                </div>
             </div>
         </div>
         {# ============================ END ============================ #}
