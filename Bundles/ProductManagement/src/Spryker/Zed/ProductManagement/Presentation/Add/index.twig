@@ -141,14 +141,19 @@
             <div class="panel-body">
 
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example" >
+                    <input type="text" class="form-control input-sm m-b-xs" id="filter"
+                           placeholder="Search in table">
+
+                    <table class="table table-striped table-bordered table-hover dataTables-product-matrix" data-page-size="4" data-filter="#filter">
                         <thead>
                         <tr>
                             <th>Sku</th>
                             {% set break1 = false %}
+                            {% set columnCount = 1 %}
                             {% for product in concretes if not break1 %}
                                 {% for attrName, attrValue in product.attributes %}
                                     {% set break1 = true %}
+                                    {% set columnCount = columnCount + 1 %}
                                     <th>{{ attrName }}</th>
                                 {% endfor %}
                             {% endfor %}
@@ -177,6 +182,12 @@
                                 {% endfor %}
                             {% endfor %}
                             <th>Action</th>
+                        </tr>
+                        <tr>
+                            <td colspan="{{ columnCount + 1 }}">
+                                <ul class="pagination pull-right">
+                                </ul>
+                            </td>
                         </tr>
                         </tfoot>
                     </table>

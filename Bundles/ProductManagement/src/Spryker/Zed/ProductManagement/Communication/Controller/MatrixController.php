@@ -35,7 +35,7 @@ class MatrixController extends AbstractController
      * - localized_attribute_values[de_DE]: {"short_description":"Lorem Ipsum","long_description":"Lorem Ipsum de_DE ..."}
      * - localized_attribute_values[en_US]: {"short_description":"Lorem Ipsum","long_description":"Lorem Ipsum en_US ..."}
      * - attribute_group: {"size":"Size","color":"Color","flavour":"Flavour"}
-     * - attribute_values: {"size":[40,41],"color":["red"],"flavour":["spicy"]}
+     * - attribute_values: {"color":{"red":"Red","blue":"Blue"},"flavour":{"sweet":"Cakes"},"size":{"40":"40","41":"41"}}
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -43,21 +43,10 @@ class MatrixController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $sku = trim((string)$request->get(
-            self::PARAM_SKU
-        ));
-
-        $attributeValuesJson = trim((string)$request->get(
-            self::PARAM_ATTRIBUTE_VALUES
-        ));
-
-        $localizedAttributeValuesJsonArray  = $request->get(
-            self::PARAM_LOCALIZED_ATTRIBUTE_VALUES
-        );
-
-        $attributeCollectionJson = trim((string)$request->get(
-            self::PARAM_ATTRIBUTE_COLLECTION
-        ));
+        $sku = trim($request->get(self::PARAM_SKU, ''));
+        $attributeValuesJson = trim($request->get(self::PARAM_ATTRIBUTE_VALUES, ''));
+        $localizedAttributeValuesJsonArray = $request->get(self::PARAM_LOCALIZED_ATTRIBUTE_VALUES, []);
+        $attributeCollectionJson = trim($request->get(self::PARAM_ATTRIBUTE_COLLECTION, ''));
 
         $localizedAttributes = [];
         $attributes = Json::decode($attributeValuesJson, true) ?: [];
@@ -72,11 +61,17 @@ class MatrixController extends AbstractController
         $productAbstractTransfer->setLocalizedAttributes(new \ArrayObject($localizedAttributes));
 
         $matrixGenerator = new MatrixGenerator();
-        $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection);
+        $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributes);
 
-        sd($productAbstractTransfer->toArray(true));
-        die;
-        //return new JsonResponse([]);
+        $a = [];
+        foreach ($matrix as $p) {
+            $a[]  = $p->toArray(true);
+        }
+
+        return new JsonResponse([
+            'product_abstract' => $productAbstractTransfer->toArray(true),
+            'concrete' => $a
+        ]);
     }
 
 

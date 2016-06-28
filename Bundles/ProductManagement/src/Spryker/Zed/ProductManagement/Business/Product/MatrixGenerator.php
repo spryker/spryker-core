@@ -197,7 +197,7 @@ class MatrixGenerator
      * @param string $concreteSku
      * @param array $attributeTokens
      *
-     * @return \Generated\Shared\Transfer\ZedProductAbstractTransfer
+     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
      */
     protected function createProductConcreteTransfer(
         ProductAbstractTransfer $productAbstractTransfer,
