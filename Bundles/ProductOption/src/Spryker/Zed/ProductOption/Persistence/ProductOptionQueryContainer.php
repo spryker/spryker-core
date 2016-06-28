@@ -18,8 +18,8 @@ use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueUsageConstraintTa
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueUsageTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
