@@ -40,42 +40,4 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         return $formData;
     }
 
-    /**
-     * @param array $attributes
-     *
-     * @return array
-     */
-    protected function convertSelectedAttributeGroupsToFormValues(array $attributes)
-    {
-        $attributeGroupCollection = array_keys($attributes) + array_keys($this->attributeGroupCollection);
-
-        $groupValues = [];
-        foreach ($attributeGroupCollection as  $type) {
-            $groupValues[$type]['value'] = array_key_exists($type, $attributes);
-        }
-
-        return $groupValues;
-    }
-
-    /**
-     * @param array $attributes
-     *
-     * @return array
-     */
-    protected function convertSelectedAttributeValuesToFormValues(array $attributes)
-    {
-        $values = [];
-        foreach ($attributes as $type => $valueSet) {
-            $values[$type]['value'] = array_keys($valueSet);
-        }
-
-        foreach ($this->attributeValueCollection as $type => $valueSet) {
-            if (!array_key_exists($type, $values)) {
-                $values[$type]['value'] = [];
-            }
-        }
-
-        return $values;
-    }
-
 }
