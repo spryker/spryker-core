@@ -201,7 +201,7 @@ class AbstractProductFormDataProvider
         $attributeGroupCollection = array_keys($attributes) + array_keys($this->attributeGroupCollection);
 
         $groupValues = [];
-        foreach ($attributeGroupCollection as  $type) {
+        foreach ($attributeGroupCollection as $type) {
             $groupValues[$type]['value'] = array_key_exists($type, $attributes);
         }
 
@@ -228,4 +228,5 @@ class AbstractProductFormDataProvider
 
         return $values;
     }
+
 }

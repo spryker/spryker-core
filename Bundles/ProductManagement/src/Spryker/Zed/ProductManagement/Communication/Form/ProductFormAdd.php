@@ -54,7 +54,7 @@ class ProductFormAdd extends AbstractType
             'cascade_validation' => true,
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
-                return [Constraint::DEFAULT_GROUP, self::VALIDATION_GROUP_ATTRIBUTES , self::VALIDATION_GROUP_ATTRIBUTE_VALUES];
+                return [Constraint::DEFAULT_GROUP, self::VALIDATION_GROUP_ATTRIBUTES, self::VALIDATION_GROUP_ATTRIBUTE_VALUES];
             }
         ]);
     }

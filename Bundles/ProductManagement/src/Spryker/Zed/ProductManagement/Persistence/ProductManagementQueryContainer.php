@@ -14,5 +14,4 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductManagementQueryContainer extends AbstractQueryContainer implements ProductManagementQueryContainerInterface
 {
-
 }

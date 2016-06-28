@@ -71,5 +71,4 @@ class MatrixController extends AbstractController
         ]);
     }
 
-
 }

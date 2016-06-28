@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\ProductManagement;
 
-
 interface ProductManagementConstants
 {
-
 }

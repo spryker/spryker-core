@@ -11,5 +11,4 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductManagementQueryContainerInterface extends QueryContainerInterface
 {
-
 }

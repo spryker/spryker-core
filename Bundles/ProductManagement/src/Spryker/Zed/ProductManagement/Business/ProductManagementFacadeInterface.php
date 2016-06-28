@@ -64,6 +64,8 @@ interface ProductManagementFacadeInterface
     public function getProductAbstractById($idProductAbstract);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return array

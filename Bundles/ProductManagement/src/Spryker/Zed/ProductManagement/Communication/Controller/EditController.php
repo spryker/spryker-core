@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
-use Spryker\Shared\Library\Json;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -79,7 +78,7 @@ class EditController extends AddController
                 ));
 
                 return $this->redirectResponse(sprintf(
-                    '/product-management/edit?%s=%d' ,
+                    '/product-management/edit?%s=%d',
                     self::PARAM_ID_PRODUCT_ABSTRACT,
                     $idProductAbstract
                 ));
@@ -96,7 +95,5 @@ class EditController extends AddController
             'concretes' => $concreteProductCollection
         ]);
     }
-
-
 
 }

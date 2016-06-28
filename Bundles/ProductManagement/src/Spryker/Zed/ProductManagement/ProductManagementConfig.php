@@ -11,5 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductManagementConfig extends AbstractBundleConfig
 {
-
 }

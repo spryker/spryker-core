@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductManagementFacade extends AbstractFacade implements ProductManagementFacadeInterface
 {
+
     /**
      * @api
      *
@@ -92,6 +93,8 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return array
@@ -102,4 +105,5 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
             ->createProductManager()
             ->getProductAttributesByAbstractProductId($idProductAbstract);
     }
+
 }

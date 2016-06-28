@@ -9,24 +9,23 @@ namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Spryker\Shared\Library\Json;
+use Spryker\Zed\ProductManagement\Business\Transfer\ProductTransferGenerator;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
-use Spryker\Zed\ProductManagement\Business\Transfer\ProductTransferGenerator;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface;
 
 class ProductManager implements ProductManagerInterface
 {
@@ -948,8 +947,7 @@ class ProductManager implements ProductManagerInterface
                 if ($productConcreteEntity) {
                     $productConcreteTransfer->setIdProductConcrete($productConcreteEntity->getIdProduct());
                     $this->saveProductConcrete($productConcreteTransfer);
-                }
-                else {
+                } else {
                     $this->createProductConcrete($productConcreteTransfer, $idProductAbstract);
                 }
             }

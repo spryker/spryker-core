@@ -34,7 +34,7 @@ class ProductFormAttributeValues extends AbstractType
 
     /**
      * @param array $attributes
-     * @param $validationGroup
+     * @param string $validationGroup
      */
     public function __construct(array $attributes, $validationGroup)
     {

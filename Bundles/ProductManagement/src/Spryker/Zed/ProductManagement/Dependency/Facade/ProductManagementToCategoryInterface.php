@@ -9,5 +9,4 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 interface ProductManagementToCategoryInterface
 {
-
 }
