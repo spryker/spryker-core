@@ -168,6 +168,34 @@ class TriggerTest extends StateMachineMocks
     }
 
     /**
+     * @return void
+     */
+    public function testTriggerShouldLogTransitionsForTriggerEvent()
+    {
+        $stateMachinePersistenceMock = $this->createTriggerPersistenceMock();
+        $finderMock = $this->createTrigerFinderMock();
+        $conditionMock = $this->createTriggerConditionMock();
+
+        $transitionLogMock = $this->createTransitionLogMock();
+        $transitionLogMock->expects($this->exactly(1))->method('setEvent');
+
+        $trigger = $this->createTrigger(
+            $transitionLogMock,
+            $finderMock,
+            $stateMachinePersistenceMock,
+            $conditionMock
+        );
+
+        $stateMachineItems[] = $this->createTriggerStateMachineItem();
+
+        $trigger->triggerEvent(
+            'event',
+            $stateMachineItems
+        );
+
+    }
+
+    /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Process[]
      */
     protected function createProcesses()
