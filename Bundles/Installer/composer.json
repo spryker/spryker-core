@@ -11,21 +11,9 @@
     }
   },
   "require": {
-    "spryker/acl": "^2.0.0",
-    "spryker/application": "^2.0.0",
-    "spryker/collector": "^2.0.0 || ^3.0.0",
     "spryker/console": "^2.0.0",
-    "spryker/country": "^2.0.0",
-    "spryker/glossary": "^2.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/locale": "^2.0.0",
-    "spryker/log": "^2.0.0",
-    "spryker/messenger": "^2.0.0",
-    "spryker/newsletter": "^2.0.0",
-    "spryker/price": "^2.0.0",
-    "spryker/product": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/user": "^2.0.0"
+    "spryker/messenger": "^2.0.0"
   },
   "description": "Installer bundle",
   "license": "proprietary",

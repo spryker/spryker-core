@@ -9,8 +9,10 @@ namespace Spryker\Zed\Collector;
 
 use Spryker\Shared\Collector\CollectorConstants;
 use Spryker\Shared\Config\Config;
-use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkDeleteTouchByIdQuery;
-use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkUpdateTouchKeyByIdQuery;
+use Spryker\Zed\Collector\Persistence\Pdo\MySql\BulkDeleteTouchByIdQuery as MySqlBulkDeleteTouchByIdQuery;
+use Spryker\Zed\Collector\Persistence\Pdo\MySql\BulkUpdateTouchKeyByIdQuery as MySqlBulkUpdateTouchKeyByIdQuery;
+use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkDeleteTouchByIdQuery as PostgreSqlBulkDeleteTouchByIdQuery;
+use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkUpdateTouchKeyByIdQuery as PostgreSqlBulkUpdateTouchKeyByIdQuery;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CollectorConfig extends AbstractBundleConfig
@@ -122,7 +124,10 @@ class CollectorConfig extends AbstractBundleConfig
      */
     protected function getMysqlDbEngineClassMap()
     {
-        return [];
+        return [
+            static::COLLECTOR_BULK_DELETE_QUERY_CLASS => MySqlBulkDeleteTouchByIdQuery::class,
+            static::COLLECTOR_BULK_UPDATE_QUERY_CLASS => MySqlBulkUpdateTouchKeyByIdQuery::class
+        ];
     }
 
     /**
@@ -131,8 +136,8 @@ class CollectorConfig extends AbstractBundleConfig
     protected function getPostgresDbEngineClassMap()
     {
         return [
-            static::COLLECTOR_BULK_DELETE_QUERY_CLASS => BulkDeleteTouchByIdQuery::class,
-            static::COLLECTOR_BULK_UPDATE_QUERY_CLASS => BulkUpdateTouchKeyByIdQuery::class
+            static::COLLECTOR_BULK_DELETE_QUERY_CLASS => PostgreSqlBulkDeleteTouchByIdQuery::class,
+            static::COLLECTOR_BULK_UPDATE_QUERY_CLASS => PostgreSqlBulkUpdateTouchKeyByIdQuery::class
         ];
     }
 

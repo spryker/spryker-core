@@ -18,6 +18,7 @@ use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueUsageConstraintTa
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueUsageTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -211,8 +212,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryProductOptionTypeUsageExclusionByFks($fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB)
     {
         return $this->getFactory()->createProductOptionTypeUsageExclusionQuery()
-            ->filterByFkProductOptionTypeUsageA([$fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB])
-            ->filterByFkProductOptionTypeUsageB([$fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB]);
+            ->filterByFkProductOptionTypeUsageA([$fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB], Criteria::IN)
+            ->filterByFkProductOptionTypeUsageB([$fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB], Criteria::IN);
     }
 
     /**
@@ -226,8 +227,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryProductOptionValueUsageConstraintsByFks($fkProductOptionValueUsageA, $fkProductOptionValueUsageB)
     {
         return $this->getFactory()->createProductOptionValueUsageConstraintQuery()
-            ->filterByFkProductOptionValueUsageA([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB])
-            ->filterByFkProductOptionValueUsageB([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB]);
+            ->filterByFkProductOptionValueUsageA([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB], Criteria::IN)
+            ->filterByFkProductOptionValueUsageB([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB], Criteria::IN);
     }
 
     /**

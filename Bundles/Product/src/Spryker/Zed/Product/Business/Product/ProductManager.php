@@ -10,6 +10,9 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\ProductImage\Persistence\SpyProductImage;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
@@ -66,7 +69,7 @@ class ProductManager implements ProductManagerInterface
     protected $productConcreteCollectionBySkuCache = [];
 
     /**
-     * @var array
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
     protected $productAbstractsBySkuCache;
 
@@ -124,6 +127,7 @@ class ProductManager implements ProductManagerInterface
         $idProductAbstract = $productAbstract->getPrimaryKey();
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
         $this->createProductAbstractAttributes($productAbstractTransfer);
+        $this->createProductAbstractImages($productAbstractTransfer);
 
         return $idProductAbstract;
     }
@@ -202,6 +206,83 @@ class ProductManager implements ProductManagerInterface
 
             $productAbstractAttributesEntity->save();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    protected function createProductAbstractImages(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
+
+        foreach ($productAbstractTransfer->getProductImagesSets() as $productImagesSet) {
+            $this->saveProductImageSet($idProductAbstract, $productImagesSet);
+        }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImagesSet
+     *
+     * @return void
+     */
+    protected function saveProductImageSet($idProductAbstract, $productImagesSet)
+    {
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
+        $productImageSetEntity = new SpyProductImageSet();
+        $productImageSetEntity->setFkProductAbstract($idProductAbstract);
+        $productImageSetEntity->setName($productImagesSet->getName());
+        $productImageSetEntity->setFkLocale($productImagesSet->getLocale()->getIdLocale());
+
+        $productImageSetEntity->save();
+
+        $idProductImageSet = $productImageSetEntity->getIdProductImageSet();
+
+        foreach ($productImagesSet->getProductImages() as $productImage) {
+            $this->saveProductImage($idProductImageSet, $productImage);
+        }
+
+        $this->productQueryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param int $idProductImageSet
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImage
+     *
+     * @return void
+     */
+    protected function saveProductImage($idProductImageSet, $productImage)
+    {
+        $productImageEntity = new SpyProductImage();
+        $productImageEntity->setExternalUrlLarge($productImage->getExternalUrlLarge());
+        $productImageEntity->setExternalUrlSmall($productImage->getExternalUrlSmall());
+
+        $productImageEntity->save();
+        $idProductImage = $productImageEntity->getIdProductImage();
+
+        $this->saveProductImageSetToProductImage($idProductImageSet, $idProductImage, $productImage);
+    }
+
+    /**
+     * @param int $idProductImageSet
+     * @param int $idProductImage
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImage
+     *
+     * @return void
+     */
+    protected function saveProductImageSetToProductImage($idProductImageSet, $idProductImage, $productImage)
+    {
+        $productImageSetToProductImageEntity = new SpyProductImageSetToProductImage();
+        $productImageSetToProductImageEntity->setFkProductImageSet($idProductImageSet);
+        $productImageSetToProductImageEntity->setFkProductImage($idProductImage);
+        $productImageSetToProductImageEntity->setSort($productImage->getSort());
+
+        $productImageSetToProductImageEntity->save();
     }
 
     /**
@@ -404,6 +485,26 @@ class ProductManager implements ProductManagerInterface
     public function touchProductActive($idProductAbstract)
     {
         $this->touchFacade->touchActive('product_abstract', $idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductInactive($idProductAbstract)
+    {
+        $this->touchFacade->touchInactive('product_abstract', $idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductAbstract)
+    {
+        $this->touchFacade->touchDeleted('product_abstract', $idProductAbstract);
     }
 
     /**

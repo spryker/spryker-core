@@ -30,7 +30,7 @@ class TouchFacadeTest extends Test
     const ITEM_ID_FOR_INSERT = 4;
 
     const ITEM_EVENT_ACTIVE = 'active';
-    const ITEM_EVENT_IN_ACTIVE = 'inactive';
+    const ITEM_EVENT_INACTIVE = 'inactive';
     const ITEM_EVENT_DELETED = 'deleted';
 
     /**
@@ -77,9 +77,9 @@ class TouchFacadeTest extends Test
             ['bulkTouchActive', [self::ITEM_ID_1, self::ITEM_ID_2], 1],
             ['bulkTouchActive', [self::ITEM_ID_1, self::ITEM_ID_FOR_INSERT], 1],
 
-            ['bulkTouchInActive', [self::ITEM_ID_2], 1, self::ITEM_EVENT_IN_ACTIVE],
-            ['bulkTouchInActive', [self::ITEM_ID_2, self::ITEM_ID_3], 1, self::ITEM_EVENT_IN_ACTIVE],
-            ['bulkTouchInActive', [self::ITEM_ID_2, self::ITEM_ID_FOR_INSERT], 1],
+            ['bulkTouchInactive', [self::ITEM_ID_2], 1, self::ITEM_EVENT_INACTIVE],
+            ['bulkTouchInactive', [self::ITEM_ID_2, self::ITEM_ID_3], 1, self::ITEM_EVENT_INACTIVE],
+            ['bulkTouchInactive', [self::ITEM_ID_2, self::ITEM_ID_FOR_INSERT], 1],
 
             ['bulkTouchDeleted', [self::ITEM_ID_3], 1, self::ITEM_EVENT_DELETED],
             ['bulkTouchDeleted', [self::ITEM_ID_3, self::ITEM_ID_1], 1, self::ITEM_EVENT_DELETED],
@@ -121,9 +121,9 @@ class TouchFacadeTest extends Test
             ['bulkTouchSetActive', [self::ITEM_ID_1, self::ITEM_ID_2], 2, self::ITEM_EVENT_ACTIVE],
             ['bulkTouchSetActive', [self::ITEM_ID_1, self::ITEM_ID_FOR_INSERT], 2, self::ITEM_EVENT_ACTIVE],
 
-            ['bulkTouchSetInActive', [self::ITEM_ID_2], 1, self::ITEM_EVENT_IN_ACTIVE],
-            ['bulkTouchSetInActive', [self::ITEM_ID_2, self::ITEM_ID_3], 2, self::ITEM_EVENT_IN_ACTIVE],
-            ['bulkTouchSetInActive', [self::ITEM_ID_2, self::ITEM_ID_FOR_INSERT], 2, self::ITEM_EVENT_IN_ACTIVE],
+            ['bulkTouchSetInactive', [self::ITEM_ID_2], 1, self::ITEM_EVENT_INACTIVE],
+            ['bulkTouchSetInactive', [self::ITEM_ID_2, self::ITEM_ID_3], 2, self::ITEM_EVENT_INACTIVE],
+            ['bulkTouchSetInactive', [self::ITEM_ID_2, self::ITEM_ID_FOR_INSERT], 2, self::ITEM_EVENT_INACTIVE],
 
             ['bulkTouchSetDeleted', [self::ITEM_ID_3], 1, self::ITEM_EVENT_DELETED],
             ['bulkTouchSetDeleted', [self::ITEM_ID_3, self::ITEM_ID_1], 2, self::ITEM_EVENT_DELETED],

@@ -11,6 +11,7 @@ use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Library\BatchIterator\Builder\BatchIteratorBuilderInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -70,19 +71,26 @@ class TouchRecord implements TouchRecordInterface
 
         if ($keyChange) {
             $this->insertKeyChangeRecord($itemType, $idItem);
-        }
 
-        if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_DELETED) {
-            if (!$this->deleteKeyChangeActiveRecord($itemType, $idItem)) {
-                $this->insertTouchRecord(
-                    $itemType,
-                    $itemEvent,
-                    $idItem,
-                    SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
-                );
+            if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_DELETED) {
+                if (!$this->deleteKeyChangeActiveRecord($itemType, $idItem)) {
+                    $this->insertTouchRecord(
+                        $itemType,
+                        $itemEvent,
+                        $idItem,
+                        SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+                    );
+                }
+            } else {
+                $this->insertTouchRecord($itemType, $itemEvent, $idItem);
             }
         } else {
-            $this->insertTouchRecord($itemType, $itemEvent, $idItem);
+            $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry(
+                $itemType,
+                $idItem
+            )->findOneOrCreate();
+
+            $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
         }
 
         $this->connection->commit();
@@ -259,7 +267,7 @@ class TouchRecord implements TouchRecordInterface
             $touchIdsToRemove = $batch->toArray();
             $this->removeTouchDataForCollectors($touchIdsToRemove);
             $deletedCount += $query
-                ->filterByIdTouch($touchIdsToRemove)
+                ->filterByIdTouch($touchIdsToRemove, Criteria::IN)
                 ->delete();
         }
 
