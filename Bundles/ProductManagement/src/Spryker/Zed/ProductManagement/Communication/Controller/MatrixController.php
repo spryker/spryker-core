@@ -31,7 +31,6 @@ class MatrixController extends AbstractController
     /**
      * Request data:
      * - sku: test-sku
-     * - attribute_collection:  {"size":{"40":"40","41":"41","42":"42","43":"43"},"color":{"blue":"Blue","red":"Red","white":"White"},"flavour":{"spicy":"Mexican Food","sweet":"Cakes"}}
      * - localized_attribute_values[de_DE]: {"short_description":"Lorem Ipsum","long_description":"Lorem Ipsum de_DE ..."}
      * - localized_attribute_values[en_US]: {"short_description":"Lorem Ipsum","long_description":"Lorem Ipsum en_US ..."}
      * - attribute_group: {"size":"Size","color":"Color","flavour":"Flavour"}
@@ -46,18 +45,16 @@ class MatrixController extends AbstractController
         $sku = trim($request->get(self::PARAM_SKU, ''));
         $attributeValuesJson = trim($request->get(self::PARAM_ATTRIBUTE_VALUES, ''));
         $localizedAttributeValuesJsonArray = $request->get(self::PARAM_LOCALIZED_ATTRIBUTE_VALUES, []);
-        $attributeCollectionJson = trim($request->get(self::PARAM_ATTRIBUTE_COLLECTION, ''));
 
         $localizedAttributes = [];
         $attributes = Json::decode($attributeValuesJson, true) ?: [];
         foreach ($localizedAttributeValuesJsonArray as $locale => $localizedJson) {
             $localizedAttributes[$locale] = Json::decode($localizedJson, true) ?: [];
         }
-        $attributeCollection = Json::decode($attributeCollectionJson, true) ?: [];
 
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setSku($sku);
-        $productAbstractTransfer->setAttributes($attributes);
+        $productAbstractTransfer->setAttributes([]);
         $productAbstractTransfer->setLocalizedAttributes(new \ArrayObject($localizedAttributes));
 
         $matrixGenerator = new MatrixGenerator();

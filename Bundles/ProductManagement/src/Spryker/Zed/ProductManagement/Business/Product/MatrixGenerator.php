@@ -166,7 +166,7 @@ class MatrixGenerator
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return array
+     * @return array|\Generated\Shared\Transfer\ZedProductConcreteTransfer[]
      */
     public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
