@@ -147,10 +147,12 @@ interface CmsFacadeInterface
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      * @param string $value
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     * @param bool $autoGlossaryKeyIncrement
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value);
+    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value, LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true);
 
     /**
      * @api

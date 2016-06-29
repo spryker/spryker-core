@@ -153,8 +153,6 @@ interface TranslationManagerInterface
     /**
      * @param int $idKey
      *
-     * @deprecated Use touchTranslationForKeyId($idKey, $localeTransfer) instead.
-     *
      * @return void
      */
     public function touchCurrentTranslationForKeyId($idKey);
