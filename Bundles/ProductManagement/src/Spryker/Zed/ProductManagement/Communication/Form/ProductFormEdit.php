@@ -17,7 +17,7 @@ class ProductFormEdit extends ProductFormAdd
      */
     public function getName()
     {
-        return 'productEdit';
+        return 'ProductFormEdit';
     }
 
     /**

@@ -28,17 +28,19 @@ class ProductFormAdd extends AbstractType
     const ATTRIBUTE_VALUES = 'attribute_values';
     const TAX_SET = 'tax_set';
     const PRICE_AND_STOCK = 'price_and_stock';
+    const SEO = 'seo';
 
     const VALIDATION_GROUP_ATTRIBUTES = 'validation_group_attributes';
     const VALIDATION_GROUP_ATTRIBUTE_VALUES = 'validation_group_attribute_values';
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
+    const VALIDATION_GROUP_SEO = 'validation_group_seo';
 
     /**
      * @return string
      */
     public function getName()
     {
-        return 'productAdd';
+        return 'ProductFormAdd';
     }
 
     /**
@@ -62,7 +64,8 @@ class ProductFormAdd extends AbstractType
                     Constraint::DEFAULT_GROUP,
                     self::VALIDATION_GROUP_ATTRIBUTES,
                     self::VALIDATION_GROUP_ATTRIBUTE_VALUES,
-                    self::VALIDATION_GROUP_PRICE_AND_STOCK
+                    self::VALIDATION_GROUP_PRICE_AND_STOCK,
+                    self::VALIDATION_GROUP_SEO,
                 ];
             }
         ]);
@@ -78,13 +81,14 @@ class ProductFormAdd extends AbstractType
     {
         $this
             ->addSkuField($builder)
-            ->addLocalizedForm($builder)
+            ->addGeneralForm($builder)
             ->addAttributeGroupForm($builder, $options[self::ATTRIBUTE_GROUP])
             ->addAttributeValuesForm($builder, [
                 self::ATTRIBUTE_GROUP => $options[self::ATTRIBUTE_GROUP],
                 self::ATTRIBUTE_VALUES => $options[self::ATTRIBUTE_VALUES]
             ])
             ->addPriceForm($builder, $options[self::TAX_SET])
+            ->addSeoForm($builder, $options)
         ;
     }
 
@@ -112,11 +116,11 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addLocalizedForm(FormBuilderInterface $builder)
+    protected function addGeneralForm(FormBuilderInterface $builder)
     {
         $builder
             ->add(self::LOCALIZED_ATTRIBUTES, 'collection', [
-                'type' => new ProductLocalizedForm()
+                'type' => new ProductFormGeneral()
             ]);
 
         return $this;
@@ -229,4 +233,37 @@ class ProductFormAdd extends AbstractType
         return $this;
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addSeoForm(FormBuilderInterface $builder, array $options = [])
+    {
+        $builder
+            ->add(self::SEO, 'collection', [
+                'label' => 'SEO Information',
+                'type' => new ProductFormSeo(self::VALIDATION_GROUP_SEO),
+                'constraints' => [new Callback([
+                    'methods' => [
+                        function ($attributes, ExecutionContextInterface $context) {
+                            $selectedAttributes = [];
+                            foreach ($attributes as $type => $valueSet) {
+                                if (!empty($valueSet['value'])) {
+                                    $selectedAttributes[] = $valueSet['value'];
+                                }
+                            }
+
+                            if (empty($selectedAttributes)) {
+                                $context->addViolation('Please enter meta information');
+                            }
+                        },
+                    ],
+                    'groups' => [self::VALIDATION_GROUP_SEO]
+                ])]
+            ]);
+
+        return $this;
+    }
 }

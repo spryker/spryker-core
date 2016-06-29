@@ -26,6 +26,21 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         if ($productAbstractTransfer) {
             $formData = $productAbstractTransfer->toArray(true);
             $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $this->getLocalizedAbstractAttributes($productAbstractTransfer);
+            $formData[ProductFormAdd::SEO] = $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES];
+        }
+
+        //TODO load from db when columsn are added
+        foreach ($formData[ProductFormAdd::SEO] as $locale => $localizedSeoData) {
+            unset($formData[ProductFormAdd::SEO][$locale]['name']);
+            unset($formData[ProductFormAdd::SEO][$locale]['attributes']);
+
+            unset($formData[ProductFormAdd::LOCALIZED_ATTRIBUTES][$locale]['meta_title']);
+            unset($formData[ProductFormAdd::LOCALIZED_ATTRIBUTES][$locale]['meta_keyword']);
+            unset($formData[ProductFormAdd::LOCALIZED_ATTRIBUTES][$locale]['meta_description']);
+
+            $formData[ProductFormAdd::SEO][$locale]['meta_title'] = '';
+            $formData[ProductFormAdd::SEO][$locale]['meta_keyword'] = '';
+            $formData[ProductFormAdd::SEO][$locale]['meta_description'] = '';
         }
 
         $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);

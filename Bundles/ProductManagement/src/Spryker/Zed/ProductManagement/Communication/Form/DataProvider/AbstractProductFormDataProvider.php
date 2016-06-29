@@ -126,7 +126,8 @@ class AbstractProductFormDataProvider
             ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields(),
             ProductFormAdd::ATTRIBUTE_GROUP => $this->getAttributeGroupDefaultFields(),
             ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields(),
-            ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields()
+            ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields(),
+            ProductFormAdd::SEO => $this->getSeoDefaultFields(),
         ];
     }
 
@@ -149,6 +150,24 @@ class AbstractProductFormDataProvider
      * @return array
      */
     public function getLocalizedAttributesDefaultFields()
+    {
+        $availableLocales = $this->localeFacade->getAvailableLocales();
+
+        $fields = [];
+        foreach ($availableLocales as $id => $code) {
+            $fields[$code] = [
+                ProductFormAdd::FIELD_NAME => null,
+                ProductFormAdd::FIELD_DESCRIPTION => null,
+            ];
+        }
+
+        return $fields;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSeoDefaultFields()
     {
         $availableLocales = $this->localeFacade->getAvailableLocales();
 

@@ -37,7 +37,7 @@ class ProductFormPrice extends AbstractType
      */
     public function getName()
     {
-        return 'productPrice';
+        return 'ProductFormPrice';
     }
 
     /**

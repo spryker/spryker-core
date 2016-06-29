@@ -42,7 +42,7 @@ class ProductFormAttributeGroup extends AbstractType
      */
     public function getName()
     {
-        return 'productAttributeGroup';
+        return 'ProductFormAttributeGroup';
     }
 
     /**

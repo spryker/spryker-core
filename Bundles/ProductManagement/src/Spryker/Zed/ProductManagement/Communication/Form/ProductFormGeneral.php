@@ -11,7 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ProductLocalizedForm extends AbstractType
+class ProductFormGeneral extends AbstractType
 {
 
     const FIELD_NAME = 'name';
@@ -22,7 +22,7 @@ class ProductLocalizedForm extends AbstractType
      */
     public function getName()
     {
-        return 'localizedProduct';
+        return 'ProductFormGeneral';
     }
 
     /**

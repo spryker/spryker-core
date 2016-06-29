@@ -34,11 +34,17 @@
         <li class="active"><a href="#tab_general" data-toggle="tab">General</a></li>
         <li class=""><a href="#tab_concrete" data-toggle="tab">Product Matrix</a></li>
         <li class=""><a href="#tab_attribute" data-toggle="tab">Attributes</a></li>
-        <li class=""><a href="#tab_price_and_stock" data-toggle="tab">Price & Stock</a></li>
+        <li class=""><a href="#tab_price_and_stock" data-toggle="tab">Default Price & Stock</a></li>
+        <li class=""><a href="#tab_seo" data-toggle="tab">SEO</a></li>
     </ul>
     <div class="tab-content">
         {# ============================ GENERAL ============================ #}
         <div id="tab_general" class="tab-pane active">
+            <div class="panel-body">
+                <h3>Lorem ipsum sku name</h3>
+                <p>Lorem ipsum locales, lorem sku and description</p>
+            </div>
+
             <div class="panel-body">
                 <div class="well">
                     {{ form_row(form.sku) }}
@@ -72,8 +78,10 @@
 
                             <div id="content_{{ locale }}" class="tab-pane {{ active }}">
                                 <div class="panel-body">
-                                    {{ form_errors(localizedAttributes.name) }}
-                                    {{ form_row(localizedAttributes.name) }}
+                                    <div class="well">
+                                        {{ form_errors(localizedAttributes.name) }}
+                                        {{ form_row(localizedAttributes.name) }}
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -84,13 +92,16 @@
         </div>
         {# ============================ END ============================ #}
 
-        {# ============================ CONRETE ============================ #}
+        {# ============================ CONRETE / MATRIX ============================ #}
         <div id="tab_concrete" class="tab-pane">
             <div class="panel-body">
-            <div class="well">
                 <h3>Manage product attributes and variants</h3>
+                <p>Lorem ipsum attributes, lorem values ipusm variants.</p>
                 <p><i>Note: Editing generated variants by adding or removing attributes, leads to the creation of new variants. Current configurations must be recreated.</i></p>
+            </div>
 
+            <div class="panel-body">
+                <div class="well">
                 <div class="tabs-container">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab_conrete_attributes" data-toggle="tab">Attributes</a></li>
@@ -212,8 +223,8 @@
         <div id="tab_price_and_stock" class="tab-pane">
             {{ form_errors(form.price_and_stock) }}
             <div class="panel-body">
-                <h3>Default Price & Tax</h3>
-                <p>Assign a price and a tax to your product.</p>
+                <h3>Price & Tax</h3>
+                <p>Assign default price and a tax rate and edit individually afterwards if necessary.</p>
                 <div class="well">
                     {{ form_row(form.price_and_stock.price) }}
                     {{ form_row(form.price_and_stock.tax_rate) }}
@@ -221,10 +232,72 @@
             </div>
 
             <div class="panel-body">
-                <h3>Default for your variants</h3>
-                <p>Assign a default stock to your variant and edit individually afterwards if necessary.</p>
+                <h3>Stock</h3>
+                <p>Assign default stock and edit individually afterwards if necessary.</p>
                 <div class="well">
                     {{ form_row(form.price_and_stock.stock) }}
+                </div>
+            </div>
+        </div>
+        {# ============================ END ============================ #}
+
+        {# ============================ SEO ============================ #}
+        <div id="tab_seo" class="tab-pane">
+            {{ form_errors(form.seo) }}
+            <div class="panel-body">
+                <h3>Search Engine Optimization</h3>
+                <p>Search engine optimization (SEO) is the process of affecting the visibility of a website or a web page in a web search engine's unpaid results — often referred to as "natural," "organic," or "earned" results.</p>
+            </div>
+
+            <div class="panel-body">
+                <div class="well">
+                    <h3>Meta Information</h3>
+                    <p>Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.</p>
+
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            {% for locale,seoData in form.seo %}
+                                {% set activeCss = '' %}
+                                {% set invalidCss = '' %}
+
+                                {% if currentLocale == locale %}
+                                    {% set activeCss =  'active' %}
+                                {% endif %}
+
+                                {% if errors.seo is defined %}
+                                    {% if locale in errors.seo|keys %}
+                                        {% set invalidCss = 'invalid-tab' %}
+                                    {% endif %}
+                                {% endif %}
+
+                                <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_seo_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="tab-content">
+                            {% for locale,seoData in form.seo %}
+                                {% set active = '' %}
+                                {% if currentLocale == locale %}
+                                    {% set active = 'active' %}
+                                {% endif %}
+
+                                <div id="content_seo_{{ locale }}" class="tab-pane {{ active }}">
+                                    <div class="panel-body">
+                                        <div class="well">
+                                            {{ form_errors(seoData.meta_title) }}
+                                            {{ form_row(seoData.meta_title) }}
+
+                                            {{ form_errors(seoData.meta_keyword) }}
+                                            {{ form_row(seoData.meta_keyword) }}
+
+                                            {{ form_errors(seoData.meta_description) }}
+                                            {{ form_row(seoData.meta_description) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
