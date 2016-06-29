@@ -26,10 +26,17 @@ class ProductFormPrice extends AbstractType
     protected $validationGroup;
 
     /**
+     * @var array
+     */
+    protected $taxCollection;
+
+    /**
+     * @param array $taxCollection
      * @param string $validationGroup
      */
-    public function __construct($validationGroup)
+    public function __construct(array $taxCollection,$validationGroup)
     {
+        $this->taxCollection = $taxCollection;
         $this->validationGroup = $validationGroup;
     }
 
@@ -96,9 +103,11 @@ class ProductFormPrice extends AbstractType
      */
     protected function addTaxRateField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_TAX_RATE, 'text', [
+        $builder->add(self::FIELD_TAX_RATE, new Select2ComboBoxType(), [
             'label' => 'Tax',
             'required' => true,
+            'choices' => $this->taxCollection,
+            'placeholder' => '-',
             'constraints' => [
                 new NotBlank(),
             ],

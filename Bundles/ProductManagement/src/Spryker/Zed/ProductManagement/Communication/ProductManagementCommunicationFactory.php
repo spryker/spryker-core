@@ -115,6 +115,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxInterface
+     */
+    public function getTaxFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_TAX);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface
      */
     public function getProductManagementFacade()
@@ -147,9 +155,17 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getProductTaxCollection()
     {
-        return [
-            '1' => '19%'
-        ];
+        $taxes = $this->getTaxFacade()->getTaxRates();
+        $taxes = $taxes->getTaxRates();
+
+        $result = [];
+        foreach ($taxes as $tax) {
+            $result[$tax->getIdTaxRate()] = $tax->getName();
+        }
+
+        asort($result, SORT_NATURAL | SORT_STRING);
+
+        return $result;
     }
 
 }

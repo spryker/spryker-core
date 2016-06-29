@@ -234,7 +234,7 @@ class ProductFormAdd extends AbstractType
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRICE_AND_STOCK, new ProductFormPrice(self::VALIDATION_GROUP_PRICE_AND_STOCK), [
+            ->add(self::PRICE_AND_STOCK, new ProductFormPrice($options, self::VALIDATION_GROUP_PRICE_AND_STOCK), [
                 'label' => 'Price & Stock',
                 'constraints' => [new Callback([
                     'methods' => [
