@@ -235,4 +235,9 @@ class AddController extends AbstractController
         return $values;
     }
 
+    protected function normalizeConcreteProductsAttributes()
+    {
+        
+    }
+
 }
