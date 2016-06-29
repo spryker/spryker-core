@@ -15,7 +15,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface;
-use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
