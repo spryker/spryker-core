@@ -11,6 +11,7 @@ use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductFormPrice extends AbstractType
 {
@@ -79,6 +80,10 @@ class ProductFormPrice extends AbstractType
     {
         $builder->add(self::FIELD_PRICE, 'text', [
             'label' => 'Price',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
 
         return $this;
@@ -93,6 +98,10 @@ class ProductFormPrice extends AbstractType
     {
         $builder->add(self::FIELD_TAX_RATE, 'text', [
             'label' => 'Tax',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
 
         return $this;
@@ -107,6 +116,10 @@ class ProductFormPrice extends AbstractType
     {
         $builder->add(self::FIELD_STOCK, 'text', [
             'label' => 'Stock',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
 
         return $this;

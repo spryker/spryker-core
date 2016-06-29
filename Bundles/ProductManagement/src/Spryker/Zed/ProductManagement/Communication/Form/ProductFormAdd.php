@@ -34,6 +34,7 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_ATTRIBUTE_VALUES = 'validation_group_attribute_values';
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
+    const VALIDATION_GROUP_GENERAL = 'validation_group_general';
 
     /**
      * @return string
@@ -62,6 +63,7 @@ class ProductFormAdd extends AbstractType
             'validation_groups' => function (FormInterface $form) {
                 return [
                     Constraint::DEFAULT_GROUP,
+                    self::VALIDATION_GROUP_GENERAL,
                     self::VALIDATION_GROUP_ATTRIBUTES,
                     self::VALIDATION_GROUP_ATTRIBUTE_VALUES,
                     self::VALIDATION_GROUP_PRICE_AND_STOCK,
@@ -120,7 +122,28 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::LOCALIZED_ATTRIBUTES, 'collection', [
-                'type' => new ProductFormGeneral()
+                'type' => new ProductFormGeneral(),
+                'constraints' => [new Callback([
+                    'methods' => [
+                        function ($dataToValidate, ExecutionContextInterface $context) {
+                            $selectedAttributes = [];
+                            foreach ($dataToValidate as $locale => $localizedData) {
+                                foreach ($localizedData as $key => $value) {
+                                    if (!empty($value)) {
+                                        $selectedAttributes[] = $value;
+                                        break;
+                                        break 2;
+                                    }
+                                }
+                            }
+
+                            if (empty($selectedAttributes)) {
+                                $context->addViolation('Please enter at least Sku and Name of the product');
+                            }
+                        },
+                    ],
+                    'groups' => [self::VALIDATION_GROUP_GENERAL]
+                ])]
             ]);
 
         return $this;
@@ -148,11 +171,12 @@ class ProductFormAdd extends AbstractType
                             foreach ($attributes as $type => $valueSet) {
                                 if (!empty($valueSet['value'])) {
                                     $selectedAttributes[] = $valueSet['value'];
+                                    break;
                                 }
                             }
 
                             if (empty($selectedAttributes)) {
-                                $context->addViolation('Please select at least one attribute');
+                                $context->addViolation('Please select at least one attribute group');
                             }
                         },
                     ],
@@ -185,6 +209,7 @@ class ProductFormAdd extends AbstractType
                             foreach ($attributes as $type => $valueSet) {
                                 if (!empty($valueSet['value'])) {
                                     $selectedAttributes[] = $valueSet['value'];
+                                    break;
                                 }
                             }
 
@@ -213,16 +238,17 @@ class ProductFormAdd extends AbstractType
                 'label' => 'Price & Stock',
                 'constraints' => [new Callback([
                     'methods' => [
-                        function ($attributes, ExecutionContextInterface $context) {
-                            $selectedAttributes = [];
-                            foreach ($attributes as $type => $valueSet) {
-                                if (!empty($valueSet['value'])) {
-                                    $selectedAttributes[] = $valueSet['value'];
+                        function ($dataToValidate, ExecutionContextInterface $context) {
+                            $expectedCount = count($dataToValidate);
+                            $validatedCount = 0;
+                            foreach ($dataToValidate as $name => $value) {
+                                if (!empty($value)) {
+                                    $validatedCount++;
                                 }
                             }
 
-                            if (empty($selectedAttributes)) {
-                                $context->addViolation('Please enter price & stock information');
+                            if ($expectedCount != $validatedCount) {
+                                $context->addViolation('Please enter Price & Stock information');
                             }
                         },
                     ],
@@ -256,7 +282,7 @@ class ProductFormAdd extends AbstractType
                             }
 
                             if (empty($selectedAttributes)) {
-                                $context->addViolation('Please enter meta information');
+                                //$context->addViolation('Please enter meta information');
                             }
                         },
                     ],
