@@ -61,17 +61,19 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @param string $itemType
      * @param string $itemId
-     * @param string $itemEvent
+     * @param string $itemEvent|null
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
-    public function queryUpdateTouchEntry($itemType, $itemId, $itemEvent)
+    public function queryUpdateTouchEntry($itemType, $itemId, $itemEvent = null)
     {
         $query = $this->getFactory()->createTouchQuery();
         $query
             ->filterByItemType($itemType)
-            ->filterByItemId($itemId)
-            ->filterByItemEvent($itemEvent);
+            ->filterByItemId($itemId);
+
+        if ($itemEvent !== null)
+            $query->filterByItemEvent($itemEvent);
 
         return $query;
     }
