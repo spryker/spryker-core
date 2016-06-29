@@ -21,6 +21,10 @@
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR"/>
+        <column name="description" required="false" type="LONGVARCHAR" default="NULL" />
+        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255" />
+        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL" />
+        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL" />
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <foreign-key name="spy_product_abstract_localized_attributes-fk_product_abstract" foreignTable="spy_product_abstract" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
@@ -57,6 +61,7 @@
         <column name="fk_product" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR"/>
+        <column name="description" required="false" type="LONGVARCHAR" default="NULL" />
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="is_complete" required="false" defaultValue="true" type="BOOLEAN"/>
         <foreign-key name="spy_product_localized_attributes-fk_product" foreignTable="spy_product" onDelete="CASCADE" onUpdate="CASCADE">

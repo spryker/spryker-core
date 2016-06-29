@@ -28,6 +28,10 @@
     <transfer name="LocalizedAttributes">
         <property name="locale" type="Locale" />
         <property name="name" type="string" />
+        <property name="description" type="string" />
+        <property name="metaTitle" type="string" />
+        <property name="metaDescription" type="string" />
+        <property name="metaKeywords" type="string" />
         <property name="attributes" type="array" singular="attribute" />
     </transfer>
 
