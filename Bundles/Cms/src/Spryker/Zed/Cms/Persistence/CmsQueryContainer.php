@@ -538,9 +538,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    public function queryLocalById($idLocale)
+    public function queryLocaleById($idLocale)
     {
-        return $this->getFactory()->createLocalQuery()->queryLocales()->filterByIdLocale($idLocale);
+        return $this->getFactory()->createLocaleQuery()->queryLocales()->filterByIdLocale($idLocale);
     }
 
 }

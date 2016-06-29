@@ -111,7 +111,7 @@ class PageController extends AbstractController
 
             $pageTransfer = $this->createPageTransfer($data);
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
-            $localeTransfer = $this->getLocalTransfer($idPage);
+            $localeTransfer = $this->getLocaleTransfer($idPage);
 
             $this->getFacade()->touchPageActive($pageTransfer, $localeTransfer);
 
@@ -233,7 +233,7 @@ class PageController extends AbstractController
         $data[CmsPageForm::FIELD_IS_ACTIVE] = $isActive;
 
         $pageTransfer = $this->createPageTransfer($data);
-        $localeTransfer = $this->getLocalTransfer($idPage);
+        $localeTransfer = $this->getLocaleTransfer($idPage);
 
         $this->getFacade()->savePage($pageTransfer);
         $this->getFacade()->touchPageActive($pageTransfer, $localeTransfer);
@@ -244,7 +244,7 @@ class PageController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer|null
      */
-    protected function getLocalTransfer($idPage)
+    protected function getLocaleTransfer($idPage)
     {
         $localeTransfer = null;
         $cmsPageEntity = $this->getQueryContainer()->queryPageById($idPage)->findOne();

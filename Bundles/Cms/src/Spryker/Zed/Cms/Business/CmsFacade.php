@@ -114,16 +114,16 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping, LocaleTransfer $locale = null)
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, LocaleTransfer $localeTransfer = null)
     {
         $glossaryKeyMappingManager = $this->getFactory()->createGlossaryKeyMappingManager();
 
-        return $glossaryKeyMappingManager->savePageKeyMappingAndTouch($pageKeyMapping, $locale);
+        return $glossaryKeyMappingManager->savePageKeyMappingAndTouch($pageKeyMappingTransfer, $localeTransfer);
     }
 
     /**
@@ -261,14 +261,14 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $locale = null)
+    public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $localeTransfer = null)
     {
         $pageManager = $this->getFactory()->createPageManager();
-        $pageManager->touchPageActive($pageTransfer, $locale);
+        $pageManager->touchPageActive($pageTransfer, $localeTransfer);
     }
 
     /**

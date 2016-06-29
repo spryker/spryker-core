@@ -153,17 +153,19 @@ interface TranslationManagerInterface
     /**
      * @param int $idKey
      *
+     * @deprecated Use touchTranslationForKeyId($idKey, $localeTransfer) instead.
+     *
      * @return void
      */
     public function touchCurrentTranslationForKeyId($idKey);
 
     /**
      * @param int $idKey
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function touchTranslationForKeyId($idKey, LocaleTransfer $locale);
+    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer

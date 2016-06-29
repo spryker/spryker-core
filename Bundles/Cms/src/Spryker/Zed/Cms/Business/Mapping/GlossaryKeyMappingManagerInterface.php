@@ -27,7 +27,7 @@ interface GlossaryKeyMappingManagerInterface
     public function translatePlaceholder($idPage, $placeholder, array $data = []);
 
     /**
-     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
@@ -36,18 +36,18 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping);
+    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping, LocaleTransfer $locale = null);
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, LocaleTransfer $localeTransfer = null);
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      * @param string $value
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -55,10 +55,10 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $page, $placeholder, $value, LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true);
+    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value, LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true);
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
@@ -67,7 +67,7 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return bool
      */
-    public function deletePageKeyMapping(PageTransfer $page, $placeholder);
+    public function deletePageKeyMapping(PageTransfer $pageTransfer, $placeholder);
 
     /**
      * @param int $idPage

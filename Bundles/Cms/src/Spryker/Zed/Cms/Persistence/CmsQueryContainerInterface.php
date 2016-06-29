@@ -176,6 +176,6 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery
      */
-    public function queryLocalById($idLocale);
+    public function queryLocaleById($idLocale);
 
 }

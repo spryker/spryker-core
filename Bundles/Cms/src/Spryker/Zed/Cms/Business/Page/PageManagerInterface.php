@@ -16,7 +16,7 @@ interface PageManagerInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
@@ -25,7 +25,7 @@ interface PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    public function savePage(PageTransfer $page);
+    public function savePage(PageTransfer $pageTransfer);
 
     /**
      * @param int $idPage
@@ -37,19 +37,19 @@ interface PageManagerInterface
     public function getPageById($idPage);
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $page
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    public function convertPageEntityToTransfer(SpyCmsPage $page);
+    public function convertPageEntityToTransfer(SpyCmsPage $pageEntity);
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $page, LocaleTransfer $locale = null);
+    public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $localeTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
@@ -70,7 +70,7 @@ interface PageManagerInterface
     public function updatePageUrl(PageTransfer $pageTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -78,7 +78,7 @@ interface PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createPageUrlWithLocale(PageTransfer $page, $url, LocaleTransfer $localeTransfer);
+    public function createPageUrlWithLocale(PageTransfer $pageTransfer, $url, LocaleTransfer $localeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
@@ -88,11 +88,11 @@ interface PageManagerInterface
     public function savePageUrlAndTouch(PageTransfer $pageTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    public function savePageBlockAndTouch(PageTransfer $page, CmsBlockTransfer $blockTransfer);
+    public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer);
 
 }
