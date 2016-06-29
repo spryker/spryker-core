@@ -90,6 +90,7 @@ class AddressForm extends AbstractType
             'label' => 'Salutation',
             'placeholder' => '-select-',
             'choices' => $choices,
+            'required' => false,
         ]);
 
         return $this;
@@ -118,7 +119,7 @@ class AddressForm extends AbstractType
      */
     protected function addMiddleNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_MIDDLE_NAME, 'text');
+        $builder->add(self::FIELD_MIDDLE_NAME, 'text', ['required' => false]);
 
         return $this;
     }
@@ -148,9 +149,9 @@ class AddressForm extends AbstractType
     {
         $builder->add(self::FIELD_EMAIL, 'text', [
             'constraints' => [
-                new NotBlank(),
                 new Email(),
             ],
+            'required' => false,
         ]);
 
         return $this;
@@ -175,7 +176,7 @@ class AddressForm extends AbstractType
      */
     protected function addCompanyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_COMPANY, 'text');
+        $builder->add(self::FIELD_COMPANY, 'text', ['required' => false]);
 
         return $this;
     }
@@ -211,7 +212,7 @@ class AddressForm extends AbstractType
      */
     protected function addPoBoxField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PO_BOX, 'text');
+        $builder->add(self::FIELD_PO_BOX, 'text', ['required' => false]);
 
         return $this;
     }
@@ -223,7 +224,7 @@ class AddressForm extends AbstractType
      */
     protected function addPhoneField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PHONE, 'text');
+        $builder->add(self::FIELD_PHONE, 'text', ['required' => false]);
 
         return $this;
     }
@@ -235,7 +236,7 @@ class AddressForm extends AbstractType
      */
     protected function addCellPhoneField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CELL_PHONE, 'text');
+        $builder->add(self::FIELD_CELL_PHONE, 'text', ['required' => false]);
 
         return $this;
     }
@@ -247,7 +248,7 @@ class AddressForm extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DESCRIPTION, 'text');
+        $builder->add(self::FIELD_DESCRIPTION, 'text', ['required' => false]);
 
         return $this;
     }
@@ -259,7 +260,7 @@ class AddressForm extends AbstractType
      */
     protected function addCommentField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_COMMENT, 'textarea');
+        $builder->add(self::FIELD_COMMENT, 'textarea', ['required' => false]);
 
         return $this;
     }
