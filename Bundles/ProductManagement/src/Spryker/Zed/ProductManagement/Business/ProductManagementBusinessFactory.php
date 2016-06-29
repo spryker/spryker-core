@@ -28,7 +28,8 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
             $this->getProductQueryContainer(),
             $this->getTouchFacade(),
             $this->getUrlFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getPriceFacade()
         );
     }
 
@@ -70,6 +71,14 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function getUrlFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     */
+    protected function getPriceFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE);
     }
 
     /**

@@ -17,6 +17,7 @@ use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Spryker\Shared\Library\Json;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductTransferGenerator;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
@@ -64,6 +65,11 @@ class ProductManager implements ProductManagerInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     */
+    protected $priceFacade;
+
+    /**
      * @var \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
     protected $productAbstractCollectionBySkuCache = [];
@@ -83,13 +89,15 @@ class ProductManager implements ProductManagerInterface
         ProductQueryContainerInterface $productQueryContainer,
         ProductManagementToTouchInterface $touchFacade,
         ProductManagementToUrlInterface $urlFacade,
-        ProductManagementToLocaleInterface $localeFacade
+        ProductManagementToLocaleInterface $localeFacade,
+        ProductManagementToPriceInterface $priceFacade
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->urlFacade = $urlFacade;
         $this->localeFacade = $localeFacade;
         $this->attributeManager = $attributeManager;
+        $this->priceFacade = $priceFacade;
     }
 
     /**
@@ -363,7 +371,6 @@ class ProductManager implements ProductManagerInterface
         $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
         $this->createProductConcreteLocalizedAttributes($productConcreteTransfer);
-        $this->loadTaxRate($productConcreteTransfer);
 
         return $idProductConcrete;
     }
@@ -695,22 +702,42 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function loadTaxRate(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $taxSetEntity = $this->productQueryContainer
+            ->queryTaxSetForProductAbstract($productAbstractTransfer->getIdProductAbstract())
+            ->findOne();
+
+        if ($taxSetEntity === null) {
+            return $productAbstractTransfer;
+        }
+
+        $effectiveTaxRate = $this->getEffectiveTaxRate($taxSetEntity->getSpyTaxRates());
+        $productAbstractTransfer->setTaxRate($effectiveTaxRate);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
      */
-    protected function loadTaxRate(ZedProductConcreteTransfer $productConcreteTransfer)
+    protected function loadPriceForProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
     {
-        $taxSetEntity = $this->productQueryContainer
-            ->queryTaxSetForProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->findOne();
+        $priceTransfer = $this->priceFacade->getProductConcretePrice(
+            $productConcreteTransfer->getIdProductConcrete()
+        );
 
-        if ($taxSetEntity === null) {
+        if ($priceTransfer === null) {
             return $productConcreteTransfer;
         }
 
-        $effectiveTaxRate = $this->getEffectiveTaxRate($taxSetEntity->getSpyTaxRates());
-        $productConcreteTransfer->setTaxRate($effectiveTaxRate);
+        $productConcreteTransfer->setPrice($priceTransfer);
 
         return $productConcreteTransfer;
     }
@@ -760,6 +787,8 @@ class ProductManager implements ProductManagerInterface
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
 
         $productAbstractTransfer = $this->loadProductAbstractLocalizedAttributes($productAbstractTransfer);
+
+        $this->loadTaxRate($productAbstractTransfer);
 
         return $productAbstractTransfer;
     }
@@ -814,7 +843,7 @@ class ProductManager implements ProductManagerInterface
         $productTransfer = $transferGenerator->convertProduct($productEntity);
 
         $productTransfer = $this->loadProductConcreteLocalizedAttributes($productTransfer);
-        $this->loadTaxRate($productTransfer);
+        $this->loadPriceForProductConcrete($productTransfer);
 
         return $productTransfer;
     }
@@ -999,7 +1028,7 @@ class ProductManager implements ProductManagerInterface
 
         for ($a=0; $a<count($transferCollection); $a++) {
             $transferCollection[$a] = $this->loadProductConcreteLocalizedAttributes($transferCollection[$a]);
-            $transferCollection[$a] = $this->loadTaxRate($transferCollection[$a]);
+            $transferCollection[$a] = $this->loadPriceForProductConcrete($transferCollection[$a]);
         }
 
         return $transferCollection;

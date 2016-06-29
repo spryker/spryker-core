@@ -12,6 +12,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
@@ -31,7 +32,7 @@ class AbstractProductFormDataProvider
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface
      */
     protected $localeFacade;
 
@@ -44,6 +45,11 @@ class AbstractProductFormDataProvider
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
     protected $productFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     */
+    protected $priceFacade;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface
@@ -69,6 +75,7 @@ class AbstractProductFormDataProvider
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
+        ProductManagementToPriceInterface $priceFacade,
         ProductFacadeInterface $productFacade,
         ProductManagementFacadeInterface $productManagementFacade,
         ProductManagementToLocaleInterface $localeFacade,
@@ -79,6 +86,7 @@ class AbstractProductFormDataProvider
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
         $this->localeFacade = $localeFacade;
+        $this->priceFacade = $priceFacade;
         $this->productFacade = $productFacade;
         $this->productManagementFacade = $productManagementFacade;
         $this->locale = $localeFacade->getCurrentLocale();

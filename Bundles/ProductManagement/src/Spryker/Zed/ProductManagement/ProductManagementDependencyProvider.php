@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlBridge;
@@ -24,6 +25,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_URL = 'FACADE_URL';
     const FACADE_TAX = 'FACADE_TAX';
+    const FACADE_PRICE = 'FACADE_PRICE';
 
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
@@ -58,6 +60,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_TAX] = function (Container $container) {
             return new ProductManagementToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
+        $container[self::FACADE_PRICE] = function (Container $container) {
+            return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
         };
 
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
@@ -100,6 +106,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_TAX] = function (Container $container) {
             return new ProductManagementToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
+        $container[self::FACADE_PRICE] = function (Container $container) {
+            return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
         };
 
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {

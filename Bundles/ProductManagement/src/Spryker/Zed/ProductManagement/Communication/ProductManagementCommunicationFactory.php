@@ -56,6 +56,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductFormAddDataProvider(
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
+            $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
@@ -73,6 +74,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductFormEditDataProvider(
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
+            $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
@@ -104,6 +106,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     */
+    public function getPriceFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE);
     }
 
     /**

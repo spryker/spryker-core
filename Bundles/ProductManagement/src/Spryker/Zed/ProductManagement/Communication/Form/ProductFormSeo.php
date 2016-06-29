@@ -18,6 +18,8 @@ class ProductFormSeo extends AbstractType
     const FIELD_META_KEYWORD = 'meta_keyword';
     const FIELD_META_DESCRIPTION = 'meta_description';
 
+    const ATTRIBUTES = 'attributes';
+
     /**
      * @return string
      */
