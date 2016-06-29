@@ -43,6 +43,32 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     /**
      * @api
      *
+     * @param int $idAbstractProduct
+     * @param null $priceType
+     *
+     * @return \Generated\Shared\Transfer\PriceProductAbstractTransfer|null
+     */
+    public function getProductAbstractPrice($idAbstractProduct, $priceType = null)
+    {
+        return $this->getFactory()->createReaderModel()->getProductAbstractPrice($idAbstractProduct, $priceType);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     * @param null $priceType
+     *
+     * @return \Generated\Shared\Transfer\PriceProductConcreteTransfer|null
+     */
+    public function getProductConcretePrice($idProduct, $priceType = null)
+    {
+        return $this->getFactory()->createReaderModel()->getProductConcretePrice($idProduct, $priceType);
+    }
+
+    /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceType

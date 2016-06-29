@@ -62,6 +62,16 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
 
     /**
      * @api
+
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryPriceProduct()
+    {
+        return $this->getFactory()->createPriceProductQuery();
+    }
+
+    /**
+     * @api
      *
      * @param string $sku
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType

@@ -33,6 +33,26 @@ interface PriceFacadeInterface
     /**
      * @api
      *
+     * @param int $idAbstractProduct
+     * @param null $priceType
+     *
+     * @return \Generated\Shared\Transfer\PriceProductAbstractTransfer|null
+     */
+    public function getProductAbstractPrice($idAbstractProduct, $priceType = null);
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     * @param null $priceType
+     *
+     * @return \Generated\Shared\Transfer\PriceProductConcreteTransfer|null
+     */
+    public function getProductConcretePrice($idProduct, $priceType = null);
+
+    /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceType

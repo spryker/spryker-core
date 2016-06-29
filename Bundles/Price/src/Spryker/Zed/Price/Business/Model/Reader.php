@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
+use Generated\Shared\Transfer\PriceProductAbstractTransfer;
+use Generated\Shared\Transfer\PriceProductConcreteTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
@@ -84,6 +86,64 @@ class Reader implements ReaderInterface
         $priceEntity = $this->getPriceEntity($sku, $this->getPriceTypeByName($priceTypeName));
 
         return $priceEntity->getPrice();
+    }
+
+    /**
+     * @param int $idAbstractProduct
+     * @param string|null $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceProductAbstractTransfer|null
+     */
+    public function getProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
+    {
+        $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
+        $priceEntity = $this->queryContainer
+            ->queryPriceProduct()
+            ->filterByFkProductAbstract($idAbstractProduct)
+            ->filterByPriceType($this->getPriceTypeByName($priceTypeName))
+            ->findOne();
+
+        if (!$priceEntity) {
+            return null;
+        }
+
+        $priceTransfer = (new PriceProductAbstractTransfer())
+            ->setIdPriceProduct($priceEntity->getIdPriceProduct())
+            ->setFkProductAbstract($idAbstractProduct)
+            ->setPrice($priceEntity->getPrice())
+            ->setPriceTypeName($priceTypeName);
+
+        return $priceTransfer;
+    }
+
+    /**
+     * @param int $idProduct
+     * @param string|null $priceTypeName
+     *
+     * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\PriceProductConcreteTransfer|null
+     */
+    public function getProductConcretePrice($idProduct, $priceTypeName = null)
+    {
+        $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
+        $priceEntity = $this->queryContainer
+            ->queryPriceProduct()
+            ->filterByFkProduct($idProduct)
+            ->filterByPriceType($this->getPriceTypeByName($priceTypeName))
+            ->findOne();
+
+        if (!$priceEntity) {
+            return null;
+        }
+
+        $priceTransfer = (new PriceProductConcreteTransfer())
+            ->setIdPriceProduct($priceEntity->getIdPriceProduct())
+            ->setFkProduct($idProduct)
+            ->setPrice($priceEntity->getPrice())
+            ->setPriceTypeName($priceTypeName);
+
+        return $priceTransfer;
     }
 
     /**
