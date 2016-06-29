@@ -165,6 +165,7 @@ class MethodForm extends AbstractType
             'label' => 'Price Plugin',
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
+            'required' => false,
         ]);
 
         return $this;
@@ -181,6 +182,7 @@ class MethodForm extends AbstractType
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
+            'required' => false,
         ]);
 
         return $this;
@@ -192,7 +194,9 @@ class MethodForm extends AbstractType
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox');
+        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox', [
+            'required' => false,
+        ]);
 
         return $this;
     }
