@@ -17,4 +17,11 @@ interface SalesToCountryInterface
      */
     public function getIdCountryByIso2Code($iso2Code);
 
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     */
+    public function getAvailableCountries();
+
 }

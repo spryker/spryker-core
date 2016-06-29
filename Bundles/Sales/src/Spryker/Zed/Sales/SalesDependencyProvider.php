@@ -76,6 +76,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             return (new Pimple())->getApplication()['dateFormatter'];
         };
 
+        $container[self::FACADE_COUNTRY] = function (Container $container) {
+            return new SalesToCountryBridge($container->getLocator()->country()->facade());
+        };
+
         return $container;
     }
 
