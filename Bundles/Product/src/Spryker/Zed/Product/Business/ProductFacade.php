@@ -78,20 +78,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return float
-     */
-    public function getEffectiveTaxRateForProductConcrete($sku)
-    {
-        return $this->getFactory()->createProductManager()->getEffectiveTaxRateForProductConcrete($sku);
-    }
-
-    /**
-     * @api
-     *
      * @param string $attributeName
      *
      * @return bool

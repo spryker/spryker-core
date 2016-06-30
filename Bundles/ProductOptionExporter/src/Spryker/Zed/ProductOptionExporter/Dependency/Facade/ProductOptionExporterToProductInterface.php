@@ -17,11 +17,4 @@ interface ProductOptionExporterToProductInterface
      */
     public function getProductConcreteIdBySku($sku);
 
-    /**
-     * @param string $sku
-     *
-     * @return float
-     */
-    public function getEffectiveTaxRateForProductConcrete($sku);
-
 }

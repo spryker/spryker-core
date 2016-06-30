@@ -126,7 +126,6 @@ class ExportProcessor implements ExportProcessorInterface
                 'id' => (int)$typeUsage['idTypeUsage'],
                 'label' => $typeUsage['label'],
                 'isOptional' => (bool)$typeUsage['isOptional'],
-                'taxRate' => $this->processOptionTaxRate($sku, $typeUsage['idTypeUsage']),
                 'excludes' => $this->processTypeExclusions($typeUsage['idTypeUsage']),
                 'values' => $this->processValuesForTypeUsage($typeUsage['idTypeUsage'], $idLocale),
             ];
@@ -149,24 +148,6 @@ class ExportProcessor implements ExportProcessorInterface
         }
 
         return $excludes;
-    }
-
-    /**
-     * @param string $sku
-     * @param int $idProductAttributeTypeUsage
-     *
-     * @return float
-     */
-    protected function processOptionTaxRate($sku, $idProductAttributeTypeUsage)
-    {
-        $typeUsageTaxRate = $this->productOptionFacade->getEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage);
-
-        if ($typeUsageTaxRate === null) {
-            $typeUsageTaxRate = $this->productFacade
-               ->getEffectiveTaxRateForProductConcrete($sku);
-        }
-
-        return (float)$typeUsageTaxRate;
     }
 
     /**

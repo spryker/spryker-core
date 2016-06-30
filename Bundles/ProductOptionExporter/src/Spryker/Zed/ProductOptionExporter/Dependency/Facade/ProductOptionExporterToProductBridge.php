@@ -33,14 +33,4 @@ class ProductOptionExporterToProductBridge implements ProductOptionExporterToPro
         return $this->productFacade->getProductConcreteIdBySku($sku);
     }
 
-    /**
-     * @param string $sku
-     *
-     * @return float
-     */
-    public function getEffectiveTaxRateForProductConcrete($sku)
-    {
-        return $this->productFacade->getEffectiveTaxRateForProductConcrete($sku);
-    }
-
 }
