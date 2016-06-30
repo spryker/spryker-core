@@ -3,7 +3,7 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Unit": "tests/",
+      "Unit": "tests/"
     }
   },
   "require": {
