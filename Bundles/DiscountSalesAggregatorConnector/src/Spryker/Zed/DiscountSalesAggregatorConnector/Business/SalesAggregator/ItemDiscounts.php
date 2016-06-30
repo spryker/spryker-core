@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -63,7 +64,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
 
         return $this->discountQueryContainer
             ->querySalesDiscount()
-            ->filterByFkSalesOrderItem($saleOrderItemIds)
+            ->filterByFkSalesOrderItem($saleOrderItemIds, Criteria::IN)
             ->find();
     }
 
