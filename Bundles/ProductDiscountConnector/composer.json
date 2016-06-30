@@ -12,7 +12,7 @@
   },
   "require": {
     "spryker/product": "^2.0.0",
-    "spryker/discount": "^2.0.0"
+    "spryker/discount": "^3.0.0"
   },
   "description": "product discount connector bundle",
   "license": "proprietary",
