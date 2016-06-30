@@ -165,15 +165,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getProductTaxCollection()
     {
-        $taxes = $this->getTaxFacade()->getTaxRates();
-        $taxes = $taxes->getTaxRates();
+        $taxSet = $this->getTaxFacade()->getTaxSets();
+        $taxSet = $taxSet->getTaxSets();
 
         $result = [];
-        foreach ($taxes as $tax) {
-            $result[$tax->getIdTaxRate()] = $tax->getName();
+        foreach ($taxSet as $tax) {
+            $result[$tax->getIdTaxSet()] = $tax->getName();
         }
-
-        asort($result, SORT_NATURAL | SORT_STRING);
 
         return $result;
     }

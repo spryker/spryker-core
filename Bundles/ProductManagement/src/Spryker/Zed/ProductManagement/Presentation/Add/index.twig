@@ -101,6 +101,7 @@
                 <h3>Manage product attributes and variants</h3>
                 <p>Lorem ipsum attributes, lorem values ipusm variants.</p>
                 <p><i>Note: Editing generated variants by adding or removing attributes, leads to the creation of new variants. Current configurations must be recreated.</i></p>
+                <br/>
 
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default collapsed">
@@ -222,6 +223,7 @@
                                 <th>{{ attributeGroupLabel }}</th>
                             {% endfor %}
                         {% endfor %}
+                        <th class="center">Stock</th>
                         <th class="no-sort">Action</th>
                     </tr>
                     </thead>
@@ -237,6 +239,7 @@
                                     <td>-</td>
                                 {% endif %}
                             {% endfor %}
+                            <td class="center">ss</td>
                             <td class="center no-sort">[activate]</td>
                         </tr>
                     {% endfor %}

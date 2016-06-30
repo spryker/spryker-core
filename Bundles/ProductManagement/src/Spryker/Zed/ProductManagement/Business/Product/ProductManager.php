@@ -716,8 +716,7 @@ class ProductManager implements ProductManagerInterface
             return $productAbstractTransfer;
         }
 
-        $effectiveTaxRate = $this->getEffectiveTaxRate($taxSetEntity->getSpyTaxRates());
-        $productAbstractTransfer->setTaxRate($effectiveTaxRate);
+        $productAbstractTransfer->setTaxSetId($taxSetEntity->getIdTaxSet());
 
         return $productAbstractTransfer;
     }
@@ -730,6 +729,28 @@ class ProductManager implements ProductManagerInterface
     protected function loadPriceForProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
     {
         $priceTransfer = $this->priceFacade->getProductConcretePrice(
+            $productConcreteTransfer->getIdProductConcrete()
+        );
+
+        if ($priceTransfer === null) {
+            return $productConcreteTransfer;
+        }
+
+        $productConcreteTransfer->setPrice($priceTransfer);
+
+        return $productConcreteTransfer;
+    }
+    
+    /**
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     */
+    protected function loadStockForProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $productConcreteTransfer;
+
+        $priceTransfer = $this->stockFacade->getProductConcretePrice(
             $productConcreteTransfer->getIdProductConcrete()
         );
 
@@ -1029,6 +1050,7 @@ class ProductManager implements ProductManagerInterface
         for ($a=0; $a<count($transferCollection); $a++) {
             $transferCollection[$a] = $this->loadProductConcreteLocalizedAttributes($transferCollection[$a]);
             $transferCollection[$a] = $this->loadPriceForProductConcrete($transferCollection[$a]);
+            $transferCollection[$a] = $this->loadStockForProductConcrete($transferCollection[$a]);
         }
 
         return $transferCollection;

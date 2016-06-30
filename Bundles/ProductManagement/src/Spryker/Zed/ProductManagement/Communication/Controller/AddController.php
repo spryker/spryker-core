@@ -43,11 +43,12 @@ class AddController extends AbstractController
             )
             ->handleRequest($request);
 
+        $attributeGroupCollection = $this->getFactory()->getProductAttributeGroupCollection();
+        $attributeValuesCollection = $this->getFactory()->getProductAttributeCollection();
+
         if ($form->isValid()) {
             try {
-                $attributeCollection = $this->getFactory()->getProductAttributeGroupCollection();
-                $attributeValuesCollection = $this->getFactory()->getProductAttributeCollection();
-                $attributes = $this->convertAttributesFromData($form->getData(), $attributeCollection);
+                $attributes = $this->convertAttributesFromData($form->getData(), $attributeValuesCollection);
                 $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeValuesCollection);
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $matrixGenerator = new MatrixGenerator();
@@ -73,7 +74,9 @@ class AddController extends AbstractController
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'matrix' => [],
-            'concretes' => []
+            'concretes' => [],
+            'attributeGroupCollection' => $attributeGroupCollection,
+            'attributeValuesCollection' => $attributeValuesCollection
         ]);
     }
 

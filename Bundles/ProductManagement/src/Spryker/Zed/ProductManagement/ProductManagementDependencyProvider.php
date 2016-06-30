@@ -29,6 +29,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
 
 
     /**
@@ -72,6 +73,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_STOCK] = function (Container $container) {
+            return $container->getLocator()->stock()->queryContainer();
         };
 
         return $container;
@@ -118,6 +123,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_STOCK] = function (Container $container) {
+            return $container->getLocator()->stock()->queryContainer();
         };
 
         return $container;

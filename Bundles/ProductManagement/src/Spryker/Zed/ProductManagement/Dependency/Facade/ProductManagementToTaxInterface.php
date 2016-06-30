@@ -15,4 +15,9 @@ interface ProductManagementToTaxInterface
      */
     public function getTaxRates();
 
+    /**
+     * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
+     */
+    public function getTaxSets();
+
 }
