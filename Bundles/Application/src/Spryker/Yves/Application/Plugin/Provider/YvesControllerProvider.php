@@ -105,20 +105,8 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
         $actionName = 'index',
         $parseJsonBody = false
     ) {
-        $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);
-        $controllerResolver = new ControllerResolver($bundleControllerAction);
-        $routeResolver = new BundleControllerActionRouteNameResolver($bundleControllerAction);
-
-        $service = (new ControllerServiceBuilder())->createServiceForController(
-            $this->app,
-            $bundleControllerAction,
-            $controllerResolver,
-            $routeResolver
-        );
-
-        $controller = $this->controllerCollection
-            ->match($path, $service)
-            ->bind($name);
+        $service = $this->getService($bundle, $controllerName, $actionName);
+        $controller = $this->getController($path, $name, $service);
 
         if ($this->sslEnabled === true && !$this->isSslExcluded($name)) {
             $controller->requireHttps();
@@ -207,15 +195,57 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * @param string $name
+     * @param string $routeName
      *
      * @return bool
      */
-    protected function isSslExcluded($name)
+    protected function isSslExcluded($routeName)
     {
-        $exclude = Config::get(ApplicationConstants::YVES_SSL_EXCLUDED, []);
+        $excludedUrls = $this->getExcludedUrls();
 
-        return in_array($name, array_keys($exclude));
+        return !empty($excludedUrls[$routeName]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getExcludedUrls()
+    {
+        return Config::get(ApplicationConstants::YVES_SSL_EXCLUDED, []);
+    }
+
+    /**
+     * @param string $bundle
+     * @param string $controllerName
+     * @param string $actionName
+     *
+     * @return string
+     */
+    protected function getService($bundle, $controllerName, $actionName)
+    {
+        $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);
+        $controllerResolver = new ControllerResolver($bundleControllerAction);
+        $routeResolver = new BundleControllerActionRouteNameResolver($bundleControllerAction);
+
+        $service = (new ControllerServiceBuilder())->createServiceForController($this->app, $bundleControllerAction, $controllerResolver, $routeResolver);
+
+        return $service;
+    }
+
+    /**
+     * @param string $path
+     * @param string $name
+     * @param string $service
+     *
+     * @return \Silex\Controller
+     */
+    protected function getController($path, $name, $service)
+    {
+        $controller = $this->controllerCollection
+            ->match($path, $service)
+            ->bind($name);
+
+        return $controller;
     }
 
 }
