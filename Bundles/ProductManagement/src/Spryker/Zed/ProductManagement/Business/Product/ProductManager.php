@@ -27,6 +27,7 @@ use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class ProductManager implements ProductManagerInterface
 {
@@ -48,6 +49,11 @@ class ProductManager implements ProductManagerInterface
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
+     */
+    protected $stockQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchInterface
@@ -87,6 +93,7 @@ class ProductManager implements ProductManagerInterface
     public function __construct(
         AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
+        StockQueryContainerInterface $stockQueryContainer,
         ProductManagementToTouchInterface $touchFacade,
         ProductManagementToUrlInterface $urlFacade,
         ProductManagementToLocaleInterface $localeFacade,
@@ -98,6 +105,7 @@ class ProductManager implements ProductManagerInterface
         $this->localeFacade = $localeFacade;
         $this->attributeManager = $attributeManager;
         $this->priceFacade = $priceFacade;
+        $this->stockQueryContainer = $stockQueryContainer;
     }
 
     /**
@@ -748,17 +756,15 @@ class ProductManager implements ProductManagerInterface
      */
     protected function loadStockForProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
     {
-        return $productConcreteTransfer;
+        $stockEntity = $this->stockQueryContainer
+            ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
+            ->findOne();
 
-        $priceTransfer = $this->stockFacade->getProductConcretePrice(
-            $productConcreteTransfer->getIdProductConcrete()
-        );
-
-        if ($priceTransfer === null) {
+        if ($stockEntity === null) {
             return $productConcreteTransfer;
         }
 
-        $productConcreteTransfer->setPrice($priceTransfer);
+        $productConcreteTransfer->setStock($stockEntity->getQuantity());
 
         return $productConcreteTransfer;
     }

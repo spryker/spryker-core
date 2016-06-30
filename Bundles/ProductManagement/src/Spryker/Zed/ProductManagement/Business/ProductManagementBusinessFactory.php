@@ -26,6 +26,7 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
         return new ProductManager(
             $this->getAttributeManager(),
             $this->getProductQueryContainer(),
+            $this->getStockQueryContainer(),
             $this->getTouchFacade(),
             $this->getUrlFacade(),
             $this->getLocaleFacade(),
@@ -87,6 +88,14 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function getProductQueryContainer()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::QUERY_CONTAINER_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
+     */
+    protected function getStockQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::QUERY_CONTAINER_STOCK);
     }
 
     /**

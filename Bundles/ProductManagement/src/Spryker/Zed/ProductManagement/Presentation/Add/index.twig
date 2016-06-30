@@ -223,6 +223,7 @@
                                 <th>{{ attributeGroupLabel }}</th>
                             {% endfor %}
                         {% endfor %}
+                        <th class="center">Price</th>
                         <th class="center">Stock</th>
                         <th class="no-sort">Action</th>
                     </tr>
@@ -239,7 +240,8 @@
                                     <td>-</td>
                                 {% endif %}
                             {% endfor %}
-                            <td class="center">ss</td>
+                            <td class="center">{{ product.price|number_format }}</td>
+                            <td class="center">{{ product.stock }}</td>
                             <td class="center no-sort">[activate]</td>
                         </tr>
                     {% endfor %}
@@ -254,6 +256,8 @@
                                 <th>{{ attrName }}</th>
                             {% endfor %}
                         {% endfor %}
+                        <th class="center">Price</th>
+                        <th class="center">Stock</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
