@@ -103,7 +103,6 @@ class ProductCartPluginTest extends Test
         $this->assertEquals(self::SKU_PRODUCT_CONCRETE, $expandedItemTransfer->getSku());
         $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
         $this->assertEquals($productConcreteEntity->getIdProduct(), $expandedItemTransfer->getId());
-        $this->assertNotNull($expandedItemTransfer->getTaxRate());
     }
 
 }

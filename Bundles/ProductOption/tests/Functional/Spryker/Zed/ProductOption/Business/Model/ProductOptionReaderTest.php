@@ -104,8 +104,6 @@ class ProductOptionReaderTest extends Test
         $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
         $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
         $this->assertEquals(199, $productOptionTransfer->getUnitGrossPrice());
-
-        $this->assertEquals('15', $productOptionTransfer->getTaxRate());
     }
 
     /**
@@ -222,22 +220,6 @@ class ProductOptionReaderTest extends Test
         $this->assertCount(2, $result);
         $this->assertEquals($this->ids['idUsageRed'], $result[0]);
         $this->assertEquals($this->ids['idUsageMedium'], $result[1]);
-    }
-
-    /**
-     * @return void
-     */
-    public function testQueryEffectiveTaxRateForTypeUsage()
-    {
-        $result = $this->facade
-            ->getEffectiveTaxRateForTypeUsage($this->ids['idUsageSize']);
-
-        $this->assertEquals('15.00', $result);
-
-        $result = $this->facade
-            ->getEffectiveTaxRateForTypeUsage($this->ids['idUsageColor']);
-
-        $this->assertNull($result);
     }
 
     /**
