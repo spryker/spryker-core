@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -265,7 +266,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
 
         return $this->discountQueryContainer
             ->querySalesDiscount()
-            ->filterByFkSalesOrderItem($saleOrderItemIds)
+            ->filterByFkSalesOrderItem($saleOrderItemIds, Criteria::IN)
             ->where(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM_OPTION . ' IS NOT NULL')
             ->find();
     }

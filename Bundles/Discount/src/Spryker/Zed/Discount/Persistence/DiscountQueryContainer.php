@@ -161,7 +161,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     {
         return $this->queryDiscountVoucher()
             ->joinVoucherPool()
-            ->filterByCode($codes);
+            ->filterByCode($codes, Criteria::IN);
     }
 
     /**
