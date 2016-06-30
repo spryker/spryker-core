@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Tax\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Spryker\Zed\Tax\Business\ShipmentFacade;
+use Spryker\Zed\Tax\Business\TaxFacadeInterface;
 use Spryker\Zed\Tax\Communication\Form\TaxSetForm;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
 
@@ -15,7 +15,7 @@ class TaxSetFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\Tax\Business\ShipmentFacade
+     * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
     protected $taxFacade;
 
@@ -25,10 +25,10 @@ class TaxSetFormDataProvider
     protected $taxSetTransfer;
 
     /**
-     * @param \Spryker\Zed\Tax\Business\ShipmentFacade $taxFacade
+     * @param \Spryker\Zed\Tax\Business\TaxFacadeInterface $taxFacade
      * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      */
-    public function __construct(ShipmentFacade $taxFacade, TaxSetTransfer $taxSetTransfer = null)
+    public function __construct(TaxFacadeInterface $taxFacade, TaxSetTransfer $taxSetTransfer = null)
     {
         $this->taxFacade = $taxFacade;
         $this->taxSetTransfer = $taxSetTransfer;

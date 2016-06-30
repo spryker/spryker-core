@@ -607,7 +607,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryTaxSetByIdProductOptionValueUsagesAndCountry($allIdOptionValueUsages, $iso2Code)
     {
         return $this->getFactory()->createProductOptionValueUsageQuery()
-            ->filterByIdProductOptionValueUsage($allIdOptionValueUsages)
+            ->filterByIdProductOptionValueUsage($allIdOptionValueUsages, Criteria::IN)
             ->withColumn(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE, self::COL_ID_PRODUCT_OPTION_VALUE_USAGE)
             ->groupBy(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE)
             ->useSpyProductOptionTypeUsageQuery()

@@ -115,7 +115,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     {
         return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
-                ->filterByIdProductAbstract($allIdProductAbstracts)
+                ->filterByIdProductAbstract($allIdProductAbstracts, Criteria::IN)
                 ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, self::COL_ID_ABSTRACT_PRODUCT)
                 ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->endUse()

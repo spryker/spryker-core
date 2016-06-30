@@ -98,7 +98,7 @@ class TaxSetForm extends AbstractType
     protected function addTaxRates(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_TAX_RATES, 'choice', [
-            'expanded' => false,
+            'expanded' => true,
             'multiple' => true,
             'label' => 'Tax rates',
             'choice_list' => $this->taxSetFormDataProvider->getOptions()[self::FIELD_TAX_RATES],

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
- * @method \Spryker\Zed\Tax\Business\ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
  */
 class SetController extends AbstractController
