@@ -1,0 +1,40 @@
+<h3>{{ 'Create voucher codes for the discount' | trans }}</h3>
+<hr />
+
+{{ form_start(voucherForm) }}
+<div class="form-group">
+    {{ form_errors(voucherForm.quantity) }}
+    {{ form_label(voucherForm.quantity) }}
+    {{ form_widget(voucherForm.quantity) }}
+</div>
+<div class="form-group">
+    {{ form_errors(voucherForm.custom_code) }}
+    {{ form_label(voucherForm.custom_code) }}
+    {{ form_widget(voucherForm.custom_code) }}
+    <p>{{ 'Enter your custom code as a string. If selected in the next step, additional random characters are added at the end of this string. Use the placeholder [code] to indicate where you want random characters to be generated."' | trans}}</p>
+</div>
+<div class="form-group">
+    {{ form_errors(voucherForm.random_generated_code_length) }}
+    {{ form_label(voucherForm.random_generated_code_length) }}
+    {{ form_widget(voucherForm.random_generated_code_length) }}
+</div>
+<div class="form-group">
+    {{ form_errors(voucherForm.max_number_of_uses) }}
+    {{ form_label(voucherForm.max_number_of_uses) }}
+    {{ form_widget(voucherForm.max_number_of_uses) }}
+</div>
+
+{{ form_rest(voucherForm) }}
+
+{{ form_end(voucherForm) }}
+
+{% if discountConfigurator.discountVoucher and discountConfigurator.discountVoucher.fkDiscountVoucherPool %}
+ {{ viewActionButton(url('/discount/voucher/export', {'id-pool' : discountConfigurator.discountVoucher.fkDiscountVoucherPool}), 'Export' | trans) }}
+ {{ removeActionButton(url('/discount/voucher/delete-discount-vouchers', {'id-pool': discountConfigurator.discountVoucher.fkDiscountVoucherPool, 'id-discount' : idDiscount }), 'Delete codes' | trans ) }}
+{% endif %}
+
+{% if voucherCodesTable is defined %}
+    <hr />
+    <p><strong>{{ 'Generated Discount Codes' | trans }}</strong></p>
+    {{ voucherCodesTable | raw }}
+{% endif %}

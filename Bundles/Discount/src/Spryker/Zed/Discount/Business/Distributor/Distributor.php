@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Discount\Business\Distributor;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 
 class Distributor implements DistributorInterface
@@ -19,19 +21,20 @@ class Distributor implements DistributorInterface
     protected $roundingError = 0.0;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\DistributorException
      *
      * @return void
      */
-    public function distribute(array $discountableObjects, DiscountTransfer $discountTransfer)
+    public function distributeDiscountAmountToDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer)
     {
-        $totalGrossAmount = $this->getTotalGrossAmountOfDiscountableObjects($discountableObjects);
+        $totalGrossAmount = $this->getTotalGrossAmountOfDiscountableObjects($collectedDiscountTransfer);
         if ($totalGrossAmount <= 0) {
             return;
         }
 
-        $totalDiscountAmount = $discountTransfer->getAmount();
+        $totalDiscountAmount = $collectedDiscountTransfer->getDiscount()->getAmount();
         if ($totalDiscountAmount <= 0) {
             return;
         }
@@ -41,9 +44,10 @@ class Distributor implements DistributorInterface
             $totalDiscountAmount = $totalGrossAmount;
         }
 
-        $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);
+        $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($collectedDiscountTransfer->getDiscount());
 
-        foreach ($discountableObjects as $discountableItemTransfer) {
+        foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
+
             $singleItemGrossAmountShare = $discountableItemTransfer->getUnitGrossPrice() / $totalGrossAmount;
 
             $itemDiscountAmount = ($totalDiscountAmount * $singleItemGrossAmountShare) + $this->roundingError;
@@ -54,19 +58,19 @@ class Distributor implements DistributorInterface
             $distributedDiscountTransfer->setUnitGrossAmount($itemDiscountAmountRounded);
             $distributedDiscountTransfer->setQuantity($discountableItemTransfer->getQuantity());
 
-            $discountableItemTransfer->getCalculatedDiscounts()->append($distributedDiscountTransfer);
+            $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
         }
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
      *
      * @return int
      */
-    protected function getTotalGrossAmountOfDiscountableObjects($discountableObjects)
+    protected function getTotalGrossAmountOfDiscountableObjects(CollectedDiscountTransfer $collectedDiscountTransfer)
     {
         $totalGrossAmount = 0;
-        foreach ($discountableObjects as $discountableItemTransfer) {
+        foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
             $totalGrossAmount += $discountableItemTransfer->getUnitGrossPrice() *
                 $this->getDiscountableItemQuantity($discountableItemTransfer);
         }
@@ -75,11 +79,11 @@ class Distributor implements DistributorInterface
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
      *
      * @return int
      */
-    protected function getDiscountableItemQuantity($discountableItemTransfer)
+    protected function getDiscountableItemQuantity(DiscountableItemTransfer $discountableItemTransfer)
     {
         $quantity = 1;
         if ($discountableItemTransfer->getQuantity()) {

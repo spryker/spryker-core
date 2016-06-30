@@ -7,17 +7,16 @@
 
 namespace Spryker\Zed\Discount\Business\Distributor;
 
-use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\CollectedDiscountTransfer;
 
 interface DistributorInterface
 {
 
     /**
-     * @param array $discountableObjects
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
      *
      * @return void
      */
-    public function distribute(array $discountableObjects, DiscountTransfer $discountTransfer);
+    public function distributeDiscountAmountToDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer);
 
 }

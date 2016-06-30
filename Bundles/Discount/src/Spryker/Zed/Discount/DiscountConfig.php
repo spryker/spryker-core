@@ -9,14 +9,14 @@ namespace Spryker\Zed\Discount;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInterface
+class DiscountConfig extends AbstractBundleConfig
 {
 
     const DEFAULT_VOUCHER_CODE_LENGTH = 6;
-    const URL_DISCOUNT_POOL_EDIT = '/discount/pool/edit';
 
-    const PARAM_ID_POOL = 'id-pool';
-    const PARAM_ID_DISCOUNT = 'id-discount';
+    const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';
+    const KEY_VOUCHER_CODE_VOWELS = 'vowels';
+    const KEY_VOUCHER_CODE_NUMBERS = 'numbers';
 
     /**
      * @return int

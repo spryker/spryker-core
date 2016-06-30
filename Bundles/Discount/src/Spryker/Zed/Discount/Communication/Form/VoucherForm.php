@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,84 +6,33 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
-use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class VoucherForm extends AbstractType
 {
 
-    const FIELD_DISCOUNT_VOUCHER_POOL = 'fk_discount_voucher_pool';
     const FIELD_QUANTITY = 'quantity';
-    const FIELD_MAX_NUMBER_OF_USES = 'max_number_of_uses';
     const FIELD_CUSTOM_CODE = 'custom_code';
-    const FIELD_CODE_LENGTH = 'code_length';
-
-    const OPTION_DISCOUNT_VOUCHER_POOL_CHOICES = 'discount_voucher_pool_choices';
-    const OPTION_CODE_LENGTH_CHOICES = 'code_length_choices';
-    const OPTION_IS_MULTIPLE = 'is_multiple';
-
-    const ONE_VOUCHER = 1;
-    const MINIMUM_VOUCHERS_TO_GENERATE = 2;
-
-    /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
-     */
-    protected $discountConfig;
-
-    /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
-     */
-    public function __construct(DiscountConfig $discountConfig)
-    {
-        $this->discountConfig = $discountConfig;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'voucher';
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setRequired(self::OPTION_DISCOUNT_VOUCHER_POOL_CHOICES);
-        $resolver->setRequired(self::OPTION_CODE_LENGTH_CHOICES);
-        $resolver->setRequired(self::OPTION_IS_MULTIPLE);
-    }
+    const FIELD_RANDOM_GENERATED_CODE_LENGTH = 'random_generated_code_length';
+    const FIELD_MAX_NUMBER_OF_USES = 'max_number_of_uses';
+    const FIELD_ID_DISCOUNT = 'id_discount';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array|string[] $options
      *
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($options[self::OPTION_IS_MULTIPLE]) {
-            $this->addQuantityField($builder);
-        }
-
-        $this
+        $this->addQuantityField($builder)
             ->addCustomCodeField($builder)
-            ->addCodeLengthField($builder, $options[self::OPTION_CODE_LENGTH_CHOICES])
+            ->addRandomGeneratedCodeLength($builder)
             ->addMaxNumberOfUsesField($builder)
-            ->addFkDiscountVoucherPoolField($builder, $options[self::OPTION_DISCOUNT_VOUCHER_POOL_CHOICES]);
+            ->addIdDiscount($builder)
+            ->addSubmitButton($builder);
     }
 
     /**
@@ -95,45 +43,10 @@ class VoucherForm extends AbstractType
     protected function addQuantityField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_QUANTITY, 'text', [
-            'label' => 'Quantity',
-            'constraints' => [
-                new NotBlank(),
-                new GreaterThan(1),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
-     *
-     * @return $this
-     */
-    protected function addFkDiscountVoucherPoolField(FormBuilderInterface $builder, array $choices)
-    {
-        $builder->add(self::FIELD_DISCOUNT_VOUCHER_POOL, 'choice', [
-            'label' => 'Voucher',
-            'placeholder' => 'Select one',
-            'choices' => $choices,
+            'label' => 'Quantity*',
             'constraints' => [
                 new NotBlank(),
             ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addMaxNumberOfUsesField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_MAX_NUMBER_OF_USES, 'number', [
-            'label' => 'Max number of uses (0 = Infinite usage)',
         ]);
 
         return $this;
@@ -146,57 +59,102 @@ class VoucherForm extends AbstractType
      */
     protected function addCustomCodeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CUSTOM_CODE, 'text', [
-            'label' => 'Custom Code',
-            'attr' => [
-                'data-toggle' => 'tooltip',
-                'data-placement' => 'top',
-                'title' => 'Add [code] template to position generated code',
-                'help' => 'Please enter a string that will be used as custom code, the string code can be used to put the code in a certain position, e.g. "summer-[code]-special"',
-            ],
-        ]);
+        $builder->add(
+            self::FIELD_CUSTOM_CODE,
+            'text',
+            [
+                'required' => false
+            ]
+        );
 
         return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
      *
      * @return $this
      */
-    protected function addCodeLengthField(FormBuilderInterface $builder, array $choices)
+    protected function addRandomGeneratedCodeLength(FormBuilderInterface $builder)
     {
-        $maxAllowedCodeCharactersLength = $this->discountConfig->getAllowedCodeCharactersLength();
-        $codeLengthValidator = new MaximumCalculatedRangeValidator($maxAllowedCodeCharactersLength);
+        $builder->add(
+            self::FIELD_RANDOM_GENERATED_CODE_LENGTH,
+            'choice',
+            [
+                'label' => 'Add Random Generated Code Length',
+                'placeholder' => 'No additional random characters',
+                'required' => false,
+                'choices' => $this->createCodeLengthRangeList()
+            ]
+        );
 
-        $builder->add(self::FIELD_CODE_LENGTH, 'choice', [
-            'label' => 'Random Generated Code Length',
-            'choices' => $choices,
-            'constraints' => [
-                new Callback([
-                    'methods' => [
-                        function ($length, ExecutionContextInterface $context) use ($codeLengthValidator) {
-                            $formData = $context->getRoot()->getData();
+        return $this;
+    }
 
-                            if (empty($formData[self::FIELD_CUSTOM_CODE]) && $length < 1) {
-                                $context->addViolation('Please add a custom code or select a length for code to be generated');
 
-                                return;
-                            }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addMaxNumberOfUsesField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            self::FIELD_MAX_NUMBER_OF_USES,
+            'text',
+            [
+                'label' => 'Max number of uses (0 = Infinite usage)'
+            ]
+        );
 
-                            if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[self::FIELD_QUANTITY]) {
-                                $context->addViolation('The quantity of required codes is to high regarding the code length');
+        return $this;
+    }
 
-                                return;
-                            }
-                        },
-                    ],
-                ]),
-            ],
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdDiscount(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_DISCOUNT, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSubmitButton(FormBuilderInterface $builder)
+    {
+        $builder->add('generate', 'submit', [
+            'attr' => [
+                'class' => 'btn-create',
+            ]
         ]);
 
         return $this;
+    }
+
+    /**
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
+     */
+    public function getName()
+    {
+        return 'discount_voucher';
+    }
+
+    /**
+     * @return array|int[]
+     */
+    protected function createCodeLengthRangeList()
+    {
+        $range = range(3, 10);
+        return array_combine(array_values($range), $range);
     }
 
 }
