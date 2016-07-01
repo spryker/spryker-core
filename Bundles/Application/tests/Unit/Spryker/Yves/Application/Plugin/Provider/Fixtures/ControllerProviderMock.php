@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\Plugin\Provider\Fixtures;
+namespace Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures;
 
 use Silex\Application;
 use Spryker\Yves\Application\Plugin\Provider\YvesControllerProvider;
 
-class ControllerProviderMockTest extends YvesControllerProvider
+class ControllerProviderMock extends YvesControllerProvider
 {
 
     /**
@@ -17,7 +17,7 @@ class ControllerProviderMockTest extends YvesControllerProvider
      *
      * @return void
      */
-    protected function defineControllers(Application $app)
+    public function defineControllers(Application $app)
     {
         $this->createController('/foo', 'foo', 'foo', 'index');
     }

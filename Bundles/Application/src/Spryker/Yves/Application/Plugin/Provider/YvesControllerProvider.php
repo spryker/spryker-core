@@ -24,17 +24,17 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     /**
      * @var \Silex\ControllerCollection
      */
-    private $controllerCollection;
+    protected $controllerCollection;
 
     /**
      * @var \Silex\Application
      */
-    private $app;
+    protected $app;
 
     /**
      * @var bool
      */
-    private $sslEnabled;
+    protected $sslEnabled;
 
     /**
      * Set the sslEnabledFlag to
