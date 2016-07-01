@@ -7,38 +7,41 @@
 
 namespace Spryker\Zed\Discount\Business;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\Calculator\Fixed;
-use Spryker\Zed\Discount\Business\Calculator\Percentage;
-use Spryker\Zed\Discount\Business\Collector\Aggregate;
-use Spryker\Zed\Discount\Business\Collector\Expense;
-use Spryker\Zed\Discount\Business\Collector\Item;
-use Spryker\Zed\Discount\Business\Collector\ItemProductOption;
-use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
-use Spryker\Zed\Discount\Business\DecisionRule\Voucher;
+use Spryker\Zed\Discount\Business\Calculator\Calculator;
+use Spryker\Zed\Discount\Business\Calculator\Discount;
+use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
+use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
+use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
+use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
+use Spryker\Zed\Discount\Business\Collector\SkuCollector;
+use Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\DayOfWeekDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\ItemQuantityDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
-use Spryker\Zed\Discount\Business\Model\Calculator;
-use Spryker\Zed\Discount\Business\Model\CartRule;
-use Spryker\Zed\Discount\Business\Model\CollectorResolver;
-use Spryker\Zed\Discount\Business\Model\DecisionRuleEngine;
-use Spryker\Zed\Discount\Business\Model\Discount;
-use Spryker\Zed\Discount\Business\Model\DiscountOrderSaver;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpensesWithDiscounts;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts;
-use Spryker\Zed\Discount\Business\Model\VoucherCode;
-use Spryker\Zed\Discount\Business\Model\VoucherEngine;
-use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
-use Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter;
-use Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
-use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
-use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
-use Spryker\Zed\Discount\Business\Writer\DiscountVoucherWriter;
-use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
-use Spryker\Zed\Discount\Business\Writer\VoucherCodesWriter;
+use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
+use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
+use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
+use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter;
+use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
+use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
+use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
+use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
+use Spryker\Zed\Discount\Business\QueryString\Validator;
+use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
+use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
+use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -50,63 +53,31 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\Voucher
+     * @return \Spryker\Zed\Discount\Business\Calculator\Discount
      */
-    public function getDecisionRuleVoucher()
-    {
-        return new Voucher($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal
-     */
-    public function getDecisionRuleMinimumCartSubtotal()
-    {
-        return new MinimumCartSubtotal();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Spryker\Zed\Discount\Business\Model\Discount
-     */
-    public function createDiscount(QuoteTransfer $quoteTransfer)
+    public function createDiscount()
     {
         return new Discount(
-            $quoteTransfer,
             $this->getQueryContainer(),
-            $this->createDecisionRuleEngine(),
             $this->createCalculator(),
-            $this->createDistributor(),
-            $this->getMessengerFacade(),
-            $this->getDecisionRulePlugins()
+            $this->createDecisionRuleBuilder(),
+            $this->createVoucherValidator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\CartRuleInterface
+     * @return \Spryker\Zed\Discount\Business\Voucher\VoucherValidator
      */
-    public function createCartRule()
+    protected function createVoucherValidator()
     {
-        return new CartRule(
+        return new VoucherValidator(
             $this->getQueryContainer(),
-            $this->getStoreConfig(),
-            $this->createDiscountDecisionRuleWriter(),
-            $this->createDiscountWriter(),
-            $this->createDiscountCollectorWriter()
+            $this->getMessengerFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter
-     */
-    public function createDiscountCollectorWriter()
-    {
-        return new DiscountCollectorWriter($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Calculator\Percentage
+     * @return \Spryker\Zed\Discount\Business\Calculator\Type\Percentage
      */
     public function createCalculatorPercentage()
     {
@@ -114,7 +85,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Calculator\Fixed
+     * @return \Spryker\Zed\Discount\Business\Calculator\Type\Fixed
      */
     public function createCalculatorFixed()
     {
@@ -122,96 +93,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Writer\DiscountWriter
-     */
-    public function createDiscountWriter()
-    {
-        return new DiscountWriter(
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Model\VoucherPoolCategory
-     */
-    public function createVoucherPoolCategory()
-    {
-        return new VoucherPoolCategory(
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Writer\VoucherCodesWriter
-     */
-    public function createVoucherCodesWriter()
-    {
-        return new VoucherCodesWriter(
-            $this->getQueryContainer(),
-            $this->createDiscountWriter(),
-            $this->createDiscountVoucherPoolWriter(),
-            $this->createDiscountVoucherPoolCategoryWriter(),
-            $this->createDiscountDecisionRuleWriter(),
-            $this->createDiscountCollectorWriter()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter
-     */
-    public function createDiscountDecisionRuleWriter()
-    {
-        return new DiscountDecisionRuleWriter(
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Writer\DiscountVoucherWriter
-     */
-    public function createDiscountVoucherWriter()
-    {
-        return new DiscountVoucherWriter(
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter
-     */
-    public function createDiscountVoucherPoolWriter()
-    {
-        return new DiscountVoucherPoolWriter(
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter
-     */
-    public function createDiscountVoucherPoolCategoryWriter()
-    {
-        return new DiscountVoucherPoolCategoryWriter(
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Model\DecisionRuleEngine
-     */
-    protected function createDecisionRuleEngine()
-    {
-        return new DecisionRuleEngine();
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Model\Calculator
+     * @return \Spryker\Zed\Discount\Business\Calculator\Calculator
      */
     protected function createCalculator()
     {
         return new Calculator(
-            $this->createCollectorResolver(),
+            $this->createCollectorBuilder(),
             $this->getMessengerFacade(),
+            $this->createDistributor(),
             $this->getCalculatorPlugins()
         );
     }
@@ -225,56 +114,18 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\VoucherEngine
+     * @return \Spryker\Zed\Discount\Business\Voucher\VoucherEngine
      */
     public function createVoucherEngine()
     {
         return new VoucherEngine(
             $this->getConfig(),
-            $this->getQueryContainer(),
-            $this->getMessengerFacade(),
-            $this->getPropelConnection()
+            $this->getQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Collector\Item
-     */
-    public function createItemCollector()
-    {
-        return new Item();
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Collector\Expense
-     */
-    public function createOrderExpenseCollector()
-    {
-        return new Expense();
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Collector\ItemProductOption
-     */
-    public function createItemProductOptionCollector()
-    {
-        return new ItemProductOption();
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Collector\Aggregate
-     */
-    public function createAggregateCollector()
-    {
-        return new Aggregate([
-                $this->createItemCollector(),
-                $this->createItemProductOptionCollector(),
-                $this->createOrderExpenseCollector(),
-            ]);
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Model\VoucherCodeInterface
+     * @return \Spryker\Zed\Discount\Business\Voucher\VoucherCodeInterface
      */
     public function createVoucherCode()
     {
@@ -282,15 +133,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\CollectorResolver
-     */
-    public function createCollectorResolver()
-    {
-        return new CollectorResolver($this->getCollectorPlugins());
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
      */
     public function getDecisionRulePlugins()
     {
@@ -298,14 +141,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\DiscountSaverInterface
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaverInterface
      */
-    public function createDiscountSaver()
+    public function createDiscountOrderSaver()
     {
-        return new DiscountOrderSaver(
-            $this->getQueryContainer(),
-            $this->createVoucherCode()
-        );
+        return new DiscountOrderSaver($this->getQueryContainer(), $this->createVoucherCode());
     }
 
     /**
@@ -317,7 +157,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
      */
     public function getCollectorPlugins()
     {
@@ -325,19 +165,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge
      */
     protected function getMessengerFacade()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_MESSENGER);
-    }
-
-    /**
-     * @return \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected function getPropelConnection()
-    {
-        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_PROPEL_CONNECTION);
     }
 
     /**
@@ -349,51 +181,260 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
      */
-    public function createOrderDiscountTotalAmount()
+    public function createSkuDecisionRule()
     {
-        return new DiscountTotalAmount();
+        return new ItemSkuDecisionRule($this->createComparatorOperators());
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts
+     * @return \Spryker\Zed\Discount\Business\Collector\SkuCollector
      */
-    public function createItemTotalOrderAggregator()
+    public function createSkuCollector()
     {
-        return new ItemDiscounts($this->getQueryContainer());
+        return new SkuCollector($this->createComparatorOperators());
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts
+     * @return \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
-    public function createSalesOrderTotalsAggregator()
+    public function createComparatorOperators()
     {
-        return new OrderDiscounts();
+        return new ComparatorOperators(
+            $this->createComparatorProvider()->createComparators()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts
+     * @return \Spryker\Zed\Discount\Business\QueryString\OperatorProvider
      */
-    public function createSalesOrderGrandTotalAggregator()
+    protected function createComparatorProvider()
     {
-        return new GrandTotalWithDiscounts();
+        return new OperatorProvider();
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider
      */
-    public function createOrderExpenseTaxWithDiscountsAggregator()
+    protected function createCollectorProvider()
     {
-        return new OrderExpenseTaxWithDiscounts($this->getProvidedDependency(DiscountDependencyProvider::FACADE_TAX));
+        return new CollectorProvider($this->getCollectorPlugins());
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpensesWithDiscounts
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider
      */
-    public function createOrderExpenseWithDiscountsAggregator()
+    protected function createDecisionRuleProvider()
     {
-        return new OrderExpensesWithDiscounts($this->getQueryContainer());
+        return new DecisionRuleProvider($this->getDecisionRulePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
+     */
+    protected function createDecisionRuleBuilder()
+    {
+        return new SpecificationBuilder(
+            $this->createTokenizer(),
+            $this->createDecisionRuleProvider(),
+            $this->createComparatorOperators(),
+            $this->createClauseValidator(MetaProviderFactory::TYPE_DECISION_RULE),
+            $this->createMetaDataProviderByType(MetaProviderFactory::TYPE_DECISION_RULE)
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
+     */
+    protected function createCollectorBuilder()
+    {
+        return new SpecificationBuilder(
+            $this->createTokenizer(),
+            $this->createCollectorProvider(),
+            $this->createComparatorOperators(),
+            $this->createClauseValidator(MetaProviderFactory::TYPE_COLLECTOR),
+            $this->createMetaDataProviderByType(MetaProviderFactory::TYPE_COLLECTOR)
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\ClauseValidator
+     */
+    protected function createClauseValidator($type)
+    {
+        return new ClauseValidator(
+            $this->createComparatorOperators(),
+            $this->createMetaDataProviderByType($type)
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\Tokenizer
+     */
+    protected function createTokenizer()
+    {
+        return new Tokenizer();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory
+     */
+    public function createQueryStringMetaDataProviderFactory()
+    {
+        return new MetaProviderFactory($this);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\LogicalComparators
+     */
+    public function createLogicalComparators()
+    {
+        return new LogicalComparators();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\Validator
+     */
+    public function createQueryStringValidator()
+    {
+        return new Validator(
+            $this->createDecisionRuleBuilder(),
+            $this->createCollectorBuilder()
+        );
+    }
+
+    /*
+     * @return DiscountConfiguratorHydrate
+     */
+    public function createDiscountConfiguratorHydrate()
+    {
+        return new DiscountConfiguratorHydrate($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountPersist
+     */
+    public function createDiscountPersist()
+    {
+        return new DiscountPersist($this->createVoucherEngine(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule
+     */
+    public function createGrandTotalDecisionRule()
+    {
+        return new GrandTotalDecisionRule($this->createComparatorOperators(), $this->createMoneyValueConverter());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule
+     */
+    public function createTotalQuantityDecisionRule()
+    {
+        return new TotalQuantityDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule
+     */
+    public function createSubTotalDecisionRule()
+    {
+        return new SubTotalDecisionRule($this->createComparatorOperators(), $this->createMoneyValueConverter());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector
+     */
+    public function createItemQuantityCollector()
+    {
+        return new ItemQuantityCollector($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
+     */
+    public function createItemQuantityDecisionRule()
+    {
+        return new ItemQuantityDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule
+     */
+    public function createItemPriceDecisionRule()
+    {
+        return new ItemPriceDecisionRule($this->createComparatorOperators(), $this->createMoneyValueConverter());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Collector\ItemPriceCollector
+     */
+    public function createItemPriceCollector()
+    {
+        return new ItemPriceCollector($this->createComparatorOperators(), $this->createMoneyValueConverter());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\DayOfWeekDecisionRule
+     */
+    public function createDayOfWeekDecisionRule()
+    {
+        return new DayOfWeekDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule
+     */
+    public function createCalendarWeekDecisionRule()
+    {
+        return new CalendarWeekDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule
+     */
+    public function createMonthDecisionRule()
+    {
+        return new MonthDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule
+     */
+    public function createTimeDecisionRule()
+    {
+        return new TimeDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     */
+    public function getCurrencyManager()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::CURRENCY_MANAGER);
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
+     */
+    protected function createMetaDataProviderByType($type)
+    {
+        return $this->createQueryStringMetaDataProviderFactory()
+            ->createMetaProviderByType($type);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter
+     */
+    protected function createMoneyValueConverter()
+    {
+        return new MoneyValueConverter($this->getCurrencyManager());
     }
 
 }

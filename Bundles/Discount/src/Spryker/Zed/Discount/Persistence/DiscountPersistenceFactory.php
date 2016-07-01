@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
-use Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -31,14 +28,6 @@ class DiscountPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
-     */
-    public function createDiscountDecisionRuleQuery()
-    {
-        return SpyDiscountDecisionRuleQuery::create();
-    }
-
-    /**
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function createDiscountQuery()
@@ -52,22 +41,6 @@ class DiscountPersistenceFactory extends AbstractPersistenceFactory
     public function createDiscountVoucherPoolQuery()
     {
         return SpyDiscountVoucherPoolQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
-     */
-    public function createDiscountCollectorQuery()
-    {
-        return SpyDiscountCollectorQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery
-     */
-    public function createDiscountVoucherPoolCategoryQuery()
-    {
-        return SpyDiscountVoucherPoolCategoryQuery::create();
     }
 
 }

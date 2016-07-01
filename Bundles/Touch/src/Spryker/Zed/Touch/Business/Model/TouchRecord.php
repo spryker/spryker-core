@@ -71,19 +71,26 @@ class TouchRecord implements TouchRecordInterface
 
         if ($keyChange) {
             $this->insertKeyChangeRecord($itemType, $idItem);
-        }
 
-        if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_DELETED) {
-            if (!$this->deleteKeyChangeActiveRecord($itemType, $idItem)) {
-                $this->insertTouchRecord(
-                    $itemType,
-                    $itemEvent,
-                    $idItem,
-                    SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
-                );
+            if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_DELETED) {
+                if (!$this->deleteKeyChangeActiveRecord($itemType, $idItem)) {
+                    $this->insertTouchRecord(
+                        $itemType,
+                        $itemEvent,
+                        $idItem,
+                        SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+                    );
+                }
+            } else {
+                $this->insertTouchRecord($itemType, $itemEvent, $idItem);
             }
         } else {
-            $this->insertTouchRecord($itemType, $itemEvent, $idItem);
+            $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry(
+                $itemType,
+                $idItem
+            )->findOneOrCreate();
+
+            $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
         }
 
         $this->connection->commit();
