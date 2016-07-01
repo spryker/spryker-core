@@ -342,6 +342,20 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
+     * @param string $abstractSku
+     *
+     * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
+     */
+    public function getProductVariantsByAbstractSku($abstractSku)
+    {
+        return $this->getFactory()
+           ->createProductVariantBuilder()
+           ->getProductVariantsByAbstractSku($abstractSku);
+    }
+
+    /**
+     * @api
+     *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
     public function getAttributeManager()

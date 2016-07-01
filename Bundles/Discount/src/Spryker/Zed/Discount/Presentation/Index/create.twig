@@ -1,0 +1,57 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Create new discount' | trans %}
+
+{% block action %}
+    {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create new discount' } %}
+
+        {% block widget_content %}
+            {{ form_start(discountForm, {attr: {'id' : 'discount-form'}}) }}
+            <div class="tabs-container tabs-manager">
+                <ul id="discount-tabs" class="nav nav-tabs">
+                    <li class="active"><a class="tab-item" data-toggle="tab" href="#general">{{ 'General information' | trans }}</a></li>
+                    <li><a class="tab-item" data-toggle="tab" href="#discount">{{ 'Discount calculation' | trans }}</a></li>
+                    <li><a class="tab-item" data-toggle="tab" href="#conditions">{{ 'Conditions' | trans }}</a></li>
+                </ul>
+                <div class="tab-content ">
+                    <div id="general" class="tab-pane active">
+                        <div class="panel-body">
+                            {% include '@Discount/Index/partial/general.twig' %}
+                        </div>
+                    </div>
+                    <div id="discount" class="tab-pane">
+                        <div class="panel-body">
+                            {% include '@Discount/Index/partial/calculation.twig' %}
+                        </div>
+                    </div>
+                    <div id="conditions" class="tab-pane">
+                        <div class="panel-body">
+                            {% include '@Discount/Index/partial/condition.twig' %}
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                {% include '@Discount/Index/_form-submit.twig' %}
+            </div>
+            {{ form_end(discountForm) }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-discount-main.css">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-discount-main.js"></script>
+{% endblock %}
+

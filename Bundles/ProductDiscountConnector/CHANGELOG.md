@@ -1,0 +1,2 @@
+# ProductDiscountConnector Changelog
+
