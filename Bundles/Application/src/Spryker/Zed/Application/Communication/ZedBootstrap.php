@@ -51,8 +51,14 @@ class ZedBootstrap
         $this->optimizeApp();
         $this->enableHttpMethodParameterOverride();
 
-        if (!$this->isAuthenticationEnabled() && $this->isInternalRequest()) {
+        if ($this->isInternalRequest() && !$this->isAuthenticationEnabled()) {
             $this->registerServiceProviderForInternalRequest();
+
+            return $this->application;
+        }
+
+        if ($this->isInternalRequest()) {
+            $this->registerServiceProviderForInternalRequestWithAuthentication();
 
             return $this->application;
         }
@@ -84,6 +90,16 @@ class ZedBootstrap
     }
 
     /**
+     * @return void
+     */
+    protected function registerServiceProviderForInternalRequestWithAuthentication()
+    {
+        foreach ($this->getInternalCallServiceProviderWithAuthentication() as $provider) {
+            $this->application->register($provider);
+        }
+    }
+
+    /**
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getServiceProvider()
@@ -95,6 +111,14 @@ class ZedBootstrap
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getInternalCallServiceProvider()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getInternalCallServiceProviderWithAuthentication()
     {
         return [];
     }
