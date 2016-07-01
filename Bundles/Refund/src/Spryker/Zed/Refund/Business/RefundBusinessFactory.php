@@ -8,7 +8,8 @@
 namespace Spryker\Zed\Refund\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Refund\Business\Model\Refund;
+use Spryker\Zed\Refund\Business\Model\RefundCalculator;
+use Spryker\Zed\Refund\Business\Model\RefundSaver;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 
 /**
@@ -19,42 +20,40 @@ class RefundBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Refund\Business\Model\Refund
+     * @return \Spryker\Zed\Refund\Business\Model\RefundCalculatorInterface
      */
-    public function createRefundModel()
+    public function createRefundCalculator()
     {
-        return new Refund(
-            $this->getSalesSplitFacade(),
-            $this->getOmsFacade(),
+        return new RefundCalculator(
+            $this->getSalesAggregatorFacade(),
+            $this->getRefundCalculatorPlugin()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Refund\Business\Model\RefundSaverInterface
+     */
+    public function createRefundSaver()
+    {
+        return new RefundSaver(
             $this->getSalesQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Refund\Business\RefundManager
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface
      */
-    public function createRefundManager()
+    protected function getSalesAggregatorFacade()
     {
-        return new RefundManager(
-            $this->getQueryContainer(),
-            $this->getSalesQueryContainer()
-        );
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_SALES_AGGREGATOR);
     }
 
     /**
-     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplitInterface
+     * @return \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface
      */
-    public function getSalesSplitFacade()
+    protected function getRefundCalculatorPlugin()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_SALES_SPLIT);
-    }
-
-    /**
-     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface
-     */
-    protected function getOmsFacade()
-    {
-        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_OMS);
+        return $this->getProvidedDependency(RefundDependencyProvider::PLUGIN_REFUND_CALCULATOR);
     }
 
     /**

@@ -7,25 +7,17 @@
 
 namespace Spryker\Zed\Refund;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsBridge;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToPayoneBridge;
+use Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPlugin;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplitBridge;
 
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const QUERY_CONTAINER_REFUND = 'QUERY_CONTAINER_REFUND';
-    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
-
-    const FACADE_OMS = 'FACADE_OMS';
-    const FACADE_PAYONE = 'payone facade';
-    const FACADE_SALES_AGGREGATOR  = 'FACADE_SALES_AGGREGATOR';
-    const FACADE_SALES_SPLIT = 'FACADE_SALES_SPLIT';
-    const SERVICE_DATE_FORMATTER = 'date formatter service';
+    const FACADE_SALES_AGGREGATOR = 'sales aggregator facade';
+    const QUERY_CONTAINER_SALES = 'sales query container';
+    const PLUGIN_REFUND_CALCULATOR = 'refund calculator plugin';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,24 +26,22 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_OMS] = function (Container $container) {
-            return new RefundToOmsBridge($container->getLocator()->oms()->facade());
-        };
+        $container = $this->addRefundCalculatorPlugin($container);
+        $container = $this->addSalesAggregatorFacade($container);
+        $container = $this->addSalesQueryContainer($container);
 
-        $container[static::FACADE_PAYONE] = function (Container $container) {
-            return new RefundToPayoneBridge($container->getLocator()->payone()->facade());
-        };
+        return $container;
+    }
 
-        $container[static::QUERY_CONTAINER_REFUND] = function (Container $container) {
-            return $container->getLocator()->refund()->queryContainer();
-        };
-
-        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
-            return $container->getLocator()->sales()->queryContainer();
-        };
-
-        $container[self::FACADE_SALES_SPLIT] = function (Container $container) {
-            return new RefundToSalesSplitBridge($container->getLocator()->salesSplit()->facade());
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRefundCalculatorPlugin(Container $container)
+    {
+        $container[self::PLUGIN_REFUND_CALCULATOR] = function () {
+            return new RefundCalculatorPlugin();
         };
 
         return $container;
@@ -62,22 +52,24 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    protected function addSalesAggregatorFacade(Container $container)
     {
-        $container[static::QUERY_CONTAINER_REFUND] = function (Container $container) {
-            return $container->getLocator()->refund()->queryContainer();
-        };
-
-        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
-            return $container->getLocator()->sales()->queryContainer();
-        };
-
         $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
             return new RefundToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
 
-        $container[self::SERVICE_DATE_FORMATTER] = function () {
-            return (new Pimple())->getApplication()['dateFormatter'];
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesQueryContainer(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return $container->getLocator()->sales()->queryContainer();
         };
 
         return $container;

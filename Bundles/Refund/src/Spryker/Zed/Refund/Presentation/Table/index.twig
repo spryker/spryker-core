@@ -1,0 +1,15 @@
+{% extends '@Sales/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Refunds List' } %}
+
+        {% block widget_content %}
+
+            {{ refunds | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

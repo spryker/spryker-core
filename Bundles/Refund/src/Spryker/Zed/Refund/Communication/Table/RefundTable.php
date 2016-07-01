@@ -8,25 +8,21 @@
 namespace Spryker\Zed\Refund\Communication\Table;
 
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
-use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Library\DateFormatterInterface;
-use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Refund\Business\RefundFacadeInterface;
+use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
 
 class RefundTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
-    const URL_REFUND_DETAILS = '/refund/details';
-    const PARAM_ID_REFUND = 'id-refund';
 
     /**
-     * @var \Spryker\Zed\Refund\Business\RefundFacadeInterface
+     * @var \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface
      */
-    protected $refundFacade;
+    protected $refundQueryContainer;
 
     /**
      * @var \Spryker\Shared\Library\DateFormatterInterface
@@ -34,15 +30,20 @@ class RefundTable extends AbstractTable
     protected $dateFormatter;
 
     /**
-     * @param \Orm\Zed\Refund\Persistence\SpyRefundQuery $refundQuery
-     * @param \Spryker\Zed\Refund\Business\RefundFacadeInterface $refundFacade
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @var \Spryker\Shared\Library\Currency\CurrencyManager
      */
-    public function __construct(SpyRefundQuery $refundQuery, RefundFacadeInterface $refundFacade, DateFormatterInterface $dateFormatter)
+    protected $currencyManager;
+
+    /**
+     * @param \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface $refundQueryContainer
+     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     */
+    public function __construct(RefundQueryContainerInterface $refundQueryContainer, DateFormatterInterface $dateFormatter, CurrencyManager $currencyManager)
     {
-        $this->refundQuery = $refundQuery;
-        $this->refundFacade = $refundFacade;
+        $this->refundQueryContainer= $refundQueryContainer;
         $this->dateFormatter = $dateFormatter;
+        $this->currencyManager = $currencyManager;
     }
 
     /**
@@ -54,13 +55,11 @@ class RefundTable extends AbstractTable
     {
         $config->setHeader([
             SpyRefundTableMap::COL_ID_REFUND => 'Refund Id',
+            SpyRefundTableMap::COL_FK_SALES_ORDER => 'Sales Order Id',
             SpyRefundTableMap::COL_CREATED_AT => 'Refund date',
             SpyRefundTableMap::COL_AMOUNT => 'Amount',
-            SpyRefundTableMap::COL_COMMENT => 'Comment',
-            self::ACTIONS => self::ACTIONS,
+            SpyRefundTableMap::COL_COMMENT => 'Comment'
         ]);
-
-        $config->addRawColumn(self::ACTIONS);
 
         $config->setSortable([
             SpyRefundTableMap::COL_CREATED_AT,
@@ -68,6 +67,7 @@ class RefundTable extends AbstractTable
 
         $config->setSearchable([
             SpyRefundTableMap::COL_ID_REFUND,
+            SpyRefundTableMap::COL_FK_SALES_ORDER,
             SpyRefundTableMap::COL_CREATED_AT,
             SpyRefundTableMap::COL_AMOUNT,
             SpyRefundTableMap::COL_COMMENT,
@@ -83,16 +83,17 @@ class RefundTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->refundQuery;
-        $queryResults = $this->runQuery($query, $config);
+        $refundQuery = $this->refundQueryContainer->queryRefunds();
+
+        $queryResults = $this->runQuery($refundQuery, $config);
         $results = [];
         foreach ($queryResults as $item) {
             $results[] = [
                 SpyRefundTableMap::COL_ID_REFUND => $item[SpyRefundTableMap::COL_ID_REFUND],
+                SpyRefundTableMap::COL_FK_SALES_ORDER => $item[SpyRefundTableMap::COL_FK_SALES_ORDER],
                 SpyRefundTableMap::COL_CREATED_AT => $this->formatDate($item[SpyRefundTableMap::COL_CREATED_AT]),
                 SpyRefundTableMap::COL_AMOUNT => $this->formatAmount($item[SpyRefundTableMap::COL_AMOUNT]),
-                SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT],
-                self::ACTIONS => implode(' ', $this->createActionUrls($item)),
+                SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT]
             ];
         }
 
@@ -107,10 +108,9 @@ class RefundTable extends AbstractTable
      */
     protected function formatAmount($value, $includeSymbol = true)
     {
-        $currencyManager = CurrencyManager::getInstance();
-        $value = $currencyManager->convertCentToDecimal($value);
+        $value = $this->currencyManager->convertCentToDecimal($value);
 
-        return $currencyManager->format($value, $includeSymbol);
+        return $this->currencyManager->format($value, $includeSymbol);
     }
 
     /**
@@ -121,24 +121,6 @@ class RefundTable extends AbstractTable
     protected function formatDate($date)
     {
         return $this->dateFormatter->dateTime($date);
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return array
-     */
-    protected function createActionUrls(array $item)
-    {
-        $urls = [];
-        $urls[] = $this->generateViewButton(
-            Url::generate(self::URL_REFUND_DETAILS, [
-                self::PARAM_ID_REFUND => $item[SpyRefundTableMap::COL_ID_REFUND],
-            ]),
-            'View'
-        );
-
-        return $urls;
     }
 
 }

@@ -3,11 +3,8 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
       "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Unit": "tests/"
     }
   },
   "require": {
@@ -15,14 +12,10 @@
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0",
-    "spryker/payone": "^2.0.0",
     "spryker/propel": "^2.2.0",
     "spryker/sales": "^2.0.0",
     "spryker/sales-aggregator": "^1.0.0 || ^2.0.0",
-    "spryker/sales-split": "^1.0.0",
-    "spryker/symfony": "^2.0.0",
-    "spryker/url": "^2.0.0"
+    "spryker/symfony": "^2.0.0"
   },
   "description": "Refund bundle",
   "license": "proprietary",

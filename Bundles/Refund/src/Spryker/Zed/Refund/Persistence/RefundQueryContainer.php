@@ -16,43 +16,16 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
 {
 
     /**
+     * Specification:
+     * - Returns SpyRefundQuery without any filter.
+     *
      * @api
      *
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
-    public function queryRefund()
+    public function queryRefunds()
     {
         return $this->getFactory()->createRefundQuery();
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idOrder
-     *
-     * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
-     */
-    public function queryRefundsByIdSalesOrder($idOrder)
-    {
-        $query = $this->getFactory()->createRefundQuery();
-        $query->filterByFkSalesOrder($idOrder);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idMethod
-     *
-     * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
-     */
-    public function queryRefundByIdRefund($idMethod)
-    {
-        $query = $this->queryRefund();
-        $query->filterByIdRefund($idMethod);
-
-        return $query;
     }
 
 }
