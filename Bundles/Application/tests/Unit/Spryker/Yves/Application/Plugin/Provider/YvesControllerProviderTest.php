@@ -4,19 +4,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\ApplicationPlugin\Provider;
+namespace Unit\Spryker\Yves\Application\Plugin\Provider;
 
 use Silex\Application;
 use Silex\Controller;
 use Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock;
 
 /**
- * @group Abstract
- * @group Controller
+ * @group Spryker
  * @group Yves
- * @group Ssl
+ * @group Application
+ * @group YvesControllerProvider
  */
-class AbstractControllerProviderTest extends \PHPUnit_Framework_TestCase
+class YvesControllerProviderTest extends \PHPUnit_Framework_TestCase
 {
 
     const METHOD_REQUIRE_HTTP = 'requireHttp';
@@ -47,6 +47,17 @@ class AbstractControllerProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testWhenSslEnabledFalseRequireHttpIsCalled()
+    {
+        $app = new Application();
+        $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTP, $this->once());
+        $controllerProviderMock = $this->createControllerProviderMock(false, $controllerMock);
+        $controllerProviderMock->defineControllers($app);
+    }
+
+    /**
+     * @return void
+     */
     public function testWhenSslEnabledTrueRequireHttpsIsCalled()
     {
         $app = new Application();
@@ -58,42 +69,27 @@ class AbstractControllerProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testIsControllerSslEnabled()
+    public function testWhenSslEnabledTrueRequireHttpsWithExcludedUrlIsNotCalled()
     {
-        $this->markTestIncomplete('Complete this test');
-//        $app = new Application();
-//        $controllerMock = $this->getControllerMock('requireHttps');
-//        $controllerProviderMock = $this->createControllerProviderMock(true, $controllerMock);
-//        $controllerProviderMock->defineControllers($app);
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsControllerSslEnabledWithExcludedUrl()
-    {
-        $this->markTestIncomplete('Complete this test');
-//        $app = new Application();
-//        $controllerMock = $this->createControllerProviderMock(true);
-//        $controllerMock
-//            ->expects($this->once())
-//            ->method('getExcludedUrls')
-//            ->willReturn([
-//                'foo' => '/foo'
-//            ]);
+        $app = new Application();
+        $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTPS, $this->never());
+        $controllerProviderMock = $this->createControllerProviderMock(true, $controllerMock, ['foo' => '/foo']);
+        $controllerProviderMock->defineControllers($app);
     }
 
     /**
      * @param bool $ssl
      * @param \Silex\Controller $controller
+     * @param array $urls
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
      */
-    protected function createControllerProviderMock($ssl, $controller)
+    protected function createControllerProviderMock($ssl, $controller, array $urls = [])
     {
-        $controllerProviderMock = $this->getMock(ControllerProviderMock::class, ['getService', 'getController'], [$ssl]);
+        $controllerProviderMock = $this->getMock(ControllerProviderMock::class, ['getService', 'getController', 'getExcludedUrls'], [$ssl]);
         $controllerProviderMock->method('getService')->willReturn('');
         $controllerProviderMock->method('getController')->willReturn($controller);
+        $controllerProviderMock->method('getExcludedUrls')->willReturn($urls);
 
         return $controllerProviderMock;
     }
