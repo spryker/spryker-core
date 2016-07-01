@@ -31,9 +31,9 @@
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="value" required="true" type="VARCHAR" size="255"/>
 
-        <unique name="spy_product_option_value-sku">
-            <unique-column name="sku"/>
-        </unique>
+        <index name="spy_product_option_value-sku">
+            <index-column name="sku"/>
+        </index>
 
         <id-method-parameter value="spy_product_option_value_pk_seq"/>
     </table>
