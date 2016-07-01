@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="Orm\Zed\ProductOption\Persistence" package="src.Orm.Zed.ProductOption.Persistence">
 
-    <table name="spy_product_option_group" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionGroup">
+    <!--<table name="spy_product_option_group" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionGroup">
         <column name="id_product_option_group" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_tax_set" type="INTEGER" required="false"/>
 
@@ -37,5 +37,5 @@
 
         <id-method-parameter value="spy_product_option_value_pk_seq"/>
     </table>
-
+-->
 </database>
