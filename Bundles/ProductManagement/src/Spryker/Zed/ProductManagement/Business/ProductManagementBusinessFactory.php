@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManager;
 use Spryker\Zed\ProductManagement\Business\Product\ProductManager;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -24,7 +25,7 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     public function createProductManager()
     {
         return new ProductManager(
-            $this->getAttributeManager(),
+            $this->getProductAttributeManager(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
             $this->getTouchFacade(),
@@ -37,7 +38,7 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
-    public function getAttributeManager()
+    public function getProductAttributeManager()
     {
         return $this->getProductFacade()->getAttributeManager();
     }
@@ -104,6 +105,14 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function getCurrentLocale()
     {
         return $this->getLocaleFacade()->getCurrentLocale();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeManagerInterface
+     */
+    public function createAttributeManager()
+    {
+        return new AttributeManager();
     }
 
 }

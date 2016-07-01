@@ -16,5 +16,28 @@
         <property name="stock" type="int" />
     </transfer>
 
+    <transfer name="ProductManagementAttribute">
+        <property name="idProductManagementAttribute" type="int" />
+    </transfer>
+
+    <transfer name="ProductManagementAttributeLocalized">
+        <property name="idProductManagementAttributeLocalized" type="int" />
+    </transfer>
+
+    <transfer name="ProductManagementAttributeMetadata">
+        <property name="idProductManagementAttributeMetadata" type="int" />
+    </transfer>
+
+    <transfer name="ProductManagementAttributeInput">
+        <property name="idProductManagementAttributeInput" type="int" />
+    </transfer>
+
+    <transfer name="ProductManagementAttributeType">
+        <property name="idProductManagementAttributeType" type="int" />
+    </transfer>
+
+    <transfer name="ProductManagementAttributeValue">
+        <property name="idProductManagementAttributeValue" type="int" />
+    </transfer>
 </transfers>
 
