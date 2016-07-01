@@ -80,8 +80,13 @@ class ProductFormAttributeGroup extends AbstractType
      */
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
+        $name = $builder->getName();
+        if (isset($this->attributeGroups[$builder->getName()])) {
+            $name = $this->attributeGroups[$builder->getName()];
+        }
+
         $builder->add(self::FIELD_VALUE, new CheckboxType(), [
-            'label' => $this->attributeGroups[$builder->getName()],
+            'label' => $name,
         ]);
 
         return $this;

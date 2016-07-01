@@ -145,11 +145,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getProductAttributeGroupCollection()
     {
-        return [
-            'size' => 'Size',
-            'color' => 'Color',
-            'flavour' => 'Flavour',
-        ];
+        return $this->getProductManagementFacade()->getProductAttributeGroupCollection();
     }
 
     /**

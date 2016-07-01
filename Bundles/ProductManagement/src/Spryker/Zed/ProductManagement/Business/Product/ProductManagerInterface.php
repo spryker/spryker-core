@@ -203,4 +203,9 @@ interface ProductManagerInterface
      */
     public function getProductAttributeCollection();
 
+    /**
+     * @return array
+     */
+    public function getProductAttributeGroupCollection();
+
 }

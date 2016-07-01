@@ -1083,9 +1083,14 @@ class ProductManager implements ProductManagerInterface
         $result = [];
         foreach ($attributes as $type => $valueSet) {
             foreach ($valueSet as $name => $value) {
-                $result[$type][$name] = $attributeCollection[$type][$name];
+                $result[$type][$name] = $value;
+                if (isset($attributeCollection[$type][$name])) {
+                    $result[$type][$name] = $attributeCollection[$type][$name];
+                }
             }
         }
+
+        unset($result['license']);
 
         return $result;
     }
@@ -1095,11 +1100,8 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAttributeCollection()
     {
-        $attr = $this->productQueryContainer
-            ->queryAttributesMetadata()
-            ->find();
-
-        return [
+        /*
+        [
             'size' => [
                 '40' => '40',
                 '41' => '41',
@@ -1115,7 +1117,46 @@ class ProductManager implements ProductManagerInterface
                 'spicy' => 'Mexican Food',
                 'sweet' => 'Cakes'
             ]
-        ];
+        ]
+         */
+
+        $attributeCollection = $this->productQueryContainer
+            ->queryAttributesMetadata()
+            ->find();
+
+        $attributes = [];
+        foreach ($attributeCollection as $attributeEntity) {
+            $attributes[$attributeEntity->getKey()] = [
+                $attributeEntity->getKey() => $attributeEntity->getKey()
+            ];
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductAttributeGroupCollection()
+    {
+        /*
+        [
+            'size' => 'Size',
+            'color' => 'Color',
+            'flavour' => 'Flavour',
+        ]
+         */
+
+        $attributeCollection = $this->productQueryContainer
+            ->queryAttributesMetadata()
+            ->find();
+
+        $attributeGroups = [];
+        foreach ($attributeCollection as $attributeEntity) {
+            $attributeGroups[$attributeEntity->getKey()] = $attributeEntity->getKey();
+        }
+
+        return $attributeGroups;
     }
 
 }
