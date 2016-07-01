@@ -7,11 +7,32 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
-
 interface AttributeManagerInterface
 {
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getProductAttributeCollection();
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
+     */
+    public function getProductAttributeMetadataCollection();
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeInputTransfer[]
+     */
+    public function getProductAttributesInputCollection();
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTypeTransfer[]
+     */
+    public function getProductAttributesTypeCollection();
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
+     */
+    public function getProductAttributesValueCollection();
 
 }

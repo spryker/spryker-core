@@ -57,7 +57,7 @@ interface ProductManagementFacadeInterface
      *
      * @return array
      */
-    public function getProductAttributeGroupCollection();
+    public function getProductAttributeMetadataCollection();
 
     /**
      * @api

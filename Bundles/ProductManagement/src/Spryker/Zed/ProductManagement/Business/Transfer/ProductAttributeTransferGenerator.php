@@ -74,7 +74,7 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
     {
         $transferList = [];
         foreach ($productAttributeLocalizedEntityCollection as $productAttributeLocalizedEntity) {
-            $transferList[] = $this->convertProductAttribute($productAttributeLocalizedEntity);
+            $transferList[] = $this->convertProductAttributeLocalized($productAttributeLocalizedEntity);
         }
 
         return $transferList;
@@ -96,7 +96,7 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
     /**
      * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeMetadata[]|\Propel\Runtime\Collection\ObjectCollection $productAttributeMetadataEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
      */
     public function convertProductAttributeMetadataCollection(ObjectCollection $productAttributeMetadataEntityCollection)
     {
@@ -130,7 +130,7 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
     {
         $transferList = [];
         foreach ($productAttributeInputEntityCollection as $productAttributeInputEntity) {
-            $transferList[] = $this->convertProductAttribute($productAttributeInputEntity);
+            $transferList[] = $this->convertProductAttributeInput($productAttributeInputEntity);
         }
 
         return $transferList;
@@ -158,7 +158,7 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
     {
         $transferList = [];
         foreach ($productAttributeTypeEntityCollection as $productAttributeTypeEntity) {
-            $transferList[] = $this->convertProductAttribute($productAttributeTypeEntity);
+            $transferList[] = $this->convertProductAttributeType($productAttributeTypeEntity);
         }
 
         return $transferList;
@@ -186,7 +186,7 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
     {
         $transferList = [];
         foreach ($productAttributeValueEntityCollection as $productAttributeValueEntity) {
-            $transferList[] = $this->convertProductAttribute($productAttributeValueEntity);
+            $transferList[] = $this->convertProductAttributeValue($productAttributeValueEntity);
         }
 
         return $transferList;

@@ -27,7 +27,7 @@ class ProductFormAttributeValues extends AbstractType
     /**
      * @var array
      */
-    protected $attributeGroups;
+    protected $attributeMetadataCollection;
 
     /**
      * @var string
@@ -41,7 +41,7 @@ class ProductFormAttributeValues extends AbstractType
     public function __construct(array $attributes, $validationGroup)
     {
         $this->attributeValues = $attributes[ProductFormAdd::ATTRIBUTE_VALUES];
-        $this->attributeGroups = $attributes[ProductFormAdd::ATTRIBUTE_GROUP];
+        $this->attributeMetadataCollection = $attributes[ProductFormAdd::ATTRIBUTE_METADATA];
         $this->validationGroup = $validationGroup;
     }
 
@@ -65,7 +65,6 @@ class ProductFormAttributeValues extends AbstractType
         $resolver->setDefaults([
             'required' => false,
             'cascade_validation' => true,
-            'align_checkbox_label' => 'right'
         ]);
     }
 
@@ -91,8 +90,8 @@ class ProductFormAttributeValues extends AbstractType
     protected function addCheckboxNameField(FormBuilderInterface $builder, array $options)
     {
         $name = $builder->getName();
-        if (isset($this->attributeGroups[$builder->getName()])) {
-            $name = $this->attributeGroups[$builder->getName()];
+        if (isset($this->attributeMetadataCollection[$builder->getName()])) {
+            $name = $this->attributeMetadataCollection[$builder->getName()];
         }
 
         $builder
@@ -111,8 +110,8 @@ class ProductFormAttributeValues extends AbstractType
     protected function addValueField(FormBuilderInterface $builder, array $options)
     {
         $name = $builder->getName();
-        if (isset($this->attributeGroups[$builder->getName()])) {
-            $name = $this->attributeGroups[$builder->getName()];
+        if (isset($this->attributeMetadataCollection[$builder->getName()])) {
+            $name = $this->attributeMetadataCollection[$builder->getName()];
         }
 
         $choices = [];
@@ -124,12 +123,12 @@ class ProductFormAttributeValues extends AbstractType
             'choices' => $choices,
             'multiple' => true,
             'label' => false,
-            'constraints' => [
+/*            'constraints' => [
                 new AttributeFieldNotBlank([
                     'attributeFieldValue' => self::FIELD_VALUE,
                     'attributeCheckboxFieldName' => self::FIELD_NAME,
                 ]),
-            ],
+            ],*/
         ]);
 
         return $this;

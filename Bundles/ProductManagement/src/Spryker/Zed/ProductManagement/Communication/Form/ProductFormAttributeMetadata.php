@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductFormAttributeGroup extends AbstractType
+class ProductFormAttributeMetadata extends AbstractType
 {
 
     const FIELD_VALUE = 'value';
@@ -42,7 +42,7 @@ class ProductFormAttributeGroup extends AbstractType
      */
     public function getName()
     {
-        return 'ProductFormAttributeGroup';
+        return 'ProductFormAttributeMetadata';
     }
 
     /**

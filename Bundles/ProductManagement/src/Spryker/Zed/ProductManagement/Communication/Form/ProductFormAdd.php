@@ -24,13 +24,13 @@ class ProductFormAdd extends AbstractType
     const FIELD_SKU = 'sku';
 
     const LOCALIZED_ATTRIBUTES = 'localized_attributes';
-    const ATTRIBUTE_GROUP = 'attribute_group';
+    const ATTRIBUTE_METADATA = 'attribute_metadata';
     const ATTRIBUTE_VALUES = 'attribute_values';
     const TAX_SET = 'tax_set';
     const PRICE_AND_STOCK = 'price_and_stock';
     const SEO = 'seo';
 
-    const VALIDATION_GROUP_ATTRIBUTES = 'validation_group_attributes';
+    const VALIDATION_GROUP_ATTRIBUTE_METADATA = 'validation_group_attribute_metadata';
     const VALIDATION_GROUP_ATTRIBUTE_VALUES = 'validation_group_attribute_values';
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
@@ -53,7 +53,7 @@ class ProductFormAdd extends AbstractType
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setRequired(self::ATTRIBUTE_GROUP);
+        $resolver->setRequired(self::ATTRIBUTE_METADATA);
         $resolver->setRequired(self::ATTRIBUTE_VALUES);
         $resolver->setRequired(self::TAX_SET);
 
@@ -64,7 +64,7 @@ class ProductFormAdd extends AbstractType
                 return [
                     Constraint::DEFAULT_GROUP,
                     self::VALIDATION_GROUP_GENERAL,
-                    self::VALIDATION_GROUP_ATTRIBUTES,
+                    self::VALIDATION_GROUP_ATTRIBUTE_METADATA,
                     self::VALIDATION_GROUP_ATTRIBUTE_VALUES,
                     self::VALIDATION_GROUP_PRICE_AND_STOCK,
                     self::VALIDATION_GROUP_SEO,
@@ -84,9 +84,9 @@ class ProductFormAdd extends AbstractType
         $this
             ->addSkuField($builder)
             ->addGeneralForm($builder)
-            ->addAttributeGroupForm($builder, $options[self::ATTRIBUTE_GROUP])
+            ->addAttributeMetadataForm($builder, $options[self::ATTRIBUTE_METADATA])
             ->addAttributeValuesForm($builder, [
-                self::ATTRIBUTE_GROUP => $options[self::ATTRIBUTE_GROUP],
+                self::ATTRIBUTE_METADATA => $options[self::ATTRIBUTE_METADATA],
                 self::ATTRIBUTE_VALUES => $options[self::ATTRIBUTE_VALUES]
             ])
             ->addPriceForm($builder, $options[self::TAX_SET])
@@ -155,14 +155,14 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributeGroupForm(FormBuilderInterface $builder, array $options = [])
+    protected function addAttributeMetadataForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::ATTRIBUTE_GROUP, 'collection', [
+            ->add(self::ATTRIBUTE_METADATA, 'collection', [
                 'label' => 'Attributes',
-                'type' => new ProductFormAttributeGroup(
+                'type' => new ProductFormAttributeMetadata(
                     $options,
-                    self::VALIDATION_GROUP_ATTRIBUTES
+                    self::VALIDATION_GROUP_ATTRIBUTE_METADATA
                 ),
                 'constraints' => [new Callback([
                     'methods' => [
@@ -180,7 +180,7 @@ class ProductFormAdd extends AbstractType
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTES]
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_METADATA]
                 ])]
             ]);
 

@@ -42,7 +42,9 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
      */
     public function queryProductManagementAttributeMetadata()
     {
-        return $this->getFactory()->createProductManagementAttributeMetadataQuery();
+        return $this->getFactory()
+            ->createProductManagementAttributeMetadataQuery()
+            ->orderByKey();
     }
 
     /**

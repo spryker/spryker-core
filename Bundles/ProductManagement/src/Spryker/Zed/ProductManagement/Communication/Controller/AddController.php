@@ -43,7 +43,7 @@ class AddController extends AbstractController
             )
             ->handleRequest($request);
 
-        $attributeGroupCollection = $this->getFactory()->getProductAttributeGroupCollection();
+        $attributeGroupCollection = $this->getFactory()->getProductAttributeMetadataCollection();
         $attributeValuesCollection = $this->getFactory()->getProductAttributeCollection();
 
         if ($form->isValid()) {
@@ -196,7 +196,7 @@ class AddController extends AbstractController
     protected function convertAttributesFromData(array $data, array $attributeCollection)
     {
         $attributes = [];
-        foreach ($data[ProductFormAdd::ATTRIBUTE_GROUP] as $type => $values) {
+        foreach ($data[ProductFormAdd::ATTRIBUTE_METADATA] as $type => $values) {
             $attributes[$type] = $values['value'];
         }
 

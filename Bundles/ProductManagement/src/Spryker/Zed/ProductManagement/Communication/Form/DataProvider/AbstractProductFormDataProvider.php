@@ -58,9 +58,9 @@ class AbstractProductFormDataProvider
     protected $productManagementFacade;
 
     /**
-     * @var array
+     * @var \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
      */
-    protected $attributeGroupCollection = [];
+    protected $attributeMetadataCollection = [];
 
     /**
      * @var array
@@ -80,7 +80,7 @@ class AbstractProductFormDataProvider
         ProductFacadeInterface $productFacade,
         ProductManagementFacadeInterface $productManagementFacade,
         ProductManagementToLocaleInterface $localeFacade,
-        array $attributeGroupCollection,
+        array $attributeMetadataCollection,
         array $attributeValueCollection,
         array $taxCollection
     ) {
@@ -91,7 +91,7 @@ class AbstractProductFormDataProvider
         $this->productFacade = $productFacade;
         $this->productManagementFacade = $productManagementFacade;
         $this->locale = $localeFacade->getCurrentLocale();
-        $this->attributeGroupCollection = $attributeGroupCollection;
+        $this->attributeMetadataCollection = $attributeMetadataCollection;
         $this->attributeValueCollection = $attributeValueCollection;
         $this->taxCollection = $taxCollection;
     }
@@ -103,7 +103,7 @@ class AbstractProductFormDataProvider
      */
     public function getOptions($idProductAbstract = null)
     {
-        $formOptions[ProductFormAdd::ATTRIBUTE_GROUP] = $this->attributeGroupCollection;
+        $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = $this->attributeMetadataCollection;
         $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->attributeValueCollection;
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
 
@@ -133,7 +133,7 @@ class AbstractProductFormDataProvider
         return [
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields(),
-            ProductFormAdd::ATTRIBUTE_GROUP => $this->getAttributeGroupDefaultFields(),
+            ProductFormAdd::ATTRIBUTE_METADATA => $this->getAttributeMetadataDefaultFields(),
             ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields(),
             ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields(),
             ProductFormAdd::SEO => $this->getSeoDefaultFields(),
@@ -207,7 +207,7 @@ class AbstractProductFormDataProvider
     /**
      * @return array
      */
-    public function getAttributeGroupDefaultFields()
+    public function getAttributeMetadataDefaultFields()
     {
         return $this->convertToFormValues($this->attributeValueCollection);
     }
@@ -246,16 +246,25 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function convertSelectedAttributeGroupsToFormValues(array $attributes)
+    protected function convertSelectedAttributeMetadataToFormValues(array $attributes)
     {
-        $attributeGroupCollection = array_keys($attributes) + array_keys($this->attributeGroupCollection);
-
-        $groupValues = [];
-        foreach ($attributeGroupCollection as $type) {
-            $groupValues[$type]['value'] = array_key_exists($type, $attributes);
+        $attributeMetadataCollection = [];
+        foreach ($this->attributeMetadataCollection as $metadataTransfer) {
+            $attributeMetadataCollection[] = $metadataTransfer->toArray();
         }
 
-        return $groupValues;
+        sd($attributeMetadataCollection);
+        $attributeMetadataCollection = array_keys($attributes) + array_keys($attributeMetadataCollection);
+
+
+        $values = [];
+        foreach ($attributeMetadataCollection as $type) {
+            $values[$type]['value'] = array_key_exists($type, $attributes);
+        }
+
+        sd($values, $attributes, $this->attributeMetadataCollection, $attributeMetadataCollection);
+
+        return $values;
     }
 
     /**
@@ -266,13 +275,13 @@ class AbstractProductFormDataProvider
     protected function convertSelectedAttributeValuesToFormValues(array $attributes)
     {
         $values = [];
-        foreach ($attributes as $type => $valueSet) {
-            $values[$type]['value'] = array_keys($valueSet);
+        foreach ($attributes as $name => $value) {
+            $values[$name]['value'] = $value;
         }
 
-        foreach ($this->attributeValueCollection as $type => $valueSet) {
-            if (!array_key_exists($type, $values)) {
-                $values[$type]['value'] = [];
+        foreach ($this->attributeValueCollection as $name => $value) {
+            if (!array_key_exists($name, $values)) {
+                $values[$name]['value'] = [];
             }
         }
 

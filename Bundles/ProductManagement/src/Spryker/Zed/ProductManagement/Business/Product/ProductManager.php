@@ -1063,44 +1063,39 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * TODO Move it to AttributeManager
+     *
      * @param int $idProductAbstract
      *
      * @return array
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract)
     {
-        $attributeCollection = $this->getProductAttributeCollection();
+        $productAbstractTransfer = $this->getProductAbstractById($idProductAbstract);
+        if (!$productAbstractTransfer) {
+            return [];
+        }
+
         $concreteProductCollection = $this->getConcreteProductsByAbstractProductId($idProductAbstract);
 
         $attributes = [];
         foreach ($concreteProductCollection as $productTransfer) {
             $productAttributes = $productTransfer->getAttributes();
             foreach ($productAttributes as $name => $value) {
-                $attributes[$name][$value] = $value;
+                $attributes[$name] = $value;
             }
         }
 
-        $result = [];
-        foreach ($attributes as $type => $valueSet) {
-            foreach ($valueSet as $name => $value) {
-                $result[$type][$name] = $value;
-                if (isset($attributeCollection[$type][$name])) {
-                    $result[$type][$name] = $attributeCollection[$type][$name];
-                }
-            }
-        }
+        $abstractAttributes = $productAbstractTransfer->getAttributes();
+        $attributes = array_merge($abstractAttributes, $attributes);
 
-        unset($result['license']);
-
-        return $result;
+        return $attributes;
     }
 
     /**
      * @return array
-     */
     public function getProductAttributeCollection()
     {
-        /*
         [
             'size' => [
                 '40' => '40',
@@ -1118,7 +1113,7 @@ class ProductManager implements ProductManagerInterface
                 'sweet' => 'Cakes'
             ]
         ]
-         */
+
 
         $attributeCollection = $this->productQueryContainer
             ->queryAttributesMetadata()
@@ -1132,31 +1127,30 @@ class ProductManager implements ProductManagerInterface
         }
 
         return $attributes;
-    }
+    }*/
 
     /**
      * @return array
-     */
-    public function getProductAttributeGroupCollection()
+    public function getProductAttributeMetadataCollection()
     {
-        /*
         [
             'size' => 'Size',
             'color' => 'Color',
             'flavour' => 'Flavour',
         ]
-         */
 
-        $attributeCollection = $this->productQueryContainer
+        $metaAttributeCollection = $this->productQueryContainer
             ->queryAttributesMetadata()
             ->find();
 
-        $attributeGroups = [];
-        foreach ($attributeCollection as $attributeEntity) {
-            $attributeGroups[$attributeEntity->getKey()] = $attributeEntity->getKey();
+        $metadata = [];
+        foreach ($metaAttributeCollection as $entity) {
+            $metadata[$entity->getKey()] = $entity->getKey();
         }
 
-        return $attributeGroups;
-    }
+        sd($metadata);
+
+        return $metadata;
+    }*/
 
 }

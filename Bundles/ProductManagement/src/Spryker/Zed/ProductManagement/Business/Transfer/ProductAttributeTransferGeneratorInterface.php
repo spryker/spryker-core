@@ -56,7 +56,7 @@ interface ProductAttributeTransferGeneratorInterface
     /**
      * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeMetadata[]|\Propel\Runtime\Collection\ObjectCollection $productAttributeMetadataEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
      */
     public function convertProductAttributeMetadataCollection(ObjectCollection $productAttributeMetadataEntityCollection
     );

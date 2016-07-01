@@ -229,7 +229,9 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryAttributesMetadata()
     {
-        return $this->getFactory()->createProductAttributesMetadataQuery();
+        return $this->getFactory()
+            ->createProductAttributesMetadataQuery()
+            ->orderByKey();
     }
 
     /**

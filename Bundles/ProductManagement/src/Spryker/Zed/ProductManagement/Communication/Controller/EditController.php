@@ -56,7 +56,7 @@ class EditController extends AddController
             ->getProductManagementFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
-        $attributeGroupCollection = $this->getFactory()->getProductAttributeGroupCollection();
+        $attributeGroupCollection = $this->getFactory()->getProductAttributeMetadataCollection();
         $attributeValuesCollection = $this->getFactory()->getProductAttributeCollection();
 
         if ($form->isValid()) {

@@ -166,8 +166,6 @@ interface ProductManagerInterface
     public function getAbstractSkuFromProductConcrete($sku);
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $productConcreteCollection
      *
@@ -197,15 +195,5 @@ interface ProductManagerInterface
      * @return array
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract);
-
-    /**
-     * @return array
-     */
-    public function getProductAttributeCollection();
-
-    /**
-     * @return array
-     */
-    public function getProductAttributeGroupCollection();
 
 }

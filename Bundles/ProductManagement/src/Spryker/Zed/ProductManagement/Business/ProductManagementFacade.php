@@ -72,7 +72,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     public function getProductAttributeCollection()
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createAttributeManager()
             ->getProductAttributeCollection();
     }
 
@@ -81,11 +81,11 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
      *
      * @return array
      */
-    public function getProductAttributeGroupCollection()
+    public function getProductAttributeMetadataCollection()
     {
         return $this->getFactory()
-            ->createProductManager()
-            ->getProductAttributeGroupCollection();
+            ->createAttributeManager()
+            ->getProductAttributeMetadataCollection();
     }
 
     /**

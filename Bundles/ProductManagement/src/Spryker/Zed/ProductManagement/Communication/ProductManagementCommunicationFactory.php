@@ -60,7 +60,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
-            $this->getProductAttributeGroupCollection(),
+            $this->getProductAttributeMetadataCollection(),
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection()
         );
@@ -78,7 +78,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
-            $this->getProductAttributeGroupCollection(),
+            $this->getProductAttributeMetadataCollection(),
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection()
         );
@@ -143,9 +143,9 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return array
      */
-    public function getProductAttributeGroupCollection()
+    public function getProductAttributeMetadataCollection()
     {
-        return $this->getProductManagementFacade()->getProductAttributeGroupCollection();
+        return $this->getProductManagementFacade()->getProductAttributeMetadataCollection();
     }
 
     /**
