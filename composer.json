@@ -449,7 +449,6 @@
       "Spryker\\Zed\\Wishlist\\": "Bundles/Wishlist/src",
       "Unit\\Spryker\\Zed\\Wishlist\\": "Bundles/Wishlist/tests",
       "Functional\\Spryker\\Zed\\Wishlist\\": "Bundles/Wishlist/tests",
-
       "Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/src",
       "Unit\\Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/tests",
       "Functional\\Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/tests",
@@ -459,11 +458,20 @@
       "Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/src",
       "Unit\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
       "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
-
+      "Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/src",
+      "Unit\\Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/tests",
+      "Functional\\Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/tests",
+      "Spryker\\Zed\\ProductCategoryDiscountConnector\\": "Bundles/ProductCategoryDiscountConnector/src",
+      "Unit\\Spryker\\Zed\\ProductCategoryDiscountConnector\\": "Bundles/ProductCategoryDiscountConnector/tests",
+      "Functional\\Spryker\\Zed\\ProductCategoryDiscountConnector\\": "Bundles/ProductCategoryDiscountConnector/tests",
       "Spryker\\Shared\\StateMachine\\": "Bundles/StateMachine/src",
       "Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/src",
       "Unit\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests",
-      "Functional\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests"
+      "Functional\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests",
+      "Spryker\\Shared\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/src",
+      "Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/src",
+      "Unit\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
+      "Functional\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests"
     },
     "psr-4": {
       "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",

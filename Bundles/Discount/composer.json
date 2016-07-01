@@ -12,8 +12,6 @@
   },
   "require": {
     "spryker/application": "^2.0.0",
-    "spryker/calculation": "^2.0.0",
-    "spryker/cart": "^2.0.0",
     "spryker/config": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
@@ -22,9 +20,7 @@
     "spryker/propel": "^2.2.0",
     "spryker/sales": "^2.0.0",
     "spryker/symfony": "^2.0.0",
-    "spryker/tax": "^2.0.0",
     "spryker/transfer": "^2.0.0",
-    "spryker/url": "^2.0.0",
     "spryker/zend": "^2.0.0"
   },
   "description": "Discount bundle",
@@ -33,7 +29,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

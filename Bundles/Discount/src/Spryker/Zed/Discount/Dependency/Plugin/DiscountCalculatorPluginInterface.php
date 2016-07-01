@@ -7,24 +7,41 @@
 
 namespace Spryker\Zed\Discount\Dependency\Plugin;
 
-use Generated\Shared\Transfer\DiscountTransfer;
-
 interface DiscountCalculatorPluginInterface
 {
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
-     * @param mixed $number
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param mixed $percentage
      *
      * @return int
      */
-    public function calculate(array $discountableObjects, $number);
+    public function calculate(array $discountableItems, $percentage);
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param int $value
+     *
+     * @return float
+     */
+    public function transformForPersistence($value);
+
+    /**
+     * @param int $value
+     *
+     * @return float
+     */
+    public function transformFromPersistence($value);
+
+    /**
+     * @param int $amount
      *
      * @return string
      */
-    public function getFormattedAmount(DiscountTransfer $discountTransfer);
+    public function getFormattedAmount($amount);
+
+    /**
+     * @return array
+     */
+    public function getAmountValidators();
 
 }
