@@ -18,11 +18,6 @@
         <property name="sumTaxAmount" type="int" />
     </transfer>
 
-    <transfer name="ProductOptionsNameValue">
-        <property name="type" type="string" />
-        <property name="value" type="string" />
-    </transfer>
-
     <transfer name="Item">
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="unitGrossPriceWithProductOptions" type="int" />

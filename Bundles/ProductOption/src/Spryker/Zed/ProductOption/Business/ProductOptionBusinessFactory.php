@@ -8,11 +8,9 @@
 namespace Spryker\Zed\ProductOption\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
 use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionGrossPrice;
 use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -23,19 +21,11 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\DataImportWriterInterface
+     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionGrossPrice
      */
-    public function createDataImportWriterModel()
+    public function createItemProductOptionGrossPriceAggregator()
     {
-        return new DataImportWriter($this->getQueryContainer(), $this->getProductFacade(), $this->getLocaleFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionReaderInterface
-     */
-    public function createProductOptionReaderModel()
-    {
-        return new ProductOptionReader($this->getQueryContainer(), $this->getLocaleFacade());
+        return new ItemProductOptionGrossPrice($this->getSalesQueryContainer());
     }
 
     /**
@@ -44,14 +34,6 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionOrderSaver()
     {
         return new ProductOptionOrderSaver();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionGrossPrice
-     */
-    public function createItemProductOptionGrossPriceAggregator()
-    {
-        return new ItemProductOptionGrossPrice($this->getSalesQueryContainer());
     }
 
     /**
