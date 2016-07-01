@@ -23,9 +23,6 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     public function getData($idProductAbstract)
     {
         $defaults = $this->getDefaultFormFields();
-        $formData[ProductFormAdd::PRICE_AND_STOCK] = [
-            ProductFormPrice::FIELD_PRICE =>  null
-        ];
 
         $productAbstractTransfer = $this->productManagementFacade->getProductAbstractById($idProductAbstract);
         if ($productAbstractTransfer) {
@@ -40,7 +37,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         }
 
         $formData[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_TAX_RATE] = $productAbstractTransfer->getTaxSetId();
-        $formData[ProductFormAdd::PRICE_AND_STOCK]['stock'] = $productAbstractTransfer->getTaxSetId();
+        $formData[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_STOCK] = $productAbstractTransfer->getTaxSetId();
 
         //TODO load from db when columsn are added
         foreach ($formData[ProductFormAdd::SEO] as $locale => $localizedSeoData) {

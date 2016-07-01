@@ -240,8 +240,16 @@
                                     <td>-</td>
                                 {% endif %}
                             {% endfor %}
-                            <td class="center">{{ product.price|number_format }}</td>
-                            <td class="center">{{ product.stock }}</td>
+                            {% if product.price is defined and product.price.price is defined %}
+                                <td class="center">{{ product.price.price|number_format }}</td>
+                            {% else %}
+                                <td>-</td>
+                            {% endif %}
+                            {% if product.stock > 0 %}
+                                <td class="center">{{ product.stock }}</td>
+                            {% else %}
+                                <td>-</td>
+                            {% endif %}
                             <td class="center no-sort">[activate]</td>
                         </tr>
                     {% endfor %}
@@ -250,15 +258,16 @@
                     <tr>
                         <th>Sku</th>
                         {% set break1 = false %}
+                        {% set columnCount = attributeGroupCollection|length %}
                         {% for product in concretes if not break1 %}
-                            {% for attrName, attrValue in product.attributes %}
+                            {% for attributeGroupKey,attributeGroupLabel in attributeGroupCollection %}
                                 {% set break1 = true %}
-                                <th>{{ attrName }}</th>
+                                <th>{{ attributeGroupLabel }}</th>
                             {% endfor %}
                         {% endfor %}
                         <th class="center">Price</th>
                         <th class="center">Stock</th>
-                        <th>Action</th>
+                        <th class="no-sort">Action</th>
                     </tr>
                     </tfoot>
                     </table>

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
@@ -136,6 +137,11 @@ class AbstractProductFormDataProvider
             ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields(),
             ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields(),
             ProductFormAdd::SEO => $this->getSeoDefaultFields(),
+            ProductFormAdd::PRICE_AND_STOCK => [
+                ProductFormPrice::FIELD_PRICE => 0,
+                ProductFormPrice::FIELD_TAX_RATE => 0,
+                ProductFormPrice::FIELD_STOCK => 0
+            ]
         ];
     }
 
