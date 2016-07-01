@@ -21,6 +21,8 @@
     {{ backActionButton('/product-management', 'List Products' | trans) }}
 {% endblock %}
 
+{% form_theme form _self %}
+
 {% block content %}
 
     {{ form_start(form) }}
@@ -119,7 +121,6 @@
                                     <ul class="nav nav-tabs">
                                         <li class="active"><a href="#tab_conrete_attributes" data-toggle="tab">Attributes</a></li>
                                         <li class=""><a href="#tab_conrete_values" data-toggle="tab">Values</a></li>
-                                        <li class=""><a href="#tab_conrete_variants" data-toggle="tab">Variants</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-content">
@@ -143,19 +144,28 @@
                                             <p>Select attributes and values that define the differences between your variants.</p>
                                             <div class="well">
                                                 <div class="row">
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-12">
                                                         {% for type,aValue in form.attribute_values %}
+                                                            {{ form_errors(aValue.name) }}
                                                             {{ form_errors(aValue.value) }}
-                                                            {{ form_row(aValue.value) }}
+
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="col-lg-6">
+                                                                        {{ form_row(aValue.name) }}
+                                                                        {{ form_label(aValue.name) }}
+                                                                    </div>
+
+                                                                    <div class="col-lg-6">
+                                                                        {{ form_label(aValue.value) }}
+                                                                        {{ form_row(aValue.value) }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         {% endfor %}
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div id="tab_conrete_variants" class="tab-pane">
-                                        <div class="panel-body">
-                                            variants
                                         </div>
                                     </div>
                                 </div>

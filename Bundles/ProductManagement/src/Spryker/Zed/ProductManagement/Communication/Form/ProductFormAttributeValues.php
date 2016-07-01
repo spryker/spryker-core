@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\ProductManagement\Communication\Form\Constraints\AttributeFieldNotBlank;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -15,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ProductFormAttributeValues extends AbstractType
 {
 
+    const FIELD_NAME = 'name';
     const FIELD_VALUE = 'value';
 
     /**
@@ -63,6 +65,7 @@ class ProductFormAttributeValues extends AbstractType
         $resolver->setDefaults([
             'required' => false,
             'cascade_validation' => true,
+            'align_checkbox_label' => 'right'
         ]);
     }
 
@@ -75,7 +78,29 @@ class ProductFormAttributeValues extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
+            ->addCheckboxNameField($builder, $options)
             ->addValueField($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addCheckboxNameField(FormBuilderInterface $builder, array $options)
+    {
+        $name = $builder->getName();
+        if (isset($this->attributeGroups[$builder->getName()])) {
+            $name = $this->attributeGroups[$builder->getName()];
+        }
+
+        $builder
+            ->add(self::FIELD_NAME, 'checkbox', [
+                'label' => $name
+            ]);
+
+        return $this;
     }
 
     /**
@@ -96,9 +121,15 @@ class ProductFormAttributeValues extends AbstractType
         }
 
         $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [
-            'label' => $name,
             'choices' => $choices,
-            'multiple' => true
+            'multiple' => true,
+            'label' => false,
+            'constraints' => [
+                new AttributeFieldNotBlank([
+                    'attributeFieldValue' => self::FIELD_VALUE,
+                    'attributeCheckboxFieldName' => self::FIELD_NAME,
+                ]),
+            ],
         ]);
 
         return $this;

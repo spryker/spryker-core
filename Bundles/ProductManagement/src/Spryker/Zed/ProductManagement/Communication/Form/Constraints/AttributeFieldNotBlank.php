@@ -9,38 +9,38 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Constraints;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CategoryFieldNotBlank extends NotBlank
+class AttributeFieldNotBlank extends NotBlank
 {
 
     /**
      * @var string
      */
-    public $message = "Please select a Category or check 'Delete subcategories'";
+    public $message = "Please select an attribute and its value";
 
     /**
      * @var string
      */
-    protected $categoryFieldName;
+    protected $attributeFieldValue;
 
     /**
      * @var string
      */
-    protected $checkboxFieldName;
+    protected $attributeCheckboxFieldName;
 
     /**
      * @return string
      */
-    public function getCategoryFieldName()
+    public function getAttributeFieldValue()
     {
-        return $this->categoryFieldName;
+        return $this->attributeFieldValue;
     }
 
     /**
      * @return string
      */
-    public function getCheckboxFieldName()
+    public function getAttributeCheckboxFieldName()
     {
-        return $this->checkboxFieldName;
+        return $this->attributeCheckboxFieldName;
     }
 
 }
