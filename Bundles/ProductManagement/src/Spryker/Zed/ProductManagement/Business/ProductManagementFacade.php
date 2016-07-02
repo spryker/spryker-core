@@ -67,7 +67,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     /**
      * @api
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getProductAttributeCollection()
     {
@@ -79,7 +79,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     /**
      * @api
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
      */
     public function getProductAttributeMetadataCollection()
     {

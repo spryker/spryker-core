@@ -28,7 +28,11 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $productAbstractTransfer = $this->productManagementFacade->getProductAbstractById($idProductAbstract);
         if ($productAbstractTransfer) {
             $formData = $productAbstractTransfer->toArray(true);
-            $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] = $this->getLocalizedAbstractAttributes($productAbstractTransfer);
+            unset($formData['attributes']);
+            unset($formData['product_images_sets']);
+            unset($formData['localized_attributes']);
+
+            $formData[ProductFormAdd::GENERAL] = $this->getLocalizedAbstractAttributes($productAbstractTransfer);
 
             $priceTransfer = $this->priceFacade->getProductAbstractPrice($idProductAbstract);
             if ($priceTransfer) {
@@ -40,14 +44,15 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         //TODO load from db when columsn are added
         $seoData = [];
-        foreach ($formData[ProductFormAdd::LOCALIZED_ATTRIBUTES] as $locale => $localizedSeoData) {
+        foreach ($formData[ProductFormAdd::GENERAL] as $locale => $localizedSeoData) {
             $seoData[$locale][ProductFormSeo::FIELD_META_TITLE] = $localizedSeoData[ProductFormSeo::FIELD_META_TITLE];
             $seoData[$locale][ProductFormSeo::FIELD_META_KEYWORDS] = $localizedSeoData[ProductFormSeo::FIELD_META_KEYWORDS];
             $seoData[$locale][ProductFormSeo::FIELD_META_DESCRIPTION] = $localizedSeoData[ProductFormSeo::FIELD_META_DESCRIPTION];
 
-            unset($formData[ProductFormAdd::LOCALIZED_ATTRIBUTES][$locale][ProductFormSeo::FIELD_META_TITLE]);
-            unset($formData[ProductFormAdd::LOCALIZED_ATTRIBUTES][$locale][ProductFormSeo::FIELD_META_KEYWORDS]);
-            unset($formData[ProductFormAdd::LOCALIZED_ATTRIBUTES][$locale][ProductFormSeo::FIELD_META_DESCRIPTION]);
+            unset($formData[ProductFormAdd::GENERAL][$locale][ProductFormSeo::FIELD_META_TITLE]);
+            unset($formData[ProductFormAdd::GENERAL][$locale][ProductFormSeo::FIELD_META_KEYWORDS]);
+            unset($formData[ProductFormAdd::GENERAL][$locale][ProductFormSeo::FIELD_META_DESCRIPTION]);
+            unset($formData[ProductFormAdd::GENERAL][$locale]['attributes']);
         }
         $formData[ProductFormAdd::SEO] = $seoData;
 
@@ -57,8 +62,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $attributeMetadataCollection;
         $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $attributeValueCollection;
-
-        sd($formData);
+        //sd($formData);
 
         return $formData;
     }

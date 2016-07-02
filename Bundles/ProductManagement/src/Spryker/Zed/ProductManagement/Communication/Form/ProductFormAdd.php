@@ -23,7 +23,7 @@ class ProductFormAdd extends AbstractType
     const FIELD_NAME = 'name';
     const FIELD_SKU = 'sku';
 
-    const LOCALIZED_ATTRIBUTES = 'localized_attributes';
+    const GENERAL = 'general';
     const ATTRIBUTE_METADATA = 'attribute_metadata';
     const ATTRIBUTE_VALUES = 'attribute_values';
     const TAX_SET = 'tax_set';
@@ -56,7 +56,7 @@ class ProductFormAdd extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::ATTRIBUTE_METADATA);
-        $resolver->setRequired(self::ATTRIBUTE_VALUES);
+        //$resolver->setRequired(self::ATTRIBUTE_VALUES);
         $resolver->setRequired(self::TAX_SET);
         $resolver->setRequired(self::ID_LOCALE);
 
@@ -88,11 +88,12 @@ class ProductFormAdd extends AbstractType
             ->addSkuField($builder)
             ->addGeneralForm($builder)
             ->addAttributeMetadataForm($builder, $options[self::ATTRIBUTE_METADATA])
+            /*
             ->addAttributeValuesForm($builder, [
                 self::ATTRIBUTE_METADATA => $options[self::ATTRIBUTE_METADATA],
                 self::ATTRIBUTE_VALUES => $options[self::ATTRIBUTE_VALUES],
                 self::ID_LOCALE => $options[self::ID_LOCALE],
-            ])
+            ])*/
             ->addPriceForm($builder, $options[self::TAX_SET])
             ->addSeoForm($builder, $options)
         ;
@@ -125,7 +126,7 @@ class ProductFormAdd extends AbstractType
     protected function addGeneralForm(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::LOCALIZED_ATTRIBUTES, 'collection', [
+            ->add(self::GENERAL, 'collection', [
                 'type' => new ProductFormGeneral(),
                 'constraints' => [new Callback([
                     'methods' => [

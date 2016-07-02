@@ -127,6 +127,27 @@ class AbstractProductFormDataProvider
         return $result;
     }
 
+
+    /**
+     * @return array
+     */
+    protected function getDefaultFormFields()
+    {
+        return [
+            ProductFormAdd::FIELD_SKU => null,
+            ProductFormAdd::GENERAL => $this->getLocalizedAttributesDefaultFields(),
+            ProductFormAdd::ATTRIBUTE_METADATA => $this->getAttributeMetadataDefaultFields(),
+            ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields(),
+            ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields(),
+            ProductFormAdd::SEO => $this->getSeoDefaultFields(),
+            ProductFormAdd::PRICE_AND_STOCK => [
+                ProductFormPrice::FIELD_PRICE => 0,
+                ProductFormPrice::FIELD_TAX_RATE => 0,
+                ProductFormPrice::FIELD_STOCK => 0
+            ]
+        ];
+    }
+
     /**
      * @param int|null $idProductAbstract |null
      *
@@ -135,7 +156,7 @@ class AbstractProductFormDataProvider
     public function getOptions($idProductAbstract = null)
     {
         $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = $this->convertAttributeMetadataToOptionValues($this->attributeMetadataCollection);
-        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->convertAttributeValueToOptionValues($this->attributeCollection);
+        //$formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->convertAttributeValueToOptionValues($this->attributeCollection);
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
         $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();
 
@@ -203,7 +224,6 @@ class AbstractProductFormDataProvider
 
         return $result;
     }
-
     /**
      * @param int $idProductAbstract
      *
@@ -217,26 +237,6 @@ class AbstractProductFormDataProvider
 
         return $this->productManagementFacade
             ->getProductAttributesByAbstractProductId($idProductAbstract);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDefaultFormFields()
-    {
-        return [
-            ProductFormAdd::FIELD_SKU => null,
-            ProductFormAdd::LOCALIZED_ATTRIBUTES => $this->getLocalizedAttributesDefaultFields(),
-            ProductFormAdd::ATTRIBUTE_METADATA => $this->getAttributeMetadataDefaultFields(),
-            ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields(),
-            ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields(),
-            ProductFormAdd::SEO => $this->getSeoDefaultFields(),
-            ProductFormAdd::PRICE_AND_STOCK => [
-                ProductFormPrice::FIELD_PRICE => 0,
-                ProductFormPrice::FIELD_TAX_RATE => 0,
-                ProductFormPrice::FIELD_STOCK => 0
-            ]
-        ];
     }
 
     /**

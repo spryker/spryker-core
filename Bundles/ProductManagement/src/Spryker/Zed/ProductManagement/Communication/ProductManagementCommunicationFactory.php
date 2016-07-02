@@ -141,19 +141,19 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return array
-     */
-    public function getProductAttributeMetadataCollection()
-    {
-        return $this->getProductManagementFacade()->getProductAttributeMetadataCollection();
-    }
-
-    /**
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getProductAttributeCollection()
     {
         return $this->getProductManagementFacade()->getProductAttributeCollection();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
+     */
+    public function getProductAttributeMetadataCollection()
+    {
+        return $this->getProductManagementFacade()->getProductAttributeMetadataCollection();
     }
 
     /**

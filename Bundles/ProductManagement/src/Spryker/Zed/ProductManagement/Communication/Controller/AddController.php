@@ -43,13 +43,13 @@ class AddController extends AbstractController
             )
             ->handleRequest($request);
 
-        $attributeGroupCollection = $this->getFactory()->getProductAttributeMetadataCollection();
-        $attributeValuesCollection = $this->getFactory()->getProductAttributeCollection();
+        $attributeMetadataCollection = $this->getFactory()->getProductAttributeMetadataCollection();
+        $attributeCollection = $this->getFactory()->getProductAttributeCollection();
 
         if ($form->isValid()) {
             try {
-                $attributes = $this->convertAttributesFromData($form->getData(), $attributeValuesCollection);
-                $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeValuesCollection);
+                $attributes = $this->convertAttributesFromData($form->getData(), $attributeCollection);
+                $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeCollection);
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $matrixGenerator = new MatrixGenerator();
                 $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
@@ -75,8 +75,8 @@ class AddController extends AbstractController
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'matrix' => [],
             'concretes' => [],
-            'attributeGroupCollection' => $attributeGroupCollection,
-            'attributeValuesCollection' => $attributeValuesCollection
+            'attributeGroupCollection' => $this->normalizeAttributeMetadataArray($attributeMetadataCollection),
+            'attributeValuesCollection' => $this->normalizeAttributeArray($attributeCollection)
         ]);
     }
 
@@ -89,7 +89,7 @@ class AddController extends AbstractController
     {
         $productAbstractTransfer = $this->createProductAbstractTransfer($formData);
 
-        $attributeData = $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES];
+        $attributeData = $formData[ProductFormAdd::GENERAL];
         foreach ($attributeData as $localeCode => $localizedAttributesData) {
             $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
 
@@ -120,7 +120,7 @@ class AddController extends AbstractController
         $productConcreteTransfer->setAbstractSku($productAbstractTransfer->getSku());
         $productConcreteTransfer->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
 
-        $attributeData = $formData[ProductFormAdd::LOCALIZED_ATTRIBUTES];
+        $attributeData = $formData[ProductFormAdd::GENERAL];
         foreach ($attributeData as $localeCode => $localizedAttributesData) {
             $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
 
@@ -238,9 +238,34 @@ class AddController extends AbstractController
         return $values;
     }
 
-    protected function normalizeConcreteProductsAttributes()
+    /**
+     * @param array $attributeCollection
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    protected function normalizeAttributeArray(array $attributeCollection)
     {
-        
+        $attributeArray = [];
+        foreach ($attributeCollection as $attributeTransfer) {
+            $attributeArray[$attributeTransfer->getMetadata()->getKey()] = $attributeTransfer->toArray(true);
+        }
+
+        return $attributeArray;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[] $attributeMetadataCollection
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
+     */
+    protected function normalizeAttributeMetadataArray(array $attributeMetadataCollection)
+    {
+        $attributeMetadataArray = [];
+        foreach ($attributeMetadataCollection as $metadataTransfer) {
+            $attributeMetadataArray[$metadataTransfer->getKey()] = $metadataTransfer->getKey();
+        }
+
+        return $attributeMetadataArray;
     }
 
 }

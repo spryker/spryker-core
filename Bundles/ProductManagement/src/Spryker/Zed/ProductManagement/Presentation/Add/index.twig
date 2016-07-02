@@ -53,7 +53,7 @@
 
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
-                        {% for locale,localizedAttributes in form.localized_attributes %}
+                        {% for locale,localizedAttributes in form.general %}
                             {% set activeCss = '' %}
                             {% set invalidCss = '' %}
 
@@ -61,8 +61,8 @@
                                 {% set activeCss =  'active' %}
                             {% endif %}
 
-                            {% if errors.localized_attributes is defined %}
-                                {% if locale in errors.localized_attributes|keys %}
+                            {% if errors.general is defined %}
+                                {% if locale in errors.general|keys %}
                                     {% set invalidCss = 'invalid-tab' %}
                                 {% endif %}
                             {% endif %}
@@ -72,7 +72,7 @@
                         </ul>
 
                         <div class="tab-content">
-                        {% for locale,localizedAttributes in form.localized_attributes %}
+                        {% for locale,localizedAttributes in form.general %}
                             {% set active = '' %}
                             {% if currentLocale == locale %}
                                 {% set active = 'active' %}
@@ -158,6 +158,7 @@
                                             <div class="well">
                                                 <div class="row">
                                                     <div class="col-lg-12">
+                                                        {% if form.attribute_values is defined %}
                                                         {% set columns = 4 %}
                                                         {% for batchResults in form.attribute_values|batch(form.attribute_values|length / columns) %}
                                                             <div class="row">
@@ -174,6 +175,7 @@
                                                                 </div>
                                                             </div>
                                                         {% endfor %}
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>

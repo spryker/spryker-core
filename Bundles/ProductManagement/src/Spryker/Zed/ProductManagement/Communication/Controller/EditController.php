@@ -56,14 +56,14 @@ class EditController extends AddController
             ->getProductManagementFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
-        $attributeGroupCollection = $this->getFactory()->getProductAttributeMetadataCollection();
-        $attributeValuesCollection = $this->getFactory()->getProductAttributeCollection();
+        $attributeMetadataCollection = $this->getFactory()->getProductAttributeMetadataCollection();
+        $attributeCollection = $this->getFactory()->getProductAttributeCollection();
 
         if ($form->isValid()) {
             try {
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-                $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeValuesCollection);
+                $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeCollection);
 
                 $matrixGenerator = new MatrixGenerator();
                 $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
@@ -87,14 +87,19 @@ class EditController extends AddController
             }
         }
 
+       /* sd(
+            $this->normalizeAttributeMetadataArray($attributeMetadataCollection),
+            $this->normalizeAttributeArray($attributeCollection)
+        );*/
+
         return $this->viewResponse([
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
             'matrix' => [],
             'concretes' => $concreteProductCollection,
-            'attributeGroupCollection' => $attributeGroupCollection,
-            'attributeValuesCollection' => $attributeValuesCollection
+            'attributeGroupCollection' => $this->normalizeAttributeMetadataArray($attributeMetadataCollection),
+            //'attributeValuesCollection' => $this->normalizeAttributeArray($attributeCollection)
         ]);
     }
 
