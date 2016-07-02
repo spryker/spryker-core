@@ -171,27 +171,23 @@ class AbstractProductFormDataProvider
 
     protected function getLocalizedAttributeMetadataKey($keyToLocalize)
     {
-        foreach ($this->attributeMetadataCollection as $metadataTransfer) {
-            if ($metadataTransfer->getKey() !== $keyToLocalize) {
-                continue;
-            }
+        if (!isset($this->attributeMetadataCollection[$keyToLocalize])) {
+            return $keyToLocalize;
+        }
 
-            foreach ($this->attributeCollection as $attributeTransfer) {
-                if ($attributeTransfer->getMetadata()->getKey() == $metadataTransfer->getKey()) {
-                    foreach ($attributeTransfer->getLocalizedAttributes() as $localizedAttribute) {
-                        if ((int)$localizedAttribute->getFkLocale() === (int)$this->localeFacade->getCurrentLocale()
-                                ->getIdLocale()
-                        ) {
-                            return $localizedAttribute->getName();
-                        }
-                    }
-                }
+        if (!isset($this->attributeCollection[$keyToLocalize])) {
+            return $keyToLocalize;
+        }
+
+        $attributeTransfer = $this->attributeCollection[$keyToLocalize];
+        foreach ($attributeTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            if ((int)$localizedAttribute->getFkLocale() === (int)$this->localeFacade->getCurrentLocale()->getIdLocale()) {
+                return $localizedAttribute->getName();
             }
         }
 
         return $keyToLocalize;
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $data

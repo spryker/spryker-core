@@ -138,17 +138,17 @@ class ProductFormAttributeValues extends AbstractType
     }
 
     /**
-     * @param string $localizedKey
+     * @param string $keyToLocalize
      *
-     * @return mixed
+     * @return string
      */
-    protected function getLocalizedFieldName($localizedKey)
+    protected function getLocalizedFieldName($keyToLocalize)
     {
-        if (isset($this->localizedAttributeNames[$localizedKey])) {
-            $localizedKey = $this->localizedAttributeNames[$localizedKey];
+        if (!isset($this->attributeMetadataCollection[$keyToLocalize])) {
+            return $keyToLocalize;
         }
 
-        return $localizedKey;
+        return $this->attributeMetadataCollection[$keyToLocalize];
     }
 
 }
