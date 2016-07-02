@@ -54,11 +54,11 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         }
 
         $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
-        $attributeGroups = $this->convertSelectedAttributeMetadataToFormValues($attributes);
+        $attributeMetadataCollection = $this->convertSelectedAttributeMetadataToFormValues($attributes);
         $attributeValueCollection = $this->convertSelectedAttributeValuesToFormValues($attributes);
-        sd($attributes, $attributeGroups, $attributeValueCollection);
+        sd($attributes, $attributeMetadataCollection, $attributeValueCollection);
 
-        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $attributeGroups;
+        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $attributeMetadataCollection;
         $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $attributeValueCollection;
 
         $formData = array_merge($defaults, $formData);

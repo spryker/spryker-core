@@ -113,7 +113,8 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     public function createAttributeManager()
     {
         return new AttributeManager(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getLocaleFacade()
         );
     }
 

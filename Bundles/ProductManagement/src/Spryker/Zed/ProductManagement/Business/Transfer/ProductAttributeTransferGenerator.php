@@ -34,6 +34,15 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
         $productAttributeTransfer = (new ProductManagementAttributeTransfer())
             ->fromArray($productAttributeEntity->toArray(), true);
 
+        $metadataTransfer = $this->convertProductAttributeMetadata($productAttributeEntity->getSpyProductManagementAttributeMetadata());
+        $productAttributeTransfer->setMetadata($metadataTransfer);
+
+        $inputTransfer = $this->convertProductAttributeInput($productAttributeEntity->getSpyProductManagementAttributeInput());
+        $productAttributeTransfer->setInput($inputTransfer);
+
+        $localizedAttributeCollection = $this->convertProductAttributeLocalizedCollection($productAttributeEntity->getSpyProductManagementAttributeLocalizeds());
+        $productAttributeTransfer->setLocalizedAttributes(new \ArrayObject($localizedAttributeCollection));
+
         return $productAttributeTransfer;
     }
 
@@ -59,10 +68,10 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
      */
     public function convertProductAttributeLocalized(SpyProductManagementAttributeLocalized $productAbstractLocalizedEntity)
     {
-        $productAbstractTransfer = (new ProductManagementAttributeLocalizedTransfer())
+        $productManagementAttributeLocalizedTransfer = (new ProductManagementAttributeLocalizedTransfer())
             ->fromArray($productAbstractLocalizedEntity->toArray(), true);
 
-        return $productAbstractTransfer;
+        return $productManagementAttributeLocalizedTransfer;
     }
 
     /**
@@ -87,10 +96,14 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
      */
     public function convertProductAttributeMetadata(SpyProductManagementAttributeMetadata $productAttributeMetadataEntity)
     {
-        $productAttributeTransfer = (new ProductManagementAttributeMetadataTransfer())
+        $productAttributeMetadataTransfer = (new ProductManagementAttributeMetadataTransfer())
             ->fromArray($productAttributeMetadataEntity->toArray(), true);
 
-        return $productAttributeTransfer;
+        $typeEntity = $productAttributeMetadataEntity->getSpyProductManagementAttributeType();
+        $typeTransfer = $this->convertProductAttributeType($typeEntity);
+        $productAttributeMetadataTransfer->setType($typeTransfer);
+
+        return $productAttributeMetadataTransfer;
     }
 
     /**

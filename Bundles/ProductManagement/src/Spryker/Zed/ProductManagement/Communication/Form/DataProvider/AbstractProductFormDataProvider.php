@@ -63,9 +63,9 @@ class AbstractProductFormDataProvider
     protected $attributeMetadataCollection = [];
 
     /**
-     * @var array
+     * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
-    protected $attributeValueCollection = [];
+    protected $attributeCollection = [];
 
     /**
      * @var array
@@ -81,7 +81,7 @@ class AbstractProductFormDataProvider
         ProductManagementFacadeInterface $productManagementFacade,
         ProductManagementToLocaleInterface $localeFacade,
         array $attributeMetadataCollection,
-        array $attributeValueCollection,
+        array $attributeCollection,
         array $taxCollection
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
@@ -92,7 +92,7 @@ class AbstractProductFormDataProvider
         $this->productManagementFacade = $productManagementFacade;
         $this->locale = $localeFacade->getCurrentLocale();
         $this->attributeMetadataCollection = $attributeMetadataCollection;
-        $this->attributeValueCollection = $attributeValueCollection;
+        $this->attributeCollection = $attributeCollection;
         $this->taxCollection = $taxCollection;
     }
 
@@ -104,7 +104,7 @@ class AbstractProductFormDataProvider
     public function getOptions($idProductAbstract = null)
     {
         $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = $this->attributeMetadataCollection;
-        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->attributeValueCollection;
+        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->attributeCollection;
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
 
         return $formOptions;
@@ -201,7 +201,7 @@ class AbstractProductFormDataProvider
      */
     public function getAttributeValuesDefaultFields()
     {
-        return $this->convertToFormValues($this->attributeValueCollection, [], []);
+        return $this->convertToFormValues($this->attributeCollection, [], []);
     }
 
     /**
@@ -209,7 +209,7 @@ class AbstractProductFormDataProvider
      */
     public function getAttributeMetadataDefaultFields()
     {
-        return $this->convertToFormValues($this->attributeValueCollection);
+        return $this->convertToFormValues($this->attributeCollection);
     }
 
     /**
@@ -250,19 +250,15 @@ class AbstractProductFormDataProvider
     {
         $attributeMetadataCollection = [];
         foreach ($this->attributeMetadataCollection as $metadataTransfer) {
-            $attributeMetadataCollection[] = $metadataTransfer->toArray();
+            $attributeMetadataCollection[$metadataTransfer->getKey()] = ['value' => null];
         }
 
-        sd($attributeMetadataCollection);
         $attributeMetadataCollection = array_keys($attributes) + array_keys($attributeMetadataCollection);
-
 
         $values = [];
         foreach ($attributeMetadataCollection as $type) {
             $values[$type]['value'] = array_key_exists($type, $attributes);
         }
-
-        sd($values, $attributes, $this->attributeMetadataCollection, $attributeMetadataCollection);
 
         return $values;
     }
@@ -279,11 +275,16 @@ class AbstractProductFormDataProvider
             $values[$name]['value'] = $value;
         }
 
-        foreach ($this->attributeValueCollection as $name => $value) {
+        sd($this->attributeCollection);
+
+        foreach ($this->attributeCollection as $attributeTransfer) {
+            $name = $attributeTransfer->getMetadata()->getKey();
             if (!array_key_exists($name, $values)) {
                 $values[$name]['value'] = [];
             }
         }
+
+        sd($values);
 
         return $values;
     }
