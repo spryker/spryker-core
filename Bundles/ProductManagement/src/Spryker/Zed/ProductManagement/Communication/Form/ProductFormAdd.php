@@ -29,12 +29,14 @@ class ProductFormAdd extends AbstractType
     const TAX_SET = 'tax_set';
     const PRICE_AND_STOCK = 'price_and_stock';
     const SEO = 'seo';
+    const ID_LOCALE = 'id_locale';
 
     const VALIDATION_GROUP_ATTRIBUTE_METADATA = 'validation_group_attribute_metadata';
     const VALIDATION_GROUP_ATTRIBUTE_VALUES = 'validation_group_attribute_values';
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
     const VALIDATION_GROUP_GENERAL = 'validation_group_general';
+
 
     /**
      * @return string
@@ -56,6 +58,7 @@ class ProductFormAdd extends AbstractType
         $resolver->setRequired(self::ATTRIBUTE_METADATA);
         $resolver->setRequired(self::ATTRIBUTE_VALUES);
         $resolver->setRequired(self::TAX_SET);
+        $resolver->setRequired(self::ID_LOCALE);
 
         $resolver->setDefaults([
             'cascade_validation' => true,
@@ -87,7 +90,8 @@ class ProductFormAdd extends AbstractType
             ->addAttributeMetadataForm($builder, $options[self::ATTRIBUTE_METADATA])
             ->addAttributeValuesForm($builder, [
                 self::ATTRIBUTE_METADATA => $options[self::ATTRIBUTE_METADATA],
-                self::ATTRIBUTE_VALUES => $options[self::ATTRIBUTE_VALUES]
+                self::ATTRIBUTE_VALUES => $options[self::ATTRIBUTE_VALUES],
+                self::ID_LOCALE => $options[self::ID_LOCALE],
             ])
             ->addPriceForm($builder, $options[self::TAX_SET])
             ->addSeoForm($builder, $options)
@@ -199,8 +203,10 @@ class ProductFormAdd extends AbstractType
             ->add(self::ATTRIBUTE_VALUES, 'collection', [
                 'label' => 'Attribute Values',
                 'type' => new ProductFormAttributeValues(
-                    $options,
-                    self::VALIDATION_GROUP_ATTRIBUTE_VALUES
+                    $options[self::ATTRIBUTE_VALUES],
+                    $options[self::ATTRIBUTE_METADATA],
+                    self::VALIDATION_GROUP_ATTRIBUTE_VALUES,
+                    $options[self::ID_LOCALE]
                 ),
                 'constraints' => [new Callback([
                     'methods' => [

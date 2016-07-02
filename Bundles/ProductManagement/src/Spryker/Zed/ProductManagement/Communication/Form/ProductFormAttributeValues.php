@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Spryker\Zed\ProductManagement\Communication\Form\Constraints\AttributeFieldNotBlank;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -20,9 +20,9 @@ class ProductFormAttributeValues extends AbstractType
     const FIELD_VALUE = 'value';
 
     /**
-     * @var array
+     * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
-    protected $attributeValues;
+    protected $attributes;
 
     /**
      * @var array
@@ -35,14 +35,22 @@ class ProductFormAttributeValues extends AbstractType
     protected $validationGroup;
 
     /**
-     * @param array $attributes
-     * @param string $validationGroup
+     * @var int
      */
-    public function __construct(array $attributes, $validationGroup)
+    protected $idLocale;
+
+    /**
+     * @param array $attributes
+     * @param array $attributeMetadataCollection
+     * @param string $validationGroup
+     * @param int $idLocale
+     */
+    public function __construct(array $attributes, array $attributeMetadataCollection, $validationGroup, $idLocale)
     {
-        $this->attributeValues = $attributes[ProductFormAdd::ATTRIBUTE_VALUES];
-        $this->attributeMetadataCollection = $attributes[ProductFormAdd::ATTRIBUTE_METADATA];
+        $this->attributes = $attributes;
+        $this->attributeMetadataCollection = $attributeMetadataCollection;
         $this->validationGroup = $validationGroup;
+        $this->idLocale = $idLocale;
     }
 
     /**
@@ -89,10 +97,7 @@ class ProductFormAttributeValues extends AbstractType
      */
     protected function addCheckboxNameField(FormBuilderInterface $builder, array $options)
     {
-        $name = $builder->getName();
-        if (isset($this->attributeMetadataCollection[$builder->getName()])) {
-            $name = $this->attributeMetadataCollection[$builder->getName()];
-        }
+        $name = $this->getLocalizedFieldName($builder->getName());
 
         $builder
             ->add(self::FIELD_NAME, 'checkbox', [
@@ -104,19 +109,17 @@ class ProductFormAttributeValues extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeLocalizedTransfer[] $options
      *
      * @return $this
      */
     protected function addValueField(FormBuilderInterface $builder, array $options)
     {
-        $name = $builder->getName();
-        if (isset($this->attributeMetadataCollection[$builder->getName()])) {
-            $name = $this->attributeMetadataCollection[$builder->getName()];
-        }
+        $name = $this->getLocalizedFieldName($builder->getName());
 
         $choices = [];
-        if (isset($this->attributeValues[$builder->getName()])) {
-            $choices = $this->attributeValues[$builder->getName()];
+        foreach ($this->attributes as $attributeTransfer) {
+            //sd($attributeTransfer->toArray());
         }
 
         $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [
@@ -132,6 +135,20 @@ class ProductFormAttributeValues extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param string $localizedKey
+     *
+     * @return mixed
+     */
+    protected function getLocalizedFieldName($localizedKey)
+    {
+        if (isset($this->localizedAttributeNames[$localizedKey])) {
+            $localizedKey = $this->localizedAttributeNames[$localizedKey];
+        }
+
+        return $localizedKey;
     }
 
 }

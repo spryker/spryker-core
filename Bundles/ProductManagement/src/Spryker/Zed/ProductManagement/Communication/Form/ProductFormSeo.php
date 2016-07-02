@@ -15,10 +15,8 @@ class ProductFormSeo extends AbstractType
 {
 
     const FIELD_META_TITLE = 'meta_title';
-    const FIELD_META_KEYWORD = 'meta_keyword';
+    const FIELD_META_KEYWORDS = 'meta_keywords';
     const FIELD_META_DESCRIPTION = 'meta_description';
-
-    const ATTRIBUTES = 'attributes';
 
     /**
      * @return string
@@ -65,7 +63,7 @@ class ProductFormSeo extends AbstractType
     protected function addMetaKeywordField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_KEYWORD, 'text', [
+            ->add(self::FIELD_META_KEYWORDS, 'text', [
                 'required' => false,
             ]);
 

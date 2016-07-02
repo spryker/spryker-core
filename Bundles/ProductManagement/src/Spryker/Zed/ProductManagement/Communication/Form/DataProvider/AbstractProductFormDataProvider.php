@@ -12,6 +12,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
@@ -91,23 +92,120 @@ class AbstractProductFormDataProvider
         $this->productFacade = $productFacade;
         $this->productManagementFacade = $productManagementFacade;
         $this->locale = $localeFacade->getCurrentLocale();
-        $this->attributeMetadataCollection = $attributeMetadataCollection;
-        $this->attributeCollection = $attributeCollection;
+        $this->attributeMetadataCollection = $this->reindexAttributeMetadataCollection($attributeMetadataCollection);
+        $this->attributeCollection = $this->reindexAttributeCollection($attributeCollection);
         $this->taxCollection = $taxCollection;
     }
 
     /**
-     * @param int|null $idProductAbstract|null
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $attributeCollection
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    protected function reindexAttributeCollection(array $attributeCollection)
+    {
+        $result = [];
+        foreach ($attributeCollection as $attributeTransfer) {
+            $result[$attributeTransfer->getMetadata()->getKey()] = $attributeTransfer;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[] $metadataCollection
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
+     */
+    protected function reindexAttributeMetadataCollection(array $metadataCollection)
+    {
+        $result = [];
+        foreach ($metadataCollection as $metadataTransfer) {
+            $result[$metadataTransfer->getKey()] = $metadataTransfer;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int|null $idProductAbstract |null
      *
      * @return mixed
      */
     public function getOptions($idProductAbstract = null)
     {
-        $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = $this->attributeMetadataCollection;
-        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->attributeCollection;
+        $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = $this->convertAttributeMetadataToOptionValues($this->attributeMetadataCollection);
+        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->convertAttributeValueToOptionValues($this->attributeCollection);
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
+        $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();
 
         return $formOptions;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[] $data
+     *
+     * @return array
+     */
+    protected function convertAttributeMetadataToOptionValues(array $data)
+    {
+        $result = [];
+        foreach ($data as $name => $transfer) {
+            if (!isset($this->attributeCollection[$name])) {
+                continue;
+            }
+
+            $attributeTransfer = $this->attributeCollection[$name];
+            foreach ($attributeTransfer->getLocalizedAttributes() as $localizedAttribute) {
+                if ((int)$localizedAttribute->getFkLocale() === (int)$this->localeFacade->getCurrentLocale()->getIdLocale()) {
+                    $name = $localizedAttribute->getName();
+                    break;
+                }
+            }
+
+            $result[$transfer->getKey()] = $name;
+        }
+
+        return $result;
+    }
+
+    protected function getLocalizedAttributeMetadataKey($keyToLocalize)
+    {
+        foreach ($this->attributeMetadataCollection as $metadataTransfer) {
+            if ($metadataTransfer->getKey() !== $keyToLocalize) {
+                continue;
+            }
+
+            foreach ($this->attributeCollection as $attributeTransfer) {
+                if ($attributeTransfer->getMetadata()->getKey() == $metadataTransfer->getKey()) {
+                    foreach ($attributeTransfer->getLocalizedAttributes() as $localizedAttribute) {
+                        if ((int)$localizedAttribute->getFkLocale() === (int)$this->localeFacade->getCurrentLocale()
+                                ->getIdLocale()
+                        ) {
+                            return $localizedAttribute->getName();
+                        }
+                    }
+                }
+            }
+        }
+
+        return $keyToLocalize;
+    }
+
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $data
+     *
+     * @return array
+     */
+    protected function convertAttributeValueToOptionValues(array $data)
+    {
+        $result = [];
+        foreach ($data as $transfer) {
+            $result[$transfer->getMetadata()->getKey()] = (array)$transfer->getValues();
+        }
+
+        return $result;
     }
 
     /**
@@ -188,8 +286,9 @@ class AbstractProductFormDataProvider
         $fields = [];
         foreach ($availableLocales as $id => $code) {
             $fields[$code] = [
-                ProductFormAdd::FIELD_NAME => null,
-                ProductFormAdd::FIELD_DESCRIPTION => null,
+                ProductFormSeo::FIELD_META_TITLE => null,
+                ProductFormSeo::FIELD_META_KEYWORDS => null,
+                ProductFormSeo::FIELD_META_DESCRIPTION => null,
             ];
         }
 
@@ -201,7 +300,13 @@ class AbstractProductFormDataProvider
      */
     public function getAttributeValuesDefaultFields()
     {
-        return $this->convertToFormValues($this->attributeCollection, [], []);
+        $attributes = [];
+        /* @var ProductManagementAttributeTransfer $attributeTransfer */
+        foreach ($this->attributeCollection as $attributeTransfer) {
+            $attributes[$attributeTransfer->getMetadata()->getKey()]['value'] = [];
+        }
+
+        return $attributes;
     }
 
     /**
@@ -209,7 +314,13 @@ class AbstractProductFormDataProvider
      */
     public function getAttributeMetadataDefaultFields()
     {
-        return $this->convertToFormValues($this->attributeCollection);
+        $attributes = [];
+        /* @var ProductManagementAttributeTransfer $attributeTransfer */
+        foreach ($this->attributeCollection as $attributeTransfer) {
+            $attributes[$attributeTransfer->getMetadata()->getKey()]['value'] = false;
+        }
+
+        return $attributes;
     }
 
     /**
@@ -248,7 +359,6 @@ class AbstractProductFormDataProvider
      */
     protected function convertSelectedAttributeMetadataToFormValues(array $attributes)
     {
-        $attributeMetadataCollection = [];
         foreach ($this->attributeMetadataCollection as $metadataTransfer) {
             $attributeMetadataCollection[$metadataTransfer->getKey()] = ['value' => null];
         }
@@ -271,20 +381,16 @@ class AbstractProductFormDataProvider
     protected function convertSelectedAttributeValuesToFormValues(array $attributes)
     {
         $values = [];
-        foreach ($attributes as $name => $value) {
-            $values[$name]['value'] = $value;
+        foreach ($attributes as $key => $value) {
+            $values[$key]['value'] = $value;
         }
-
-        sd($this->attributeCollection);
 
         foreach ($this->attributeCollection as $attributeTransfer) {
-            $name = $attributeTransfer->getMetadata()->getKey();
-            if (!array_key_exists($name, $values)) {
-                $values[$name]['value'] = [];
+            $key = $attributeTransfer->getMetadata()->getKey();
+            if (!array_key_exists($key, $values)) {
+                $values[$key]['value'] = [];
             }
         }
-
-        sd($values);
 
         return $values;
     }

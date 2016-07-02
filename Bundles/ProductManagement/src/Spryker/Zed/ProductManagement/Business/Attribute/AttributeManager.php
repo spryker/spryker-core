@@ -68,13 +68,27 @@ class AttributeManager implements AttributeManagerInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeLocalizedTransfer[]
+     */
+    public function getProductAttributeLocalizedCollection()
+    {
+        $collection = $this->productManagementQueryContainer
+            ->queryProductManagementAttributeLocalized()
+            ->innerJoinSpyLocale()
+            ->innerJoinSpyProductManagementAttribute()
+            ->find();
+
+        return $this->getTransferGenerator()->convertProductAttributeLocalizedCollection($collection);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
      */
     public function getProductAttributeMetadataCollection()
     {
         $collection = $this->productManagementQueryContainer
             ->queryProductManagementAttributeMetadata()
-            ->joinSpyProductManagementAttributeType(null, Criteria::INNER_JOIN)
+            ->innerJoinSpyProductManagementAttributeType()
             ->find();
 
         return $this->getTransferGenerator()->convertProductAttributeMetadataCollection($collection);
@@ -97,6 +111,7 @@ class AttributeManager implements AttributeManagerInterface
      */
     public function getProductAttributesTypeCollection()
     {
+        die('fix me');
         $collection = $this->productManagementQueryContainer
             ->queryProductManagementAttributeType()
             ->find();

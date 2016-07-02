@@ -130,7 +130,7 @@
                                             <div class="well">
                                                 <div class="row">
                                                     <div class="col-lg-4">
-                                                        {% for type,attribute in form.attribute_group %}
+                                                        {% for type,attribute in form.attribute_metadata %}
                                                             {{ form_errors(attribute.value) }}
                                                             {{ form_row(attribute.value) }}
                                                         {% endfor %}
@@ -151,15 +151,11 @@
                                                                 <div class="col-sm-12">
                                                                 {% for type,aValue in batchResults %}
                                                                     <div class="col-sm-4">
-                                                                        <p class="text-left">
                                                                         {{ form_row(aValue.name) }}
                                                                         {{ form_label(aValue.name) }}
-                                                                        </p>
 
-                                                                        <p class="text-right">
                                                                         {{ form_label(aValue.value) }}
                                                                         {{ form_row(aValue.value) }}
-                                                                        </p>
                                                                     </div>
                                                                 {% endfor %}
                                                                 </div>
@@ -244,7 +240,6 @@
                     {% for product in concretes %}
                         <tr class="gradeX">
                             <td>{{ product.sku }}</td>
-                            {#{% for attr in product.attributes %}#}
                             {% for attributeGroupKey,attributeGroupLabel in attributeGroupCollection %}
                                 {% if product.attributes[attributeGroupKey] is defined %}
                                     <td>{{ product.attributes[attributeGroupKey] }}</td>
@@ -366,8 +361,8 @@
                                             {{ form_errors(seoData.meta_title) }}
                                             {{ form_row(seoData.meta_title) }}
 
-                                            {{ form_errors(seoData.meta_keyword) }}
-                                            {{ form_row(seoData.meta_keyword) }}
+                                            {{ form_errors(seoData.meta_keywords) }}
+                                            {{ form_row(seoData.meta_keywords) }}
 
                                             {{ form_errors(seoData.meta_description) }}
                                             {{ form_row(seoData.meta_description) }}
