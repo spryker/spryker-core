@@ -26,12 +26,12 @@ class TaxFacadeRateCalculationTest extends Test
      */
     public function testSetTaxRateWhenExemptTaxRateUsedShouldSetZeroTaxRate()
     {
-        $abstractProcuctEntity = $this->createAbstractProductWithTaxSet(20, 'GB');
+        $abstractProductEntity = $this->createAbstractProductWithTaxSet(20, 'GB');
 
         $quoteTransfer = new QuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setIdProductAbstract($abstractProcuctEntity->getIdProductAbstract());
+        $itemTransfer->setIdProductAbstract($abstractProductEntity->getIdProductAbstract());
         $quoteTransfer->addItem($itemTransfer);
 
         $taxFacadeTest = $this->createTaxFacade();
@@ -71,11 +71,17 @@ class TaxFacadeRateCalculationTest extends Test
     {
         $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($iso2Code);
 
-        $taxRateEntity = new SpyTaxRate();
-        $taxRateEntity->setRate($taxRate);
-        $taxRateEntity->setName('test rate');
-        $taxRateEntity->setFkCountry($countryEntity->getIdCountry());
-        $taxRateEntity->save();
+        $taxRateEntity1 = new SpyTaxRate();
+        $taxRateEntity1->setRate($taxRate);
+        $taxRateEntity1->setName('test rate');
+        $taxRateEntity1->setFkCountry($countryEntity->getIdCountry());
+        $taxRateEntity1->save();
+
+        $taxRateEntity2 = new SpyTaxRate();
+        $taxRateEntity2->setRate(13);
+        $taxRateEntity2->setName('test rate');
+        $taxRateEntity2->setFkCountry($countryEntity->getIdCountry());
+        $taxRateEntity2->save();
 
         $taxRateExemptEntity = new SpyTaxRate();
         $taxRateExemptEntity->setRate(0);
@@ -88,7 +94,12 @@ class TaxFacadeRateCalculationTest extends Test
 
         $taxSetTaxRateEntity = new SpyTaxSetTax();
         $taxSetTaxRateEntity->setFkTaxSet($taxSetEntity->getIdTaxSet());
-        $taxSetTaxRateEntity->setFkTaxRate($taxRateEntity->getIdTaxRate());
+        $taxSetTaxRateEntity->setFkTaxRate($taxRateEntity1->getIdTaxRate());
+        $taxSetTaxRateEntity->save();
+
+        $taxSetTaxRateEntity = new SpyTaxSetTax();
+        $taxSetTaxRateEntity->setFkTaxSet($taxSetEntity->getIdTaxSet());
+        $taxSetTaxRateEntity->setFkTaxRate($taxRateEntity2->getIdTaxRate());
         $taxSetTaxRateEntity->save();
 
         $taxSetTaxRateEntity = new SpyTaxSetTax();

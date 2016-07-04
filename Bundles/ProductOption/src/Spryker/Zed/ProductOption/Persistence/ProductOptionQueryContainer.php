@@ -42,7 +42,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     const LABEL = 'label';
     const PRICE = 'price';
 
-    const COL_SUM_TAX_RATE = 'SumTaxRate';
+    const COL_MAX_TAX_RATE = 'MaxTaxRate';
     const COL_ID_PRODUCT_OPTION_VALUE_USAGE = 'IdProductOptionValueUsage';
 
 
@@ -625,10 +625,10 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                         ->withColumn(SpyTaxSetTableMap::COL_NAME)
                         ->groupBy(SpyTaxSetTableMap::COL_NAME)
                     ->endUse()
-                    ->withColumn('SUM(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_SUM_TAX_RATE)
+                    ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
                 ->endUse()
             ->endUse()
-            ->select([self::COL_SUM_TAX_RATE]);
+            ->select([self::COL_MAX_TAX_RATE]);
     }
 
 }

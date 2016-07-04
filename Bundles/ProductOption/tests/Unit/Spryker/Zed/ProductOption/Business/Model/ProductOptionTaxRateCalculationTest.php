@@ -183,7 +183,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE => 1,
-                ProductOptionQueryContainer::COL_SUM_TAX_RATE => 11,
+                ProductOptionQueryContainer::COL_MAX_TAX_RATE => 11,
             ]
         ];
     }
@@ -196,11 +196,11 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE => 1,
-                ProductOptionQueryContainer::COL_SUM_TAX_RATE => 20,
+                ProductOptionQueryContainer::COL_MAX_TAX_RATE => 20,
             ],
             [
                 ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE => 2,
-                ProductOptionQueryContainer::COL_SUM_TAX_RATE => 14,
+                ProductOptionQueryContainer::COL_MAX_TAX_RATE => 14,
             ],
         ];
     }

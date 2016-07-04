@@ -157,7 +157,7 @@ class ShipmentTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     protected function getMockCountryBasedTaxRates()
     {
         return [
-            ShipmentQueryContainer::COL_SUM_TAX_RATE => 12,
+            ShipmentQueryContainer::COL_MAX_TAX_RATE => 12,
         ];
     }
 

@@ -102,7 +102,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     {
         foreach ($taxRates as $taxRate) {
             if ($taxRate[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE] === $idOptionValueUsage) {
-                return (float)$taxRate[ProductOptionQueryContainer::COL_SUM_TAX_RATE];
+                return (float)$taxRate[ProductOptionQueryContainer::COL_MAX_TAX_RATE];
             }
         }
 

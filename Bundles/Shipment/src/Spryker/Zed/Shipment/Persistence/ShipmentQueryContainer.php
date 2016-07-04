@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface
 {
 
-    const COL_SUM_TAX_RATE = 'SumTaxRate';
+    const COL_MAX_TAX_RATE = 'MaxTaxRate';
 
     /**
      * @api
@@ -99,9 +99,9 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
                 ->endUse()
                 ->withColumn(SpyTaxSetTableMap::COL_NAME)
                 ->groupBy(SpyTaxSetTableMap::COL_NAME)
-                ->withColumn('SUM(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_SUM_TAX_RATE)
+                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([self::COL_SUM_TAX_RATE]);
+            ->select([self::COL_MAX_TAX_RATE]);
     }
 
 }

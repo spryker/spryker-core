@@ -198,7 +198,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 TaxQueryContainer::COL_ID_ABSTRACT_PRODUCT => 1,
-                TaxQueryContainer::COL_SUM_TAX_RATE => 11,
+                TaxQueryContainer::COL_MAX_TAX_RATE => 11,
             ]
         ];
     }
@@ -211,11 +211,11 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 TaxQueryContainer::COL_ID_ABSTRACT_PRODUCT => 1,
-                TaxQueryContainer::COL_SUM_TAX_RATE => 20,
+                TaxQueryContainer::COL_MAX_TAX_RATE => 20,
             ],
             [
                 TaxQueryContainer::COL_ID_ABSTRACT_PRODUCT => 2,
-                TaxQueryContainer::COL_SUM_TAX_RATE => 14,
+                TaxQueryContainer::COL_MAX_TAX_RATE => 14,
             ],
         ];
     }

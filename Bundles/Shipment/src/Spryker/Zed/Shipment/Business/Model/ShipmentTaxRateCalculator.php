@@ -50,7 +50,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         $taxSetEntity = $this->findTaxSetByIdShipmentMethodAndCountry($quoteTransfer);
 
         if ($taxSetEntity !== null) {
-            $taxRate = (float)$taxSetEntity[ShipmentQueryContainer::COL_SUM_TAX_RATE];
+            $taxRate = (float)$taxSetEntity[ShipmentQueryContainer::COL_MAX_TAX_RATE];
         }
 
         $this->setShipmentTaxRate($quoteTransfer, $taxRate);

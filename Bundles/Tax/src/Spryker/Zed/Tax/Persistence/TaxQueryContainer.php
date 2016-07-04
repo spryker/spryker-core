@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContainerInterface
 {
 
-    const COL_SUM_TAX_RATE = 'SumTaxRate';
+    const COL_MAX_TAX_RATE = 'MaxTaxRate';
     const COL_ID_ABSTRACT_PRODUCT = 'IdProductAbstract';
 
     /**
@@ -127,9 +127,9 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
                     ->_or()
                     ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
                 ->endUse()
-                ->withColumn('SUM(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_SUM_TAX_RATE)
+                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([self::COL_SUM_TAX_RATE]);
+            ->select([self::COL_MAX_TAX_RATE]);
     }
 
 }

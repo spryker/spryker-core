@@ -100,7 +100,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     {
         foreach ($taxRates as $taxRate) {
             if ($taxRate[TaxQueryContainer::COL_ID_ABSTRACT_PRODUCT] === $idProductAbstract) {
-                return (float)$taxRate[TaxQueryContainer::COL_SUM_TAX_RATE];
+                return (float)$taxRate[TaxQueryContainer::COL_MAX_TAX_RATE];
             }
         }
 
