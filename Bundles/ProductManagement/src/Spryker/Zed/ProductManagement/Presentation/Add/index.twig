@@ -189,73 +189,73 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table
-                                id="productMatrixTable"
-                                class="table table-striped table-bordered table-hover gui-table-data"
-                                data-page-size="4"
-                                data-order='[["0", "asc"]]'
-                                data-column-defs='[{ "targets": "no-sort", "orderable": false }]'
-                                data-state-save="false"
-                        >
-                            <thead>
-                            <tr>
-                                <th>Sku</th>
-                                {% set break1 = false %}
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table
+                            id="productMatrixTable"
+                            class="table table-striped table-bordered table-hover gui-table-data"
+                            data-page-size="4"
+                            data-order='[["0", "asc"]]'
+                            data-column-defs='[{ "targets": "no-sort", "orderable": false }]'
+                            data-state-save="false"
+                    >
+                        <thead>
+                        <tr>
+                            <th>Sku</th>
+                            {% set break1 = false %}
+                            {% for attributeGroupKey,attributeGroupLabel in attributeGroupCollection %}
+                                {% set break1 = true %}
+                                <th>{{ attributeGroupLabel }}</th>
+                            {% endfor %}
+                            <th class="center">Price</th>
+                            <th class="center">Stock</th>
+                            <th class="no-sort">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in concretes %}
+                            <tr class="gradeX">
+                                <td>{{ product.sku }}</td>
+                                {% for attributeGroupKey,attributeGroupLabel in attributeGroupCollection %}
+                                    {% if product.attributes[attributeGroupKey] is defined %}
+                                        <td>{{ product.attributes[attributeGroupKey] }}</td>
+                                    {% else %}
+                                        <td>-</td>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if product.price is defined and product.price.price is defined %}
+                                    <td class="center">{{ product.price.price|number_format }}</td>
+                                {% else %}
+                                    <td>-</td>
+                                {% endif %}
+                                {% if product.stock > 0 %}
+                                    <td class="center">{{ product.stock }}</td>
+                                {% else %}
+                                    <td>-</td>
+                                {% endif %}
+                                <td class="center no-sort">[activate]</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Sku</th>
+                            {% set break1 = false %}
+                            {% set columnCount = attributeGroupCollection|length %}
+                            {% for product in concretes if not break1 %}
                                 {% for attributeGroupKey,attributeGroupLabel in attributeGroupCollection %}
                                     {% set break1 = true %}
                                     <th>{{ attributeGroupLabel }}</th>
                                 {% endfor %}
-                                <th class="center">Price</th>
-                                <th class="center">Stock</th>
-                                <th class="no-sort">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for product in concretes %}
-                                <tr class="gradeX">
-                                    <td>{{ product.sku }}</td>
-                                    {% for attributeGroupKey,attributeGroupLabel in attributeGroupCollection %}
-                                        {% if product.attributes[attributeGroupKey] is defined %}
-                                            <td>{{ product.attributes[attributeGroupKey] }}</td>
-                                        {% else %}
-                                            <td>-</td>
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if product.price is defined and product.price.price is defined %}
-                                        <td class="center">{{ product.price.price|number_format }}</td>
-                                    {% else %}
-                                        <td>-</td>
-                                    {% endif %}
-                                    {% if product.stock > 0 %}
-                                        <td class="center">{{ product.stock }}</td>
-                                    {% else %}
-                                        <td>-</td>
-                                    {% endif %}
-                                    <td class="center no-sort">[activate]</td>
-                                </tr>
                             {% endfor %}
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Sku</th>
-                                {% set break1 = false %}
-                                {% set columnCount = attributeGroupCollection|length %}
-                                {% for product in concretes if not break1 %}
-                                    {% for attributeGroupKey,attributeGroupLabel in attributeGroupCollection %}
-                                        {% set break1 = true %}
-                                        <th>{{ attributeGroupLabel }}</th>
-                                    {% endfor %}
-                                {% endfor %}
-                                <th class="center">Price</th>
-                                <th class="center">Stock</th>
-                                <th class="no-sort">Action</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                            <th class="center">Price</th>
+                            <th class="center">Stock</th>
+                            <th class="no-sort">Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
