@@ -91,16 +91,6 @@ class ProductFormAttributeMetadata extends AbstractType
      */
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
-
-        $builder->add(self::FIELD_VALUE, new CheckboxType(), [
-            'label' => $builder->getName(),
-            'value' => false //$this->attributeValues[$name][self::FIELD_VALUE],
-        ]);
-
-        return $this;
-
-        //sd($this->attributeLabels, $this->attributeValues);
-
         $name = $builder->getName();
         $label = $name;
 
@@ -113,7 +103,6 @@ class ProductFormAttributeMetadata extends AbstractType
         $builder->add(self::FIELD_VALUE, new CheckboxType(), [
             'disabled' => $isDisabled,
             'label' => $builder->getName(),
-            'value' => false //$this->attributeValues[$name][self::FIELD_VALUE],
         ]);
 
         return $this;

@@ -110,8 +110,8 @@
                                     <div class="col-sm-12">
                                         {% for aValue in batchResults %}
                                             <div class="col-sm-4">
-                                                {{ form_label(aValue.value) }}
-                                                {{ form_row(aValue.value) }}
+                                                {{ form_label(aValue.value.value) }}
+                                                {{ form_row(aValue.value.value) }}
                                             </div>
                                         {% endfor %}
                                     </div>
@@ -127,60 +127,55 @@
         {# ============================ VARIANTS ============================ #}
         <div id="tab_attribute" class="tab-pane">
             <div class="panel-body">
-                <div class="panel-body">
-                    <h3>Manage product attributes and variants</h3>
-                    <p>Lorem ipsum attributes, lorem values ipusm variants.</p>
-                    <p><i>Note: Editing generated variants by adding or removing attributes, leads to the creation of new variants. Current configurations must be recreated.</i></p>
-                    <br/>
+                <h3>Manage product attributes and variants</h3>
+                <p>Lorem ipsum attributes, lorem values ipusm variants.</p>
+                <p><i>Note: Editing generated variants by adding or removing attributes, leads to the creation of new variants. Current configurations must be recreated.</i></p>
+                <br/>
 
-                    <div class="panel-group" id="accordion">
-                        <div class="panel panel-default collapsed">
-                            <div class="panel-heading">
-                                <h5 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Common Attributes</a>
-                                </h5>
-                            </div>
-                            <div id="collapseOne" class="panel-collapse collapse out">
-                                <div class="panel-body">
-                                    sdfssfsa
-                                </div>
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default collapsed">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Common Attributes</a>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse out">
+                            <div class="panel-body">
+                                sdfssfsa
                             </div>
                         </div>
+                    </div>
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h5 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Variant Specific Attributes</a>
-                                </h5>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse out">
-                                <div class="panel-body">
-                                    <p>Select attributes and values that define the differences between your variants.</p>
-                                    <div class="well">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <pre>
-                                                {{ dump(form.attribute_values) }}
-                                                    </pre>
-                                                {% if form.attribute_values is defined %}
-                                                    {% set columns = 4 %}
-                                                    {% for batchResults in form.attribute_values|batch(form.attribute_values|length / columns) %}
-                                                        <div class="row">
-                                                            <div class="col-sm-12">
-                                                                {% for type,aValue in batchResults %}
-                                                                    <div class="col-sm-4">
-                                                                        {{ form_row(aValue.name) }}
-                                                                        {{ form_label(aValue.name) }}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Variant Specific Attributes</a>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse out">
+                            <div class="panel-body">
+                                <p>Select attributes and values that define the differences between your variants.</p>
+                                <div class="well">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            {% if form.attribute_values is defined %}
+                                                {% set columns = 4 %}
+                                                {% for batchResults in form.attribute_values|batch(form.attribute_values|length / columns) %}
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            {% for type,aValue in batchResults %}
+                                                                <div class="col-sm-4">
+                                                                    {{ form_row(aValue.name) }}
+                                                                    {{ form_label(aValue.name) }}
 
-                                                                        {{ form_label(aValue.value) }}
-                                                                        {{ form_row(aValue.value) }}
-                                                                    </div>
-                                                                {% endfor %}
-                                                            </div>
+                                                                    {{ form_label(aValue.value) }}
+                                                                    {{ form_row(aValue.value) }}
+                                                                </div>
+                                                            {% endfor %}
                                                         </div>
-                                                    {% endfor %}
-                                                {% endif %}
-                                            </div>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

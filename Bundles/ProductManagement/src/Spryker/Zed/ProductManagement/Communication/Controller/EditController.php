@@ -90,20 +90,24 @@ class EditController extends AddController
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-        }
+        };
 
         $r = [];
         foreach ($concreteProductCollection as $t) {
             $r[] = $t->toArray(true);
         }
 
+        $a = $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection);
+
+        sd($r, $a);
+
         return $this->viewResponse([
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
             'matrix' => [],
-            'concretes' => $concreteProductCollection,
-            'attributeGroupCollection' => $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection),
+            'concretes' => $r,
+            'attributeGroupCollection' => $a,
         ]);
     }
 

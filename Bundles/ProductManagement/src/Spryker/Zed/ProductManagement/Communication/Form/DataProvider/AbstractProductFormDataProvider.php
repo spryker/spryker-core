@@ -120,6 +120,8 @@ class AbstractProductFormDataProvider
 
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
         $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();
+        s($formOptions);
+        ob_flush();
 
         return $formOptions;
     }

@@ -198,7 +198,6 @@ class ProductFormAdd extends AbstractType
      */
     protected function addAttributeValuesForm(FormBuilderInterface $builder, array $options = [])
     {
-        sd($options);
         $builder
             ->add(self::ATTRIBUTE_VALUES, 'collection', [
                 'label' => 'Attribute Values',
