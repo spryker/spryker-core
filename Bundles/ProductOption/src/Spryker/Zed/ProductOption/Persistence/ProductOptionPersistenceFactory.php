@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductOption\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -15,5 +18,27 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function createProductOptionGroupQuery()
+    {
+        return SpyProductOptionGroupQuery::create();
+    }
 
+    /**
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function createProductOptionValueQuery()
+    {
+        return SpyProductOptionValueQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function createProductAbstractQuery()
+    {
+        return SpyProductAbstractQuery::create();
+    }
 }

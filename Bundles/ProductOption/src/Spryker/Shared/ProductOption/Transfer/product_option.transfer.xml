@@ -6,13 +6,13 @@
     <transfer name="ProductOption">
         <property name="idOptionValueUsage" type="int" />
         <property name="localeCode" type="string " />
-        <property name="labelOptionType" type="string" />
-        <property name="labelOptionValue" type="string" />
+        <property name="value" type="string" />
+        <property name="sku" type="string" />
+        <property name="quantity" type="int" /> <!--Todo remove quantity-->
         <property name="taxRate" type="float" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
-        <property name="quantity" type="int" />
         <property name="refundableAmount" type="int"/>
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
@@ -23,4 +23,21 @@
         <property name="unitGrossPriceWithProductOptions" type="int" />
         <property name="sumGrossPriceWithProductOptions" type="int" />
     </transfer>
+
+    <transfer name="ProductOptionValue">
+        <property name="idProductOptionValue" type="int" />
+        <property name="price" type="int" />
+        <property name="sku" type="string" />
+        <property name="fkProductOptionGroup" type="int" />
+        <property name="value" type="string" />
+    </transfer>
+
+    <transfer name="ProductOptionGroup">
+        <property name="idProductOptionGroup" type="int" />
+        <property name="fkTaxSet" type="int" />
+        <property name="active" type="bool" />
+        <property name="name" type="string" />
+        <property name="productOptionValues" type="ProductOptionValue[]" />
+    </transfer>
+
 </transfers>

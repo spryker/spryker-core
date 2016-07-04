@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductOption\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -17,6 +19,43 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeInterface
 {
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return int
+     */
+    public function saveProductOptionGroup(ProductOptionGroupTransfer $productOptionGroupTransfer)
+    {
+       return $this->getFactory()
+           ->createProductOptionGroupSaver()
+           ->saveProductOptionGroup($productOptionGroupTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
+     *
+     * @return int
+     */
+    public function saveProductOptionValue(ProductOptionValueTransfer $productOptionValueTransfer)
+    {
+        return $this->getFactory()
+            ->createProductOptionGroupSaver()
+            ->saveProductOptionValue($productOptionValueTransfer);
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param int $idProductOptionGroup
+     *
+     * @return bool|void
+     */
+    public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup)
+    {
+        return $this->getFactory()
+            ->createProductOptionGroupSaver()
+            ->addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup);
+    }
 
     /**
      * @api
