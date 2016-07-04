@@ -99,7 +99,7 @@ class EditController extends AddController
 
         $a = $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection);
 
-        sd($r, $a);
+        //sd($r, $a);
 
         return $this->viewResponse([
             'form' => $form->createView(),

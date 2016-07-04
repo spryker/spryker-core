@@ -120,8 +120,6 @@ class AbstractProductFormDataProvider
 
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
         $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();
-        s($formOptions);
-        ob_flush();
 
         return $formOptions;
     }
@@ -218,13 +216,7 @@ class AbstractProductFormDataProvider
      */
     public function getAttributeValuesDefaultFields()
     {
-        $attributes = [];
-        /* @var ProductManagementAttributeTransfer $attributeTransfer */
-        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $attributes[$type]['value'] = [];
-        }
-
-        return $attributes;
+        return $this->convertSelectedAttributeValuesToFormValues([]);
     }
 
     /**
@@ -232,13 +224,7 @@ class AbstractProductFormDataProvider
      */
     public function getAttributeMetadataDefaultFields()
     {
-        $attributes = [];
-        /* @var ProductManagementAttributeTransfer $attributeTransfer */
-        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $attributes[$type]['value'] = false;
-        }
-
-        return $attributes;
+        return $this->convertSelectedAttributeMetadataToFormValues([]);
     }
 
     /**
@@ -283,6 +269,10 @@ class AbstractProductFormDataProvider
             $isMulti = isset($productAttributes[$type]) && is_array($productAttributes[$type]);
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
 
+            if ($isMulti && $value) {
+                $value = !empty($value);
+            }
+
             $values[$type] = [
                 'value' => [$value],
                 'product_specific' => $isProductSpecificAttribute,
@@ -321,7 +311,7 @@ class AbstractProductFormDataProvider
             $isDefined = !array_key_exists($type, $this->attributeTransferCollection);
             $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
             $isMulti = isset($productAttributes[$type]) && is_array($productAttributes[$type]);
-            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : false;
+            $value = isset($productAttributes[$type]) ? true : false;
 
             if ($isMulti && $value) {
                 $value = !empty($value);

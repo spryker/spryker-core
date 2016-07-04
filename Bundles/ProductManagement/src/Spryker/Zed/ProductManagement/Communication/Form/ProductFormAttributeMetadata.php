@@ -20,6 +20,7 @@ class ProductFormAttributeMetadata extends AbstractType
     const OPTION_LABELS = 'option_labels';
     const OPTION_VALUES = 'option_values';
     const LABEL = 'label';
+    const CUSTOM = 'custom';
 
     /**
      * @var array
@@ -93,16 +94,16 @@ class ProductFormAttributeMetadata extends AbstractType
     {
         $name = $builder->getName();
         $label = $name;
+        $isDisabled = true;
 
         if (isset($this->attributeLabels[$name])) {
             $label = $this->attributeLabels[$name][self::LABEL];
+            $isDisabled = $this->attributeLabels[$name][self::CUSTOM] === true;
         }
-
-        $isDisabled = !array_key_exists($name, $this->attributeValues);
 
         $builder->add(self::FIELD_VALUE, new CheckboxType(), [
             'disabled' => $isDisabled,
-            'label' => $builder->getName(),
+            'label' => $label,
         ]);
 
         return $this;
