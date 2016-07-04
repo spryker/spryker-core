@@ -178,7 +178,7 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
     }
 
     /**
-     * @param \Orm\Zed\ProductManagement\Persistence\Base\SpyProductManagementAttributeValue $productAttributeValueEntity
+     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue $productAttributeValueEntity
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
      */

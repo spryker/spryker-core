@@ -22,6 +22,7 @@
         <property name="input" type="ProductManagementAttributeInput" />
         <property name="multi" type="bool" />
         <property name="allowInput" type="bool" />
+        <property name="isLocalized" type="bool" />
         <property name="localizedAttributes" type="ProductManagementAttributeLocalized[]" singular="localizedAttribute" />
         <property name="values" type="ProductManagementAttributeValue[]" />
     </transfer>

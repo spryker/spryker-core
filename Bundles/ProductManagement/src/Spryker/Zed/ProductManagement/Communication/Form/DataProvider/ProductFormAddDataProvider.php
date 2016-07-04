@@ -19,7 +19,7 @@ class ProductFormAddDataProvider extends AbstractProductFormDataProvider
         $defaults = $this->getDefaultFormFields();
 
         $formData = array_merge($defaults, $formData);
-
+        
         return $formData;
     }
 

@@ -68,7 +68,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $attributeValueCollection;
 
         //sd($formData);
-
+        
         return $formData;
     }
 
