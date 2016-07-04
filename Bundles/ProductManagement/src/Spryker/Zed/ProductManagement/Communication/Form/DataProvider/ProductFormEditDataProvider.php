@@ -61,6 +61,8 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $attributeMetadataCollection;
         $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $attributeValueCollection;
 
+        //sd($formData);
+
         return $formData;
     }
 

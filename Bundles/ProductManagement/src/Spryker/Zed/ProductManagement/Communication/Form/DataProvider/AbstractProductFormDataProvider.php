@@ -12,6 +12,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeMetadata;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeValues;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
@@ -108,10 +109,15 @@ class AbstractProductFormDataProvider
         $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
 
         $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = [
-            ProductFormAttributeMetadata::OPTION_LABELS => $this->convertAttributeMetadataToOptionValues($attributes),
-            ProductFormAttributeMetadata::OPTION_VALUES => $this->convertSelectedAttributeMetadataToFormValues($attributes),
+            ProductFormAttributeMetadata::OPTION_LABELS => $this->convertSelectedAttributeMetadataToFormValues($attributes),
+            ProductFormAttributeMetadata::OPTION_VALUES => $this->convertSelectedAttributeValuesToFormValues($attributes),
         ];
-        //$formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->convertAttributeValueToOptionValues($this->attributeCollection);
+
+/*        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = [
+            ProductFormAttributeValues::OPTION_LABELS => $this->convertAttributeMetadataToOptionValues($attributes),
+            ProductFormAttributeValues::OPTION_VALUES => $this->convertSelectedAttributeValuesToFormValues($attributes),
+        ];*/
+
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
         $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();
 
@@ -136,41 +142,6 @@ class AbstractProductFormDataProvider
                 ProductFormPrice::FIELD_STOCK => 0
             ]
         ];
-    }
-
-    /**
-     * @param array $attributes
-     *
-     * @return array
-     */
-    protected function convertAttributeMetadataToOptionValues(array $attributes)
-    {
-        $values = [];
-        foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
-            $value = array_key_exists($type, $attributes);
-
-            $values[$type] = [
-                'value' => $value,
-                'label' => $this->getLocalizedAttributeMetadataKey($type)
-            ];
-        }
-
-        return $values;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $data
-     *
-     * @return array
-     */
-    protected function convertAttributeValueToOptionValues(array $data)
-    {
-        $result = [];
-        foreach ($data as $transfer) {
-            $result[$transfer->getMetadata()->getKey()] = (array)$transfer->getValues();
-        }
-
-        return $result;
     }
 
     /**
@@ -297,44 +268,83 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param array $attributes
+     * @param array $productAttributes
      *
      * @return array
      */
-    protected function convertSelectedAttributeMetadataToFormValues(array $attributes)
+    protected function convertSelectedAttributeValuesToFormValues(array $productAttributes)
     {
         $values = [];
         foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
-            $isDefined = array_key_exists($type, $this->attributeMetadataTransferCollection);
-            $isProductSpecificAttribute = !array_key_exists($type, $attributes);
-            $isCustom = !array_key_exists($type, $this->attributeTransferCollection);
+            $isDefined = !array_key_exists($type, $this->attributeTransferCollection);
+            $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
+            $isMulti = isset($productAttributes[$type]) && is_array($productAttributes[$type]);
+            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
 
             $values[$type] = [
-                'value' => $isDefined,
+                'value' => [$value],
                 'product_specific' => $isProductSpecificAttribute,
-                'disabled' => $isCustom,
-                'label' => $this->getLocalizedAttributeMetadataKey($type)
+                'custom' => $isDefined,
+                'label' => $this->getLocalizedAttributeMetadataKey($type),
+                'multi' => $isMulti
             ];
+
+            //append product custom attributes
+            foreach ($productAttributes as $key => $value) {
+                $isMulti = isset($value) && is_array($value);
+                if (!array_key_exists($key, $values)) {
+                    $values[$key] = [
+                        'value' => [$value],
+                        'product_specific' => true,
+                        'custom' => true,
+                        'label' => $this->getLocalizedAttributeMetadataKey($key),
+                        'multi' => $isMulti
+                    ];
+                }
+            }
         }
 
         return $values;
     }
 
     /**
-     * @param array $attributes
+     * @param array $productAttributes
      *
      * @return array
      */
-    protected function convertSelectedAttributeValuesToFormValues(array $attributes)
+    protected function convertSelectedAttributeMetadataToFormValues(array $productAttributes)
     {
         $values = [];
-        foreach ($attributes as $key => $value) {
-            $values[$key]['value'] = $value;
+        foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
+            $isDefined = !array_key_exists($type, $this->attributeTransferCollection);
+            $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
+            $isMulti = isset($productAttributes[$type]) && is_array($productAttributes[$type]);
+            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : false;
+
+            if ($isMulti && $value) {
+                $value = !empty($value);
+            }
+
+            $values[$type] = [
+                'value' => $value,
+                'product_specific' => $isProductSpecificAttribute,
+                'custom' => $isDefined,
+                'label' => $this->getLocalizedAttributeMetadataKey($type),
+                'multi' => $isMulti
+            ];
         }
 
-        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            if (!array_key_exists($type, $values)) {
-                $values[$type]['value'] = [];
+        //append product custom attributes
+        foreach ($productAttributes as $key => $value) {
+            $isMulti = isset($value) && is_array($value);
+            if (!array_key_exists($key, $values)) {
+                $values[$key] = [
+                    'value' => true,
+                    'product_specific' => true,
+                    'custom' => true,
+                    'label' => $this->getLocalizedAttributeMetadataKey($key),
+                    'multi' => $isMulti
+                ];
             }
         }
 

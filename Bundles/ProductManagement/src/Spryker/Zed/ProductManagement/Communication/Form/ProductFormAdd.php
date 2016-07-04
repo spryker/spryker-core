@@ -84,16 +84,14 @@ class ProductFormAdd extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+//        $valueOptions = $options[self::ATTRIBUTE_VALUES];
+        //$valueOptions[self::ID_LOCALE] = $options[self::ATTRIBUTE_VALUES];
+
         $this
             ->addSkuField($builder)
             ->addGeneralForm($builder)
             ->addAttributeMetadataForm($builder, $options[self::ATTRIBUTE_METADATA])
-            /*
-            ->addAttributeValuesForm($builder, [
-                self::ATTRIBUTE_METADATA => $options[self::ATTRIBUTE_METADATA],
-                self::ATTRIBUTE_VALUES => $options[self::ATTRIBUTE_VALUES],
-                self::ID_LOCALE => $options[self::ID_LOCALE],
-            ])*/
+            //->addAttributeValuesForm($builder, $valueOptions)
             ->addPriceForm($builder, $options[self::TAX_SET])
             ->addSeoForm($builder, $options);
     }
@@ -200,12 +198,13 @@ class ProductFormAdd extends AbstractType
      */
     protected function addAttributeValuesForm(FormBuilderInterface $builder, array $options = [])
     {
+        sd($options);
         $builder
             ->add(self::ATTRIBUTE_VALUES, 'collection', [
                 'label' => 'Attribute Values',
                 'type' => new ProductFormAttributeValues(
-                    $options[self::ATTRIBUTE_VALUES],
-                    $options[self::ATTRIBUTE_METADATA],
+                    $options[ProductFormAttributeValues::OPTION_LABELS],
+                    $options[ProductFormAttributeValues::OPTION_VALUES],
                     self::VALIDATION_GROUP_ATTRIBUTE_VALUES,
                     $options[self::ID_LOCALE]
                 ),
