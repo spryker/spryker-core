@@ -41,8 +41,8 @@
         <column name="id_product_management_attribute" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="fk_metadata" type="INTEGER" required="true" />
         <column name="fk_input" type="INTEGER" required="true" />
-        <column name="multi" type="BOOLEAN" required="true" defaultValue="false" />
         <column name="allow_input" type="BOOLEAN" required="true" defaultValue="true" />
+        <column name="is_multiple" type="BOOLEAN" required="true" defaultValue="false" />
         <column name="is_localized" type="BOOLEAN" required="true" defaultValue="false" />
 
         <foreign-key name="spy_product_management_attribute-fk_metadata" foreignTable="spy_product_management_attribute_metadata">

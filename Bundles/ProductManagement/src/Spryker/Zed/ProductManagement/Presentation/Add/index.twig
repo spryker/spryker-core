@@ -205,9 +205,9 @@
                         <tr>
                             <th>Sku</th>
                             {% set break1 = false %}
-                            {% for attributeGroupKey,attributeGroupLabel in attributeGroupCollection %}
+                            {% for attributeGroupKey,attributeGroup in attributeGroupCollection %}
                                 {% set break1 = true %}
-                                <th>{{ attributeGroupLabel }}</th>
+                                <th>{{ attributeGroup.label }}</th>
                             {% endfor %}
                             <th class="center">Price</th>
                             <th class="center">Stock</th>
@@ -218,9 +218,21 @@
                         {% for product in concretes %}
                             <tr class="gradeX">
                                 <td>{{ product.sku }}</td>
-                                {% for attributeGroupKey,attributeGroupLabel in attributeGroupCollection %}
+                                {% for attributeGroupKey,attributeGroup in attributeGroupCollection %}
+                                    {% if attributeValueCollection[attributeGroupKey] is defined %}
+                                        {% set productAttributeMetadata = attributeValueCollection[attributeGroupKey] %}
+                                    {% endif %}
+
                                     {% if product.attributes[attributeGroupKey] is defined %}
-                                        <td>{{ product.attributes[attributeGroupKey] }}</td>
+                                        {% set value = product.attributes[attributeGroupKey] %}
+                                        {% if productAttributeMetadata is defined and productAttributeMetadata.isLocalized %}
+                                            <td>Localized: {{ value }}</td>
+                                        {% elseif productAttributeMetadata is defined and productAttributeMetadata.isMultiple %}
+                                            <td>Multiple: {{ value }}</td>
+                                        {% else %}
+                                            <td>{{ value }}</td>
+                                        {% endif %}
+
                                     {% else %}
                                         <td>-</td>
                                     {% endif %}
@@ -245,9 +257,9 @@
                             {% set break1 = false %}
                             {% set columnCount = attributeGroupCollection|length %}
                             {% for product in concretes if not break1 %}
-                                {% for attributeGroupKey,attributeGroupLabel in attributeGroupCollection %}
+                                {% for attributeGroupKey,attributeGroup in attributeGroupCollection %}
                                     {% set break1 = true %}
-                                    <th>{{ attributeGroupLabel }}</th>
+                                    <th>{{ attributeGroup.label }}</th>
                                 {% endfor %}
                             {% endfor %}
                             <th class="center">Price</th>

@@ -97,9 +97,30 @@ class EditController extends AddController
             $r[] = $t->toArray(true);
         }
 
-        $a = $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection);
 
-        //sd($r, $a);
+        $localizedAttributeMetadataNames = $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection);
+
+        $items = [];
+        foreach ($localizedAttributeMetadataNames as $type => $name) {
+            $items[$type] = [
+                'label' => $localizedAttributeMetadataNames[$type],
+                'isLocalized' => false,
+                'isMultiple' => false,
+                'isCustom' => true,
+            ];
+
+            if (isset($attributeCollection[$type])) {
+                $attributeTransfer = $attributeCollection[$type];
+
+                $items[$type]['isLocalized'] = (bool)$attributeTransfer->getIsLocalized();
+                $items[$type]['isMultiple'] = (bool)$attributeTransfer->getIsMultiple();
+                $items[$type]['isCustom'] = false;
+            }
+        }
+
+        //sd($items, $localizedAttributeMetadataNames);
+
+        //sd($items);
 
         return $this->viewResponse([
             'form' => $form->createView(),
@@ -107,7 +128,8 @@ class EditController extends AddController
             'currentProduct' => $productAbstractTransfer->toArray(),
             'matrix' => [],
             'concretes' => $r,
-            'attributeGroupCollection' => $a,
+            'attributeGroupCollection' => $items,
+            'attributeValueCollection' => $attributeCollection,
         ]);
     }
 

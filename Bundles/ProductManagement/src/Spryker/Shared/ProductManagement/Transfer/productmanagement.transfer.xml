@@ -20,8 +20,8 @@
         <property name="idProductManagementAttribute" type="int" />
         <property name="metadata" type="ProductManagementAttributeMetadata" />
         <property name="input" type="ProductManagementAttributeInput" />
-        <property name="multi" type="bool" />
         <property name="allowInput" type="bool" />
+        <property name="isMultiple" type="bool" />
         <property name="isLocalized" type="bool" />
         <property name="localizedAttributes" type="ProductManagementAttributeLocalized[]" singular="localizedAttribute" />
         <property name="values" type="ProductManagementAttributeValue[]" />
