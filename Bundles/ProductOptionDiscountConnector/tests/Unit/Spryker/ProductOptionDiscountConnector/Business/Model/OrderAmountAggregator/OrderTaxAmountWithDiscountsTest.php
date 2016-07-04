@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts;
-use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface;
+use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface;
 
 class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
 {
@@ -100,11 +100,11 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface
      */
     protected function createTaxFacadeBridgeMock()
     {
-        return $this->getMockBuilder(ProductOptionToTaxBridgeInterface::class)->disableArgumentCloning()->getMock();
+        return $this->getMockBuilder(ProductOptionToTaxInterface::class)->disableArgumentCloning()->getMock();
     }
 
 }
