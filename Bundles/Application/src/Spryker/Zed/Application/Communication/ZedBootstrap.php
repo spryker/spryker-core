@@ -94,7 +94,14 @@ class ZedBootstrap
      */
     protected function registerServiceProviderForInternalRequestWithAuthentication()
     {
-        foreach ($this->getInternalCallServiceProviderWithAuthentication() as $provider) {
+        $serviceProviders = $this->getInternalCallServiceProviderWithAuthentication();
+
+        /** @deprecated This added to keep Backward Compatibility and will be removed in major release */
+        if (!$serviceProviders) {
+            $serviceProviders = $this->getServiceProvider();
+        }
+
+        foreach ($serviceProviders as $provider) {
             $this->application->register($provider);
         }
     }
