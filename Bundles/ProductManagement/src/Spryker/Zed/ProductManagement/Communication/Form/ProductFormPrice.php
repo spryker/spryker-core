@@ -34,7 +34,7 @@ class ProductFormPrice extends AbstractType
      * @param array $taxCollection
      * @param string $validationGroup
      */
-    public function __construct(array $taxCollection,$validationGroup)
+    public function __construct(array $taxCollection, $validationGroup)
     {
         $this->taxCollection = $taxCollection;
         $this->validationGroup = $validationGroup;
@@ -74,8 +74,7 @@ class ProductFormPrice extends AbstractType
         $this
             ->addPriceField($builder, $options)
             ->addTaxRateField($builder, $options)
-            ->addStockField($builder, $options)
-        ;
+            ->addStockField($builder, $options);
     }
 
     /**

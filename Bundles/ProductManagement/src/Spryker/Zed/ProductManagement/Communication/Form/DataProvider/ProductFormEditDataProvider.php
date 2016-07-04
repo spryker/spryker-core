@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormGeneral;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 
@@ -62,7 +60,6 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $attributeMetadataCollection;
         $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $attributeValueCollection;
-        //sd($formData);
 
         return $formData;
     }

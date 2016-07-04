@@ -43,12 +43,17 @@ class AddController extends AbstractController
             )
             ->handleRequest($request);
 
-        $attributeMetadataCollection = $this->getFactory()->getProductAttributeMetadataCollection();
-        $attributeCollection = $this->getFactory()->getProductAttributeCollection();
+        $attributeMetadataCollection = $this->normalizeAttributeMetadataArray(
+            $this->getFactory()->getProductAttributeMetadataCollection()
+        );
+
+        $attributeCollection = $this->normalizeAttributeArray(
+            $this->getFactory()->getProductAttributeCollection()
+        );
 
         if ($form->isValid()) {
             try {
-                $attributes = $this->convertAttributesFromData($form->getData(), $attributeCollection);
+                $attributes = $this->convertAttributesFromData($form->getData());
                 $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeCollection);
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $matrixGenerator = new MatrixGenerator();
@@ -75,8 +80,7 @@ class AddController extends AbstractController
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'matrix' => [],
             'concretes' => [],
-            'attributeGroupCollection' => $this->normalizeAttributeMetadataArray($attributeMetadataCollection),
-            'attributeValuesCollection' => $this->normalizeAttributeArray($attributeCollection)
+            'attributeGroupCollection' => $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection),
         ]);
     }
 
@@ -189,11 +193,10 @@ class AddController extends AbstractController
 
     /**
      * @param array $data
-     * @param array $attributeCollection
      *
      * @return array
      */
-    protected function convertAttributesFromData(array $data, array $attributeCollection)
+    protected function convertAttributesFromData(array $data)
     {
         $attributes = [];
         foreach ($data[ProductFormAdd::ATTRIBUTE_METADATA] as $type => $values) {
@@ -247,7 +250,7 @@ class AddController extends AbstractController
     {
         $attributeArray = [];
         foreach ($attributeCollection as $attributeTransfer) {
-            $attributeArray[$attributeTransfer->getMetadata()->getKey()] = $attributeTransfer->toArray(true);
+            $attributeArray[$attributeTransfer->getMetadata()->getKey()] = $attributeTransfer;
         }
 
         return $attributeArray;
@@ -262,10 +265,42 @@ class AddController extends AbstractController
     {
         $attributeMetadataArray = [];
         foreach ($attributeMetadataCollection as $metadataTransfer) {
-            $attributeMetadataArray[$metadataTransfer->getKey()] = $metadataTransfer->getKey();
+            $attributeMetadataArray[$metadataTransfer->getKey()] = $metadataTransfer;
         }
 
         return $attributeMetadataArray;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[] $metadataCollection
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $attributeCollection
+     *
+     * @return array
+     */
+    protected function getLocalizedAttributeMetadataNames(array $metadataCollection, array $attributeCollection)
+    {
+        $currentLocale = (int)$this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale()
+            ->getIdLocale();
+
+        $result = [];
+        foreach ($metadataCollection as $type => $transfer) {
+            $result[$type] = $type;
+            if (!isset($attributeCollection[$type])) {
+                continue;
+            }
+
+            $attributeTransfer = $attributeCollection[$type];
+            foreach ($attributeTransfer->getLocalizedAttributes() as $localizedAttribute) {
+                if ((int)$localizedAttribute->getFkLocale() === $currentLocale) {
+                    $result[$type] = $localizedAttribute->getName();
+                    break;
+                }
+            }
+        }
+
+        return $result;
     }
 
 }

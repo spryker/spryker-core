@@ -56,8 +56,13 @@ class EditController extends AddController
             ->getProductManagementFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
-        $attributeMetadataCollection = $this->getFactory()->getProductAttributeMetadataCollection();
-        $attributeCollection = $this->getFactory()->getProductAttributeCollection();
+        $attributeMetadataCollection = $this->normalizeAttributeMetadataArray(
+            $this->getFactory()->getProductAttributeMetadataCollection()
+        );
+
+        $attributeCollection = $this->normalizeAttributeArray(
+            $this->getFactory()->getProductAttributeCollection()
+        );
 
         if ($form->isValid()) {
             try {
@@ -87,10 +92,10 @@ class EditController extends AddController
             }
         }
 
-       /* sd(
-            $this->normalizeAttributeMetadataArray($attributeMetadataCollection),
-            $this->normalizeAttributeArray($attributeCollection)
-        );*/
+        $r = [];
+        foreach ($concreteProductCollection as $t) {
+            $r[] = $t->toArray(true);
+        }
 
         return $this->viewResponse([
             'form' => $form->createView(),
@@ -98,8 +103,7 @@ class EditController extends AddController
             'currentProduct' => $productAbstractTransfer->toArray(),
             'matrix' => [],
             'concretes' => $concreteProductCollection,
-            'attributeGroupCollection' => $this->normalizeAttributeMetadataArray($attributeMetadataCollection),
-            //'attributeValuesCollection' => $this->normalizeAttributeArray($attributeCollection)
+            'attributeGroupCollection' => $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection),
         ]);
     }
 

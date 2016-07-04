@@ -17,10 +17,20 @@ class ProductFormAttributeMetadata extends AbstractType
 
     const FIELD_VALUE = 'value';
 
+    const OPTION_LABELS = 'option_labels';
+    const OPTION_VALUES = 'option_values';
+    const LABEL = 'label';
+    const DISABLED = 'disabled';
+
     /**
      * @var array
      */
-    protected $attributeGroups;
+    protected $attributeLabels;
+
+    /**
+     * @var array
+     */
+    protected $attributeValues;
 
     /**
      * @var string
@@ -28,12 +38,14 @@ class ProductFormAttributeMetadata extends AbstractType
     protected $validationGroup;
 
     /**
-     * @param array $attributeGroups
+     * @param array $attributeLabels
+     * @param array $attributeValues
      * @param array $validationGroup
      */
-    public function __construct(array $attributeGroups, $validationGroup)
+    public function __construct(array $attributeLabels, array $attributeValues, $validationGroup)
     {
-        $this->attributeGroups = $attributeGroups;
+        $this->attributeLabels = $attributeLabels;
+        $this->attributeValues = $attributeValues;
         $this->validationGroup = $validationGroup;
     }
 
@@ -81,12 +93,10 @@ class ProductFormAttributeMetadata extends AbstractType
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
-        if (isset($this->attributeGroups[$builder->getName()])) {
-            $name = $this->attributeGroups[$builder->getName()];
-        }
-
         $builder->add(self::FIELD_VALUE, new CheckboxType(), [
-            'label' => $name,
+            'value' => $this->attributeValues[$name][self::FIELD_VALUE],
+            'label' => $this->attributeValues[$name][self::LABEL],
+            'disabled' => $this->attributeValues[$name][self::DISABLED]
         ]);
 
         return $this;

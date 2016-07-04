@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeMetadata;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
@@ -61,12 +62,12 @@ class AbstractProductFormDataProvider
     /**
      * @var \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
      */
-    protected $attributeMetadataCollection = [];
+    protected $attributeMetadataTransferCollection = [];
 
     /**
      * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
-    protected $attributeCollection = [];
+    protected $attributeTransferCollection = [];
 
     /**
      * @var array
@@ -92,41 +93,30 @@ class AbstractProductFormDataProvider
         $this->productFacade = $productFacade;
         $this->productManagementFacade = $productManagementFacade;
         $this->locale = $localeFacade->getCurrentLocale();
-        $this->attributeMetadataCollection = $this->reindexAttributeMetadataCollection($attributeMetadataCollection);
-        $this->attributeCollection = $this->reindexAttributeCollection($attributeCollection);
+        $this->attributeMetadataTransferCollection = $attributeMetadataCollection;
+        $this->attributeTransferCollection = $attributeCollection;
         $this->taxCollection = $taxCollection;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $attributeCollection
+     * @param int|null $idProductAbstract |null
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return mixed
      */
-    protected function reindexAttributeCollection(array $attributeCollection)
+    public function getOptions($idProductAbstract = null)
     {
-        $result = [];
-        foreach ($attributeCollection as $attributeTransfer) {
-            $result[$attributeTransfer->getMetadata()->getKey()] = $attributeTransfer;
-        }
+        $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
 
-        return $result;
+        $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = [
+            ProductFormAttributeMetadata::OPTION_LABELS => $this->convertAttributeMetadataToOptionValues($attributes),
+            ProductFormAttributeMetadata::OPTION_VALUES => $this->convertSelectedAttributeMetadataToFormValues($attributes),
+        ];
+        //$formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->convertAttributeValueToOptionValues($this->attributeCollection);
+        $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
+        $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();
+
+        return $formOptions;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[] $metadataCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
-     */
-    protected function reindexAttributeMetadataCollection(array $metadataCollection)
-    {
-        $result = [];
-        foreach ($metadataCollection as $metadataTransfer) {
-            $result[$metadataTransfer->getKey()] = $metadataTransfer;
-        }
-
-        return $result;
-    }
-
 
     /**
      * @return array
@@ -149,65 +139,23 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param int|null $idProductAbstract |null
-     *
-     * @return mixed
-     */
-    public function getOptions($idProductAbstract = null)
-    {
-        $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = $this->convertAttributeMetadataToOptionValues($this->attributeMetadataCollection);
-        //$formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $this->convertAttributeValueToOptionValues($this->attributeCollection);
-        $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
-        $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();
-
-        return $formOptions;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[] $data
+     * @param array $attributes
      *
      * @return array
      */
-    protected function convertAttributeMetadataToOptionValues(array $data)
+    protected function convertAttributeMetadataToOptionValues(array $attributes)
     {
-        $result = [];
-        foreach ($data as $name => $transfer) {
-            if (!isset($this->attributeCollection[$name])) {
-                continue;
-            }
+        $values = [];
+        foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
+            $value = array_key_exists($type, $attributes);
 
-            $attributeTransfer = $this->attributeCollection[$name];
-            foreach ($attributeTransfer->getLocalizedAttributes() as $localizedAttribute) {
-                if ((int)$localizedAttribute->getFkLocale() === (int)$this->localeFacade->getCurrentLocale()->getIdLocale()) {
-                    $name = $localizedAttribute->getName();
-                    break;
-                }
-            }
-
-            $result[$transfer->getKey()] = $name;
+            $values[$type] = [
+                'value' => $value,
+                'label' => $this->getLocalizedAttributeMetadataKey($type)
+            ];
         }
 
-        return $result;
-    }
-
-    protected function getLocalizedAttributeMetadataKey($keyToLocalize)
-    {
-        if (!isset($this->attributeMetadataCollection[$keyToLocalize])) {
-            return $keyToLocalize;
-        }
-
-        if (!isset($this->attributeCollection[$keyToLocalize])) {
-            return $keyToLocalize;
-        }
-
-        $attributeTransfer = $this->attributeCollection[$keyToLocalize];
-        foreach ($attributeTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            if ((int)$localizedAttribute->getFkLocale() === (int)$this->localeFacade->getCurrentLocale()->getIdLocale()) {
-                return $localizedAttribute->getName();
-            }
-        }
-
-        return $keyToLocalize;
+        return $values;
     }
 
     /**
@@ -224,6 +172,7 @@ class AbstractProductFormDataProvider
 
         return $result;
     }
+
     /**
      * @param int $idProductAbstract
      *
@@ -298,8 +247,8 @@ class AbstractProductFormDataProvider
     {
         $attributes = [];
         /* @var ProductManagementAttributeTransfer $attributeTransfer */
-        foreach ($this->attributeCollection as $attributeTransfer) {
-            $attributes[$attributeTransfer->getMetadata()->getKey()]['value'] = [];
+        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            $attributes[$type]['value'] = [];
         }
 
         return $attributes;
@@ -312,8 +261,8 @@ class AbstractProductFormDataProvider
     {
         $attributes = [];
         /* @var ProductManagementAttributeTransfer $attributeTransfer */
-        foreach ($this->attributeCollection as $attributeTransfer) {
-            $attributes[$attributeTransfer->getMetadata()->getKey()]['value'] = false;
+        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            $attributes[$type]['value'] = false;
         }
 
         return $attributes;
@@ -347,7 +296,6 @@ class AbstractProductFormDataProvider
         return $attributes;
     }
 
-
     /**
      * @param array $attributes
      *
@@ -355,15 +303,18 @@ class AbstractProductFormDataProvider
      */
     protected function convertSelectedAttributeMetadataToFormValues(array $attributes)
     {
-        foreach ($this->attributeMetadataCollection as $metadataTransfer) {
-            $attributeMetadataCollection[$metadataTransfer->getKey()] = ['value' => null];
-        }
-
-        $attributeMetadataCollection = array_keys($attributes) + array_keys($attributeMetadataCollection);
-
         $values = [];
-        foreach ($attributeMetadataCollection as $type) {
-            $values[$type]['value'] = array_key_exists($type, $attributes);
+        foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
+            $isDefined = array_key_exists($type, $this->attributeMetadataTransferCollection);
+            $isProductSpecificAttribute = !array_key_exists($type, $attributes);
+            $isCustom = !array_key_exists($type, $this->attributeTransferCollection);
+
+            $values[$type] = [
+                'value' => $isDefined,
+                'product_specific' => $isProductSpecificAttribute,
+                'disabled' => $isCustom,
+                'label' => $this->getLocalizedAttributeMetadataKey($type)
+            ];
         }
 
         return $values;
@@ -381,14 +332,33 @@ class AbstractProductFormDataProvider
             $values[$key]['value'] = $value;
         }
 
-        foreach ($this->attributeCollection as $attributeTransfer) {
-            $key = $attributeTransfer->getMetadata()->getKey();
-            if (!array_key_exists($key, $values)) {
-                $values[$key]['value'] = [];
+        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            if (!array_key_exists($type, $values)) {
+                $values[$type]['value'] = [];
             }
         }
 
         return $values;
+    }
+
+    protected function getLocalizedAttributeMetadataKey($keyToLocalize)
+    {
+        if (!isset($this->attributeMetadataTransferCollection[$keyToLocalize])) {
+            return $keyToLocalize;
+        }
+
+        if (!isset($this->attributeTransferCollection[$keyToLocalize])) {
+            return $keyToLocalize;
+        }
+
+        $attributeTransfer = $this->attributeTransferCollection[$keyToLocalize];
+        foreach ($attributeTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            if ((int)$localizedAttribute->getFkLocale() === (int)$this->localeFacade->getCurrentLocale()->getIdLocale()) {
+                return $localizedAttribute->getName();
+            }
+        }
+
+        return $keyToLocalize;
     }
 
 }

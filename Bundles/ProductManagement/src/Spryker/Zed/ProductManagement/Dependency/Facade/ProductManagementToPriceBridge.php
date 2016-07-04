@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-
 class ProductManagementToPriceBridge implements ProductManagementToPriceInterface
 {
 
@@ -49,4 +48,5 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     {
         return $this->priceFacade->getProductConcretePrice($idProduct, $priceType);
     }
+
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGenerator;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;

@@ -748,7 +748,7 @@ class ProductManager implements ProductManagerInterface
 
         return $productConcreteTransfer;
     }
-    
+
     /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
      *
@@ -1084,6 +1084,13 @@ class ProductManager implements ProductManagerInterface
             foreach ($productAttributes as $name => $value) {
                 $attributes[$name] = $value;
             }
+
+            foreach ($productTransfer->getLocalizedAttributes() as $localizedAttribute) {
+                foreach ($localizedAttribute->getAttributes() as $name => $value) {
+                    $localeName = $localizedAttribute->getLocale()->getLocaleName();
+                    $attributes[$name][$localeName] = $value;
+                }
+            }
         }
 
         $abstractAttributes = $productAbstractTransfer->getAttributes();
@@ -1091,66 +1098,5 @@ class ProductManager implements ProductManagerInterface
 
         return $attributes;
     }
-
-    /**
-     * @return array
-    public function getProductAttributeCollection()
-    {
-        [
-            'size' => [
-                '40' => '40',
-                '41' => '41',
-                '42' => '42',
-                '43' => '43',
-            ],
-            'color' => [
-                'blue' => 'Blue',
-                'red' => 'Red',
-                'white' => 'White',
-            ],
-            'flavour' => [
-                'spicy' => 'Mexican Food',
-                'sweet' => 'Cakes'
-            ]
-        ]
-
-
-        $attributeCollection = $this->productQueryContainer
-            ->queryAttributesMetadata()
-            ->find();
-
-        $attributes = [];
-        foreach ($attributeCollection as $attributeEntity) {
-            $attributes[$attributeEntity->getKey()] = [
-                $attributeEntity->getKey() => $attributeEntity->getKey()
-            ];
-        }
-
-        return $attributes;
-    }*/
-
-    /**
-     * @return array
-    public function getProductAttributeMetadataCollection()
-    {
-        [
-            'size' => 'Size',
-            'color' => 'Color',
-            'flavour' => 'Flavour',
-        ]
-
-        $metaAttributeCollection = $this->productQueryContainer
-            ->queryAttributesMetadata()
-            ->find();
-
-        $metadata = [];
-        foreach ($metaAttributeCollection as $entity) {
-            $metadata[$entity->getKey()] = $entity->getKey();
-        }
-
-        sd($metadata);
-
-        return $metadata;
-    }*/
 
 }

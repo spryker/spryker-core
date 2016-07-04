@@ -38,4 +38,5 @@ class ProductManagementToTaxBridge implements ProductManagementToTaxInterface
     {
         return $this->taxFacade->getTaxSets();
     }
+
 }

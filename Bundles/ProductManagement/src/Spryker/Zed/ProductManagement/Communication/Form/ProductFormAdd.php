@@ -95,8 +95,7 @@ class ProductFormAdd extends AbstractType
                 self::ID_LOCALE => $options[self::ID_LOCALE],
             ])*/
             ->addPriceForm($builder, $options[self::TAX_SET])
-            ->addSeoForm($builder, $options)
-        ;
+            ->addSeoForm($builder, $options);
     }
 
     /**
@@ -166,7 +165,8 @@ class ProductFormAdd extends AbstractType
             ->add(self::ATTRIBUTE_METADATA, 'collection', [
                 'label' => 'Attributes',
                 'type' => new ProductFormAttributeMetadata(
-                    $options,
+                    $options[ProductFormAttributeMetadata::OPTION_LABELS],
+                    $options[ProductFormAttributeMetadata::OPTION_VALUES],
                     self::VALIDATION_GROUP_ATTRIBUTE_METADATA
                 ),
                 'constraints' => [new Callback([
@@ -299,4 +299,5 @@ class ProductFormAdd extends AbstractType
 
         return $this;
     }
+
 }
