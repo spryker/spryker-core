@@ -72,7 +72,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator
+     * @return \Spryker\Zed\Tax\Business\Model\ExpenseTaxCalculator
      */
     public function createExpenseTaxCalculator()
     {

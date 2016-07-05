@@ -219,4 +219,9 @@ interface TaxFacadeInterface
      */
     public function getDefaultTaxRate();
 
+    /**
+     * @return void
+     */
+    public function resetAccruedTaxCalculatorRoundingErrorDelta();
+
 }

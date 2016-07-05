@@ -28,4 +28,9 @@ interface ProductOptionToTaxBridgeInterface
      */
     public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
 
+    /**
+     * @return void
+     */
+    public function resetAccruedTaxCalculatorRoundingErrorDelta();
+
 }

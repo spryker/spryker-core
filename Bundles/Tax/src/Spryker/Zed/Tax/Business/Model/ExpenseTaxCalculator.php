@@ -31,6 +31,7 @@ class ExpenseTaxCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
+        $this->accruedTaxCalculator->resetRoundingErrorDelta();
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $unitTaxAmount = $this->calculateTaxAmount(
                 $expenseTransfer->getUnitGrossPrice(),

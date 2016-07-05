@@ -26,4 +26,9 @@ interface DiscountSalesAggregatorConnectorToTaxInterface
      */
     public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
 
+    /**
+     * @return void
+     */
+    public function resetAccruedTaxCalculatorRoundingErrorDelta();
+
 }

@@ -43,6 +43,8 @@ class ExpenseTax implements OrderAmountAggregatorInterface
      */
     protected function addTaxAmountToTaxableItems(\ArrayObject $taxableItems)
     {
+        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
+
         foreach ($taxableItems as $expenseTransfer) {
             if (!$expenseTransfer->getTaxRate()) {
                 continue;

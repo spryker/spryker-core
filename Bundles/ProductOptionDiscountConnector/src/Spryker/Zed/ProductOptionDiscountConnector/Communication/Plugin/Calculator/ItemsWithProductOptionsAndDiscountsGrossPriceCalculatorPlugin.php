@@ -8,12 +8,12 @@ namespace Spryker\Zed\ProductOptionDiscountConnector\Communication\Plugin\Calcul
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductOptionDiscountConnector\Business\ProductOptionDiscountConnectorFacade getFacade()
  */
-class ItemsWithProductOptionsAndDiscountsGrossPriceCalculatorPlugin extends AbstractDiscountPlugin implements CalculatorPluginInterface
+class ItemsWithProductOptionsAndDiscountsGrossPriceCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
     /**

@@ -42,6 +42,8 @@ class ExpenseTaxWithDiscountsCalculator implements CalculatorInterface
      */
     protected function addExpenseTaxes(QuoteTransfer $quoteTransfer)
     {
+        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
+
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if (!$expenseTransfer->getTaxRate()) {
                 continue;

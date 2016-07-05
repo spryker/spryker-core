@@ -444,4 +444,18 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
             ->getTaxValueFromPrice($grossPrice, $taxRate);
     }
 
+    /**
+     * Specification:
+     *  - Reset rounding error counter to 0
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function resetAccruedTaxCalculatorRoundingErrorDelta()
+    {
+         $this->getFactory()
+            ->createAccruedTaxCalculator()
+            ->resetRoundingErrorDelta();
+    }
 }

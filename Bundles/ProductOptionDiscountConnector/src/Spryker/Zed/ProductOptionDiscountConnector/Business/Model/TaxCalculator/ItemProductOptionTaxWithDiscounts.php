@@ -58,6 +58,7 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
      */
     protected function addTaxWithProductOptions(\ArrayObject $items)
     {
+        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
         foreach ($items as $itemTransfer) {
 
             $unitOptionTaxTotalAmount = $this->getProductOptionWithDiscountsUnitTotalTaxAmount($itemTransfer);
