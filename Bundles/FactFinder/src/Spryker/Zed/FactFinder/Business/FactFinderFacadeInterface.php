@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\FactFinder;
+namespace Spryker\Zed\FactFinder\Business;
 
-use Spryker\Client\Kernel\AbstractFactory;
-
-class FactFinderFactory extends AbstractFactory
+interface FactFinderFacadeInterface
 {
+
 }
