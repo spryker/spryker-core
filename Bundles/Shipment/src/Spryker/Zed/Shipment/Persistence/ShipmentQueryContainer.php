@@ -79,11 +79,11 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
      * @api
      *
      * @param int $idShipmentMethod
-     * @param string $iso2Code
+     * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
-    public function queryTaxSetByIdShipmentMethodAndCountry($idShipmentMethod, $iso2Code)
+    public function queryTaxSetByIdShipmentMethodAndCountryIso2Code($idShipmentMethod, $countryIso2Code)
     {
         return $this->getFactory()->createShipmentMethodQuery()
             ->filterByIdShipmentMethod($idShipmentMethod)
@@ -91,7 +91,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
                 ->useSpyTaxSetTaxQuery()
                     ->useSpyTaxRateQuery()
                         ->useCountryQuery()
-                            ->filterByIso2Code($iso2Code)
+                            ->filterByIso2Code($countryIso2Code)
                         ->endUse()
                         ->_or()
                         ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)

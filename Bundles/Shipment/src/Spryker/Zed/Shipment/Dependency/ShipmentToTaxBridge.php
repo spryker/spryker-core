@@ -27,9 +27,9 @@ class ShipmentToTaxBridge implements ShipmentToTaxInterface
     /**
      * @return string
      */
-    public function getDefaultTaxCountry()
+    public function getDefaultTaxCountryIso2Code()
     {
-        return $this->taxFacade->getDefaultTaxCountry();
+        return $this->taxFacade->getDefaultTaxCountryIso2Code();
     }
 
     /**

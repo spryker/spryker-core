@@ -35,7 +35,7 @@ class TaxDefault implements TaxDefaultInterface
     /**
      * @return string
      */
-    public function getDefaultCountry()
+    public function getDefaultCountryIso2Code()
     {
         return $this->store->getCurrentCountry();
     }

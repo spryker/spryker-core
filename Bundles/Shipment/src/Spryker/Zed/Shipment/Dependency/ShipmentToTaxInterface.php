@@ -12,7 +12,7 @@ interface ShipmentToTaxInterface
     /**
      * @return string
      */
-    public function getDefaultTaxCountry();
+    public function getDefaultTaxCountryIso2Code();
 
     /**
      * @return float

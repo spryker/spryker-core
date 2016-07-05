@@ -42,10 +42,10 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $country = $this->getShippingCountryIsoCode($quoteTransfer);
+        $countryIsoCode = $this->getShippingCountryIsoCode($quoteTransfer);
         $allIdOptionValueUsages = $this->getAllIdOptionValueUsages($quoteTransfer);
 
-        $taxRates = $this->findTaxRatesByIdOptionValueUsageAndCountry($allIdOptionValueUsages, $country);
+        $taxRates = $this->findTaxRatesByIdOptionValueUsageAndCountryIso2Code($allIdOptionValueUsages, $countryIsoCode);
 
         $this->setItemsTaxRate($quoteTransfer, $taxRates);
     }
@@ -58,7 +58,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     protected function getShippingCountryIsoCode(QuoteTransfer $quoteTransfer)
     {
         if ($quoteTransfer->getShippingAddress() === null) {
-            return $this->taxFacade->getDefaultTaxCountry();
+            return $this->taxFacade->getDefaultTaxCountryIso2Code();
         }
 
         return $quoteTransfer->getShippingAddress()->getIso2Code();
@@ -139,13 +139,13 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param int[] $allIdOptionValueUsages
-     * @param string $country
+     * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function findTaxRatesByIdOptionValueUsageAndCountry($allIdOptionValueUsages, $country)
+    protected function findTaxRatesByIdOptionValueUsageAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code)
     {
-        return $this->queryContainer->queryTaxSetByIdProductOptionValueUsagesAndCountry($allIdOptionValueUsages, $country)
+        return $this->queryContainer->queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code)
             ->find()
             ->toArray();
     }

@@ -571,7 +571,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @param int $idProductOptionTypeUsage
      *
-     * @deprecated use queryTaxSetByProductOptionTypeUsageAndCountry instead
+     * @deprecated use queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code instead
      *
      * @return string|null
      */
@@ -600,11 +600,11 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      * @api
      *
      * @param int[] $allIdOptionValueUsages
-     * @param string $iso2Code
+     * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
-    public function queryTaxSetByIdProductOptionValueUsagesAndCountry($allIdOptionValueUsages, $iso2Code)
+    public function queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code)
     {
         return $this->getFactory()->createProductOptionValueUsageQuery()
             ->filterByIdProductOptionValueUsage($allIdOptionValueUsages, Criteria::IN)
@@ -616,7 +616,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                         ->useSpyTaxSetTaxQuery()
                             ->useSpyTaxRateQuery()
                                 ->useCountryQuery()
-                                    ->filterByIso2Code($iso2Code)
+                                    ->filterByIso2Code($countryIso2Code)
                                 ->endUse()
                                 ->_or()
                                 ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)

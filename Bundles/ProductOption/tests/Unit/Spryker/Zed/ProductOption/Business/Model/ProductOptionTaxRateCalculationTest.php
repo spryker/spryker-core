@@ -50,7 +50,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $mockData)
     {
         $productItemTaxRateCalculatorMock = $this->createProductItemTaxRateCalculator();
-        $productItemTaxRateCalculatorMock->method('findTaxRatesByIdOptionValueUsageAndCountry')->willReturn($mockData);
+        $productItemTaxRateCalculatorMock->method('findTaxRatesByIdOptionValueUsageAndCountryIso2Code')->willReturn($mockData);
 
         $productItemTaxRateCalculatorMock->recalculate($quoteTransfer);
         $taxAverage = $this->getProductItemsTaxRateAverage($quoteTransfer);
@@ -63,7 +63,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
      */
     protected function createProductItemTaxRateCalculator()
     {
-        return $this->getMock(ProductOptionTaxRateCalculator::class, ['findTaxRatesByIdOptionValueUsageAndCountry'], [
+        return $this->getMock(ProductOptionTaxRateCalculator::class, ['findTaxRatesByIdOptionValueUsageAndCountryIso2Code'], [
             $this->createQueryContainerMock(),
             $this->createProductOptionToTaxBridgeMock()
         ]);
@@ -90,7 +90,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
 
         $bridgeMock
             ->expects($this->any())
-            ->method('getDefaultTaxCountry')
+            ->method('getDefaultTaxCountryIso2Code')
             ->willReturn('DE');
 
         $bridgeMock

@@ -260,10 +260,10 @@ interface ProductOptionQueryContainerInterface
      * @api
      *
      * @param int[] $allIdOptionValueUsages
-     * @param string $iso2Code
+     * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
-    public function queryTaxSetByIdProductOptionValueUsagesAndCountry($allIdOptionValueUsages, $iso2Code);
+    public function queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code);
 
 }

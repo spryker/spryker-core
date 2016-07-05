@@ -210,7 +210,7 @@ interface TaxFacadeInterface
      *
      * @return string
      */
-    public function getDefaultTaxCountry();
+    public function getDefaultTaxCountryIso2Code();
 
     /**
      * @api

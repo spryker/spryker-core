@@ -40,10 +40,10 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $country = $this->getShippingCountryIsoCode($quoteTransfer);
+        $countryIso2Code = $this->getShippingCountryIso2Code($quoteTransfer);
         $allIdProductAbstracts = $this->getAllIdAbstractProducts($quoteTransfer);
 
-        $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountry($allIdProductAbstracts, $country);
+        $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code);
 
         $this->setItemsTax($quoteTransfer, $taxRates);
     }
@@ -53,10 +53,10 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      *
      * @return string
      */
-    protected function getShippingCountryIsoCode(QuoteTransfer $quoteTransfer)
+    protected function getShippingCountryIso2Code(QuoteTransfer $quoteTransfer)
     {
         if ($quoteTransfer->getShippingAddress() === null) {
-            return $this->taxDefault->getDefaultCountry();
+            return $this->taxDefault->getDefaultCountryIso2Code();
         }
 
         return $quoteTransfer->getShippingAddress()->getIso2Code();
@@ -109,13 +109,13 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param array $allIdProductAbstracts
-     * @param int $country
+     * @param string $countryIso2Code
      *
      * @return array
      */
-    protected function findTaxRatesByAllIdProductAbstractsAndCountry(array $allIdProductAbstracts, $country)
+    protected function findTaxRatesByAllIdProductAbstractsAndCountryIso2Code(array $allIdProductAbstracts, $countryIso2Code)
     {
-        return $this->taxQueryContainer->queryTaxSetByIdProductAbstractAndCountry($allIdProductAbstracts, $country)
+        return $this->taxQueryContainer->queryTaxSetByIdProductAbstractAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code)
             ->find()
             ->toArray();
     }

@@ -401,11 +401,11 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      *
      * @return string
      */
-    public function getDefaultTaxCountry()
+    public function getDefaultTaxCountryIso2Code()
     {
         return $this->getFactory()
             ->createTaxDefault()
-            ->getDefaultCountry();
+            ->getDefaultCountryIso2Code();
     }
 
     /**
