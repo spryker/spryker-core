@@ -60,7 +60,7 @@ class AddController extends AbstractController
                 $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
 
                 $idProductAbstract = $this->getFactory()
-                    ->getProductManagementFacade()1
+                    ->getProductManagementFacade()
                     ->addProduct($productAbstractTransfer, $concreteProductCollection);
 
                 $this->addSuccessMessage('The product was added successfully.');
