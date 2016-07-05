@@ -69,7 +69,7 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      * Get the real tax rate from a given gross price and given tax amount.
      *
      * @param int $price Price as integer (e.g. 15508 for 155.08)
-     * @param float $taxAmount Tax amount (e.g. 196)
+     * @param float $taxAmount Tax amount (e.g. 19.6)
      *
      * @return float
      */
