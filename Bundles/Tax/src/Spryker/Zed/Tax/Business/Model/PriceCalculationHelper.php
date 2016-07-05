@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
+use Spryker\Zed\Tax\Business\Model\Exception\CalculationException;
+
 class PriceCalculationHelper implements PriceCalculationHelperInterface
 {
 
@@ -22,6 +24,10 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getTaxValueFromPrice($price, $taxPercentage, $round = true)
     {
+        if ($price < 0) {
+            throw new CalculationException('Invalid price value given.');
+        }
+
         $price = (int)$price;
         $amount = ($price * $taxPercentage) / ($taxPercentage + 100);
         if (!$round) {
@@ -43,6 +49,10 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getNetValueFromPrice($price, $taxPercentage, $round = true)
     {
+        if ($price < 0) {
+            throw new CalculationException('Invalid price value given.');
+        }
+
         $price = (int)$price;
         $amount = ($price * 100) / ($taxPercentage + 100);
 
@@ -63,6 +73,10 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getTaxRateFromPrice($price, $taxAmount)
     {
+        if ($price < 0 || $taxAmount <= 0) {
+            throw new CalculationException('Invalid price or tax amount value given.');
+        }
+
         $price = (int)$price;
         $taxAmount = (int)$taxAmount;
 

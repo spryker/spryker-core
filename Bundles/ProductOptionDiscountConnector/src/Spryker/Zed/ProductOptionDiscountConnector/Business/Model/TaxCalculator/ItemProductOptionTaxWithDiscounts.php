@@ -64,15 +64,20 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
             $unitOptionTaxTotalAmount = $this->getProductOptionWithDiscountsUnitTotalTaxAmount($itemTransfer);
             $sumOptionTaxTotalAmount = $this->getProductOptionWithDiscountsSumTotalTaxAmount($itemTransfer);
 
-            $itemUnitAmount = $this->calculateTaxAmount(
-                $itemTransfer->getUnitGrossPriceWithDiscounts(),
-                $itemTransfer->getTaxRate()
-            );
+            $itemUnitAmount = 0;
+            $itemSumTaxAmount = 0;
 
-            $itemSumTaxAmount = $this->calculateTaxAmount(
-                $itemTransfer->getSumGrossPriceWithDiscounts(),
-                $itemTransfer->getTaxRate()
-            );
+            if ($itemTransfer->getTaxRate()) {
+                $itemUnitAmount = $this->calculateTaxAmount(
+                    $itemTransfer->getUnitGrossPriceWithDiscounts(),
+                    $itemTransfer->getTaxRate()
+                );
+
+                $itemSumTaxAmount = $this->calculateTaxAmount(
+                    $itemTransfer->getSumGrossPriceWithDiscounts(),
+                    $itemTransfer->getTaxRate()
+                );
+            }
 
             $itemTransfer->setUnitTaxAmountWithProductOptionAndDiscountAmounts($itemUnitAmount + $unitOptionTaxTotalAmount);
             $itemTransfer->setSumTaxAmountWithProductOptionAndDiscountAmounts($itemSumTaxAmount + $sumOptionTaxTotalAmount);
@@ -89,6 +94,11 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
     {
         $unitOptionTaxTotalAmount = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+
+            $productOptionTransfer->setUnitTaxAmountWithDiscounts(0);
+            if (!$productOptionTransfer->getTaxRate()) {
+                continue;
+            }
 
             $unitOptionTaxAmount = $this->calculateTaxAmount(
                 $productOptionTransfer->getUnitGrossPriceWithDiscounts(),
@@ -112,6 +122,11 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
     {
         $sumOptionTaxTotalAmount = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+
+            $productOptionTransfer->setSumTaxAmountWithDiscounts(0);
+            if (!$productOptionTransfer->getTaxRate()) {
+                continue;
+            }
 
             $sumOptionTaxAmount = $this->calculateTaxAmount(
                 $productOptionTransfer->getSumGrossPriceWithDiscounts(),

@@ -34,6 +34,14 @@ class ItemTaxCalculator implements CalculatorInterface
         $this->accruedTaxCalculator->resetRoundingErrorDelta();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
+
+            $itemTransfer->setUnitTaxAmount(0);
+            $itemTransfer->setSumTaxAmount(0);
+
+            if (!$itemTransfer->getTaxRate()) {
+                continue;
+            }
+
             $unitTaxAmount = $this->calculateTaxAmount(
                 $itemTransfer->getUnitGrossPrice(),
                 $itemTransfer->getTaxRate()
