@@ -92,43 +92,13 @@ class EditController extends AddController
             }
         };
 
-        $r = [];
-        foreach ($concreteProductCollection as $t) {
-            $r[] = $t->toArray(true);
-        }
-
-
-        $localizedAttributeMetadataNames = $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection);
-
-        $items = [];
-        foreach ($localizedAttributeMetadataNames as $type => $name) {
-            $items[$type] = [
-                'label' => $localizedAttributeMetadataNames[$type],
-                'isLocalized' => false,
-                'isMultiple' => false,
-                'isCustom' => true,
-            ];
-
-            if (isset($attributeCollection[$type])) {
-                $attributeTransfer = $attributeCollection[$type];
-
-                $items[$type]['isLocalized'] = (bool)$attributeTransfer->getIsLocalized();
-                $items[$type]['isMultiple'] = (bool)$attributeTransfer->getIsMultiple();
-                $items[$type]['isCustom'] = false;
-            }
-        }
-
-        //sd($items, $localizedAttributeMetadataNames);
-
-        //sd($items);
-
         return $this->viewResponse([
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
             'matrix' => [],
-            'concretes' => $r,
-            'attributeGroupCollection' => $items,
+            'concretes' => $this->someToView($idProductAbstract, $concreteProductCollection),
+            'attributeGroupCollection' => $this->someViewMetadata($attributeMetadataCollection, $attributeCollection),
             'attributeValueCollection' => $attributeCollection,
         ]);
     }

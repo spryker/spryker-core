@@ -60,7 +60,7 @@ class AddController extends AbstractController
                 $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
 
                 $idProductAbstract = $this->getFactory()
-                    ->getProductManagementFacade()
+                    ->getProductManagementFacade()1
                     ->addProduct($productAbstractTransfer, $concreteProductCollection);
 
                 $this->addSuccessMessage('The product was added successfully.');
@@ -80,7 +80,8 @@ class AddController extends AbstractController
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'matrix' => [],
             'concretes' => [],
-            'attributeGroupCollection' => $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection),
+            'attributeGroupCollection' => $this->someViewMetadata($attributeMetadataCollection, $attributeCollection),
+            'attributeValueCollection' => $attributeCollection,
         ]);
     }
 
@@ -301,6 +302,54 @@ class AddController extends AbstractController
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $concreteProductCollection
+     *
+     * @return array
+     */
+    protected function someToView($idProductAbstract, array $concreteProductCollection)
+    {
+        $r = [];
+        foreach ($concreteProductCollection as $t) {
+            $c = $t->toArray(true);;
+            $c['attributes'] = $this->getFacade()->getProductAttributesByAbstractProductId($idProductAbstract);
+            $r[] = $c;
+        }
+
+        return $r;
+    }
+
+    /**
+     * @param array $attributeMetadataCollection
+     * @param array $attributeCollection
+     *
+     * @return array
+     */
+    protected function someViewMetadata(array $attributeMetadataCollection, array $attributeCollection)
+    {
+        $localizedAttributeMetadataNames = $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection);
+
+        $items = [];
+        foreach ($localizedAttributeMetadataNames as $type => $name) {
+            $items[$type] = [
+                'label' => $localizedAttributeMetadataNames[$type],
+                'isLocalized' => false,
+                'isMultiple' => false,
+                'isCustom' => true,
+            ];
+
+            if (isset($attributeCollection[$type])) {
+                $attributeTransfer = $attributeCollection[$type];
+
+                $items[$type]['isLocalized'] = (bool)$attributeTransfer->getIsLocalized();
+                $items[$type]['isMultiple'] = (bool)$attributeTransfer->getIsMultiple();
+                $items[$type]['isCustom'] = false;
+            }
+        }
+
+        return $items;
     }
 
 }

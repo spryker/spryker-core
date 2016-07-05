@@ -226,9 +226,15 @@
                                     {% if product.attributes[attributeGroupKey] is defined %}
                                         {% set value = product.attributes[attributeGroupKey] %}
                                         {% if productAttributeMetadata is defined and productAttributeMetadata.isLocalized %}
-                                            <td>Localized: {{ value }}</td>
+
+                                            {% if value[currentLocale] is defined  %}
+                                                <td>({{ currentLocale }}) {{ value[currentLocale] }}</td>
+                                            {% else %}
+                                                <td>{{ dump(value) }}</td>
+                                            {% endif %}
+
                                         {% elseif productAttributeMetadata is defined and productAttributeMetadata.isMultiple %}
-                                            <td>Multiple: {{ value }}</td>
+                                            <td>Multiple: {{ dump(value) }}</td>
                                         {% else %}
                                             <td>{{ value }}</td>
                                         {% endif %}
