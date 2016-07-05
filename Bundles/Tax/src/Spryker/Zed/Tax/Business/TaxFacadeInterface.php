@@ -81,13 +81,13 @@ interface TaxFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRate
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\TaxRateTransfer
      */
-    public function createTaxRate(TaxRateTransfer $taxRate);
+    public function createTaxRate(TaxRateTransfer $taxRateTransfer);
 
     /**
      * @api
@@ -104,7 +104,7 @@ interface TaxFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSet
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -112,7 +112,7 @@ interface TaxFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    public function createTaxSet(TaxSetTransfer $taxSet);
+    public function createTaxSet(TaxSetTransfer $taxSetTransfer);
 
     /**
      * @api
@@ -130,7 +130,7 @@ interface TaxFacadeInterface
     /**
      * @api
      *
-     * @param int $taxSetId
+     * @param int $idTaxSet
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -138,13 +138,13 @@ interface TaxFacadeInterface
      *
      * @return int
      */
-    public function addTaxRateToTaxSet($taxSetId, TaxRateTransfer $taxRateTransfer);
+    public function addTaxRateToTaxSet($idTaxSet, TaxRateTransfer $taxRateTransfer);
 
     /**
      * @api
      *
-     * @param int $taxSetId
-     * @param int $taxRateId
+     * @param int $idTaxSet
+     * @param int $idTaxRate
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -152,7 +152,7 @@ interface TaxFacadeInterface
      *
      * @return int
      */
-    public function removeTaxRateFromTaxSet($taxSetId, $taxRateId);
+    public function removeTaxRateFromTaxSet($idTaxSet, $idTaxRate);
 
     /**
      * @api

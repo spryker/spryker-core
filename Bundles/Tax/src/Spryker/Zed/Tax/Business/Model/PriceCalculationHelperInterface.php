@@ -28,10 +28,11 @@ interface PriceCalculationHelperInterface
      *
      * @param int $price Price as integer (e. g 15508 for 155.08)
      * @param float $taxPercentage Tax percentage as float (e. g. 19.6)
+     * @param bool $round
      *
      * @return int
      */
-    public function getNetValueFromPrice($price, $taxPercentage);
+    public function getNetValueFromPrice($price, $taxPercentage, $round = true);
 
     /**
      * Get the real tax rate from a given gross price and given tax amount.

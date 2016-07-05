@@ -41,7 +41,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
 
         $taxAmount += static::$roundingError;
 
-        $taxAmountRounded = round($taxAmount, 4);
+        $taxAmountRounded = round($taxAmount, 2);
         static::$roundingError = $taxAmount - $taxAmountRounded;
 
         return $taxAmountRounded;

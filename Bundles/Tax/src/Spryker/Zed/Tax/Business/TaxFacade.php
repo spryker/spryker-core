@@ -19,6 +19,9 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 {
 
     /**
+     * Specification:
+     *  - Returns all persisted tax rates
+     *
      * @api
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -27,10 +30,16 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function getTaxRates()
     {
-        return $this->getFactory()->createReaderModel()->getTaxRates();
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getTaxRates();
     }
 
     /**
+     *
+     *  Specification:
+     *  - Returns persisted rate by primary id
+     *
      * @api
      *
      * @param int $id
@@ -42,10 +51,15 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function getTaxRate($id)
     {
-        return $this->getFactory()->createReaderModel()->getTaxRate($id);
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getTaxRate($id);
     }
 
     /**
+     * Specification:
+     *  - Check if rate with given primary id exists
+     *
      * @api
      *
      * @param int $id
@@ -56,10 +70,15 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function taxRateExists($id)
     {
-        return $this->getFactory()->createReaderModel()->taxRateExists($id);
+        return $this->getFactory()
+            ->createReaderModel()
+            ->taxRateExists($id);
     }
 
     /**
+     * Specification:
+     *  - Get all tax sets
+     *
      * @api
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -68,10 +87,16 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function getTaxSets()
     {
-        return $this->getFactory()->createReaderModel()->getTaxSets();
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getTaxSets();
     }
 
     /**
+     *
+     * Specification:
+     *  - Return tax set by primary id
+     *
      * @api
      *
      * @param int $id
@@ -83,10 +108,16 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function getTaxSet($id)
     {
-        return $this->getFactory()->createReaderModel()->getTaxSet($id);
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getTaxSet($id);
     }
 
     /**
+     *
+     * Specification:
+     *  - Check if tax set exist with given primary id
+     *
      * @api
      *
      * @param int $id
@@ -97,24 +128,35 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function taxSetExists($id)
     {
-        return $this->getFactory()->createReaderModel()->taxSetExists($id);
+        return $this->getFactory()
+            ->createReaderModel()
+            ->taxSetExists($id);
     }
 
     /**
+     * Specification:
+     *  - Create new tax rate
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRate
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\TaxRateTransfer
      */
-    public function createTaxRate(TaxRateTransfer $taxRate)
+    public function createTaxRate(TaxRateTransfer $taxRateTransfer)
     {
-        return $this->getFactory()->createWriterModel()->createTaxRate($taxRate);
+        return $this->getFactory()
+            ->createWriterModel()
+            ->createTaxRate($taxRateTransfer);
     }
 
     /**
+     *
+     * Specification:
+     *  - Update existing tax rate
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
@@ -126,13 +168,19 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function updateTaxRate(TaxRateTransfer $taxRateTransfer)
     {
-        return $this->getFactory()->createWriterModel()->updateTaxRate($taxRateTransfer);
+        return $this->getFactory()
+            ->createWriterModel()
+            ->updateTaxRate($taxRateTransfer);
     }
 
     /**
+     *
+     * Specification:
+     *  - Create new tax set
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSet
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -140,12 +188,18 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    public function createTaxSet(TaxSetTransfer $taxSet)
+    public function createTaxSet(TaxSetTransfer $taxSetTransfer)
     {
-        return $this->getFactory()->createWriterModel()->createTaxSet($taxSet);
+        return $this->getFactory()
+            ->createWriterModel()
+            ->createTaxSet($taxSetTransfer);
     }
 
     /**
+     *
+     * Specification:
+     *  - Update existing tax set
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
@@ -158,13 +212,19 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function updateTaxSet(TaxSetTransfer $taxSetTransfer)
     {
-        return $this->getFactory()->createWriterModel()->updateTaxSet($taxSetTransfer);
+        return $this->getFactory()
+            ->createWriterModel()
+            ->updateTaxSet($taxSetTransfer);
     }
 
     /**
+     *
+     * Specification:
+     *  - Add existing tax rate tax set
+     *
      * @api
      *
-     * @param int $taxSetId
+     * @param int $idTaxSet
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -172,16 +232,22 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      *
      * @return int
      */
-    public function addTaxRateToTaxSet($taxSetId, TaxRateTransfer $taxRateTransfer)
+    public function addTaxRateToTaxSet($idTaxSet, TaxRateTransfer $taxRateTransfer)
     {
-        return $this->getFactory()->createWriterModel()->addTaxRateToTaxSet($taxSetId, $taxRateTransfer);
+        return $this->getFactory()
+            ->createWriterModel()
+            ->addTaxRateToTaxSet($idTaxSet, $taxRateTransfer);
     }
 
     /**
+     *
+     * Specification:
+     *  - Remove tax reate from existing set
+     *
      * @api
      *
-     * @param int $taxSetId
-     * @param int $taxRateId
+     * @param int $idTaxSet
+     * @param int $idTaxRate
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -189,12 +255,17 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      *
      * @return int
      */
-    public function removeTaxRateFromTaxSet($taxSetId, $taxRateId)
+    public function removeTaxRateFromTaxSet($idTaxSet, $idTaxRate)
     {
-        return $this->getFactory()->createWriterModel()->removeTaxRateFromTaxSet($taxSetId, $taxRateId);
+        return $this->getFactory()
+            ->createWriterModel()
+            ->removeTaxRateFromTaxSet($idTaxSet, $idTaxRate);
     }
 
     /**
+     *  Specification:
+     *  - Remove tax reate
+     *
      * @api
      *
      * @param int $id
@@ -205,10 +276,16 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function deleteTaxRate($id)
     {
-        return $this->getFactory()->createWriterModel()->deleteTaxRate($id);
+        return $this->getFactory()
+            ->createWriterModel()
+            ->deleteTaxRate($id);
     }
 
     /**
+     *
+     * Specification:
+     *  - Remove tax set with all tax rates assigned
+     *
      * @api
      *
      * @param int $id
@@ -219,10 +296,16 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function deleteTaxSet($id)
     {
-        return $this->getFactory()->createWriterModel()->deleteTaxSet($id);
+        return $this->getFactory()
+            ->createWriterModel()
+            ->deleteTaxSet($id);
     }
 
     /**
+     *
+     * Specification:
+     *  - Loop over calculable items and sum all item taxes, includes expenses
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -231,10 +314,16 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function calculateTaxTotals(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->createTaxCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createTaxCalculator()
+            ->recalculate($quoteTransfer);
     }
 
     /**
+     *
+     * Specification:
+     *  - Set tax rate for each item
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -243,10 +332,16 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function calculateProductItemTaxRate(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->createProductItemTaxRateCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createProductItemTaxRateCalculator()
+            ->recalculate($quoteTransfer);
     }
 
     /**
+     *
+     * Specification:
+     *  - Calculate tax amount for each item
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -255,10 +350,15 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function recalculateTaxItemAmount(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->createTaxItemAmountCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createTaxItemAmountCalculator()
+            ->recalculate($quoteTransfer);
     }
 
     /**
+     * Specification:
+     *  - Calculate tax amount for each expense item
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -267,11 +367,17 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function recalculateExpenseTaxAmount(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->createExpenseTaxCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()
+            ->createExpenseTaxCalculator()
+            ->recalculate($quoteTransfer);
     }
 
 
     /**
+     * Specification:
+     *  - Calculate tax amount from given price and rate
+     *  - Value is not rounded
+     *
      * @api
      *
      * @param int $grossPrice
@@ -281,30 +387,49 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
     {
-        return $this->getFactory()->createPriceCalculationHelper()->getTaxValueFromPrice($grossPrice, $taxRate);
+        return $this->getFactory()
+            ->createPriceCalculationHelper()
+            ->getTaxValueFromPrice($grossPrice, $taxRate, false);
     }
 
     /**
+     * Specification:
+     *  - Return default country used when setting rate
+     *  - Value is read from config
+     *
      * @api
      *
      * @return string
      */
     public function getDefaultTaxCountry()
     {
-        return $this->getFactory()->createTaxDefault()->getDefaultCountry();
+        return $this->getFactory()
+            ->createTaxDefault()
+            ->getDefaultCountry();
     }
 
     /**
+     * Specification:
+     *  - Return default tax rate used when setting rate
+     *  - Value is read from config
+     *
      * @api
      *
      * @return float
      */
     public function getDefaultTaxRate()
     {
-        return $this->getFactory()->createTaxDefault()->getDefaultTaxRate();
+        return $this->getFactory()
+            ->createTaxDefault()
+            ->getDefaultTaxRate();
     }
 
     /**
+     *
+     * Specification:
+     *  - Calculate tax amount from given price and rate
+     *  - Share rounding error between calls to this method.
+     *
      * @api
      *
      * @param int $grossPrice
@@ -314,7 +439,9 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate)
     {
-        return $this->getFactory()->createAccruedTaxCalculator()->getTaxValueFromPrice($grossPrice, $taxRate);
+        return $this->getFactory()
+            ->createAccruedTaxCalculator()
+            ->getTaxValueFromPrice($grossPrice, $taxRate);
     }
 
 }
