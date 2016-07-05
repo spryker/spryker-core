@@ -60,24 +60,25 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $attributeValueCollection = $this->convertSelectedAttributeValuesToFormValues($attributes);
 
         $values = [];
+        $metadata = [];
         foreach ($attributeValueCollection as $type => $data) {
             $values[$type] = [
                 ProductFormAttributeValues::FIELD_VALUE => $data[ProductFormAttributeValues::FIELD_VALUE],
                 ProductFormAttributeValues::FIELD_NAME => (bool)$data['product_specific'],
             ];
+
+            $metadata[$type] = [
+                ProductFormAttributeValues::FIELD_VALUE => [1],
+                ProductFormAttributeValues::FIELD_NAME => (bool)$data['product_specific'],
+            ];
         }
 
-        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $attributeMetadataCollection;
-/*
-        $formData[ProductFormAdd::ATTRIBUTE_VALUES] = [
-            'battery' => [
-                'value' => [],
-                'name' => true,
-            ],
-        ];*/
+        //$metadata = $values;
 
-
+        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $metadata;
         $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $values;
+
+        //sd($formData);
 
         return $formData;
     }

@@ -158,10 +158,9 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTE_METADATA, 'collection', [
-                'label' => 'Attributes',
-                'type' => new ProductFormAttributeMetadata(
-                    $options[ProductFormAttributeMetadata::OPTION_LABELS],
-                    $options[ProductFormAttributeMetadata::OPTION_VALUES],
+                'label' => 'Attribute Metadata',
+                'type' => new ProductFormAttributeValues(
+                    $options[ProductFormAttributeValues::OPTION_VALUES],
                     self::VALIDATION_GROUP_ATTRIBUTE_METADATA
                 ),
                 'constraints' => [new Callback([
@@ -197,10 +196,9 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTE_VALUES, 'collection', [
-                'label' => 'Attributes',
+                'label' => 'Attribute Values',
                 'type' => new ProductFormAttributeValues(
-                    $options[ProductFormAttributeMetadata::OPTION_LABELS],
-                    $options[ProductFormAttributeMetadata::OPTION_VALUES],
+                    $options[ProductFormAttributeValues::OPTION_VALUES],
                     self::VALIDATION_GROUP_ATTRIBUTE_VALUES
                 ),
                 'constraints' => [new Callback([

@@ -22,13 +22,8 @@ class ProductFormAttributeValues extends AbstractType
     const OPTION_LABELS = 'option_labels';
     const OPTION_VALUES = 'option_values';
     const LABEL = 'label';
-    const MULTIPLE = 'multi';
+    const MULTIPLE = 'multiple';
     const CUSTOM = 'custom';
-
-    /**
-     * @var array
-     */
-    protected $attributeLabels;
 
     /**
      * @var array
@@ -41,13 +36,11 @@ class ProductFormAttributeValues extends AbstractType
     protected $validationGroup;
 
     /**
-     * @param array $attributeLabels
      * @param array $attributeValues
      * @param array $validationGroup
      */
-    public function __construct(array $attributeLabels, array $attributeValues, $validationGroup)
+    public function __construct(array $attributeValues, $validationGroup)
     {
-        $this->attributeLabels = $attributeLabels;
         $this->attributeValues = $attributeValues;
         $this->validationGroup = $validationGroup;
     }
@@ -101,9 +94,9 @@ class ProductFormAttributeValues extends AbstractType
         $label = $name;
         $isDisabled = true;
 
-        if (isset($this->attributeLabels[$name])) {
-            $label = $this->attributeLabels[$name][self::LABEL];
-            $isDisabled = $this->attributeLabels[$name][self::CUSTOM] === true;
+        if (isset($this->attributeValues[$name])) {
+            $label = $this->attributeValues[$name][self::LABEL];
+            $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
         }
 
         $builder
@@ -123,16 +116,9 @@ class ProductFormAttributeValues extends AbstractType
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
-        $label = $name;
-        $isDisabled = true;
-        $isMultiple = true;
-
-
-        if (isset($this->attributeLabels[$name])) {
-            $label = $this->attributeLabels[$name][self::LABEL];
-            $isMultiple = $this->attributeLabels[$name][self::MULTIPLE];
-            $isDisabled = $this->attributeLabels[$name][self::CUSTOM] === true;
-        }
+        $label = $this->attributeValues[$name][self::LABEL];
+        $isMultiple = $this->attributeValues[$name][self::MULTIPLE];
+        $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
 
         $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [ //TODO type depends on DB settings
             'disabled' => $isDisabled,

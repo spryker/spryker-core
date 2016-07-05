@@ -21,6 +21,13 @@
     {{ backActionButton('/product-management', 'List Products' | trans) }}
 {% endblock %}
 
+{% block checkbox_widget %}
+    {% spaceless %}
+        <label for="{{ id }}">{{ label|trans }}</label>&nbsp;<input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    {% endspaceless %}
+{% endblock checkbox_widget %}
+
+
 {% form_theme form _self %}
 
 {% block content %}
@@ -104,15 +111,23 @@
                 <div class="well">
                     <div class="row">
                             {% if form.attribute_metadata is defined and form.attribute_metadata|length > 0 %}
-                            {% set columns = 4 %}
-                            {% for batchResults in form.attribute_metadata|batch(form.attribute_metadata|length / columns) %}
-                                {% for aValue in batchResults %}
-                                    <div class="col-sm-3">
-                                        {{ form_label(aValue.value) }}
-                                        {{ form_row(aValue.value) }}
-                                    </div>
+                                {% set columns = 3 %}
+                                {% for batchResults in form.attribute_metadata|batch(form.attribute_metadata|length / columns) %}
+                                    {% for type,aValue in batchResults %}
+                                        <div class="col-md-4 col-sm-6 col-lg-4">
+                                            <div class="row vertical-align">
+                                                <div class="col-md-6 text-right vertical-align">
+                                                    {{ form_errors(aValue.name) }}
+                                                    {{ form_row(aValue.name) }}
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{ form_errors(aValue.value) }}
+                                                    {{ form_row(aValue.value) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 {% endfor %}
-                            {% endfor %}
                             {% else %}
                                 No attribute metadata was defined. Update metadata attributes first.
                             {% endif %}
@@ -156,15 +171,20 @@
                                 <div class="well">
                                     <div class="row">
                                     {% if form.attribute_values is defined and form.attribute_values|length > 0 %}
-                                        {% set columns = 4 %}
+                                        {% set columns = 3 %}
                                         {% for batchResults in form.attribute_values|batch(form.attribute_values|length / columns) %}
                                             {% for type,aValue in batchResults %}
-                                                <div class="col-sm-3">
-                                                    {{ form_errors(aValue.name) }}
-                                                    {{ form_row(aValue.name) }}
-
-                                                    {{ form_errors(aValue.value) }}
-                                                    {{ form_row(aValue.value) }}
+                                                <div class="col-md-4 col-sm-6 col-lg-4">
+                                                    <div class="row vertical-align">
+                                                        <div class="col-md-6 text-right vertical-align">
+                                                            {{ form_errors(aValue.name) }}
+                                                            {{ form_row(aValue.name) }}
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            {{ form_errors(aValue.value) }}
+                                                            {{ form_row(aValue.value) }}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             {% endfor %}
                                         {% endfor %}
@@ -182,19 +202,17 @@
             <div class="panel-body">
                 <div class="table-responsive">
                     <table
-                            id="productMatrixTable"
-                            class="table table-striped table-bordered table-hover gui-table-data"
-                            data-page-size="4"
-                            data-order='[["0", "asc"]]'
-                            data-column-defs='[{ "targets": "no-sort", "orderable": false }]'
-                            data-state-save="false"
+                        id="productMatrixTable"
+                        class="table table-striped table-bordered table-hover gui-table-data"
+                        data-page-size="4"
+                        data-order='[["0", "asc"]]'
+                        data-column-defs='[{ "targets": "no-sort", "orderable": false }]'
+                        data-state-save="false"
                     >
                         <thead>
                         <tr>
                             <th>Sku</th>
-                            {% set break1 = false %}
                             {% for attributeGroupKey,attributeGroup in attributeGroupCollection %}
-                                {% set break1 = true %}
                                 <th>{{ attributeGroup.label }}</th>
                             {% endfor %}
                             <th class="center">Price</th>
@@ -205,7 +223,9 @@
                         <tbody>
                         {% for product in concretes %}
                             <tr class="gradeX">
+                                {# --------------------------------------- SKU --------------------------------------- #}
                                 <td>{{ product.sku }}</td>
+                                {# --------------------------------------- ATTRIBUTES --------------------------------------- #}
                                 {% for attributeGroupKey,attributeGroup in attributeGroupCollection %}
                                     {% if attributeValueCollection[attributeGroupKey] is defined %}
                                         {% set productAttributeMetadata = attributeValueCollection[attributeGroupKey] %}
@@ -231,11 +251,15 @@
                                         <td>-</td>
                                     {% endif %}
                                 {% endfor %}
+
+                                {# --------------------------------------- PRICE --------------------------------------- #}
                                 {% if product.price is defined and product.price.price is defined %}
                                     <td class="center">{{ product.price.price|number_format }}</td>
                                 {% else %}
                                     <td>-</td>
                                 {% endif %}
+
+                                {# --------------------------------------- STOCK --------------------------------------- #}
                                 {% if product.stock > 0 %}
                                     <td class="center">{{ product.stock }}</td>
                                 {% else %}
@@ -248,13 +272,8 @@
                         <tfoot>
                         <tr>
                             <th>Sku</th>
-                            {% set break1 = false %}
-                            {% set columnCount = attributeGroupCollection|length %}
-                            {% for product in concretes if not break1 %}
-                                {% for attributeGroupKey,attributeGroup in attributeGroupCollection %}
-                                    {% set break1 = true %}
-                                    <th>{{ attributeGroup.label }}</th>
-                                {% endfor %}
+                            {% for attributeGroupKey,attributeGroup in attributeGroupCollection %}
+                                <th>{{ attributeGroup.label }}</th>
                             {% endfor %}
                             <th class="center">Price</th>
                             <th class="center">Stock</th>

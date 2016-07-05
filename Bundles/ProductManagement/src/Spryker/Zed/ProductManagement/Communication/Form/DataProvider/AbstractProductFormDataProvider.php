@@ -261,21 +261,23 @@ class AbstractProductFormDataProvider
     {
         $values = [];
         foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
-            $isDefined = !array_key_exists($type, $this->attributeTransferCollection);
+            $isCustom = !array_key_exists($type, $this->attributeTransferCollection);
             $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
             $isMulti = isset($productAttributes[$type]) && is_array($productAttributes[$type]);
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
+            $isLocalized = false;
 
-            if ($isMulti && $value) {
-                $value = !empty($value);
+            if (array_key_exists($type, $this->attributeTransferCollection)) {
+                $isLocalized = $this->attributeTransferCollection[$type]->getIsLocalized();
             }
 
             $values[$type] = [
                 'value' => [$value],
                 'product_specific' => $isProductSpecificAttribute,
-                'custom' => $isDefined,
+                'custom' => $isCustom,
                 'label' => $this->getLocalizedAttributeMetadataKey($type),
-                'multi' => $isMulti
+                'multiple' => $isMulti,
+                'localized' => $isLocalized
             ];
 
             //append product custom attributes
@@ -287,7 +289,8 @@ class AbstractProductFormDataProvider
                         'product_specific' => true,
                         'custom' => true,
                         'label' => $this->getLocalizedAttributeMetadataKey($key),
-                        'multi' => $isMulti
+                        'multiple' => $isMulti,
+                        'localized' => false
                     ];
                 }
             }
@@ -305,10 +308,15 @@ class AbstractProductFormDataProvider
     {
         $values = [];
         foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
-            $isDefined = !array_key_exists($type, $this->attributeTransferCollection);
+            $isCustom = !array_key_exists($type, $this->attributeTransferCollection);
             $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
             $isMulti = isset($productAttributes[$type]) && is_array($productAttributes[$type]);
             $value = isset($productAttributes[$type]) ? true : false;
+            $isLocalized = false;
+
+            if (array_key_exists($type, $this->attributeTransferCollection)) {
+                $isLocalized = $this->attributeTransferCollection[$type]->getIsLocalized();
+            }
 
             if ($isMulti && $value) {
                 $value = !empty($value);
@@ -317,9 +325,10 @@ class AbstractProductFormDataProvider
             $values[$type] = [
                 'value' => $value,
                 'product_specific' => $isProductSpecificAttribute,
-                'custom' => $isDefined,
+                'custom' => $isCustom,
                 'label' => $this->getLocalizedAttributeMetadataKey($type),
-                'multi' => $isMulti
+                'multiple' => $isMulti,
+                'localized' => $isLocalized
             ];
         }
 
@@ -332,7 +341,8 @@ class AbstractProductFormDataProvider
                     'product_specific' => true,
                     'custom' => true,
                     'label' => $this->getLocalizedAttributeMetadataKey($key),
-                    'multi' => $isMulti
+                    'multiple' => $isMulti,
+                    'localized' => false
                 ];
             }
         }
