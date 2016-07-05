@@ -90,6 +90,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $commands;
 
     /**
+     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface
+     */
+    protected $finder;
+
+    /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $transitionLog
@@ -97,6 +102,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
      * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
      * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface $finder
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
@@ -105,7 +111,8 @@ class OrderStateMachine implements OrderStateMachineInterface
         TimeoutInterface $timeout,
         ReadOnlyArrayObject $activeProcesses,
         $conditions,
-        $commands
+        $commands,
+        FinderInterface $finder = null
     ) {
         $this->queryContainer = $queryContainer;
         $this->builder = $builder;
@@ -114,6 +121,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $this->activeProcesses = $activeProcesses;
         $this->setConditions($conditions);
         $this->setCommands($commands);
+        $this->finder = $finder;
     }
 
     /**
@@ -771,6 +779,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
             if ($orderItem->isModified()) {
                 $orderItem->save();
+                $this->updateProductReservationAmountBySku($orderItem->getSku());
                 $log->save($orderItem);
             }
         }
@@ -826,6 +835,24 @@ class OrderStateMachine implements OrderStateMachineInterface
             $stateName = $orderItem->getState()->getName();
             $log->addSourceState($orderItem, $stateName);
         }
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return void
+     */
+    protected function updateProductReservationAmountBySku($sku)
+    {
+        if ($this->finder === null) {
+            return;
+        }
+
+        $reservationQuantity = $this->finder->countReservedOrderItemsForSku($sku);
+        $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOneOrCreate();
+        $reservationEntity->setReservationQuantity($reservationQuantity);
+
+        $reservationEntity->save();
     }
 
 }

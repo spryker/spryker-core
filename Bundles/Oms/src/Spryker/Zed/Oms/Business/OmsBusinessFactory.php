@@ -59,7 +59,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createOrderStateMachineTimeout(),
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
-            $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS)
+            $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
+            $this->createOrderStateMachineFinder()
         );
     }
 

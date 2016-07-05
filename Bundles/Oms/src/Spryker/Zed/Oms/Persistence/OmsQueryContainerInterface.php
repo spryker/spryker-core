@@ -177,4 +177,13 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      */
     public function queryLockItemsByIdentifier($identifier);
 
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function createOmsProductReservationQuery($sku);
+
 }

@@ -312,4 +312,15 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             ->filterByIdentifier($identifier);
     }
 
+    /**
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function createOmsProductReservationQuery($sku)
+    {
+        return $this->getFactory()->createOmsProductReservationQuery()
+            ->filterBySku($sku);
+    }
+
 }
