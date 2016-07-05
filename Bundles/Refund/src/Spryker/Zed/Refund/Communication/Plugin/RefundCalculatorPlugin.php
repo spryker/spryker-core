@@ -24,7 +24,7 @@ class RefundCalculatorPlugin extends AbstractPlugin implements RefundCalculatorP
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] array $salesOrderItems
      *
-     * @return \Generated\Shared\Transfer\RefundTransfer
+     * @return void
      */
     public function calculateRefund(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems)
     {
@@ -42,8 +42,6 @@ class RefundCalculatorPlugin extends AbstractPlugin implements RefundCalculatorP
         }
 
         $this->calculateRefundableAmount($refundTransfer);
-
-        return $refundTransfer;
     }
 
     /**
@@ -72,6 +70,7 @@ class RefundCalculatorPlugin extends AbstractPlugin implements RefundCalculatorP
     {
         foreach ($refundTransfer->getItems() as $itemTransfer) {
             $refundTransfer->setAmount($refundTransfer->getAmount() + $itemTransfer->getRefundableAmount());
+            $itemTransfer->setCanceledAmount($itemTransfer->getRefundableAmount());
         }
 
         if ($refundTransfer->getExpenses()) {

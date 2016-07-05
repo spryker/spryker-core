@@ -18,7 +18,7 @@ interface RefundCalculatorPluginInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] array $salesOrderItems
      *
-     * @return \Generated\Shared\Transfer\RefundTransfer
+     * @return void
      */
     public function calculateRefund(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems);
 

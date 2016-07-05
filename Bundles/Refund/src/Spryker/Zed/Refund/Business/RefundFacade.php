@@ -44,7 +44,7 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
      *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
-     * @return \Generated\Shared\Transfer\RefundTransfer
+     * @return bool
      */
     public function saveRefund(RefundTransfer $refundTransfer)
     {

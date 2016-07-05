@@ -5,21 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Refund\Business;
+namespace Spryker\Zed\DummyPayment\Dependency\Facade;
 
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
-interface RefundFacadeInterface
+interface DummyPaymentToRefundInterface
 {
 
     /**
-     * Specification:
-     * - Calculates refund amount for given OrderTransfer and OrderItems which should be refunded.
-     * - Adds refundable amount to RefundTransfer object and returns it.
-     *
-     * @api
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
@@ -28,11 +22,6 @@ interface RefundFacadeInterface
     public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity);
 
     /**
-     * Specification:
-     * - Persists calculated Refund amount.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return bool

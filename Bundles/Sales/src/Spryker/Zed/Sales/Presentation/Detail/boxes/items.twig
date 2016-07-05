@@ -90,7 +90,7 @@
                     </td>
                 </tr>
                 {% if orderItemSplitFormCollection is defined %}
-                <tr style="display: none;" id="split_form_row_{{ orderItem.idSalesOrderItem }}">
+                <tr style="display: block;" id="split_form_row_{{ orderItem.idSalesOrderItem }}">
                     <td colspan="12">
                         <h4>{{ 'Split order items' | trans }}</h4>
                         {{ form(orderItemSplitFormCollection[orderItem.idSalesOrderItem]) }}

@@ -28,13 +28,6 @@ class TableController extends AbstractController
     }
 
     /**
-     * @return array
-     */
-    protected function getTableViewResponse()
-    {
-    }
-
-    /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()

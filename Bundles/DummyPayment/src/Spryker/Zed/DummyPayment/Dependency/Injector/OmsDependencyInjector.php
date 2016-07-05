@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\DummyPayment\Dependency\Injector;
 
+use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Command\RefundPlugin;
+use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsAuthorizedPlugin;
+use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsPayedPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
@@ -37,6 +40,8 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     protected function injectCommands(Container $container)
     {
         $container->extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
+            $commandCollection->add(new RefundPlugin(), 'DummyPayment/Refund');
+
             return $commandCollection;
         });
 
@@ -51,6 +56,9 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     protected function injectConditions(Container $container)
     {
         $container->extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
+            $conditionCollection->add(new IsAuthorizedPlugin(), 'DummyPayment/IsAuthorized');
+            $conditionCollection->add(new IsPayedPlugin(), 'DummyPayment/IsPayed');
+
             return $conditionCollection;
         });
 
