@@ -13,6 +13,12 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class FactFinderConfig extends AbstractBundleConfig
 {
 
-    
+    /**
+     * @return string
+     */
+    public function getEnv()
+    {
+        return $this->get(FactFinderConstants::ENV);
+    }
 
 }

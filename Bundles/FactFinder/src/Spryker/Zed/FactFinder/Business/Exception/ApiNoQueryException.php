@@ -5,12 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\FactFinder;
+namespace Spryker\Zed\FactFinder\Business\Exception;
 
-interface FactFinderConstants
+class ApiNoQueryException extends \Exception
 {
-
-    const PROVIDER_NAME = 'FactFinder';
-    const ENV = 'FF env';
-
 }

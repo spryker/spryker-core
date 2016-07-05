@@ -6,26 +6,20 @@
 
 namespace Spryker\Zed\FactFinder\Business\Api;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\FactFinder\Business\Api\Builder\BuilderFactory;
-use Spryker\Zed\FactFinder\Business\Api\Model\RequestModelFactory;
-
-class ApiFactory extends AbstractBusinessFactory
+class ApiFacade 
 {
 
     /**
-     * @var \Spryker\Zed\FactFinder\Business\Api\Builder\BuilderFactory
+     * @var FFConnector
      */
-    protected $builderFactory;
+    protected $ffConnector;
 
     /**
-     * ApiFactory constructor.
      *
-     * @param \Spryker\Zed\FactFinder\Business\Api\Builder\BuilderFactory $builderFactory
      */
-    public function __construct(BuilderFactory $builderFactory)
+    public function __construct(FFConnector $ffConnector)
     {
-        $this->builderFactory = $builderFactory;
+        $this->ffConnector = $ffConnector;
     }
 
     /**

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <production>
+		<debug>true</debug>
+		<connection>
+			<protocol>http</protocol> <!-- possible values: http, https -->
+			<address>demoshop.fact-finder.de</address>
+			<port>80</port>
+			<context>FACT-Finder</context>
+			<channel>fahrrad-de</channel>
+			<language>de</language>
+			<authentication>
+				<type>advanced</type> <!-- possible values: http, simple, advanced -->
+				<username>user</username>
+				<password>userpw</password>
+				<prefix>FACT-FINDER</prefix>
+				<postfix>FACT-FINDER</postfix>
+			</authentication>
+			<!-- all timeouts given in seconds -->
+			<timeouts>
+				<defaultConnectTimeout>2</defaultConnectTimeout>
+				<defaultTimeout>4</defaultTimeout>
+				<suggestConnectTimeout>2</suggestConnectTimeout>
+				<suggestTimeout>2</suggestTimeout>
+				<trackingConnectTimeout>1</trackingConnectTimeout>
+				<trackingTimeout>2</trackingTimeout>
+				<importConnectTimeout>10</importConnectTimeout>
+				<importTimeout>360</importTimeout>
+			</timeouts>
+		</connection>
+
+		<parameters>
+			<!-- parameter settings for the server -->
+			<server>
+				<ignore name="password" />
+				<ignore name="username" />
+				<ignore name="timestamp" />
+
+                <mapping from="SID" to="sid" />
+                <mapping from="session" to="sid" />
+                <mapping from="PHPSESSID" to="sid" />
+			</server>
+
+			<!-- parameter settings for the client -->
+			<client>
+				<ignore name="xml" />
+				<ignore name="format" />
+				<ignore name="channel" />
+				<ignore name="password" />
+				<ignore name="username" />
+				<ignore name="timestamp" />
+			</client>
+		</parameters>
+
+		<encoding>
+			<pageContent>UTF-8</pageContent>
+			<clientUrl>UTF-8</clientUrl>
+		</encoding>
+	</production>
+</configuration>
