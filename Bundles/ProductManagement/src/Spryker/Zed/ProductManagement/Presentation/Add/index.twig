@@ -103,25 +103,19 @@
                 <p>Select attributes that will define your product.</p>
                 <div class="well">
                     <div class="row">
-                        <div class="col-lg-12">
                             {% if form.attribute_metadata is defined and form.attribute_metadata|length > 0 %}
-                            {% set columns = 3 %}
+                            {% set columns = 4 %}
                             {% for batchResults in form.attribute_metadata|batch(form.attribute_metadata|length / columns) %}
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        {% for aValue in batchResults %}
-                                            <div class="col-sm-3">
-                                                {{ form_label(aValue.value) }}
-                                                {{ form_row(aValue.value) }}
-                                            </div>
-                                        {% endfor %}
+                                {% for aValue in batchResults %}
+                                    <div class="col-sm-3">
+                                        {{ form_label(aValue.value) }}
+                                        {{ form_row(aValue.value) }}
                                     </div>
-                                </div>
+                                {% endfor %}
                             {% endfor %}
                             {% else %}
                                 No attribute metadata was defined. Update metadata attributes first.
                             {% endif %}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -161,28 +155,22 @@
                                 <p>Select attributes and values that define the differences between your variants.</p>
                                 <div class="well">
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            {% if form.attribute_values is defined and form.attribute_values|length > 0 %}
-                                                {% set columns = 3 %}
-                                                {% for batchResults in form.attribute_values|batch(form.attribute_values|length / columns) %}
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            {% for type,aValue in batchResults %}
-                                                                <div class="col-sm-3">
-                                                                    {{ form_errors(aValue.name) }}
-                                                                    {{ form_row(aValue.name) }}
+                                    {% if form.attribute_values is defined and form.attribute_values|length > 0 %}
+                                        {% set columns = 4 %}
+                                        {% for batchResults in form.attribute_values|batch(form.attribute_values|length / columns) %}
+                                            {% for type,aValue in batchResults %}
+                                                <div class="col-sm-3">
+                                                    {{ form_errors(aValue.name) }}
+                                                    {{ form_row(aValue.name) }}
 
-                                                                    {{ form_errors(aValue.value) }}
-                                                                    {{ form_row(aValue.value) }}
-                                                                </div>
-                                                            {% endfor %}
-                                                        </div>
-                                                    </div>
-                                                {% endfor %}
-                                            {% else %}
-                                                No attributes found in this product.
-                                            {% endif %}
-                                        </div>
+                                                    {{ form_errors(aValue.value) }}
+                                                    {{ form_row(aValue.value) }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% else %}
+                                        No attributes found in this product.
+                                    {% endif %}
                                     </div>
                                 </div>
                             </div>

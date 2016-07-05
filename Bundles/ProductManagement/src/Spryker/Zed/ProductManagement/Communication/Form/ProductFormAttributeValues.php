@@ -99,10 +99,17 @@ class ProductFormAttributeValues extends AbstractType
     {
         $name = $builder->getName();
         $label = $name;
+        $isDisabled = true;
+
+        if (isset($this->attributeLabels[$name])) {
+            $label = $this->attributeLabels[$name][self::LABEL];
+            $isDisabled = $this->attributeLabels[$name][self::CUSTOM] === true;
+        }
 
         $builder
             ->add(self::FIELD_NAME, 'checkbox', [
-                'label' => $label
+                'label' => $label,
+                'disabled' => $isDisabled
             ]);
 
         return $this;
@@ -128,6 +135,7 @@ class ProductFormAttributeValues extends AbstractType
         }
 
         $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [ //TODO type depends on DB settings
+            'disabled' => $isDisabled,
             'choices' => [],//TODO depends on DB settings
             'multiple' => true, //TODO depends on DB settings
             'label' => false,
