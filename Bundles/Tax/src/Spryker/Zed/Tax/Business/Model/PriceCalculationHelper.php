@@ -24,11 +24,12 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getTaxValueFromPrice($price, $taxPercentage, $round = true)
     {
+        $price = (int)$price;
+
         if ($price < 0) {
             throw new CalculationException('Invalid price value given.');
         }
 
-        $price = (int)$price;
         $amount = ($price * $taxPercentage) / ($taxPercentage + 100);
         if (!$round) {
             return $amount;
@@ -49,11 +50,12 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getNetValueFromPrice($price, $taxPercentage, $round = true)
     {
+        $price = (int)$price;
+
         if ($price < 0) {
             throw new CalculationException('Invalid price value given.');
         }
 
-        $price = (int)$price;
         $amount = ($price * 100) / ($taxPercentage + 100);
 
         if (!$round) {
@@ -67,24 +69,24 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      * Get the real tax rate from a given gross price and given tax amount.
      *
      * @param int $price Price as integer (e.g. 15508 for 155.08)
-     * @param int $taxAmount Tax amount (e.g. 196)
+     * @param float $taxAmount Tax amount (e.g. 196)
      *
      * @return float
      */
     public function getTaxRateFromPrice($price, $taxAmount)
     {
+        $price = (int)$price;
+
         if ($price < 0 || $taxAmount <= 0) {
             throw new CalculationException('Invalid price or tax amount value given.');
         }
 
-        $price = (int)$price;
-        $taxAmount = (int)$taxAmount;
-
-        if ($taxAmount === 0) {
-            return 0;
+        $netPrice = $price - $taxAmount;
+        if ($netPrice <= 0) {
+            throw new CalculationException('Division by zero.');
         }
 
-        return $taxAmount / ($price - $taxAmount);
+        return $taxAmount / $netPrice;
     }
 
 }
