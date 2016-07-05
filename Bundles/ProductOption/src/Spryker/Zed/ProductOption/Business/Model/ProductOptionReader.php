@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductOptionsNameValueTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionTypeTranslationTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTranslationTableMap;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ArrayCollection;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
@@ -89,7 +88,6 @@ class ProductOptionReader implements ProductOptionReaderInterface
         } else {
             $productOptionTransfer->setUnitGrossPrice((int)$price);
         }
-
 
         return $productOptionTransfer;
     }

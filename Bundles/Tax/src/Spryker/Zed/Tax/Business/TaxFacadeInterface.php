@@ -220,6 +220,8 @@ interface TaxFacadeInterface
     public function getDefaultTaxRate();
 
     /**
+     * @api
+     *
      * @return void
      */
     public function resetAccruedTaxCalculatorRoundingErrorDelta();

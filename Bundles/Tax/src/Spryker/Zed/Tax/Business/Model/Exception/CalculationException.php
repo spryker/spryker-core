@@ -8,5 +8,4 @@ namespace Spryker\Zed\Tax\Business\Model\Exception;
 
 class CalculationException extends \RuntimeException
 {
-
 }
