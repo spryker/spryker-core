@@ -113,10 +113,7 @@ class AbstractProductFormDataProvider
             ProductFormAttributeMetadata::OPTION_VALUES => $this->convertSelectedAttributeValuesToFormValues($attributes),
         ];
 
-/*        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = [
-            ProductFormAttributeValues::OPTION_LABELS => $this->convertAttributeMetadataToOptionValues($attributes),
-            ProductFormAttributeValues::OPTION_VALUES => $this->convertSelectedAttributeValuesToFormValues($attributes),
-        ];*/
+        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $formOptions[ProductFormAdd::ATTRIBUTE_METADATA];
 
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
         $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();

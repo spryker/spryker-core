@@ -169,10 +169,10 @@
                                                         <div class="col-sm-12">
                                                             {% for type,aValue in batchResults %}
                                                                 <div class="col-sm-3">
+                                                                    {{ form_errors(aValue.name) }}
                                                                     {{ form_row(aValue.name) }}
-                                                                    {{ form_label(aValue.name) }}
 
-                                                                    {{ form_label(aValue.value) }}
+                                                                    {{ form_errors(aValue.value) }}
                                                                     {{ form_row(aValue.value) }}
                                                                 </div>
                                                             {% endfor %}

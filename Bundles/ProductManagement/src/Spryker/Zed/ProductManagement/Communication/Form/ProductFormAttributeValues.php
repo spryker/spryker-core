@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,12 +16,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ProductFormAttributeValues extends AbstractType
 {
 
+    const FIELD_NAME = 'name';
     const FIELD_VALUE = 'value';
 
     const OPTION_LABELS = 'option_labels';
     const OPTION_VALUES = 'option_values';
     const LABEL = 'label';
-    const DISABLED = 'disabled';
+    const MULTIPLE = 'multi';
+    const CUSTOM = 'custom';
 
     /**
      * @var array
@@ -42,12 +45,11 @@ class ProductFormAttributeValues extends AbstractType
      * @param array $attributeValues
      * @param array $validationGroup
      */
-    public function __construct(array $attributeLabels, array $attributeValues, $validationGroup, $idLocale)
+    public function __construct(array $attributeLabels, array $attributeValues, $validationGroup)
     {
         $this->attributeLabels = $attributeLabels;
         $this->attributeValues = $attributeValues;
         $this->validationGroup = $validationGroup;
-        $this->idLocale = $idLocale;
     }
 
     /**
@@ -55,7 +57,7 @@ class ProductFormAttributeValues extends AbstractType
      */
     public function getName()
     {
-        return 'ProductFormAttributeMetadata';
+        return 'ProductFormAttributeValues';
     }
 
     /**
@@ -83,7 +85,27 @@ class ProductFormAttributeValues extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
+            ->addCheckboxNameField($builder, $options)
             ->addValueField($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addCheckboxNameField(FormBuilderInterface $builder, array $options)
+    {
+        $name = $builder->getName();
+        $label = $name;
+
+        $builder
+            ->add(self::FIELD_NAME, 'checkbox', [
+                'label' => $label
+            ]);
+
+        return $this;
     }
 
     /**
@@ -93,12 +115,28 @@ class ProductFormAttributeValues extends AbstractType
      */
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
-        sd($this->attributeValues);
         $name = $builder->getName();
-        $builder->add(self::FIELD_VALUE, new CheckboxType(), [
-            'value' => $this->attributeValues[$name][self::FIELD_VALUE],
-            'label' => $this->attributeValues[$name][self::LABEL],
-            'disabled' => $this->attributeValues[$name][self::DISABLED]
+        $label = $name;
+        $isDisabled = true;
+        $isMultiple = true;
+
+
+        if (isset($this->attributeLabels[$name])) {
+            $label = $this->attributeLabels[$name][self::LABEL];
+            $isMultiple = $this->attributeLabels[$name][self::MULTIPLE];
+            $isDisabled = $this->attributeLabels[$name][self::CUSTOM] === true;
+        }
+
+        $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [ //TODO type depends on DB settings
+            'choices' => [],//TODO depends on DB settings
+            'multiple' => true, //TODO depends on DB settings
+            'label' => false,
+            /*            'constraints' => [
+                            new AttributeFieldNotBlank([
+                                'attributeFieldValue' => self::FIELD_VALUE,
+                                'attributeCheckboxFieldName' => self::FIELD_NAME,
+                            ]),
+                        ],*/
         ]);
 
         return $this;

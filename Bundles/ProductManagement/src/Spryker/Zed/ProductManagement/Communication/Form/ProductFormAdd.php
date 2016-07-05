@@ -56,7 +56,7 @@ class ProductFormAdd extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::ATTRIBUTE_METADATA);
-        //$resolver->setRequired(self::ATTRIBUTE_VALUES);
+        $resolver->setRequired(self::ATTRIBUTE_VALUES);
         $resolver->setRequired(self::TAX_SET);
         $resolver->setRequired(self::ID_LOCALE);
 
@@ -84,14 +84,11 @@ class ProductFormAdd extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $valueOptions = $options[self::ATTRIBUTE_VALUES];
-        //$valueOptions[self::ID_LOCALE] = $options[self::ATTRIBUTE_VALUES];
-
         $this
             ->addSkuField($builder)
             ->addGeneralForm($builder)
             ->addAttributeMetadataForm($builder, $options[self::ATTRIBUTE_METADATA])
-            //->addAttributeValuesForm($builder, $valueOptions)
+            ->addAttributeValuesForm($builder, $options[self::ATTRIBUTE_VALUES])
             ->addPriceForm($builder, $options[self::TAX_SET])
             ->addSeoForm($builder, $options);
     }
@@ -200,12 +197,11 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTE_VALUES, 'collection', [
-                'label' => 'Attribute Values',
+                'label' => 'Attributes',
                 'type' => new ProductFormAttributeValues(
-                    $options[ProductFormAttributeValues::OPTION_LABELS],
-                    $options[ProductFormAttributeValues::OPTION_VALUES],
-                    self::VALIDATION_GROUP_ATTRIBUTE_VALUES,
-                    $options[self::ID_LOCALE]
+                    $options[ProductFormAttributeMetadata::OPTION_LABELS],
+                    $options[ProductFormAttributeMetadata::OPTION_VALUES],
+                    self::VALIDATION_GROUP_ATTRIBUTE_VALUES
                 ),
                 'constraints' => [new Callback([
                     'methods' => [

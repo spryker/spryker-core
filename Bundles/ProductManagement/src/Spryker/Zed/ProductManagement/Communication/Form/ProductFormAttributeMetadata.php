@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ProductFormAttributeMetadata extends AbstractType
 {
 
+    const FIELD_NAME = 'name';
     const FIELD_VALUE = 'value';
 
     const OPTION_LABELS = 'option_labels';

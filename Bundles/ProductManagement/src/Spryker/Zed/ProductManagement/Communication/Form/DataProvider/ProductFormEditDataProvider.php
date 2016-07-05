@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeValues;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 
@@ -58,17 +59,26 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $attributeMetadataCollection = $this->convertSelectedAttributeMetadataToFormValues($attributes);
         $attributeValueCollection = $this->convertSelectedAttributeValuesToFormValues($attributes);
 
-
-        $a = [];
-        foreach ($attributeMetadataCollection as $type => $data) {
-            $a[$type]['value'] = $data['value'];
+        $values = [];
+        foreach ($attributeValueCollection as $type => $data) {
+            $values[$type] = [
+                ProductFormAttributeValues::FIELD_VALUE => $data[ProductFormAttributeValues::FIELD_VALUE],
+                ProductFormAttributeValues::FIELD_NAME => (bool)$data['product_specific'],
+            ];
         }
 
-        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $a;
-        $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $attributeValueCollection;
+        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $attributeMetadataCollection;
+/*
+        $formData[ProductFormAdd::ATTRIBUTE_VALUES] = [
+            'battery' => [
+                'value' => [],
+                'name' => true,
+            ],
+        ];*/
 
-        //sd($formData);
-        
+
+        $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $values;
+
         return $formData;
     }
 
