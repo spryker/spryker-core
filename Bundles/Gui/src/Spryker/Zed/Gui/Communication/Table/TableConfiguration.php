@@ -34,6 +34,8 @@ class TableConfiguration
     protected $pageLength = 0;
 
     /**
+     * If null it will use all fields defined in $header.
+     *
      * @var array|null
      */
     protected $searchableFields = null;
