@@ -27,20 +27,6 @@ class RefundCalculationPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testCalculateRefundShouldReturnRefundTransfer()
-    {
-        $refundCalculationPlugin = new RefundCalculatorPlugin;
-        $orderTransfer = new OrderTransfer();
-        $salesOrderItems = [];
-
-        $refundTransfer = $refundCalculationPlugin->calculateRefund(new RefundTransfer(), $orderTransfer, $salesOrderItems);
-
-        $this->assertInstanceOf(RefundTransfer::class, $refundTransfer);
-    }
-
-    /**
-     * @return void
-     */
     public function testCalculateRefundForOrderWithoutAlreadyRefundedItems()
     {
         $refundCalculationPlugin = new RefundCalculatorPlugin;

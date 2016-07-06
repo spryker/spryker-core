@@ -51,8 +51,13 @@
                     {#</td>#}
                     <td>{{ orderItem.Sku }}</td>
                     <td>{{ orderItem.unitGrossPriceWithProductOptions | currency }}</td>
-                    {#<td><a href="#" class="item-split" data-id="{{ orderItem.idSalesOrderItem }}">{{ orderItem.quantity }}</a></td>#}
-                    <td>{{ orderItem.quantity }}</td>{# remove this line and uncomment the above one #}
+
+                    {% if orderItem.quantity > 1 %}
+                        <td><a href="#" class="item-split" data-id="{{ orderItem.idSalesOrderItem }}">{{ orderItem.quantity }}</a></td>
+                    {% else %}
+                        <td>{{ orderItem.quantity }}</td>
+                    {% endif %}
+
                     <td>{{ orderItem.sumGrossPriceWithProductOptions | currency }}</td>
                     <td>{{ orderItem.sumTaxAmountWithProductOptionAndDiscountAmounts | currency }}</td>
                     <td>{{ orderItem.taxRate|default(0) }} %</td>
@@ -90,12 +95,12 @@
                     </td>
                 </tr>
                 {% if orderItemSplitFormCollection is defined %}
-                <tr style="display: block;" id="split_form_row_{{ orderItem.idSalesOrderItem }}">
-                    <td colspan="12">
-                        <h4>{{ 'Split order items' | trans }}</h4>
-                        {{ form(orderItemSplitFormCollection[orderItem.idSalesOrderItem]) }}
-                    </td>
-                </tr>
+                    <tr style="display: none;" id="split_form_row_{{ orderItem.idSalesOrderItem }}">
+                        <td colspan="12">
+                            <h4>{{ 'Split order items' | trans }}</h4>
+                            {{ form(orderItemSplitFormCollection[orderItem.idSalesOrderItem]) }}
+                        </td>
+                    </tr>
                 {% endif %}
             {% endfor %}
             </tbody>

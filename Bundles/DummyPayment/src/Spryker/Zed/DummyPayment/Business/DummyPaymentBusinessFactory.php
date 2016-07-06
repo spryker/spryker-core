@@ -8,10 +8,12 @@
 namespace Spryker\Zed\DummyPayment\Business;
 
 use Spryker\Zed\DummyPayment\Business\Model\Payment\Refund;
-use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface;
 use Spryker\Zed\DummyPayment\DummyPaymentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Spryker\Zed\DummyPayment\DummyPaymentConfig getConfig()
+ */
 class DummyPaymentBusinessFactory extends AbstractBusinessFactory
 {
 
@@ -26,7 +28,7 @@ class DummyPaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DummyPaymentToRefundInterface
+     * @return \Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface
      */
     protected function getRefundFacade()
     {

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class OrderItemSplitController extends AbstractController
 {
 
-    const SALES_ORDER_DETAIL_URL = '/sales/details?id-sales-order=%d';
+    const SALES_ORDER_DETAIL_URL = '/sales/detail?id-sales-order=%d';
     const SPLIT_SUCCESS_MESSAGE = 'Order item with "%d" was successfully split.';
 
     /**

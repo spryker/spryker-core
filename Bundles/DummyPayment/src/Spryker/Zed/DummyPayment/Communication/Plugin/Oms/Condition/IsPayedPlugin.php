@@ -13,6 +13,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 /**
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacade getFacade()
  */
 class IsPayedPlugin extends AbstractPlugin implements ConditionInterface
 {

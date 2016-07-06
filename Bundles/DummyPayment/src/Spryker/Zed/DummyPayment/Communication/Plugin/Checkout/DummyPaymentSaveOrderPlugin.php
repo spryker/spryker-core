@@ -14,6 +14,7 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterf
 
 /**
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacade getFacade()
  */
 class DummyPaymentSaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrderPluginInterface
 {

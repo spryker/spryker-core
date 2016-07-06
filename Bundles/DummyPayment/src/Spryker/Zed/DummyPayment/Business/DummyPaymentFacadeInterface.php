@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DummyPayment\Business;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface DummyPaymentFacadeInterface
 {
@@ -16,7 +15,7 @@ interface DummyPaymentFacadeInterface
     /**
      * @api
      *
-     * @param SpySalesOrderItem[] $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
      * @return mixed
