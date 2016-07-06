@@ -12,7 +12,6 @@ use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOp
 use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionGroupSaver;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -27,15 +26,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOptionGroupSaver()
     {
-       return new ProductOptionGroupSaver($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionValueSaver
-     */
-    public function createProductOptionValueSaver()
-    {
-        return new ProductOptionValueSaver();
+       return new ProductOptionGroupSaver($this->getQueryContainer(), $this->getTouchFacade());
     }
 
     /**
@@ -84,6 +75,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface
+     */
+    protected function getTouchFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_TOUCH);
     }
 
 }

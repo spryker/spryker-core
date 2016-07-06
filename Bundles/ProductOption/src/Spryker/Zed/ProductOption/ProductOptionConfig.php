@@ -11,4 +11,5 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOptionConfig extends AbstractBundleConfig
 {
+    const RESOURCE_TYPE_PRODUCT_OPTION = 'product_option';
 }

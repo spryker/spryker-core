@@ -10,7 +10,9 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class ProductOptionGroupSaver
 {
@@ -20,11 +22,20 @@ class ProductOptionGroupSaver
     protected $productOptionQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface
      */
-    public function __construct(ProductOptionQueryContainerInterface $productOptionQueryContainer)
-    {
+    protected $touchFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface $touchFacade
+     */
+    public function __construct(
+        ProductOptionQueryContainerInterface $productOptionQueryContainer,
+        ProductOptionToTouchInterface $touchFacade
+    ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
+        $this->touchFacade = $touchFacade;
     }
 
     /**
@@ -50,7 +61,7 @@ class ProductOptionGroupSaver
      * @param string $abstractSku
      * @param int $idProductOptionGroup
      *
-     * @return bool|void
+     * @return bool
      */
     public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup)
     {
@@ -59,7 +70,7 @@ class ProductOptionGroupSaver
             ->findOne();
 
         if (!$productOptionGroupEntity) {
-            return;
+            return false;
         }
 
         $productAbstractEntity = $this->productOptionQueryContainer
@@ -67,12 +78,23 @@ class ProductOptionGroupSaver
             ->findOne();
 
         if (!$productAbstractEntity) {
-            return;
+            return false;
         }
 
         $productOptionGroupEntity->addSpyProductAbstract($productAbstractEntity);
 
-        return $productOptionGroupEntity->save() > 0;
+        $affectedRows = $productOptionGroupEntity->save();
+
+        if ($affectedRows > 0) {
+            $this->touchFacade->touchActive(
+                ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
+                $productAbstractEntity->getIdProductAbstract()
+            );
+
+            return true;
+        }
+
+        return false;
 
     }
 

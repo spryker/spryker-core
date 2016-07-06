@@ -11,16 +11,19 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchBridge;
 
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_LOCALE = 'LOCALE_FACADE';
-    const FACADE_TAX = 'TAX_FACADE';
+    const FACADE_LOCALE = 'FACADE_LOCALE';
+    const FACADE_TAX = 'FACADE_TAX';
+    const FACADE_TOUCH = 'FACADE_TOUCH';
+
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,8 +40,8 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductOptionToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
-        $container[self::FACADE_TAX] = function (Container $container) {
-            return new ProductOptionToTaxBridge($container->getLocator()->tax()->facade());
+        $container[self::FACADE_TOUCH] = function (Container $container) {
+            return new ProductOptionToTouchBridge($container->getLocator()->touch()->facade());
         };
 
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {

@@ -66,7 +66,9 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      */
     public function aggregateOrderItemProductOptionGrossPrice(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createItemProductOptionGrossPriceAggregator()->aggregate($orderTransfer);
+        $this->getFactory()
+            ->createItemProductOptionGrossPriceAggregator()
+            ->aggregate($orderTransfer);
     }
 
     /**
@@ -78,7 +80,9 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      */
     public function aggregateOrderSubtotalWithProductOptions(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createSubtotalWithProductOption()->aggregate($orderTransfer);
+        $this->getFactory()
+            ->createSubtotalWithProductOption()
+            ->aggregate($orderTransfer);
     }
 
     /**
@@ -91,7 +95,9 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      */
     public function saveSaleOrderProductOptions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createProductOptionOrderSaver()->save($quoteTransfer, $checkoutResponse);
+        $this->getFactory()
+            ->createProductOptionOrderSaver()
+            ->save($quoteTransfer, $checkoutResponse);
     }
 
 }
