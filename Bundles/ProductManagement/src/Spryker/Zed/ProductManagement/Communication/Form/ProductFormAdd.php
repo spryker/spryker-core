@@ -65,12 +65,12 @@ class ProductFormAdd extends AbstractType
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
                 return [
-                    Constraint::DEFAULT_GROUP/*,
+                    Constraint::DEFAULT_GROUP,
                     self::VALIDATION_GROUP_GENERAL,
                     self::VALIDATION_GROUP_ATTRIBUTE_METADATA,
                     self::VALIDATION_GROUP_ATTRIBUTE_VALUES,
                     self::VALIDATION_GROUP_PRICE_AND_STOCK,
-                    self::VALIDATION_GROUP_SEO,*/
+                    self::VALIDATION_GROUP_SEO,
                 ];
             }
         ]);
@@ -235,16 +235,12 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
-                            $expectedCount = count($dataToValidate);
-                            $validatedCount = 0;
-                            foreach ($dataToValidate as $name => $value) {
-                                if (!empty($value)) {
-                                    $validatedCount++;
-                                }
+                            if ((int)$dataToValidate[ProductFormPrice::FIELD_PRICE] <= 0) {
+                                $context->addViolation('Please Price information under Price & Taxes');
                             }
 
-                            if ($expectedCount != $validatedCount) {
-                                $context->addViolation('Please enter Price & Stock information');
+                            if ((int)$dataToValidate[ProductFormPrice::FIELD_TAX_RATE] <= 0) {
+                                $context->addViolation('Please Tax information under Price & Taxes');
                             }
                         },
                     ],

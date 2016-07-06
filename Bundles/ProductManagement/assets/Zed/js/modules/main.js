@@ -13,10 +13,27 @@ $(document).ready(function() {
         tags: true
     });
 
+    //$('.attribute_metadata_value').prop('disabled', false);
+
+    $('.attribute_metadata_checkbox').each(function() {
+        var $item = $(this);
+        var $input = $item
+            .parents('.attribute_metadata_row')
+            .find('.attribute_metadata_value');
+
+        if (!$item.prop('disabled')) {
+            $input.prop('disabled', !$item.prop('checked'));
+        }
+    });
+
     $('.attribute_metadata_checkbox')
         .off('click')
         .on('click', function() {
-            $('.attribute_metadata_value').prop('disabled', !$(this).prop('checked'));
+            var $item = $(this);
+            $item
+                .parents('.attribute_metadata_row')
+                .find('.attribute_metadata_value')
+                .prop('disabled', !$item.prop('checked'));
         });
-    
+
 });

@@ -128,7 +128,7 @@ class ProductFormAttributeMetadata extends AbstractType
         }
 
         $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [ //TODO type depends on DB settings
-            'disabled' => true,
+            'disabled' => $isDisabled,
             'multiple' => true, //TODO depends on DB settings
             'label' => false,
             'choices' => [], // ['red' => 'red'],
