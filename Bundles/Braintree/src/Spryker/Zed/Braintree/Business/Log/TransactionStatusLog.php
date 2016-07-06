@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Braintree\Business\Log;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Braintree\Persistence\BraintreeQueryContainerInterface;
 
@@ -113,7 +114,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
                 $idSalesOrder,
                 $transactionCode
             )
-            ->filterByTransactionStatus($statusCode)
+            ->filterByTransactionStatus((array)$statusCode, Criteria::IN)
             ->findOne();
         if (!$logEntity) {
             return false;
