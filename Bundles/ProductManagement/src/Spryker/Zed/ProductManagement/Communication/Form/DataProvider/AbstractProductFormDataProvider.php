@@ -10,10 +10,11 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeMetadata;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeValues;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
@@ -108,7 +109,6 @@ class AbstractProductFormDataProvider
     public function getOptions($idProductAbstract = null)
     {
         $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
-        sd($attributes);
 
         $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = [
             ProductFormAttributeMetadata::OPTION_LABELS => $this->convertSelectedAttributeMetadataToFormValues($attributes),
@@ -215,7 +215,8 @@ class AbstractProductFormDataProvider
      */
     public function getAttributeValuesDefaultFields()
     {
-        return $this->convertSelectedAttributeValuesToFormValues([]);
+        $attributeProcessor = new AttributeProcessor();
+        return $this->convertSelectedAttributeValuesToFormValues($attributeProcessor);
     }
 
     /**
@@ -223,7 +224,8 @@ class AbstractProductFormDataProvider
      */
     public function getAttributeMetadataDefaultFields()
     {
-        return $this->convertSelectedAttributeMetadataToFormValues([]);
+        $attributeProcessor = new AttributeProcessor();
+        return $this->convertSelectedAttributeMetadataToFormValues($attributeProcessor);
     }
 
     /**
@@ -255,12 +257,14 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param array $productAttributes
+     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
      *
      * @return array
      */
-    protected function convertSelectedAttributeValuesToFormValues(array $productAttributes)
+    protected function convertSelectedAttributeValuesToFormValues(AttributeProcessorInterface $attributeProcessor)
     {
+        $productAttributes = $attributeProcessor->getAttributes()->toArray(true);
+
         $values = [];
         foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
             $isCustom = !array_key_exists($type, $this->attributeTransferCollection);
@@ -310,12 +314,13 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param array $productAttributes
+     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
      *
      * @return array
      */
-    protected function convertSelectedAttributeMetadataToFormValues(array $productAttributes)
+    protected function convertSelectedAttributeMetadataToFormValues(AttributeProcessorInterface $attributeProcessor)
     {
+        $productAttributes = $attributeProcessor->getAttributes()->toArray(true);
         $values = [];
         foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
             $isCustom = !array_key_exists($type, $this->attributeTransferCollection);
@@ -387,7 +392,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param ProductManagementAttributeTransfer $attributeTransfer
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
      * @param mixed $value
      *
      * @return mixed
@@ -396,11 +401,11 @@ class AbstractProductFormDataProvider
     {
         switch ($attributeTransfer->getInput()->getInput()) {
             case 'text':
-                default:
-                    if (is_array($value)) {
-                        sd($value);
-                    }
-                    return $value;
+            default:
+                if (is_array($value)) {
+                    sd($value);
+                }
+                return $value;
                 break;
         }
     }
