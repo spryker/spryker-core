@@ -21,6 +21,7 @@
     "spryker/oms": "^2.0.0 || ^3.0.0",
     "spryker/propel": "^2.2.0",
     "spryker/sales-aggregator": "^1.0.0 || ^2.0.0",
+    "spryker/sales-split": "^1.0.2",
     "spryker/sequence-number": "^2.0.0",
     "spryker/shipment": "^2.0.0 || ^3.0.0",
     "spryker/symfony": "^2.0.0",
