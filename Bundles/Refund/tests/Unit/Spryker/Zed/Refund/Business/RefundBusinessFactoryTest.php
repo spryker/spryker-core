@@ -5,7 +5,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Zed\Refund\Business;
 
 use Spryker\Zed\Refund\Business\Model\RefundCalculatorInterface;

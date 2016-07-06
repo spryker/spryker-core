@@ -90,6 +90,7 @@
         <property name="idSalesOrderItem" type="int" />
         <property name="fkSalesOrder" type="int" />
         <property name="fkOmsOrderItemState" type="int" />
+        <property name="fkRefund" type="int" />
         <property name="name" type="string" />
         <property name="process" type="string" />
         <property name="sku" type="string" />
@@ -131,6 +132,28 @@
         <property name="references" type="array" />
         <property name="context" type="string" />
         <property name="observer" type="string" />
+    </transfer>
+
+    <transfer name="SalesPayment">
+        <property name="method" type="string" />
+        <property name="redirectUrl" type="string" />
+        <property name="ccType" type="string" />
+        <property name="ccNumber" type="string" />
+        <property name="ccCardholder" type="string" />
+        <property name="ccExpirationMonth" type="string" />
+        <property name="ccExpirationYear" type="string" />
+        <property name="ccVerification" type="string" />
+        <property name="debitHolder" type="string" />
+        <property name="debitAccountNumber" type="string" />
+        <property name="debitBankCodeNumber" type="string" />
+        <property name="debitInstitute" type="string" />
+        <property name="pseudoCcNumber" type="string" />
+        <property name="paymentData" type="string" />
+        <property name="paymentDataClassName" type="string" />
+    </transfer>
+
+    <transfer name="RegularRedirectPaymentCancellation">
+        <property name="orderId" type="string" />
     </transfer>
 
     <transfer name="Filter">
