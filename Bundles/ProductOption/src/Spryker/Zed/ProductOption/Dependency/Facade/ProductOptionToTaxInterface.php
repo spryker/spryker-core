@@ -7,9 +7,15 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
-/**
- * @deprecated Use ProductOptionToTaxInterface instead
- */
-interface ProductOptionToTaxBridgeInterface extends ProductOptionToTaxInterface
+interface ProductOptionToTaxInterface
 {
+
+    /**
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
 }
