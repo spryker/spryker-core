@@ -102,7 +102,10 @@ class ProductFormAttributeMetadata extends AbstractType
         $builder
             ->add(self::FIELD_NAME, 'checkbox', [
                 'label' => $label,
-                'disabled' => $isDisabled
+                'disabled' => $isDisabled,
+                'attr' => [
+                    'class' => 'attribute_metadata_checkbox'
+                ],
             ]);
 
         return $this;
@@ -129,7 +132,10 @@ class ProductFormAttributeMetadata extends AbstractType
             'multiple' => true, //TODO depends on DB settings
             'label' => false,
             'choices' => [], // ['red' => 'red'],
-            'attr' => ['style' => 'width: 250px !important'],
+            'attr' => [
+                'style' => 'width: 250px !important',
+                'class' => 'attribute_metadata_value'
+            ],
             'constraints' => [
                 new AttributeFieldNotBlank([
                     'attributeFieldValue' => self::FIELD_VALUE,

@@ -27,6 +27,10 @@
     {% endspaceless %}
 {% endblock checkbox_widget %}
 
+{% block select2_widget %}
+    {{ form_widget(form, { 'attr': {'class': 'spryker-form-select2combobox attribute_metadata_value'} }) }}
+{% endblock select2_widget %}
+
 
 {% form_theme form _self %}
 
@@ -113,8 +117,13 @@
                         {% if form.attribute_metadata is defined and form.attribute_metadata|length > 0 %}
                             {% for type,input in form.attribute_metadata %}
                                 <div class="col-sm-12 col-md-6 col-lg-4">
-                                    <div class="text-right vertical-align">
-                                        <nobr>{{ form_row(input.name) }} {{ form_row(input.value) }}</nobr>
+                                    <div class="row ">
+                                        <div class="col-sm-4 col-md-4 col-lg-3 text-right pull-left">
+                                            {{ form_row(input.name) }}
+                                        </div>
+                                        <div class="col-sm-8 col-md-8 col-lg-9 pull-right ">
+                                            {{ form_row(input.value) }}
+                                        </div>
                                     </div>
                                 </div>
                             {% endfor %}
