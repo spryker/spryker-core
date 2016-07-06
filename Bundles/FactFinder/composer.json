@@ -4,14 +4,14 @@
     "psr-0": {
       "Spryker": "src/",
       "Acceptance": "tests/",
-      "Function": "tests/",
+      "Functional": "tests/",
       "Integration": "tests/",
       "Unit": "tests/",
       "YvesUnit": "tests/"
     }
   },
   "require": {
-    "spryker/guzzle": "^2.0.0"
+    "FACT-Finder/FACT-Finder-PHP-Library": "1.2.*"
   },
   "description": "fact-finder bundle",
   "license": "proprietary",
