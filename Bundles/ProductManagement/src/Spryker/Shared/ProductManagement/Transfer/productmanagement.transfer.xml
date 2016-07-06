@@ -58,5 +58,14 @@
         <property name="minValue" type="string" />
         <property name="maxValue" type="string" />
     </transfer>
+
+    <transfer name="ProductManagementAttributeSet">
+        <property name="idProductAbstract" type="int" />
+        <property name="abstractAttributes" type="array" singular="abstractAttribute" />
+        <property name="attributes" type="array" singular="attribute" />
+        <property name="localizedAttributes" type="array" singular="localizedAttribute" />
+        <property name="abstractLocalizedAttributes" type="array" singular="localizedAttribute" />
+    </transfer>
+
 </transfers>
 

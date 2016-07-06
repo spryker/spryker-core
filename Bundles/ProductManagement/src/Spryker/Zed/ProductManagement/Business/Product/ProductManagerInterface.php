@@ -192,7 +192,7 @@ interface ProductManagerInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract);
 

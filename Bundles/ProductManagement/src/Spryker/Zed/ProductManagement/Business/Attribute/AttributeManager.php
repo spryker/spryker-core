@@ -142,6 +142,7 @@ class AttributeManager implements AttributeManagerInterface
 
     protected function loadInput()
     {
+        die('fix me');
         $inputCollection = $this->productManagementQueryContainer
             ->queryProductManagementAttributeMetadata()
             ->filterByFkType($metadataTransfer->getType()->getIdProductManagementAttributeIn())

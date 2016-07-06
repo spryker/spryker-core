@@ -108,6 +108,7 @@ class AbstractProductFormDataProvider
     public function getOptions($idProductAbstract = null)
     {
         $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
+        sd($attributes);
 
         $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = [
             ProductFormAttributeMetadata::OPTION_LABELS => $this->convertSelectedAttributeMetadataToFormValues($attributes),
@@ -145,7 +146,7 @@ class AbstractProductFormDataProvider
     /**
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
      */
     public function getAttributesForAbstractProduct($idProductAbstract = null)
     {

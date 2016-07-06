@@ -14,7 +14,9 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
+use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Shared\Library\Json;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductTransferGenerator;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
@@ -1067,7 +1069,7 @@ class ProductManager implements ProductManagerInterface
      *
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract)
     {
@@ -1076,27 +1078,30 @@ class ProductManager implements ProductManagerInterface
             return [];
         }
 
+        $attributeProcessor = new AttributeProcessor();
         $concreteProductCollection = $this->getConcreteProductsByAbstractProductId($idProductAbstract);
 
-        $attributes = [];
         foreach ($concreteProductCollection as $productTransfer) {
-            $productAttributes = $productTransfer->getAttributes();
-            foreach ($productAttributes as $name => $value) {
-                $attributes[$name] = $value;
-            }
+            $attributeProcessor->setAttributes(new Collection(
+                $productTransfer->getAttributes()
+            ));
 
             foreach ($productTransfer->getLocalizedAttributes() as $localizedAttribute) {
+                $localizedAttributes = new Collection([]);
                 foreach ($localizedAttribute->getAttributes() as $name => $value) {
                     $localeName = $localizedAttribute->getLocale()->getLocaleName();
-                    $attributes[$name][$localeName] = $value;
+                    $localizedAttributes->set($name, [$localeName => $value]);
                 }
+
+                $attributeProcessor->setLocalizedAttributes($localizedAttributes);
             }
         }
 
-        $abstractAttributes = $productAbstractTransfer->getAttributes();
-        $attributes = array_merge($abstractAttributes, $attributes);
+        $attributeProcessor->setAbstractAttributes(new Collection(
+            $productAbstractTransfer->getAttributes()
+        ));
 
-        return $attributes;
+        return $attributeProcessor;
     }
 
 }

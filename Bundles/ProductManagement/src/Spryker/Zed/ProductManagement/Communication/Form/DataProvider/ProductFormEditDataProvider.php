@@ -56,6 +56,8 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $formData[ProductFormAdd::SEO] = $seoData;
 
         $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
+        sd($attributes);
+        
         $attributeMetadataCollection = $this->convertSelectedAttributeMetadataToFormValues($attributes);
         $attributeValueCollection = $this->convertSelectedAttributeValuesToFormValues($attributes);
 
