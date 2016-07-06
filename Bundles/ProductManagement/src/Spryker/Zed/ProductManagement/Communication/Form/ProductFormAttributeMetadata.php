@@ -134,7 +134,7 @@ class ProductFormAttributeMetadata extends AbstractType
             'choices' => [], // ['red' => 'red'],
             'attr' => [
                 'style' => 'width: 250px !important',
-                'class' => 'attribute_metadata_value'
+                'class' => 'attribute_metadata_value',
             ],
             'constraints' => [
                 new AttributeFieldNotBlank([

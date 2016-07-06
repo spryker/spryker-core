@@ -5,4 +5,4 @@
 
 'use strict';
 
-require('./main');
+require('./modules/add');

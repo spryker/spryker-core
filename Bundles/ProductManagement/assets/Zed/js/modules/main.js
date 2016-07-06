@@ -12,4 +12,11 @@ $(document).ready(function() {
     $('.spryker-form-select2combobox').select2({
         tags: true
     });
+
+    $('.attribute_metadata_checkbox')
+        .off('click')
+        .on('click', function() {
+            $('.attribute_metadata_value').prop('disabled', !$(this).prop('checked'));
+        });
+    
 });
