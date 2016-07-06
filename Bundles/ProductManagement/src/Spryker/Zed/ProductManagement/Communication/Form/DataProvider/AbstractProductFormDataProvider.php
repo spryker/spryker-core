@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -269,10 +270,16 @@ class AbstractProductFormDataProvider
 
             if (array_key_exists($type, $this->attributeTransferCollection)) {
                 $isLocalized = $this->attributeTransferCollection[$type]->getIsLocalized();
+                $isMulti = $this->attributeTransferCollection[$type]->getIsMultiple();
+                //$value = $this->getValueBasedOnInputType($this->attributeTransferCollection[$type], $value);
+            }
+
+            if ($isLocalized || $isMulti) {
+                continue;
             }
 
             $values[$type] = [
-                'value' => [$value],
+                'value' => $value,
                 'product_specific' => $isProductSpecificAttribute,
                 'custom' => $isCustom,
                 'label' => $this->getLocalizedAttributeMetadataKey($type),
@@ -285,7 +292,7 @@ class AbstractProductFormDataProvider
                 $isMulti = isset($value) && is_array($value);
                 if (!array_key_exists($key, $values)) {
                     $values[$key] = [
-                        'value' => [$value],
+                        'value' => $value,
                         'product_specific' => true,
                         'custom' => true,
                         'label' => $this->getLocalizedAttributeMetadataKey($key),
@@ -318,12 +325,16 @@ class AbstractProductFormDataProvider
                 $isLocalized = $this->attributeTransferCollection[$type]->getIsLocalized();
             }
 
+            if ($isLocalized || $isMulti) {
+                //continue;
+            }
+
             if ($isMulti && $value) {
                 $value = !empty($value);
             }
 
             $values[$type] = [
-                'value' => $value,
+                'value' => (bool)$value,
                 'product_specific' => $isProductSpecificAttribute,
                 'custom' => $isCustom,
                 'label' => $this->getLocalizedAttributeMetadataKey($type),
@@ -368,6 +379,25 @@ class AbstractProductFormDataProvider
         }
 
         return $keyToLocalize;
+    }
+
+    /**
+     * @param ProductManagementAttributeTransfer $attributeTransfer
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    protected function getValueBasedOnInputType(ProductManagementAttributeTransfer $attributeTransfer, $value)
+    {
+        switch ($attributeTransfer->getInput()->getInput()) {
+            case 'text':
+                default:
+                    if (is_array($value)) {
+                        sd($value);
+                    }
+                    return $value;
+                break;
+        }
     }
 
 }

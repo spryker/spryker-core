@@ -65,12 +65,12 @@ class ProductFormAdd extends AbstractType
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
                 return [
-                    Constraint::DEFAULT_GROUP,
+                    Constraint::DEFAULT_GROUP/*,
                     self::VALIDATION_GROUP_GENERAL,
                     self::VALIDATION_GROUP_ATTRIBUTE_METADATA,
                     self::VALIDATION_GROUP_ATTRIBUTE_VALUES,
                     self::VALIDATION_GROUP_PRICE_AND_STOCK,
-                    self::VALIDATION_GROUP_SEO,
+                    self::VALIDATION_GROUP_SEO,*/
                 ];
             }
         ]);

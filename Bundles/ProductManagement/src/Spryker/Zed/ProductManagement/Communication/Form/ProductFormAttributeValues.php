@@ -116,15 +116,27 @@ class ProductFormAttributeValues extends AbstractType
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
-        $label = $this->attributeValues[$name][self::LABEL];
-        $isMultiple = $this->attributeValues[$name][self::MULTIPLE];
-        $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
+        $label = $name;
+        $isDisabled = true;
+
+        if (isset($this->attributeValues[$name])) {
+            $label = $this->attributeValues[$name][self::LABEL];
+            $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
+        }
+
+        $builder
+            ->add(self::FIELD_VALUE, 'text', [
+                'label' => false,
+                'disabled' => $isDisabled
+            ]);
+
+        return $this;
 
         $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [ //TODO type depends on DB settings
             'disabled' => $isDisabled,
-            'choices' => [],//TODO depends on DB settings
             'multiple' => true, //TODO depends on DB settings
             'label' => false,
+            'choices' => [], // ['red' => 'red'],
             /*            'constraints' => [
                             new AttributeFieldNotBlank([
                                 'attributeFieldValue' => self::FIELD_VALUE,
