@@ -1073,12 +1073,13 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract)
     {
+        $attributeProcessor = new AttributeProcessor();
         $productAbstractTransfer = $this->getProductAbstractById($idProductAbstract);
+
         if (!$productAbstractTransfer) {
-            return [];
+            return $attributeProcessor;
         }
 
-        $attributeProcessor = new AttributeProcessor();
         $concreteProductCollection = $this->getConcreteProductsByAbstractProductId($idProductAbstract);
 
         foreach ($concreteProductCollection as $productTransfer) {

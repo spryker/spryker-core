@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\ProductManagement\Communication\Form\Constraints\AttributeFieldNotBlank;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -124,16 +125,17 @@ class ProductFormAttributeMetadata extends AbstractType
         }
 
         $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [ //TODO type depends on DB settings
-            'disabled' => $isDisabled,
+            'disabled' => true,
             'multiple' => true, //TODO depends on DB settings
             'label' => false,
             'choices' => [], // ['red' => 'red'],
-/*            'constraints' => [
+            'attr' => ['style' => 'width: 250px !important'],
+            'constraints' => [
                 new AttributeFieldNotBlank([
                     'attributeFieldValue' => self::FIELD_VALUE,
                     'attributeCheckboxFieldName' => self::FIELD_NAME,
                 ]),
-            ],*/
+            ],
         ]);
 
         return $this;

@@ -150,10 +150,6 @@ class AbstractProductFormDataProvider
      */
     public function getAttributesForAbstractProduct($idProductAbstract = null)
     {
-        if ($idProductAbstract === null) {
-            return [];
-        }
-
         return $this->productManagementFacade
             ->getProductAttributesByAbstractProductId($idProductAbstract);
     }
