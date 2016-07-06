@@ -17,18 +17,4 @@ interface ConverterInterface
      */
     public function toTransactionResponseTransfer($stringData);
 
-    /**
-     * @param array $data
-     *
-     * @return string
-     */
-    public function toCalculationRequest(array $data);
-
-    /**
-     * @param string $stringData
-     *
-     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
-     */
-    public function toCalculationResponseTransfer($stringData);
-
 }

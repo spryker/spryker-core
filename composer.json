@@ -10,7 +10,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*"
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "config": {
     "use-include-path": true
@@ -44,6 +44,18 @@
       "Functional\\Spryker\\Zed\\Availability\\": "Bundles/Availability/tests",
       "Spryker\\Zed\\AvailabilityCartConnector\\": "Bundles/AvailabilityCartConnector/src",
       "Unit\\Spryker\\Zed\\AvailabilityCartConnector\\": "Bundles/AvailabilityCartConnector/tests",
+
+      "Spryker\\Yves\\Braintree\\": "Bundles/Braintree/src",
+      "Spryker\\Client\\Braintree\\": "Bundles/Braintree/src",
+      "Unit\\Spryker\\Client\\Braintree\\": "Bundles/Braintree/tests",
+      "Functional\\Spryker\\Client\\Braintree\\": "Bundles/Braintree/tests",
+      "Spryker\\Shared\\Braintree\\": "Bundles/Braintree/src",
+      "Unit\\Spryker\\Shared\\Braintree\\": "Bundles/Braintree/tests",
+      "Functional\\Spryker\\Shared\\Braintree\\": "Bundles/Braintree/tests",
+      "Spryker\\Zed\\Braintree\\": "Bundles/Braintree/src",
+      "Unit\\Spryker\\Zed\\Braintree\\": "Bundles/Braintree/tests",
+      "Functional\\Spryker\\Zed\\Braintree\\": "Bundles/Braintree/tests",
+
       "Spryker\\Zed\\Cache\\": "Bundles/Cache/src",
       "Spryker\\Shared\\Calculation\\": "Bundles/Calculation/src",
       "Unit\\Spryker\\Shared\\Calculation\\": "Bundles/Calculation/tests",
