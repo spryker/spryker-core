@@ -70,16 +70,19 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             }
 
             $values[$type] = $data;
-            $values[$type][ProductFormAttributeValues::FIELD_NAME] = $data['value'] !== null;
+
+            $metadata[$type] = $data;
+            $metadata[$type]['value'] = [$data['value']];
         }
-        $metadata = $values;
+
+        //sd($values, $attributeValueCollection);
 
         $formData['attribute_values2'] = [
             'color' => ['value' => 'red' ]
         ];
 
 
-        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = [];
+        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $metadata;
         $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $values;
 
         return $formData;

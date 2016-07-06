@@ -158,9 +158,8 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTE_METADATA, 'collection', [
-                'label' => 'Attribute Metadata',
-                'type' => new ProductFormAttributeValues(
-                    $options[ProductFormAttributeValues::OPTION_VALUES],
+                'type' => new ProductFormAttributeMetadata(
+                    $options[ProductFormAttributeMetadata::OPTION_VALUES],
                     self::VALIDATION_GROUP_ATTRIBUTE_METADATA
                 ),
                 'constraints' => [new Callback([
@@ -196,7 +195,6 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTE_VALUES, 'collection', [
-                'label' => 'Attribute Values',
                 'type' => new ProductFormAttributeValues(
                     $options[ProductFormAttributeValues::OPTION_VALUES],
                     self::VALIDATION_GROUP_ATTRIBUTE_VALUES
@@ -234,7 +232,6 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::PRICE_AND_STOCK, new ProductFormPrice($options, self::VALIDATION_GROUP_PRICE_AND_STOCK), [
-                'label' => 'Price & Stock',
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
@@ -268,7 +265,6 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::SEO, 'collection', [
-                'label' => 'SEO Information',
                 'type' => new ProductFormSeo(self::VALIDATION_GROUP_SEO),
                 'constraints' => [new Callback([
                     'methods' => [

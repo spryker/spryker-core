@@ -176,14 +176,8 @@
                                             {% for type,aValue in batchResults %}
                                                 <div class="col-md-4 col-sm-6 col-lg-4">
                                                     <div class="row vertical-align">
-                                                        <div class="col-md-6 text-right vertical-align">
-                                                            {{ form_errors(aValue.name) }}
-                                                            {{ form_row(aValue.name) }}
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            {{ form_errors(aValue.value) }}
-                                                            {{ form_row(aValue.value) }}
-                                                        </div>
+                                                        {{ form_errors(aValue.value) }}
+                                                        {{ form_row(aValue.value) }}
                                                     </div>
                                                 </div>
                                             {% endfor %}

@@ -33,11 +33,15 @@ class ProductFormAttributeValues extends AbstractType
     /**
      * @var string
      */
+    protected $validationMetadata;
+
+    /**
+     * @var string
+     */
     protected $validationGroup;
 
     /**
      * @param array $attributeValues
-     * @param array $validationGroup
      */
     public function __construct(array $attributeValues, $validationGroup)
     {
@@ -65,7 +69,7 @@ class ProductFormAttributeValues extends AbstractType
         $resolver->setDefaults([
             'required' => false,
             'cascade_validation' => true,
-            'validation_groups' => [$this->validationGroup]
+            'validation_groups' => [$this->validationMetadata]
         ]);
     }
 
@@ -78,34 +82,7 @@ class ProductFormAttributeValues extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addCheckboxNameField($builder, $options)
             ->addValueField($builder, $options);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addCheckboxNameField(FormBuilderInterface $builder, array $options)
-    {
-        $name = $builder->getName();
-        $label = $name;
-        $isDisabled = true;
-
-        if (isset($this->attributeValues[$name])) {
-            $label = $this->attributeValues[$name][self::LABEL];
-            $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
-        }
-
-        $builder
-            ->add(self::FIELD_NAME, 'checkbox', [
-                'label' => $label,
-                'disabled' => $isDisabled
-            ]);
-
-        return $this;
     }
 
     /**
@@ -126,24 +103,11 @@ class ProductFormAttributeValues extends AbstractType
 
         $builder
             ->add(self::FIELD_VALUE, 'text', [
-                'label' => false,
+                'label' => $label,
                 'disabled' => $isDisabled
             ]);
 
         return $this;
-
-        $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [ //TODO type depends on DB settings
-            'disabled' => $isDisabled,
-            'multiple' => true, //TODO depends on DB settings
-            'label' => false,
-            'choices' => [], // ['red' => 'red'],
-            /*            'constraints' => [
-                            new AttributeFieldNotBlank([
-                                'attributeFieldValue' => self::FIELD_VALUE,
-                                'attributeCheckboxFieldName' => self::FIELD_NAME,
-                            ]),
-                        ],*/
-        ]);
 
         return $this;
     }

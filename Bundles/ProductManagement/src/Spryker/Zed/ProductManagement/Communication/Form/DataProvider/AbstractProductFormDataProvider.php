@@ -280,6 +280,7 @@ class AbstractProductFormDataProvider
 
             $values[$type] = [
                 'value' => $value,
+                'name' => $isCustom,
                 'product_specific' => $isProductSpecificAttribute,
                 'custom' => $isCustom,
                 'label' => $this->getLocalizedAttributeMetadataKey($type),
@@ -293,6 +294,7 @@ class AbstractProductFormDataProvider
                 if (!array_key_exists($key, $values)) {
                     $values[$key] = [
                         'value' => $value,
+                        'name' => $isCustom,
                         'product_specific' => true,
                         'custom' => true,
                         'label' => $this->getLocalizedAttributeMetadataKey($key),
@@ -334,7 +336,8 @@ class AbstractProductFormDataProvider
             }
 
             $values[$type] = [
-                'value' => (bool)$value,
+                'value' => null,
+                'name' => $isCustom,
                 'product_specific' => $isProductSpecificAttribute,
                 'custom' => $isCustom,
                 'label' => $this->getLocalizedAttributeMetadataKey($type),
@@ -348,7 +351,8 @@ class AbstractProductFormDataProvider
             $isMulti = isset($value) && is_array($value);
             if (!array_key_exists($key, $values)) {
                 $values[$key] = [
-                    'value' => true,
+                    'value' => null,
+                    'name' => true,
                     'product_specific' => true,
                     'custom' => true,
                     'label' => $this->getLocalizedAttributeMetadataKey($key),
