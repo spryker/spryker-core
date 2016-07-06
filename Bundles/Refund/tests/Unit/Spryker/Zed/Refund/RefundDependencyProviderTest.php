@@ -29,7 +29,7 @@ class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
     {
         $refundDependencyProvider = new RefundDependencyProvider();
         $container = new Container();
-        $refundDependencyProvider->provideBusinessLayerDependencies($container);
+        $container = $refundDependencyProvider->provideBusinessLayerDependencies($container);
 
         $this->assertArrayHasKey(RefundDependencyProvider::FACADE_SALES_AGGREGATOR, $container);
         $this->assertInstanceOf(RefundToSalesAggregatorBridge::class, $container[RefundDependencyProvider::FACADE_SALES_AGGREGATOR]);
@@ -42,7 +42,7 @@ class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
     {
         $refundDependencyProvider = new RefundDependencyProvider();
         $container = new Container();
-        $refundDependencyProvider->provideBusinessLayerDependencies($container);
+        $container = $refundDependencyProvider->provideBusinessLayerDependencies($container);
 
         $this->assertArrayHasKey(RefundDependencyProvider::PLUGIN_REFUND_CALCULATOR, $container);
         $this->assertInstanceOf(RefundCalculatorPluginInterface::class, $container[RefundDependencyProvider::PLUGIN_REFUND_CALCULATOR]);
@@ -55,7 +55,7 @@ class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
     {
         $refundDependencyProvider = new RefundDependencyProvider();
         $container = new Container();
-        $refundDependencyProvider->provideBusinessLayerDependencies($container);
+        $container = $refundDependencyProvider->provideBusinessLayerDependencies($container);
 
         $this->assertArrayHasKey(RefundDependencyProvider::QUERY_CONTAINER_SALES, $container);
         $this->assertInstanceOf(SalesQueryContainerInterface::class, $container[RefundDependencyProvider::QUERY_CONTAINER_SALES]);
