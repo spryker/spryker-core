@@ -14,7 +14,7 @@ interface RefundQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - Returns SpyRefundQuery without any filter.
+     * - Returns SpyRefundQuery ordered by id descending.
      *
      * @api
      *

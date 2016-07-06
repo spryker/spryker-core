@@ -76,6 +76,7 @@ class RefundCalculatorPlugin extends AbstractPlugin implements RefundCalculatorP
         if ($refundTransfer->getExpenses()) {
             foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
                 $refundTransfer->setAmount($refundTransfer->getAmount() + $expenseTransfer->getRefundableAmount());
+                $expenseTransfer->setCanceledAmount($expenseTransfer->getRefundableAmount());
             }
         }
     }

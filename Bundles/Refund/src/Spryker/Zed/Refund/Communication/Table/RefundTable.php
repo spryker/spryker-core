@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Refund\Communication\Table;
 
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -84,6 +85,7 @@ class RefundTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $refundQuery = $this->refundQueryContainer->queryRefunds();
+        $refundQuery->orderByIdRefund(Criteria::DESC);
 
         $queryResults = $this->runQuery($refundQuery, $config);
         $results = [];
