@@ -170,11 +170,22 @@ interface OmsFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use sumReservedProductQuantitiesForSku() instead
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function countReservedOrderItemsForSku($sku);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function sumReservedProductQuantitiesForSku($sku);
 
     /**
      * @api

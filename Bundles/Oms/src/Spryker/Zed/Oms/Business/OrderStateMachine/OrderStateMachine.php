@@ -16,6 +16,7 @@ use Propel\Runtime\Propel;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Business\Util\ReservationInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
@@ -90,9 +91,9 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $commands;
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface
+     * @var \Spryker\Zed\Oms\Business\Util\ReservationInterface
      */
-    protected $finder;
+    protected $reservation;
 
     /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
@@ -102,7 +103,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
      * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
      * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
-     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface $finder
+     * @param \Spryker\Zed\Oms\Business\Util\ReservationInterface $reservation
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
@@ -112,7 +113,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         ReadOnlyArrayObject $activeProcesses,
         $conditions,
         $commands,
-        FinderInterface $finder = null
+        ReservationInterface $reservation
     ) {
         $this->queryContainer = $queryContainer;
         $this->builder = $builder;
@@ -121,7 +122,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $this->activeProcesses = $activeProcesses;
         $this->setConditions($conditions);
         $this->setCommands($commands);
-        $this->finder = $finder;
+        $this->reservation = $reservation;
     }
 
     /**
@@ -656,6 +657,10 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $sourceState = $process->getStateFromAllProcesses($orderItem->getState()->getName());
             }
 
+            if ($sourceState === $targetState && $targetState->isReserved()) {
+                $this->reservation->updateReservationQuantity($orderItem->getSku());
+            }
+
             if ($sourceState !== $targetState->getName()
                 && $targetState->hasOnEnterEvent()
             ) {
@@ -779,7 +784,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
             if ($orderItem->isModified()) {
                 $orderItem->save();
-                $this->updateProductReservationAmountBySku($orderItem->getSku());
+                $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku());
                 $log->save($orderItem);
             }
         }
@@ -838,21 +843,21 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
+     * @param ProcessInterface $process
+     * @param string $sourceStateId
+     * @param string $targetStateId
      * @param string $sku
      *
      * @return void
      */
-    protected function updateProductReservationAmountBySku($sku)
+    protected function updateReservation(ProcessInterface $process, $sourceStateId, $targetStateId, $sku)
     {
-        if ($this->finder === null) {
-            return;
+        $sourceStateIsReserved = $process->getState($sourceStateId)->isReserved();
+        $targetStateIsReserved = $process->getState($targetStateId)->isReserved();
+
+        if ($sourceStateIsReserved !== $targetStateIsReserved) {
+            $this->reservation->updateReservationQuantity($sku);
         }
-
-        $reservationQuantity = $this->finder->countReservedOrderItemsForSku($sku);
-        $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOneOrCreate();
-        $reservationEntity->setReservationQuantity($reservationQuantity);
-
-        $reservationEntity->save();
     }
 
 }

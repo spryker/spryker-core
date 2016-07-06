@@ -24,6 +24,8 @@ class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
     }
 
     /**
+     * @deprecated Use sumReservedProductQuantitiesForSku() instead
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -33,4 +35,13 @@ class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
         return $this->omsFacade->countReservedOrderItemsForSku($sku);
     }
 
+    /**
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function sumReservedProductQuantitiesForSku($sku)
+    {
+        return $this->omsFacade->sumReservedProductQuantitiesForSku($sku);
+    }
 }

@@ -260,6 +260,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use sumReservedProductQuantitiesForSku() instead
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
@@ -269,6 +271,20 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->countReservedOrderItemsForSku($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function sumReservedProductQuantitiesForSku($sku)
+    {
+        return $this->getFactory()
+            ->createUtilReservation()
+            ->sumReservedProductQuantitiesForSku($sku);
     }
 
     /**

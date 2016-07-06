@@ -23,6 +23,8 @@ use Spryker\Zed\Oms\Business\Process\Transition;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Business\Util\Reservation;
+use Spryker\Zed\Oms\Business\Util\ReservationInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLog;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
@@ -60,7 +62,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
-            $this->createOrderStateMachineFinder()
+            $this->createUtilReservation()
         );
     }
 
@@ -230,6 +232,18 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new TriggerLocker(
             $this->getQueryContainer(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return ReservationInterface
+     */
+    public function createUtilReservation()
+    {
+        return new Reservation(
+            $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
+            $this->createOrderStateMachineBuilder(),
+            $this->getQueryContainer()
         );
     }
 
