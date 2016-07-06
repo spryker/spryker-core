@@ -4,26 +4,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FactFinder\Business\Api;
+namespace Spryker\Zed\FactFinder\Business\Api\Request;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class ApiFacade 
+class SearchRequest extends AbstractRequest implements RequestInterface
 {
-
-    
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\FFSearchResponseTransfer
      */
-    public function search(QuoteTransfer $quoteTransfer)
+    public function request(QuoteTransfer $quoteTransfer)
     {
-        $factory = (new RequestModelFactory())
-//            ->registerBuilder(ApiConstants::REQUEST_MODEL_PAYMENT_INIT, $this->createInitModel())
-        ;
-        return $factory;
-    }
 
+    }
 }

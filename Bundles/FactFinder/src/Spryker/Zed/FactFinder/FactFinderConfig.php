@@ -21,4 +21,12 @@ class FactFinderConfig extends AbstractBundleConfig
         return $this->get(FactFinderConstants::ENV);
     }
 
+    /**
+     * @return array
+     */
+    public function getFFConfiguration()
+    {
+        return $this->get(FactFinderConstants::ENV . $this->getEnv());
+    }
+
 }

@@ -244,9 +244,8 @@ class FFConnector
 
         $this->dic['configuration'] = function($c) {
             return FF::getInstance(
-                'Core\XmlConfiguration',
-                $this->getConfigXml(),
-                $this->factFinderConfig->getEnv()
+                'Core\ManualConfiguration',
+                $this->factFinderConfig->getFFConfiguration()
             );
         };
 

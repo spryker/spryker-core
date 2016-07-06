@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FactFinder\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -15,5 +16,21 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterface
 {
 
+    /**
+     * Specification:
+     * - search request
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\FFSearchResponseTransfer
+     */
+    public function search(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()
+            ->createSearchRequest()
+            ->request($quoteTransfer);
+    }
 
 }

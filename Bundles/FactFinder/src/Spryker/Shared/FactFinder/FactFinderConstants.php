@@ -11,6 +11,10 @@ interface FactFinderConstants
 {
 
     const PROVIDER_NAME = 'FactFinder';
+
     const ENV = 'FF env';
+    const ENV_PRODUCTION = 'production';
+    const ENV_DEVELOPMENT = 'development';
+    const ENV_TEST = 'test';
 
 }

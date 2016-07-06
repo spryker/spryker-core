@@ -4,11 +4,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd"
 >
-    <transfer name="BraintreePayment">
+
+    <transfer name="Quote">
+        <property name="FFSearchRequest" type="FFSearchRequest"/>
+    </transfer>
+
+    <transfer name="FFSearchRequest">
 
     </transfer>
 
-    <transfer name="BraintreeTransactionResponse">
+    <transfer name="FFSearchResponse">
 
     </transfer>
 
