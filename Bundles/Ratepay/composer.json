@@ -10,7 +10,6 @@
   "require": {
     "spryker/country": "^2.0.0",
     "spryker/customer": "^2.0.0",
-    "spryker/glossary": "^2.0.0",
     "spryker/guzzle": "^2.0.0",
     "spryker/installer": "^2.0.0",
     "spryker/kernel": "^2.0.0",
@@ -18,9 +17,11 @@
     "spryker/log": "^2.0.0",
     "spryker/messenger": "^2.1.0",
     "spryker/oms": ">=2.0.0 <=3.0.0",
+    "spryker/payment": "^2.0.0",
     "spryker/product": "^2.0.0",
     "spryker/sales": "^2.0.0",
     "spryker/sales-aggregator": "^1.0.0",
+    "spryker/session": "^2.1.0",
     "spryker/step-engine": "^1.2.0",
     "spryker/symfony": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
