@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Zed\Ratepay\Business\Api\ApiFactory;
 use Spryker\Zed\Ratepay\Business\Api\Builder\BuilderFactory;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
@@ -112,7 +114,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
 
         $this->assertInstanceOf(Init::class, $request);
 
-        $this->assertEquals('Spryker www.spryker.dev', $this->requestTransfer->getHead()->getSystemId());
+        $this->assertEquals(Config::get(RatepayConstants::SYSTEM_ID), $this->requestTransfer->getHead()->getSystemId());
         $this->assertNotNull($this->requestTransfer->getHead()->getProfileId());
         $this->assertNotNull($this->requestTransfer->getHead()->getSecurityCode());
         $this->assertNull($this->requestTransfer->getHead()->getOperation());
@@ -133,7 +135,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $request = $paymentMethod->paymentRequest($quoteTransfer);
 
         $this->assertInstanceOf(Request::class, $request);
-        $this->assertEquals('Spryker www.spryker.dev', $this->requestTransfer->getHead()->getSystemId());
+        $this->assertEquals(Config::get(RatepayConstants::SYSTEM_ID), $this->requestTransfer->getHead()->getSystemId());
 
         //head
         $this->assertNotNull($this->requestTransfer->getHead()->getProfileId());
@@ -180,7 +182,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $this->assertNotNull($this->requestTransfer->getHead()->getSecurityCode());
 
         $this->assertEquals('TEST--1', $this->requestTransfer->getHead()->getExternalOrderId());
-        $this->assertEquals('Spryker www.spryker.dev', $this->requestTransfer->getHead()->getSystemId());
+        $this->assertEquals(Config::get(RatepayConstants::SYSTEM_ID), $this->requestTransfer->getHead()->getSystemId());
     }
 
     /**
@@ -201,7 +203,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $this->assertEquals('58-201604122719694', $this->requestTransfer->getHead()->getTransactionId());
         $this->assertEquals('5QTZ.2VWD.OMWW.9D3E', $this->requestTransfer->getHead()->getTransactionShortId());
 
-        $this->assertEquals('Spryker www.spryker.dev', $this->requestTransfer->getHead()->getSystemId());
+        $this->assertEquals(Config::get(RatepayConstants::SYSTEM_ID), $this->requestTransfer->getHead()->getSystemId());
 
         //basket and items
         $this->testBasketAndItems();
@@ -227,7 +229,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $this->assertEquals('5QTZ.2VWD.OMWW.9D3E', $this->requestTransfer->getHead()->getTransactionShortId());
 
         $this->assertEquals('TEST--1', $this->requestTransfer->getHead()->getExternalOrderId());
-        $this->assertEquals('Spryker www.spryker.dev', $this->requestTransfer->getHead()->getSystemId());
+        $this->assertEquals(Config::get(RatepayConstants::SYSTEM_ID), $this->requestTransfer->getHead()->getSystemId());
 
         //basket and items
         $this->testBasketAndItems();
@@ -252,7 +254,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $this->assertEquals('5QTZ.2VWD.OMWW.9D3E', $this->requestTransfer->getHead()->getTransactionShortId());
 
         $this->assertEquals('TEST--1', $this->requestTransfer->getHead()->getExternalOrderId());
-        $this->assertEquals('Spryker www.spryker.dev', $this->requestTransfer->getHead()->getSystemId());
+        $this->assertEquals(Config::get(RatepayConstants::SYSTEM_ID), $this->requestTransfer->getHead()->getSystemId());
 
         //basket and items
         $this->testBasketAndItems();
