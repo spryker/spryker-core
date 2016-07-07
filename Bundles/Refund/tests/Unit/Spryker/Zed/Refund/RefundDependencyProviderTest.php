@@ -40,14 +40,27 @@ class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testProvideBusinessLayerDependenciesShouldAddRefundCalculatorPlugin()
+    public function testProvideBusinessLayerDependenciesShouldAddRefundableItemAmountCalculatorPlugin()
     {
         $refundDependencyProvider = new RefundDependencyProvider();
         $container = new Container();
         $container = $refundDependencyProvider->provideBusinessLayerDependencies($container);
 
-        $this->assertArrayHasKey(RefundDependencyProvider::PLUGIN_REFUND_CALCULATOR, $container);
-        $this->assertInstanceOf(RefundCalculatorPluginInterface::class, $container[RefundDependencyProvider::PLUGIN_REFUND_CALCULATOR]);
+        $this->assertArrayHasKey(RefundDependencyProvider::PLUGIN_ITEM_REFUND_CALCULATOR, $container);
+        $this->assertInstanceOf(RefundCalculatorPluginInterface::class, $container[RefundDependencyProvider::PLUGIN_ITEM_REFUND_CALCULATOR]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProvideBusinessLayerDependenciesShouldAddRefundableExpenseAmountCalculatorPlugin()
+    {
+        $refundDependencyProvider = new RefundDependencyProvider();
+        $container = new Container();
+        $container = $refundDependencyProvider->provideBusinessLayerDependencies($container);
+
+        $this->assertArrayHasKey(RefundDependencyProvider::PLUGIN_ITEM_REFUND_CALCULATOR, $container);
+        $this->assertInstanceOf(RefundCalculatorPluginInterface::class, $container[RefundDependencyProvider::PLUGIN_EXPENSE_REFUND_CALCULATOR]);
     }
 
     /**

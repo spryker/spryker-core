@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Refund\Business;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -22,6 +23,7 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
      * - Calculates refund amount for given OrderTransfer and OrderItems which should be refunded.
      * - Adds refundable amount to RefundTransfer.
      * - Adds items with canceled amount to RefundTransfer.
+     * - Uses calculator plugin stack for calculation.
      *
      * @api
      *
@@ -33,6 +35,40 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity)
     {
         return $this->getFactory()->createRefundCalculator()->calculateRefund($salesOrderItems, $salesOrderEntity);
+    }
+
+    /**
+     * Specification:
+     * - Calculates refundable item amount.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] array $salesOrderItems
+     *
+     * @return \Generated\Shared\Transfer\RefundTransfer
+     */
+    public function calculateRefundableItemAmount(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems)
+    {
+        return $this->getFactory()->createItemRefundCalculator()->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
+    }
+
+    /**
+     * Specification:
+     * - Calculates refundable expense amount.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] array $salesOrderItems
+     *
+     * @return \Generated\Shared\Transfer\RefundTransfer
+     */
+    public function calculateRefundableExpenseAmount(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems)
+    {
+        return $this->getFactory()->createExpenseRefundCalculator()->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
     }
 
     /**

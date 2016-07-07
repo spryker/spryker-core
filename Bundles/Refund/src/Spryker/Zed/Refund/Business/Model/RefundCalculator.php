@@ -9,7 +9,6 @@ namespace Spryker\Zed\Refund\Business\Model;
 
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface;
 
 class RefundCalculator implements RefundCalculatorInterface
@@ -21,18 +20,18 @@ class RefundCalculator implements RefundCalculatorInterface
     protected $salesAggregatorFacade;
 
     /**
-     * @var \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface
+     * @var \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface[]
      */
-    protected $refundCalculatorPlugin;
+    protected $refundCalculatorPlugins;
 
     /**
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface $salesAggregatorFacade
-     * @param \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface $refundCalculatorPlugin
+     * @param \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface[] $refundCalculatorPlugins
      */
-    public function __construct(RefundToSalesAggregatorInterface $salesAggregatorFacade, RefundCalculatorPluginInterface $refundCalculatorPlugin)
+    public function __construct(RefundToSalesAggregatorInterface $salesAggregatorFacade, array $refundCalculatorPlugins)
     {
         $this->salesAggregatorFacade = $salesAggregatorFacade;
-        $this->refundCalculatorPlugin = $refundCalculatorPlugin;
+        $this->refundCalculatorPlugins = $refundCalculatorPlugins;
     }
 
     /**
@@ -49,7 +48,9 @@ class RefundCalculator implements RefundCalculatorInterface
         $refundTransfer->setAmount(0);
         $refundTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
 
-        $this->refundCalculatorPlugin->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
+        foreach ($this->refundCalculatorPlugins as $refundCalculatorPlugin) {
+            $refundTransfer = $refundCalculatorPlugin->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
+        }
 
         return $refundTransfer;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Refund\Business;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
@@ -17,6 +18,7 @@ interface RefundFacadeInterface
      * Specification:
      * - Calculates refund amount for given OrderTransfer and OrderItems which should be refunded.
      * - Adds refundable amount to RefundTransfer object and returns it.
+     * - Uses calculator plugin stack for calculation.
      *
      * @api
      *
@@ -26,6 +28,34 @@ interface RefundFacadeInterface
      * @return \Generated\Shared\Transfer\RefundTransfer
      */
     public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity);
+
+    /**
+     * Specification:
+     * - Calculates refundable item amount.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] array $salesOrderItems
+     *
+     * @return \Generated\Shared\Transfer\RefundTransfer
+     */
+    public function calculateRefundableItemAmount(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems);
+
+    /**
+     * Specification:
+     * - Calculates refundable expense amount.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] array $salesOrderItems
+     *
+     * @return \Generated\Shared\Transfer\RefundTransfer
+     */
+    public function calculateRefundableExpenseAmount(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems);
 
     /**
      * Specification:

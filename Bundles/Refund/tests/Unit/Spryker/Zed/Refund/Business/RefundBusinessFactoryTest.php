@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Refund\Business;
 
 use Spryker\Zed\Refund\Business\Model\RefundCalculatorInterface;
+use Spryker\Zed\Refund\Business\Model\RefundCalculator\RefundCalculatorInterface as ConcreteCalculatorInterface;
 use Spryker\Zed\Refund\Business\Model\RefundSaverInterface;
 use Spryker\Zed\Refund\Business\RefundBusinessFactory;
 
@@ -29,6 +30,26 @@ class RefundBusinessFactoryTest extends \PHPUnit_Framework_TestCase
         $refundCalculationFactory = new RefundBusinessFactory();
 
         $this->assertInstanceOf(RefundCalculatorInterface::class, $refundCalculationFactory->createRefundCalculator());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateItemRefundCalculatorShouldReturnRefundCalculatorInterface()
+    {
+        $refundCalculationFactory = new RefundBusinessFactory();
+
+        $this->assertInstanceOf(ConcreteCalculatorInterface::class, $refundCalculationFactory->createItemRefundCalculator());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateExpenseRefundCalculatorShouldReturnRefundCalculatorInterface()
+    {
+        $refundCalculationFactory = new RefundBusinessFactory();
+
+        $this->assertInstanceOf(ConcreteCalculatorInterface::class, $refundCalculationFactory->createExpenseRefundCalculator());
     }
 
     /**

@@ -9,6 +9,8 @@ namespace Spryker\Zed\Refund\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Refund\Business\Model\RefundCalculator;
+use Spryker\Zed\Refund\Business\Model\RefundCalculator\ExpenseRefundCalculator;
+use Spryker\Zed\Refund\Business\Model\RefundCalculator\ItemRefundCalculator;
 use Spryker\Zed\Refund\Business\Model\RefundSaver;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 
@@ -26,8 +28,24 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     {
         return new RefundCalculator(
             $this->getSalesAggregatorFacade(),
-            $this->getRefundCalculatorPlugin()
+            $this->getRefundCalculatorPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Refund\Business\Model\RefundCalculator\RefundCalculatorInterface
+     */
+    public function createItemRefundCalculator()
+    {
+        return new ItemRefundCalculator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Refund\Business\Model\RefundCalculator\RefundCalculatorInterface
+     */
+    public function createExpenseRefundCalculator()
+    {
+        return new ExpenseRefundCalculator();
     }
 
     /**
@@ -49,11 +67,14 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface
+     * @return \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface[]
      */
-    protected function getRefundCalculatorPlugin()
+    protected function getRefundCalculatorPlugins()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::PLUGIN_REFUND_CALCULATOR);
+        return [
+            $this->getProvidedDependency(RefundDependencyProvider::PLUGIN_ITEM_REFUND_CALCULATOR),
+            $this->getProvidedDependency(RefundDependencyProvider::PLUGIN_EXPENSE_REFUND_CALCULATOR),
+        ];
     }
 
     /**

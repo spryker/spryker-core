@@ -12,7 +12,8 @@ use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Library\DateFormatter;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPlugin;
+use Spryker\Zed\Refund\Communication\Plugin\RefundableExpenseAmountCalculatorPlugin;
+use Spryker\Zed\Refund\Communication\Plugin\RefundableItemAmountCalculatorPlugin;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
 
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
@@ -20,7 +21,8 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_SALES_AGGREGATOR = 'sales aggregator facade';
     const QUERY_CONTAINER_SALES = 'sales query container';
-    const PLUGIN_REFUND_CALCULATOR = 'refund calculator plugin';
+    const PLUGIN_ITEM_REFUND_CALCULATOR = 'item refund calculator plugin';
+    const PLUGIN_EXPENSE_REFUND_CALCULATOR = 'expense refund calculator plugin';
 
     const CURRENCY_MANAGER = 'currency manager';
     const DATE_FORMATTER = 'date formatter';
@@ -32,7 +34,8 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = $this->addRefundCalculatorPlugin($container);
+        $container = $this->addItemRefundCalculatorPlugin($container);
+        $container = $this->addExpenseRefundCalculatorPlugin($container);
         $container = $this->addSalesAggregatorFacade($container);
         $container = $this->addSalesQueryContainer($container);
 
@@ -57,10 +60,24 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addRefundCalculatorPlugin(Container $container)
+    protected function addItemRefundCalculatorPlugin(Container $container)
     {
-        $container[self::PLUGIN_REFUND_CALCULATOR] = function () {
-            return new RefundCalculatorPlugin();
+        $container[self::PLUGIN_ITEM_REFUND_CALCULATOR] = function () {
+            return new RefundableItemAmountCalculatorPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addExpenseRefundCalculatorPlugin(Container $container)
+    {
+        $container[self::PLUGIN_EXPENSE_REFUND_CALCULATOR] = function () {
+            return new RefundableExpenseAmountCalculatorPlugin();
         };
 
         return $container;

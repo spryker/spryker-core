@@ -9,8 +9,13 @@ namespace Spryker\Zed\Refund\Communication\Plugin;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-interface RefundCalculatorPluginInterface
+/**
+ * @method \Spryker\Zed\Refund\Business\RefundFacade getFacade()
+ * @method \Spryker\Zed\Refund\Communication\RefundCommunicationFactory getFactory()
+ */
+class RefundableExpenseAmountCalculatorPlugin extends AbstractPlugin implements RefundCalculatorPluginInterface
 {
 
     /**
@@ -20,6 +25,9 @@ interface RefundCalculatorPluginInterface
      *
      * @return \Generated\Shared\Transfer\RefundTransfer
      */
-    public function calculateRefund(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems);
+    public function calculateRefund(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems)
+    {
+        return $this->getFacade()->calculateRefundableExpenseAmount($refundTransfer, $orderTransfer, $salesOrderItems);
+    }
 
 }
