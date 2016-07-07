@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Refund;
 
+use Spryker\Shared\Library\Context;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Library\DateFormatter;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPlugin;
@@ -19,6 +22,9 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_SALES = 'sales query container';
     const PLUGIN_REFUND_CALCULATOR = 'refund calculator plugin';
 
+    const CURRENCY_MANAGER = 'currency manager';
+    const DATE_FORMATTER = 'date formatter';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -29,6 +35,19 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRefundCalculatorPlugin($container);
         $container = $this->addSalesAggregatorFacade($container);
         $container = $this->addSalesQueryContainer($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container = $this->addCurrencyManager($container);
+        $container = $this->addDateFormatter($container);
 
         return $container;
     }
@@ -70,6 +89,34 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCurrencyManager(Container $container)
+    {
+        $container[self::CURRENCY_MANAGER] = function () {
+            return CurrencyManager::getInstance();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDateFormatter(Container $container)
+    {
+        $container[self::DATE_FORMATTER] = function () {
+            return new DateFormatter(Context::getInstance(Context::CONTEXT_ZED));
         };
 
         return $container;

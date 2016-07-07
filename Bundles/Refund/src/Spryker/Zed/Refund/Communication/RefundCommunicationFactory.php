@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\Refund\Communication;
 
-use Spryker\Shared\Library\Context;
-use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Shared\Library\DateFormatter;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Refund\Communication\Table\RefundTable;
+use Spryker\Zed\Refund\RefundDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Refund\RefundConfig getConfig()
@@ -39,15 +37,15 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function getDateFormatter()
     {
-        return new DateFormatter(Context::getInstance(Context::CONTEXT_ZED));
+        return $this->getProvidedDependency(RefundDependencyProvider::DATE_FORMATTER);
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
      */
     protected function getCurrencyManager()
     {
-        return CurrencyManager::getInstance();
+        return $this->getProvidedDependency(RefundDependencyProvider::CURRENCY_MANAGER);
     }
 
 }

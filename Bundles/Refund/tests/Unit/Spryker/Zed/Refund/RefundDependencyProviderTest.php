@@ -7,6 +7,8 @@
 
 namespace Unit\Spryker\Zed\Refund;
 
+use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
+use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
@@ -59,6 +61,32 @@ class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey(RefundDependencyProvider::QUERY_CONTAINER_SALES, $container);
         $this->assertInstanceOf(SalesQueryContainerInterface::class, $container[RefundDependencyProvider::QUERY_CONTAINER_SALES]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProvideCommunicationLayerDependenciesShouldAddCurrencyManager()
+    {
+        $refundDependencyProvider = new RefundDependencyProvider();
+        $container = new Container();
+        $container = $refundDependencyProvider->provideCommunicationLayerDependencies($container);
+
+        $this->assertArrayHasKey(RefundDependencyProvider::CURRENCY_MANAGER, $container);
+        $this->assertInstanceOf(CurrencyManagerInterface::class, $container[RefundDependencyProvider::CURRENCY_MANAGER]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProvideCommunicationLayerDependenciesShouldAddDateFormatter()
+    {
+        $refundDependencyProvider = new RefundDependencyProvider();
+        $container = new Container();
+        $container = $refundDependencyProvider->provideCommunicationLayerDependencies($container);
+
+        $this->assertArrayHasKey(RefundDependencyProvider::DATE_FORMATTER, $container);
+        $this->assertInstanceOf(DateFormatterInterface::class, $container[RefundDependencyProvider::DATE_FORMATTER]);
     }
 
 }

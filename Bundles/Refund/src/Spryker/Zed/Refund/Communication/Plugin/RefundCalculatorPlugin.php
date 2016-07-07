@@ -42,6 +42,7 @@ class RefundCalculatorPlugin extends AbstractPlugin implements RefundCalculatorP
         }
 
         $this->calculateRefundableAmount($refundTransfer);
+        $this->setCancelledAmount($refundTransfer);
     }
 
     /**
@@ -68,14 +69,68 @@ class RefundCalculatorPlugin extends AbstractPlugin implements RefundCalculatorP
      */
     protected function calculateRefundableAmount(RefundTransfer $refundTransfer)
     {
+        $this->calculateRefundableItemAmount($refundTransfer);
+        $this->calculateRefundableExpenseAmount($refundTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     *
+     * @return void
+     */
+    protected function calculateRefundableItemAmount(RefundTransfer $refundTransfer)
+    {
         foreach ($refundTransfer->getItems() as $itemTransfer) {
             $refundTransfer->setAmount($refundTransfer->getAmount() + $itemTransfer->getRefundableAmount());
-            $itemTransfer->setCanceledAmount($itemTransfer->getRefundableAmount());
         }
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     *
+     * @return void
+     */
+    protected function calculateRefundableExpenseAmount(RefundTransfer $refundTransfer)
+    {
         if ($refundTransfer->getExpenses()) {
             foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
                 $refundTransfer->setAmount($refundTransfer->getAmount() + $expenseTransfer->getRefundableAmount());
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     *
+     * @return void
+     */
+    protected function setCancelledAmount(RefundTransfer $refundTransfer)
+    {
+        $this->setCancelledItemAmount($refundTransfer);
+        $this->setCancelledExpenseAmount($refundTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     *
+     * @return void
+     */
+    protected function setCancelledItemAmount(RefundTransfer $refundTransfer)
+    {
+        foreach ($refundTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setCanceledAmount($itemTransfer->getRefundableAmount());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     *
+     * @return void
+     */
+    protected function setCancelledExpenseAmount(RefundTransfer $refundTransfer)
+    {
+        if ($refundTransfer->getExpenses()) {
+            foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
                 $expenseTransfer->setCanceledAmount($expenseTransfer->getRefundableAmount());
             }
         }

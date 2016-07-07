@@ -9,7 +9,7 @@ namespace Spryker\Zed\Refund\Communication\Table;
 
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -31,16 +31,16 @@ class RefundTable extends AbstractTable
     protected $dateFormatter;
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManager
+     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
      */
     protected $currencyManager;
 
     /**
      * @param \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface $refundQueryContainer
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
-     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManager
      */
-    public function __construct(RefundQueryContainerInterface $refundQueryContainer, DateFormatterInterface $dateFormatter, CurrencyManager $currencyManager)
+    public function __construct(RefundQueryContainerInterface $refundQueryContainer, DateFormatterInterface $dateFormatter, CurrencyManagerInterface $currencyManager)
     {
         $this->refundQueryContainer= $refundQueryContainer;
         $this->dateFormatter = $dateFormatter;
