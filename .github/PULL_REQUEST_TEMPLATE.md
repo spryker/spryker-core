@@ -1,7 +1,9 @@
 #### Overview
 - Developers: @your_names
 
-- Issue: [#main_issue_number](https://github.com/spryker/spryker/issues/issue_number)
+- Issue: https://spryker.atlassian.net/browse/issue_number
+
+- Project PR: https://github.com/spryker/project/pull/pr_number
 
 - Bundles to release:
 
@@ -22,7 +24,7 @@
 - [ ] Unit tests
 - [ ] Functional (Facade) tests
 - [ ] Scrutinizer score (>= 9.7)
-- [ ] Documentation [PR](https://github.com/spryker/spryker.github.io/pull/pr_number)
+- [ ] Documentation PR: https://github.com/spryker/spryker.github.io/pull/pr_number
 - [ ] No open tickets that require a major release (also checked cleanups)
 - [ ] Legal check for external dependencies
 
