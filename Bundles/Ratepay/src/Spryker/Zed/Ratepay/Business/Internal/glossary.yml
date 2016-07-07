@@ -1,0 +1,102 @@
+payment.method.checkout_title.ratepayElv:
+  translations:
+    en_US: 'RatePAY Direct Debit'
+payment.method.checkout_title.ratepayInstallment:
+  translations:
+    en_US: 'RatePAY Installment'
+payment.method.checkout_title.ratepayInvoice:
+  translations:
+    en_US: 'RatePAY Invoice'
+payment.method.checkout_title.ratepayPrepayment:
+  translations:
+    en_US: 'RatePAY Prepayment'
+summary.payment.method.ratepayElv:
+  translations:
+    en_US: 'RatePAY Direct Debit'
+summary.payment.method.ratepayInstallment:
+  translations:
+    en_US: 'RatePAY Installment'
+summary.payment.method.ratepayInvoice:
+  translations:
+    en_US: 'RatePAY Invoice'
+summary.payment.method.ratepayPrepayment:
+  translations:
+    en_US: 'RatePAY Prepayment'
+payment.ratepay.elv:
+  translations:
+    en_US: 'Direct Debit'
+payment.ratepay.installment:
+  translations:
+    en_US: 'Installment'
+payment.ratepay.invoice:
+  translations:
+    en_US: 'Invoice'
+payment.ratepay.prepayment:
+  translations:
+    en_US: 'Prepayment'
+payment.ratepay.date_of_birth:
+  translations:
+    en_US: 'Date of birth'
+payment.ratepay.phone:
+  translations:
+    en_US: 'Phone number'
+payment.ratepay.customer_allow_credit_inquiry:
+  translations:
+    en_US: 'Customer allow credit inquiry'
+payment.ratepay.bank_account:
+  translations:
+    en_US: 'Bank account'
+payment.ratepay.bank_account.holder:
+  translations:
+    en_US: 'Bank account holder'
+payment.ratepay.bank_account.iban:
+  translations:
+    en_US: 'Bank account IBAN'
+payment.ratepay.bank_account.bic:
+  translations:
+    en_US: 'Bank account BIC'
+payment.ratepay.debit_pay_type:
+  translations:
+    en_US: 'Debit pay type'
+payment.ratepay.installment_calculator:
+  translations:
+    en_US: 'Installment calculator'
+payment.ratepay.installment_calculator.type:
+  translations:
+    en_US: 'Calculator type'
+payment.ratepay.installment_calculator.month_allowed:
+  translations:
+    en_US: 'Month allowed'
+payment.ratepay.installment_calculator.interest_rate:
+  translations:
+    en_US: 'Interest rate'
+summary.ratepay.installment.type:
+  translations:
+    en_US: 'Type'
+summary.ratepay.installment.plan_details:
+  translations:
+    en_US: 'Plan details'
+summary.ratepay.installment.rates_number:
+  translations:
+    en_US: 'Number of rates'
+summary.ratepay.installment.last_month_amount:
+  translations:
+    en_US: 'Last month amount'
+summary.ratepay.installment.amout_per_month:
+  translations:
+    en_US: 'Amount per month'
+summary.ratepay.installment.annual_rercentage_rate:
+  translations:
+    en_US: 'Annual percentage rate'
+summary.ratepay.installment.service_charge:
+  translations:
+    en_US: 'Service charge'
+summary.ratepay.installment.interest_amount:
+  translations:
+    en_US: 'Interest amount'
+summary.ratepay.installment.order_grand_total:
+  translations:
+    en_US: 'Order grant total'
+summary.ratepay.installment.plan_grand_total:
+  translations:
+    en_US: 'Plan grant total'

@@ -234,6 +234,7 @@
       "Spryker\\Zed\\Maintenance\\": "Bundles/Maintenance/src",
       "Unit\\Spryker\\Zed\\Maintenance\\": "Bundles/Maintenance/tests",
       "Spryker\\Shared\\Messenger\\": "Bundles/Messenger/src",
+      "Spryker\\Yves\\Messenger\\": "Bundles/Messenger/src",
       "Unit\\Spryker\\Shared\\Messenger\\": "Bundles/Messenger/tests",
       "Spryker\\Zed\\Messenger\\": "Bundles/Messenger/src",
       "Unit\\Spryker\\Zed\\Messenger\\": "Bundles/Messenger/tests",
@@ -352,6 +353,14 @@
       "Unit\\Spryker\\Shared\\Refund\\": "Bundles/Refund/tests",
       "Spryker\\Zed\\Refund\\": "Bundles/Refund/src",
       "Unit\\Spryker\\Zed\\Refund\\": "Bundles/Refund/tests",
+
+      "Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/src",
+      "Spryker\\Yves\\Ratepay\\": "Bundles/Ratepay/src",
+      "Spryker\\Shared\\Ratepay\\": "Bundles/Ratepay/src",
+      "Spryker\\Client\\Ratepay\\": "Bundles/Ratepay/src",
+      "Functional\\Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/tests",
+      "Unit\\Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/tests",
+
       "Spryker\\Client\\Sales\\": "Bundles/Sales/src",
       "Unit\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",
       "Functional\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",
