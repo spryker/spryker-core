@@ -19,7 +19,7 @@ class BundleParser
     /**
      * @var array
      */
-    protected $coreBundleNamespaces = ['Spryker'];
+    protected $coreBundleNamespaces = ['Spryker', 'Orm', 'Client'];
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
