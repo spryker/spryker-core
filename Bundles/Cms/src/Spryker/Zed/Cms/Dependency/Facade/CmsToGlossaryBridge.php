@@ -151,4 +151,15 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
         return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }
 
+    /**
+     * @param int $idKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return void
+     */
+    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null)
+    {
+        $this->glossaryFacade->touchTranslationForKeyId($idKey, $localeTransfer);
+    }
+
 }
