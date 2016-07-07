@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FactFinder\Business\Api\Request;
+namespace Spryker\Zed\FactFinder\Business\Api\Handler\Request;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 

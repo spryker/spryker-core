@@ -12,7 +12,7 @@ trait LoggerTrait
 {
 
     /**
-     * @return \Psr\Log\LoggerInterface|null
+     * @return \Psr\Log\LoggerInterface
      */
     protected function getLogger()
     {

@@ -7,14 +7,41 @@
 
     <transfer name="Quote">
         <property name="FFSearchRequest" type="FFSearchRequest"/>
+        <property name="FFRecommendationRequest" type="FFRecommendationRequest"/>
+        <property name="FFSuggestRequest" type="FFSuggestRequest"/>
+        <property name="FFTagCloudRequest" type="FFTagCloudRequest"/>
     </transfer>
 
     <transfer name="FFSearchRequest">
-
+        <property name="temp" type="string"/>
     </transfer>
 
     <transfer name="FFSearchResponse">
+        <property name="temp" type="string"/>
+    </transfer>
 
+    <transfer name="FFRecommendationRequest">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFRecommendationResponse">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFSuggestRequest">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFSuggestResponse">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFTagCloudRequest">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFTagCloudResponse">
+        <property name="temp" type="string"/>
     </transfer>
 
 </transfer>
