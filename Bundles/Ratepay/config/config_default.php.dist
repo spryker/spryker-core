@@ -6,7 +6,7 @@ $config[RatepayConstants::PROFILE_ID] = '';
 $config[RatepayConstants::SECURITY_CODE] = '';
 $config[RatepayConstants::SNIPPET_ID] = 'ratepay';
 $config[RatepayConstants::SHOP_ID] = '';
-$config[RatepayConstants::API_TEST_URL] = 'https://gateway-int.ratepay.com/api/xml/1_0';
-$config[RatepayConstants::API_LIVE_URL] = 'https://gateway.ratepay.com/api/xml/1_0';
-$config[RatepayConstants::MODE] = RatepayConstants::MODE_TEST;
 $config[RatepayConstants::SYSTEM_ID] = '';
+
+/* Test URL - Live URL is https://gateway.ratepay.com/api/xml/1_0 */
+$config[RatepayConstants::API_URL] = 'https://gateway-int.ratepay.com/api/xml/1_0';

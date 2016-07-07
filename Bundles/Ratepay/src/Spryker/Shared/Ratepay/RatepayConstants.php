@@ -31,7 +31,7 @@ interface RatepayConstants
     /**
      * API modes urls.
      */
-    const API_URL = 'RATEPAY_API_LIVE_URL';
+    const API_URL = 'RATEPAY_API_URL';
 
     /**
      * Service method
