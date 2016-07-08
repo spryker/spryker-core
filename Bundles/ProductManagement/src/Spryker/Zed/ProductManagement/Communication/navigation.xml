@@ -5,5 +5,23 @@
         <title>Product Management</title>
         <uri>/product-management</uri>
         <icon>fa-database</icon>
+        <pages>
+            <products>
+                <label>Products</label>
+                <title>Products</title>
+                <bundle>product-management</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <icon>fa-database</icon>
+            </products>
+            <attributes>
+                <label>Attribute Preferences</label>
+                <title>Attribute Preferences</title>
+                <bundle>product-management</bundle>
+                <controller>attributes</controller>
+                <action>index</action>
+                <icon>fa-bolt</icon>
+            </attributes>
+        </pages>
     </product-management>
 </config>

@@ -12,6 +12,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAdd
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
+use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -177,6 +178,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         }
 
         return $result;
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable
+     */
+    public function createAttributeTable()
+    {
+        return new AttributeTable($this->getQueryContainer());
     }
 
 }

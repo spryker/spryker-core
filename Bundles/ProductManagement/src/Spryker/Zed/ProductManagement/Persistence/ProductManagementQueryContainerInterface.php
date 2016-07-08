@@ -22,36 +22,15 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeLocalizedQuery
-     */
-    public function queryProductManagementAttributeLocalized();
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeMetadataQuery
-     */
-    public function queryProductManagementAttributeMetadata();
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeInputQuery
-     */
-    public function queryProductManagementAttributeInput();
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeTypeQuery
-     */
-    public function queryProductManagementAttributeType();
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function queryProductManagementAttributeValue();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryProductAttributeKey();
 
 }

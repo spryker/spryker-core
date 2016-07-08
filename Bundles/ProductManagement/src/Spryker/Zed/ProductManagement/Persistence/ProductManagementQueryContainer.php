@@ -28,53 +28,23 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeLocalizedQuery
-     */
-    public function queryProductManagementAttributeLocalized()
-    {
-        return $this->getFactory()->createProductManagementAttributeLocalizedQuery();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeMetadataQuery
-     */
-    public function queryProductManagementAttributeMetadata()
-    {
-        return $this->getFactory()
-            ->createProductManagementAttributeMetadataQuery()
-            ->orderByKey();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeInputQuery
-     */
-    public function queryProductManagementAttributeInput()
-    {
-        return $this->getFactory()->createProductManagementAttributeInputQuery();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeTypeQuery
-     */
-    public function queryProductManagementAttributeType()
-    {
-        return $this->getFactory()->createProductManagementAttributeTypeQuery();
-    }
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function queryProductManagementAttributeValue()
     {
         return $this->getFactory()->createProductManagementAttributeValueQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryProductAttributeKey()
+    {
+        return $this->getFactory()
+            ->createProductAttributeKeyQuery()
+            ->leftJoinSpyProductManagementAttribute();
     }
 
 }
