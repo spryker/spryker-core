@@ -128,14 +128,14 @@
         <id-method-parameter value="spy_product_attribute_type_value_pk_seq"/>
     </table>
 
-    <table name="spy_product_attribute" idMethod="native" allowPkInsert="true" phpName="SpyProductAttribute" identifierQuoting="true">
-        <column name="id_product_attribute" primaryKey="true" type="INTEGER" autoIncrement="true"/>
+    <table name="spy_product_attribute_key" idMethod="native" allowPkInsert="true" phpName="SpyProductAttributeKey" identifierQuoting="true">
+        <column name="id_product_attribute_key" primaryKey="true" type="INTEGER" autoIncrement="true"/>
         <column name="key" required="true" type="VARCHAR"/>
-        <unique name="spy_product_attribute-unique-key">
+        <unique name="spy_product_attribute_key-unique-key">
             <unique-column name="key"/>
         </unique>
 
-        <id-method-parameter value="spy_product_attribute_pk_seq"/>
+        <id-method-parameter value="spy_product_attribute_key_pk_seq"/>
     </table>
 
 </database>
