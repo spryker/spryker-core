@@ -3,30 +3,15 @@
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="Orm\Zed\ProductManagement\Persistence" package="src.Orm.Zed.ProductManagement.Persistence">
 
-    <table name="spy_product_management_attribute_input" idMethod="native" allowPkInsert="true" identifierQuoting="true">
-        <column name="id_product_management_attribute_input" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="input" type="VARCHAR" size="128" required="true" />
-
-        <unique name="spy_product_management_attribute_input-unique-input">
-            <unique-column name="input" />
-        </unique>
-
-        <id-method-parameter value="spy_product_management_attribute_input_pk_seq" />
-    </table>
-
     <table name="spy_product_management_attribute" idMethod="native" allowPkInsert="true">
         <column name="id_product_management_attribute" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="fk_product_attribute_key" type="INTEGER" required="true" />
-        <column name="fk_product_management_input" type="INTEGER" required="true" />
         <column name="allow_input" type="BOOLEAN" required="true" defaultValue="true" />
+        <column name="input_type" type="VARCHAR" required="true" />
         <column name="is_multiple" type="BOOLEAN" required="true" defaultValue="false" />
 
         <foreign-key name="spy_product_management_attribute-fk_product_attribute_key" foreignTable="spy_product_attribute_key">
             <reference local="fk_product_attribute_key" foreign="id_product_attribute_key" />
-        </foreign-key>
-
-        <foreign-key name="spy_product_management_attribute-fk_product_management_input" foreignTable="spy_product_management_attribute_input">
-            <reference local="fk_product_management_input" foreign="id_product_management_attribute_input" />
         </foreign-key>
 
         <id-method-parameter value="spy_product_management_attribute_pk_seq" />
