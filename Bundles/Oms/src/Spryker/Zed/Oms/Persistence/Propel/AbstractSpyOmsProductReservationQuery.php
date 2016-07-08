@@ -18,6 +18,6 @@ use Orm\Zed\Oms\Persistence\Base\SpyOmsProductReservationQuery as BaseSpyOmsProd
  * long as it does not already exist in the output directory.
  *
  */
-class AbstractSpyOmsProductReservationQuery extends BaseSpyOmsProductReservationQuery
+abstract class AbstractSpyOmsProductReservationQuery extends BaseSpyOmsProductReservationQuery
 {
 }

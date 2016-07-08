@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
+use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
+use Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface;
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -31,6 +33,18 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return AvailabilityHandlerInterface
+     */
+    public function createAvailabilityHandler()
+    {
+        return new AvailabilityHandler(
+            $this->createSellableModel(),
+            $this->getTouchFacade(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected function getStockFacade()
@@ -44,6 +58,14 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     protected function getOmsFacade()
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface
+     */
+    protected function getTouchFacade()
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_TOUCH);
     }
 
     /**

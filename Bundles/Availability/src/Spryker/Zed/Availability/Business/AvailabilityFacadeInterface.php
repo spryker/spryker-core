@@ -29,4 +29,13 @@ interface AvailabilityFacadeInterface
      */
     public function calculateStockForProduct($sku);
 
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateAvailability($sku);
+
 }

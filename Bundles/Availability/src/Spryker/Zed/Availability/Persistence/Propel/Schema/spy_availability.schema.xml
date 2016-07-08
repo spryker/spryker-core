@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Availability\Persistence" namespaceAutoPackage="false" package="src.Orm.Zed.Availability.Persistence" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+
+    <table name="spy_availability" phpName="SpyAvailability">
+        <column name="id_availability" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="sku" type="VARCHAR" size="255" required="true"/>
+        <column name="quantity" type="INTEGER" required="true"/>
+
+        <unique name="spy_availability-sku">
+            <unique-column name="sku"/>
+        </unique>
+
+        <id-method-parameter value="spy_availability_pk_seq"/>
+    </table>
+
+</database>

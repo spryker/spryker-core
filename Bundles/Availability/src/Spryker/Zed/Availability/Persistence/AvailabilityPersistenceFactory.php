@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Availability\Persistence;
 
+use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -15,4 +16,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return SpyAvailabilityQuery
+     */
+    public function createSpyAvailabilityQuery()
+    {
+        return SpyAvailabilityQuery::create();
+    }
 }

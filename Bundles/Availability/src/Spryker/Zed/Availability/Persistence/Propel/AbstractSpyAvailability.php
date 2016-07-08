@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oms\Persistence\Propel;
+namespace Spryker\Zed\Availability\Persistence\Propel;
 
-use Orm\Zed\Oms\Persistence\Base\SpyOmsProductReservation as BaseSpyOmsProductReservation;
+use Orm\Zed\Availability\Persistence\Base\SpyAvailability as BaseSpyAvailability;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_oms_product_reservation' table.
+ * Skeleton subclass for representing a row from the 'spy_availability' table.
  *
  *
  *
@@ -18,6 +18,6 @@ use Orm\Zed\Oms\Persistence\Base\SpyOmsProductReservation as BaseSpyOmsProductRe
  * long as it does not already exist in the output directory.
  *
  */
-abstract class AbstractSpyOmsProductReservation extends BaseSpyOmsProductReservation
+abstract class AbstractSpyAvailability extends BaseSpyAvailability
 {
 }

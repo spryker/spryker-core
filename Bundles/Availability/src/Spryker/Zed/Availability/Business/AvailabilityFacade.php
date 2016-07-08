@@ -59,4 +59,15 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
             ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateAvailability($sku)
+    {
+        $this->getFactory()->createAvailabilityHandler()->updateAvailability($sku);
+    }
 }
