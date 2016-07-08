@@ -32,23 +32,6 @@
         <id-method-parameter value="spy_product_management_attribute_pk_seq" />
     </table>
 
-    <table name="spy_product_management_attribute_localized" idMethod="native" allowPkInsert="true">
-        <column name="id_product_management_attribute_localized" type="INTEGER" primaryKey="true" autoIncrement="true" />
-        <column name="fk_locale" type="INTEGER" required="true" />
-        <column name="fk_attribute" type="INTEGER" required="true" />
-        <column name="name" type="VARCHAR" size="255" required="true" />
-
-        <foreign-key name="spy_product_management_attribute_localized-fk_locale" foreignTable="spy_locale">
-            <reference local="fk_locale" foreign="id_locale" />
-        </foreign-key>
-
-        <foreign-key name="spy_product_management_attribute_localized-fk_attribute" foreignTable="spy_product_management_attribute">
-            <reference local="fk_attribute" foreign="id_product_management_attribute" />
-        </foreign-key>
-
-        <id-method-parameter value="spy_product_management_attribute_localized_pk_seq" />
-    </table>
-
     <table name="spy_product_management_attribute_value" idMethod="native" allowPkInsert="true">
         <column name="id_product_management_attribute_value" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="fk_locale" type="INTEGER" required="false" />
