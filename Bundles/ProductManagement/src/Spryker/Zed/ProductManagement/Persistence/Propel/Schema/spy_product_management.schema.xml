@@ -17,7 +17,7 @@
     <table name="spy_product_management_attribute" idMethod="native" allowPkInsert="true">
         <column name="id_product_management_attribute" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="fk_product_attribute_key" type="INTEGER" required="true" />
-        <column name="fk_input" type="INTEGER" required="true" />
+        <column name="fk_product_management_input" type="INTEGER" required="true" />
         <column name="allow_input" type="BOOLEAN" required="true" defaultValue="true" />
         <column name="is_multiple" type="BOOLEAN" required="true" defaultValue="false" />
 
@@ -25,8 +25,8 @@
             <reference local="fk_product_attribute_key" foreign="id_product_attribute_key" />
         </foreign-key>
 
-        <foreign-key name="spy_product_management_attribute-fk_input" foreignTable="spy_product_management_attribute_input">
-            <reference local="fk_input" foreign="id_product_management_attribute_input" />
+        <foreign-key name="spy_product_management_attribute-fk_product_management_input" foreignTable="spy_product_management_attribute_input">
+            <reference local="fk_product_management_input" foreign="id_product_management_attribute_input" />
         </foreign-key>
 
         <id-method-parameter value="spy_product_management_attribute_pk_seq" />
@@ -35,7 +35,7 @@
     <table name="spy_product_management_attribute_value" idMethod="native" allowPkInsert="true">
         <column name="id_product_management_attribute_value" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="fk_locale" type="INTEGER" required="false" />
-        <column name="fk_attribute" type="INTEGER" required="true" />
+        <column name="fk_product_management_attribute" type="INTEGER" required="true" />
         <column name="value" type="VARCHAR" size="255" required="true" />
         <column name="min_value" type="VARCHAR" size="255" required="false" />
         <column name="max_value" type="VARCHAR" size="255" required="false" />
@@ -44,12 +44,12 @@
             <reference local="fk_locale" foreign="id_locale" />
         </foreign-key>
 
-        <foreign-key name="spy_product_management_attribute_value-fk_attribute" foreignTable="spy_product_management_attribute">
-            <reference local="fk_attribute" foreign="id_product_management_attribute" />
+        <foreign-key name="spy_product_management_attribute_value-fk_product_management_attribute" foreignTable="spy_product_management_attribute">
+            <reference local="fk_product_management_attribute" foreign="id_product_management_attribute" />
         </foreign-key>
 
         <unique name="spy_product_management_attribute_type_value-unique-locale_attribute_value">
-            <unique-column name="fk_attribute" />
+            <unique-column name="fk_product_management_attribute" />
             <unique-column name="fk_locale" /><!-- this really does not work with null values, add php logic to ensure unique values -->
             <unique-column name="value" />
         </unique>
