@@ -18,6 +18,8 @@ interface AttributeProcessorInterface
 
     /**
      * @param \Spryker\Shared\Library\Collection\CollectionInterface $abstractAttributes
+     *
+     * @return $this
      */
     public function setAbstractAttributes(CollectionInterface $abstractAttributes);
 
@@ -27,9 +29,11 @@ interface AttributeProcessorInterface
     public function getConcreteAttributes();
 
     /**
-     * @param \Spryker\Shared\Library\Collection\CollectionInterface $attributes
+     * @param \Spryker\Shared\Library\Collection\CollectionInterface $concreteAttributes
+     *
+     * @return $this
      */
-    public function setConcreteAttributes(CollectionInterface $attributes);
+    public function setConcreteAttributes(CollectionInterface $concreteAttributes);
 
     /**
      * @return \Spryker\Shared\Library\Collection\CollectionInterface
@@ -37,9 +41,11 @@ interface AttributeProcessorInterface
     public function getConcreteLocalizedAttributes();
 
     /**
-     * @param \Spryker\Shared\Library\Collection\CollectionInterface $localizedAttributes
+     * @param \Spryker\Shared\Library\Collection\CollectionInterface $concreteLocalizedAttributes
+     *
+     * @return $this
      */
-    public function setConcreteLocalizedAttributes(CollectionInterface $localizedAttributes);
+    public function setConcreteLocalizedAttributes(CollectionInterface $concreteLocalizedAttributes);
 
     /**
      * @return \Spryker\Shared\Library\Collection\CollectionInterface
@@ -48,6 +54,8 @@ interface AttributeProcessorInterface
 
     /**
      * @param \Spryker\Shared\Library\Collection\CollectionInterface $abstractLocalizedAttributes
+     *
+     * @return $this
      */
     public function setAbstractLocalizedAttributes(CollectionInterface $abstractLocalizedAttributes);
 

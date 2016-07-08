@@ -61,11 +61,14 @@ class AttributeProcessor implements AttributeProcessorInterface
 
     /**
      * @param \Spryker\Shared\Library\Collection\CollectionInterface $abstractAttributes
-     * @return void
+     *
+     * @return $this
      */
     public function setAbstractAttributes(CollectionInterface $abstractAttributes)
     {
         $this->abstractAttributes = $abstractAttributes;
+
+        return $this;
     }
 
     /**
@@ -78,11 +81,14 @@ class AttributeProcessor implements AttributeProcessorInterface
 
     /**
      * @param \Spryker\Shared\Library\Collection\CollectionInterface $concreteAttributes
-     * @return void
+     *
+     * @return $this
      */
     public function setConcreteAttributes(CollectionInterface $concreteAttributes)
     {
         $this->concreteAttributes = $concreteAttributes;
+
+        return $this;
     }
 
     /**
@@ -95,11 +101,14 @@ class AttributeProcessor implements AttributeProcessorInterface
 
     /**
      * @param \Spryker\Shared\Library\Collection\CollectionInterface $concreteLocalizedAttributes
-     * @return void
+     *
+     * @return $this
      */
     public function setConcreteLocalizedAttributes(CollectionInterface $concreteLocalizedAttributes)
     {
         $this->concreteLocalizedAttributes = $concreteLocalizedAttributes;
+
+        return $this;
     }
 
     /**
@@ -112,11 +121,14 @@ class AttributeProcessor implements AttributeProcessorInterface
 
     /**
      * @param \Spryker\Shared\Library\Collection\CollectionInterface $abstractLocalizedAttributes
-     * @return void
+     *
+     * @return $this
      */
     public function setAbstractLocalizedAttributes(CollectionInterface $abstractLocalizedAttributes)
     {
         $this->abstractLocalizedAttributes = $abstractLocalizedAttributes;
+
+        return $this;
     }
 
     /**
