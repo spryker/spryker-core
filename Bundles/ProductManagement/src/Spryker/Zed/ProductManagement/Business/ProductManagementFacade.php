@@ -79,18 +79,6 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
-     */
-    public function getProductAttributeMetadataCollection()
-    {
-        return $this->getFactory()
-            ->createAttributeManager()
-            ->getProductAttributeMetadataCollection();
-    }
-
-    /**
-     * @api
-     *
      * @param int $idProductAbstract
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -116,18 +104,6 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
         return $this->getFactory()
             ->createProductManager()
             ->getProductAttributesByAbstractProductId($idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getProductAttributesTypeCollection()
-    {
-        return $this->getFactory()
-            ->createAttributeManager()
-            ->getProductAttributesTypeCollection();
     }
 
 }

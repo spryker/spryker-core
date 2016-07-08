@@ -56,10 +56,6 @@ class EditController extends AddController
             ->getProductManagementFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
-        $attributeMetadataCollection = $this->normalizeAttributeMetadataArray(
-            $this->getFactory()->getProductAttributeMetadataCollection()
-        );
-
         $attributeCollection = $this->normalizeAttributeArray(
             $this->getFactory()->getProductAttributeCollection()
         );
@@ -98,7 +94,6 @@ class EditController extends AddController
             'currentProduct' => $productAbstractTransfer->toArray(),
             'matrix' => [],
             'concretes' => $this->someToView($idProductAbstract, $concreteProductCollection),
-            'attributeGroupCollection' => $this->someViewMetadata($attributeMetadataCollection, $attributeCollection),
             'attributeValueCollection' => $attributeCollection,
         ]);
     }

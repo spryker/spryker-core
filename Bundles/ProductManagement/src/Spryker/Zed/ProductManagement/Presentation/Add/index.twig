@@ -206,8 +206,8 @@
                         <thead>
                         <tr>
                             <th>Sku</th>
-                            {% for attributeGroupKey,attributeGroup in attributeGroupCollection %}
-                                <th>{{ attributeGroup.label }}</th>
+                            {% for attributeGroupKey,attributeGroup in attributeValueCollection %}
+                                <th>{{ attributeGroup.key }}</th>
                             {% endfor %}
                             <th class="center">Price</th>
                             <th class="center">Stock</th>
@@ -220,7 +220,7 @@
                                 {# --------------------------------------- SKU --------------------------------------- #}
                                 <td>{{ product.sku }}</td>
                                 {# --------------------------------------- ATTRIBUTES --------------------------------------- #}
-                                {% for attributeGroupKey,attributeGroup in attributeGroupCollection %}
+                                {% for attributeGroupKey,attributeGroup in attributeValueCollection %}
                                     {% if attributeValueCollection[attributeGroupKey] is defined %}
                                         {% set productAttributeMetadata = attributeValueCollection[attributeGroupKey] %}
                                     {% endif %}
@@ -266,8 +266,8 @@
                         <tfoot>
                         <tr>
                             <th>Sku</th>
-                            {% for attributeGroupKey,attributeGroup in attributeGroupCollection %}
-                                <th>{{ attributeGroup.label }}</th>
+                            {% for attributeGroupKey,attributeGroup in attributeValueCollection %}
+                                <th>{{ attributeGroup.key }}</th>
                             {% endfor %}
                             <th class="center">Price</th>
                             <th class="center">Stock</th>

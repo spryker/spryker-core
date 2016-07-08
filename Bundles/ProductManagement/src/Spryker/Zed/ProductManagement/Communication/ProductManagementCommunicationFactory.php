@@ -60,7 +60,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
-            $this->getProductAttributeMetadataCollection(),
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection()
         );
@@ -78,7 +77,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
             $this->getLocaleFacade(),
-            $this->getProductAttributeMetadataCollection(),
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection()
         );
@@ -151,16 +149,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
-     */
-    public function getProductAttributeMetadataCollection()
-    {
-        return $this->reindexAttributeMetadataCollection(
-            $this->getProductManagementFacade()->getProductAttributeMetadataCollection()
-        );
-    }
-
-    /**
      * @return array
      */
     public function getProductTaxCollection()
@@ -185,22 +173,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         $result = [];
         foreach ($attributeCollection as $attributeTransfer) {
-            $result[$attributeTransfer->getMetadata()->getKey()] = $attributeTransfer;
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[] $metadataCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
-     */
-    protected function reindexAttributeMetadataCollection(array $metadataCollection)
-    {
-        $result = [];
-        foreach ($metadataCollection as $metadataTransfer) {
-            $result[$metadataTransfer->getKey()] = $metadataTransfer;
+            $result[$attributeTransfer->getKey()] = $attributeTransfer;
         }
 
         return $result;

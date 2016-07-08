@@ -59,7 +59,7 @@ class AttributeManager implements AttributeManagerInterface
     {
         $collection = $this->productManagementQueryContainer
             ->queryProductManagementAttribute()
-            ->innerJoinSpyProductManagementAttributeInput()
+            ->innerJoinSpyProductAttributeKey()
             ->find();
 
         return $this->getTransferGenerator()->convertProductAttributeCollection($collection);
@@ -68,7 +68,7 @@ class AttributeManager implements AttributeManagerInterface
     /**
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
      */
-    public function getProductAttributesValueCollection()
+    public function getProductAttributeValueCollection()
     {
         $collection = $this->productManagementQueryContainer
             ->queryProductManagementAttributeValue()

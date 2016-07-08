@@ -42,5 +42,10 @@
         <property name="attributes" type="array" singular="attribute" />
     </transfer>
 
+    <transfer name="ProductAttributeKey">
+        <property name="idProductAttributeKey" type="int" />
+        <property name="key" type="string" />
+    </transfer>
+
 </transfers>
 

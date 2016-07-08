@@ -16,28 +16,8 @@ interface AttributeManagerInterface
     public function getProductAttributeCollection();
 
     /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeLocalizedTransfer[]
-     */
-    public function getProductAttributeLocalizedCollection();
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
-     */
-    public function getProductAttributeMetadataCollection();
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeInputTransfer[]
-     */
-    public function getProductAttributesInputCollection();
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTypeTransfer[]
-     */
-    public function getProductAttributesTypeCollection();
-
-    /**
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
      */
-    public function getProductAttributesValueCollection();
+    public function getProductAttributeValueCollection();
 
 }

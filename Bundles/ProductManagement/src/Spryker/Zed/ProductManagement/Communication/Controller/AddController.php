@@ -251,25 +251,10 @@ class AddController extends AbstractController
     {
         $attributeArray = [];
         foreach ($attributeCollection as $attributeTransfer) {
-            $attributeArray[$attributeTransfer->getMetadata()->getKey()] = $attributeTransfer;
+            $attributeArray[$attributeTransfer->getKey()] = $attributeTransfer;
         }
 
         return $attributeArray;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[] $attributeMetadataCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
-     */
-    protected function normalizeAttributeMetadataArray(array $attributeMetadataCollection)
-    {
-        $attributeMetadataArray = [];
-        foreach ($attributeMetadataCollection as $metadataTransfer) {
-            $attributeMetadataArray[$metadataTransfer->getKey()] = $metadataTransfer;
-        }
-
-        return $attributeMetadataArray;
     }
 
     /**
@@ -319,37 +304,6 @@ class AddController extends AbstractController
         }
 
         return $r;
-    }
-
-    /**
-     * @param array $attributeMetadataCollection
-     * @param array $attributeCollection
-     *
-     * @return array
-     */
-    protected function someViewMetadata(array $attributeMetadataCollection, array $attributeCollection)
-    {
-        $localizedAttributeMetadataNames = $this->getLocalizedAttributeMetadataNames($attributeMetadataCollection, $attributeCollection);
-
-        $items = [];
-        foreach ($localizedAttributeMetadataNames as $type => $name) {
-            $items[$type] = [
-                'label' => $localizedAttributeMetadataNames[$type],
-                'isLocalized' => false,
-                'isMultiple' => false,
-                'isCustom' => true,
-            ];
-
-            if (isset($attributeCollection[$type])) {
-                $attributeTransfer = $attributeCollection[$type];
-
-                $items[$type]['isLocalized'] = (bool)$attributeTransfer->getIsLocalized();
-                $items[$type]['isMultiple'] = (bool)$attributeTransfer->getIsMultiple();
-                $items[$type]['isCustom'] = false;
-            }
-        }
-
-        return $items;
     }
 
 }

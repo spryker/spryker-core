@@ -63,11 +63,6 @@ class AbstractProductFormDataProvider
     protected $productManagementFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[]
-     */
-    protected $attributeMetadataTransferCollection = [];
-
-    /**
      * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     protected $attributeTransferCollection = [];
@@ -85,7 +80,6 @@ class AbstractProductFormDataProvider
         ProductFacadeInterface $productFacade,
         ProductManagementFacadeInterface $productManagementFacade,
         ProductManagementToLocaleInterface $localeFacade,
-        array $attributeMetadataCollection,
         array $attributeCollection,
         array $taxCollection
     ) {
@@ -96,7 +90,6 @@ class AbstractProductFormDataProvider
         $this->productFacade = $productFacade;
         $this->productManagementFacade = $productManagementFacade;
         $this->locale = $localeFacade->getCurrentLocale();
-        $this->attributeMetadataTransferCollection = $attributeMetadataCollection;
         $this->attributeTransferCollection = $attributeCollection;
         $this->taxCollection = $taxCollection;
     }
@@ -258,18 +251,16 @@ class AbstractProductFormDataProvider
         $productAttributes = $attributeProcessor->getAttributes()->toArray(true);
 
         $values = [];
-        foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
+        foreach ($this->attributeTransferCollection as $type => $transfer) {
             $isCustom = !array_key_exists($type, $this->attributeTransferCollection);
             $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
             $isMulti = isset($productAttributes[$type]) && is_array($productAttributes[$type]);
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
             $isLocalized = false;
 
-            if (array_key_exists($type, $this->attributeTransferCollection)) {
-                $isLocalized = $this->attributeTransferCollection[$type]->getIsLocalized();
-                $isMulti = $this->attributeTransferCollection[$type]->getIsMultiple();
-                //$value = $this->getValueBasedOnInputType($this->attributeTransferCollection[$type], $value);
-            }
+            $isLocalized = $this->attributeTransferCollection[$type]->getIsLocalized();
+            $isMulti = $this->attributeTransferCollection[$type]->getIsMultiple();
+            //$value = $this->getValueBasedOnInputType($this->attributeTransferCollection[$type], $value);
 
             if ($isLocalized || $isMulti) {
                 continue;
@@ -314,16 +305,14 @@ class AbstractProductFormDataProvider
     {
         $productAttributes = $attributeProcessor->getAttributes()->toArray(true);
         $values = [];
-        foreach ($this->attributeMetadataTransferCollection as $type => $transfer) {
+        foreach ($this->attributeTransferCollection as $type => $transfer) {
             $isCustom = !array_key_exists($type, $this->attributeTransferCollection);
             $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
             $isMulti = isset($productAttributes[$type]) && is_array($productAttributes[$type]);
             $value = isset($productAttributes[$type]) ? true : false;
             $isLocalized = false;
 
-            if (array_key_exists($type, $this->attributeTransferCollection)) {
-                $isLocalized = $this->attributeTransferCollection[$type]->getIsLocalized();
-            }
+            $isLocalized = $this->attributeTransferCollection[$type]->getIsLocalized();
 
             if ($isLocalized || $isMulti) {
                 continue;
@@ -365,41 +354,7 @@ class AbstractProductFormDataProvider
 
     protected function getLocalizedAttributeMetadataKey($keyToLocalize)
     {
-        if (!isset($this->attributeMetadataTransferCollection[$keyToLocalize])) {
-            return $keyToLocalize;
-        }
-
-        if (!isset($this->attributeTransferCollection[$keyToLocalize])) {
-            return $keyToLocalize;
-        }
-
-        $attributeTransfer = $this->attributeTransferCollection[$keyToLocalize];
-        foreach ($attributeTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            if ((int)$localizedAttribute->getFkLocale() === (int)$this->localeFacade->getCurrentLocale()->getIdLocale()) {
-                return $localizedAttribute->getName();
-            }
-        }
-
         return $keyToLocalize;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    protected function getValueBasedOnInputType(ProductManagementAttributeTransfer $attributeTransfer, $value)
-    {
-        switch ($attributeTransfer->getInput()->getInput()) {
-            case 'text':
-            default:
-                if (is_array($value)) {
-                    sd($value);
-                }
-                return $value;
-                break;
-        }
     }
 
 }

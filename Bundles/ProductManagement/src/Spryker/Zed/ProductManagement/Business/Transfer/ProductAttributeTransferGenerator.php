@@ -34,6 +34,8 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
         $productAttributeTransfer = (new ProductManagementAttributeTransfer())
             ->fromArray($productAttributeEntity->toArray(), true);
 
+        $productAttributeTransfer->setKey($productAttributeEntity->getSpyProductAttributeKey()->getKey());
+
         return $productAttributeTransfer;
     }
 
