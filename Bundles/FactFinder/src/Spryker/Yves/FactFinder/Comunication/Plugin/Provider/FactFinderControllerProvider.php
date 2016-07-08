@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Yves\FactFinder\Plugin\Provider;
+namespace Spryker\Yves\FactFinder\Comunication\Plugin\Provider;
 
 use Pyz\Yves\Application\Plugin\Provider\AbstractYvesControllerProvider;
 use Silex\Application;
