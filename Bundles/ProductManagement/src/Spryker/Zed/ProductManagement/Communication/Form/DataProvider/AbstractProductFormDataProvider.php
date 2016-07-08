@@ -103,8 +103,8 @@ class AbstractProductFormDataProvider
     {
         $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
 
-        $formOptions[ProductFormAdd::ATTRIBUTE_METADATA] = $this->convertSelectedAttributeValuesToFormValues($attributes);
-        $formOptions[ProductFormAdd::ATTRIBUTE_VALUES] = $formOptions[ProductFormAdd::ATTRIBUTE_METADATA];
+        $formOptions[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $this->convertAbstractAttributesToFormValues($attributes);
+        $formOptions[ProductFormAdd::ATTRIBUTE_VARIANT] = $formOptions[ProductFormAdd::ATTRIBUTE_ABSTRACT];
 
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
         $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();
@@ -120,8 +120,8 @@ class AbstractProductFormDataProvider
         return [
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::GENERAL => $this->getLocalizedAttributesDefaultFields(),
-            ProductFormAdd::ATTRIBUTE_METADATA => $this->getAttributeMetadataDefaultFields(),
-            ProductFormAdd::ATTRIBUTE_VALUES => $this->getAttributeValuesDefaultFields(),
+            ProductFormAdd::ATTRIBUTE_ABSTRACT => $this->getAttributeMetadataDefaultFields(),
+            ProductFormAdd::ATTRIBUTE_VARIANT => $this->getAttributeValuesDefaultFields(),
             ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields(),
             ProductFormAdd::SEO => $this->getSeoDefaultFields(),
             ProductFormAdd::PRICE_AND_STOCK => [
@@ -201,7 +201,7 @@ class AbstractProductFormDataProvider
     public function getAttributeValuesDefaultFields()
     {
         $attributeProcessor = new AttributeProcessor();
-        return $this->convertSelectedAttributeValuesToFormValues($attributeProcessor);
+        return $this->convertAbstractAttributesToFormValues($attributeProcessor);
     }
 
     /**
@@ -210,7 +210,7 @@ class AbstractProductFormDataProvider
     public function getAttributeMetadataDefaultFields()
     {
         $attributeProcessor = new AttributeProcessor();
-        return $this->convertSelectedAttributeMetadataToFormValues($attributeProcessor);
+        return $this->convertAbstractAttributesToFormValues($attributeProcessor);
     }
 
     /**
@@ -246,12 +246,12 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function convertSelectedAttributeValuesToFormValues(AttributeProcessorInterface $attributeProcessor)
+    protected function convertAbstractAttributesToFormValues(AttributeProcessorInterface $attributeProcessor)
     {
-        $productAttributes = $attributeProcessor->getAttributes()->toArray(true);
+        $productAttributes = $attributeProcessor->getAbstractAttributes()->toArray(true);
 
         $values = [];
-        foreach ($this->attributeTransferCollection as $type => $transfer) {
+        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isCustom = !array_key_exists($type, $this->attributeTransferCollection);
             $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
             $isMulti = isset($productAttributes[$type]) && is_array($productAttributes[$type]);
@@ -295,12 +295,7 @@ class AbstractProductFormDataProvider
 
         return $values;
     }
-
-    /**
-     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
-     *
-     * @return array
-     */
+/*
     protected function convertSelectedAttributeMetadataToFormValues(AttributeProcessorInterface $attributeProcessor)
     {
         $productAttributes = $attributeProcessor->getAttributes()->toArray(true);
@@ -329,7 +324,9 @@ class AbstractProductFormDataProvider
                 'custom' => $isCustom,
                 'label' => $this->getLocalizedAttributeMetadataKey($type),
                 'multiple' => $isMulti,
-                'localized' => $isLocalized
+                'localized' => $isLocalized,
+                'input_type' => $transfer->getInputType(),
+                'allow_input' => $transfer->getAllowInput(),
             ];
         }
 
@@ -350,7 +347,7 @@ class AbstractProductFormDataProvider
         }
 
         return $values;
-    }
+    }*/
 
     protected function getLocalizedAttributeMetadataKey($keyToLocalize)
     {

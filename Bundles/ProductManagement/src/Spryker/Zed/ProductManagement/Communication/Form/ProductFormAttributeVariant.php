@@ -13,7 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductFormVariantMetadata extends AbstractType
+class ProductFormAttributeVariant extends AbstractType
 {
 
     const FIELD_NAME = 'name';
@@ -50,7 +50,7 @@ class ProductFormVariantMetadata extends AbstractType
      */
     public function getName()
     {
-        return 'ProductFormVariantMetadata';
+        return 'ProductFormAttributeVariant';
     }
 
     /**

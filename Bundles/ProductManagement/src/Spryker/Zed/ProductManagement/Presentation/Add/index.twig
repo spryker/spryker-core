@@ -117,8 +117,8 @@
                 <p>Select attributes and corresponding values.</p>
                 <div class="well">
                     <div class="row ">
-                        {% if form.attribute_metadata is defined and form.attribute_metadata|length > 0 %}
-                            {% for type,input in form.attribute_metadata %}
+                        {% if form.attribute_abstract is defined and form.attribute_abstract|length > 0 %}
+                            {% for type,input in form.attribute_abstract %}
                                 <div class="col-sm-12 col-md-6 col-lg-4">
                                     <div class="row attribute_metadata_row">
                                         <div class="col-sm-4 col-md-4 col-lg-3 text-right pull-left">

@@ -57,27 +57,11 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         $attributeProcessor = $this->getAttributesForAbstractProduct($idProductAbstract);
 
-        $attributeMetadataCollection = $this->convertSelectedAttributeMetadataToFormValues($attributeProcessor);
-        $attributeValueCollection = $this->convertSelectedAttributeValuesToFormValues($attributeProcessor);
+        //$attributeMetadataCollection = $this->convertSelectedAttributeMetadataToFormValues($attributeProcessor);
+        $attributeValueCollection = $this->convertAbstractAttributesToFormValues($attributeProcessor);
 
-        $metadata = [];
-        $values = [];
-        foreach ($attributeValueCollection as $type => $data) {
-            if ($data['multiple']) {
-                continue;
-            }
-            if ($data['localized']) {
-                continue;
-            }
-
-            $values[$type] = $data;
-
-            $metadata[$type] = $data;
-            $metadata[$type]['value'] = [$data['value']];
-        }
-
-        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $attributeMetadataCollection;
-        $formData[ProductFormAdd::ATTRIBUTE_VALUES] = [];
+        $formData[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $attributeValueCollection;
+        $formData[ProductFormAdd::ATTRIBUTE_VARIANT] = [];
 
         return $formData;
     }

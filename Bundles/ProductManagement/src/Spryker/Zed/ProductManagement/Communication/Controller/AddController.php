@@ -195,7 +195,7 @@ class AddController extends AbstractController
     protected function convertAttributesFromData(array $data)
     {
         $attributes = [];
-        foreach ($data[ProductFormAdd::ATTRIBUTE_METADATA] as $type => $values) {
+        foreach ($data[ProductFormAdd::ATTRIBUTE_ABSTRACT] as $type => $values) {
             $attributes[$type] = $values['value'];
         }
 
@@ -211,7 +211,7 @@ class AddController extends AbstractController
     protected function convertAttributeValuesFromData(array $data, array $attributeCollection)
     {
         $attributes = [];
-        foreach ($data[ProductFormAdd::ATTRIBUTE_VALUES] as $type => $values) {
+        foreach ($data[ProductFormAdd::ATTRIBUTE_VARIANT] as $type => $values) {
             $values = $this->getAttributeValues($values['value'], $attributeCollection[$type]);
             if (!empty($values)) {
                 $attributes[$type] = $values;

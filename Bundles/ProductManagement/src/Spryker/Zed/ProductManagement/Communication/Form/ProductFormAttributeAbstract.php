@@ -13,7 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductFormAttributeMetadata extends AbstractType
+class ProductFormAttributeAbstract extends AbstractType
 {
 
     const FIELD_NAME = 'name';
@@ -48,7 +48,7 @@ class ProductFormAttributeMetadata extends AbstractType
      */
     public function getName()
     {
-        return 'ProductFormAttributeMetadata';
+        return 'ProductFormAttributeAbstract';
     }
 
     /**
@@ -117,13 +117,9 @@ class ProductFormAttributeMetadata extends AbstractType
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
-        $label = $name;
-        $isDisabled = true;
+        $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
 
-        if (isset($this->attributeValues[$name])) {
-            $label = $this->attributeValues[$name][self::LABEL];
-            $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
-        }
+        //sd($this->attributeValues[$name]);
 
         $builder->add(self::FIELD_VALUE, 'text', [ //TODO type depends on DB settings
             'disabled' => $isDisabled,

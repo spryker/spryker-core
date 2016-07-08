@@ -23,22 +23,19 @@ class ProductFormAdd extends AbstractType
     const FIELD_NAME = 'name';
     const FIELD_SKU = 'sku';
 
+    const ATTRIBUTE_ABSTRACT = 'attribute_abstract';
+    const ATTRIBUTE_VARIANT = 'attribute_variant';
     const GENERAL = 'general';
-    const ATTRIBUTE_METADATA = 'attribute_metadata';
-    const ATTRIBUTE_VALUES = 'attribute_values';
-    const TAX_SET = 'tax_set';
-    const PRICE_AND_STOCK = 'price_and_stock';
-    const VARIANT_METADATA = 'variant_metadata';
-    const VARIANT_VALUES = 'variant_values';
-    const SEO = 'seo';
     const ID_LOCALE = 'id_locale';
+    const PRICE_AND_STOCK = 'price_and_stock';
+    const TAX_SET = 'tax_set';
+    const SEO = 'seo';
 
-    const VALIDATION_GROUP_ATTRIBUTE_METADATA = 'validation_group_attribute_metadata';
-    const VALIDATION_GROUP_ATTRIBUTE_VALUES = 'validation_group_attribute_values';
-    const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
-    const VALIDATION_GROUP_SEO = 'validation_group_seo';
+    const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
+    const VALIDATION_GROUP_ATTRIBUTE_VARIANT = 'validation_group_attribute_variant';
     const VALIDATION_GROUP_GENERAL = 'validation_group_general';
-    const VALIDATION_GROUP_VARIANT_METADATA = 'validation_group_variant_metadata';
+    const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
+    const VALIDATION_GROUP_SEO = 'validation_group_seo';
 
 
     /**
@@ -58,8 +55,8 @@ class ProductFormAdd extends AbstractType
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setRequired(self::ATTRIBUTE_METADATA);
-        $resolver->setRequired(self::ATTRIBUTE_VALUES);
+        $resolver->setRequired(self::ATTRIBUTE_ABSTRACT);
+        $resolver->setRequired(self::ATTRIBUTE_VARIANT);
         $resolver->setRequired(self::TAX_SET);
         $resolver->setRequired(self::ID_LOCALE);
 
@@ -70,9 +67,9 @@ class ProductFormAdd extends AbstractType
                 return [
                     Constraint::DEFAULT_GROUP,
                     self::VALIDATION_GROUP_GENERAL,
-                    self::VALIDATION_GROUP_ATTRIBUTE_METADATA,
-                    self::VALIDATION_GROUP_ATTRIBUTE_VALUES,
-                    self::VALIDATION_GROUP_PRICE_AND_STOCK,
+                    self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
+                    self::VALIDATION_GROUP_PRICE_AND_TAX,
+                    self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
                     self::VALIDATION_GROUP_SEO,
                 ];
             }
@@ -90,8 +87,8 @@ class ProductFormAdd extends AbstractType
         $this
             ->addSkuField($builder)
             ->addGeneralForm($builder)
-            ->addAttributeMetadataForm($builder, $options[self::ATTRIBUTE_METADATA])
-            ->addAttributeValuesForm($builder, $options[self::ATTRIBUTE_VALUES])
+            ->addAttributeAbstractForm($builder, $options[self::ATTRIBUTE_ABSTRACT])
+            ->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
             ->addPriceForm($builder, $options[self::TAX_SET])
             ->addSeoForm($builder, $options);
     }
@@ -157,13 +154,13 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributeMetadataForm(FormBuilderInterface $builder, array $options = [])
+    protected function addAttributeAbstractForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::ATTRIBUTE_METADATA, 'collection', [
-                'type' => new ProductFormAttributeMetadata(
+            ->add(self::ATTRIBUTE_ABSTRACT, 'collection', [
+                'type' => new ProductFormAttributeAbstract(
                     $options,
-                    self::VALIDATION_GROUP_ATTRIBUTE_METADATA
+                    self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT
                 ),
                 'label' => false,
                 'constraints' => [new Callback([
@@ -182,7 +179,7 @@ class ProductFormAdd extends AbstractType
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_METADATA]
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT]
                 ])]
             ]);
 
@@ -195,13 +192,13 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributeValuesForm(FormBuilderInterface $builder, array $options = [])
+    protected function addAttributeVariantForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::ATTRIBUTE_VALUES, 'collection', [
-                'type' => new ProductFormAttributeValues(
+            ->add(self::ATTRIBUTE_VARIANT, 'collection', [
+                'type' => new ProductFormAttributeVariant(
                     $options,
-                    self::VALIDATION_GROUP_ATTRIBUTE_VALUES
+                    self::VALIDATION_GROUP_ATTRIBUTE_VARIANT
                 ),
                 'label' => false,
                 'constraints' => [new Callback([
@@ -216,11 +213,11 @@ class ProductFormAdd extends AbstractType
                             }
 
                             if (empty($selectedAttributes)) {
-                                $context->addViolation('Please select at least one attribute value');
+                                $context->addViolation('Please select at least one variant attribute value');
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUES]
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VARIANT]
                 ])]
             ]);
 
@@ -236,7 +233,7 @@ class ProductFormAdd extends AbstractType
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRICE_AND_STOCK, new ProductFormPrice($options, self::VALIDATION_GROUP_PRICE_AND_STOCK), [
+            ->add(self::PRICE_AND_STOCK, new ProductFormPrice($options, self::VALIDATION_GROUP_PRICE_AND_TAX), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -250,7 +247,7 @@ class ProductFormAdd extends AbstractType
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_STOCK]
+                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX]
                 ])]
             ]);
 
@@ -285,44 +282,6 @@ class ProductFormAdd extends AbstractType
                         },
                     ],
                     'groups' => [self::VALIDATION_GROUP_SEO]
-                ])]
-            ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addVariantMetadataForm(FormBuilderInterface $builder, array $options = [])
-    {
-        $builder
-            ->add(self::ATTRIBUTE_METADATA, 'collection', [
-                'label' => false,
-                'type' => new ProductFormVariantMetadata(
-                    $options,
-                    self::VALIDATION_GROUP_VARIANT_METADATA
-                ),
-                'constraints' => [new Callback([
-                    'methods' => [
-                        function ($attributes, ExecutionContextInterface $context) {
-                            $selectedAttributes = [];
-                            foreach ($attributes as $type => $valueSet) {
-                                if (!empty($valueSet['value'])) {
-                                    $selectedAttributes[] = $valueSet['value'];
-                                    break;
-                                }
-                            }
-
-                            if (empty($selectedAttributes)) {
-                                $context->addViolation('Please select at least one attribute group');
-                            }
-                        },
-                    ],
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_METADATA]
                 ])]
             ]);
 
