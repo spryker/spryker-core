@@ -21,7 +21,8 @@ class ProductFormAttributeAbstract extends AbstractType
 
     const LABEL = 'label';
     const MULTIPLE = 'multiple';
-    const CUSTOM = 'custom';
+    const PRODUCT_SPECIFIC = 'product_specific';
+    const INPUT = 'input';
 
     /**
      * @var array
@@ -94,7 +95,7 @@ class ProductFormAttributeAbstract extends AbstractType
 
         if (isset($this->attributeValues[$name])) {
             $label = $this->attributeValues[$name][self::LABEL];
-            $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
+            $isDisabled = $this->attributeValues[$name][self::PRODUCT_SPECIFIC] === true;
         }
 
         $builder
@@ -117,11 +118,10 @@ class ProductFormAttributeAbstract extends AbstractType
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
-        $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
+        $isDisabled = $this->attributeValues[$name][self::PRODUCT_SPECIFIC] === true;
+        $input = $this->attributeValues[$name][self::INPUT];
 
-        //sd($this->attributeValues[$name]);
-
-        $builder->add(self::FIELD_VALUE, 'text', [ //TODO type depends on DB settings
+        $builder->add(self::FIELD_VALUE, $input, [
             'disabled' => $isDisabled,
             'label' => false,
             'attr' => [

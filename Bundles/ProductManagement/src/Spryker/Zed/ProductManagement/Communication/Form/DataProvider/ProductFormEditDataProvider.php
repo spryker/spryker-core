@@ -57,7 +57,6 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         $attributeProcessor = $this->getAttributesForAbstractProduct($idProductAbstract);
 
-        //$attributeMetadataCollection = $this->convertSelectedAttributeMetadataToFormValues($attributeProcessor);
         $attributeValueCollection = $this->convertAbstractAttributesToFormValues($attributeProcessor);
 
         $formData[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $attributeValueCollection;
