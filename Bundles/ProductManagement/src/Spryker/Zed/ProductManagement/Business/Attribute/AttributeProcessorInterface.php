@@ -24,22 +24,22 @@ interface AttributeProcessorInterface
     /**
      * @return \Spryker\Shared\Library\Collection\CollectionInterface
      */
-    public function getAttributes();
+    public function getConcreteAttributes();
 
     /**
      * @param \Spryker\Shared\Library\Collection\CollectionInterface $attributes
      */
-    public function setAttributes(CollectionInterface $attributes);
+    public function setConcreteAttributes(CollectionInterface $attributes);
 
     /**
      * @return \Spryker\Shared\Library\Collection\CollectionInterface
      */
-    public function getLocalizedAttributes();
+    public function getConcreteLocalizedAttributes();
 
     /**
      * @param \Spryker\Shared\Library\Collection\CollectionInterface $localizedAttributes
      */
-    public function setLocalizedAttributes(CollectionInterface $localizedAttributes);
+    public function setConcreteLocalizedAttributes(CollectionInterface $localizedAttributes);
 
     /**
      * @return \Spryker\Shared\Library\Collection\CollectionInterface
@@ -55,5 +55,15 @@ interface AttributeProcessorInterface
      * @return array
      */
     public function mergeAttributes();
+
+    /**
+     * @return array
+     */
+    public function mergeAbstractAttributes();
+
+    /**
+     * @return array
+     */
+    public function mergeConcreteAttributes();
 
 }

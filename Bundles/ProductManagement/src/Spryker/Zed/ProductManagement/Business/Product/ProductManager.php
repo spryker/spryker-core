@@ -1083,7 +1083,7 @@ class ProductManager implements ProductManagerInterface
         $concreteProductCollection = $this->getConcreteProductsByAbstractProductId($idProductAbstract);
 
         foreach ($concreteProductCollection as $productTransfer) {
-            $attributeProcessor->setAttributes(new Collection(
+            $attributeProcessor->setConcreteAttributes(new Collection(
                 $productTransfer->getAttributes()
             ));
 
@@ -1094,7 +1094,7 @@ class ProductManager implements ProductManagerInterface
                     $localizedAttributes->set($name, [$localeName => $value]);
                 }
 
-                $attributeProcessor->setLocalizedAttributes($localizedAttributes);
+                $attributeProcessor->setConcreteLocalizedAttributes($localizedAttributes);
             }
         }
 
