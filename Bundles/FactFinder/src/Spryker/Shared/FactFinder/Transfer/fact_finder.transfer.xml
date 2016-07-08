@@ -10,6 +10,9 @@
         <property name="FFRecommendationRequest" type="FFRecommendationRequest"/>
         <property name="FFSuggestRequest" type="FFSuggestRequest"/>
         <property name="FFTagCloudRequest" type="FFTagCloudRequest"/>
+        <property name="FFTrackingRequest" type="FFTrackingRequest"/>
+        <property name="FFSimilarRecordsRequest" type="FFSimilarRecordsRequest"/>
+        <property name="FFProductCampaignRequest" type="FFProductCampaignRequest"/>
     </transfer>
 
     <transfer name="FFSearchRequest">
@@ -41,6 +44,30 @@
     </transfer>
 
     <transfer name="FFTagCloudResponse">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFTrackingRequest">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFTrackingResponse">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFSimilarRecordsRequest">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFSimilarRecordsResponse">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFProductCampaignRequest">
+        <property name="temp" type="string"/>
+    </transfer>
+
+    <transfer name="FFProductCampaignResponse">
         <property name="temp" type="string"/>
     </transfer>
 

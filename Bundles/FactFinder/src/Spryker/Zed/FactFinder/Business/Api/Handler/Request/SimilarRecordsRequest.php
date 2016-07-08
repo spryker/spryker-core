@@ -10,31 +10,30 @@ namespace Spryker\Zed\FactFinder\Business\Api\Handler\Request;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 
-class SuggestRequest extends AbstractRequest implements RequestInterface
+class SimilarRecordsRequest extends AbstractRequest implements RequestInterface
 {
     
-    const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_SUGGEST;
+    const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_SIMILAR_RECORDS;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FFSuggestResponseTransfer
+     * @return \Generated\Shared\Transfer\FFSimilarRecordsResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $suggestRequestTransfer = $quoteTransfer->getFFSuggestRequest();
+        $similarRecordsRequestTransfer = $quoteTransfer->getFFSimilarRecordsRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);
-        $suggestAdapter = $this->ffConnector->createSuggestAdapter();
+        $similarRecordsAdapter = $this->ffConnector->createSimilarRecordsAdapter();
         // @todo check
-        $suggestAdapter->getRawSuggestions();
 
-        $this->logInfo($quoteTransfer, $suggestAdapter);
+        $this->logInfo($quoteTransfer, $similarRecordsAdapter);
         
         // convert to FFSearchResponseTransfer
         $responseTransfer = $this->converterFactory
-            ->createSuggestResponseConverter($suggestAdapter)
+            ->createSimilarRecordsResponseConverter($similarRecordsAdapter)
             ->convert();
 
         return $responseTransfer;

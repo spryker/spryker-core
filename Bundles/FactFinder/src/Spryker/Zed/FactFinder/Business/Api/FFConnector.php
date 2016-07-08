@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -46,6 +47,26 @@ class FFConnector
      * @var \FACTFinder\Adapter\Tracking
      */
     protected $trackingAdapter;
+
+    /**
+     * @var \FACTFinder\Adapter\SimilarRecords
+     */
+    protected $similarRecordsAdapter;
+
+    /**
+     * @var \FACTFinder\Adapter\ProductCampaign
+     */
+    protected $productCampaignAdapter;
+
+    /**
+     * @var \FACTFinder\Adapter\Import
+     */
+    protected $importAdapter;
+
+    /**
+     * @var \FACTFinder\Adapter\Compare
+     */
+    protected $compareAdapter;
 
 //    /**
 //     * @var \FACTFinder\Util\Log4PhpLogger
@@ -146,6 +167,70 @@ class FFConnector
         );
 
         return $this->trackingAdapter;
+    }
+
+    /**
+     * @return \FACTFinder\Adapter\SimilarRecords
+     */
+    public function createSimilarRecordsAdapter()
+    {
+        $this->similarRecordsAdapter = FF::getInstance(
+            'Adapter\SimilarRecords',
+            $this->dic['loggerClass'],
+            $this->dic['configuration'],
+            $this->dic['request'],
+            $this->dic['clientUrlBuilder']
+        );
+
+        return $this->similarRecordsAdapter;
+    }
+
+    /**
+     * @return \FACTFinder\Adapter\ProductCampaign
+     */
+    public function createProductCampaignAdapter()
+    {
+        $this->productCampaignAdapter = FF::getInstance(
+            'Adapter\ProductCampaign',
+            $this->dic['loggerClass'],
+            $this->dic['configuration'],
+            $this->dic['request'],
+            $this->dic['clientUrlBuilder']
+        );
+
+        return $this->productCampaignAdapter;
+    }
+
+    /**
+     * @return \FACTFinder\Adapter\Import
+     */
+    public function createImportAdapter()
+    {
+        $this->importAdapter = FF::getInstance(
+            'Adapter\Import',
+            $this->dic['loggerClass'],
+            $this->dic['configuration'],
+            $this->dic['request'],
+            $this->dic['clientUrlBuilder']
+        );
+
+        return $this->importAdapter;
+    }
+
+    /**
+     * @return \FACTFinder\Adapter\Compare
+     */
+    public function createCompareAdapter()
+    {
+        $this->compareAdapter = FF::getInstance(
+            'Adapter\Compare',
+            $this->dic['loggerClass'],
+            $this->dic['configuration'],
+            $this->dic['request'],
+            $this->dic['clientUrlBuilder']
+        );
+
+        return $this->compareAdapter;
     }
 
     /**

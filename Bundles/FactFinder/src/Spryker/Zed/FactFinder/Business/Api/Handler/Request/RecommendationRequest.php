@@ -27,6 +27,8 @@ class RecommendationRequest extends AbstractRequest implements RequestInterface
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);
         $recommendationAdapter = $this->ffConnector->createRecommendationAdapter();
+        // @todo check
+        $recommendationAdapter->getRawRecommendations();
 
         $this->logInfo($quoteTransfer, $recommendationAdapter);
         

@@ -27,12 +27,14 @@ class TagCloudRequest extends AbstractRequest implements RequestInterface
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);
         $tagCloudAdapter = $this->ffConnector->createTagCloudAdapter();
+        // @todo check
+        $tagCloud = $tagCloudAdapter->getTagCloud();
 
         $this->logInfo($quoteTransfer, $tagCloudAdapter);
         
         // convert to FFSearchResponseTransfer
         $responseTransfer = $this->converterFactory
-            ->createSearchResponseConverter($tagCloudAdapter)
+            ->createTagCloudResponseConverter($tagCloudAdapter)
             ->convert();
 
         return $responseTransfer;

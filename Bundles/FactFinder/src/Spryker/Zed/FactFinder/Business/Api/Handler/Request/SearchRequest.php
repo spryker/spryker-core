@@ -27,6 +27,12 @@ class SearchRequest extends AbstractRequest implements RequestInterface
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);
         $searchAdapter = $this->ffConnector->createSearchAdapter();
+        // @todo check
+        $campaigns = $searchAdapter->getCampaigns();
+        if ($campaigns->hasRedirect()) {
+            //throw new RedirectException($campaigns->getRedirectUrl());
+            $redirectUrl = $campaigns->getRedirectUrl();
+        }
 
         $this->logInfo($quoteTransfer, $searchAdapter);
         

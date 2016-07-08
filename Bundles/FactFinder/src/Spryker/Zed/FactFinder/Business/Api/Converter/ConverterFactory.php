@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\FactFinder\Business\Api\Converter;
 
+use FACTFinder\Adapter\ProductCampaign as FFProductCampaignAdapter;
 use FACTFinder\Adapter\Recommendation as FFRecommendationAdapter;
 use FACTFinder\Adapter\Search as FFSearchAdapter;
+use FACTFinder\Adapter\SimilarRecords as FFSimilarRecordsAdapter;
 use FACTFinder\Adapter\Suggest as FFSuggestAdapter;
 use FACTFinder\Adapter\TagCloud as FFTagCloudAdapter;
+use FACTFinder\Adapter\Tracking as FFTrackingAdapter;
 
 class ConverterFactory
 {
@@ -53,6 +56,36 @@ class ConverterFactory
     public function createTagCloudResponseConverter(FFTagCloudAdapter $tagCloudAdapter)
     {
         return new TagCloudResponseConverter($tagCloudAdapter);
+    }
+
+    /**
+     * @param \FACTFinder\Adapter\Tracking $trackingAdapter
+     *
+     * @return \Spryker\Zed\FactFinder\Business\Api\Converter\TrackingResponseConverter
+     */
+    public function createTrackingResponseConverter(FFTrackingAdapter $trackingAdapter)
+    {
+        return new TrackingResponseConverter($trackingAdapter);
+    }
+
+    /**
+     * @param \FACTFinder\Adapter\SimilarRecords $similarRecordsAdapter
+     *
+     * @return \Spryker\Zed\FactFinder\Business\Api\Converter\SimilarRecordsResponseConverter
+     */
+    public function createSimilarRecordsResponseConverter(FFSimilarRecordsAdapter $similarRecordsAdapter)
+    {
+        return new SimilarRecordsResponseConverter($similarRecordsAdapter);
+    }
+
+    /**
+     * @param \FACTFinder\Adapter\ProductCampaign $productCampaignAdapter
+     *
+     * @return \Spryker\Zed\FactFinder\Business\Api\Converter\SearchResponseConverter
+     */
+    public function createProductCampaignResponseConverter(FFProductCampaignAdapter $productCampaignAdapter)
+    {
+        return new ProductCampaignResponseConverter($productCampaignAdapter);
     }
 
 }

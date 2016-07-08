@@ -10,31 +10,31 @@ namespace Spryker\Zed\FactFinder\Business\Api\Handler\Request;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 
-class SuggestRequest extends AbstractRequest implements RequestInterface
+class ProductCampaignRequest extends AbstractRequest implements RequestInterface
 {
     
-    const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_SUGGEST;
+    const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_PRODUCT_CAMPAIGN;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FFSuggestResponseTransfer
+     * @return \Generated\Shared\Transfer\FFProductCampaignResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $suggestRequestTransfer = $quoteTransfer->getFFSuggestRequest();
+        $productCampaignRequestTransfer = $quoteTransfer->getFFProductCampaignRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);
-        $suggestAdapter = $this->ffConnector->createSuggestAdapter();
+        $productCampaignAdapter = $this->ffConnector->createProductCampaignAdapter();
         // @todo check
-        $suggestAdapter->getRawSuggestions();
-
-        $this->logInfo($quoteTransfer, $suggestAdapter);
+        $campaigns = $productCampaignAdapter->getCampaigns();
+        
+        $this->logInfo($quoteTransfer, $productCampaignAdapter);
         
         // convert to FFSearchResponseTransfer
         $responseTransfer = $this->converterFactory
-            ->createSuggestResponseConverter($suggestAdapter)
+            ->createProductCampaignResponseConverter($productCampaignAdapter)
             ->convert();
 
         return $responseTransfer;

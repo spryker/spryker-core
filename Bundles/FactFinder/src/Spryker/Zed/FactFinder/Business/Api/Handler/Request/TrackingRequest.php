@@ -10,31 +10,31 @@ namespace Spryker\Zed\FactFinder\Business\Api\Handler\Request;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 
-class SuggestRequest extends AbstractRequest implements RequestInterface
+class TrackingRequest extends AbstractRequest implements RequestInterface
 {
     
-    const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_SUGGEST;
+    const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_SEARCH;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FFSuggestResponseTransfer
+     * @return \Generated\Shared\Transfer\FFTagCloudResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $suggestRequestTransfer = $quoteTransfer->getFFSuggestRequest();
+        $trackingRequestTransfer = $quoteTransfer->getFFTrackingRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);
-        $suggestAdapter = $this->ffConnector->createSuggestAdapter();
+        $trackingAdapter = $this->ffConnector->createTrackingAdapter();
         // @todo check
-        $suggestAdapter->getRawSuggestions();
+        $trackingAdapter->doTrackingFromRequest();
 
-        $this->logInfo($quoteTransfer, $suggestAdapter);
+        $this->logInfo($quoteTransfer, $trackingAdapter);
         
         // convert to FFSearchResponseTransfer
         $responseTransfer = $this->converterFactory
-            ->createSuggestResponseConverter($suggestAdapter)
+            ->createTrackingResponseConverter($trackingAdapter)
             ->convert();
 
         return $responseTransfer;
