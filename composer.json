@@ -476,6 +476,7 @@
       "Spryker\\Client\\FactFinder\\": "Bundles/FactFinder/src",
       "Spryker\\Shared\\FactFinder\\": "Bundles/FactFinder/src/",
       "Spryker\\Zed\\FactFinder\\": "Bundles/FactFinder/src/",
+      "Spryker\\Yves\\FactFinder\\": "Bundles/FactFinder/src",
       "Unit\\Spryker\\Zed\\FactFinder\\": "Bundles/FactFinder/tests",
       "Functional\\Spryker\\Zed\\FactFinder\\": "Bundles/FactFinder/tests"
 
