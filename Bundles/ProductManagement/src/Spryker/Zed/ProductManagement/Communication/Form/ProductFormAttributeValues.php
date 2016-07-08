@@ -19,8 +19,6 @@ class ProductFormAttributeValues extends AbstractType
     const FIELD_NAME = 'name';
     const FIELD_VALUE = 'value';
 
-    const OPTION_LABELS = 'option_labels';
-    const OPTION_VALUES = 'option_values';
     const LABEL = 'label';
     const MULTIPLE = 'multiple';
     const CUSTOM = 'custom';
@@ -29,11 +27,6 @@ class ProductFormAttributeValues extends AbstractType
      * @var array
      */
     protected $attributeValues;
-
-    /**
-     * @var string
-     */
-    protected $validationMetadata;
 
     /**
      * @var string
@@ -69,7 +62,7 @@ class ProductFormAttributeValues extends AbstractType
         $resolver->setDefaults([
             'required' => false,
             'cascade_validation' => true,
-            'validation_groups' => [$this->validationMetadata]
+            'validation_groups' => [$this->validationGroup]
         ]);
     }
 
@@ -106,8 +99,6 @@ class ProductFormAttributeValues extends AbstractType
                 'label' => $label,
                 'disabled' => $isDisabled
             ]);
-
-        return $this;
 
         return $this;
     }

@@ -13,12 +13,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductFormAttributeMetadata extends AbstractType
+class ProductFormVariantEditor extends AbstractType
 {
 
     const FIELD_NAME = 'name';
     const FIELD_VALUE = 'value';
 
+    const OPTION_LABELS = 'option_labels';
+    const OPTION_VALUES = 'option_values';
     const LABEL = 'label';
     const MULTIPLE = 'multiple';
     const CUSTOM = 'custom';
@@ -48,7 +50,7 @@ class ProductFormAttributeMetadata extends AbstractType
      */
     public function getName()
     {
-        return 'ProductFormAttributeMetadata';
+        return 'ProductFormVariantEditor';
     }
 
     /**
@@ -76,7 +78,7 @@ class ProductFormAttributeMetadata extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addCheckboxNameField($builder, $options)
+            ->addColumnField($builder, $options)
             ->addValueField($builder, $options);
     }
 
@@ -86,8 +88,9 @@ class ProductFormAttributeMetadata extends AbstractType
      *
      * @return $this
      */
-    protected function addCheckboxNameField(FormBuilderInterface $builder, array $options)
+    protected function addColumnField(FormBuilderInterface $builder, array $options)
     {
+        sd($this->attributeValues);
         $name = $builder->getName();
         $label = $name;
         $isDisabled = true;
@@ -97,16 +100,22 @@ class ProductFormAttributeMetadata extends AbstractType
             $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
         }
 
-        $builder
-            ->add(self::FIELD_NAME, 'checkbox', [
-                'label' => $label,
-                'disabled' => $isDisabled,
-                'attr' => [
-                    'class' => 'attribute_metadata_checkbox'
-                ],
-            ]);
-
-        return $this;
+        $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [ //TODO type depends on DB settings
+            'disabled' => $isDisabled,
+            'multiple' => true, //TODO depends on DB settings
+            'label' => false,
+            'choices' => [], // ['red' => 'red'],
+            'attr' => [
+                'style' => 'width: 250px !important',
+                'class' => 'attribute_metadata_value',
+            ],
+            'constraints' => [
+                new AttributeFieldNotBlank([
+                    'attributeFieldValue' => self::FIELD_VALUE,
+                    'attributeCheckboxFieldName' => self::FIELD_NAME,
+                ]),
+            ],
+        ]);
     }
 
     /**
@@ -125,9 +134,11 @@ class ProductFormAttributeMetadata extends AbstractType
             $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
         }
 
-        $builder->add(self::FIELD_VALUE, 'text', [ //TODO type depends on DB settings
+        $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [ //TODO type depends on DB settings
             'disabled' => $isDisabled,
+            'multiple' => true, //TODO depends on DB settings
             'label' => false,
+            'choices' => [], // ['red' => 'red'],
             'attr' => [
                 'style' => 'width: 250px !important',
                 'class' => 'attribute_metadata_value',

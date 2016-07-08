@@ -13,12 +13,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductFormAttributeMetadata extends AbstractType
+class ProductFormVariantMetadata extends AbstractType
 {
 
     const FIELD_NAME = 'name';
     const FIELD_VALUE = 'value';
 
+    const OPTION_LABELS = 'option_labels';
+    const OPTION_VALUES = 'option_values';
     const LABEL = 'label';
     const MULTIPLE = 'multiple';
     const CUSTOM = 'custom';
@@ -48,7 +50,7 @@ class ProductFormAttributeMetadata extends AbstractType
      */
     public function getName()
     {
-        return 'ProductFormAttributeMetadata';
+        return 'ProductFormVariantMetadata';
     }
 
     /**
@@ -125,9 +127,11 @@ class ProductFormAttributeMetadata extends AbstractType
             $isDisabled = $this->attributeValues[$name][self::CUSTOM] === true;
         }
 
-        $builder->add(self::FIELD_VALUE, 'text', [ //TODO type depends on DB settings
+        $builder->add(self::FIELD_VALUE, new Select2ComboBoxType(), [ //TODO type depends on DB settings
             'disabled' => $isDisabled,
+            'multiple' => true, //TODO depends on DB settings
             'label' => false,
+            'choices' => [], // ['red' => 'red'],
             'attr' => [
                 'style' => 'width: 250px !important',
                 'class' => 'attribute_metadata_value',

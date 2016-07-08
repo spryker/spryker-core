@@ -56,7 +56,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $formData[ProductFormAdd::SEO] = $seoData;
 
         $attributeProcessor = $this->getAttributesForAbstractProduct($idProductAbstract);
-        
+
         $attributeMetadataCollection = $this->convertSelectedAttributeMetadataToFormValues($attributeProcessor);
         $attributeValueCollection = $this->convertSelectedAttributeValuesToFormValues($attributeProcessor);
 
@@ -76,15 +76,8 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $metadata[$type]['value'] = [$data['value']];
         }
 
-        //sd($values, $attributeValueCollection);
-
-        $formData['attribute_values2'] = [
-            'color' => ['value' => 'red' ]
-        ];
-
-
-        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $metadata;
-        $formData[ProductFormAdd::ATTRIBUTE_VALUES] = $values;
+        $formData[ProductFormAdd::ATTRIBUTE_METADATA] = $attributeMetadataCollection;
+        $formData[ProductFormAdd::ATTRIBUTE_VALUES] = [];
 
         return $formData;
     }

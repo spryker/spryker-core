@@ -28,6 +28,8 @@ class ProductFormAdd extends AbstractType
     const ATTRIBUTE_VALUES = 'attribute_values';
     const TAX_SET = 'tax_set';
     const PRICE_AND_STOCK = 'price_and_stock';
+    const VARIANT_METADATA = 'variant_metadata';
+    const VARIANT_VALUES = 'variant_values';
     const SEO = 'seo';
     const ID_LOCALE = 'id_locale';
 
@@ -36,6 +38,7 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
     const VALIDATION_GROUP_GENERAL = 'validation_group_general';
+    const VALIDATION_GROUP_VARIANT_METADATA = 'validation_group_variant_metadata';
 
 
     /**
@@ -159,9 +162,10 @@ class ProductFormAdd extends AbstractType
         $builder
             ->add(self::ATTRIBUTE_METADATA, 'collection', [
                 'type' => new ProductFormAttributeMetadata(
-                    $options[ProductFormAttributeMetadata::OPTION_VALUES],
+                    $options,
                     self::VALIDATION_GROUP_ATTRIBUTE_METADATA
                 ),
+                'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
@@ -196,9 +200,10 @@ class ProductFormAdd extends AbstractType
         $builder
             ->add(self::ATTRIBUTE_VALUES, 'collection', [
                 'type' => new ProductFormAttributeValues(
-                    $options[ProductFormAttributeValues::OPTION_VALUES],
+                    $options,
                     self::VALIDATION_GROUP_ATTRIBUTE_VALUES
                 ),
+                'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
@@ -232,6 +237,7 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::PRICE_AND_STOCK, new ProductFormPrice($options, self::VALIDATION_GROUP_PRICE_AND_STOCK), [
+                'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
@@ -261,6 +267,7 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::SEO, 'collection', [
+                'label' => false,
                 'type' => new ProductFormSeo(self::VALIDATION_GROUP_SEO),
                 'constraints' => [new Callback([
                     'methods' => [
@@ -278,6 +285,44 @@ class ProductFormAdd extends AbstractType
                         },
                     ],
                     'groups' => [self::VALIDATION_GROUP_SEO]
+                ])]
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addVariantMetadataForm(FormBuilderInterface $builder, array $options = [])
+    {
+        $builder
+            ->add(self::ATTRIBUTE_METADATA, 'collection', [
+                'label' => false,
+                'type' => new ProductFormVariantMetadata(
+                    $options,
+                    self::VALIDATION_GROUP_VARIANT_METADATA
+                ),
+                'constraints' => [new Callback([
+                    'methods' => [
+                        function ($attributes, ExecutionContextInterface $context) {
+                            $selectedAttributes = [];
+                            foreach ($attributes as $type => $valueSet) {
+                                if (!empty($valueSet['value'])) {
+                                    $selectedAttributes[] = $valueSet['value'];
+                                    break;
+                                }
+                            }
+
+                            if (empty($selectedAttributes)) {
+                                $context->addViolation('Please select at least one attribute group');
+                            }
+                        },
+                    ],
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_METADATA]
                 ])]
             ]);
 

@@ -103,7 +103,7 @@ class ProductFormPrice extends AbstractType
     protected function addTaxRateField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_TAX_RATE, new Select2ComboBoxType(), [
-            'label' => 'Tax',
+            'label' => 'Tax Set',
             'required' => true,
             'choices' => $this->taxCollection,
             'placeholder' => '-',

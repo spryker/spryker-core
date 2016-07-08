@@ -30,10 +30,12 @@ $(document).ready(function() {
         .off('click')
         .on('click', function() {
             var $item = $(this);
-            $item
+            var input = $item
                 .parents('.attribute_metadata_row')
-                .find('.attribute_metadata_value')
-                .prop('disabled', !$item.prop('checked'));
+                .find('.attribute_metadata_value');
+
+            input.prop('disabled', !$item.prop('checked'));
+            input.focus();
         });
 
 });

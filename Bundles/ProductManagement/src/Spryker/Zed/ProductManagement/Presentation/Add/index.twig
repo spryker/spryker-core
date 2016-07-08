@@ -21,11 +21,13 @@
     {{ backActionButton('/product-management', 'List Products' | trans) }}
 {% endblock %}
 
+
 {% block checkbox_widget %}
     {% spaceless %}
         <label for="{{ id }}">{{ label|trans }}</label>&nbsp;<input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
     {% endspaceless %}
 {% endblock checkbox_widget %}
+
 
 {% block select2_widget %}
     {{ form_widget(form, { 'attr': {'class': 'spryker-form-select2combobox attribute_metadata_value'} }) }}
@@ -111,7 +113,8 @@
         {# ============================ ABSTRACT ATTRIBUTES ============================ #}
         <div id="tab_abstract_attributes" class="tab-pane">
             <div class="panel-body">
-                <p>Select attributes that will define your product.</p>
+                <h3>Configure Product Attributes</h3>
+                <p>Select attributes and corresponding values.</p>
                 <div class="well">
                     <div class="row ">
                         {% if form.attribute_metadata is defined and form.attribute_metadata|length > 0 %}
@@ -140,19 +143,19 @@
         {# ============================ VARIANTS ============================ #}
         <div id="tab_variants" class="tab-pane">
             <div class="panel-body">
-                <h3>Manage product attributes and variants</h3>
-                <p>Lorem ipsum attributes, lorem values ipusm variants.</p>
+                <h3>Manage product variants</h3>
+                <p>For the creation of product variants, start by selecting attributes and value that define the difference between your variations.</p>
                 <p><i>Note: Editing generated variants by adding or removing attributes, leads to the creation of new variants. Current configurations must be recreated.</i></p>
                 <br/>
 
-                <div class="panel-group" id="accordion">
+                <div class="panel-group" id="variants_accordion">
                     <div class="panel panel-default collapsed">
                         <div class="panel-heading">
                             <h5 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Common Attributes</a>
+                                <a data-toggle="collapse" data-parent="#variants_accordion" href="#variants_accordion_collapseOne">Variant Definition</a>
                             </h5>
                         </div>
-                        <div id="collapseOne" class="panel-collapse collapse out">
+                        <div id="variants_accordion_collapseOne" class="panel-collapse collapse out">
                             <div class="panel-body">
                                 sdfssfsa
                             </div>
@@ -162,10 +165,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h5 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Variant Specific Attributes</a>
+                                <a data-toggle="collapse" data-parent="#variants_accordion" href="#variants_accordion_collapseTwo">Variant Configuration</a>
                             </h5>
                         </div>
-                        <div id="collapseTwo" class="panel-collapse collapse out">
+                        <div id="variants_accordion_collapseTwo" class="panel-collapse collapse out">
                             <div class="panel-body">
                                 <p>Select attributes and values that define the differences between your variants.</p>
                                 <div class="well">
@@ -282,7 +285,7 @@
             {{ form_errors(form.price_and_stock) }}
             <div class="panel-body">
                 <h3>Price & Tax</h3>
-                <p>Assign default price and a tax rate and edit individually afterwards if necessary.</p>
+                <p>Enter price and tax set.</p>
                 <div class="well">
                     {{ form_row(form.price_and_stock.price) }}
                     {{ form_row(form.price_and_stock.tax_rate) }}
@@ -291,7 +294,7 @@
 
             <div class="panel-body">
                 <h3>Stock</h3>
-                <p>Assign default stock and edit individually afterwards if necessary.</p>
+                <p>Enter stock value. In case you create multiple variants, the stock can be managed under "Product Variants" and this input field will be ignored.</p>
                 <div class="well">
                     {{ form_row(form.price_and_stock.stock) }}
                 </div>
