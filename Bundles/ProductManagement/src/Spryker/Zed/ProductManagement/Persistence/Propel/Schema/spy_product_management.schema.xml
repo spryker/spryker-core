@@ -3,17 +3,6 @@
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="Orm\Zed\ProductManagement\Persistence" package="src.Orm.Zed.ProductManagement.Persistence">
 
-    <table name="spy_product_management_attribute_type" idMethod="native" allowPkInsert="true" identifierQuoting="true">
-        <column name="id_product_management_attribute_type" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="type" type="VARCHAR" size="128" required="true" />
-
-        <unique name="spy_product_management_attribute_type-unique-type">
-            <unique-column name="type" />
-        </unique>
-
-        <id-method-parameter value="spy_product_management_attribute_type_pk_seq" />
-    </table>
-
     <table name="spy_product_management_attribute_input" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_management_attribute_input" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="input" type="VARCHAR" size="128" required="true" />
@@ -25,28 +14,15 @@
         <id-method-parameter value="spy_product_management_attribute_input_pk_seq" />
     </table>
 
-    <table name="spy_product_management_attribute_metadata" idMethod="native" allowPkInsert="true" identifierQuoting="true">
-        <column name="id_product_management_attribute_metadata" primaryKey="true" type="INTEGER" autoIncrement="true" />
-        <column name="key" required="true" type="VARCHAR" />
-        <column name="fk_type" type="INTEGER" />
-
-        <foreign-key name="spy_product_management_attribute_metadata-fk_type" foreignTable="spy_product_management_attribute_type">
-            <reference local="fk_type" foreign="id_product_management_attribute_type" />
-        </foreign-key>
-
-        <id-method-parameter value="spy_product_management_attribute_metadata_pk_seq" />
-    </table>
-
     <table name="spy_product_management_attribute" idMethod="native" allowPkInsert="true">
         <column name="id_product_management_attribute" type="INTEGER" primaryKey="true" autoIncrement="true" />
-        <column name="fk_metadata" type="INTEGER" required="true" />
+        <column name="fk_product_attribute" type="INTEGER" required="true" />
         <column name="fk_input" type="INTEGER" required="true" />
         <column name="allow_input" type="BOOLEAN" required="true" defaultValue="true" />
         <column name="is_multiple" type="BOOLEAN" required="true" defaultValue="false" />
-        <column name="is_localized" type="BOOLEAN" required="true" defaultValue="false" />
 
-        <foreign-key name="spy_product_management_attribute-fk_metadata" foreignTable="spy_product_management_attribute_metadata">
-            <reference local="fk_metadata" foreign="id_product_management_attribute_metadata" />
+        <foreign-key name="spy_product_management_attribute-fk_product_attribute" foreignTable="spy_product_attribute">
+            <reference local="fk_product_attribute" foreign="id_product_attribute" />
         </foreign-key>
 
         <foreign-key name="spy_product_management_attribute-fk_input" foreignTable="spy_product_management_attribute_input">
