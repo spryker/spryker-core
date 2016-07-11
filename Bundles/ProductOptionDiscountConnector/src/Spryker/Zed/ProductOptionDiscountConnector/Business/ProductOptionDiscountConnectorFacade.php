@@ -20,7 +20,7 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
     /**
      * Specification:
      *  - Loops over product option calculated discounts and sums up to order total
-     *  - Amounts stored in orderTransfer:calculatedDiscounts
+     *  - Amounts stored in OrderTransfer->getCalculatedDiscounts()
      *
      * @api
      *
