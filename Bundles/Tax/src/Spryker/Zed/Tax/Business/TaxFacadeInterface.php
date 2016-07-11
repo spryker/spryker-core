@@ -9,12 +9,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 
-
 /**
  * @method \Spryker\Zed\Tax\Business\TaxBusinessFactory getFactory()
  */
 interface TaxFacadeInterface
 {
+
     /**
      * Specification:
      *  - Returns all persisted tax rates
@@ -329,4 +329,5 @@ interface TaxFacadeInterface
      * @return void
      */
     public function resetAccruedTaxCalculatorRoundingErrorDelta();
+
 }
