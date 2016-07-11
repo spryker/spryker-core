@@ -42,7 +42,7 @@ class PaymentDependencyInjectorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection
      */

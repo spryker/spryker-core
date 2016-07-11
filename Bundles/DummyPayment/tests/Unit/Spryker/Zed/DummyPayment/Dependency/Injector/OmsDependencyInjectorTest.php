@@ -38,7 +38,7 @@ class OmsDependencyInjectorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection
      */
@@ -67,7 +67,7 @@ class OmsDependencyInjectorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection
      */
