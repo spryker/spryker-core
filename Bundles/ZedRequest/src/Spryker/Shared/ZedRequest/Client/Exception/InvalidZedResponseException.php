@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Library\Zed\Exception;
+namespace Spryker\Shared\ZedRequest\Client\Exception;
 
 use Guzzle\Http\Message\Response;
 

@@ -21,7 +21,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\EventJournal\Model\SharedEventJournal;
 use Spryker\Shared\Library\System;
-use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
+use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
@@ -226,7 +226,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
-     * @throws \Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
      * @return \Guzzle\Http\Message\Response
      */
@@ -243,7 +243,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param \Guzzle\Http\Message\Response $response
      *
-     * @throws \Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
      * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
