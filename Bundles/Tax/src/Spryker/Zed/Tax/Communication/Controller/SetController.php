@@ -105,13 +105,8 @@ class SetController extends AbstractController
     {
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
-        $removed = $this->getFacade()->deleteTaxSet($idTaxSet);
-
-        if ($removed) {
-            $this->addSuccessMessage('Tax set removed.');
-        } else {
-            $this->addErrorMessage('Failed to remove tax set.');
-        }
+        $this->getFacade()->deleteTaxSet($idTaxSet);
+        $this->addSuccessMessage('Tax set removed.');
 
         return $this->redirectResponse(Url::generate('/tax/set/list')->build());
     }

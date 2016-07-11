@@ -36,7 +36,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *
      *  Specification:
      *  - Returns persisted rate by primary id
      *
@@ -93,7 +92,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *  - Return tax set by primary id
      *
@@ -174,7 +172,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *  - Create new tax set
      *
@@ -196,7 +193,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *  - Update existing tax set
      *
@@ -218,7 +214,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *  - Add existing tax rate tax set
      *
@@ -240,7 +235,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *  - Remove tax reate from existing set
      *
@@ -263,7 +257,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *  Specification:
+     * Specification:
      *  - Remove tax rate
      *
      * @api
@@ -272,17 +266,16 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return bool
+     * @return void
      */
     public function deleteTaxRate($id)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriterModel()
             ->deleteTaxRate($id);
     }
 
     /**
-     *
      * Specification:
      *  - Removes tax set with all tax rates assigned
      *
@@ -290,19 +283,18 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      *
      * @param int $id
      *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @return void
      *
-     * @return bool
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function deleteTaxSet($id)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriterModel()
             ->deleteTaxSet($id);
     }
 
     /**
-     *
      * Specification:
      *  - Loops over calculable items and sum all item taxes, including expenses
      *
@@ -320,7 +312,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *  - Set tax rate for each item
      *
@@ -338,7 +329,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *  - Calculate tax amount for each item
      *

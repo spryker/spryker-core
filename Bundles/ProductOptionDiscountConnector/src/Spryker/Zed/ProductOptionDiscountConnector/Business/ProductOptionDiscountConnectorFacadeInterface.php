@@ -8,12 +8,12 @@ namespace Spryker\Zed\ProductOptionDiscountConnector\Business;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-
 /**
  * @method \Spryker\Zed\ProductOptionDiscountConnector\Business\ProductOptionDiscountConnectorBusinessFactory getFactory()
  */
 interface ProductOptionDiscountConnectorFacadeInterface
 {
+
     /**
      * Specification:
      *  - Loops over product option calculated discounts and sums up to order total
@@ -136,4 +136,5 @@ interface ProductOptionDiscountConnectorFacadeInterface
      * @return void
      */
     public function recalculateDiscountTotalsWithProductOptions(QuoteTransfer $quoteTransfer);
+
 }

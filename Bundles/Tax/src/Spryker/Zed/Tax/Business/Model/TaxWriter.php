@@ -230,7 +230,7 @@ class TaxWriter implements TaxWriterInterface
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return bool
+     * @return void
      */
     public function deleteTaxRate($id)
     {
@@ -239,8 +239,6 @@ class TaxWriter implements TaxWriterInterface
         if ($taxRateEntity) {
             $taxRateEntity->delete();
         }
-
-        return $taxRateEntity->isDeleted();
     }
 
     /**
@@ -248,7 +246,7 @@ class TaxWriter implements TaxWriterInterface
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return bool
+     * @return void
      */
     public function deleteTaxSet($id)
     {
@@ -257,8 +255,6 @@ class TaxWriter implements TaxWriterInterface
         if ($taxSetEntity) {
             $taxSetEntity->delete();
         }
-
-        return $taxSetEntity->isDeleted();
     }
 
     /**
