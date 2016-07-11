@@ -104,7 +104,6 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
      * @param int|null $timeoutInSeconds
-     * @param bool $isBackgroundRequest
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\RequestException
      *
@@ -114,12 +113,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $pathInfo,
         TransferInterface $transferObject = null,
         array $metaTransfers = [],
-        $timeoutInSeconds = null,
-        $isBackgroundRequest = false
+        $timeoutInSeconds = null
     ) {
-        if (!$this->isRequestAllowed($isBackgroundRequest)) {
-            throw new \LogicException('You cannot make more than one request from Yves to Zed.');
-        }
+
         self::$requestCounter++;
 
         $requestTransfer = $this->createRequestTransfer($transferObject, $metaTransfers);
@@ -149,23 +145,6 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected function isLoggingAllowed($pathInfo)
     {
         return strpos($pathInfo, 'heartbeat');
-    }
-
-    /**
-     * @param bool $isBackgroundRequest
-     *
-     * @return bool
-     */
-    protected function isRequestAllowed($isBackgroundRequest)
-    {
-        if (!$isBackgroundRequest) {
-            if (self::$alreadyRequested === true) {
-                return false;
-            }
-            self::$alreadyRequested = true;
-        }
-
-        return true;
     }
 
     /**

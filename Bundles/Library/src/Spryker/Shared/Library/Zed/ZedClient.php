@@ -85,17 +85,13 @@ class ZedClient
      * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
      * @param int|null $timeoutInSeconds
-     * @param bool $isBackgroundRequest
      *
      * @throws \LogicException
      *
      * @return \Spryker\Shared\Library\Communication\Response
      */
-    public function request($pathInfo, TransferInterface $transferObject = null, array $metaTransfers = [], $timeoutInSeconds = null, $isBackgroundRequest = false)
+    public function request($pathInfo, TransferInterface $transferObject = null, array $metaTransfers = [], $timeoutInSeconds = null)
     {
-        if (!$this->isRequestAllowed($isBackgroundRequest)) {
-            throw new \LogicException('You cannot make more than one request from Yves to Zed.');
-        }
         self::$requestCounter++;
 
         $requestTransfer = $this->createRequestTransfer($transferObject, $metaTransfers);
@@ -120,24 +116,7 @@ class ZedClient
         return mb_strpos($pathInfo, 'heartbeat') !== false;
     }
 
-    /**
-     * @param bool $isBackgroundRequest
-     *
-     * @return bool
-     */
-    protected function isRequestAllowed($isBackgroundRequest)
-    {
-        if (!$isBackgroundRequest) {
-            if (self::$alreadyRequested === true) {
-                return false;
-            }
-            self::$alreadyRequested = true;
-        }
-
-        return true;
-    }
-
-    /**
+     /**
      * @param string $pathInfo
      * @param \Spryker\Shared\Library\Communication\Request $requestTransfer
      * @param int|null $timeoutInSeconds

@@ -27,7 +27,6 @@ interface HttpClientInterface
      * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
      * @param int|null $timeoutInSeconds
-     * @param bool $isBackgroundRequest
      *
      * @throws \LogicException
      *
@@ -37,8 +36,7 @@ interface HttpClientInterface
         $pathInfo,
         TransferInterface $transferObject = null,
         array $metaTransfers = [],
-        $timeoutInSeconds = null,
-        $isBackgroundRequest = false
+        $timeoutInSeconds = null
     );
 
     /**
