@@ -13,7 +13,7 @@ use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
 
-class ItemPriceRuleTest extends BaseRuleTester
+class ItemPriceCollectorTest extends BaseRuleTester
 {
 
     /**
