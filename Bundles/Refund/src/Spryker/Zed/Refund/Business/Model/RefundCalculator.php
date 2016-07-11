@@ -20,13 +20,13 @@ class RefundCalculator implements RefundCalculatorInterface
     protected $salesAggregatorFacade;
 
     /**
-     * @var \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface[]
+     * @var \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[]
      */
     protected $refundCalculatorPlugins;
 
     /**
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface $salesAggregatorFacade
-     * @param \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface[] $refundCalculatorPlugins
+     * @param \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[] $refundCalculatorPlugins
      */
     public function __construct(RefundToSalesAggregatorInterface $salesAggregatorFacade, array $refundCalculatorPlugins)
     {

@@ -17,6 +17,9 @@ class DummyPaymentFacade extends AbstractFacade implements DummyPaymentFacadeInt
 {
 
     /**
+     * Specification:
+     * - Calculate refund amount for given order items and order entity
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems

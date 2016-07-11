@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
@@ -27,7 +28,7 @@ class IsAuthorizedPlugin extends AbstractPlugin implements ConditionInterface
     {
         $lastName = $orderItem->getOrder()->getLastName();
 
-        return ($lastName !== 'Invalid');
+        return ($lastName !== DummyPaymentConstants::LAST_NAME_FOR_INVALID_TEST);
     }
 
 }

@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Refund\Business\Model\RefundCalculator;
-use Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface;
+use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 
 /**
  * @group Spryker
@@ -48,7 +48,7 @@ class RefundCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface[] $refundCalculatorPlugins
+     * @param \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[] $refundCalculatorPlugins
      *
      * @return \Spryker\Zed\Refund\Business\Model\RefundCalculator
      */
@@ -74,7 +74,7 @@ class RefundCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface
      */
     protected function getRefundCalculationPlugin()
     {

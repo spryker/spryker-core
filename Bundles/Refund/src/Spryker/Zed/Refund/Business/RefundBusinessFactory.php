@@ -67,7 +67,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface[]
+     * @return \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[]
      */
     protected function getRefundCalculatorPlugins()
     {

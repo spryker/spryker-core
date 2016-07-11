@@ -10,6 +10,7 @@ namespace Spryker\Zed\Refund\Communication\Plugin;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 
 /**
  * @method \Spryker\Zed\Refund\Business\RefundFacade getFacade()

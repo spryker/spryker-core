@@ -10,6 +10,7 @@ namespace Spryker\Zed\DummyPayment\Communication\Plugin\Checkout;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 
@@ -50,7 +51,7 @@ class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPost
      */
     protected function isAuthorizationApproved(QuoteTransfer $quoteTransfer)
     {
-        return ($quoteTransfer->getBillingAddress()->getLastName() !== 'Invalid');
+        return ($quoteTransfer->getBillingAddress()->getLastName() !== DummyPaymentConstants::LAST_NAME_FOR_INVALID_TEST);
     }
 
 }

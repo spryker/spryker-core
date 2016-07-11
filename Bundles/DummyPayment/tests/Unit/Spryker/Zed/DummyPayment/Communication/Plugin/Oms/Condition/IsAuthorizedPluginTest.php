@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsAuthorizedPlugin;
 
 /**
@@ -42,7 +43,7 @@ class IsAuthorizedPluginTest extends \PHPUnit_Framework_TestCase
     {
         $isAuthorizedPlugin = new IsAuthorizedPlugin();
         $salesOrderEntity = new SpySalesOrder();
-        $salesOrderEntity->setLastName('Invalid');
+        $salesOrderEntity->setLastName(DummyPaymentConstants::LAST_NAME_FOR_INVALID_TEST);
         $salesOrderItemEntity = new SpySalesOrderItem();
         $salesOrderItemEntity->setOrder($salesOrderEntity);
 

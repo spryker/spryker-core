@@ -10,8 +10,8 @@ namespace Unit\Spryker\Zed\Refund;
 use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Refund\Communication\Plugin\RefundCalculatorPluginInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
+use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 

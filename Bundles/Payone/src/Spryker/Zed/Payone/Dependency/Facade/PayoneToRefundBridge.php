@@ -32,7 +32,7 @@ class PayoneToRefundBridge implements PayoneToRefundInterface
      */
     public function calculateRefundableAmount(OrderTransfer $orderTransfer)
     {
-        return $this->refundFacade->calculateRefund($orderTransfer);
+        return $this->refundFacade->calculateRefundableAmount($orderTransfer);
     }
 
 }
