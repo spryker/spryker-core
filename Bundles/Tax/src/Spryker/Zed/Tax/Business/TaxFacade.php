@@ -264,7 +264,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 
     /**
      *  Specification:
-     *  - Remove tax reate
+     *  - Remove tax rate
      *
      * @api
      *
@@ -284,7 +284,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     /**
      *
      * Specification:
-     *  - Remove tax set with all tax rates assigned
+     *  - Removes tax set with all tax rates assigned
      *
      * @api
      *
@@ -304,7 +304,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     /**
      *
      * Specification:
-     *  - Loop over calculable items and sum all item taxes, includes expenses
+     *  - Loops over calculable items and sum all item taxes, including expenses
      *
      * @api
      *

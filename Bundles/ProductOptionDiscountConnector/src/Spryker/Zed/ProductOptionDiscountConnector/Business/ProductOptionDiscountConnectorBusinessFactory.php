@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business;
 
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\DiscountTotalAmount;
@@ -75,7 +74,7 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return DiscountQueryContainerInterface
+     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function getDiscountQueryContainer()
     {

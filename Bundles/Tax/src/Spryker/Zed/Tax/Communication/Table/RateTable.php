@@ -21,6 +21,7 @@ class RateTable extends AbstractTable
 
     const TABLE_COL_ACTIONS = 'Actions';
     const URL_PARAM_ID_TAX_RATE = 'id-tax-rate';
+    const COUNTRY_NOT_AVAILABLE = 'N/A';
 
     /**
      * @var \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
@@ -180,7 +181,7 @@ class RateTable extends AbstractTable
      */
     protected function getCountryName(SpyTaxRate $taxRateEntity)
     {
-        $countryName = 'N/A';
+        $countryName = self::COUNTRY_NOT_AVAILABLE;
         if ($taxRateEntity->getCountry()) {
             $countryName = $taxRateEntity->getCountry()->getName();
         }
