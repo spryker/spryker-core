@@ -40,6 +40,7 @@
       "Functional\\Spryker\\Zed\\Auth\\": "Bundles/Auth/tests",
       "Spryker\\Zed\\AuthMailConnector\\": "Bundles/AuthMailConnector/src",
       "Unit\\Spryker\\Zed\\AuthMailConnector\\": "Bundles/AuthMailConnector/tests",
+      "Spryker\\Shared\\Availability\\": "Bundles/Availability/src",
       "Spryker\\Zed\\Availability\\": "Bundles/Availability/src",
       "Functional\\Spryker\\Zed\\Availability\\": "Bundles/Availability/tests",
       "Spryker\\Zed\\AvailabilityCartConnector\\": "Bundles/AvailabilityCartConnector/src",

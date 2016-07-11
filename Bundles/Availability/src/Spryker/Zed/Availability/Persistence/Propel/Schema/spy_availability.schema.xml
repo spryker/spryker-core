@@ -5,6 +5,7 @@
         <column name="id_availability" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="quantity" type="INTEGER" required="true"/>
+        <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
 
         <unique name="spy_availability-sku">
             <unique-column name="sku"/>

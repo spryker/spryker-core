@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Orm\Zed\Availability\Persistence\SpyAvailability;
+use Spryker\Shared\Availability\AvailabilityConstants;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
@@ -51,34 +52,33 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function updateAvailability($sku)
     {
-        $currentQuantity = null;
-        $currentAvailabilityEntity = $this->querySpyAvailabilityBySku($sku)->findOne();
+        $oldQuantity = $this->getOldPhysicalQuantity($sku);
+        $newQuantity = $this->getNewPhysicalQuantity($this->sellable->calculateStockForProduct($sku));
 
-        if ($currentAvailabilityEntity !== null) {
-            $currentQuantity = $currentAvailabilityEntity->getQuantity();
-        }
+        $savedAvailabilityEntity = $this->saveCurrentAvailability($sku, $newQuantity);
 
-        $newAvailabilityQuantity = $this->sellable->calculateStockForProduct($sku);
-        $currentAvailabilityEntity = $this->saveCurrentAvailability($sku, $newAvailabilityQuantity);
-
-        if ($currentQuantity === null || $this->isAvailabilityStatusChanged($currentQuantity, $newAvailabilityQuantity)) {
-            $this->touchAvailability($currentAvailabilityEntity->getIdAvailability());
+        if ($this->isAvailabilityStatusChanged($oldQuantity, $newQuantity)) {
+            $this->touchAvailability($savedAvailabilityEntity->getIdAvailability());
         }
     }
 
     /**
-     * @param int $currentQuantity
+     * @param int $oldQuantity
      * @param int $newQuantity
      *
      * @return bool
      */
-    protected function isAvailabilityStatusChanged($currentQuantity, $newQuantity)
+    protected function isAvailabilityStatusChanged($oldQuantity, $newQuantity)
     {
-        if ($currentQuantity === 0 && $newQuantity > $currentQuantity) {
+        if ($oldQuantity === null) {
             return true;
         }
 
-        if ($currentQuantity !== 0 && $newQuantity === 0) {
+        if ($oldQuantity === 0 && $newQuantity > $oldQuantity) {
+            return true;
+        }
+
+        if ($oldQuantity !== 0 && $newQuantity === 0) {
             return true;
         }
 
@@ -117,7 +117,34 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function touchAvailability($idAvailability)
     {
-        $this->touchFacade->touchActive('availability', $idAvailability);
+        $this->touchFacade->touchActive(AvailabilityConstants::RESOURCE_TYPE_AVAILABILITY, $idAvailability);
+    }
+
+    /**
+     * @param int $quantity
+     *
+     * @return int
+     */
+    protected function getNewPhysicalQuantity($quantity)
+    {
+        return $quantity > 0 ? $quantity : 0;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    protected function getOldPhysicalQuantity($sku)
+    {
+        $oldQuantity = null;
+        $availabilityEntity = $this->querySpyAvailabilityBySku($sku)->findOne();
+
+        if ($availabilityEntity !== null) {
+            $oldQuantity = $availabilityEntity->getQuantity();
+        }
+
+        return $oldQuantity;
     }
 
 }
