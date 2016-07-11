@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Reservation implements ReservationInterface
@@ -28,15 +29,27 @@ class Reservation implements ReservationInterface
     protected $queryContainer;
 
     /**
+     * @var ReservationHandlerPluginInterface[]
+     */
+    protected $reservationHandlerPlugins;
+
+    /**
      * @param array $activeProcesses
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      * @param OmsQueryContainerInterface $queryContainer
+     * @param ReservationHandlerPluginInterface[] $reservationHandlerPlugins
      */
-    public function __construct(ReadOnlyArrayObject $activeProcesses, BuilderInterface $builder, OmsQueryContainerInterface $queryContainer)
+    public function __construct(
+        ReadOnlyArrayObject $activeProcesses,
+        BuilderInterface $builder,
+        OmsQueryContainerInterface $queryContainer,
+        array $reservationHandlerPlugins
+    )
     {
         $this->activeProcesses = $activeProcesses;
         $this->builder = $builder;
         $this->queryContainer = $queryContainer;
+        $this->reservationHandlerPlugins = $reservationHandlerPlugins;
     }
 
     /**
@@ -46,11 +59,8 @@ class Reservation implements ReservationInterface
      */
     public function updateReservationQuantity($sku)
     {
-        $reservationQuantity = $this->sumReservedProductQuantitiesForSku($sku);
-        $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOneOrCreate();
-        $reservationEntity->setReservationQuantity($reservationQuantity);
-
-        $reservationEntity->save();
+        $this->saveReservation($sku);
+        $this->handleReservationPlugins($sku);
     }
 
     /**
@@ -89,6 +99,32 @@ class Reservation implements ReservationInterface
         }
 
         return $reservedStates;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return void
+     */
+    protected function saveReservation($sku)
+    {
+        $reservationQuantity = $this->sumReservedProductQuantitiesForSku($sku);
+        $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOneOrCreate();
+        $reservationEntity->setReservationQuantity($reservationQuantity);
+
+        $reservationEntity->save();
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return void
+     */
+    protected function handleReservationPlugins($sku)
+    {
+        foreach ($this->reservationHandlerPlugins as $reservationHandlerPluginInterface) {
+            $reservationHandlerPluginInterface->handle($sku);
+        }
     }
 
 }

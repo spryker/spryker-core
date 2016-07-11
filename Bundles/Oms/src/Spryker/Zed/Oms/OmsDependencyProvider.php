@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
+use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -20,6 +21,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
     const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
+    const PLUGINS_RESERVATION = 'reservation plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +40,10 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::PLUGIN_GRAPH] = function (Container $container) {
             return $this->getGraphPlugin();
+        };
+
+        $container[self::PLUGINS_RESERVATION] = function (Container $container) {
+            return $this->getReservationHandlerPlugins($container);
         };
 
         return $container;
@@ -81,6 +87,16 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     protected function getGraphPlugin()
     {
         return new GraphPlugin();
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return ReservationHandlerPluginInterface[]
+     */
+    protected function getReservationHandlerPlugins(Container $container)
+    {
+        return [];
     }
 
 }

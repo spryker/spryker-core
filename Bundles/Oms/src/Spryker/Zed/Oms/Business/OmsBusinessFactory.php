@@ -26,6 +26,7 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\Reservation;
 use Spryker\Zed\Oms\Business\Util\ReservationInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLog;
+use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
@@ -243,8 +244,17 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new Reservation(
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
             $this->createOrderStateMachineBuilder(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getReservationHandlerPlugins()
         );
+    }
+
+    /**
+     * @return ReservationHandlerPluginInterface[]
+     */
+    protected function getReservationHandlerPlugins()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION);
     }
 
 }
