@@ -33,7 +33,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     *
      * Specification:
      *  - Reads order from database and stores in order transfer
      *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
@@ -50,7 +49,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     *
      *  Specification:
      *  - Use existing OrderTransfer instead fo quering database
      *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
@@ -67,7 +65,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     *
      * Specification:
      *  - Iterate order exepenses and sum up amounts
      *
@@ -83,7 +80,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     *
      *  Specification:
      *  - Sum up expenses and subtotals
      *
@@ -99,7 +95,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     *
      * Specification:
      *  - Sum up item amounts before discounts
      *
@@ -131,7 +126,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     *
      * Specification:
      *  - Calculate item tax amount
      *
@@ -147,7 +141,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     *
      * Specification:
      *  - Calculate order total tax amount
      *
@@ -163,7 +156,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     *
      * Specification:
      *  - Calculate order expense tax amount
      *

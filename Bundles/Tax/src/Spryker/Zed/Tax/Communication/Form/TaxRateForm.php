@@ -43,7 +43,7 @@ class TaxRateForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addName($builder)
-            ->adIdTaxRate($builder)
+            ->addIdTaxRate($builder)
             ->addCountry($builder)
             ->addPercentage($builder);
     }
@@ -73,7 +73,7 @@ class TaxRateForm extends AbstractType
      *
      * @return $this
      */
-    protected function adIdTaxRate(FormBuilderInterface $builder)
+    protected function addIdTaxRate(FormBuilderInterface $builder)
     {
         $taxRateTransfer = $this->taxRateFormDataProvider->getData();
         if (!$taxRateTransfer || !$taxRateTransfer->getIdTaxRate()) {

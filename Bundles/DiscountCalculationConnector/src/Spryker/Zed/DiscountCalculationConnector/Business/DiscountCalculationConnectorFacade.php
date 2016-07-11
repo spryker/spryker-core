@@ -17,6 +17,10 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
 {
 
     /**
+     * Specification:
+     *  - Loops over items and expenses calculated discounts
+     *  - Sum all calculated discounts and store to QuoteTransfer->getTotals()->setDiscountTotal()
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -29,6 +33,10 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
+     * Specification:
+     *  - Loops over items and expense
+     *  - Set empty \ArrayObject for calculater discounts
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -41,6 +49,9 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
+     * Specification:
+     *  - Takes grand total without discounts and subtract TotalDiscounts
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -53,6 +64,10 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
+     * Specification:
+     *  - Loops over items and expenses
+     *  - Calculates total item discount amount and gross price after discounts
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -65,6 +80,9 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
+     * Specification:
+     *  - Calculates total item tax amount after discounts
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

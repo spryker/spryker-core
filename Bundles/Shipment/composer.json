@@ -20,7 +20,7 @@
     "spryker/session": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/url": "^2.0.0",
-    "spryker/tax": "^2.0.0",
+    "spryker/tax": "^3.0.0",
     "spryker/sales": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/zed-request": "^2.0.0"

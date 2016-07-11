@@ -18,6 +18,10 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
 {
 
     /**
+     * Specification:
+     *  - Loops over product option calculated discounts and sums up to order total
+     *  - Amounts stored in orderTransfer:calculatedDiscounts
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -30,6 +34,11 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
     }
 
     /**
+     * Specification:
+     *  - Loops over product option discount with discount sum
+     *  - Calculates totals with product options
+     *  - Amounts stored: OrderTransfer->getTotals()->setDiscountTotal()
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -42,6 +51,11 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
     }
 
     /**
+     * Specification:
+     *  - Read order discounts from persistence
+     *  - Assign discount to each coresponding item
+     *  - Calculate item and product option discount amount fields with discount
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -54,6 +68,10 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
     }
 
     /**
+     * Specification:
+     *  - Loops over items with discounts
+     *  - Calculate discount amount for items after discounts
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -66,6 +84,11 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
     }
 
     /**
+     * Specification:
+     *  - Loops over items with options and discounts
+     *  - Loops over expenses with discounts
+     *  - Summ all tax amounts calculated
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -78,6 +101,10 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
     }
 
     /**
+     * Specification:
+     *  - Loops over items with options and discounts, calculates tax
+     *  - Loops over expenses with discounts, calculates tax
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -90,6 +117,11 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
     }
 
     /**
+     * Specification:
+     *  - Loops over items with options and discounts
+     *  - Loops over expenses with discounts
+     *  - Summ all tax amounts calculated
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -102,6 +134,11 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
     }
 
     /**
+     * Specification:
+     *  - Read order discounts from persistence
+     *  - Assign discount to each coresponding item
+     *  - Calculate item and product option discount amount fields with discount
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -114,6 +151,11 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade implements Pro
     }
 
     /**
+     * Specification:
+     *  - Loops over product option discount with discount sum
+     *  - Calculates totals with product options
+     *  - Amounts stored: QuoteTransfer->getTotals()->setDiscountTotal()
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
