@@ -11,10 +11,10 @@
     }
   },
   "require": {
-    "spryker/product": "^2.0.0",
-    "spryker/discount": "^3.0.0"
+    "spryker/discount": "^3.0.0",
+    "spryker/product": "^2.0.0"
   },
-  "description": "product discount connector bundle",
+  "description": "ProductDiscountConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -22,5 +22,8 @@
     "branch-alias": {
       "dev-master": "1.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

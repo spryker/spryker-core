@@ -342,6 +342,21 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     /**
      * @api
      *
+     * @param int $idKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return void
+     */
+    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null)
+    {
+        $translationManager = $this->getFactory()->createTranslationManager();
+
+        $translationManager->touchTranslationForKeyId($idKey, $localeTransfer);
+    }
+
+    /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return int

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Cart\Dependency\Facade;
 
 use Generated\Shared\Transfer\MessageTransfer;
 
-class CartToMessengerBridge implements CartToMessengerBridgeInterface
+class CartToMessengerBridge implements CartToMessengerInterface
 {
 
     /**

@@ -158,6 +158,14 @@ interface TranslationManagerInterface
     public function touchCurrentTranslationForKeyId($idKey);
 
     /**
+     * @param int $idKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return void
+     */
+    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null);
+
+    /**
      * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
