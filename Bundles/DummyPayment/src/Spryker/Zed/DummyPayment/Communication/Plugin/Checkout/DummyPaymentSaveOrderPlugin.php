@@ -23,10 +23,11 @@ class DummyPaymentSaveOrderPlugin extends AbstractPlugin implements CheckoutSave
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
+        return $checkoutResponseTransfer;
     }
 
 }

@@ -51,7 +51,12 @@ class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPost
      */
     protected function isAuthorizationApproved(QuoteTransfer $quoteTransfer)
     {
-        return ($quoteTransfer->getBillingAddress()->getLastName() !== DummyPaymentConstants::LAST_NAME_FOR_INVALID_TEST);
+        $quoteTransfer->requireBillingAddress();
+
+        $billingAddress = $quoteTransfer->getBillingAddress();
+        $billingAddress->requireLastName();
+
+        return ($billingAddress->getLastName() !== DummyPaymentConstants::LAST_NAME_FOR_INVALID_TEST);
     }
 
 }
