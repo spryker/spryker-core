@@ -17,6 +17,8 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Sales\Business\Model\Order\Grouper\Grouper;
+use Spryker\Zed\Sales\Business\Model\Order\Grouper\GrouperInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesConfig;
@@ -166,7 +168,10 @@ class OrderSaver implements OrderSaverInterface
      */
     protected function saveOrderItems(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        $items = $this->expandItems($quoteTransfer->getItems());
+        $quoteTransfer->setItems($items);
+
+        foreach ($items as $itemTransfer) {
             $this->assertItemRequirements($itemTransfer);
 
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
@@ -174,6 +179,26 @@ class OrderSaver implements OrderSaverInterface
             $salesOrderItemEntity->save();
             $itemTransfer->setIdSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem());
         }
+    }
+
+    /**
+     * @param \ArrayObject|ItemTransfer[] $items
+     *
+     * @return \ArrayObject|ItemTransfer[]
+     */
+    protected function expandItems(\ArrayObject $items)
+    {
+        $expandedItems = new \ArrayObject();
+        foreach ($items as $itemTransfer) {
+            for ($i = 1; $itemTransfer->getQuantity() >= $i; $i++) {
+                $expandedItemTransfer = clone $itemTransfer;
+                $expandedItemTransfer->setGroupKey(null);
+                $expandedItemTransfer->setQuantity(1);
+                $expandedItems->append($expandedItemTransfer);
+            }
+        }
+
+        return $expandedItems;
     }
 
     /**

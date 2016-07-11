@@ -33,11 +33,6 @@ class Operation implements OperationInterface
     protected $calculationFacade;
 
     /**
-     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface
-     */
-    protected $itemGrouperFacade;
-
-    /**
      * @var \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     protected $messengerFacade;
@@ -50,20 +45,17 @@ class Operation implements OperationInterface
     /**
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
-     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface $itemGrouperFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
         CartToCalculationInterface $calculationFacade,
-        CartToItemGrouperInterface $itemGrouperFacade,
         CartToMessengerInterface $messengerFacade,
         array $itemExpanderPlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;
-        $this->itemGrouperFacade = $itemGrouperFacade;
         $this->messengerFacade = $messengerFacade;
         $this->itemExpanderPlugins = $itemExpanderPlugins;
     }
@@ -77,7 +69,6 @@ class Operation implements OperationInterface
     {
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
-        $quoteTransfer = $this->getGroupedCartItems($quoteTransfer);
         $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::ADD_ITEMS_SUCCESS));
 
         return $this->recalculate($quoteTransfer);
@@ -133,23 +124,6 @@ class Operation implements OperationInterface
     protected function recalculate(QuoteTransfer $quoteTransfer)
     {
         return $this->calculationFacade->recalculate($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function getGroupedCartItems(QuoteTransfer $quoteTransfer)
-    {
-        $groupAbleItems = new GroupableContainerTransfer();
-        $groupAbleItems->setItems($quoteTransfer->getItems());
-
-        $groupedItems = $this->itemGrouperFacade->groupItemsByKey($groupAbleItems);
-
-        $quoteTransfer->setItems($groupedItems->getItems());
-
-        return $quoteTransfer;
     }
 
 }

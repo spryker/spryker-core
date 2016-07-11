@@ -297,15 +297,15 @@ class SalesFacadeSaveOrderTest extends Test
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item1Entity->getFkOmsOrderItemState());
         $this->assertSame($item1->getSku(), $item1Entity->getSku());
         $this->assertSame($savedItems[1]->getUnitGrossPrice(), $item1Entity->getGrossPrice());
-        $this->assertSame($item1->getQuantity(), $item1Entity->getQuantity());
+        $this->assertSame(1, $item1Entity->getQuantity());
 
-        $this->assertSame($savedItems[2]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
+        $this->assertSame($savedItems[3]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
         $this->assertSame($item2->getName(), $item2Entity->getName());
         $this->assertSame($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder(), $item2Entity->getFkSalesOrder());
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item2Entity->getFkOmsOrderItemState());
         $this->assertSame($item2->getSku(), $item2Entity->getSku());
-        $this->assertSame($savedItems[2]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
-        $this->assertSame($item2->getQuantity(), $item2Entity->getQuantity());
+        $this->assertSame($savedItems[3]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
+        $this->assertSame(1, $item2Entity->getQuantity());
     }
 
     /**
