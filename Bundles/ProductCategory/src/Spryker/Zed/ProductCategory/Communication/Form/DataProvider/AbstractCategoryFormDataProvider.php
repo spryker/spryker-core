@@ -132,7 +132,7 @@ class AbstractCategoryFormDataProvider
      */
     public function getAttributes($idCategory)
     {
-        $attributeCollection = $this->categoryQueryContainer->queryCategoryAttributes($idCategory)
+        $attributeCollection = $this->categoryQueryContainer->queryAttributeByCategoryId($idCategory)
             ->innerJoinLocale()
             ->clearSelectColumns()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, CategoryFormEdit::FIELD_NAME)
