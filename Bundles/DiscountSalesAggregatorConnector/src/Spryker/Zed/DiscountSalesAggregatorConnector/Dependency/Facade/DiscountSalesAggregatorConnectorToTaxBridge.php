@@ -35,8 +35,6 @@ class DiscountSalesAggregatorConnectorToTaxBridge implements DiscountSalesAggreg
     }
 
     /**
-     * @api
-     *
      * @param int $grossPrice
      * @param float $taxRate
      *

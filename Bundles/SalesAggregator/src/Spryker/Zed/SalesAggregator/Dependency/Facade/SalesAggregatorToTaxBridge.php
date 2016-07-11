@@ -35,8 +35,6 @@ class SalesAggregatorToTaxBridge implements SalesAggregatorToTaxInterface
     }
 
     /**
-     * @api
-     *
      * @param int $grossPrice
      * @param float $taxRate
      *

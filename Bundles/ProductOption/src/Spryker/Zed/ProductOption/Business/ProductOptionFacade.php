@@ -311,6 +311,10 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * Specification:
+     *  - Calculate tax rate for current quote
+     *  - Set tax rate perecentage
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

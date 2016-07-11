@@ -17,8 +17,6 @@ interface DiscountCalculationToTaxInterface
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
 
     /**
-     * @api
-     *
      * @param int $grossPrice
      * @param float $taxRate
      *

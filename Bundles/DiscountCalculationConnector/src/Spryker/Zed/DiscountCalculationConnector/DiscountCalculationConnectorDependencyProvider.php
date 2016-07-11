@@ -34,7 +34,7 @@ class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDepen
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
-     * r
+     *
      * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)

@@ -34,8 +34,6 @@ class DiscountCalculationToTaxBridge implements DiscountCalculationToTaxInterfac
     }
 
     /**
-     * @api
-     *
      * @param int $grossPrice
      * @param float $taxRate
      *
