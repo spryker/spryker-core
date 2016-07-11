@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <discount>
-        <label>Tax</label>
-        <title>Tax</title>
+    <tax>
+        <label>Taxes</label>
+        <title>Taxes</title>
         <uri>#</uri>
-        <icon>fa-credit-card</icon>
+        <icon>fa-fax</icon>
         <bundle>tax</bundle>
         <pages>
             <pool>
@@ -13,7 +13,6 @@
                 <bundle>tax</bundle>
                 <controller>rate</controller>
                 <action>list</action>
-                <icon>fa-file-code-o</icon>
             </pool>
             <cart-rules>
                 <label>Tax Sets</label>
@@ -21,8 +20,7 @@
                 <bundle>tax</bundle>
                 <controller>set</controller>
                 <action>list</action>
-                <icon>fa-thumb-tack</icon>
             </cart-rules>
         </pages>
-    </discount>
+    </tax>
 </config>
