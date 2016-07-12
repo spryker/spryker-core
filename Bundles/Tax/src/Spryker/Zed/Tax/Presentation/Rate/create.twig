@@ -4,9 +4,7 @@
 {% block section_title 'Create new tax rate' | trans %}
 
 {% block action %}
-    {{ backActionButton(url('/tax/rate/list'), 'Back to list' | trans) }}
-
-
+    {{ backActionButton(url('/tax/rate/list'), 'List of Task Rates' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -28,7 +26,7 @@
                     {{ form_errors(form.rate) }}
                 </div>
 
-               <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}" />
+               <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}
         {% endblock %}
 

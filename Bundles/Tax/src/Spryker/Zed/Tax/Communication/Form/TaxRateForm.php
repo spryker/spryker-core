@@ -10,6 +10,7 @@ namespace Spryker\Zed\Tax\Communication\Form;
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -59,6 +60,7 @@ class TaxRateForm extends AbstractType
             self::FIELD_NAME,
             'text',
             [
+                'label' => 'Name*',
                 'constraints' => [
                     new NotBlank()
                 ]
@@ -103,10 +105,13 @@ class TaxRateForm extends AbstractType
         $builder->add(self::FIELD_COUNTRY, 'choice', [
             'expanded' => false,
             'multiple' => false,
-            'label' => 'Country',
+            'label' => 'Country*',
             'choices' => $this->taxRateFormDataProvider->getOptions()[self::FIELD_COUNTRY],
             'constraints' => [
-                new NotBlank()
+                new GreaterThan([
+                    'value' => 1,
+                    'message' => 'Select country.',
+                ]),
             ],
             'attr' => []
         ]);
@@ -126,12 +131,12 @@ class TaxRateForm extends AbstractType
             self::FIELD_RATE,
             'text',
             [
+                'label' => 'Percentage*',
                 'constraints' => [
                     new Range([
                         'min' => 0,
                         'max' => 100
                     ]),
-
                 ]
             ]
         );

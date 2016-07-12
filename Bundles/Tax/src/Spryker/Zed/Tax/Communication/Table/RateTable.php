@@ -55,7 +55,7 @@ class RateTable extends AbstractTable
 
         $config->setUrl($url);
         $config->setHeader([
-            SpyTaxRateTableMap::COL_ID_TAX_RATE => 'ID',
+            SpyTaxRateTableMap::COL_ID_TAX_RATE => 'Tax Rate ID',
             SpyTaxRateTableMap::COL_NAME => 'Name',
             SpyTaxRateTableMap::COL_CREATED_AT => 'Created At',
             SpyCountryTableMap::COL_NAME => 'Country',
@@ -118,8 +118,8 @@ class RateTable extends AbstractTable
     protected function getActionButtons(SpyTaxRate $taxRateEntity)
     {
         $buttons = [];
-        $buttons[] = $this->createViewButton($taxRateEntity);
         $buttons[] = $this->createEditButton($taxRateEntity);
+        $buttons[] = $this->createViewButton($taxRateEntity);
         $buttons[] = $this->createDeleteButton($taxRateEntity);
 
         return implode(' ', $buttons);
