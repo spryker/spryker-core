@@ -8,12 +8,10 @@
 namespace Spryker\Zed\Cart\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
-use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 
 class Operation implements OperationInterface

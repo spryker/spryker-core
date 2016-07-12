@@ -17,8 +17,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Propel;
-use Spryker\Zed\Sales\Business\Model\Order\Grouper\Grouper;
-use Spryker\Zed\Sales\Business\Model\Order\Grouper\GrouperInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesConfig;
@@ -182,15 +180,16 @@ class OrderSaver implements OrderSaverInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
-     * @return \ArrayObject|ItemTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function expandItems(\ArrayObject $items)
     {
         $expandedItems = new \ArrayObject();
         foreach ($items as $itemTransfer) {
-            for ($i = 1; $itemTransfer->getQuantity() >= $i; $i++) {
+            $quantity = $itemTransfer->getQuantity();
+            for ($i = 1; $quantity >= $i; $i++) {
                 $expandedItemTransfer = clone $itemTransfer;
                 $expandedItemTransfer->setGroupKey(null);
                 $expandedItemTransfer->setQuantity(1);
