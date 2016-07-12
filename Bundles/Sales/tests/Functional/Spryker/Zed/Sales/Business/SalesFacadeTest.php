@@ -52,7 +52,7 @@ class SalesFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCustomerOrderShouldReturnListOfCustomerPlacdOrders()
+    public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders()
     {
         $testOrderCreator = $this->createTestOrderCreator();
         $salesOrderEntity = $testOrderCreator->create();

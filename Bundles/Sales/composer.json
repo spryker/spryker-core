@@ -5,9 +5,10 @@
       "Spryker": "src/",
       "Acceptance": "tests/",
       "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Sales\\Module\\": "tests/"
     }
   },
   "require": {
