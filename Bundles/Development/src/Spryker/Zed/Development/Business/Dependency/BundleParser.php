@@ -13,13 +13,10 @@ use Spryker\Zed\Development\DevelopmentConfig;
 class BundleParser
 {
 
-    const CONFIG_FILE = 'bundle_config.json';
-    const ENGINE = 'engine';
-
     /**
      * @var array
      */
-    protected $coreBundleNamespaces = ['Spryker', 'Orm', 'Client', 'Shared', 'Generated'];
+    protected $includedBundleNamespaces = ['Spryker', 'Orm'];
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -47,8 +44,9 @@ class BundleParser
     public function parseOutgoingDependencies($bundleName)
     {
         $allFileDependencies = $this->parseDependencies($bundleName);
-        $allFileDependencies = $this->filterCoreClasses($allFileDependencies);
-        $bundleDependencies = $this->filterBundleDependencies($allFileDependencies, $bundleName);
+        $allFileDependencies = $this->filterIncludedClasses($allFileDependencies);
+        $allFileDependencies = $this->ignorePlugins($allFileDependencies);
+        $bundleDependencies = $this->buildBundleDependencies($allFileDependencies, $bundleName);
 
         return $bundleDependencies;
     }
@@ -94,7 +92,7 @@ class BundleParser
      *
      * @return array
      */
-    protected function filterCoreClasses(array $dependencies)
+    protected function filterIncludedClasses(array $dependencies)
     {
         $reducedDependenciesPerFile = [];
         foreach ($dependencies as $fileName => $fileDependencies) {
@@ -103,7 +101,7 @@ class BundleParser
                 $fileDependencyParts = explode('\\', $fileDependency);
                 $bundleNamespace = $fileDependencyParts[0];
 
-                if (in_array($bundleNamespace, $this->coreBundleNamespaces)) {
+                if (in_array($bundleNamespace, $this->includedBundleNamespaces)) {
                     $reducedDependencies[] = $fileDependency;
                 }
             }
@@ -119,7 +117,7 @@ class BundleParser
      *
      * @return array
      */
-    protected function filterBundleDependencies(array $allFileDependencies, $bundle)
+    protected function buildBundleDependencies(array $allFileDependencies, $bundle)
     {
         $bundleDependencies = [];
         foreach ($allFileDependencies as $fileDependencies) {
@@ -138,6 +136,23 @@ class BundleParser
         ksort($bundleDependencies);
 
         return $bundleDependencies;
+    }
+
+    /**
+     * @param array $dependencies
+     * @return array
+     */
+    protected function ignorePlugins(array $dependencies)
+    {
+        foreach ($dependencies as $fileName => $fileDependencies) {
+            if (strpos($fileName, '/Communication/Plugin/') === false) {
+                continue;
+            }
+
+            unset($dependencies[$fileName]);
+        }
+
+        return $dependencies;
     }
 
 }
