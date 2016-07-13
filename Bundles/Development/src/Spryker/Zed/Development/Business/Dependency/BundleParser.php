@@ -50,8 +50,8 @@ class BundleParser
         $allFileDependencies = $this->parseDependencies($bundleName);
         $allFileDependencies = $this->filterIncludedClasses($allFileDependencies);
         $allFileDependencies = $this->ignorePlugins($allFileDependencies);
-        $bundleDependencies = $this->buildBundleDependencies($allFileDependencies, $bundleName);
 
+        $bundleDependencies = $this->buildBundleDependencies($allFileDependencies, $bundleName);
         $bundleDependencies = $this->addPersistenceLayerDependencies($bundleName, $bundleDependencies);
 
         return $bundleDependencies;
