@@ -1,9 +1,9 @@
 ### Overview
-- Developer(s): @$username
+- Developer(s): @your_username
 
-- Ticket: $url
+- Ticket: URL_HERE
 
-- Project PR: $url
+- Project PR: URL_HERE
 
 - Bundles to release:
 
@@ -15,11 +15,11 @@
 
    `patch` requires 1, `minor` 2 and `major` 3 reviewers.
 
-- Recommended reviewers: @$reviewer, @$reviewer, @$reviewer
+- Recommended reviewers: @reviewer_usernames
 
 -----------------------------------------
 
-### Major - $bundle
+#### Bundle MajorBundleA (e.g. "Bundle Cms")
 
 _New or fully refactored bundle._
 
@@ -38,7 +38,7 @@ Add here a highlights of what are the important new things that come with this f
 
 -----------------------------------------
 
-###  Major - $bundle
+#### Bundle MajorBundleA
 
 _Added functionality with incompatible API changes_
 
@@ -56,7 +56,7 @@ Add here a highlights of what are the important new things that come with this f
 
 -----------------------------------------
 
-###  Minor - $bundle
+#### Bundle MinorBundleB
 
 _Added functionality in a backwards-compatible manner_
 
@@ -74,7 +74,7 @@ Some explanation of what has been improved.
 
 -----------------------------------------
 
-###  Patch - $bundle
+#### Bundle PatchBundleC
 
 _Backwards-compatible bug fix_
 
