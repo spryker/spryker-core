@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Tax\Communication\Form;
 
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider;
+use Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
@@ -28,11 +29,20 @@ class TaxRateForm extends AbstractType
     protected $taxRateFormDataProvider;
 
     /**
-     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider $taxRateFormDataProvider
+     * @var \Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer
      */
-    public function __construct(TaxRateFormDataProvider $taxRateFormDataProvider)
-    {
+    protected $percentageTransformer;
+
+    /**
+     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider $taxRateFormDataProvider
+     * @param \Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer $percentageTransformer
+     */
+    public function __construct(
+        TaxRateFormDataProvider $taxRateFormDataProvider,
+        PercentageTransformer $percentageTransformer
+    ) {
         $this->taxRateFormDataProvider = $taxRateFormDataProvider;
+        $this->percentageTransformer = $percentageTransformer;
     }
 
     /**
@@ -61,9 +71,10 @@ class TaxRateForm extends AbstractType
             'text',
             [
                 'label' => 'Name*',
+                'required' => false,
                 'constraints' => [
                     new NotBlank()
-                ]
+                ],
             ]
         );
 
@@ -132,6 +143,7 @@ class TaxRateForm extends AbstractType
             'text',
             [
                 'label' => 'Percentage*',
+                'required' => false,
                 'constraints' => [
                     new Range([
                         'min' => 0,
@@ -140,6 +152,9 @@ class TaxRateForm extends AbstractType
                 ]
             ]
         );
+
+        $builder->get(self::FIELD_RATE)
+            ->addModelTransformer($this->percentageTransformer);
 
         return $this;
     }

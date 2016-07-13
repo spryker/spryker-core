@@ -14,6 +14,7 @@ use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider;
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider;
 use Spryker\Zed\Tax\Communication\Form\TaxRateForm;
 use Spryker\Zed\Tax\Communication\Form\TaxSetForm;
+use Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer;
 use Spryker\Zed\Tax\Communication\Table\RateTable;
 use Spryker\Zed\Tax\Communication\Table\SetTable;
 use Spryker\Zed\Tax\TaxDependencyProvider;
@@ -34,7 +35,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createTaxRateForm(TaxRateFormDataProvider $taxRateFormDataProvider)
     {
-        $taxRateForm = new TaxRateForm($taxRateFormDataProvider);
+        $taxRateForm = new TaxRateForm($taxRateFormDataProvider, $this->createPercentageTransformer());
 
         return $this->getFormFactory()->create(
             $taxRateForm,
@@ -81,6 +82,14 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     public function createTaxRateFormDataProvider(TaxRateTransfer $taxRateTransfer = null)
     {
         return new TaxRateFormDataProvider($this->getCountryFacade(), $taxRateTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer
+     */
+    protected function createPercentageTransformer()
+    {
+        return new PercentageTransformer();
     }
 
     /**

@@ -132,4 +132,21 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
             ->select([self::COL_MAX_TAX_RATE]);
     }
 
+    /**
+     * @param string $name
+     * @param int $idCountry
+     * @param float $rate
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
+     */
+    public function queryTaxRateWithCountryAndRate($name, $idCountry, $rate)
+    {
+        return $this->getFactory()
+            ->createTaxRateQuery()
+            ->filterByName($name)
+            ->filterByFkCountry($idCountry)
+            ->filterByRate($rate);
+    }
+
 }

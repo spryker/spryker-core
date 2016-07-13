@@ -64,4 +64,15 @@ interface TaxQueryContainerInterface extends QueryContainerInterface
      */
     public function queryTaxSetByIdProductAbstractAndCountryIso2Code(array $allIdProductAbstracts, $countryIso2Code);
 
+    /**
+     * @param string $name
+     * @param int $idCountry
+     * @param float $rate
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
+     */
+    public function queryTaxRateWithCountryAndRate($name, $idCountry, $rate);
+
 }

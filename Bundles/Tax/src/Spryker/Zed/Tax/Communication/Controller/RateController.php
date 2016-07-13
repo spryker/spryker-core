@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax\Communication\Controller;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,9 +35,22 @@ class RateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $taxRateTransfer = $this->getFacade()->createTaxRate($form->getData());
-            if ($taxRateTransfer->getIdTaxRate()) {
-                $this->addSuccessMessage('Tax rate succesfully created.');
+            $taxRateTransfer = $form->getData();
+
+            $rowCount = $this->getQueryContainer()
+                ->queryTaxRateWithCountryAndRate(
+                    $taxRateTransfer->getName(),
+                    $taxRateTransfer->getFkCountry(),
+                    $taxRateTransfer->getRate()
+                )->count();
+
+            if ($rowCount > 0) {
+                $this->addErrorMessage('Tax rate with provided name, percentage and country already exists.');
+            } else {
+                $taxRateTransfer = $this->getFacade()->createTaxRate($taxRateTransfer);
+                if ($taxRateTransfer->getIdTaxRate()) {
+                    $this->addSuccessMessage('Tax rate successfully created.');
+                }
             }
         }
 
@@ -64,12 +78,24 @@ class RateController extends AbstractController
             $taxRateTransfer = $form->getData();
             $taxRateTransfer->setIdTaxRate($idTaxRate);
 
-            $rowsAffected = $this->getFacade()->updateTaxRate($taxRateTransfer);
-            if ($rowsAffected > 0) {
-                $this->addSuccessMessage('Tax rate succesfully updated.');
-                return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
+            $rowCount = $this->getQueryContainer()
+                ->queryTaxRateWithCountryAndRate(
+                    $taxRateTransfer->getName(),
+                    $taxRateTransfer->getFkCountry(),
+                    $taxRateTransfer->getRate()
+                )->filterByIdTaxRate($idTaxRate, Criteria::NOT_EQUAL)
+                ->count();
+
+            if ($rowCount > 0) {
+                $this->addErrorMessage('Tax rate with provided name, percentage and country already exists.');
             } else {
-                $this->addErrorMessage('No updates saved.');
+                $rowsAffected = $this->getFacade()->updateTaxRate($taxRateTransfer);
+                if ($rowsAffected > 0) {
+                    $this->addSuccessMessage('Tax rate succesfully updated.');
+                    return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
+                } else {
+                    $this->addErrorMessage('No updates saved.');
+                }
             }
         }
 
