@@ -25,7 +25,7 @@ use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
-use Spryker\Shared\ZedRequest\ZedRequestConstants;  
+use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
