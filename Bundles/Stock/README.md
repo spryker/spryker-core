@@ -8,4 +8,4 @@ composer require spryker/stock
 
 ## Documentation
 
-[Stock Documentation](http://spryker.github.io/core/bundles/stock)
+[Documentation](http://spryker.github.io)
