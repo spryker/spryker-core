@@ -21,7 +21,7 @@
 
 #### Bundle MajorBundleA (e.g. "Bundle Cms")
 
-_New or fully refactored bundle._
+_**Maxi-Major:** New or fully refactored bundle._
 
 Def of done (by responsible developer):
 - [ ] All methods in facade and all plugin-interfaces provide an [API-doc](https://academy.spryker.com/display/CORE/Definition+of+API)
@@ -40,7 +40,7 @@ Add here a highlights of what are the important new things that come with this f
 
 #### Bundle MajorBundleA
 
-_Added functionality with incompatible API changes_
+_**Mini-Major:** Added functionality with incompatible API changes_
 
 Def of done (by responsible developer):
 - [ ] All methods in facade and all plugin-interfaces provide an [API-doc](https://academy.spryker.com/display/CORE/Definition+of+API)
@@ -58,7 +58,7 @@ Add here a highlights of what are the important new things that come with this f
 
 #### Bundle MinorBundleB
 
-_Added functionality in a backwards-compatible manner_
+_**Minor:** Added functionality in a backwards-compatible manner_
 
 Def of done (by responsible developer):
 - [ ] All changes are backward-compatible. Outdated code is marked as deprecated
@@ -76,7 +76,7 @@ Some explanation of what has been improved.
 
 #### Bundle PatchBundleC
 
-_Backwards-compatible bug fix_
+_**Patch:** Backwards-compatible bug fix_
 
 Def of done (by responsible developer):
 - [ ] All changes are backward-compatible. Outdated code is marked as deprecated
