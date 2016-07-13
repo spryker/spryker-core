@@ -25,7 +25,7 @@ _New or fully refactored bundle._
 
 Def of done (by responsible developer):
 - [ ] All methods in facade and all plugin-interfaces provide an [API-doc](https://academy.spryker.com/display/CORE/Definition+of+API)
-- [ ] All dependencies are defined, checked and corrected
+- [ ] All [dependencies](https://academy.spryker.com/display/CORE/Bundle+Dependency+Guidelines) are defined, checked and corrected
 - [ ] There are no violations of the architecture rules
 - [ ] All new or heavily changed classes get an "A" rating, except Facades, Factories, QueryContainers and Tests
 - [ ] All new or changed business logic is covered by unit tests (in Zed business layer)
