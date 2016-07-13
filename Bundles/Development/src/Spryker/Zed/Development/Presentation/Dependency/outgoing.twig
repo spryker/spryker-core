@@ -15,4 +15,23 @@
             {% endfor %}
         </table>
     </div>
+
+    <hr>
+
+    <div class="spy-layout sparse">
+        <h3>{{ "Composer dependencies" }}</h3>
+        <table class="table table-striped spy-grid">
+            <tr class="text-left">
+                <th>{{ 'Found in code' | trans }}</th>
+                <th>{{ 'Declared in composer.json' | trans }}</th>
+            </tr>
+            {% for composerDependency in composerDependencies %}
+                <tr>
+                    <td>{{ composerDependency.code }}</td>
+                    <td>{{ composerDependency.composer }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
 {% endblock %}

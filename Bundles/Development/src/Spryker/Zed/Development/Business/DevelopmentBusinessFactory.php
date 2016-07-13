@@ -20,6 +20,7 @@ use Spryker\Zed\Development\Business\Composer\Updater\RequireExternalUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater;
 use Spryker\Zed\Development\Business\DependencyTree\AdjacencyMatrixBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParser;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\ClassNameFilter;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\ConstantsToForeignConstantsFilter;
@@ -714,6 +715,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             ->addFilter($this->createDependencyTreeInvalidForeignBundleFilter());
 
         return $treeFilter;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParser
+     */
+    public function createComposerDependencyParser()
+    {
+        return new ComposerDependencyParser($this->createComposerJsonFinder());
     }
 
 }
