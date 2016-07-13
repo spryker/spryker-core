@@ -12,7 +12,8 @@
   },
   "require": {
     "spryker/kernel": "^2.0.0",
-    "spryker/product-option": "^2.0.0"
+    "spryker/product-option": "^2.0.0",
+    "spryker/symfony": "^2.0.0"
   },
   "description": "ProductOptionCartConnector bundle",
   "license": "proprietary",

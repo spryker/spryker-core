@@ -10,6 +10,7 @@
     "spryker/discount": "^3.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/sales-aggregator": "^1.0.0",
+    "spryker/symfony": "^2.0.0",
     "spryker/tax": "^2.0.0"
   },
   "description": "DiscountSalesAggregatorConnector bundle",

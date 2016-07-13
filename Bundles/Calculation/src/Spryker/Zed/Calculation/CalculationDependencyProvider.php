@@ -14,8 +14,6 @@ use Spryker\Zed\Calculation\Communication\Plugin\ItemGrossAmountsCalculatorPlugi
 use Spryker\Zed\Calculation\Communication\Plugin\ProductOptionGrossSumCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin;
-use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\GrandTotalWithDiscountsCalculatorPlugin;
-use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\RemoveAllCalculatedDiscountsCalculatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -48,7 +46,6 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
         return [
             //Remove calculated values, start with clean state.
             new RemoveTotalsCalculatorPlugin(),
-            new RemoveAllCalculatedDiscountsCalculatorPlugin(),
 
             //Item calculators
             new ProductOptionGrossSumCalculatorPlugin(),
@@ -63,7 +60,6 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 
             //GrandTotal
             new GrandTotalTotalsCalculatorPlugin(),
-            new GrandTotalWithDiscountsCalculatorPlugin(),
         ];
     }
 
