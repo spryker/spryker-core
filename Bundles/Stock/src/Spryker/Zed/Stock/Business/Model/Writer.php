@@ -14,6 +14,7 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
+use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class Writer implements WriterInterface
@@ -39,18 +40,26 @@ class Writer implements WriterInterface
     protected $touchFacade;
 
     /**
+     * @var StockUpdateHandlerPluginInterface[]
+     */
+    protected $stockUpdateHandlerPlugins;
+
+    /**
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $readerInterface
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
+     * @param StockUpdateHandlerPluginInterface[] $stockUpdateHandlerPlugins
      */
     public function __construct(
         StockQueryContainerInterface $queryContainer,
         ReaderInterface $readerInterface,
-        StockToTouchInterface $touchFacade
+        StockToTouchInterface $touchFacade,
+        array $stockUpdateHandlerPlugins
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $readerInterface;
         $this->touchFacade = $touchFacade;
+        $this->stockUpdateHandlerPlugins = $stockUpdateHandlerPlugins;
     }
 
     /**
@@ -113,6 +122,7 @@ class Writer implements WriterInterface
         $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
         $this->reader->checkStockDoesNotExist($idStockType, $idProduct);
         $idStockProduct = $this->saveStockProduct($transferStockProduct, $idStockType, $idProduct);
+        $this->handleStockUpdatePlugins($transferStockProduct->getSku());
 
         Propel::getConnection()->commit();
 
@@ -142,6 +152,7 @@ class Writer implements WriterInterface
             ->setIsNeverOutOfStock($transferStockProduct->getIsNeverOutOfStock())
             ->save();
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
+        $this->handleStockUpdatePlugins($transferStockProduct->getSku());
 
         Propel::getConnection()->commit();
 
@@ -238,6 +249,18 @@ class Writer implements WriterInterface
         $this->insertActiveTouchRecordStockProduct($stockProduct);
 
         return $stockProduct->getPrimaryKey();
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return void
+     */
+    protected function handleStockUpdatePlugins($sku)
+    {
+        foreach ($this->stockUpdateHandlerPlugins as $stockUpdateHandlerPlugin) {
+            $stockUpdateHandlerPlugin->handle($sku);
+        }
     }
 
 }

@@ -8,6 +8,7 @@ namespace Spryker\Zed\Availability\Business\Model;
 
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Spryker\Shared\Availability\AvailabilityConstants;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
@@ -18,6 +19,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @var SellableInterface
      */
     protected $sellable;
+
+    /**
+     * @var AvailabilityToStockInterface
+     */
+    protected $stockFacade;
 
     /**
      * @var AvailabilityToTouchInterface
@@ -31,16 +37,19 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param SellableInterface $sellable
+     * @param AvailabilityToStockInterface $stockFacade
      * @param AvailabilityToTouchInterface $touchFacade
      * @param AvailabilityQueryContainerInterface $queryContainer
      */
     public function __construct(
         SellableInterface $sellable,
+        AvailabilityToStockInterface $stockFacade,
         AvailabilityToTouchInterface $touchFacade,
         AvailabilityQueryContainerInterface $queryContainer
     )
     {
         $this->sellable = $sellable;
+        $this->stockFacade = $stockFacade;
         $this->touchFacade = $touchFacade;
         $this->queryContainer = $queryContainer;
     }
@@ -95,6 +104,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     {
         $spyAvailability = $this->querySpyAvailabilityBySku($sku)->findOneOrCreate();
         $spyAvailability->setQuantity($quantity);
+        $spyAvailability->setIsNeverOutOfStock($this->stockFacade->isNeverOutOfStock($sku));
         $spyAvailability->save();
 
         return $spyAvailability;

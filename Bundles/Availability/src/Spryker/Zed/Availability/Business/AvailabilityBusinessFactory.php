@@ -39,6 +39,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     {
         return new AvailabilityHandler(
             $this->createSellableModel(),
+            $this->getStockFacade(),
             $this->getTouchFacade(),
             $this->getQueryContainer()
         );

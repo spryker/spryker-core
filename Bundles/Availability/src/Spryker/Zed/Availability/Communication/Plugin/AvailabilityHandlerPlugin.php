@@ -8,11 +8,12 @@ namespace Spryker\Zed\Availability\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
+use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 
 /**
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacade getFacade()
  */
-class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface
+class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface, StockUpdateHandlerPluginInterface
 {
 
     /**
