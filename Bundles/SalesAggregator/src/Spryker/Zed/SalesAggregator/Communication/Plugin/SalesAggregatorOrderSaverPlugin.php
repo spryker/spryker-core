@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade getFacade()
+ * @method \Spryker\Zed\SalesAggregator\Communication\SalesAggregatorCommunicationFactory getFactory()
  */
 class SalesAggregatorOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {

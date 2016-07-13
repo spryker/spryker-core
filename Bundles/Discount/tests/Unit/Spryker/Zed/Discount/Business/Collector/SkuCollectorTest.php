@@ -11,7 +11,7 @@ use Spryker\Zed\Discount\Business\Collector\SkuCollector;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
 
-class SkuRuleTest extends BaseRuleTester
+class SkuCollectorTest extends BaseRuleTester
 {
 
     /**

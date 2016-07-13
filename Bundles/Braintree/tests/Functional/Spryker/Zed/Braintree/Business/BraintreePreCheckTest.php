@@ -21,9 +21,9 @@ use Spryker\Zed\Braintree\Persistence\BraintreeQueryContainer;
  * @group Zed
  * @group Business
  * @group Braintree
- * @group BraintreeFacadePreCheckTest
+ * @group BraintreePreCheckTest
  */
-class BraintreeFacadePreCheckTest extends AbstractFacadeTest
+class BraintreePreCheckTest extends AbstractFacadeTest
 {
 
     /**
