@@ -10,6 +10,7 @@
     <transfer name="TaxSet">
         <property name="idTaxSet" type="int" />
         <property name="name" type="string" />
+        <property name="amount" type="int" />
         <property name="taxRates" type="TaxRate[]" singular="taxRate" />
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
@@ -29,14 +30,29 @@
         <property name="updatedAt" type="string" />
     </transfer>
 
+    <transfer name="TaxTotal">
+        <property name="taxRate" type="float" />
+        <property name="amount" type="int" />
+    </transfer>
+
     <transfer name="Item">
+        <property name="idProductAbstract" type="int" />
+        <property name="name" type="string" />
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
+        <property name="taxRate" type="float" />
+        <property name="sku" type="string" />
     </transfer>
 
     <transfer name="Expense">
+        <property name="taxRate" type="float" />
+        <property name="name" type="string" />
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
     </transfer>
 
     <transfer name="Country">
@@ -46,6 +62,30 @@
         <property name="name" type="string" />
         <property name="postalCodeMandatory" type="bool" />
         <property name="postalCodeRegex" type="string" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals" />
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="iso2Code" type="string" />
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="taxTotal" type="TaxTotal" />
+    </transfer>
+
+    <transfer name="TaxTotal">
+        <property name="amount" type="int" />
+    </transfer>
+
+    <transfer name="Address">
+        <property name="iso2Code" type="string" />
+        <property name="fkCountry" type="int" />
     </transfer>
 
 </transfers>

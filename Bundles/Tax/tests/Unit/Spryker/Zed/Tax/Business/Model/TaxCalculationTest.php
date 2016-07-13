@@ -8,7 +8,6 @@ namespace Unit\Spryker\Zed\Tax\Business\Model;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Tax\Business\Model\TaxCalculation;
@@ -57,21 +56,12 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
         return new TaxCalculation();
     }
 
-
     /**
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createItemTransfer()
     {
         return new ItemTransfer();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer
-     */
-    protected function createProductOptionTransfer()
-    {
-        return new ProductOptionTransfer();
     }
 
     /**

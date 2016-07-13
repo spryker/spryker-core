@@ -70,8 +70,8 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected function getAllIdAbstractProducts(QuoteTransfer $quoteTransfer)
     {
         $allIdProductAbstracts = [];
-        foreach ($quoteTransfer->getItems() as $item) {
-            $allIdProductAbstracts[] = $item->getIdProductAbstract();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $allIdProductAbstracts[] = $itemTransfer->getIdProductAbstract();
         }
 
         return $allIdProductAbstracts;
@@ -85,8 +85,8 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     protected function setItemsTax(QuoteTransfer $quoteTransfer, array $taxRates)
     {
-        foreach ($quoteTransfer->getItems() as $item) {
-            $item->setTaxRate($this->getEffectiveTaxRate($taxRates, $item->getIdProductAbstract()));
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setTaxRate($this->getEffectiveTaxRate($taxRates, $itemTransfer->getIdProductAbstract()));
         }
     }
 
