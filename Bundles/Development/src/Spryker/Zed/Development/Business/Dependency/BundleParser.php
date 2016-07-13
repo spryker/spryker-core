@@ -9,6 +9,8 @@ namespace Spryker\Zed\Development\Business\Dependency;
 
 use Spryker\Zed\Development\Business\DependencyTree\Finder;
 use Spryker\Zed\Development\DevelopmentConfig;
+use Symfony\Component\Finder\Finder as SFinder;
+use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class BundleParser
 {
@@ -29,10 +31,12 @@ class BundleParser
     protected $bundleConfig;
 
     /**
+     * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
-    public function __construct(DevelopmentConfig $config)
+    public function __construct(SFinder $finder, DevelopmentConfig $config)
     {
+        $this->finder = $finder;
         $this->config = $config;
     }
 
@@ -47,6 +51,8 @@ class BundleParser
         $allFileDependencies = $this->filterIncludedClasses($allFileDependencies);
         $allFileDependencies = $this->ignorePlugins($allFileDependencies);
         $bundleDependencies = $this->buildBundleDependencies($allFileDependencies, $bundleName);
+
+        $bundleDependencies = $this->addPersistenceLayerDependencies($bundleName, $bundleDependencies);
 
         return $bundleDependencies;
     }
@@ -140,6 +146,7 @@ class BundleParser
 
     /**
      * @param array $dependencies
+     *
      * @return array
      */
     protected function ignorePlugins(array $dependencies)
@@ -153,6 +160,54 @@ class BundleParser
         }
 
         return $dependencies;
+    }
+
+    /**
+     * @param string $bundleName
+     * @param array $bundleDependencies
+     *
+     * @return array
+     */
+    protected function addPersistenceLayerDependencies($bundleName, array $bundleDependencies)
+    {
+        $folder = $this->config->getBundleDirectory() . $bundleName . '/src/Spryker/Zed/' . $bundleName . '/Persistence/Propel/Schema/';
+        if (!is_dir($folder)) {
+            return $bundleDependencies;
+        }
+
+        $files = $this->find($folder);
+
+        foreach ($files as $file) {
+            preg_match('/^spy\_(.+)\.schema\.xml$/', $file->getRelativePathname(), $matches);
+            if (!$matches) {
+                continue;
+            }
+
+            $filter = new UnderscoreToCamelCase();
+            $name = $filter->filter($matches[1]);
+            if ($name === $bundleName) {
+                continue;
+            }
+
+            if (!isset($bundleDependencies[$name])) {
+                $bundleDependencies[$name] = 1;
+                continue;
+            }
+
+            $bundleDependencies[$name]++;
+        }
+
+        return $bundleDependencies;
+    }
+
+    /**
+     * @param string
+     *
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     */
+    protected function find($folder)
+    {
+        return $this->finder->in($folder)->name('*.schema.xml')->depth('< 2');
     }
 
 }

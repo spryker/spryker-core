@@ -129,7 +129,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $config = $this->getConfig();
 
-        return new BundleParser($config);
+        return new BundleParser($this->createFinder(), $config);
     }
 
     /**
