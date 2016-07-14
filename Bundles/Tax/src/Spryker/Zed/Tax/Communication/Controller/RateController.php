@@ -50,6 +50,8 @@ class RateController extends AbstractController
                 $taxRateTransfer = $this->getFacade()->createTaxRate($taxRateTransfer);
                 if ($taxRateTransfer->getIdTaxRate()) {
                     $this->addSuccessMessage('Tax rate successfully created.');
+                    $redirectUrl = Url::generate('/tax/rate/edit', [static::PARAM_URL_ID_TAX_RATE => $taxRateTransfer->getIdTaxRate()])->build();
+                    return $this->redirectResponse($redirectUrl);
                 }
             }
         }

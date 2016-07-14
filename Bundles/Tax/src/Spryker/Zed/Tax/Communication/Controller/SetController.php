@@ -37,6 +37,8 @@ class SetController extends AbstractController
             $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
             if ($taxSetTransfer->getIdTaxSet()) {
                 $this->addSuccessMessage('Tax set successfully created.');
+                $redirectUrl = Url::generate('/tax/set/edit', [static::PARAM_URL_ID_TAX_SET => $taxSetTransfer->getIdTaxSet()])->build();
+                return $this->redirectResponse($redirectUrl);
             }
         }
 
