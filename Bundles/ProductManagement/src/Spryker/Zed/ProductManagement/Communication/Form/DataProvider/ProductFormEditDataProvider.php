@@ -23,15 +23,17 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     public function getData($idProductAbstract)
     {
         $formData = $this->getDefaultFormFields();
-
+        $attributeProcessor = $this->getAttributesForAbstractProduct($idProductAbstract);
         $productAbstractTransfer = $this->productManagementFacade->getProductAbstractById($idProductAbstract);
+
         if ($productAbstractTransfer) {
             $formData = $productAbstractTransfer->toArray(true);
             unset($formData['attributes']);
             unset($formData['product_images_sets']);
             unset($formData['localized_attributes']);
 
-            $formData[ProductFormAdd::GENERAL] = $this->getLocalizedAbstractAttributes($productAbstractTransfer);
+            $formData[ProductFormAdd::GENERAL] = $this->getLocalizedAttributesAsArray((array) $attributeProcessor->getAbstractLocalizedAttributes());
+            $formData[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $this->getLocalizedAttributesAsArray((array) $attributeProcessor->getAbstractAttributes());
 
             $priceTransfer = $this->priceFacade->getProductAbstractPrice($idProductAbstract);
             if ($priceTransfer) {
@@ -54,8 +56,6 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             unset($formData[ProductFormAdd::GENERAL][$locale]['attributes']);
         }
         $formData[ProductFormAdd::SEO] = $seoData;
-
-        $attributeProcessor = $this->getAttributesForAbstractProduct($idProductAbstract);
 
         $attributeValueCollection = $this->convertAbstractAttributesToFormValues($attributeProcessor);
 

@@ -812,7 +812,7 @@ class ProductManager implements ProductManagerInterface
             return null;
         }
 
-        $transferGenerator = new ProductTransferGenerator();  //TODO inject
+        $transferGenerator = new ProductTransferGenerator();
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
 
         $productAbstractTransfer = $this->loadProductAbstractLocalizedAttributes($productAbstractTransfer);
@@ -1081,6 +1081,7 @@ class ProductManager implements ProductManagerInterface
         }
 
         $concreteProductCollection = $this->getConcreteProductsByAbstractProductId($idProductAbstract);
+        $localizedAttributeCollection = new Collection([]);
 
         foreach ($concreteProductCollection as $productTransfer) {
             $attributeProcessor->setConcreteAttributes(new Collection(
@@ -1088,18 +1089,23 @@ class ProductManager implements ProductManagerInterface
             ));
 
             foreach ($productTransfer->getLocalizedAttributes() as $localizedAttribute) {
-                $localizedAttributes = new Collection([]);
+                $localizedData = [];
                 foreach ($localizedAttribute->getAttributes() as $name => $value) {
                     $localeName = $localizedAttribute->getLocale()->getLocaleName();
-                    $localizedAttributes->set($name, [$localeName => $value]);
+                    $localizedData[$localeName][$name] = $value;
                 }
-
-                $attributeProcessor->setConcreteLocalizedAttributes($localizedAttributes);
+                $localizedAttributeCollection->appendArray($localizedData);
             }
         }
 
+        $attributeProcessor->setConcreteLocalizedAttributes($localizedAttributeCollection);
+
         $attributeProcessor->setAbstractAttributes(new Collection(
             $productAbstractTransfer->getAttributes()
+        ));
+
+        $attributeProcessor->setAbstractLocalizedAttributes(new Collection(
+            (array) $productAbstractTransfer->getLocalizedAttributes()
         ));
 
         return $attributeProcessor;

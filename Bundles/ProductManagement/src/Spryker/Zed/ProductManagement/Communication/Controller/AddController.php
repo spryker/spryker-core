@@ -77,6 +77,7 @@ class AddController extends AbstractController
             'matrix' => [],
             'concretes' => [],
             'attributeValueCollection' => $attributeCollection,
+            'localeCollection' => $this->getFactory()->getLocaleFacade()->getAvailableLocales(),
         ]);
     }
 

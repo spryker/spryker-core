@@ -37,6 +37,19 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
 
+    /**
+     * @var array
+     */
+    protected $localeCollection;
+
+
+    /**
+     * @param array $localeCollection
+     */
+    public function __construct(array $localeCollection)
+    {
+        $this->localeCollection = $localeCollection;
+    }
 
     /**
      * @return string
@@ -55,8 +68,8 @@ class ProductFormAdd extends AbstractType
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setRequired(self::ATTRIBUTE_ABSTRACT);
-        $resolver->setRequired(self::ATTRIBUTE_VARIANT);
+        //$resolver->setRequired(self::ATTRIBUTE_ABSTRACT);
+        //$resolver->setRequired(self::ATTRIBUTE_VARIANT);
         $resolver->setRequired(self::TAX_SET);
         $resolver->setRequired(self::ID_LOCALE);
 
@@ -86,9 +99,9 @@ class ProductFormAdd extends AbstractType
     {
         $this
             ->addSkuField($builder)
-            ->addGeneralForm($builder)
-            ->addAttributeAbstractForm($builder, $options[self::ATTRIBUTE_ABSTRACT])
-            ->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
+            ->addGeneralForms($builder)
+            //->addAttributeAbstractForm($builder, $options[self::ATTRIBUTE_ABSTRACT])
+            //->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
             ->addPriceForm($builder, $options[self::TAX_SET])
             ->addSeoForm($builder, $options);
     }
@@ -117,11 +130,25 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addGeneralForm(FormBuilderInterface $builder)
+    protected function addGeneralForms(FormBuilderInterface $builder)
+    {
+        foreach ($this->localeCollection as $code => $localeTransfer) {
+            $this->addGeneralForm($builder, self::GENERAL. '_'.$code.'');
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addGeneralForm(FormBuilderInterface $builder, $name)
     {
         $builder
-            ->add(self::GENERAL, 'collection', [
-                'type' => new ProductFormGeneral(),
+            ->add($name, new ProductFormGeneral(), [
+                'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {

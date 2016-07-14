@@ -94,8 +94,8 @@ class ProductFormAttributeAbstract extends AbstractType
         $isDisabled = true;
 
         if (isset($this->attributeValues[$name])) {
-            $label = $this->attributeValues[$name][self::LABEL];
-            $isDisabled = $this->attributeValues[$name][self::PRODUCT_SPECIFIC] === true;
+            $label = $name; //$this->attributeValues[$name][self::LABEL];
+            $isDisabled = false; //$this->attributeValues[$name][self::PRODUCT_SPECIFIC] === true;
         }
 
         $builder
@@ -118,8 +118,8 @@ class ProductFormAttributeAbstract extends AbstractType
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
-        $isDisabled = $this->attributeValues[$name][self::PRODUCT_SPECIFIC] === true;
-        $input = $this->attributeValues[$name][self::INPUT];
+        $isDisabled = false; //$this->attributeValues[$name][self::PRODUCT_SPECIFIC] === true;
+        $input = 'text'; //$this->attributeValues[$name][self::INPUT];
 
         $builder->add(self::FIELD_VALUE, $input, [
             'disabled' => $isDisabled,
@@ -127,6 +127,7 @@ class ProductFormAttributeAbstract extends AbstractType
             'attr' => [
                 'style' => 'width: 250px !important',
                 'class' => 'attribute_metadata_value',
+                'input_data' => 'bar'
             ],
             'constraints' => [
                 new AttributeFieldNotBlank([

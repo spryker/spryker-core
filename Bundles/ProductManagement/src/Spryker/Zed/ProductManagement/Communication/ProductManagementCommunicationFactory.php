@@ -31,7 +31,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormAdd(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormAdd();
+        $formType = new ProductFormAdd($this->getLocaleFacade()->getLocaleCollection());
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
     }
