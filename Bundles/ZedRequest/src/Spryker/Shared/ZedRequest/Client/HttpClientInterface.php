@@ -30,7 +30,7 @@ interface HttpClientInterface
      *
      * @throws \LogicException
      *
-     * @return \Spryker\Shared\Library\Communication\Response
+     * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     public function request(
         $pathInfo,
