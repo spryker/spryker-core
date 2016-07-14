@@ -155,11 +155,12 @@ class BundleParser
     protected function ignorePlugins(array $dependencies)
     {
         foreach ($dependencies as $fileName => $fileDependencies) {
+            //if (preg_match('#/Communication/Plugin/\w+.php$#', $fileName)) {
             if (strpos($fileName, '/Communication/Plugin/') === false) {
                 continue;
             }
 
-            unset($dependencies[$fileName]);
+            //unset($dependencies[$fileName]);
         }
 
         return $dependencies;
