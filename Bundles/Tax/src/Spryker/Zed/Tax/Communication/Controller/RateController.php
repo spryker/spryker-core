@@ -93,8 +93,6 @@ class RateController extends AbstractController
                 if ($rowsAffected > 0) {
                     $this->addSuccessMessage('Tax rate succesfully updated.');
                     return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
-                } else {
-                    $this->addErrorMessage('No updates saved.');
                 }
             }
         }

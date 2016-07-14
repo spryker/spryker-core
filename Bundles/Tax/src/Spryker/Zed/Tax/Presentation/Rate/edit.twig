@@ -4,8 +4,8 @@
 {% block section_title 'Update tax rate' | trans %}
 
 {% block action %}
-    {{ backActionButton('/tax/rate/list', 'Back to list' | trans) }}
-    {{ removeActionButton(url('/tax/rate/delete', {'id-tax-set': taxRate.idTaxRate}), 'Delete' | trans) }}
+    {{ removeActionButton(url('/tax/rate/delete', {'id-tax-rate': taxRate.idTaxRate}), 'Delete' | trans) }}
+    {{ backActionButton('/tax/rate/list', 'List of Task Rates' | trans) }}
 {% endblock %}
 
 {% block content %}

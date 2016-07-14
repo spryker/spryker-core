@@ -97,6 +97,7 @@ class TaxRateForm extends AbstractType
             self::FIELD_ID_TAX_RATE,
             'text',
             [
+                'label' => 'Tax Rate ID',
                 'attr' => [
                     'disabled' => 'disabled'
                 ]

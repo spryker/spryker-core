@@ -36,7 +36,7 @@ class SetController extends AbstractController
         if ($taxSetForm->isValid()) {
             $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
             if ($taxSetTransfer->getIdTaxSet()) {
-                $this->addSuccessMessage('Tax set succefully created.');
+                $this->addSuccessMessage('Tax set successfully created.');
             }
         }
 
@@ -68,9 +68,6 @@ class SetController extends AbstractController
             $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
             if ($rowsAffected > 0) {
                 $this->addSuccessMessage('Tax set succefully updated.');
-                return $this->redirectResponse(Url::generate('/tax/set/list')->build());
-            } else {
-                $this->addErrorMessage('No updates saved.');
             }
         }
 
@@ -106,7 +103,7 @@ class SetController extends AbstractController
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
         $this->getFacade()->deleteTaxSet($idTaxSet);
-        $this->addSuccessMessage('Tax set removed.');
+        $this->addSuccessMessage('The tax set has been deleted.');
 
         return $this->redirectResponse(Url::generate('/tax/set/list')->build());
     }

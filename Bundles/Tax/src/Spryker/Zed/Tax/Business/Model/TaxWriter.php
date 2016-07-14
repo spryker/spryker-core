@@ -105,13 +105,11 @@ class TaxWriter implements TaxWriterInterface
         $taxSetEntity = new SpyTaxSet();
         $taxSetEntity->setName($taxSetTransfer->getName());
 
-        if ($taxSetTransfer->getTaxRates()->count() === 0) {
-            throw new MissingTaxRateException($taxSetTransfer->getName() . ' tax set is missing tax rates');
-        }
-
-        foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
-            $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
-            $taxSetEntity->addSpyTaxRate($taxRateEntity);
+        if ($taxSetTransfer->getTaxRates()->count() !== 0) {
+            foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
+                $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
+                $taxSetEntity->addSpyTaxRate($taxRateEntity);
+            }
         }
 
         $taxSetEntity->save();
@@ -138,15 +136,13 @@ class TaxWriter implements TaxWriterInterface
             throw new ResourceNotFoundException();
         }
 
-        if ($taxSetTransfer->getTaxRates()->count() === 0) {
-            throw new MissingTaxRateException();
-        }
+        if ($taxSetTransfer->getTaxRates()->count() !== 0) {
+            $taxSetEntity->setName($taxSetTransfer->getName())->setSpyTaxRates(new Collection());
 
-        $taxSetEntity->setName($taxSetTransfer->getName())->setSpyTaxRates(new Collection());
-
-        foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
-            $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
-            $taxSetEntity->addSpyTaxRate($taxRateEntity);
+            foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
+                $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
+                $taxSetEntity->addSpyTaxRate($taxRateEntity);
+            }
         }
 
         foreach ($this->taxChangePlugins as $plugin) {

@@ -56,6 +56,8 @@ class TaxSetForm extends AbstractType
             self::FIELD_NAME,
             'text',
             [
+                'label' => 'Name*',
+                'required' => false,
                 'constraints' => [
                     new NotBlank()
                 ]

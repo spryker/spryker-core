@@ -1,7 +1,7 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title ' View' | trans %}
+{% block section_title ' View tax rate' | trans %}
 
 {% block action %}
     {{ backActionButton('/tax/rate/list', 'Back to list' | trans) }}
@@ -11,25 +11,37 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View tax rate' | trans } %}
 
         {% block widget_content %}
             <table class="table">
                 <tr>
-                    <td>Name</td>
+                    <td>{{ 'Name' | trans }}</td>
                     <td>{{ taxRate.name }}</td>
                 </tr>
                 <tr>
-                    <td>Id</td>
+                    <td>{{ 'Tax Rate ID' | trans  }}</td>
                     <td>{{ taxRate.idTaxRate }}</td>
                 </tr>
                 <tr>
-                    <td>Country</td>
-                    <td>{{ taxRate.country.name }}</td>
+                    <td>{{ 'Country' | trans }}</td>
+                    <td>
+                        {% if taxRate.country %}
+                           {{ taxRate.country.name }}
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
-                    <td>Percentage</td>
+                    <td>{{ 'Percentage' | trans }}</td>
                     <td>{{ taxRate.rate }} %</td>
+                </tr>
+                <tr>
+                    <td>{{ 'Created At' | trans }}</td>
+                    <td>{{ taxRate.createdAt | formatDateTime }}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'Updated At' | trans }}</td>
+                    <td>{{ taxRate.updatedAt | formatDateTime }}</td>
                 </tr>
             </table>
         {% endblock %}

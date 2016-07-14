@@ -51,13 +51,14 @@ class SetTable extends AbstractTable
 
         $config->setUrl($url);
         $config->setHeader([
-            SpyTaxSetTableMap::COL_ID_TAX_SET => 'ID',
+            SpyTaxSetTableMap::COL_ID_TAX_SET => 'Tax Set ID',
             SpyTaxSetTableMap::COL_NAME => 'Name',
             SpyTaxSetTableMap::COL_CREATED_AT => 'Created At',
             self::TABLE_COL_ACTIONS => 'Actions'
         ]);
 
         $config->setSearchable([
+            SpyTaxSetTableMap::COL_ID_TAX_SET,
             SpyTaxSetTableMap::COL_NAME,
         ]);
 
@@ -142,7 +143,7 @@ class SetTable extends AbstractTable
                 self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet()
             ]
         );
-        return $this->generateViewButton($viewTaxSetUrl, 'view');
+        return $this->generateViewButton($viewTaxSetUrl, 'View');
     }
 
     /**
@@ -159,7 +160,7 @@ class SetTable extends AbstractTable
             ]
         );
 
-        return $this->generateRemoveButton($deleteTaxSetUrl, 'delete');
+        return $this->generateRemoveButton($deleteTaxSetUrl, 'Delete');
     }
 
 }
