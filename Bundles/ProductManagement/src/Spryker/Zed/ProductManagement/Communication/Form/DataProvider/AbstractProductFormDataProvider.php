@@ -123,7 +123,6 @@ class AbstractProductFormDataProvider
             ProductFormAdd::ATTRIBUTE_ABSTRACT => $this->getAttributeAbstractDefaultFields($idProductAbstract),
             ProductFormAdd::ATTRIBUTE_VARIANT => $this->getAttributeVariantDefaultFields(),
             ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields(),
-            ProductFormAdd::SEO => $this->getSeoDefaultFields(),
             ProductFormAdd::PRICE_AND_STOCK => [
                 ProductFormPrice::FIELD_PRICE => 0,
                 ProductFormPrice::FIELD_TAX_RATE => 0,
@@ -132,6 +131,7 @@ class AbstractProductFormDataProvider
         ];
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());
+        $data = array_merge($data, $this->getSeoDefaultFields());
 
         return $data;
     }

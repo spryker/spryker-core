@@ -64,6 +64,17 @@
                 <div class="well">
                     {{ form_row(form.sku) }}
 
+                    {# find out which localized tab has errors  #}
+                    {% set generalLocalizedErrors = [] %}
+                    {% for localeCode in localeCollection %}
+                        {% set generalKey = 'general_' ~ localeCode %}
+                            {% for input in form[generalKey] %}
+                                {%  if input.vars.errors is defined and input.vars.errors|length %}
+                                    {%  set generalLocalizedErrors = generalLocalizedErrors|merge([{'code': localeCode, 'field': input.vars.errors.form.config.name }]) %}
+                                {% endif %}
+                            {% endfor %}
+                    {% endfor %}
+
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                         {% for localeCode in localeCollection %}
@@ -75,21 +86,18 @@
                                 {% set activeCss =  'active' %}
                             {% endif %}
 
-                            {% if errors.form[generalKey] is defined %}
-                                {% if localeCode in errors.form[generalKey]|keys %}
-                                    {% set invalidCss = 'invalid-tab' %}
-                                {% endif %}
+                            {% if localeCode in generalLocalizedErrors %}
+                                {% set invalidCss = 'invalid-tab' %}
                             {% endif %}
 
+                            {% set invalidCss = 'invalid-tab' %}
                             <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
                         {% endfor %}
                         </ul>
-
                         <div class="tab-content">
                             {% for localeCode in localeCollection %}
                                 {% set generalKey = 'general_' ~ localeCode %}
                                 {% set activeCss = '' %}
-                                {% set invalidCss = '' %}
 
                                 {% if currentLocale == localeCode %}
                                     {% set activeCss =  'active' %}

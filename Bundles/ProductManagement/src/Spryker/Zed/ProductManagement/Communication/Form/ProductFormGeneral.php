@@ -76,8 +76,6 @@ class ProductFormGeneral extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $name = $builder->getName();
-        s($name);
         $builder
             ->add(self::FIELD_DESCRIPTION, 'textarea', [
                 'required' => false,
