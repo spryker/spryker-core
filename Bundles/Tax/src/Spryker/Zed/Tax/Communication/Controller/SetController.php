@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax\Communication\Controller;
 
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,8 +105,12 @@ class SetController extends AbstractController
     {
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
-        $this->getFacade()->deleteTaxSet($idTaxSet);
-        $this->addSuccessMessage('The tax set has been deleted.');
+        try {
+            $this->getFacade()->deleteTaxSet($idTaxSet);
+            $this->addSuccessMessage('The tax set has been deleted.');
+        } catch (PropelException $e) {
+            $this->addErrorMessage('Could not delete tax set. Is it  assigned to product or shipping method?');
+        }
 
         return $this->redirectResponse(Url::generate('/tax/set/list')->build());
     }

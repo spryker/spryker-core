@@ -230,7 +230,12 @@ class TaxWriter implements TaxWriterInterface
      */
     public function deleteTaxRate($id)
     {
-        $taxRateEntity = $this->queryContainer->queryTaxRate($id)->findOne();
+        $taxRateEntity = $this->queryContainer
+            ->queryTaxRate($id)
+            ->findOne();
+
+        $taxSetTaxes = $taxRateEntity->getSpyTaxSetTaxes();
+        $taxSetTaxes->delete();
 
         if ($taxRateEntity) {
             $taxRateEntity->delete();
