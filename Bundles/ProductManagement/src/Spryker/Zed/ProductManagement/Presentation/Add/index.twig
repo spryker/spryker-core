@@ -99,7 +99,6 @@
                                     <div class="panel-body">
                                         <div class="well">
                                         {% for input in form[generalKey] %}
-                                            {{ form_errors(input) }}
                                             {{ form_row(input) }}
                                         {% endfor %}
                                         </div>
@@ -370,7 +369,6 @@
                                     <div class="panel-body">
                                         <div class="well">
                                             {% for input in form[generalKey] %}
-                                                {{ form_errors(input) }}
                                                 {{ form_row(input) }}
                                             {% endfor %}
                                         </div>

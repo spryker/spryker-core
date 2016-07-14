@@ -18,11 +18,24 @@ class ProductFormGeneral extends AbstractType
     const FIELD_DESCRIPTION = 'description';
 
     /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * ProductFormGeneral constructor.
+     */
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return string
      */
     public function getName()
     {
-        return 'ProductFormGeneral';
+        return $this->name;
     }
 
     /**

@@ -68,23 +68,32 @@ class ProductFormAdd extends AbstractType
     {
         parent::setDefaultOptions($resolver);
 
-        //$resolver->setRequired(self::ATTRIBUTE_ABSTRACT);
-        //$resolver->setRequired(self::ATTRIBUTE_VARIANT);
+        $localizedFormsToValidate = [
+            self::VALIDATION_GROUP_GENERAL,
+            self::VALIDATION_GROUP_SEO
+        ];
+
+        $validationGroups = [
+            Constraint::DEFAULT_GROUP,
+            self::VALIDATION_GROUP_PRICE_AND_TAX,
+            self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
+        ];
+
+        foreach ($this->localeCollection as $localeCode => $localeTransfer) {
+            foreach ($localizedFormsToValidate as $validationGroupPrefix) {
+                $name = self::getLocalizedPrefixName($validationGroupPrefix, $localeCode);
+                $validationGroups[] = $name;
+            }
+        }
+
         $resolver->setRequired(self::TAX_SET);
         $resolver->setRequired(self::ID_LOCALE);
 
         $resolver->setDefaults([
             'cascade_validation' => true,
             'required' => false,
-            'validation_groups' => function (FormInterface $form) {
-                return [
-                    Constraint::DEFAULT_GROUP,
-                    self::VALIDATION_GROUP_GENERAL,
-                    self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
-                    self::VALIDATION_GROUP_PRICE_AND_TAX,
-                    self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
-                    self::VALIDATION_GROUP_SEO,
-                ];
+            'validation_groups' => function (FormInterface $form) use ($validationGroups) {
+                return $validationGroups;
             }
         ]);
     }
@@ -115,7 +124,8 @@ class ProductFormAdd extends AbstractType
     {
         foreach ($this->localeCollection as $localeCode => $localeTransfer) {
             $name = self::getGeneralFormName($localeCode);
-            $this->addGeneralForm($builder, $name);
+            $validationGroup = self::getLocalizedPrefixName(self::VALIDATION_GROUP_GENERAL, $localeCode);
+            $this->addGeneralForm($builder, $name, [$validationGroup]);
         }
 
         return $this;
@@ -149,7 +159,16 @@ class ProductFormAdd extends AbstractType
                 'label' => 'SKU',
                 'required' => true,
                 'constraints' => [
-                    new NotBlank(),
+                    new Callback([
+                        'methods' => [
+                            function ($dataToValidate, ExecutionContextInterface $context) {
+                                //TODO more sophisticated validation
+                                if (!($dataToValidate)) {
+                                    $context->addViolation('Please enter valid SKU, it may consist of alphanumeric characters with dashes or dots.');
+                                }
+                            },
+                        ],
+                    ]),
                 ],
             ]);
 
@@ -158,25 +177,27 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $name
+     * @param array $validationGroups
      * @param array $options
      *
      * @return $this
      */
-    protected function addGeneralForm(FormBuilderInterface $builder, $name, array $options = [])
+    protected function addGeneralForm(FormBuilderInterface $builder, $name, array $validationGroups, array $options = [])
     {
         $builder
-            ->add($name, new ProductFormGeneral(), [
+            ->add($name, new ProductFormGeneral($name), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
-                            $selectedAttributes = array_values($dataToValidate);
+                            $selectedAttributes = array_filter(array_values($dataToValidate));
                             if (empty($selectedAttributes)) {
-                                $context->addViolation('Please enter at least Sku and Name of the product');
+                                $context->addViolation('Please enter at least Sku and Name of the product in every locale under General');
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_GENERAL]
+                    'groups' => $validationGroups
                 ])]
             ]);
 
@@ -304,7 +325,7 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
-                            $selectedAttributes = array_values($dataToValidate);
+                            $selectedAttributes = array_filter(array_values($dataToValidate));
                             if (empty($selectedAttributes)) {
                                 $context->addViolation('Please enter at least Sku and Name of the product');
                             }
@@ -322,7 +343,7 @@ class ProductFormAdd extends AbstractType
      *
      * @return string
      */
-    protected static function getLocalizedFormName($prefix, $localeCode)
+    protected static function getLocalizedPrefixName($prefix, $localeCode)
     {
         return $prefix . '_' . $localeCode . '';
     }
@@ -334,7 +355,7 @@ class ProductFormAdd extends AbstractType
      */
     public static function getGeneralFormName($localeCode)
     {
-        return self::getLocalizedFormName(self::GENERAL, $localeCode);
+        return self::getLocalizedPrefixName(self::GENERAL, $localeCode);
     }
 
     /**
@@ -344,7 +365,7 @@ class ProductFormAdd extends AbstractType
      */
     public static function getSeoFormName($localeCode)
     {
-        return self::getLocalizedFormName(self::SEO, $localeCode);
+        return self::getLocalizedPrefixName(self::SEO, $localeCode);
     }
 
 }
