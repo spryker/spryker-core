@@ -18,7 +18,7 @@ class BundleParser
     /**
      * @var array
      */
-    protected $includedBundleNamespaces = ['Spryker', 'Orm'];
+    protected $relevantBundleNamespaces = ['Spryker', 'Orm'];
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -50,7 +50,7 @@ class BundleParser
         $allFileDependencies = $this->parseDependencies($bundleName);
         $externalBundleDependencies = $this->buildExternalBundleDependencies($allFileDependencies);
 
-        $allFileDependencies = $this->filterIncludedClasses($allFileDependencies);
+        $allFileDependencies = $this->filterRelevantClasses($allFileDependencies);
 
         $bundleDependencies = $this->buildBundleDependencies($allFileDependencies, $bundleName);
         $bundleDependencies = $this->addPersistenceLayerDependencies($bundleName, $bundleDependencies);
@@ -100,7 +100,7 @@ class BundleParser
      *
      * @return array
      */
-    protected function filterIncludedClasses(array $dependencies)
+    protected function filterRelevantClasses(array $dependencies)
     {
         $reducedDependenciesPerFile = [];
         foreach ($dependencies as $fileName => $fileDependencies) {
@@ -109,7 +109,7 @@ class BundleParser
                 $fileDependencyParts = explode('\\', $fileDependency);
                 $bundleNamespace = $fileDependencyParts[0];
 
-                if (in_array($bundleNamespace, $this->includedBundleNamespaces)) {
+                if (in_array($bundleNamespace, $this->relevantBundleNamespaces)) {
                     $reducedDependencies[] = $fileDependency;
                 }
             }
