@@ -24,7 +24,6 @@
     "spryker/session": "^2.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^2.0.0",
-    "spryker/twig": "^2.0.0",
     "spryker/url": "^2.0.0",
     "spryker/zed-request": "^2.0.0",
     "spryker/zend": "^2.0.0"
