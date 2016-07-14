@@ -9,7 +9,7 @@ namespace Spryker\Zed\Development\Business\Dependency;
 
 use Spryker\Zed\Development\Business\DependencyTree\Finder;
 use Spryker\Zed\Development\DevelopmentConfig;
-use Symfony\Component\Finder\Finder as SFinder;
+use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class BundleParser
@@ -34,7 +34,7 @@ class BundleParser
      * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
-    public function __construct(SFinder $finder, DevelopmentConfig $config)
+    public function __construct(SymfonyFinder $finder, DevelopmentConfig $config)
     {
         $this->finder = $finder;
         $this->config = $config;

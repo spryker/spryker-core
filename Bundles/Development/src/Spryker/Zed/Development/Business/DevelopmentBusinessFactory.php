@@ -59,7 +59,7 @@ use Spryker\Zed\Development\Business\Dependency\Manager;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Symfony\Component\Finder\Finder as SfFinder;
+use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 /**
  * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
@@ -646,7 +646,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createFinder()
     {
-        return new SfFinder();
+        return new SymfonyFinder();
     }
 
     /**
