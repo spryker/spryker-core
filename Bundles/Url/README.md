@@ -8,4 +8,4 @@ composer require spryker/url
 
 ## Documentation
 
-[Url Documentation](http://spryker.github.io/core/bundles/url)
+[Documentation](http://spryker.github.io)

@@ -8,4 +8,4 @@ composer require spryker/collector
 
 ## Documentation
 
-[Collector Documentation](http://spryker.github.io/core/bundles/collector)
+[Documentation](http://spryker.github.io)
