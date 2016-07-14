@@ -185,8 +185,8 @@ class AbstractProductFormDataProvider
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
         $fields = [];
-        foreach ($availableLocales as $id => $code) {
-            $key = ProductFormAdd::GENERAL . '_' . $code;
+        foreach ($availableLocales as $id => $localeCode) {
+            $key = ProductFormAdd::getGeneralFormName($localeCode);
             $fields[$key] = [
                 ProductFormAdd::FIELD_NAME => null,
                 ProductFormAdd::FIELD_DESCRIPTION => null,
@@ -204,8 +204,9 @@ class AbstractProductFormDataProvider
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
         $fields = [];
-        foreach ($availableLocales as $id => $code) {
-            $fields[$code] = [
+        foreach ($availableLocales as $id => $localeCode) {
+            $key = ProductFormAdd::getSeoFormName($localeCode);
+            $fields[$key] = [
                 ProductFormSeo::FIELD_META_TITLE => null,
                 ProductFormSeo::FIELD_META_KEYWORDS => null,
                 ProductFormSeo::FIELD_META_DESCRIPTION => null,

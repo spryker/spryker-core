@@ -325,7 +325,6 @@
 
         {# ============================ SEO ============================ #}
         <div id="tab_seo" class="tab-pane">
-            {{ form_errors(form.seo) }}
             <div class="panel-body">
                 <h3>Search Engine Optimization</h3>
                 <p>Search engine optimization (SEO) is the process of affecting the visibility of a website or a web page in a web search engine's unpaid results — often referred to as "natural," "organic," or "earned" results.</p>
@@ -338,42 +337,42 @@
 
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
-                            {% for locale,seoData in form.seo %}
+                            {% for localeCode in localeCollection %}
+                                {% set generalKey = 'seo_' ~ localeCode %}
                                 {% set activeCss = '' %}
                                 {% set invalidCss = '' %}
 
-                                {% if currentLocale == locale %}
+                                {% if currentLocale == localeCode %}
                                     {% set activeCss =  'active' %}
                                 {% endif %}
 
-                                {% if errors.seo is defined %}
-                                    {% if locale in errors.seo|keys %}
+                                {% if errors.form[generalKey] is defined %}
+                                    {% if localeCode in errors.form[generalKey]|keys %}
                                         {% set invalidCss = 'invalid-tab' %}
                                     {% endif %}
                                 {% endif %}
 
-                                <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_seo_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
+                                <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
                             {% endfor %}
                         </ul>
 
                         <div class="tab-content">
-                            {% for locale,seoData in form.seo %}
-                                {% set active = '' %}
-                                {% if currentLocale == locale %}
-                                    {% set active = 'active' %}
+                            {% for localeCode in localeCollection %}
+                                {% set generalKey = 'seo_' ~ localeCode %}
+                                {% set activeCss = '' %}
+                                {% set invalidCss = '' %}
+
+                                {% if currentLocale == localeCode %}
+                                    {% set activeCss =  'active' %}
                                 {% endif %}
 
-                                <div id="content_seo_{{ locale }}" class="tab-pane {{ active }}">
+                                <div id="content_{{ localeCode }}" class="tab-pane {{ activeCss }}">
                                     <div class="panel-body">
                                         <div class="well">
-                                            {{ form_errors(seoData.meta_title) }}
-                                            {{ form_row(seoData.meta_title) }}
-
-                                            {{ form_errors(seoData.meta_keywords) }}
-                                            {{ form_row(seoData.meta_keywords) }}
-
-                                            {{ form_errors(seoData.meta_description) }}
-                                            {{ form_row(seoData.meta_description) }}
+                                            {% for input in form[generalKey] %}
+                                                {{ form_errors(input) }}
+                                                {{ form_row(input) }}
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>

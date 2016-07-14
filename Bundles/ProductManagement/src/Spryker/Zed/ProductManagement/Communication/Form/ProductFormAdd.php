@@ -103,7 +103,38 @@ class ProductFormAdd extends AbstractType
             //->addAttributeAbstractForm($builder, $options[self::ATTRIBUTE_ABSTRACT])
             //->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
             ->addPriceForm($builder, $options[self::TAX_SET])
-            ->addSeoForm($builder, $options);
+            ->addSeoLocalizedForms($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addGeneralLocalizedForms(FormBuilderInterface $builder)
+    {
+        foreach ($this->localeCollection as $localeCode => $localeTransfer) {
+            $name = self::getGeneralFormName($localeCode);
+            $this->addGeneralForm($builder, $name);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addSeoLocalizedForms(FormBuilderInterface $builder, array $options = [])
+    {
+        foreach ($this->localeCollection as $localeCode => $localeTransfer) {
+            $name = self::getSeoFormName($localeCode);
+            $this->addSeoForm($builder, $name, $options);
+        }
+
+        return $this;
     }
 
     /**
@@ -127,24 +158,11 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addGeneralLocalizedForms(FormBuilderInterface $builder)
-    {
-        foreach ($this->localeCollection as $code => $localeTransfer) {
-            $this->addGeneralForm($builder, self::GENERAL. '_'.$code.'');
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addGeneralForm(FormBuilderInterface $builder, $name)
+    protected function addGeneralForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
             ->add($name, new ProductFormGeneral(), [
@@ -273,28 +291,22 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $name
      * @param array $options
      *
      * @return $this
      */
-    protected function addSeoForm(FormBuilderInterface $builder, array $options = [])
+    protected function addSeoForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add(self::SEO, 'collection', [
+            ->add($name, new ProductFormSeo(), [
                 'label' => false,
-                'type' => new ProductFormSeo(self::VALIDATION_GROUP_SEO),
                 'constraints' => [new Callback([
                     'methods' => [
-                        function ($attributes, ExecutionContextInterface $context) {
-                            $selectedAttributes = [];
-                            foreach ($attributes as $type => $valueSet) {
-                                if (!empty($valueSet['value'])) {
-                                    $selectedAttributes[] = $valueSet['value'];
-                                }
-                            }
-
+                        function ($dataToValidate, ExecutionContextInterface $context) {
+                            $selectedAttributes = array_values($dataToValidate);
                             if (empty($selectedAttributes)) {
-                                //$context->addViolation('Please enter meta information');
+                                $context->addViolation('Please enter at least Sku and Name of the product');
                             }
                         },
                     ],
@@ -303,6 +315,36 @@ class ProductFormAdd extends AbstractType
             ]);
 
         return $this;
+    }
+
+    /**
+     * @param string $localeCode
+     *
+     * @return string
+     */
+    protected static function getLocalizedFormName($prefix, $localeCode)
+    {
+        return $prefix . '_' . $localeCode . '';
+    }
+
+    /**
+     * @param string $localeCode
+     *
+     * @return string
+     */
+    public static function getGeneralFormName($localeCode)
+    {
+        return self::getLocalizedFormName(self::GENERAL, $localeCode);
+    }
+
+    /**
+     * @param string $localeCode
+     *
+     * @return string
+     */
+    public static function getSeoFormName($localeCode)
+    {
+        return self::getLocalizedFormName(self::SEO, $localeCode);
     }
 
 }
