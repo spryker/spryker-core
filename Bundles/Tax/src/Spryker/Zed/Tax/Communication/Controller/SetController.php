@@ -109,7 +109,7 @@ class SetController extends AbstractController
             $this->getFacade()->deleteTaxSet($idTaxSet);
             $this->addSuccessMessage('The tax set has been deleted.');
         } catch (PropelException $e) {
-            $this->addErrorMessage('Could not delete tax set. Is it  assigned to product or shipping method?');
+            $this->addErrorMessage('Could not delete tax set. Is it assigned to product or shipping method?');
         }
 
         return $this->redirectResponse(Url::generate('/tax/set/list')->build());
