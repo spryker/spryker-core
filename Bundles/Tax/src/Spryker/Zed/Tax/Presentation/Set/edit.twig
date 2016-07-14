@@ -4,7 +4,7 @@
 {% block section_title 'Edit tax set' | trans %}
 
 {% block action %}
-    {{ backActionButton(url('/tax/set/list'), 'List of Task Sets' | trans) }}
+    {{ backActionButton(url('/tax/set/list'), 'List of task sets' | trans) }}
     {{ removeActionButton(url('/tax/set/delete', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}
 {% endblock %}
 

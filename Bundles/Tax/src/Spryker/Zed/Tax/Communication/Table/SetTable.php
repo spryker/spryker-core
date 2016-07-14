@@ -51,9 +51,9 @@ class SetTable extends AbstractTable
 
         $config->setUrl($url);
         $config->setHeader([
-            SpyTaxSetTableMap::COL_ID_TAX_SET => 'Tax Set ID',
+            SpyTaxSetTableMap::COL_ID_TAX_SET => 'Tax set ID',
             SpyTaxSetTableMap::COL_NAME => 'Name',
-            SpyTaxSetTableMap::COL_CREATED_AT => 'Created At',
+            SpyTaxSetTableMap::COL_CREATED_AT => 'Created at',
             self::TABLE_COL_ACTIONS => 'Actions'
         ]);
 

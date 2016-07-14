@@ -1,10 +1,10 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title ' View tax set' | trans %}
+{% block section_title 'View tax set' | trans %}
 
 {% block action %}
-    {{ backActionButton('/tax/set/list', 'List of Task Sets' | trans) }}
+    {{ backActionButton('/tax/set/list', 'List of task sets' | trans) }}
     {{ removeActionButton(url('/tax/set/delete', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}
     {{ editActionButton(url('/tax/set/edit', {'id-tax-set': taxSet.idTaxSet}), 'Edit' | trans) }}
 {% endblock %}
@@ -20,7 +20,7 @@
                     <td>{{ taxSet.name }}</td>
                 </tr>
                 <tr>
-                    <td>{{ 'Tax Set ID' | trans }}</td>
+                    <td>{{ 'Tax set ID' | trans }}</td>
                     <td>{{ taxSet.idTaxSet }}</td>
                 </tr>
                 <tr>
@@ -39,11 +39,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ 'Created At' | trans }}</td>
+                    <td>{{ 'Created at' | trans }}</td>
                     <td>{{ taxSet.createdAt | formatDateTime }}</td>
                 </tr>
                 <tr>
-                    <td>{{ 'Updated At' | trans }}</td>
+                    <td>{{ 'Updated at' | trans }}</td>
                     <td>{{ taxSet.updatedAt | formatDateTime }}</td>
                 </tr>
             </table>

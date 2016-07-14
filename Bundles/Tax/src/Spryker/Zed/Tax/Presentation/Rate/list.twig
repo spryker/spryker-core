@@ -4,12 +4,12 @@
 {% block section_title 'Tax rate list' | trans %}
 
 {% block action %}
-    {{ createActionButton('/tax/rate/create', 'Create new Tax Rate' | trans) }}
+    {{ createActionButton('/tax/rate/create', 'Create new tax rate' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tax Rate List' | trans } %}
+     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tax rate list' | trans } %}
 
         {% block widget_content %}
             {{ taxRateTable | raw }}

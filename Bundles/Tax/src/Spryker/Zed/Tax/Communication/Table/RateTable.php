@@ -55,9 +55,9 @@ class RateTable extends AbstractTable
 
         $config->setUrl($url);
         $config->setHeader([
-            SpyTaxRateTableMap::COL_ID_TAX_RATE => 'Tax Rate ID',
+            SpyTaxRateTableMap::COL_ID_TAX_RATE => 'Tax rate ID',
             SpyTaxRateTableMap::COL_NAME => 'Name',
-            SpyTaxRateTableMap::COL_CREATED_AT => 'Created At',
+            SpyTaxRateTableMap::COL_CREATED_AT => 'Created at',
             SpyCountryTableMap::COL_NAME => 'Country',
             SpyTaxRateTableMap::COL_RATE => 'Percentage',
             self::TABLE_COL_ACTIONS => 'Actions'
@@ -154,7 +154,7 @@ class RateTable extends AbstractTable
                 self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate()
             ]
         );
-        return $this->generateViewButton($viewTaxRateUrl, 'view');
+        return $this->generateViewButton($viewTaxRateUrl, 'View');
     }
 
     /**
@@ -171,7 +171,7 @@ class RateTable extends AbstractTable
             ]
         );
 
-        return $this->generateRemoveButton($deleteTaxRateUrl, 'delete');
+        return $this->generateRemoveButton($deleteTaxRateUrl, 'Delete');
     }
 
     /**
