@@ -49,6 +49,7 @@ class ProductFormSeo extends AbstractType
         $builder
             ->add(self::FIELD_META_TITLE, 'text', [
                 'required' => false,
+                'label' => 'Title'
             ]);
 
         return $this;
@@ -64,6 +65,7 @@ class ProductFormSeo extends AbstractType
         $builder
             ->add(self::FIELD_META_KEYWORDS, 'text', [
                 'required' => false,
+                'label' => 'Keywords'
             ]);
 
         return $this;
@@ -79,6 +81,7 @@ class ProductFormSeo extends AbstractType
         $builder
             ->add(self::FIELD_META_DESCRIPTION, 'text', [
                 'required' => false,
+                'label' => 'Description'
             ]);
 
         return $this;
