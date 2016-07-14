@@ -65,6 +65,8 @@ interface TaxQueryContainerInterface extends QueryContainerInterface
     public function queryTaxSetByIdProductAbstractAndCountryIso2Code(array $allIdProductAbstracts, $countryIso2Code);
 
     /**
+     * @api
+     *
      * @param string $name
      * @param int $idCountry
      * @param float $rate

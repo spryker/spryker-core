@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Tax\Communication\Form\Transform;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class PercentageTransformer implements DataTransformerInterface
 {
@@ -38,7 +37,7 @@ class PercentageTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the transformed representation
      *
-     * @throws TransformationFailedException When the transformation fails.
+     * @throws \Symfony\Component\Form\Exception\TransformationFailedException When the transformation fails.
      */
     public function transform($value)
     {
@@ -67,10 +66,11 @@ class PercentageTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the original representation
      *
-     * @throws TransformationFailedException When the transformation fails.
+     * @throws \Symfony\Component\Form\Exception\TransformationFailedException When the transformation fails.
      */
     public function reverseTransform($value)
     {
         return str_replace(',', '.', $value);
     }
+
 }

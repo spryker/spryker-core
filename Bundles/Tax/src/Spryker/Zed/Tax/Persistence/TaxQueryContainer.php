@@ -133,6 +133,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * @api
+     *
      * @param string $name
      * @param int $idCountry
      * @param float $rate
