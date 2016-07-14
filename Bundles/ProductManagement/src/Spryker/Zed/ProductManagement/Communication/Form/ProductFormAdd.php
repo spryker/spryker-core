@@ -99,7 +99,7 @@ class ProductFormAdd extends AbstractType
     {
         $this
             ->addSkuField($builder)
-            ->addGeneralForms($builder)
+            ->addGeneralLocalizedForms($builder)
             //->addAttributeAbstractForm($builder, $options[self::ATTRIBUTE_ABSTRACT])
             //->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
             ->addPriceForm($builder, $options[self::TAX_SET])
@@ -130,7 +130,7 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addGeneralForms(FormBuilderInterface $builder)
+    protected function addGeneralLocalizedForms(FormBuilderInterface $builder)
     {
         foreach ($this->localeCollection as $code => $localeTransfer) {
             $this->addGeneralForm($builder, self::GENERAL. '_'.$code.'');
@@ -152,17 +152,7 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
-                            $selectedAttributes = [];
-                            foreach ($dataToValidate as $locale => $localizedData) {
-                                foreach ($localizedData as $key => $value) {
-                                    if (!empty($value)) {
-                                        $selectedAttributes[] = $value;
-                                        break;
-                                        break 2;
-                                    }
-                                }
-                            }
-
+                            $selectedAttributes = array_values($dataToValidate);
                             if (empty($selectedAttributes)) {
                                 $context->addViolation('Please enter at least Sku and Name of the product');
                             }

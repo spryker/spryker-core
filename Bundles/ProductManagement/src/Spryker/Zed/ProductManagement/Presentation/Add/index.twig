@@ -68,7 +68,6 @@
                         <ul class="nav nav-tabs">
                         {% for localeCode in localeCollection %}
                             {% set generalKey = 'general_' ~ localeCode %}
-
                             {% set activeCss = '' %}
                             {% set invalidCss = '' %}
 
@@ -89,21 +88,21 @@
                         <div class="tab-content">
                             {% for localeCode in localeCollection %}
                                 {% set generalKey = 'general_' ~ localeCode %}
-                                <div id="content_{{ localeCode }}" class="tab-pane {{ active }}">
+                                {% set activeCss = '' %}
+                                {% set invalidCss = '' %}
+
+                                {% if currentLocale == localeCode %}
+                                    {% set activeCss =  'active' %}
+                                {% endif %}
+
+                                <div id="content_{{ localeCode }}" class="tab-pane {{ activeCss }}">
                                     <div class="panel-body">
-                                    <div class="well">
-
+                                        <div class="well">
                                         {% for input in form[generalKey] %}
-                                            {% set active = '' %}
-                                            {% if currentLocale == localeCode %}
-                                                {% set active = 'active' %}
-                                            {% endif %}
-
-                                                <pre>
-                                                    {{ form_row(input) }}
-                                                </pre>
+                                            {{ form_errors(input) }}
+                                            {{ form_row(input) }}
                                         {% endfor %}
-                                    </div>
+                                        </div>
                                     </div>
                                 </div>
                             {% endfor %}
