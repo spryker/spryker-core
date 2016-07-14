@@ -180,10 +180,10 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
-                            //s($context->getPropertyName(), $context->getPropertyPath(), $context->getValue(), $context->getViolations());
                             $selectedAttributes = array_filter(array_values($dataToValidate));
-                            if (empty($selectedAttributes)) {
-                                $context->addViolation('Please enter at least Sku and Name of the product in every locale under General', [$context->getPropertyPath()]);
+                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), ProductFormGeneral::$errorFieldsDisplayed)) {
+                                $context->addViolation('Please enter at least Sku and Name of the product in every locale under General', [$context->getGroup()]);
+                                ProductFormGeneral::$errorFieldsDisplayed[$context->getGroup()] = true;
                             }
                         },
                     ],

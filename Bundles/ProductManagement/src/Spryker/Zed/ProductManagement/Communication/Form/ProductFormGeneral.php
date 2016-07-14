@@ -17,6 +17,8 @@ class ProductFormGeneral extends AbstractType
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
 
+    public static $errorFieldsDisplayed = [];
+
     /**
      * @var string
      */
