@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Library\Zed\Exception;
+namespace Spryker\Shared\ZedRequest\Client\Exception;
 
 use Guzzle\Http\Message\Response;
 
-/**
- * @deprecated Moved to ZedRequest Bundle
- */
 class InvalidZedResponseException extends \RuntimeException
 {
 
+    /**
+     * @param string $reason
+     * @param \Guzzle\Http\Message\Response $response
+     */
     public function __construct($reason, Response $response)
     {
         $message = 'Invalid response from Zed' . PHP_EOL . implode(PHP_EOL, [

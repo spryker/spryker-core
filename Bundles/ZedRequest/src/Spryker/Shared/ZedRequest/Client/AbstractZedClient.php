@@ -67,19 +67,17 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      * @param string $url
      * @param \Spryker\Shared\Transfer\TransferInterface $object
      * @param int|null $timeoutInSeconds (optional) default: null
-     * @param bool $isBackgroundRequest (optional) default: false
      *
      * @return \Spryker\Shared\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $timeoutInSeconds = null, $isBackgroundRequest = false)
+    public function call($url, TransferInterface $object, $timeoutInSeconds = null)
     {
         self::$lastResponse = null;
         self::$lastResponse = $this->httpClient->request(
             $url,
             $object,
             $this->prepareAndGetMetaTransfers(),
-            $timeoutInSeconds,
-            $isBackgroundRequest
+            $timeoutInSeconds
         );
 
         return self::$lastResponse->getTransfer();

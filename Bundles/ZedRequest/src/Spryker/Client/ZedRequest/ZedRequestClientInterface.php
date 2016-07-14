@@ -18,11 +18,10 @@ interface ZedRequestClientInterface
      * @param string $url
      * @param \Spryker\Shared\Transfer\TransferInterface $object
      * @param int|null $timeoutInSeconds
-     * @param bool|false $isBackgroundRequest
      *
      * @return \Spryker\Shared\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $timeoutInSeconds = null, $isBackgroundRequest = false);
+    public function call($url, TransferInterface $object, $timeoutInSeconds = null);
 
     /**
      * @api

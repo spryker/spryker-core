@@ -27,18 +27,16 @@ interface HttpClientInterface
      * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
      * @param int|null $timeoutInSeconds
-     * @param bool $isBackgroundRequest
      *
      * @throws \LogicException
      *
-     * @return \Spryker\Shared\Library\Communication\Response
+     * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     public function request(
         $pathInfo,
         TransferInterface $transferObject = null,
         array $metaTransfers = [],
-        $timeoutInSeconds = null,
-        $isBackgroundRequest = false
+        $timeoutInSeconds = null
     );
 
     /**
