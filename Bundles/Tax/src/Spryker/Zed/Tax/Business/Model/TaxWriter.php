@@ -136,13 +136,11 @@ class TaxWriter implements TaxWriterInterface
             throw new ResourceNotFoundException();
         }
 
-        if ($taxSetTransfer->getTaxRates()->count() !== 0) {
-            $taxSetEntity->setName($taxSetTransfer->getName())->setSpyTaxRates(new Collection());
+        $taxSetEntity->setName($taxSetTransfer->getName())->setSpyTaxRates(new Collection());
 
-            foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
-                $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
-                $taxSetEntity->addSpyTaxRate($taxRateEntity);
-            }
+        foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
+            $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
+            $taxSetEntity->addSpyTaxRate($taxRateEntity);
         }
 
         foreach ($this->taxChangePlugins as $plugin) {

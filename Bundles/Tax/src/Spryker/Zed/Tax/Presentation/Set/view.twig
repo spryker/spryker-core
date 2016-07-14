@@ -4,9 +4,9 @@
 {% block section_title 'View tax set' | trans %}
 
 {% block action %}
-    {{ backActionButton('/tax/set/list', 'List of task sets' | trans) }}
-    {{ removeActionButton(url('/tax/set/delete', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}
     {{ editActionButton(url('/tax/set/edit', {'id-tax-set': taxSet.idTaxSet}), 'Edit' | trans) }}
+    {{ removeActionButton(url('/tax/set/delete', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}
+    {{ backActionButton('/tax/set/list', 'List of task sets' | trans) }}
 {% endblock %}
 
 {% block content %}

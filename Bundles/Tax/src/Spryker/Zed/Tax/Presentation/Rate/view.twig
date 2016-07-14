@@ -6,7 +6,7 @@
 {% block action %}
     {{ editActionButton(url('/tax/rate/edit', {'id-tax-rate': taxRate.idTaxRate}), 'Edit' | trans) }}
     {{ removeActionButton(url('/tax/rate/delete', {'id-tax-rate': taxRate.idTaxRate}), 'Delete' | trans) }}
-    {{ backActionButton('/tax/rate/list', 'List of rates' | trans) }}
+    {{ backActionButton('/tax/rate/list', 'List of tax rates' | trans) }}
 {% endblock %}
 
 {% block content %}

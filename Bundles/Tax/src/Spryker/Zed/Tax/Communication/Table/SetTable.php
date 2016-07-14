@@ -106,8 +106,8 @@ class SetTable extends AbstractTable
     protected function getActionButtons(SpyTaxSet $taxSetEntity)
     {
         $buttons = [];
-        $buttons[] = $this->createViewButton($taxSetEntity);
         $buttons[] = $this->createEditButton($taxSetEntity);
+        $buttons[] = $this->createViewButton($taxSetEntity);
         $buttons[] = $this->createDeleteButton($taxSetEntity);
 
         return implode(' ', $buttons);
