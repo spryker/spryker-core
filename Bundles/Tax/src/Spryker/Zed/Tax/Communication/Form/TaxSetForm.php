@@ -41,7 +41,6 @@ class TaxSetForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addName($builder)
-            ->addIdTaxSet($builder)
             ->addTaxRates($builder);
     }
 
@@ -60,31 +59,6 @@ class TaxSetForm extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new NotBlank()
-                ]
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdTaxSet(FormBuilderInterface $builder)
-    {
-        $taxSetTransfer = $this->taxSetFormDataProvider->getData();
-        if (!$taxSetTransfer || !$taxSetTransfer->getIdTaxSet()) {
-            return $this;
-        }
-
-        $builder->add(
-            self::FIELD_ID_TAX_SET,
-            'text',
-            [
-                'attr' => [
-                    'disabled' => 'disabled'
                 ]
             ]
         );

@@ -39,7 +39,10 @@ class TaxReader implements TaxReaderInterface
      */
     public function getTaxRates()
     {
-        $propelCollection = $this->queryContainer->queryAllTaxRates()->find();
+        $propelCollection = $this->queryContainer
+            ->queryAllTaxRates()
+            ->orderByName()
+            ->find();
 
         $transferCollection = new TaxRateCollectionTransfer();
         foreach ($propelCollection as $taxRateEntity) {

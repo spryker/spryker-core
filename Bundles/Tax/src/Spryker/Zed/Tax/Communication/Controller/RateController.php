@@ -94,7 +94,6 @@ class RateController extends AbstractController
                 $rowsAffected = $this->getFacade()->updateTaxRate($taxRateTransfer);
                 if ($rowsAffected > 0) {
                     $this->addSuccessMessage('Tax rate succesfully updated.');
-                    return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
                 }
             }
         }

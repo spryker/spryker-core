@@ -16,7 +16,6 @@
             {{ form_start(form) }}
 
                 {{ form_row(form.name) }}
-                {{ form_row(form.idTaxRate) }}
                 {{ form_row(form.fkCountry) }}
 
                 <div class="form-group {% if form.rate.vars.errors|length > 0 %}has-error{% endif %}">

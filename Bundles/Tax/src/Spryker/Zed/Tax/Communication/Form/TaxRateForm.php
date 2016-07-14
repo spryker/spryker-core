@@ -54,7 +54,6 @@ class TaxRateForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addName($builder)
-            ->addIdTaxRate($builder)
             ->addCountry($builder)
             ->addPercentage($builder);
     }
@@ -75,32 +74,6 @@ class TaxRateForm extends AbstractType
                 'constraints' => [
                     new NotBlank()
                 ],
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdTaxRate(FormBuilderInterface $builder)
-    {
-        $taxRateTransfer = $this->taxRateFormDataProvider->getData();
-        if (!$taxRateTransfer || !$taxRateTransfer->getIdTaxRate()) {
-            return $this;
-        }
-
-        $builder->add(
-            self::FIELD_ID_TAX_RATE,
-            'text',
-            [
-                'label' => 'Tax rate ID',
-                'attr' => [
-                    'disabled' => 'disabled'
-                ]
             ]
         );
 
