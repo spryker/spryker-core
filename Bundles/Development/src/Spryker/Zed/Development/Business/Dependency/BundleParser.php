@@ -48,11 +48,14 @@ class BundleParser
     public function parseOutgoingDependencies($bundleName)
     {
         $allFileDependencies = $this->parseDependencies($bundleName);
+        $externalBundleDependencies = $this->buildExternalBundleDependencies($allFileDependencies);
+
         $allFileDependencies = $this->filterIncludedClasses($allFileDependencies);
         $allFileDependencies = $this->ignorePlugins($allFileDependencies);
 
         $bundleDependencies = $this->buildBundleDependencies($allFileDependencies, $bundleName);
         $bundleDependencies = $this->addPersistenceLayerDependencies($bundleName, $bundleDependencies);
+        $bundleDependencies += $externalBundleDependencies;
 
         return $bundleDependencies;
     }
@@ -208,6 +211,46 @@ class BundleParser
     protected function find($folder)
     {
         return $this->finder->in($folder)->name('*.schema.xml')->depth('< 2');
+    }
+
+    /**
+     * @param array $allFileDependencies
+     * @return array
+     */
+    protected function buildExternalBundleDependencies(array $allFileDependencies)
+    {
+        $bundleDependencies = [];
+
+        $map = $this->config->getExternalToInternalNamespaceMap();
+        foreach ($allFileDependencies as $fileDependencies) {
+            foreach ($fileDependencies as $fileDependency) {
+                $found = null;
+                foreach ($map as $namespace => $package) {
+                    if (strpos($fileDependency, $namespace . '\\') !== 0) {
+                        continue;
+                    }
+
+                    $found = $package;
+                    break;
+                }
+
+                if (!$found) {
+                    continue;
+                }
+
+                $name = substr($found, 8);
+                $name = str_replace('-', '_', $name);
+                $filter = new UnderscoreToCamelCase();
+                $name = ucfirst($filter->filter($name));
+
+                if (!isset($bundleDependencies[$name])) {
+                    $bundleDependencies[$name] = 0;
+                }
+                $bundleDependencies[$name]++;
+            }
+        }
+
+        return $bundleDependencies;
     }
 
 }
