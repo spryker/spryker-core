@@ -310,7 +310,7 @@ class ProductFormAdd extends AbstractType
     protected function addSeoForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new ProductFormSeo(), [
+            ->add($name, new ProductFormSeo($name), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [

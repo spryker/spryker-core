@@ -7,23 +7,15 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ProductFormSeo extends AbstractType
+class ProductFormSeo extends AbstractSubForm
 {
 
     const FIELD_META_TITLE = 'meta_title';
     const FIELD_META_KEYWORDS = 'meta_keywords';
     const FIELD_META_DESCRIPTION = 'meta_description';
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'ProductFormSeo';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

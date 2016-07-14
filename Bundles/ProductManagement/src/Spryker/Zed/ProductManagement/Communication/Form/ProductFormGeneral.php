@@ -7,38 +7,14 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ProductFormGeneral extends AbstractType
+class ProductFormGeneral extends AbstractSubForm
 {
 
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
-
-    public static $errorFieldsDisplayed = [];
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * ProductFormGeneral constructor.
-     */
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

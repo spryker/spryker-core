@@ -81,19 +81,23 @@
                             {% set generalKey = 'general_' ~ localeCode %}
                             {% set activeCss = '' %}
                             {% set invalidCss = '' %}
+                            {% set invalidCssFound = false %}
 
                             {% if currentLocale == localeCode %}
                                 {% set activeCss =  'active' %}
                             {% endif %}
 
-                            {% if localeCode in generalLocalizedErrors %}
-                                {% set invalidCss = 'invalid-tab' %}
-                            {% endif %}
+                            {% for error in generalLocalizedErrors %}
+                                {% if error.code == localeCode and not invalidCssFound %}
+                                    {% set invalidCss = 'invalid-tab' %}
+                                    {% set invalidCssFound = true %}
+                                {% endif %}
+                            {% endfor %}
 
-                            {% set invalidCss = 'invalid-tab' %}
-                            <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
+                            <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_general_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
                         {% endfor %}
                         </ul>
+
                         <div class="tab-content">
                             {% for localeCode in localeCollection %}
                                 {% set generalKey = 'general_' ~ localeCode %}
@@ -103,7 +107,7 @@
                                     {% set activeCss =  'active' %}
                                 {% endif %}
 
-                                <div id="content_{{ localeCode }}" class="tab-pane {{ activeCss }}">
+                                <div id="content_general_{{ localeCode }}" class="tab-pane {{ activeCss }}">
                                     <div class="panel-body">
                                         <div class="well">
                                         {% for input in form[generalKey] %}
@@ -342,24 +346,37 @@
                     <h3>Meta Information</h3>
                     <p>Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.</p>
 
+                    {# find out which localized tab has errors  #}
+                    {% set generalLocalizedErrors = [] %}
+                    {% for localeCode in localeCollection %}
+                        {% set generalKey = 'seo_' ~ localeCode %}
+                        {% for input in form[generalKey] %}
+                            {%  if input.vars.errors is defined and input.vars.errors|length %}
+                                {%  set generalLocalizedErrors = generalLocalizedErrors|merge([{'code': localeCode }]) %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             {% for localeCode in localeCollection %}
                                 {% set generalKey = 'seo_' ~ localeCode %}
                                 {% set activeCss = '' %}
                                 {% set invalidCss = '' %}
+                                {% set invalidCssFound = false %}
 
                                 {% if currentLocale == localeCode %}
                                     {% set activeCss =  'active' %}
                                 {% endif %}
 
-                                {% if errors.form[generalKey] is defined %}
-                                    {% if localeCode in errors.form[generalKey]|keys %}
+                                {% for error in generalLocalizedErrors %}
+                                    {% if error.code == localeCode and not invalidCssFound %}
                                         {% set invalidCss = 'invalid-tab' %}
+                                        {% set invalidCssFound = true %}
                                     {% endif %}
-                                {% endif %}
+                                {% endfor %}
 
-                                <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
+                                <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_seo_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
                             {% endfor %}
                         </ul>
 
@@ -367,13 +384,12 @@
                             {% for localeCode in localeCollection %}
                                 {% set generalKey = 'seo_' ~ localeCode %}
                                 {% set activeCss = '' %}
-                                {% set invalidCss = '' %}
 
                                 {% if currentLocale == localeCode %}
                                     {% set activeCss =  'active' %}
                                 {% endif %}
 
-                                <div id="content_{{ localeCode }}" class="tab-pane {{ activeCss }}">
+                                <div id="content_seo_{{ localeCode }}" class="tab-pane {{ activeCss }}">
                                     <div class="panel-body">
                                         <div class="well">
                                             {% for input in form[generalKey] %}
@@ -385,6 +401,7 @@
                             {% endfor %}
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
