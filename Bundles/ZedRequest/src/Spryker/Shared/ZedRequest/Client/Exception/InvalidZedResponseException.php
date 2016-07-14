@@ -12,6 +12,10 @@ use Guzzle\Http\Message\Response;
 class InvalidZedResponseException extends \RuntimeException
 {
 
+    /**
+     * @param string $reason
+     * @param \Guzzle\Http\Message\Response $response
+     */
     public function __construct($reason, Response $response)
     {
         $message = 'Invalid response from Zed' . PHP_EOL . implode(PHP_EOL, [
