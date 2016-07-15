@@ -1,5 +1,41 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
+{% macro localizedTabs(formPrefix, localeCollection, form, currentLocale) %}
+    {# find out which localized tab has errors  #}
+    {% set errorList = [] %}
+    {% for localeCode in localeCollection %}
+        {% set formKey = formPrefix ~ '_' ~ localeCode %}
+        {% for input in form[formKey] %}
+            {%  if input.vars.errors is defined and input.vars.errors|length %}
+                {%  set errorList = errorList|merge([{'code': localeCode, 'field': input.vars.errors.form.config.name }]) %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    <ul class="nav nav-tabs">
+        {% for localeCode in localeCollection %}
+            {% set formKey = formPrefix ~ localeCode %}
+            {% set activeCss = '' %}
+            {% set invalidCss = '' %}
+            {% set invalidCssFound = false %}
+
+            {% if currentLocale == localeCode %}
+                {% set activeCss =  'active' %}
+            {% endif %}
+
+            {% for error in errorList %}
+                {% if error.code == localeCode and not invalidCssFound %}
+                    {% set invalidCss = 'invalid-tab' %}
+                    {% set invalidCssFound = true %}
+                {% endif %}
+            {% endfor %}
+
+            <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_{{ formPrefix }}_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+
 {% if widget_title is not defined %}
     {% set widget_title = 'Product Add' | trans %}
 {% endif %}
@@ -35,6 +71,8 @@
 {% endblock select2_widget %}
 
 #}
+
+{% import _self as forms %}
 
 {% form_theme form _self %}
 
@@ -135,9 +173,12 @@
                 <p>Select attributes and corresponding values.</p>
                 <div class="well">
                     <div class="row ">
-                        {# find out which localized tab has errors  #}
+                        {% set attributeLocaleCollection = localeCollection %}
+                        {% set attributeLocaleCollection = attributeLocaleCollection|merge(['default']) %}
+
+                        {# find out which localized tab has errors
                         {% set generalLocalizedErrors = [] %}
-                        {% for localeCode in localeCollection %}
+                        {% for localeCode in attributeLocaleCollection %}
                             {% set generalKey = 'attribute_abstract_' ~ localeCode %}
                             {% for input in form[generalKey] %}
                                 {%  if input.vars.errors is defined and input.vars.errors|length %}
@@ -145,13 +186,11 @@
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
+                        #}
 
                         <div class="tabs-container">
-                            {% set attributeLocaleCollection = localeCollection %}
-                            {% set attributeLocaleCollection = attributeLocaleCollection|merge(['default']) %}
-
                             <div class="tabs-top">
-                                <ul class="nav nav-tabs">
+{#                                <ul class="nav nav-tabs">
                                     {% for localeCode in attributeLocaleCollection %}
                                         {% set generalKey = 'attribute_abstract_' ~ localeCode %}
                                         {% set activeCss = '' %}
@@ -171,7 +210,9 @@
 
                                         <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_attribute_abstract_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
                                     {% endfor %}
-                                </ul>
+                                </ul>#}
+
+                                {{ forms.localizedTabs('attribute_abstract', attributeLocaleCollection, form, currentLocale) }}
 
                                 <div class="tab-content">
                                     {% for localeCode in attributeLocaleCollection %}

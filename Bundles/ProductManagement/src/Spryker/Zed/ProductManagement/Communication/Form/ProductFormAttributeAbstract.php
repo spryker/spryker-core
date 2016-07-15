@@ -11,6 +11,8 @@ use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Communication\Form\Constraints\AttributeFieldNotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormAttributeAbstract extends AbstractSubForm
 {
@@ -104,11 +106,23 @@ class ProductFormAttributeAbstract extends AbstractSubForm
                 'product_specific' => $this->attributeValues[$name][self::PRODUCT_SPECIFIC]
             ],
             'constraints' => [
+                new Callback([
+                    'methods' => [
+                        function ($dataToValidate, ExecutionContextInterface $context) {
+                            //TODO more sophisticated validation
+                            if (!($dataToValidate)) {
+                                //$context->addViolation('Please enter attribute value.');
+                            }
+                        },
+                    ],
+                ]),
+            ]
+/*            'constraints' => [
                 new AttributeFieldNotBlank([
                     'attributeFieldValue' => self::FIELD_VALUE,
                     'attributeCheckboxFieldName' => self::FIELD_NAME,
                 ]),
-            ],
+            ],*/
         ]);
 
         return $this;

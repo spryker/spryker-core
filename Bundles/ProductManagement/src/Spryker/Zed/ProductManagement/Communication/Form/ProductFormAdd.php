@@ -77,7 +77,7 @@ class ProductFormAdd extends AbstractType
             Constraint::DEFAULT_GROUP,
             self::VALIDATION_GROUP_GENERAL,
             self::VALIDATION_GROUP_PRICE_AND_TAX,
-            self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
+            self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
             self::VALIDATION_GROUP_SEO
         ];
 
@@ -154,7 +154,7 @@ class ProductFormAdd extends AbstractType
 
         $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::ATTRIBUTE_ABSTRACT, AbstractProductFormDataProvider::DEFAULT_LOCALE);
         $this->addAttributeAbstractForm($builder, $defaultName, $options);
-        
+
         return $this;
     }
 
@@ -241,8 +241,9 @@ class ProductFormAdd extends AbstractType
                                 }
                             }
 
-                            if (empty($selectedAttributes)) {
-                                $context->addViolation('Please select at least one attribute group');
+                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), ProductFormGeneral::$errorFieldsDisplayed)) {
+                                $context->addViolation('Please select at least one attribute and its value under Attributes');
+                                ProductFormGeneral::$errorFieldsDisplayed[$context->getGroup()] = true;
                             }
                         },
                     ],
