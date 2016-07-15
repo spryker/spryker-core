@@ -9,11 +9,10 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Communication\Form\Constraints\AttributeFieldNotBlank;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductFormAttributeAbstract extends AbstractType
+class ProductFormAttributeAbstract extends AbstractSubForm
 {
 
     const FIELD_NAME = 'name';
@@ -22,6 +21,8 @@ class ProductFormAttributeAbstract extends AbstractType
     const LABEL = 'label';
     const MULTIPLE = 'multiple';
     const PRODUCT_SPECIFIC = 'product_specific';
+    const NAME_DISABLED = 'name_disabled';
+    const VALUE_DISABLED = 'value_disabled';
     const INPUT = 'input';
 
     /**
@@ -29,43 +30,15 @@ class ProductFormAttributeAbstract extends AbstractType
      */
     protected $attributeValues;
 
-    /**
-     * @var string
-     */
-    protected $validationGroup;
 
     /**
+     * @param string $name
      * @param array $attributeValues
-     * @param string $validationGroup
      */
-    public function __construct(array $attributeValues, $validationGroup)
+    public function __construct($name, array $attributeValues)
     {
+        parent::__construct($name);
         $this->attributeValues = $attributeValues;
-        $this->validationGroup = $validationGroup;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'ProductFormAttributeAbstract';
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setDefaults([
-            'required' => false,
-            'cascade_validation' => true,
-            'validation_groups' => [$this->validationGroup]
-        ]);
     }
 
     /**
@@ -94,8 +67,8 @@ class ProductFormAttributeAbstract extends AbstractType
         $isDisabled = true;
 
         if (isset($this->attributeValues[$name])) {
-            $label = $name; //$this->attributeValues[$name][self::LABEL];
-            $isDisabled = false; //$this->attributeValues[$name][self::PRODUCT_SPECIFIC] === true;
+            $label = $this->attributeValues[$name][self::LABEL];
+            $isDisabled = $this->attributeValues[$name][self::NAME_DISABLED];
         }
 
         $builder
@@ -103,7 +76,8 @@ class ProductFormAttributeAbstract extends AbstractType
                 'label' => $label,
                 'disabled' => $isDisabled,
                 'attr' => [
-                    'class' => 'attribute_metadata_checkbox'
+                    'class' => 'attribute_metadata_checkbox',
+                    'product_specific' => $this->attributeValues[$name][self::PRODUCT_SPECIFIC]
                 ],
             ]);
 
@@ -118,8 +92,8 @@ class ProductFormAttributeAbstract extends AbstractType
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
-        $isDisabled = false; //$this->attributeValues[$name][self::PRODUCT_SPECIFIC] === true;
-        $input = 'text'; //$this->attributeValues[$name][self::INPUT];
+        $isDisabled = $this->attributeValues[$name][self::VALUE_DISABLED];
+        $input = $this->attributeValues[$name][self::INPUT];
 
         $builder->add(self::FIELD_VALUE, $input, [
             'disabled' => $isDisabled,
@@ -127,7 +101,7 @@ class ProductFormAttributeAbstract extends AbstractType
             'attr' => [
                 'style' => 'width: 250px !important',
                 'class' => 'attribute_metadata_value',
-                'input_data' => 'bar'
+                'product_specific' => $this->attributeValues[$name][self::PRODUCT_SPECIFIC]
             ],
             'constraints' => [
                 new AttributeFieldNotBlank([

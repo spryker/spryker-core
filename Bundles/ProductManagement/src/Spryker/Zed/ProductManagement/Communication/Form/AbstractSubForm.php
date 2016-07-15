@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AbstractSubForm extends AbstractType
 {
@@ -33,6 +34,20 @@ class AbstractSubForm extends AbstractType
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults([
+            'required' => false,
+        ]);
     }
 
 }

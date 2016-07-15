@@ -68,6 +68,10 @@ class ProductFormAdd extends AbstractType
     {
         parent::setDefaultOptions($resolver);
 
+        $resolver->setRequired(self::TAX_SET);
+        $resolver->setRequired(self::ID_LOCALE);
+        $resolver->setRequired(self::ATTRIBUTE_ABSTRACT);
+
         $validationGroups = [
             Constraint::DEFAULT_GROUP,
             self::VALIDATION_GROUP_GENERAL,
@@ -75,9 +79,6 @@ class ProductFormAdd extends AbstractType
             self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
             self::VALIDATION_GROUP_SEO
         ];
-
-        $resolver->setRequired(self::TAX_SET);
-        $resolver->setRequired(self::ID_LOCALE);
 
         $resolver->setDefaults([
             'cascade_validation' => true,
@@ -100,7 +101,7 @@ class ProductFormAdd extends AbstractType
         $this
             ->addSkuField($builder)
             ->addGeneralLocalizedForms($builder)
-            //->addAttributeAbstractForm($builder, $options[self::ATTRIBUTE_ABSTRACT])
+            ->addAttributeAbstractForms($builder, $options[self::ATTRIBUTE_ABSTRACT])
             //->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
             ->addPriceForm($builder, $options[self::TAX_SET])
             ->addSeoLocalizedForms($builder, $options);
@@ -132,6 +133,22 @@ class ProductFormAdd extends AbstractType
         foreach ($this->localeCollection as $localeCode => $localeTransfer) {
             $name = self::getSeoFormName($localeCode);
             $this->addSeoForm($builder, $name, $options);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addAttributeAbstractForms(FormBuilderInterface $builder, array $options = [])
+    {
+        foreach ($this->localeCollection as $localeCode => $localeTransfer) {
+            $name = self::getAbstractAttributeFormName($localeCode);
+            $this->addAttributeAbstractForm($builder, $name, $options);
         }
 
         return $this;
@@ -200,13 +217,13 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributeAbstractForm(FormBuilderInterface $builder, array $options = [])
+    protected function addAttributeAbstractForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add(self::ATTRIBUTE_ABSTRACT, 'collection', [
+            ->add($name, 'collection', [
                 'type' => new ProductFormAttributeAbstract(
-                    $options,
-                    self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT
+                    $name,
+                    $options
                 ),
                 'label' => false,
                 'constraints' => [new Callback([
@@ -312,17 +329,6 @@ class ProductFormAdd extends AbstractType
         $builder
             ->add($name, new ProductFormSeo($name), [
                 'label' => false,
-                'constraints' => [new Callback([
-                    'methods' => [
-                        function ($dataToValidate, ExecutionContextInterface $context) {
-                            $selectedAttributes = array_filter(array_values($dataToValidate));
-                            if (empty($selectedAttributes)) {
-                                //$context->addViolation('Please enter SEO information');
-                            }
-                        },
-                    ],
-                    'groups' => [self::VALIDATION_GROUP_SEO]
-                ])]
             ]);
 
         return $this;
@@ -333,7 +339,7 @@ class ProductFormAdd extends AbstractType
      *
      * @return string
      */
-    protected static function getLocalizedPrefixName($prefix, $localeCode)
+    public static function getLocalizedPrefixName($prefix, $localeCode)
     {
         return $prefix . '_' . $localeCode . '';
     }
@@ -358,4 +364,13 @@ class ProductFormAdd extends AbstractType
         return self::getLocalizedPrefixName(self::SEO, $localeCode);
     }
 
+    /**
+     * @param string $localeCode
+     *
+     * @return string
+     */
+    public static function getAbstractAttributeFormName($localeCode)
+    {
+        return self::getLocalizedPrefixName(self::ATTRIBUTE_ABSTRACT, $localeCode);
+    }
 }

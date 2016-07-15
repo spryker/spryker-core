@@ -121,7 +121,7 @@
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
             </div>
         </div>
         {# ============================ END ============================ #}
@@ -133,26 +133,63 @@
                 <p>Select attributes and corresponding values.</p>
                 <div class="well">
                     <div class="row ">
-                        {% if form.attribute_abstract is defined and form.attribute_abstract|length > 0 %}
-                            {% for locale,localizedAttributes in form.attribute_abstract %}
-                                {% set active = '' %}
-                                {% if currentLocale == locale %}
-                                    {% set active = 'active' %}
+                        {# find out which localized tab has errors  #}
+                        {% set generalLocalizedErrors = [] %}
+                        {% for localeCode in localeCollection %}
+                            {% set generalKey = 'attribute_abstract_' ~ localeCode %}
+                            {% for input in form[generalKey] %}
+                                {%  if input.vars.errors is defined and input.vars.errors|length %}
+                                    {%  set generalLocalizedErrors = generalLocalizedErrors|merge([{'code': localeCode, 'field': input.vars.errors.form.config.name }]) %}
                                 {% endif %}
-
-                                {% for type,input in localizedAttributes %}
-
-                                <pre>
-                                {{ dump(type) }}
-                                {{ dump(input) }}
-                                </pre>
-
-                                {% endfor %}
-
                             {% endfor %}
-                        {% else %}
-                            No attribute metadata was defined. Update metadata attributes first.
-                        {% endif %}
+                        {% endfor %}
+
+                        <div class="tabs-container locale">
+                            <div class="tabs-left">
+                                <ul class="nav nav-tabs locale">
+                                    {% for localeCode in localeCollection %}
+                                        {% set generalKey = 'attribute_abstract_' ~ localeCode %}
+                                        {% set activeCss = '' %}
+                                        {% set invalidCss = '' %}
+                                        {% set invalidCssFound = false %}
+
+                                        {% if currentLocale == localeCode %}
+                                            {% set activeCss =  'active' %}
+                                        {% endif %}
+
+                                        {% for error in generalLocalizedErrors %}
+                                            {% if error.code == localeCode and not invalidCssFound %}
+                                                {% set invalidCss = 'invalid-tab' %}
+                                                {% set invalidCssFound = true %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_attribute_abstract_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
+                                    {% endfor %}
+                                </ul>
+
+                                <div class="tab-content">
+                                    {% for localeCode in localeCollection %}
+                                        {% set generalKey = 'attribute_abstract_' ~ localeCode %}
+                                        {% set activeCss = '' %}
+
+                                        {% if currentLocale == localeCode %}
+                                            {% set activeCss =  'active' %}
+                                        {% endif %}
+
+                                        <div id="content_attribute_abstract_{{ localeCode }}" class="tab-pane {{ activeCss }}">
+                                            <div class="panel-body">
+                                                <div class="well">
+                                                    {% for input in form[generalKey] %}
+                                                        {{ form_row(input) }}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
