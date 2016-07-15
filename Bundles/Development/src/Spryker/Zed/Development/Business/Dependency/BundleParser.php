@@ -51,6 +51,7 @@ class BundleParser
         $externalBundleDependencies = $this->buildExternalBundleDependencies($allFileDependencies);
 
         $allFileDependencies = $this->filterRelevantClasses($allFileDependencies);
+        $allFileDependencies = $this->ignorePluginInterfaces($allFileDependencies);
 
         $bundleDependencies = $this->buildBundleDependencies($allFileDependencies, $bundleName);
         $bundleDependencies = $this->addPersistenceLayerDependencies($bundleName, $bundleDependencies);
@@ -241,6 +242,29 @@ class BundleParser
         }
 
         return $bundleDependencies;
+    }
+
+    /**
+     * @param array $dependencies
+     * @return array
+     */
+    protected function ignorePluginInterfaces(array $dependencies)
+    {
+        foreach ($dependencies as $fileName => $fileDependencies) {
+            if (strpos($fileName, '/Communication/Plugin/') === false) {
+                continue;
+            }
+
+            foreach ($fileDependencies as $key => $fileDependency) {
+                if (!preg_match('#\\\\Dependency\\\\Plugin\\\\.+Interface$#', $fileDependency)) {
+                    continue;
+                }
+
+                unset($dependencies[$fileName][$key]);
+            }
+        }
+
+        return $dependencies;
     }
 
 }

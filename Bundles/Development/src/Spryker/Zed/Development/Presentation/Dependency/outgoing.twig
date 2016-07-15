@@ -11,7 +11,7 @@
                 <tr>
                     <td>{{ dependency }}
                         {% if dependency in incomingDependencies|keys %}
-                        <span class="glyphicon glyphicon-exclamation-sign" title="Incoming dependency!"></span>
+                        <span class="glyphicon glyphicon-exclamation-sign" title="{{ "Incoming dependency!" | trans }}"></span>
                         {% endif %}
                     </td>
                     <td>{{ count }}</td>
@@ -23,7 +23,7 @@
     <hr>
 
     <div class="spy-layout sparse">
-        <h3>{{ "Composer dependencies" }}</h3>
+        <h3>{{ "Composer dependencies" | trans }}</h3>
         <table class="table table-striped spy-grid">
             <tr class="text-left">
                 <th>{{ 'Found in code' | trans }}</th>
@@ -31,8 +31,8 @@
             </tr>
             {% for composerDependency in composerDependencies %}
                 <tr>
-                    <td>{{ composerDependency.code }}</td>
-                    <td>{{ composerDependency.composer }}</td>
+                    <td{% if not composerDependency.composer %} style="color: red"{% endif %}>{{ composerDependency.code }}</td>
+                    <td{% if not composerDependency.code %} style="color: red"{% endif %}>{{ composerDependency.composer }}</td>
                 </tr>
             {% endfor %}
         </table>
