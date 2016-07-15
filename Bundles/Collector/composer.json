@@ -18,7 +18,6 @@
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.4.0",
     "spryker/library": "^2.0.0",
-    "spryker/messenger": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/sql-criteria-builder": "^1.0.0",
     "spryker/storage": "^2.0.0",
