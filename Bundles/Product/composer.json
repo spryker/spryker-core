@@ -28,7 +28,7 @@
     "spryker/url": "^2.0.0"
   },
   "require-dev": {
-    "spryker/tax": "^2.0.0"
+    "spryker/tax": "^2.0.0 || ^3.0.0"
   },
   "description": "Product bundle",
   "license": "proprietary",
