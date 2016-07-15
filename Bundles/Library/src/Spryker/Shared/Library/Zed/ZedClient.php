@@ -25,6 +25,9 @@ use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
 use Spryker\Shared\Transfer\TransferInterface;
 
+/**
+ * @deprecated Moved to ZedRequest Bundle
+ */
 class ZedClient
 {
 
@@ -71,6 +74,8 @@ class ZedClient
     }
 
     /**
+     * @deprecated Moved to ZedRequest Bundle
+     *
      * @param int $timeoutInSeconds
      *
      * @return void
@@ -81,6 +86,8 @@ class ZedClient
     }
 
     /**
+     * @deprecated Moved to ZedRequest Bundle
+     *
      * @param string $pathInfo
      * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers

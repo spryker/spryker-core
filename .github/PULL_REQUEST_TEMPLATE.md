@@ -1,9 +1,9 @@
 ### Overview
-- Developer(s): @$username
+- Developer(s): @your_username
 
-- Ticket: $url
+- Ticket: URL_HERE
 
-- Project PR: $url
+- Project PR: URL_HERE
 
 - Bundles to release:
 
@@ -15,17 +15,17 @@
 
    `patch` requires 1, `minor` 2 and `major` 3 reviewers.
 
-- Recommended reviewers: @$reviewer, @$reviewer, @$reviewer
+- Recommended reviewers: @reviewer_usernames
 
 -----------------------------------------
 
-### Major - $bundle
+#### Bundle MajorBundleA (e.g. "Bundle Cms")
 
-_New or fully refactored bundle._
+_**Maxi-Major:** New or fully refactored bundle._
 
 Def of done (by responsible developer):
 - [ ] All methods in facade and all plugin-interfaces provide an [API-doc](https://academy.spryker.com/display/CORE/Definition+of+API)
-- [ ] All dependencies are defined, checked and corrected
+- [ ] All [dependencies](https://academy.spryker.com/display/CORE/Bundle+Dependency+Guidelines) are defined, checked and corrected
 - [ ] There are no violations of the architecture rules
 - [ ] All new or heavily changed classes get an "A" rating, except Facades, Factories, QueryContainers and Tests
 - [ ] All new or changed business logic is covered by unit tests (in Zed business layer)
@@ -38,9 +38,9 @@ Add here a highlights of what are the important new things that come with this f
 
 -----------------------------------------
 
-###  Major - $bundle
+#### Bundle MajorBundleA
 
-_Added functionality with incompatible API changes_
+_**Mini-Major:** Added functionality with incompatible API changes_
 
 Def of done (by responsible developer):
 - [ ] All methods in facade and all plugin-interfaces provide an [API-doc](https://academy.spryker.com/display/CORE/Definition+of+API)
@@ -56,9 +56,9 @@ Add here a highlights of what are the important new things that come with this f
 
 -----------------------------------------
 
-###  Minor - $bundle
+#### Bundle MinorBundleB
 
-_Added functionality in a backwards-compatible manner_
+_**Minor:** Added functionality in a backwards-compatible manner_
 
 Def of done (by responsible developer):
 - [ ] All changes are backward-compatible. Outdated code is marked as deprecated
@@ -74,9 +74,9 @@ Some explanation of what has been improved.
 
 -----------------------------------------
 
-###  Patch - $bundle
+#### Bundle PatchBundleC
 
-_Backwards-compatible bug fix_
+_**Patch:** Backwards-compatible bug fix_
 
 Def of done (by responsible developer):
 - [ ] All changes are backward-compatible. Outdated code is marked as deprecated

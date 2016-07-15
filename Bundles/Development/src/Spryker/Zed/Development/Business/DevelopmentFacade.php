@@ -204,4 +204,17 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
         return $this->getFactory()->createExternalDependencyTree();
     }
 
+    /**
+     * @api
+     *
+     * @param string $bundleName
+     * @param array $dependencies
+     *
+     * @return array
+     */
+    public function getComposerDependencyComparison($bundleName, array $dependencies)
+    {
+        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($bundleName, $dependencies);
+    }
+
 }

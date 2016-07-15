@@ -20,6 +20,7 @@ use Spryker\Zed\Development\Business\Composer\Updater\RequireExternalUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater;
 use Spryker\Zed\Development\Business\DependencyTree\AdjacencyMatrixBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParser;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\ClassNameFilter;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\ConstantsToForeignConstantsFilter;
@@ -58,7 +59,7 @@ use Spryker\Zed\Development\Business\Dependency\Manager;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Symfony\Component\Finder\Finder as SfFinder;
+use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 /**
  * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
@@ -128,7 +129,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $config = $this->getConfig();
 
-        return new BundleParser($config);
+        return new BundleParser($this->createFinder(), $config);
     }
 
     /**
@@ -645,7 +646,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createFinder()
     {
-        return new SfFinder();
+        return new SymfonyFinder();
     }
 
     /**
@@ -714,6 +715,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             ->addFilter($this->createDependencyTreeInvalidForeignBundleFilter());
 
         return $treeFilter;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParser
+     */
+    public function createComposerDependencyParser()
+    {
+        return new ComposerDependencyParser($this->createComposerJsonFinder());
     }
 
 }

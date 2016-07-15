@@ -8,4 +8,4 @@ composer require spryker/discount-sales-aggregator-connector
 
 ## Documentation
 
-[DiscountSalesAggregatorConnector Documentation](http://spryker.github.io/core/bundles/discount)
+[Documentation](http://spryker.github.io)
