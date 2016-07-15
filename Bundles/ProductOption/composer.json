@@ -13,7 +13,7 @@
   "require": {
     "spryker/kernel": "^2.0.0",
     "spryker/locale": "^2.0.0",
-    "spryker/product": "^2.0.0",
+    "spryker/product": "^2.0.0 || ^3.0.0",
     "spryker/propel": "^2.2.0",
     "spryker/sales": "^2.0.0",
     "spryker/tax": "^3.0.0",
