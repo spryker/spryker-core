@@ -75,8 +75,9 @@
                             {% endfor %}
                     {% endfor %}
 
-                    <div class="tabs-container">
-                        <ul class="nav nav-tabs">
+                    <div class="tabs-container locale">
+                        <div class="tabs-left">
+                        <ul class="nav nav-tabs locale">
                         {% for localeCode in localeCollection %}
                             {% set generalKey = 'general_' ~ localeCode %}
                             {% set activeCss = '' %}
@@ -119,6 +120,7 @@
                             {% endfor %}
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -357,8 +359,9 @@
                         {% endfor %}
                     {% endfor %}
 
-                    <div class="tabs-container">
-                        <ul class="nav nav-tabs">
+                    <div class="tabs-container locale">
+                        <div class="tabs-left">
+                        <ul class="nav nav-tabs locale">
                             {% for localeCode in localeCollection %}
                                 {% set generalKey = 'seo_' ~ localeCode %}
                                 {% set activeCss = '' %}
@@ -400,6 +403,7 @@
                                 </div>
                             {% endfor %}
                         </div>
+                    </div>
                     </div>
 
                 </div>
