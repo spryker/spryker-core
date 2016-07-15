@@ -49,6 +49,7 @@ class BundleParser
     {
         $allFileDependencies = $this->parseDependencies($bundleName);
         $externalBundleDependencies = $this->buildExternalBundleDependencies($allFileDependencies);
+        $locatorBundleDependencies = $this->buildLocatorBundleDependencies($allFileDependencies, $bundleName);
 
         $allFileDependencies = $this->filterRelevantClasses($allFileDependencies);
         $allFileDependencies = $this->ignorePluginInterfaces($allFileDependencies);
@@ -56,6 +57,7 @@ class BundleParser
         $bundleDependencies = $this->buildBundleDependencies($allFileDependencies, $bundleName);
         $bundleDependencies = $this->addPersistenceLayerDependencies($bundleName, $bundleDependencies);
         $bundleDependencies += $externalBundleDependencies;
+        $bundleDependencies += $locatorBundleDependencies;
 
         return $bundleDependencies;
     }
@@ -197,6 +199,7 @@ class BundleParser
 
     /**
      * @param array $allFileDependencies
+     *
      * @return array
      */
     protected function buildExternalBundleDependencies(array $allFileDependencies)
@@ -246,6 +249,7 @@ class BundleParser
 
     /**
      * @param array $dependencies
+     *
      * @return array
      */
     protected function ignorePluginInterfaces(array $dependencies)
@@ -256,12 +260,64 @@ class BundleParser
             }
 
             foreach ($fileDependencies as $key => $fileDependency) {
-                if (!preg_match('#\\\\Dependency\\\\Plugin\\\\.+Interface$#', $fileDependency)) {
+                if (!preg_match('#\\\\Dependency\\\\.*Plugin.*Interface$#', $fileDependency)) {
                     continue;
                 }
 
                 unset($dependencies[$fileName][$key]);
             }
+        }
+
+        return $dependencies;
+    }
+
+    /**
+     * @param array $allFileDependencies
+     * @param string $bundleName
+     *
+     * @return array
+     */
+    protected function buildLocatorBundleDependencies($allFileDependencies, $bundleName)
+    {
+        $dependencies = [];
+
+        foreach ($allFileDependencies as $fileName => $fileDependencies) {
+            if (!$fileDependencies || strpos($fileName, 'DependencyProvider.php') === false) {
+                continue;
+            }
+
+            $dependencies += $this->extractDependenciesFromDependencyProvider($fileName, $bundleName);
+        }
+
+        return $dependencies;
+    }
+
+    /**
+     * @param string $fileName
+     * @param string $bundleName;
+     *
+     * @return array
+     */
+    protected function extractDependenciesFromDependencyProvider($fileName, $bundleName)
+    {
+        $content = file_get_contents($fileName);
+
+        if (!preg_match_all('/->(?<bundle>\w+?)\(\)->(client|facade|queryContainer)\(\)/', $content, $matches, PREG_SET_ORDER)) {
+            return [];
+        }
+
+        $dependencies = [];
+
+        foreach ($matches as $match) {
+            $toBundle = ucfirst($match['bundle']);
+            if ($toBundle === $bundleName) {
+                continue;
+            }
+
+            if (!isset($dependencies[$toBundle])) {
+                $dependencies[$toBundle] = 0;
+            }
+            $dependencies[$toBundle]++;
         }
 
         return $dependencies;
