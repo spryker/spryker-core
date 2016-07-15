@@ -303,6 +303,7 @@
       "Unit\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Functional\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/src",
+      "Spryker\\Client\\ProductOption\\": "Bundles/ProductOption/src",
       "Unit\\Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/tests",
       "Functional\\Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/tests",
       "Spryker\\Zed\\ProductOption\\": "Bundles/ProductOption/src",

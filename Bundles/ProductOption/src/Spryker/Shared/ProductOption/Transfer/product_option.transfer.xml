@@ -37,7 +37,11 @@
         <property name="fkTaxSet" type="int" />
         <property name="active" type="bool" />
         <property name="name" type="string" />
-        <property name="productOptionValues" type="ProductOptionValue[]" />
+        <property name="productOptionValues" type="ProductOptionValue[]" singular="productOptionValue"/>
+    </transfer>
+
+    <transfer name="ProductOptionGroups">
+        <property name="productOptionGroups" type="ProductOptionGroup[]" singular="productOptionGroup" />
     </transfer>
 
 </transfers>

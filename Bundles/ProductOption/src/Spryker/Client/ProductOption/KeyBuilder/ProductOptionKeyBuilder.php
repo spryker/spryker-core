@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Glossary\Code\KeyBuilder;
+namespace Spryker\Client\ProductOption\KeyBuilder;
 
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
-trait GlossaryKeyBuilder
+class ProductOptionKeyBuilder implements KeyBuilderInterface
 {
-
-    use KeyBuilderTrait;
+     use KeyBuilderTrait;
 
     /**
-     * @param string $idAbstractProduct
+     * @param int $idAbstractProduct
      *
      * @return string
      */
     protected function buildKey($idAbstractProduct)
     {
-        return 'translation.' . $idAbstractProduct;
+        return 'product_option.' . $idAbstractProduct;
     }
 
     /**
@@ -29,7 +29,6 @@ trait GlossaryKeyBuilder
      */
     public function getBundleName()
     {
-        return 'glossary';
+        return 'resource';
     }
-
 }
