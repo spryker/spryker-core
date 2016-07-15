@@ -67,7 +67,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $savedAvailabilityEntity = $this->saveCurrentAvailability($sku, $newQuantity);
 
         if ($this->isAvailabilityStatusChanged($oldQuantity, $newQuantity)) {
-            $this->touchAvailability($savedAvailabilityEntity->getIdAvailability());
+            $this->touchAvailabilityAbstract($savedAvailabilityEntity->getFkAvailabilityAbstract());
         }
     }
 
@@ -125,9 +125,9 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      *
      * @return void
      */
-    protected function touchAvailability($idAvailability)
+    protected function touchAvailabilityAbstract($idAvailabilityAbstract)
     {
-        $this->touchFacade->touchActive(AvailabilityConstants::RESOURCE_TYPE_AVAILABILITY, $idAvailability);
+        $this->touchFacade->touchActive(AvailabilityConstants::RESOURCE_TYPE_AVAILABILITY_ABSTRACT, $idAvailabilityAbstract);
     }
 
     /**
