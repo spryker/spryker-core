@@ -149,6 +149,7 @@ class MethodForm extends AbstractType
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
+            'required' => false,
         ]);
 
         return $this;
