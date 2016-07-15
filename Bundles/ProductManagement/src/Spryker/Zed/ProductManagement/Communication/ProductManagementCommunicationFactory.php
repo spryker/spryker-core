@@ -8,6 +8,10 @@
 namespace Spryker\Zed\ProductManagement\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
+use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationFormCollection;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -116,7 +120,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
     public function getProductFacade()
     {
@@ -129,6 +133,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getTaxFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface
+     */
+    public function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**
@@ -186,6 +198,68 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createAttributeTable()
     {
         return new AttributeTable($this->getQueryContainer());
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createAttributeForm(array $data = [], array $options = [])
+    {
+        $attributeFormType = $this->createAttributeFormType();
+
+        return $this->getFormFactory()->create($attributeFormType, $data, $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\AbstractType
+     */
+    protected function createAttributeFormType()
+    {
+        return new AttributeForm();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider
+     */
+    public function createAttributeFormDataProvider()
+    {
+        return new AttributeFormDataProvider();
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createAttributeTranslationFormCollection(array $data = [], array $options = [])
+    {
+        $attributeTranslationFormCollectionType = $this->createAttributeTranslationFormCollectionType();
+
+        return $this->getFormFactory()->create($attributeTranslationFormCollectionType, $data, $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\AbstractType
+     */
+    public function createAttributeTranslationFormCollectionType()
+    {
+        return new AttributeTranslationFormCollection();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider
+     */
+    public function createAttributeTranslationFormCollectionDataProvider()
+    {
+        return new AttributeTranslationFormCollectionDataProvider(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
     }
 
 }

@@ -101,6 +101,8 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @param string $attributeName
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     *
+     * TODO: remove
      */
     public function queryAttributeByName($attributeName);
 
@@ -108,6 +110,8 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     *
+     * TODO: remove
      */
     public function queryAttributesMetadata();
 
@@ -117,6 +121,8 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @param string $attributeType
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery
+     *
+     * TODO: remove
      */
     public function queryAttributeTypeByName($attributeType);
 
@@ -158,5 +164,10 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return $this
      */
     public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleTransfer $locale);
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryProductAttributeKey();
 
 }

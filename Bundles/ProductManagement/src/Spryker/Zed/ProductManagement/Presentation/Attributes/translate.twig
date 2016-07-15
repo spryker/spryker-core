@@ -1,0 +1,106 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Product Attributes' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/product-management/attributes', 'Back to List' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Attribute' } %}
+        {% block widget_content %}
+            {{ form_start(form) }}
+
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="disabled"><a>{{ 'General Information' | trans }}</a></li>
+                    <li class="active"><a>{{ 'Translations' | trans }}</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab_general" class="tab-pane active">
+                        <div class="panel-body">
+
+                            <div class="tabs-container">
+                                <ul class="nav nav-tabs">
+                                    {% for locale,localizedAttribute in form.translations %}
+                                        {% set activeClass = '' %}
+                                        {% set invalidClass = '' %}
+
+                                        {% if currentLocale == locale %}
+                                            {% set activeClass =  'active' %}
+                                        {% endif %}
+
+                                        {% if errors.general is defined %}
+                                            {% if locale in errors.general|keys %}
+                                                {% set invalidClass = 'invalid-tab' %}
+                                            {% endif %}
+                                        {% endif %}
+
+                                        <li class="{{ activeClass }} {{ invalidClass }}"><a href="#content_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
+                                    {% endfor %}
+                                </ul>
+
+                                <div class="tab-content">
+                                    {% for locale,localizedAttribute in form.translations %}
+                                        {% set activeClass = '' %}
+                                        {% if currentLocale == locale %}
+                                            {% set activeClass = 'active' %}
+                                        {% endif %}
+
+                                        <div id="content_{{ locale }}" class="tab-pane {{ activeClass }}">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        {{ form_row(localizedAttribute.attribute_name) }}
+                                                        {{ form_errors(localizedAttribute.attribute_name) }}
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        {{ form_row(localizedAttribute.attribute_name_translation) }}
+                                                        {{ form_errors(localizedAttribute.attribute_name_translation) }}
+                                                    </div>
+                                                </div>
+
+                                                {{ form_row(localizedAttribute.translate_values, {'attr': {'class': 'translate_values_checkbox'}}) }}
+
+                                                <div class="value_translation_container">
+                                                    {% if localizedAttribute.value_translations|length %}
+                                                        <label class="control-label">{{ form_label(localizedAttribute.value_translations) }}</label>
+                                                        {% for valueTranslationForm in localizedAttribute.value_translations %}
+                                                            <div class="row form-group">
+                                                                <div class="col-sm-6">
+                                                                    {{ form_widget(valueTranslationForm.id_product_management_attribute_value) }}
+
+                                                                    {{ form_widget(valueTranslationForm.value) }}
+                                                                    {{ form_errors(valueTranslationForm.value) }}
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    {{ form_widget(valueTranslationForm.translation) }}
+                                                                    {{ form_errors(valueTranslationForm.translation) }}
+                                                                </div>
+                                                            </div>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        {{ form_widget(localizedAttribute.value_translations) }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

@@ -23,16 +23,13 @@
         <property name="allowInput" type="bool" />
         <property name="isMultiple" type="bool" />
         <property name="isLocalized" type="bool" />
-        <property name="values" type="ProductManagementAttributeValue[]" />
+        <property name="values" type="ProductManagementAttributeValue[]" singular="value" />
     </transfer>
 
     <transfer name="ProductManagementAttributeValue">
         <property name="idProductManagementAttributeValue" type="int" />
-        <property name="fkLocale" type="int" />
-        <property name="fkAttribute" type="int" />
+        <property name="fkProductManagementAttribute" type="int" />
         <property name="value" type="string" />
-        <property name="minValue" type="string" />
-        <property name="maxValue" type="string" />
     </transfer>
 
     <transfer name="ProductManagementAttributeSet">
@@ -41,6 +38,21 @@
         <property name="attributes" type="array" singular="attribute" />
         <property name="localizedAttributes" type="array" singular="localizedAttribute" />
         <property name="abstractLocalizedAttributes" type="array" singular="localizedAttribute" />
+    </transfer>
+
+    <transfer name="ProductManagementAttributeTranslationForm">
+        <property name="idProductManagementAttribute" type="int" />
+        <property name="attributeName" type="string" />
+        <property name="attributeNameTranslation" type="string" />
+        <property name="localeName" type="string" />
+        <property name="translateValues" type="bool" />
+        <property name="valueTranslations" type="ProductManagementAttributeValueTranslation[]" singular="valueTranslation" />
+    </transfer>
+
+    <transfer name="ProductManagementAttributeValueTranslation">
+        <property name="idProductManagementAttributeValue" type="int" />
+        <property name="value" type="string" />
+        <property name="translation" type="string" />
     </transfer>
 
 </transfers>

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
@@ -251,5 +252,33 @@ interface ProductFacadeInterface
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
     public function getAttributeManager();
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasProductAttributeKey($key);
+
+    /**
+     * @param string $key
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     */
+    public function getProductAttributeKey($key);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     */
+    public function createProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     */
+    public function updateProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer);
 
 }

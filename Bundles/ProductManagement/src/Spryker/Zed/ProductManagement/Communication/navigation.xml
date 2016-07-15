@@ -15,8 +15,8 @@
                 <icon>fa-database</icon>
             </products>
             <attributes>
-                <label>Attribute Preferences</label>
-                <title>Attribute Preferences</title>
+                <label>Attributes</label>
+                <title>Attributes</title>
                 <bundle>product-management</bundle>
                 <controller>attributes</controller>
                 <action>index</action>

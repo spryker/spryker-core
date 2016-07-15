@@ -9,4 +9,7 @@ namespace Spryker\Shared\ProductManagement;
 
 interface ProductManagementConstants
 {
+
+    const PRODUCT_MANAGEMENT_ATTRIBUTE_GLOSSARY_PREFIX = 'product.attribute.';
+
 }

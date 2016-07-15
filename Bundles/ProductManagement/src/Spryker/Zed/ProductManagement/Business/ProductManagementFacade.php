@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -104,6 +105,42 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
         return $this->getFactory()
             ->createProductManager()
             ->getProductAttributesByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
+     */
+    public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
+    {
+        return $this->getFactory()
+            ->createAttributeSaver()
+            ->createProductManagementAttribute($productManagementAttributeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
+     */
+    public function updateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
+    {
+        return $this->getFactory()
+            ->createAttributeSaver()
+            ->updateProductManagementAttribute($productManagementAttributeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer[] $attributeTranslationFormTransfers
+     *
+     * @return void
+     */
+    public function translateProductManagementAttribute(array $attributeTranslationFormTransfers)
+    {
+        $this->getFactory()
+            ->createAttributeTranslator()
+            ->saveProductManagementAttributeTranslation($attributeTranslationFormTransfers);
     }
 
 }

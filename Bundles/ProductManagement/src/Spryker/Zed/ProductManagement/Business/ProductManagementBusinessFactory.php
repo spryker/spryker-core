@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductManagement\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManager;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeSaver;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueSaver;
 use Spryker\Zed\ProductManagement\Business\Product\ProductManager;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -44,7 +47,7 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
     protected function getProductFacade()
     {
@@ -84,6 +87,14 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface
+     */
+    protected function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected function getProductQueryContainer()
@@ -97,6 +108,18 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function getStockQueryContainer()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::QUERY_CONTAINER_STOCK);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslatorInterface
+     */
+    public function createAttributeTranslator()
+    {
+        return new AttributeTranslator(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
     }
 
     /**
@@ -115,6 +138,29 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
         return new AttributeManager(
             $this->getQueryContainer(),
             $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeSaverInterface
+     */
+    public function createAttributeSaver()
+    {
+        return new AttributeSaver(
+            $this->getQueryContainer(),
+            $this->getProductFacade(),
+            $this->getGlossaryFacade(),
+            $this->createAttributeValueSaver()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueSaverInterface
+     */
+    protected function createAttributeValueSaver()
+    {
+        return new AttributeValueSaver(
+            $this->getQueryContainer()
         );
     }
 

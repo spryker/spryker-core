@@ -17,7 +17,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
-use Spryker\Zed\Product\Business\ProductFacadeInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class AbstractProductFormDataProvider
@@ -47,7 +47,7 @@ class AbstractProductFormDataProvider
     protected $locale;
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
     protected $productFacade;
 
@@ -76,7 +76,7 @@ class AbstractProductFormDataProvider
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
         ProductManagementToPriceInterface $priceFacade,
-        ProductFacadeInterface $productFacade,
+        ProductManagementToProductInterface $productFacade,
         ProductManagementFacadeInterface $productManagementFacade,
         ProductManagementToLocaleInterface $localeFacade,
         array $attributeCollection,

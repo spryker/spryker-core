@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Product\Business\Attribute\AttributeKeyManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
 use Spryker\Zed\Product\Business\Importer\FileImporter;
@@ -192,6 +193,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getCurrentLocale()
     {
         return $this->getLocaleFacade()->getCurrentLocale();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeKeyManagerInterface
+     */
+    public function createAttributeKeyManager()
+    {
+        return new AttributeKeyManager($this->getQueryContainer());
     }
 
 }

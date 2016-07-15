@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 interface ProductManagementFacadeInterface
 {
@@ -71,5 +72,26 @@ interface ProductManagementFacadeInterface
      * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
+     */
+    public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
+     */
+    public function updateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer[] $attributeTranslationFormTransfers
+     *
+     * @return void
+     */
+    public function translateProductManagementAttribute(array $attributeTranslationFormTransfers);
 
 }

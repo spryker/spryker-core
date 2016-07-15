@@ -450,4 +450,12 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             ->filterByFkProductAbstract($productAbstract->getIdProductAbstract());
     }
 
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryProductAttributeKey()
+    {
+        return $this->getFactory()->createProductAttributeKeyQuery();
+    }
+
 }

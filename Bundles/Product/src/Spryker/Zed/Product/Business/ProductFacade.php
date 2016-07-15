@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
@@ -95,6 +96,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $attributeName
      *
      * @return bool
+     * 
+     * TODO: remove
      */
     public function hasAttribute($attributeName)
     {
@@ -109,6 +112,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $attributeType
      *
      * @return bool
+     *
+     * TODO: remove
      */
     public function hasAttributeType($attributeType)
     {
@@ -127,6 +132,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
      *
      * @return int
+     *
+     * TODO: remove
      */
     public function createAttributeType($name, $inputType, $fkParentAttributeType = null)
     {
@@ -146,6 +153,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
      *
      * @return int
+     *
+     * TODO: remove
      */
     public function createAttribute($attributeName, $attributeType, $isEditable = true)
     {
@@ -357,10 +366,68 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
+     * 
+     * TODO: remove this method, because models must not be given away for other bundles
      */
     public function getAttributeManager()
     {
         return $this->getFactory()->createAttributeManager();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     *
+     * TODO: add tests
+     */
+    public function hasProductAttributeKey($key)
+    {
+        return $this->getFactory()
+            ->createAttributeKeyManager()
+            ->hasAttributeKey($key);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     *
+     * TODO: add tests
+     */
+    public function getProductAttributeKey($key)
+    {
+        return $this->getFactory()
+            ->createAttributeKeyManager()
+            ->getAttributeKey($key);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     *
+     * TODO: add tests
+     */
+    public function createProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer)
+    {
+        return $this->getFactory()
+            ->createAttributeKeyManager()
+            ->createAttributeKey($productAttributeKeyTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     *
+     * TODO: add tests
+     */
+    public function updateProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer)
+    {
+        return $this->getFactory()
+            ->createAttributeKeyManager()
+            ->updateAttributeKey($productAttributeKeyTransfer);
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
+use Orm\Zed\Product\Persistence\Base\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
@@ -77,6 +78,14 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     public function createTaxSetQuery()
     {
         return SpyTaxSetQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function createProductAttributeKeyQuery()
+    {
+        return SpyProductAttributeKeyQuery::create();
     }
 
 }

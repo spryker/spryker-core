@@ -1,15 +1,15 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Attribute Preferences' %}
+{% set widget_title = 'Product Attributes' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ createActionButton('/product-management/attributes/add', 'Create Product Attribute' | trans) }}
+    {{ createActionButton('/product-management/attributes/create', 'Create Product Attribute' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Attributes' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attribute list' } %}
 
         {% block widget_content %}
             {{ attributeTable | raw }}

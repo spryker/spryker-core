@@ -14,32 +14,45 @@
             <reference local="fk_product_attribute_key" foreign="id_product_attribute_key" />
         </foreign-key>
 
+        <unique name="spy_product_management_attribute-unique-fk_product_attribute_key">
+            <unique-column name="fk_product_attribute_key" />
+        </unique>
+
         <id-method-parameter value="spy_product_management_attribute_pk_seq" />
     </table>
 
     <table name="spy_product_management_attribute_value" idMethod="native" allowPkInsert="true">
         <column name="id_product_management_attribute_value" type="INTEGER" primaryKey="true" autoIncrement="true" />
-        <column name="fk_locale" type="INTEGER" required="false" />
         <column name="fk_product_management_attribute" type="INTEGER" required="true" />
-        <column name="value" type="VARCHAR" size="255" required="true" />
-        <column name="min_value" type="VARCHAR" size="255" required="false" />
-        <column name="max_value" type="VARCHAR" size="255" required="false" />
-
-        <foreign-key name="spy_product_management_attribute_value-fk_locale" foreignTable="spy_locale">
-            <reference local="fk_locale" foreign="id_locale" />
-        </foreign-key>
+        <column name="value" type="LONGVARCHAR" required="true" />
 
         <foreign-key name="spy_product_management_attribute_value-fk_product_management_attribute" foreignTable="spy_product_management_attribute">
             <reference local="fk_product_management_attribute" foreign="id_product_management_attribute" />
         </foreign-key>
 
-        <unique name="spy_product_management_attribute_type_value-unique-locale_attribute_value">
-            <unique-column name="fk_product_management_attribute" />
-            <unique-column name="fk_locale" /><!-- this really does not work with null values, add php logic to ensure unique values -->
-            <unique-column name="value" />
+        <id-method-parameter value="spy_product_management_attribute_value_pk_seq" />
+    </table>
+
+    <table name="spy_product_management_attribute_value_translation" idMethod="native" allowPkInsert="true">
+        <column name="id_product_management_attribute_value_translation" type="INTEGER" primaryKey="true" autoIncrement="true" />
+        <column name="fk_locale" type="INTEGER" required="true" />
+        <column name="fk_product_management_attribute_value" type="INTEGER" required="true" />
+        <column name="translation" type="LONGVARCHAR" required="true" />
+
+        <foreign-key name="spy_product_management_attribute_value-fk_locale" foreignTable="spy_locale">
+            <reference local="fk_locale" foreign="id_locale" />
+        </foreign-key>
+
+        <foreign-key name="spy_product_management_attribute_value_translation-fk_product_management_attribute_value" foreignTable="spy_product_management_attribute_value">
+            <reference local="fk_product_management_attribute_value" foreign="id_product_management_attribute_value" />
+        </foreign-key>
+
+        <unique name="spy_product_management_attribute_value_translation-unique-locale_attribute_value">
+            <unique-column name="fk_locale" />
+            <unique-column name="fk_product_management_attribute_value" />
         </unique>
 
-        <id-method-parameter value="spy_product_management_attribute_value_pk_seq" />
+        <id-method-parameter value="spy_product_management_attribute_value_translation_pk_seq" />
     </table>
 
 </database>
