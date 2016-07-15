@@ -24,7 +24,7 @@ class AbstractProductFormDataProvider
 {
 
     const LOCALE_NAME = 'locale_name';
-    const DEFAULT_LOCALE = 'default_locale';
+    const DEFAULT_LOCALE = 'default';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -392,7 +392,13 @@ class AbstractProductFormDataProvider
 
     protected function getLocalizedAttributeMetadataKey($keyToLocalize)
     {
-        return $keyToLocalize;
+        if (!array_key_exists($keyToLocalize, $this->attributeTransferCollection)) {
+            return $keyToLocalize;
+        }
+
+        $transfer = $this->attributeTransferCollection[$keyToLocalize];
+        //TODO implement translations
+        return $transfer->getKey();
     }
 
     /**

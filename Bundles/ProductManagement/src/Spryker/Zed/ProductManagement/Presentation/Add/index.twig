@@ -28,11 +28,13 @@
     {% endspaceless %}
 {% endblock checkbox_widget %}
 
+{#
 
-{% block select2_widget %}
+{% block select_widget %}
     {{ form_widget(form, { 'attr': {'class': 'spryker-form-select2combobox attribute_metadata_value'} }) }}
 {% endblock select2_widget %}
 
+#}
 
 {% form_theme form _self %}
 
@@ -144,10 +146,13 @@
                             {% endfor %}
                         {% endfor %}
 
-                        <div class="tabs-container locale">
-                            <div class="tabs-left">
-                                <ul class="nav nav-tabs locale">
-                                    {% for localeCode in localeCollection %}
+                        <div class="tabs-container">
+                            {% set attributeLocaleCollection = localeCollection %}
+                            {% set attributeLocaleCollection = attributeLocaleCollection|merge(['default']) %}
+
+                            <div class="tabs-top">
+                                <ul class="nav nav-tabs">
+                                    {% for localeCode in attributeLocaleCollection %}
                                         {% set generalKey = 'attribute_abstract_' ~ localeCode %}
                                         {% set activeCss = '' %}
                                         {% set invalidCss = '' %}
@@ -169,7 +174,7 @@
                                 </ul>
 
                                 <div class="tab-content">
-                                    {% for localeCode in localeCollection %}
+                                    {% for localeCode in attributeLocaleCollection %}
                                         {% set generalKey = 'attribute_abstract_' ~ localeCode %}
                                         {% set activeCss = '' %}
 
@@ -180,9 +185,15 @@
                                         <div id="content_attribute_abstract_{{ localeCode }}" class="tab-pane {{ activeCss }}">
                                             <div class="panel-body">
                                                 <div class="well">
+                                                    <div class="row">
                                                     {% for input in form[generalKey] %}
-                                                        {{ form_row(input) }}
+                                                        <div class="col-md-10 col-sm-12 col-lg-6">
+                                                            <div class="row vertical-align text-right">
+                                                                <nobr>{{ form_row(input.name) }} {{ form_row(input.value) }}</nobr>
+                                                            </div>
+                                                        </div>
                                                     {% endfor %}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -193,21 +204,20 @@
                     </div>
                 </div>
             </div>
+
+            {% if form.attribute_abstract is defined and form.attribute_abstract|length > 0 %}
             <div class="panel-body">
                 <h3>Custom Product Attributes</h3>
                 <p><i>Note: In order to manage attributes below you have to define them first under Attribute Management.</i></p>
                 <div class="well">
                     <div class="row ">
-                        {% if form.attribute_abstract is defined and form.attribute_abstract|length > 0 %}
-                            {% for type,input in form.attribute_abstract %}
+                        {% for type,input in form.attribute_abstract %}
 
-                            {% endfor %}
-                        {% else %}
-                            No attribute metadata was defined. Update metadata attributes first.
-                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
         {# ============================ END ============================ #}
 

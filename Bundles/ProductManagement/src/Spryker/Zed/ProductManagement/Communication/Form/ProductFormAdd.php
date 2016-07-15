@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -151,6 +152,9 @@ class ProductFormAdd extends AbstractType
             $this->addAttributeAbstractForm($builder, $name, $options);
         }
 
+        $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::ATTRIBUTE_ABSTRACT, AbstractProductFormDataProvider::DEFAULT_LOCALE);
+        $this->addAttributeAbstractForm($builder, $defaultName, $options);
+        
         return $this;
     }
 
