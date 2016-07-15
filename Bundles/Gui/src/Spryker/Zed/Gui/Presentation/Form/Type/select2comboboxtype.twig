@@ -1,3 +1,7 @@
 {% block select2_widget %}
-    {{ form_widget(form, { 'attr': {'class': 'spryker-form-select2combobox'} }) }}
+    {% set css = 'spryker-form-select2combobox' %}
+    {% if form.vars.attr.class is defined %}
+        {% set css = form.vars.attr.class ~ ' spryker-form-select2combobox' %}
+    {% endif %}
+    {{ form_widget(form, { 'attr': {'class': css } }) }}
 {% endblock select2_widget %}
