@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Availability\Persistence;
 
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
+use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
@@ -23,5 +26,21 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
     public function createSpyAvailabilityQuery()
     {
         return SpyAvailabilityQuery::create();
+    }
+
+    /**
+     * @return SpyAvailabilityAbstractQuery
+     */
+    public function createSpyAvailabilityAbstractQuery()
+    {
+        return SpyAvailabilityAbstractQuery::create();
+    }
+
+    /**
+     * @return ProductQueryContainerInterface
+     */
+    public function getProductQueryContainer()
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
 }

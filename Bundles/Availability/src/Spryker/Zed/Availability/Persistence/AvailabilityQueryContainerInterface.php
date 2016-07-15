@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Availability\Persistence;
 
 use Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 
 interface AvailabilityQueryContainerInterface
 {
@@ -18,4 +19,32 @@ interface AvailabilityQueryContainerInterface
      * @return SpyAvailabilityQuery
      */
     public function querySpyAvailabilityBySku($sku);
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return SpyAvailabilityAbstractQuery
+     */
+    public function querySpyAvailabilityAbstractByAbstractSku($abstractSku);
+
+    /**
+     * @param int $idAvailabilityAbstract
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract);
+
+    /**
+     * @param int $idAvailabilityAbstract
+     *
+     * @return SpyAvailabilityQuery
+     */
+    public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract);
+
+    /**
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function querySpyProductBySku($sku);
 }

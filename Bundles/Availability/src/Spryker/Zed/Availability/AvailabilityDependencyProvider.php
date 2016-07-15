@@ -19,6 +19,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_OMS = 'oms facade';
     const FACADE_STOCK = 'stock facade';
     const FACADE_TOUCH = 'touch facade';
+    const QUERY_CONTAINER_PRODUCT = 'product query container';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,6 +38,20 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new AvailabilityToTouchBridge($container->getLocator()->touch()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->product()->queryContainer();
         };
 
         return $container;

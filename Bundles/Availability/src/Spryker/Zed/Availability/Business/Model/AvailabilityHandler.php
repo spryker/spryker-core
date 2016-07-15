@@ -7,7 +7,9 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Orm\Zed\Availability\Persistence\SpyAvailability;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Spryker\Shared\Availability\AvailabilityConstants;
+use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
@@ -103,15 +105,23 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected function saveCurrentAvailability($sku, $quantity)
     {
         $spyAvailability = $this->querySpyAvailabilityBySku($sku)->findOneOrCreate();
+
+        if ($spyAvailability->isNew()) {
+            $availabilityAbstractEntity = $this->findOrCreateSpyAvailabilityAbstract($sku);
+            $spyAvailability->setFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract());
+        }
+
         $spyAvailability->setQuantity($quantity);
         $spyAvailability->setIsNeverOutOfStock($this->stockFacade->isNeverOutOfStock($sku));
         $spyAvailability->save();
+
+        $this->updateAbstractAvailabilityQuantity($spyAvailability->getFkAvailabilityAbstract());
 
         return $spyAvailability;
     }
 
     /**
-     * @param $sku
+     * @param string $sku
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
@@ -155,6 +165,63 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         }
 
         return $oldQuantity;
+    }
+
+    /**
+     * @param int $idAvailabilityAbstract
+     *
+     * @return void
+     */
+    public function updateAbstractAvailabilityQuantity($idAvailabilityAbstract)
+    {
+        $availabilityAbstractEntity = $this->queryContainer
+            ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
+            ->findOne();
+
+        $sumQuantity = (int) $this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)->findOne();
+
+        $availabilityAbstractEntity->setQuantity($sumQuantity);
+        $availabilityAbstractEntity->save();
+    }
+
+    /**
+     * @param $sku
+     *
+     * @throws ProductNotFoundException
+     * @return SpyAvailabilityAbstract
+     */
+    protected function findOrCreateSpyAvailabilityAbstract($sku)
+    {
+        $productEntity = $this->queryContainer->querySpyProductBySku($sku)->findOne();
+
+        if ($productEntity === null) {
+            throw new ProductNotFoundException(
+                sprintf('The product was not found with this SKU: %s', $sku)
+            );
+        }
+
+        $abstractSku = $productEntity->getAbstractSku();
+        $availabilityAbstractEntity = $this->queryContainer->querySpyAvailabilityAbstractByAbstractSku($abstractSku)->findOne();
+
+        if ($availabilityAbstractEntity !== null) {
+            return $availabilityAbstractEntity;
+        }
+
+        return $this->createSpyAvailabilityAbstract($abstractSku);
+    }
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return SpyAvailabilityAbstract
+     */
+    protected function createSpyAvailabilityAbstract($abstractSku)
+    {
+        $availableAbstractEntity = new SpyAvailabilityAbstract();
+        $availableAbstractEntity->setAbstractSku($abstractSku);
+        $availableAbstractEntity->save();
+
+        return $availableAbstractEntity;
     }
 
 }
