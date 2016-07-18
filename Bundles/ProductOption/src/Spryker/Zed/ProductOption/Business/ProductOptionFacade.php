@@ -21,6 +21,10 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 {
 
     /**
+     * Specification:
+     *  - Persist new product option group
+     *  - Persist option values if provided
+     *
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return int
@@ -33,6 +37,9 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * Specification:
+     *  - Persist new product option value
+     *
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
      *
      * @return int
@@ -45,6 +52,9 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * Specification:
+     *  - Attach abstract product to existing product group
+     *
      * @param string $abstractSku
      * @param int $idProductOptionGroup
      *
@@ -58,6 +68,26 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * Specification:
+     *  - Read product option from persistence
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     */
+    public function getProductOptionValue($idProductOptionValue)
+    {
+        return $this->getFactory()
+            ->createProductOptionValueReader()
+            ->getProductOption($idProductOptionValue);
+    }
+
+    /**
+     *
+     * Specification:
+     *  - Loops over all items and calculates gross amount for each items
+     *  - Data is read from sales order persistence
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -72,6 +102,9 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * Specification:
+     *  - Loops over all items and calculates subtotal
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -86,6 +119,10 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * Specification:
+     *  - Persist product option sales data
+     *  - Used by sales saver plugin
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

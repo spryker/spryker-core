@@ -12,10 +12,9 @@ interface ProductOptionCartConnectorToProductOptionInterface
 
     /**
      * @param int $idProductOptionValueUsage
-     * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOption($idProductOptionValueUsage, $idLocale);
+    public function getProductOptionValue($idProductOptionValueUsage);
 
 }

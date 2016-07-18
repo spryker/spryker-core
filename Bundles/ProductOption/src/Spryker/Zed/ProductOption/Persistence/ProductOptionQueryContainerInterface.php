@@ -18,7 +18,6 @@ interface ProductOptionQueryContainerInterface
      */
     public function queryProductOptionGroupByIdProductOptionGroup($idProductOptionGroup);
 
-
     /**
      * @param string $sku
      *
@@ -27,5 +26,12 @@ interface ProductOptionQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractBySku($sku);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryProductOptionByValueId($idProductOptionValue);
 
 }

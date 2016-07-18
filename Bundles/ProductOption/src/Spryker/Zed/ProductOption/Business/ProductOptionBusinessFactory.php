@@ -12,6 +12,7 @@ use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOp
 use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionGroupSaver;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
+use Spryker\Zed\ProductOption\Business\Model\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -43,6 +44,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionOrderSaver()
     {
         return new ProductOptionOrderSaver();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionValueReader
+     */
+    public function createProductOptionValueReader()
+    {
+        return new ProductOptionValueReader($this->getQueryContainer());
     }
 
     /**

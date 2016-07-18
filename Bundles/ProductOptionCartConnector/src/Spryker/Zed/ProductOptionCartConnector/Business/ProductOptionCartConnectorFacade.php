@@ -17,27 +17,37 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
 {
 
     /**
+     *  Specification:
+     *  - Expand product option transfer object with additional data from persistence
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandProductOptions(CartChangeTransfer $change)
+    public function expandProductOptions(CartChangeTransfer $changeTransfer)
     {
-        return $this->getFactory()->createProductOptionManager()->expandProductOptions($change);
+        return $this->getFactory()
+            ->createProductOptionValueExpander()
+            ->expandProductOptions($changeTransfer);
     }
 
     /**
+     * Specification:
+     *  - Set group key to itemTransfer to contain product option identifiers.
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandGroupKey(CartChangeTransfer $change)
+    public function expandGroupKey(CartChangeTransfer $changeTransfer)
     {
-        return $this->getFactory()->createGroupKeyExpander()->expand($change);
+        return $this->getFactory()
+            ->createGroupKeyExpander()
+            ->expand($changeTransfer);
     }
 
 }

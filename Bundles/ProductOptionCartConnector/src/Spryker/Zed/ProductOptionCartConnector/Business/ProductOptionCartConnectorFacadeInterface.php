@@ -15,19 +15,19 @@ interface ProductOptionCartConnectorFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandProductOptions(CartChangeTransfer $change);
+    public function expandProductOptions(CartChangeTransfer $changeTransfer);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandGroupKey(CartChangeTransfer $change);
+    public function expandGroupKey(CartChangeTransfer $changeTransfer);
 
 }

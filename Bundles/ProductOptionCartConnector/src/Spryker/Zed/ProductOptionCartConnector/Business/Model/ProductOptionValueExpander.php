@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOptionCartConnector\Business\Manager;
+namespace Spryker\Zed\ProductOptionCartConnector\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface;
 
-class ProductOptionManager implements ProductOptionManagerInterface
+class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
 {
 
     /**
@@ -42,22 +42,21 @@ class ProductOptionManager implements ProductOptionManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
-    public function expandProductOptionTransfers(ItemTransfer $cartItem)
+    protected function expandProductOptionTransfers(ItemTransfer $itemTransfer)
     {
-        foreach ($cartItem->getProductOptions() as &$productOptionTransfer) {
-            if ($productOptionTransfer->getIdOptionValueUsage() === null || $productOptionTransfer->getLocaleCode() === null) {
-                throw new \RuntimeException('Unable to expand product option. Missing required values: idOptionValueUsage, localeCode');
+        foreach ($itemTransfer->getProductOptions() as &$productOptionTransfer) {
+            if ($productOptionTransfer->getIdProductOptionValue() === null) {
+                throw new \RuntimeException('Unable to expand product option. Missing required value: idOptionValueUsage.');
             }
 
-            $productOptionTransfer = $this->productOptionFacade->getProductOption(
-                $productOptionTransfer->getIdOptionValueUsage(),
-                $productOptionTransfer->getLocaleCode()
-            );
-            $productOptionTransfer->setQuantity($cartItem->getQuantity());
+            $productOptionTransfer = $this->productOptionFacade
+                ->getProductOptionValue($productOptionTransfer->getIdProductOptionValue());
+
+            $productOptionTransfer->setQuantity($itemTransfer->getQuantity());
         }
     }
 

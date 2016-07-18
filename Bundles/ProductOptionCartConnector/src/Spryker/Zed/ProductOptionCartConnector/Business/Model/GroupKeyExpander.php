@@ -15,32 +15,32 @@ class GroupKeyExpander
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expand(CartChangeTransfer $change)
+    public function expand(CartChangeTransfer $cartChangeTransfer)
     {
-        foreach ($change->getItems() as $item) {
-            $item->setGroupKey($this->buildGroupKey($item));
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setGroupKey($this->buildGroupKey($itemTransfer));
         }
 
-        return $change;
+        return $cartChangeTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return string
      */
-    protected function buildGroupKey(ItemTransfer $cartItem)
+    protected function buildGroupKey(ItemTransfer $itemTransfer)
     {
-        $currentGroupKey = $cartItem->getGroupKey();
-        if (!$cartItem->getProductOptions()) {
+        $currentGroupKey = $itemTransfer->getGroupKey();
+        if (!$itemTransfer->getProductOptions()) {
             return $currentGroupKey;
         }
 
-        $sortedProductOptions = $this->sortOptions((array)$cartItem->getProductOptions());
+        $sortedProductOptions = $this->sortOptions((array)$itemTransfer->getProductOptions());
         $optionGroupKey = $this->combineOptionParts($sortedProductOptions);
 
         if (empty($optionGroupKey)) {
@@ -60,7 +60,7 @@ class GroupKeyExpander
         usort(
             $options,
             function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
-                return ($productOptionLeft->getIdOptionValueUsage() < $productOptionRight->getIdOptionValueUsage()) ? -1 : 1;
+                return ($productOptionLeft->getIdProductOptionValue() < $productOptionRight->getIdProductOptionValue()) ? -1 : 1;
             }
         );
 
@@ -76,10 +76,10 @@ class GroupKeyExpander
     {
         $groupKeyPart = [];
         foreach ($sortedProductOptions as $option) {
-            if (!$option->getIdOptionValueUsage()) {
+            if (!$option->getIdProductOptionValue()) {
                 continue;
             }
-            $groupKeyPart[] = $option->getIdOptionValueUsage();
+            $groupKeyPart[] = $option->getIdProductOptionValue();
         }
 
         return implode('-', $groupKeyPart);

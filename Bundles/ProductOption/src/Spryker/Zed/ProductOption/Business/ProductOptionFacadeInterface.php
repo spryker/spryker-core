@@ -40,6 +40,13 @@ interface ProductOptionFacadeInterface
     public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup);
 
     /**
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     */
+    public function getProductOptionValue($idProductOptionValue);
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

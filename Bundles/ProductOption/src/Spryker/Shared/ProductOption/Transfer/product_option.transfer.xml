@@ -4,8 +4,8 @@
            xsi:schemaLocation="https://static.spryker.com https://static.spryker.com/transfer-01.xsd" >
 
     <transfer name="ProductOption">
-        <property name="idOptionValueUsage" type="int" />
-        <property name="localeCode" type="string " />
+        <property name="idProductOptionValue" type="int" />
+        <property name="groupName" type="string" />
         <property name="value" type="string" />
         <property name="sku" type="string" />
         <property name="quantity" type="int" /> <!--Todo remove quantity-->

@@ -43,4 +43,16 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->filterBySku($sku);
     }
 
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryProductOptionByValueId($idProductOptionValue)
+    {
+        return $this->getFactory()
+            ->createProductOptionValueQuery()
+            ->filterByIdProductOptionValue($idProductOptionValue);
+    }
+
 }
