@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,196 +6,81 @@
 
 namespace Spryker\Zed\Discount\Communication\Controller;
 
-use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
-use Generated\Shared\Transfer\VoucherTransfer;
-use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Discount\Communication\Form\VoucherForm;
-use Spryker\Zed\Gui\Communication\Table\TableParameters;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class VoucherController extends AbstractController
 {
 
-    const SESSION_TIME = 'session_title';
-    const ID_POOL_PARAMETER = 'id-pool';
-    const BATCH_PARAMETER = 'batch';
-    const GENERATED_ON_PARAMETER = 'generated-on';
+    const URL_PARAM_ID_POOL = 'id-pool';
+    const URL_PARAM_ID_DISCOUNT = 'id-discount';
+    const URL_PARAM_ID_VOUCHER = 'id-voucher';
+    const CSV_FILENAME = 'vouchers.csv';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function createSingleAction(Request $request)
+    public function deleteDiscountVouchersAction(Request $request)
     {
-        $dataProvider = $this->getFactory()->createVoucherFormDataProvider();
-        $form = $this
-            ->getFactory()
-            ->createVoucherForm(
-                $dataProvider->getData(),
-                $dataProvider->getOptions()
-            )
-            ->handleRequest($request);
+        $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
+        $idPool = $this->castId($request->query->get(self::URL_PARAM_ID_POOL));
 
-        if ($form->isValid()) {
-            $formData = $form->getData();
+        $affectedRows = $this->getQueryContainer()
+            ->queryVouchersByIdVoucherPool($idPool)
+            ->deleteAll();
 
-            $this->setSessionTimestampForVoucherGenerator();
-
-            $voucherTransfer = new VoucherTransfer();
-            $voucherTransfer->fromArray($formData, true);
-            $voucherTransfer->setQuantity(VoucherForm::ONE_VOUCHER);
-            $voucherTransfer->setIncludeTemplate(false);
-
-            $voucherCreateInfoTransfer = $this->getFacade()->createVoucherCodes($voucherTransfer);
-
-            $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
-
-            return $this->redirectResponse(
+        if ($affectedRows > 0) {
+            $this->addSuccessMessage(
                 sprintf(
-                    '/discount/voucher/view/?%s=%d&%s=%d',
-                    self::ID_POOL_PARAMETER,
-                    (int)$formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL],
-                    self::BATCH_PARAMETER,
-                    $voucherTransfer->getVoucherBatch()
+                    'Successfully deleted "%d" vouchers.',
+                    $affectedRows
                 )
             );
+        } else {
+            $this->addErrorMessage('No voucher codes were deleted.');
         }
 
-        return [
-            'form' => $form->createView(),
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function createMultipleAction(Request $request)
-    {
-        $dataProvider = $this->getFactory()->createVoucherFormDataProvider();
-        $form = $this
-            ->getFactory()
-            ->createVoucherForm(
-                $dataProvider->getData(true),
-                $dataProvider->getOptions(true)
-            )
-            ->handleRequest($request);
-
-        if ($form->isValid()) {
-            $formData = $form->getData();
-            $this->setSessionTimestampForVoucherGenerator();
-
-            $voucherTransfer = new VoucherTransfer();
-            $voucherTransfer->fromArray($formData, true);
-            $voucherTransfer->setIncludeTemplate(false);
-
-            $voucherCreateInfoTransfer = $this->getFacade()->createVoucherCodes($voucherTransfer);
-
-            $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
-
-            return $this->redirectResponse(
-                sprintf(
-                    '/discount/voucher/view/?%s=%d&%s=%d',
-                    self::ID_POOL_PARAMETER,
-                    (int)$formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL],
-                    self::BATCH_PARAMETER,
-                    $voucherTransfer->getVoucherBatch()
-                )
-            );
-        }
-
-        return [
-            'form' => $form->createView(),
-        ];
-    }
-
-    /**
-     * VoucherCreateInfoTransfer might have different types of a message, success and error messages are mapped respectively
-     * onto respective types of the MessengerFacade, other types of messages are mapped to Info message type.
-     *
-     * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoInterface
-     *
-     * @return $this
-     */
-    protected function addVoucherCreateMessage(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
-    {
-        if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_SUCCESS) {
-            return $this->addSuccessMessage($voucherCreateInfoInterface->getMessage());
-        }
-        if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_ERROR) {
-            return $this->addErrorMessage($voucherCreateInfoInterface->getMessage());
-        }
-
-        return $this->addInfoMessage($voucherCreateInfoInterface->getMessage());
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function viewAction(Request $request)
-    {
-        $idPool = $this->castId($request->query->get(self::ID_POOL_PARAMETER));
-        $batchValue = $request->query->get(self::BATCH_PARAMETER);
-
-        $pool = $this->getFactory()
-            ->getVoucherPoolById($idPool);
-
-        $discount = $this->getFactory()
-            ->getDiscountByIdDiscountVoucherPool($idPool);
-
-        $countVouchers = $this->getFactory()
-            ->getGeneratedVouchersCountByIdPool($pool->getIdDiscountVoucherPool());
-
-        $generatedCodesTable = $this->getGeneratedCodesTable($request);
-
-        return $this->viewResponse([
-            'idPool' => $idPool,
-            'pool' => $pool,
-            'batchValue' => $batchValue,
-            'discount' => $discount,
-            'countVouchers' => $countVouchers,
-            'generatedCodes' => $generatedCodesTable->render(),
-        ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function tableAction(Request $request)
-    {
-        $table = $this->getGeneratedCodesTable($request);
-
-        return $this->jsonResponse(
-            $table->fetchData()
+        return new RedirectResponse(
+            $this->createEditDiscountRedirectUrl($idDiscount)
         );
+
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function getGeneratedCodesTable(Request $request)
+    public function deleteVoucherCodeAction(Request $request)
     {
-        $idPool = $this->castId($request->query->get(self::ID_POOL_PARAMETER));
-        $batch = $request->query->get(self::BATCH_PARAMETER);
+        $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
+        $idVoucher = $this->castId($request->query->get(self::URL_PARAM_ID_VOUCHER));
 
-        $tableParameters = TableParameters::getTableParameters($request);
+        $voucherEntity = $this->getQueryContainer()
+            ->queryVoucherByIdVoucher($idVoucher);
 
-        return $this->getFactory()->createDiscountVoucherCodesTable($tableParameters, $idPool, $batch);
+        $affectedRows = $voucherEntity->delete();
+
+        if ($affectedRows > 0) {
+            $this->addSuccessMessage('Voucher code successfully deleted.');
+        } else {
+            $this->addErrorMessage('Voucher code could not be deleted.');
+        }
+
+        return new RedirectResponse(
+            $this->createEditDiscountRedirectUrl($idDiscount)
+        );
     }
 
     /**
@@ -206,63 +90,26 @@ class VoucherController extends AbstractController
      */
     public function exportAction(Request $request)
     {
-        $idPool = $this->castId($request->query->get(self::ID_POOL_PARAMETER));
-        $batch = $request->query->get(self::BATCH_PARAMETER);
+        $idPool = $this->castId($request->query->get(self::URL_PARAM_ID_POOL));
 
-        return $this->generateCsvFromVouchers($idPool, $batch);
+        return $this->generateCsvFromVouchers($idPool);
     }
 
-    /**
-     * @return \DateTime
-     */
-    protected function setSessionTimestampForVoucherGenerator()
-    {
-        $now = $this->getCurrentTimestampByStoreTimeZone();
-        $this->getSession()->set(self::SESSION_TIME, $now);
-
-        return $now;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    protected function getCurrentTimestampByStoreTimeZone()
-    {
-        $store = $this->getFactory()->getStore();
-        $now = new \DateTime('now', new \DateTimeZone($store->getTimezone()));
-
-        return $now;
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Session
-     */
-    private function getSession()
-    {
-        return $this->getApplication()['request']->getSession();
-    }
 
     /**
      * @param int $idPool
-     * @param int $batchValue
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function generateCsvFromVouchers($idPool, $batchValue)
+    protected function generateCsvFromVouchers($idPool)
     {
-        $generatedVouchersQuery = $this->getFactory()
-            ->getQueryForGeneratedVouchersByIdPool($idPool);
-
-        if ($batchValue > 0) {
-            $generatedVouchersQuery = $generatedVouchersQuery->filterByVoucherBatch($batchValue);
-        }
-
-        $generatedVouchers = $generatedVouchersQuery
+        $generatedVouchers = $this->getQueryContainer()
+            ->queryVouchersByIdVoucherPool($idPool)
             ->find();
 
-        $response = new StreamedResponse();
+        $streamedResponse = new StreamedResponse();
 
-        $response->setCallback(function () use ($generatedVouchers) {
+        $streamedResponse->setCallback(function () use ($generatedVouchers) {
             $csvHandle = fopen('php://output', 'w+');
             fputcsv($csvHandle, ['Voucher Code']);
 
@@ -273,11 +120,28 @@ class VoucherController extends AbstractController
             fclose($csvHandle);
         });
 
-        $response->setStatusCode(Response::HTTP_OK);
-        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
-        $response->headers->set('Content-Disposition', 'attachment; filename="vouchers.csv"');
+        $streamedResponse->setStatusCode(Response::HTTP_OK);
+        $streamedResponse->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $streamedResponse->headers->set('Content-Disposition', 'attachment; filename="' . self::CSV_FILENAME . '"');
 
-        return $response->send();
+        return $streamedResponse->send();
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return string
+     */
+    protected function createEditDiscountRedirectUrl($idDiscount)
+    {
+        $redirectUrl = Url::generate(
+            '/discount/index/edit',
+            [
+                self::URL_PARAM_ID_DISCOUNT => $idDiscount
+            ]
+        )->build();
+
+        return $redirectUrl;
     }
 
 }

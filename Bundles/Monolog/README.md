@@ -8,4 +8,4 @@ composer require spryker/monolog
 
 ## Documentation
 
-[Monolog Documentation](http://spryker.github.io/core/bundles/monolog)
+[Documentation](http://spryker.github.io)

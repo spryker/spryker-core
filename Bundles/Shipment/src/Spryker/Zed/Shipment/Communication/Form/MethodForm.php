@@ -24,13 +24,13 @@ class MethodForm extends AbstractType
     const FIELD_IS_ACTIVE = 'isActive';
     const FIELD_DEFAULT_PRICE = 'defaultPrice';
     const FIELD_AVAILABILITY_PLUGIN_FIELD = 'availabilityPlugin';
-    const FIELD_PRICE_PLUGIN_FIELD = 'priceCalculationPlugin';
+    const FIELD_PRICE_PLUGIN_FIELD = 'pricePlugin';
     const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
     const FIELD_CARRIER_FIELD = 'fkShipmentCarrier';
 
     const OPTION_CARRIER_CHOICES = 'carrier_choices';
     const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
-    const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_calculation_plugin_choice_list';
+    const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_plugin_choice_list';
     const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
 
     /**
@@ -149,6 +149,7 @@ class MethodForm extends AbstractType
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
+            'required' => false,
         ]);
 
         return $this;
@@ -165,6 +166,7 @@ class MethodForm extends AbstractType
             'label' => 'Price Plugin',
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
+            'required' => false,
         ]);
 
         return $this;
@@ -181,6 +183,7 @@ class MethodForm extends AbstractType
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
+            'required' => false,
         ]);
 
         return $this;
@@ -192,7 +195,9 @@ class MethodForm extends AbstractType
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox');
+        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox', [
+            'required' => false,
+        ]);
 
         return $this;
     }

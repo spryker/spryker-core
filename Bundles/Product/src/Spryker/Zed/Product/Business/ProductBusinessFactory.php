@@ -19,6 +19,7 @@ use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
 use Spryker\Zed\Product\Business\Internal\Install;
 use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Product\Business\Product\ProductManager;
+use Spryker\Zed\Product\Business\Product\ProductVariantBuilder;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
@@ -151,6 +152,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         }
 
         return $this->productManager;
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\ProductVariantBuilder
+     */
+    public function createProductVariantBuilder()
+    {
+         return new ProductVariantBuilder($this->getQueryContainer());
     }
 
     /**

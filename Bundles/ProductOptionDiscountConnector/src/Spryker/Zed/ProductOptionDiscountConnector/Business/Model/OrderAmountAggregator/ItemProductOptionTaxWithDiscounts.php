@@ -9,20 +9,20 @@ namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountA
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface;
+use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface;
 
 class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface
+     * @var \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface
      */
     protected $taxFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface $taxFacade
+     * @param \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface $taxFacade
      */
-    public function __construct(ProductOptionToTaxBridgeInterface $taxFacade)
+    public function __construct(ProductOptionToTaxInterface $taxFacade)
     {
         $this->taxFacade = $taxFacade;
     }

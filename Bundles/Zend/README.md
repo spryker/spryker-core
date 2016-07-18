@@ -8,4 +8,4 @@ composer require spryker/zend
 
 ## Documentation
 
-[Zend Documentation](http://spryker.github.io/core/bundles/zend)
+[Documentation](http://spryker.github.io)
