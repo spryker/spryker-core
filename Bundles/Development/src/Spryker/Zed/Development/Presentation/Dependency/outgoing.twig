@@ -9,11 +9,7 @@
             </tr>
             {% for dependency, count in dependencies %}
                 <tr>
-                    <td>{{ dependency }}
-                        {% if dependency in incomingDependencies|keys %}
-                        <span class="glyphicon glyphicon-exclamation-sign" title="{{ "Incoming dependency!" | trans }}"></span>
-                        {% endif %}
-                    </td>
+                    <td>{{ dependency }}</td>
                     <td>{{ count }}</td>
                 </tr>
             {% endfor %}
