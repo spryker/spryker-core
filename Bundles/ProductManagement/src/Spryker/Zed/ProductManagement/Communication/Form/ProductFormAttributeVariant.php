@@ -24,39 +24,19 @@ class ProductFormAttributeVariant extends ProductFormAttributeAbstract
      */
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
-        $attributes = $options[ProductFormAttributeAbstract::OPTION_ATTRIBUTE];
-
         $name = $builder->getName();
-        $isDisabled = $attributes[$name][self::VALUE_DISABLED];
-        $input = $attributes[$name][self::INPUT];
+        $attributes = $options[self::OPTION_ATTRIBUTE];
+        $config = $this->getValueFieldConfig($name, $attributes);
+        $isMultiple = $attributes[$name][self::MULTIPLE];
 
-        $builder->add(self::FIELD_VALUE, $input, [
-            'disabled' => $isDisabled,
-            'label' => false,
-            'attr' => [
-                'style' => 'width: 250px !important',
-                'class' => 'attribute_metadata_value',
-                'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC]
-            ],
-            'constraints' => [
-                new Callback([
-                    'methods' => [
-                        function ($dataToValidate, ExecutionContextInterface $context) {
-                            //TODO more sophisticated validation
-                            if (!($dataToValidate)) {
-                                //$context->addViolation('Please enter attribute value.');
-                            }
-                        },
-                    ],
-                ]),
-            ]
-/*            'constraints' => [
-                new AttributeFieldNotBlank([
-                    'attributeFieldValue' => self::FIELD_VALUE,
-                    'attributeCheckboxFieldName' => self::FIELD_NAME,
-                ]),
-            ],*/
-        ]);
+        $input = new Select2ComboBoxType();
+        $config['multiple'] = $isMultiple;
+        $config['choices'] = [
+            'aaa', 'bbb', 'ccc'
+        ];
+        $config['tags'] = false;
+
+        $builder->add(self::FIELD_VALUE, $input, $config);
 
         return $this;
     }

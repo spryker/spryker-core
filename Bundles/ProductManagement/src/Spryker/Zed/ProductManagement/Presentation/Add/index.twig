@@ -36,6 +36,9 @@
 
 #}
 
+{% set attributeLocaleCollection = localeCollection %}
+{% set attributeLocaleCollection = attributeLocaleCollection|merge(['default']) %}
+
 {% import _self as forms %}
 
 {% form_theme form _self %}
@@ -91,9 +94,6 @@
                 <p>Select attributes and corresponding values.</p>
                 <div class="well">
                     <div class="row ">
-                        {% set attributeLocaleCollection = localeCollection %}
-                        {% set attributeLocaleCollection = attributeLocaleCollection|merge(['default']) %}
-
                         <div class="tabs-container">
                             <div class="tabs-top">
                                 {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-nav.twig' with {
@@ -131,20 +131,6 @@
                     </div>
                 </div>
             </div>
-
-            {% if form.attribute_abstract is defined and form.attribute_abstract|length > 0 %}
-            <div class="panel-body">
-                <h3>Custom Product Attributes</h3>
-                <p><i>Note: In order to manage attributes below you have to define them first under Attribute Management.</i></p>
-                <div class="well">
-                    <div class="row ">
-                        {% for type,input in form.attribute_abstract %}
-
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% endif %}
         </div>
         {# ============================ END ============================ #}
 

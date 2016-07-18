@@ -9,7 +9,7 @@ require('ZedGui');
 require('../../sass/main.scss');
 
 $(document).ready(function() {
-    $('.spryker-form-select2combobox').select2({
+    $('.spryker-form-select2combobox.tags').select2({
         tags: true
     });
 

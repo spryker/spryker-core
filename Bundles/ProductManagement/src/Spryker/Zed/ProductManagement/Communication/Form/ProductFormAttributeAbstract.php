@@ -26,6 +26,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
     const NAME_DISABLED = 'name_disabled';
     const VALUE_DISABLED = 'value_disabled';
     const INPUT = 'input';
+    const ALLOW_INPUT = 'allow_input';
 
     const OPTION_ATTRIBUTE = 'option_attribute_abstract';
 
@@ -96,19 +97,16 @@ class ProductFormAttributeAbstract extends AbstractSubForm
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $name
+     * @param string $attributes
      *
-     * @return $this
+     * @return array
      */
-    protected function addValueField(FormBuilderInterface $builder, array $options = [])
+    protected function getValueFieldConfig($name, $attributes)
     {
-        $attributes = $options[ProductFormAttributeAbstract::OPTION_ATTRIBUTE];
-
-        $name = $builder->getName();
         $isDisabled = $attributes[$name][self::VALUE_DISABLED];
-        $input = $attributes[$name][self::INPUT];
 
-        $builder->add(self::FIELD_VALUE, $input, [
+        return [
             'disabled' => $isDisabled,
             'label' => false,
             'attr' => [
@@ -128,13 +126,50 @@ class ProductFormAttributeAbstract extends AbstractSubForm
                     ],
                 ]),
             ]
-/*            'constraints' => [
+            /*
+           'constraints' => [
                 new AttributeFieldNotBlank([
                     'attributeFieldValue' => self::FIELD_VALUE,
                     'attributeCheckboxFieldName' => self::FIELD_NAME,
                 ]),
-            ],*/
-        ]);
+            ],
+            */
+        ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValueField(FormBuilderInterface $builder, array $options = [])
+    {
+        $name = $builder->getName();
+        $attributes = $options[self::OPTION_ATTRIBUTE];
+        $config = $this->getValueFieldConfig($name, $attributes);
+
+        $input = $attributes[$name][self::INPUT];
+        $allowInput = $attributes[$name][self::ALLOW_INPUT];
+        $isMultiple = $attributes[$name][self::MULTIPLE];
+
+        if (strtolower($input) === 'select2') {
+            $input = new Select2ComboBoxType();
+        }
+
+        if ($isMultiple) {
+            $input = new Select2ComboBoxType();
+            $config['multiple'] = $isMultiple;
+
+            if ($isMultiple) {
+                $config['attr']['tags'] = $allowInput;
+                //load multiple choices or load choices via ajax
+                $config['choices'] = [
+                    'aaa', 'bbb', 'ccc'
+                ];
+            }
+        }
+
+        $builder->add(self::FIELD_VALUE, $input, $config);
 
         return $this;
     }
