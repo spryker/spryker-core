@@ -226,7 +226,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAttributeFormDataProvider()
     {
-        return new AttributeFormDataProvider();
+        return new AttributeFormDataProvider($this->getQueryContainer());
     }
 
     /**

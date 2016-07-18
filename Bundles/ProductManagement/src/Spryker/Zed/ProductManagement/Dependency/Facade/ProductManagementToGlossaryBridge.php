@@ -33,9 +33,24 @@ class ProductManagementToGlossaryBridge implements ProductManagementToGlossaryIn
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
-        return $this->glossaryFacade->createTranslation($keyName, $locale, $value, $isActive);
+        return $this->glossaryFacade->createAndTouchTranslation($keyName, $locale, $value, $isActive);
+    }
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function updateAndTouchTranslation($keyName, $locale, $value, $isActive = true)
+    {
+        return $this->glossaryFacade->updateAndTouchTranslation($keyName, $locale, $value, $isActive);
     }
 
     /**

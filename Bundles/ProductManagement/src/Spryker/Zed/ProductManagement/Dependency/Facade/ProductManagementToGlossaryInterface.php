@@ -20,7 +20,19 @@ interface ProductManagementToGlossaryInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function updateAndTouchTranslation($keyName, $locale, $value, $isActive = true);
 
     /**
      * @param string $keyName

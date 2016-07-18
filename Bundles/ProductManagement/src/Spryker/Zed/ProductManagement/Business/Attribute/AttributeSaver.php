@@ -131,6 +131,9 @@ class AttributeSaver implements AttributeSaverInterface
 
         // TODO: update glossary key if attribute key is changed
 
+        // save attribute values
+        $this->attributeValueSaver->saveProductAttributeValues($productManagementAttributeTransfer);
+
         return $productManagementAttributeTransfer;
     }
 

@@ -142,6 +142,42 @@ class AttributesController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function editAction(Request $request)
+    {
+        $idProductManagementAttribute = $this->castId($request->query->get('id'));
+
+        $dataProvider = $this
+            ->getFactory()
+            ->createAttributeFormDataProvider();
+
+        $attributeForm = $this
+            ->getFactory()
+            ->createAttributeForm($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions($idProductManagementAttribute))
+            ->handleRequest($request);
+
+        if ($attributeForm->isValid()) {
+            $productManagementAttributeTransfer = $this->createAttributeTransfer($attributeForm);
+
+            $productManagementAttributeTransfer = $this
+                ->getFacade()
+                ->updateProductManagementAttribute($productManagementAttributeTransfer);
+
+            return $this->redirectResponse(sprintf(
+                '/product-management/attributes/translate?id=%d',
+                $productManagementAttributeTransfer->getIdProductManagementAttribute()
+            ));
+        }
+
+        return $this->viewResponse([
+            'form' => $attributeForm->createView(),
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormInterface $attributeForm
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer

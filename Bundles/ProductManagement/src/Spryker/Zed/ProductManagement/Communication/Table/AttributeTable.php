@@ -17,7 +17,8 @@ use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInt
 class AttributeTable extends AbstractTable
 {
 
-    const COL_INPUT_TYPE = 'tpe';
+    const COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
+    const COL_INPUT_TYPE = 'input_type';
     const COL_ACTIONS = 'actions';
 
     /**
@@ -41,7 +42,7 @@ class AttributeTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY => 'Attribute ID',
+            static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE => 'Attribute ID',
             SpyProductAttributeKeyTableMap::COL_KEY => 'Attribute Key',
             static::COL_INPUT_TYPE => 'Type',
             static::COL_ACTIONS => 'Actions',
@@ -57,7 +58,7 @@ class AttributeTable extends AbstractTable
         ]);
 
         $config->setSortable([
-            SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY,
+            static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE,
             SpyProductAttributeKeyTableMap::COL_KEY,
             static::COL_INPUT_TYPE,
         ]);
@@ -75,6 +76,7 @@ class AttributeTable extends AbstractTable
         $query = $this
             ->productManagementQueryContainer
             ->queryProductAttributeKey()
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE)
             ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, static::COL_INPUT_TYPE);
 
         $queryResults = $this->runQuery($query, $config);
@@ -82,7 +84,7 @@ class AttributeTable extends AbstractTable
         $productAbstractCollection = [];
         foreach ($queryResults as $item) {
             $productAbstractCollection[] = [
-                SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY => $item[SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY],
+                static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE  => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
                 SpyProductAttributeKeyTableMap::COL_KEY => $item[SpyProductAttributeKeyTableMap::COL_KEY],
                 static::COL_INPUT_TYPE => $item[static::COL_INPUT_TYPE],
                 static::COL_ACTIONS => implode(' ', $this->createActionColumn($item)),
@@ -103,14 +105,14 @@ class AttributeTable extends AbstractTable
 
         $urls[] = $this->generateViewButton(
             Url::generate('/product-management/attributes/view', [
-                'id' => $item[SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY],
+                'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE ],
             ]),
             'View'
         );
 
         $urls[] = $this->generateEditButton(
             Url::generate('/product-management/attributes/edit', [
-                'id' => $item[SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY],
+                'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE ],
             ]),
             'Edit'
         );

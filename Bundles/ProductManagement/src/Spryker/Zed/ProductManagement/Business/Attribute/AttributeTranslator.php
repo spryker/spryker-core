@@ -96,8 +96,18 @@ class AttributeTranslator implements AttributeTranslatorInterface
     {
         $attributeGlossaryKey = $this->generateAttributeGlossaryKey($attributeTranslationFormTransfer->getAttributeName());
 
-        // FIXME: update doesn't work with this
-        $this->glossaryFacade->createTranslation(
+        if ($this->glossaryFacade->hasTranslation($attributeGlossaryKey, $localeTransfer)) {
+            $this->glossaryFacade->updateAndTouchTranslation(
+                $attributeGlossaryKey,
+                $localeTransfer,
+                $attributeTranslationFormTransfer->getAttributeNameTranslation(),
+                true
+            );
+
+            return;
+        }
+        
+        $this->glossaryFacade->createAndTouchTranslation(
             $attributeGlossaryKey,
             $localeTransfer,
             $attributeTranslationFormTransfer->getAttributeNameTranslation(),

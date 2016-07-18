@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AttributeForm extends AbstractType
 {
+    const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
     const FIELD_KEY = 'key';
     const FIELD_INPUT_TYPE = 'input_type';
     const FIELD_ALLOW_INPUT = 'allow_input';
@@ -54,11 +55,24 @@ class AttributeForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
+            ->addIdProductManagementAttribute($builder)
             ->addKeyField($builder)
             ->addInputTypeField($builder, $options[self::OPTION_ATTRIBUTE_TYPE_CHOICES])
             ->addAllowInputField($builder)
             ->addIsMultipleField($builder)
             ->addValuesField($builder, $options[self::OPTION_VALUES_CHOICES]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdProductManagementAttribute(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'hidden');
+
+        return $this;
     }
 
     /**
