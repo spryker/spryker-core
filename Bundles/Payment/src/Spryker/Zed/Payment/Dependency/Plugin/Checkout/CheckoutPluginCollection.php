@@ -39,6 +39,17 @@ class CheckoutPluginCollection implements CheckoutPluginCollectionInterface
      * @param string $provider
      * @param string $pluginType
      *
+     * @return bool
+     */
+    public function has($provider, $pluginType)
+    {
+        return isset($this->plugins[$pluginType][$provider]);
+    }
+
+    /**
+     * @param string $provider
+     * @param string $pluginType
+     *
      * @throws \Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException
      *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface

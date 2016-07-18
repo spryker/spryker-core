@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -114,14 +115,15 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer)
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, LocaleTransfer $localeTransfer = null)
     {
         $glossaryKeyMappingManager = $this->getFactory()->createGlossaryKeyMappingManager();
 
-        return $glossaryKeyMappingManager->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
+        return $glossaryKeyMappingManager->savePageKeyMappingAndTouch($pageKeyMappingTransfer, $localeTransfer);
     }
 
     /**
@@ -209,14 +211,16 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      * @param string $value
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     * @param bool $autoGlossaryKeyIncrement
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value)
+    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value, LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true)
     {
         $glossaryKeyMappingManager = $this->getFactory()->createGlossaryKeyMappingManager();
 
-        return $glossaryKeyMappingManager->addPlaceholderText($pageTransfer, $placeholder, $value);
+        return $glossaryKeyMappingManager->addPlaceholderText($pageTransfer, $placeholder, $value, $localeTransfer, $autoGlossaryKeyIncrement);
     }
 
     /**
@@ -259,13 +263,14 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $pageTransfer)
+    public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $localeTransfer = null)
     {
         $pageManager = $this->getFactory()->createPageManager();
-        $pageManager->touchPageActive($pageTransfer);
+        $pageManager->touchPageActive($pageTransfer, $localeTransfer);
     }
 
     /**

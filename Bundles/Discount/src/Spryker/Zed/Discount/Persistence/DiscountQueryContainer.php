@@ -8,14 +8,11 @@
 namespace Spryker\Zed\Discount\Persistence;
 
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
-use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -28,7 +25,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     const ALIAS_COL_AMOUNT = 'amount';
     const ALIAS_COL_TYPE = 'type';
     const ALIAS_COL_DESCRIPTION = 'description';
-    const ALIAS_COL_USED_VOUCHER_CODE = 'UsedVoucherCode';
+    const ALIAS_COL_VOUCHER_CODE = 'VoucherCode';
+    const ALIAS_VOUCHER_POOL_NAME = 'voucher_pool';
 
     /**
      * @api
@@ -39,20 +37,9 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryVoucher($code)
     {
-        return $this->getFactory()->createDiscountVoucherQuery()->filterByCode($code);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idDiscount
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
-     */
-    public function queryDecisionRules($idDiscount)
-    {
-        return $this->getFactory()->createDiscountDecisionRuleQuery()
-            ->filterByFkDiscount($idDiscount);
+        return $this->getFactory()
+            ->createDiscountVoucherQuery()
+            ->filterByCode($code);
     }
 
     /**
@@ -63,19 +50,21 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryActiveAndRunningDiscounts()
     {
         $now = new \DateTime();
+        $dateFormatted = $now->format('Y-m-d H:i:s');
 
-        $query = $this->getFactory()->createDiscountQuery()
+        $query = $this->getFactory()
+            ->createDiscountQuery()
             ->filterByIsActive(true)
             ->where(
-                '(' . SpyDiscountTableMap::COL_VALID_FROM . ' <= ? AND '
-                . SpyDiscountTableMap::COL_VALID_TO . ' >= ? )',
+                '(' . SpyDiscountTableMap::COL_VALID_FROM . ' <= ? AND ' . SpyDiscountTableMap::COL_VALID_TO . ' >= ? )',
                 [
-                    $now->format('Y-m-d H:i:s'),
-                    $now->format('Y-m-d H:i:s'),
+                    $dateFormatted,
+                    $dateFormatted,
                 ]
-            )->_or()->where(
-                SpyDiscountTableMap::COL_VALID_FROM . ' IS NULL AND '
-                . SpyDiscountTableMap::COL_VALID_TO . ' IS NULL'
+            )
+            ->_or()
+            ->where(
+                '(' . SpyDiscountTableMap::COL_VALID_FROM . ' IS NULL AND ' . SpyDiscountTableMap::COL_VALID_TO . ' IS NULL )'
             );
 
         return $query;
@@ -84,22 +73,35 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @api
      *
-     * @param string[] $couponCodes
+     * @param string[] $voucherCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    public function queryCartRulesIncludingSpecifiedVouchers(array $couponCodes = [])
+    public function queryDiscountsBySpecifiedVouchers(array $voucherCodes = [])
     {
-        return $this->queryActiveAndRunningDiscounts()
+        $query = $this->queryActiveAndRunningDiscounts()
             ->useVoucherPoolQuery()
                 ->useDiscountVoucherQuery()
-                    ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_USED_VOUCHER_CODE)
-                    ->filterByCode(array_unique($couponCodes), Criteria::IN)
+                    ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_VOUCHER_CODE)
+                    ->filterByCode(array_unique($voucherCodes), Criteria::IN)
                 ->endUse()
-            ->endUse()
-            ->_or()
-            ->filterByFkDiscountVoucherPool(null)
-            ->filterByIsActive(true);
+            ->endUse();
+
+        return $query;
+
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryActiveCartRules()
+    {
+        $query = $this->queryActiveAndRunningDiscounts()
+            ->filterByDiscountType(DiscountConstants::TYPE_CART_RULE);
+
+        return $query;
     }
 
     /**
@@ -109,7 +111,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryVoucherPool()
     {
-        return $this->getFactory()->createDiscountVoucherPoolQuery();
+        return $this->getFactory()
+            ->createDiscountVoucherPoolQuery();
     }
 
     /**
@@ -119,54 +122,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscount()
     {
-        return $this->getFactory()->createDiscountQuery();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
-     */
-    public function queryDiscountCollector()
-    {
-        return $this->getFactory()->createDiscountCollectorQuery();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
-     */
-    public function queryDiscountDecisionRule()
-    {
-        return $this->getFactory()->createDiscountDecisionRuleQuery()
-            ->joinDiscount()
-            ->withColumn(SpyDiscountTableMap::COL_DISPLAY_NAME, 'discount_name')
-            ->withColumn(SpyDiscountTableMap::COL_AMOUNT, 'discount_amount');
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idDiscountCollector
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
-     */
-    public function queryDiscountCollectorById($idDiscountCollector)
-    {
-        return $this->queryDiscountCollector()->filterByIdDiscountCollector($idDiscountCollector);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idDiscount
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
-     */
-    public function queryDiscountCollectorByDiscountId($idDiscount)
-    {
-        return $this->queryDiscountCollector()->filterByFkDiscount($idDiscount);
+        return $this->getFactory()
+            ->createDiscountQuery();
     }
 
     /**
@@ -176,9 +133,10 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscountVoucher()
     {
-        return $this->getFactory()->createDiscountVoucherQuery()
+        return $this->getFactory()
+            ->createDiscountVoucherQuery()
             ->joinVoucherPool()
-            ->withColumn(SpyDiscountVoucherPoolTableMap::COL_NAME, 'voucher_pool');
+            ->withColumn(SpyDiscountVoucherPoolTableMap::COL_NAME, self::ALIAS_VOUCHER_POOL_NAME);
     }
 
     /**
@@ -188,29 +146,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscountVoucherPool()
     {
-        return $this->getFactory()->createDiscountVoucherPoolQuery();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
-     */
-    public function queryDiscountVoucherPoolJoinedVoucherPoolCategory()
-    {
-        return $this->queryDiscountVoucherPool()
-            ->joinVoucherPoolCategory()
-            ->withColumn(SpyDiscountVoucherPoolCategoryTableMap::COL_NAME, 'category');
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery
-     */
-    public function queryDiscountVoucherPoolCategory()
-    {
-        return $this->getFactory()->createDiscountVoucherPoolCategoryQuery();
+        return $this->getFactory()
+            ->createDiscountVoucherPoolQuery();
     }
 
     /**
@@ -223,7 +160,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryVoucherPoolByVoucherCodes(array $codes)
     {
         return $this->queryDiscountVoucher()
-            ->joinWithVoucherPool()
+            ->joinVoucherPool()
             ->filterByCode($codes, Criteria::IN);
     }
 
@@ -237,12 +174,6 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryVoucherCodeByIdVoucherCode($idVoucherCode)
     {
         return $this->queryDiscountVoucherPool()
-            ->useDiscountQuery()
-                ->useDecisionRuleQuery()
-                ->endUse()
-            ->endUse()
-            ->joinVoucherPoolCategory(SpyDiscountVoucherPoolCategoryTableMap::TABLE_NAME)
-            ->withColumn(SpyDiscountVoucherPoolCategoryTableMap::COL_NAME, VoucherCodesForm::FIELD_VOUCHER_POOL_CATEGORY)
             ->withColumn(SpyDiscountTableMap::COL_ID_DISCOUNT, self::ALIAS_COL_ID_DISCOUNT)
             ->withColumn(SpyDiscountTableMap::COL_AMOUNT, self::ALIAS_COL_AMOUNT)
             ->withColumn(SpyDiscountTableMap::COL_DESCRIPTION, self::ALIAS_COL_DESCRIPTION)
@@ -252,15 +183,44 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @api
      *
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $pool
+     * @param int $idVoucherPool
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
-    public function queryDiscountCollectorBysByIdPool(SpyDiscountVoucherPool $pool)
+    public function queryVouchersByIdVoucherPool($idVoucherPool)
     {
-        return $this->queryDecisionRules($pool->getVirtualColumn(self::ALIAS_COL_ID_DISCOUNT));
+        return $this->getFactory()
+            ->createDiscountVoucherQuery()
+            ->filterByFkDiscountVoucherPool($idVoucherPool);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idVoucher
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
+     */
+    public function queryVoucherByIdVoucher($idVoucher)
+    {
+        return $this->getFactory()
+            ->createDiscountVoucherQuery()
+            ->filterByIdDiscountVoucher($idVoucher);
+    }
+
+
+    /**
+     * @api
+     *
+     * @param string $discountName
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryDiscountName($discountName)
+    {
+        return $this->getFactory()
+           ->createDiscountQuery()
+           ->filterByDisplayName($discountName);
     }
 
     /**
@@ -268,19 +228,9 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
      */
-    public function querySalesDisount()
+    public function querySalesDiscount()
     {
         return new SpySalesDiscountQuery();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery
-     */
-    public function querySalesDisountCode()
-    {
-        return new SpySalesDiscountCodeQuery();
     }
 
 }

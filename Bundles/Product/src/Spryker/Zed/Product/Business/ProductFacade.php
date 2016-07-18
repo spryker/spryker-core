@@ -339,4 +339,18 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()->createProductManager()->createAndTouchProductUrlByIdProduct($idProductAbstract, $url, $locale);
     }
 
+    /**
+     * @api
+     *
+     * @param string $abstractSku
+     *
+     * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
+     */
+    public function getProductVariantsByAbstractSku($abstractSku)
+    {
+        return $this->getFactory()
+           ->createProductVariantBuilder()
+           ->getProductVariantsByAbstractSku($abstractSku);
+    }
+
 }

@@ -10,7 +10,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*"
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "config": {
     "use-include-path": true
@@ -44,6 +44,18 @@
       "Functional\\Spryker\\Zed\\Availability\\": "Bundles/Availability/tests",
       "Spryker\\Zed\\AvailabilityCartConnector\\": "Bundles/AvailabilityCartConnector/src",
       "Unit\\Spryker\\Zed\\AvailabilityCartConnector\\": "Bundles/AvailabilityCartConnector/tests",
+
+      "Spryker\\Yves\\Braintree\\": "Bundles/Braintree/src",
+      "Spryker\\Client\\Braintree\\": "Bundles/Braintree/src",
+      "Unit\\Spryker\\Client\\Braintree\\": "Bundles/Braintree/tests",
+      "Functional\\Spryker\\Client\\Braintree\\": "Bundles/Braintree/tests",
+      "Spryker\\Shared\\Braintree\\": "Bundles/Braintree/src",
+      "Unit\\Spryker\\Shared\\Braintree\\": "Bundles/Braintree/tests",
+      "Functional\\Spryker\\Shared\\Braintree\\": "Bundles/Braintree/tests",
+      "Spryker\\Zed\\Braintree\\": "Bundles/Braintree/src",
+      "Unit\\Spryker\\Zed\\Braintree\\": "Bundles/Braintree/tests",
+      "Functional\\Spryker\\Zed\\Braintree\\": "Bundles/Braintree/tests",
+
       "Spryker\\Zed\\Cache\\": "Bundles/Cache/src",
       "Spryker\\Shared\\Calculation\\": "Bundles/Calculation/src",
       "Unit\\Spryker\\Shared\\Calculation\\": "Bundles/Calculation/tests",
@@ -222,6 +234,7 @@
       "Spryker\\Zed\\Maintenance\\": "Bundles/Maintenance/src",
       "Unit\\Spryker\\Zed\\Maintenance\\": "Bundles/Maintenance/tests",
       "Spryker\\Shared\\Messenger\\": "Bundles/Messenger/src",
+      "Spryker\\Yves\\Messenger\\": "Bundles/Messenger/src",
       "Unit\\Spryker\\Shared\\Messenger\\": "Bundles/Messenger/tests",
       "Spryker\\Zed\\Messenger\\": "Bundles/Messenger/src",
       "Unit\\Spryker\\Zed\\Messenger\\": "Bundles/Messenger/tests",
@@ -340,6 +353,14 @@
       "Unit\\Spryker\\Shared\\Refund\\": "Bundles/Refund/tests",
       "Spryker\\Zed\\Refund\\": "Bundles/Refund/src",
       "Unit\\Spryker\\Zed\\Refund\\": "Bundles/Refund/tests",
+
+      "Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/src",
+      "Spryker\\Yves\\Ratepay\\": "Bundles/Ratepay/src",
+      "Spryker\\Shared\\Ratepay\\": "Bundles/Ratepay/src",
+      "Spryker\\Client\\Ratepay\\": "Bundles/Ratepay/src",
+      "Functional\\Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/tests",
+      "Unit\\Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/tests",
+
       "Spryker\\Client\\Sales\\": "Bundles/Sales/src",
       "Unit\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",
       "Functional\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",
@@ -449,7 +470,6 @@
       "Spryker\\Zed\\Wishlist\\": "Bundles/Wishlist/src",
       "Unit\\Spryker\\Zed\\Wishlist\\": "Bundles/Wishlist/tests",
       "Functional\\Spryker\\Zed\\Wishlist\\": "Bundles/Wishlist/tests",
-
       "Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/src",
       "Unit\\Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/tests",
       "Functional\\Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/tests",
@@ -459,11 +479,20 @@
       "Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/src",
       "Unit\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
       "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
-
+      "Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/src",
+      "Unit\\Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/tests",
+      "Functional\\Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/tests",
+      "Spryker\\Zed\\ProductCategoryDiscountConnector\\": "Bundles/ProductCategoryDiscountConnector/src",
+      "Unit\\Spryker\\Zed\\ProductCategoryDiscountConnector\\": "Bundles/ProductCategoryDiscountConnector/tests",
+      "Functional\\Spryker\\Zed\\ProductCategoryDiscountConnector\\": "Bundles/ProductCategoryDiscountConnector/tests",
       "Spryker\\Shared\\StateMachine\\": "Bundles/StateMachine/src",
       "Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/src",
       "Unit\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests",
-      "Functional\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests"
+      "Functional\\Spryker\\Zed\\StateMachine\\": "Bundles/StateMachine/tests",
+      "Spryker\\Shared\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/src",
+      "Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/src",
+      "Unit\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
+      "Functional\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests"
     },
     "psr-4": {
       "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",

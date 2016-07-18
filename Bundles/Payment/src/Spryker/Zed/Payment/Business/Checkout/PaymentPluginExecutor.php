@@ -38,8 +38,10 @@ class PaymentPluginExecutor
      */
     public function executePreCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS,  $quoteTransfer);
-        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        if ($this->hasPlugin(PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS,  $quoteTransfer)) {
+            $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS,  $quoteTransfer);
+            $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        }
     }
 
     /**
@@ -52,8 +54,10 @@ class PaymentPluginExecutor
      */
     public function executeOrderSaverPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS, $quoteTransfer);
-        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        if ($this->hasPlugin(PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS, $quoteTransfer)) {
+            $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS, $quoteTransfer);
+            $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        }
     }
 
     /**
@@ -66,8 +70,25 @@ class PaymentPluginExecutor
      */
     public function executePostCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS, $quoteTransfer);
-        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        if ($this->hasPlugin(PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS, $quoteTransfer)) {
+            $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS, $quoteTransfer);
+            $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        }
+    }
+
+    /**
+     * @param string $pluginType
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasPlugin($pluginType, QuoteTransfer $quoteTransfer)
+    {
+        $this->assertResolverRequirements($quoteTransfer);
+
+        $provider = $quoteTransfer->getPayment()->getPaymentProvider();
+
+        return $this->checkoutPlugins->has($provider, $pluginType);
     }
 
     /**

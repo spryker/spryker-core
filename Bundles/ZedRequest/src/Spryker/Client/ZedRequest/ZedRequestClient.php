@@ -39,13 +39,12 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      * @param string $url
      * @param \Spryker\Shared\Transfer\TransferInterface $object
      * @param int|null $timeoutInSeconds
-     * @param bool|false $isBackgroundRequest
      *
      * @return \Spryker\Shared\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $timeoutInSeconds = null, $isBackgroundRequest = false)
+    public function call($url, TransferInterface $object, $timeoutInSeconds = null)
     {
-        return $this->getClient()->call($url, $object, $timeoutInSeconds, $isBackgroundRequest);
+        return $this->getClient()->call($url, $object, $timeoutInSeconds);
     }
 
     /**

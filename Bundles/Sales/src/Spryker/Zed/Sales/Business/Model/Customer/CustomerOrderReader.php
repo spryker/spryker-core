@@ -82,7 +82,6 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
             $orderTransfer = $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder(
                 $salesOrderEntity->getIdSalesOrder()
             );
-            $orderTransfer = $this->salesAggregatorFacade->getOrderTotalByOrderTransfer($orderTransfer);
             $orders->append($orderTransfer);
         }
 

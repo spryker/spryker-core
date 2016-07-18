@@ -23,8 +23,6 @@ class ProductOptionOrderSaverPlugin extends AbstractPlugin implements CheckoutSa
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @retrun void
-     *
      * @return void
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)

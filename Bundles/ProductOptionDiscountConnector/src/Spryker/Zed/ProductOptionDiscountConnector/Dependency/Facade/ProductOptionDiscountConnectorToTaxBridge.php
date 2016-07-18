@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade;
 
-class ProductOptionDiscountConnectorToTaxBridge implements ProductOptionToTaxBridgeInterface
+class ProductOptionDiscountConnectorToTaxBridge implements ProductOptionToTaxInterface
 {
 
     /**

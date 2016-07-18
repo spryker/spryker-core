@@ -8,4 +8,4 @@ composer require spryker/redis
 
 ## Documentation
 
-[Redis Documentation](http://spryker.github.io/core/bundles/redis)
+[Documentation](http://spryker.github.io)

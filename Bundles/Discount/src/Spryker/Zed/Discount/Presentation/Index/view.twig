@@ -1,0 +1,94 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'View discount' %}
+
+{% block action %}
+    {{ editActionButton(url('/discount/index/edit', {'id-discount' : discountConfigurator.discountGeneral.idDiscount}), 'Edit' | trans, {'id': 'create-discount-button'}) }}
+    {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Generated Discount Codes' } %}
+
+        {% block widget_content %}
+           <h4>{{ 'General Information' | trans }}</h4>
+           <table class="table">
+               <tr>
+                   <td style="width: 150px;">{{ 'Discount Type:' | trans }}</td>
+                   <td>
+                       {{ discountConfigurator.discountGeneral.discountType|replace('_', ' ')|trans  }}
+                   </td>
+               </tr>
+               <tr>
+                   <td>{{ 'Name:' | trans }}</td>
+                   <td>{{ discountConfigurator.discountGeneral.displayName }}</td>
+               </tr>
+               <tr>
+                   <td>{{ 'Description:' | trans }}</td>
+                   <td>{{ discountConfigurator.discountGeneral.description }}</td>
+               </tr>
+
+               <tr>
+                   <td>{{ 'Exclusive:' | trans }}</td>
+                   <td>
+                       {% if discountConfigurator.discountGeneral.isExclusive %}
+                           {{ 'Yes' | trans }}
+                       {% else %}
+                           {{ 'No' | trans }}
+                       {% endif %}
+                   </td>
+               </tr>
+               <tr>
+                   <td>{{ 'Valid from:' | trans }}</td>
+                   <td>{{ discountConfigurator.discountGeneral.validFrom|date }}</td>
+               </tr>
+               <tr>
+                   <td>{{ 'Valid until:' | trans }}</td>
+                   <td>{{ discountConfigurator.discountGeneral.validTo|date }}</td>
+               </tr>
+           </table>
+
+          <h4>{{ 'Discount calculation' | trans }}</h4>
+          <table class="table">
+              <tr>
+                  <td style="width: 150px;">{{ 'Type:' | trans }}</td>
+                  <td>{{ discountConfigurator.discountCalculator.calculatorPlugin|replace({'_' :' ', 'PLUGIN' : ''})|capitalize }}</td>
+              </tr>
+              <tr>
+                  <td>{{ 'Amount:' | trans }}</td>
+                  <td>{{ discountConfigurator.discountCalculator.amount }}</td>
+              </tr>
+              <tr>
+                  <td>{{ 'Apply to:' | trans }}</td>
+                  <td>{{ discountConfigurator.discountCalculator.collectorQueryString }}</td>
+              </tr>
+          </table>
+
+          <h4>{{ 'Conditions' | trans }}</h4>
+
+          <table class="table">
+              <tr>
+                  <td>
+                      {% if discountConfigurator.discountCondition.decisionRuleQueryString %}
+                        {{ discountConfigurator.discountCondition.decisionRuleQueryString }}
+                      {% else %}
+                          {{  'No conditions, discount always applied.' | trans }}
+                      {% endif %}
+                  </td>
+              </tr>
+          </table>
+
+            {% if discountConfigurator.discountGeneral.discountType == 'voucher' %}
+                <hr>
+                <p><strong>{{ 'Generated Discount Codes' | trans }}</strong></p>
+                {{ voucherCodesTable | raw }}
+            {% endif %}
+
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+

@@ -57,7 +57,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridgeInterface
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface
      */
     protected function getMessengerFacade()
     {

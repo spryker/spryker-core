@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
+use Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
@@ -73,7 +74,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
@@ -81,14 +82,14 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    public function savePage(PageTransfer $page)
+    public function savePage(PageTransfer $pageTransfer)
     {
-        $this->checkTemplateExists($page->getFkTemplate());
+        $this->checkTemplateExists($pageTransfer->getFkTemplate());
 
-        if ($page->getIdCmsPage() === null) {
-            return $this->createPage($page);
+        if ($pageTransfer->getIdCmsPage() === null) {
+            return $this->createPage($pageTransfer);
         } else {
-            return $this->updatePage($page);
+            return $this->updatePage($pageTransfer);
         }
     }
 
@@ -189,34 +190,35 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $page
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    public function convertPageEntityToTransfer(SpyCmsPage $page)
+    public function convertPageEntityToTransfer(SpyCmsPage $pageEntity)
     {
         $pageTransfer = new PageTransfer();
-        $pageTransfer->fromArray($page->toArray());
+        $pageTransfer->fromArray($pageEntity->toArray());
 
         return $pageTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $page)
+    public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $localeTransfer = null)
     {
-        $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($page->getIdCmsPage())
+        $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($pageTransfer->getIdCmsPage())
             ->find();
         foreach ($pageMappings as $pageMapping) {
-            $this->glossaryFacade->touchCurrentTranslationForKeyId($pageMapping->getFkGlossaryKey());
+            $this->glossaryFacade->touchTranslationForKeyId($pageMapping->getFkGlossaryKey(), $localeTransfer);
         }
 
-        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
+        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $pageTransfer->getIdCmsPage());
     }
 
     /**
@@ -229,9 +231,11 @@ class PageManager implements PageManagerInterface
     public function createPageUrl(PageTransfer $pageTransfer)
     {
         $this->checkPageExists($pageTransfer->getIdCmsPage());
+        $idLocale = $pageTransfer->getUrl()->getFkLocale();
 
-        return $this->urlFacade->createUrlForCurrentLocale(
+        return $this->urlFacade->createUrl(
             $pageTransfer->getUrl()->getUrl(),
+            $this->getLocaleTransfer($idLocale),
             CmsConstants::RESOURCE_TYPE_PAGE,
             $pageTransfer->getIdCmsPage()
         );
@@ -252,7 +256,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -260,11 +264,11 @@ class PageManager implements PageManagerInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createPageUrlWithLocale(PageTransfer $page, $url, LocaleTransfer $localeTransfer)
+    public function createPageUrlWithLocale(PageTransfer $pageTransfer, $url, LocaleTransfer $localeTransfer)
     {
-        $this->checkPageExists($page->getIdCmsPage());
+        $this->checkPageExists($pageTransfer->getIdCmsPage());
 
-        return $this->urlFacade->createUrl($url, $localeTransfer, CmsConstants::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
+        return $this->urlFacade->createUrl($url, $localeTransfer, CmsConstants::RESOURCE_TYPE_PAGE, $pageTransfer->getIdCmsPage());
     }
 
     /**
@@ -285,19 +289,19 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
-    public function savePageBlockAndTouch(PageTransfer $page, CmsBlockTransfer $blockTransfer)
+    public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer)
     {
-        $pageTransfer = $this->savePage($page);
-        $blockTransfer->setFkPage($pageTransfer->getIdCmsPage());
+        $savedPageTransfer = $this->savePage($pageTransfer);
+        $blockTransfer->setFkPage($savedPageTransfer->getIdCmsPage());
 
         $this->blockManager->saveBlockAndTouch($blockTransfer);
 
-        return $pageTransfer;
+        return $savedPageTransfer;
     }
 
     /**
@@ -310,6 +314,28 @@ class PageManager implements PageManagerInterface
         $query = $this->cmsQueryContainer->queryPageById($idPage);
 
         return $query->count() > 0;
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getLocaleTransfer($idLocale)
+    {
+        $localEntity = $this->cmsQueryContainer->queryLocaleById($idLocale)->findOne();
+
+        if ($localEntity === null) {
+            throw new LocaleNotFoundException(
+                sprintf('Locale with id %s not found', $idLocale)
+            );
+        }
+
+        $localTransfer = new LocaleTransfer();
+        $localTransfer->fromArray($localEntity->toArray());
+
+        return $localTransfer;
     }
 
 }

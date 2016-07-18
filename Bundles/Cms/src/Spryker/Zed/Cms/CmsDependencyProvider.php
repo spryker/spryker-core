@@ -25,6 +25,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_URL = 'url_query_container';
     const QUERY_CONTAINER_GLOSSARY = 'glossary_query_container';
     const QUERY_CONTAINER_CATEGORY = 'category query container';
+    const QUERY_CONTAINER_LOCALE = 'locale query container';
 
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
@@ -93,6 +94,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+            return $container->getLocator()->locale()->queryContainer();
         };
     }
 

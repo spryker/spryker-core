@@ -13,7 +13,7 @@ use Spryker\Shared\Kernel\Store;
  * This class is the central math class for currency arithmetic operations
  */
 
-class CurrencyManager
+class CurrencyManager implements CurrencyManagerInterface
 {
 
     const PRICE_PRECISION = 100;

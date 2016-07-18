@@ -7,30 +7,9 @@
 
 namespace Spryker\Zed\Cart\Dependency\Facade;
 
-use Generated\Shared\Transfer\MessageTransfer;
-
-interface CartToMessengerBridgeInterface
+/**
+ * @deprecated Use CartToMessengerInterface instead.
+ */
+interface CartToMessengerBridgeInterface extends CartToMessengerInterface
 {
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return void
-     */
-    public function addSuccessMessage(MessageTransfer $messageTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return void
-     */
-    public function addErrorMessage(MessageTransfer $messageTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return void
-     */
-    public function addInfoMessage(MessageTransfer $messageTransfer);
-
 }

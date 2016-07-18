@@ -8,4 +8,4 @@ composer require spryker/nopayment
 
 ## Documentation
 
-[Nopayment Documentation](http://spryker.github.io/core/bundles/nopayment)
+[Documentation](http://spryker.github.io)

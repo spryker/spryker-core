@@ -41,6 +41,28 @@ class CheckoutPluginCollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testHasShouldReturnFalse()
+    {
+        $checkoutPluginCollection = new CheckoutPluginCollection();
+
+        $this->assertFalse($checkoutPluginCollection->has(self::PROVIDER, self::PLUGIN_TYPE));
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasShouldReturnTrue()
+    {
+        $checkoutPluginCollection = new CheckoutPluginCollection();
+        $pluginMock = $this->getPluginMock();
+        $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
+
+        $this->assertTrue($checkoutPluginCollection->has(self::PROVIDER, self::PLUGIN_TYPE));
+    }
+
+    /**
+     * @return void
+     */
     public function testGetShouldReturnPluginForGivenProviderAndPluginType()
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();

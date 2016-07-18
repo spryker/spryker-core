@@ -1,0 +1,29 @@
+{
+  "name": "spryker/product-discount-connector",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/",
+      "YvesUnit": "tests/"
+    }
+  },
+  "require": {
+    "spryker/discount": "^3.0.0",
+    "spryker/product": "^2.0.0"
+  },
+  "description": "ProductDiscountConnector bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
