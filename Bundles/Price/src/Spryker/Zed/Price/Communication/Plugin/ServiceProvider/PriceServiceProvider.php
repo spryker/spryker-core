@@ -42,7 +42,6 @@ class PriceServiceProvider extends AbstractPlugin implements ServiceProviderInte
      */
     public function boot(Application $app)
     {
-
     }
 
 }

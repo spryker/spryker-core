@@ -8,9 +8,10 @@
 namespace Spryker\Shared\Library\Twig;
 
 use Spryker\Shared\Library\DateFormatterInterface;
+use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Shared\Twig\TwigFilter;
 
-class DateFormatterTwigExtension extends \Twig_Extension
+class DateFormatterTwigExtension extends TwigExtension
 {
 
     private static $filterFunctions = [
