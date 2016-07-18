@@ -27,6 +27,7 @@ Def of done (by responsible developer):
 - [ ] All methods in facade and all plugin-interfaces provide an [API-doc](https://academy.spryker.com/display/CORE/Definition+of+API)
 - [ ] All [dependencies](https://academy.spryker.com/display/CORE/Bundle+Dependency+Guidelines) are defined, checked and corrected
 - [ ] There are no violations of the architecture rules
+- [ ] All deprecations are removed
 - [ ] All new or heavily changed classes get an "A" rating, except Facades, Factories, QueryContainers and Tests
 - [ ] All new or changed business logic is covered by unit tests (in Zed business layer)
 - [ ] If there are new OS components, they must be approved by legal department
@@ -45,6 +46,7 @@ _**Mini-Major:** Added functionality with incompatible API changes_
 Def of done (by responsible developer):
 - [ ] All methods in facade and all plugin-interfaces provide an [API-doc](https://academy.spryker.com/display/CORE/Definition+of+API)
 - [ ] New code fits to the architecture rules
+- [ ] All deprecations are removed
 - [ ] All new or heavily changed classes get an "A" rating (Scrutinizer), except Facades, Factories, QueryContainers and Tests
 - [ ] All new or changed business logic is covered by unit tests (in Zed business layer)
 - [ ] If there are new OS components, they must be approved by legal department
