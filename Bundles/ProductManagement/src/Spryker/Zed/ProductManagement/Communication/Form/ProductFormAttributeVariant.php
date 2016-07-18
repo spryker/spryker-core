@@ -34,7 +34,7 @@ class ProductFormAttributeVariant extends ProductFormAttributeAbstract
         $config['choices'] = [
             'aaa', 'bbb', 'ccc'
         ];
-        $config['tags'] = false;
+        $config['attr']['tags'] = false;
 
         $builder->add(self::FIELD_VALUE, $input, $config);
 

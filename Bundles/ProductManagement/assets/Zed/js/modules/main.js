@@ -9,11 +9,13 @@ require('ZedGui');
 require('../../sass/main.scss');
 
 $(document).ready(function() {
+    $('select.spryker-form-select2combobox:not([class=".tags"])').select2({
+        tags: false
+    });
+
     $('.spryker-form-select2combobox.tags').select2({
         tags: true
     });
-
-    //$('.attribute_metadata_value').prop('disabled', false);
 
     $('.attribute_metadata_checkbox').each(function() {
         var $item = $(this);
