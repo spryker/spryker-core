@@ -38,6 +38,9 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
 
+    const SUB_FORM_NAME = 'sub_form_name';
+
+
     /**
      * @var array
      */
@@ -196,7 +199,8 @@ class ProductFormAdd extends AbstractType
     protected function addGeneralForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new ProductFormGeneral($name), [
+            ->add($name, new ProductFormGeneral(), [
+                self::SUB_FORM_NAME => $name,
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -225,10 +229,11 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add($name, 'collection', [
-                'type' => new ProductFormAttributeAbstract(
-                    $name,
-                    $options
-                ),
+                'type' => new ProductFormAttributeAbstract(),
+                'options' => [
+                    ProductFormAttributeAbstract::OPTION_ATTRIBUTE_ABSTRACT => $options,
+                    self::SUB_FORM_NAME => $name,
+                ],
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -332,8 +337,9 @@ class ProductFormAdd extends AbstractType
     protected function addSeoForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new ProductFormSeo($name), [
+            ->add($name, new ProductFormSeo(), [
                 'label' => false,
+                self::SUB_FORM_NAME => $name,
             ]);
 
         return $this;

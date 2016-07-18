@@ -25,6 +25,8 @@ class ProductFormSeo extends AbstractSubForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
+        
         $this
             ->addMetaTitleField($builder)
             ->addMetaKeywordField($builder)

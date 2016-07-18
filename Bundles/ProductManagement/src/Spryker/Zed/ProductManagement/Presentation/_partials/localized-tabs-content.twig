@@ -11,9 +11,11 @@
             {% block tabContentRow %}
                 <div class="panel-body">
                     <div class="well">
-                        {% for input in form[formKey] %}
-                            {% block formInput %}{{ form_row(input) }}{% endblock %}
-                        {% endfor %}
+                        {% if form is defined and form[formKey] is defined %}
+                            {% for input in form[formKey] %}
+                                {% block formInput %}{{ form_row(input) }}{% endblock %}
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             {% endblock %}

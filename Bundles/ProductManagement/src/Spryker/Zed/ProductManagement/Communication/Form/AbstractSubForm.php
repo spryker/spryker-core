@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AbstractSubForm extends AbstractType
@@ -19,14 +20,6 @@ class AbstractSubForm extends AbstractType
      * @var string
      */
     protected $name;
-
-    /**
-     * @param string $name
-     */
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
 
     /**
      * @return string
@@ -45,9 +38,22 @@ class AbstractSubForm extends AbstractType
     {
         parent::setDefaultOptions($resolver);
 
+        $resolver->setRequired(ProductFormAdd::SUB_FORM_NAME);
+
         $resolver->setDefaults([
             'required' => false,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $this->name = $options[ProductFormAdd::SUB_FORM_NAME];
     }
 
 }
