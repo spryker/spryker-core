@@ -154,49 +154,16 @@
                 <h3>Manage product variants</h3>
                 <p>For the creation of product variants, start by selecting attributes and value that define the difference between your variations.</p>
                 <p><i>Note: Editing generated variants by adding or removing attributes, leads to the creation of new variants. Current configurations must be recreated.</i></p>
-                <br/>
 
-                <div class="panel-group" id="variants_accordion">
-                    <div class="panel panel-default collapsed">
-                        <div class="panel-heading">
-                            <h5 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#variants_accordion" href="#variants_accordion_collapseOne">Variant Definition</a>
-                            </h5>
-                        </div>
-                        <div id="variants_accordion_collapseOne" class="panel-collapse collapse out">
-                            <div class="panel-body">
-                                sdfssfsa
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h5 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#variants_accordion" href="#variants_accordion_collapseTwo">Variant Configuration</a>
-                            </h5>
-                        </div>
-                        <div id="variants_accordion_collapseTwo" class="panel-collapse collapse out">
-                            <div class="panel-body">
-                                <p>Select attributes and values that define the differences between your variants.</p>
-                                <div class="well">
-                                    <div class="row">
-                                    {% if form.attribute_values is defined and form.attribute_values|length > 0 %}
-                                        {% for type,input in form.attribute_values %}
-                                            <div class="col-md-4 col-sm-6 col-lg-4">
-                                                <div class="row vertical-align">
-                                                    {{ form_errors(input.value) }}
-                                                    {{ form_row(input.value) }}
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    {% else %}
-                                        No attributes found in this product.
-                                    {% endif %}
-                                    </div>
+                <div class="well">
+                    <div class="row" style="padding-right: 20px !important;">
+                        {% for input in form.attribute_variant %}
+                            <div class="col-md-10 col-sm-12 col-lg-6">
+                                <div class="row vertical-align attribute_metadata_row">
+                                    <div class="pull-right"><nobr>{{ form_row(input.name) }} {{ form_row(input.value) }}</nobr></div>
                                 </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

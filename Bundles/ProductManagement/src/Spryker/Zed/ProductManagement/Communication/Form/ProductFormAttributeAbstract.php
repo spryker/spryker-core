@@ -27,7 +27,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
     const VALUE_DISABLED = 'value_disabled';
     const INPUT = 'input';
 
-    const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
+    const OPTION_ATTRIBUTE = 'option_attribute_abstract';
 
     /**
      * @var array
@@ -44,7 +44,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setRequired(self::OPTION_ATTRIBUTE_ABSTRACT);
+        $resolver->setRequired(self::OPTION_ATTRIBUTE);
         $resolver->setRequired(ProductFormAdd::SUB_FORM_NAME);
     }
 
@@ -71,7 +71,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
      */
     protected function addCheckboxNameField(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $options[ProductFormAttributeAbstract::OPTION_ATTRIBUTE_ABSTRACT];
+        $attributes = $options[ProductFormAttributeAbstract::OPTION_ATTRIBUTE];
 
         $name = $builder->getName();
         $label = $name;
@@ -102,7 +102,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
      */
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
-        $attributes = $options[ProductFormAttributeAbstract::OPTION_ATTRIBUTE_ABSTRACT];
+        $attributes = $options[ProductFormAttributeAbstract::OPTION_ATTRIBUTE];
 
         $name = $builder->getName();
         $isDisabled = $attributes[$name][self::VALUE_DISABLED];

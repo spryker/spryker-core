@@ -75,12 +75,14 @@ class ProductFormAdd extends AbstractType
         $resolver->setRequired(self::TAX_SET);
         $resolver->setRequired(self::ID_LOCALE);
         $resolver->setRequired(self::ATTRIBUTE_ABSTRACT);
+        $resolver->setRequired(self::ATTRIBUTE_VARIANT);
 
         $validationGroups = [
             Constraint::DEFAULT_GROUP,
             self::VALIDATION_GROUP_GENERAL,
             self::VALIDATION_GROUP_PRICE_AND_TAX,
             self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
+            self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
             self::VALIDATION_GROUP_SEO
         ];
 
@@ -106,7 +108,7 @@ class ProductFormAdd extends AbstractType
             ->addSkuField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::ATTRIBUTE_ABSTRACT])
-            //->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
+            ->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
             ->addPriceForm($builder, $options[self::TAX_SET])
             ->addSeoLocalizedForms($builder, $options);
     }
@@ -221,6 +223,7 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $name
      * @param array $options
      *
      * @return $this
@@ -231,7 +234,7 @@ class ProductFormAdd extends AbstractType
             ->add($name, 'collection', [
                 'type' => new ProductFormAttributeAbstract(),
                 'options' => [
-                    ProductFormAttributeAbstract::OPTION_ATTRIBUTE_ABSTRACT => $options,
+                    ProductFormAttributeAbstract::OPTION_ATTRIBUTE => $options,
                     self::SUB_FORM_NAME => $name,
                 ],
                 'label' => false,
@@ -269,10 +272,11 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTE_VARIANT, 'collection', [
-                'type' => new ProductFormAttributeVariant(
-                    $options,
-                    self::VALIDATION_GROUP_ATTRIBUTE_VARIANT
-                ),
+                'type' => new ProductFormAttributeVariant(),
+                'options' => [
+                    ProductFormAttributeVariant::OPTION_ATTRIBUTE => $options,
+                    self::SUB_FORM_NAME => 'ProductAttributeVariant',
+                ],
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
