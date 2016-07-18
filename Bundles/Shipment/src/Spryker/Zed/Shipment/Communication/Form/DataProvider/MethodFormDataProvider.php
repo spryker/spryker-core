@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Shipment\Communication\Form\DataProvider;
 
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
+use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
@@ -26,15 +27,23 @@ class MethodFormDataProvider
     protected $plugins;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
+     */
+    protected $taxFacade;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
+     * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param array $plugins
      */
     public function __construct(
         ShipmentQueryContainerInterface $shipmentQueryContainer,
+        ShipmentToTaxInterface $taxFacade,
         array $plugins
     ) {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
         $this->plugins = $plugins;
+        $this->taxFacade = $taxFacade;
     }
 
     /**
@@ -56,6 +65,7 @@ class MethodFormDataProvider
                 MethodForm::FIELD_PRICE_PLUGIN_FIELD => $method->getPricePlugin(),
                 MethodForm::FIELD_DELIVERY_TIME_PLUGIN_FIELD => $method->getDeliveryTimePlugin(),
                 MethodForm::FIELD_IS_ACTIVE => $method->getIsActive(),
+                MethodForm::FIELD_TAX_SET_FIELD => $method->getFkTaxSet(),
             ];
 
             return $data;
@@ -83,9 +93,28 @@ class MethodFormDataProvider
                 array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
                 array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS])
             ),
+            MethodForm::OPTION_TAX_SETS => $this->createTaxSetsList(),
         ];
 
         return $options;
+    }
+
+    /**
+     * @return array
+     */
+    protected function createTaxSetsList()
+    {
+        $taxSetCollection = $this->taxFacade->getTaxSets();
+        if (!$taxSetCollection) {
+            return [];
+        }
+
+        $taxSetList = [];
+        foreach ($taxSetCollection->getTaxSets() as $taxSetTransfer) {
+            $taxSetList[$taxSetTransfer->getIdTaxSet()] = $taxSetTransfer->getName();
+        }
+
+        return $taxSetList;
     }
 
     /**

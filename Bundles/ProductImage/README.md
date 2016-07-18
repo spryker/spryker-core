@@ -8,4 +8,4 @@ composer require spryker/product-image
 
 ## Documentation
 
-[ProductImage Documentation](http://spryker.github.io/core/bundles/product-image)
+[Documentation](http://spryker.github.io)

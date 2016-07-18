@@ -320,4 +320,54 @@ class GlossaryTest extends Test
         $this->assertNotNull($translation->getIdGlossaryTranslation());
     }
 
+    /**
+     * @return void
+     */
+    public function testTouchTranslationForKeyAndCurrentLocale()
+    {
+        $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey6');
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
+        $transferTranslation = $this->glossaryFacade->createTranslationForCurrentLocale('SomeNonExistentKey6', 'some value', true);
+
+        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeTransfer->getIdLocale());
+        $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
+
+        $this->assertEquals(1, $specificTranslationQuery->count());
+        $touchCountBeforeCreation = $touchQuery->count();
+
+        $transferTranslation->setValue('setSomeOtherTranslation');
+        $this->glossaryFacade->saveTranslation($transferTranslation);
+        $this->glossaryFacade->touchTranslationForKeyId($keyId);
+
+        $touchCountAfterCreation = $touchQuery->count();
+
+        $this->assertEquals('setSomeOtherTranslation', $specificTranslationQuery->findOne()->getValue());
+        $this->assertTrue($touchCountAfterCreation > $touchCountBeforeCreation);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTouchTranslationForKeyAndCustomLocale()
+    {
+        $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey7');
+        $localeTransfer = $this->localeFacade->createLocale('ab_fg');
+        $transferTranslation = $this->glossaryFacade->createTranslation('SomeNonExistentKey7', $localeTransfer, 'some value', true);
+
+        $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeTransfer->getIdLocale());
+        $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
+
+        $this->assertEquals(1, $specificTranslationQuery->count());
+        $touchCountBeforeCreation = $touchQuery->count();
+
+        $transferTranslation->setValue('setSomeOtherTranslation');
+        $this->glossaryFacade->saveTranslation($transferTranslation);
+        $this->glossaryFacade->touchTranslationForKeyId($keyId, $localeTransfer);
+
+        $touchCountAfterCreation = $touchQuery->count();
+
+        $this->assertEquals('setSomeOtherTranslation', $specificTranslationQuery->findOne()->getValue());
+        $this->assertTrue($touchCountAfterCreation > $touchCountBeforeCreation);
+    }
+
 }

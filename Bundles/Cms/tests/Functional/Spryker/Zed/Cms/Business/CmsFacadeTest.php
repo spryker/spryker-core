@@ -21,6 +21,7 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
@@ -68,6 +69,11 @@ class CmsFacadeTest extends Test
     protected $locator;
 
     /**
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
+     */
+    protected $touchQueryContainer;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -76,10 +82,11 @@ class CmsFacadeTest extends Test
 
         $this->cmsFacade = new CmsFacade();
         $this->urlFacade = new UrlFacade();
-
         $this->localeFacade = new LocaleFacade();
+
         $this->cmsQueryContainer = new CmsQueryContainer();
         $this->glossaryQueryContainer = new GlossaryQueryContainer();
+        $this->touchQueryContainer = new TouchQueryContainer();
 
         $this->buildGlossaryFacade();
     }
@@ -321,6 +328,53 @@ class CmsFacadeTest extends Test
 
         $translation = $this->cmsFacade->translatePlaceholder($page->getIdCmsPage(), 'Placeholder1');
         $this->assertEquals('A Placeholder Translation', $translation);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePageAndTouchForCustomLocale()
+    {
+        $localeTransfer = $this->localeFacade->createLocale('ABCDE');
+        $template = $this->cmsFacade->createTemplate('APlaceholderTemplate2', 'APlaceholderTemplatePath2');
+
+        $pageTransfer = new PageTransfer();
+        $pageTransfer->setFkTemplate($template->getIdCmsTemplate());
+        $pageTransfer->setIsActive(true);
+
+        $pageTransfer = $this->cmsFacade->savePage($pageTransfer);
+        $this->cmsFacade->addPlaceholderText($pageTransfer, 'Placeholder1', 'A Placeholder Translation', $localeTransfer);
+
+        $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('page');
+
+        $touchCountBeforeCreation = $touchQuery->count();
+        $this->cmsFacade->touchPageActive($pageTransfer, $localeTransfer);
+        $touchCountAfterCreation = $touchQuery->count();
+
+        $this->assertTrue($touchCountAfterCreation > $touchCountBeforeCreation);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePageAndTouchForCurrentLocale()
+    {
+        $template = $this->cmsFacade->createTemplate('APlaceholderTemplate2', 'APlaceholderTemplatePath2');
+
+        $pageTransfer = new PageTransfer();
+        $pageTransfer->setFkTemplate($template->getIdCmsTemplate());
+        $pageTransfer->setIsActive(true);
+
+        $pageTransfer = $this->cmsFacade->savePage($pageTransfer);
+        $this->cmsFacade->addPlaceholderText($pageTransfer, 'Placeholder1', 'A Placeholder Translation');
+
+        $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('page');
+
+        $touchCountBeforeCreation = $touchQuery->count();
+        $this->cmsFacade->touchPageActive($pageTransfer);
+        $touchCountAfterCreation = $touchQuery->count();
+
+        $this->assertTrue($touchCountAfterCreation > $touchCountBeforeCreation);
     }
 
     /**

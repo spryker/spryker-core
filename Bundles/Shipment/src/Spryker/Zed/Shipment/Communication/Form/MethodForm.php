@@ -24,14 +24,16 @@ class MethodForm extends AbstractType
     const FIELD_IS_ACTIVE = 'isActive';
     const FIELD_DEFAULT_PRICE = 'defaultPrice';
     const FIELD_AVAILABILITY_PLUGIN_FIELD = 'availabilityPlugin';
-    const FIELD_PRICE_PLUGIN_FIELD = 'priceCalculationPlugin';
+    const FIELD_PRICE_PLUGIN_FIELD = 'pricePlugin';
     const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
     const FIELD_CARRIER_FIELD = 'fkShipmentCarrier';
+    const FIELD_TAX_SET_FIELD ='fkTaxSet';
 
     const OPTION_CARRIER_CHOICES = 'carrier_choices';
     const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
-    const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_calculation_plugin_choice_list';
+    const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_plugin_choice_list';
     const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
+    const OPTION_TAX_SETS = 'option_tax_sets';
 
     /**
      * @return string
@@ -56,7 +58,8 @@ class MethodForm extends AbstractType
             ->addPricePluginField($builder, $options)
             ->addDeliveryTimePluginField($builder, $options)
             ->addIsActiveField($builder)
-            ->addIdField($builder);
+            ->addIdField($builder)
+            ->addTaxSetField($builder, $options);
     }
 
     /**
@@ -73,6 +76,7 @@ class MethodForm extends AbstractType
         $resolver->setRequired(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_PRICE_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST);
+        $resolver->setRequired(self::OPTION_TAX_SETS);
 
         $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST, ChoiceList::class);
         $resolver->setAllowedTypes(self::OPTION_PRICE_PLUGIN_CHOICE_LIST, ChoiceList::class);
@@ -149,6 +153,7 @@ class MethodForm extends AbstractType
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
+            'required' => false,
         ]);
 
         return $this;
@@ -165,6 +170,7 @@ class MethodForm extends AbstractType
             'label' => 'Price Plugin',
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
+            'required' => false,
         ]);
 
         return $this;
@@ -181,6 +187,7 @@ class MethodForm extends AbstractType
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
             'choice_list' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
+            'required' => false,
         ]);
 
         return $this;
@@ -192,7 +199,9 @@ class MethodForm extends AbstractType
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox');
+        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox', [
+            'required' => false,
+        ]);
 
         return $this;
     }
@@ -204,6 +213,26 @@ class MethodForm extends AbstractType
     protected function addIdField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ID_FIELD, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addTaxSetField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            self::FIELD_TAX_SET_FIELD,
+            'choice',
+            [
+                'label' => 'Tax set',
+                'choices' => $options[self::OPTION_TAX_SETS],
+            ]
+        );
 
         return $this;
     }

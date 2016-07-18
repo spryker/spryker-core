@@ -77,4 +77,13 @@ interface ShipmentFacadeInterface
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateShipmentTaxRate(QuoteTransfer $quoteTransfer);
+
 }

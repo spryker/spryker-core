@@ -80,6 +80,10 @@ class TaxWriter implements TaxWriterInterface
 
         $taxRateEntity->fromArray($taxRateTransfer->toArray());
 
+        if ($taxRateTransfer->getFkCountry() === 0) {
+            $taxRateEntity->setFkCountry(null);
+        }
+
         foreach ($this->taxChangePlugins as $plugin) {
             $plugin->handleTaxRateChange($taxRateEntity->getIdTaxRate());
         }
@@ -101,13 +105,11 @@ class TaxWriter implements TaxWriterInterface
         $taxSetEntity = new SpyTaxSet();
         $taxSetEntity->setName($taxSetTransfer->getName());
 
-        if ($taxSetTransfer->getTaxRates()->count() === 0) {
-            throw new MissingTaxRateException($taxSetTransfer->getName() . ' tax set is missing tax rates');
-        }
-
-        foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
-            $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
-            $taxSetEntity->addSpyTaxRate($taxRateEntity);
+        if ($taxSetTransfer->getTaxRates()->count() !== 0) {
+            foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
+                $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
+                $taxSetEntity->addSpyTaxRate($taxRateEntity);
+            }
         }
 
         $taxSetEntity->save();
@@ -132,10 +134,6 @@ class TaxWriter implements TaxWriterInterface
 
         if ($taxSetEntity === null) {
             throw new ResourceNotFoundException();
-        }
-
-        if ($taxSetTransfer->getTaxRates()->count() === 0) {
-            throw new MissingTaxRateException();
         }
 
         $taxSetEntity->setName($taxSetTransfer->getName())->setSpyTaxRates(new Collection());
@@ -230,7 +228,12 @@ class TaxWriter implements TaxWriterInterface
      */
     public function deleteTaxRate($id)
     {
-        $taxRateEntity = $this->queryContainer->queryTaxRate($id)->findOne();
+        $taxRateEntity = $this->queryContainer
+            ->queryTaxRate($id)
+            ->findOne();
+
+        $taxSetTaxes = $taxRateEntity->getSpyTaxSetTaxes();
+        $taxSetTaxes->delete();
 
         if ($taxRateEntity) {
             $taxRateEntity->delete();
@@ -264,6 +267,11 @@ class TaxWriter implements TaxWriterInterface
     {
         $taxRateEntity = new SpyTaxRate();
         $taxRateEntity->fromArray($taxRateTransfer->toArray());
+
+        if ($taxRateTransfer->getFkCountry() === 0) {
+            $taxRateEntity->setFkCountry(null);
+        }
+
         $taxRateEntity->save();
 
         return $taxRateEntity;

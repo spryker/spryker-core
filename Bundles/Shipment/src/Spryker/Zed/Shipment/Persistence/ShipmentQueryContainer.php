@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -14,6 +17,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface
 {
+
+    const COL_MAX_TAX_RATE = 'MaxTaxRate';
 
     /**
      * @api
@@ -68,6 +73,35 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
         $query->filterByIdShipmentMethod($idMethod);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     * @param string $countryIso2Code
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryTaxSetByIdShipmentMethodAndCountryIso2Code($idShipmentMethod, $countryIso2Code)
+    {
+        return $this->getFactory()->createShipmentMethodQuery()
+            ->filterByIdShipmentMethod($idShipmentMethod)
+            ->useTaxSetQuery()
+                ->useSpyTaxSetTaxQuery()
+                    ->useSpyTaxRateQuery()
+                        ->useCountryQuery()
+                            ->filterByIso2Code($countryIso2Code)
+                        ->endUse()
+                        ->_or()
+                        ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
+                    ->endUse()
+                ->endUse()
+                ->withColumn(SpyTaxSetTableMap::COL_NAME)
+                ->groupBy(SpyTaxSetTableMap::COL_NAME)
+                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
+            ->endUse()
+            ->select([self::COL_MAX_TAX_RATE]);
     }
 
 }

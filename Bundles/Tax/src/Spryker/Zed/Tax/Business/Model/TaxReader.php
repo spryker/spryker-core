@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\TaxRateCollectionTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetCollectionTransfer;
@@ -38,7 +39,10 @@ class TaxReader implements TaxReaderInterface
      */
     public function getTaxRates()
     {
-        $propelCollection = $this->queryContainer->queryAllTaxRates()->find();
+        $propelCollection = $this->queryContainer
+            ->queryAllTaxRates()
+            ->orderByName()
+            ->find();
 
         $transferCollection = new TaxRateCollectionTransfer();
         foreach ($propelCollection as $taxRateEntity) {
@@ -59,13 +63,24 @@ class TaxReader implements TaxReaderInterface
      */
     public function getTaxRate($id)
     {
-        $taxRateEntity = $this->queryContainer->queryTaxRate($id)->findOne();
+        $taxRateEntity = $this->queryContainer
+            ->queryTaxRate($id)
+            ->findOne();
 
         if ($taxRateEntity === null) {
             throw new ResourceNotFoundException();
         }
 
-        return (new TaxRateTransfer())->fromArray($taxRateEntity->toArray());
+        $taxRateTransfer = new TaxRateTransfer();
+        $taxRateTransfer->fromArray($taxRateEntity->toArray());
+
+        if ($taxRateEntity->getCountry()) {
+            $countryTransfer = new CountryTransfer();
+            $countryTransfer->fromArray($taxRateEntity->getCountry()->toArray(), true);
+            $taxRateTransfer->setCountry($countryTransfer);
+        }
+
+        return $taxRateTransfer;
     }
 
     /**
@@ -110,7 +125,9 @@ class TaxReader implements TaxReaderInterface
      */
     public function getTaxSet($id)
     {
-        $taxSetEntity = $this->queryContainer->queryTaxSet($id)->findOne();
+        $taxSetEntity = $this->queryContainer
+            ->queryTaxSet($id)
+            ->findOne();
 
         if ($taxSetEntity === null) {
             throw new ResourceNotFoundException();
@@ -121,6 +138,13 @@ class TaxReader implements TaxReaderInterface
         foreach ($taxSetEntity->getSpyTaxRates() as $taxRateEntity) {
             $taxRateTransfer = new TaxRateTransfer();
             $taxRateTransfer->fromArray($taxRateEntity->toArray());
+
+            if ($taxRateEntity->getCountry()) {
+                $countryTransfer = new CountryTransfer();
+                $countryTransfer->fromArray($taxRateEntity->getCountry()->toArray(), true);
+                $taxRateTransfer->setCountry($countryTransfer);
+            }
+
             $taxSetTransfer->addTaxRate($taxRateTransfer);
         }
 

@@ -8,10 +8,16 @@
 namespace Spryker\Zed\Tax\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculator;
+use Spryker\Zed\Tax\Business\Model\ExpenseTaxCalculator;
+use Spryker\Zed\Tax\Business\Model\ItemTaxCalculator;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
+use Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\Tax\Business\Model\TaxCalculation;
+use Spryker\Zed\Tax\Business\Model\TaxDefault;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
 use Spryker\Zed\Tax\Business\Model\TaxWriter;
+use Spryker\Zed\Tax\TaxDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
@@ -54,7 +60,31 @@ class TaxBusinessFactory extends AbstractBusinessFactory
      */
     public function createTaxCalculator()
     {
-        return new TaxCalculation($this->createPriceCalculationHelper());
+        return new TaxCalculation();
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
+     */
+    public function createTaxItemAmountCalculator()
+    {
+        return new ItemTaxCalculator($this->createAccruedTaxCalculator());
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Business\Model\ExpenseTaxCalculator
+     */
+    public function createExpenseTaxCalculator()
+    {
+        return new ExpenseTaxCalculator($this->createAccruedTaxCalculator());
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator
+     */
+    public function createProductItemTaxRateCalculator()
+    {
+        return new ProductItemTaxRateCalculator($this->getQueryContainer(), $this->createTaxDefault());
     }
 
     /**
@@ -63,6 +93,30 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     public function createPriceCalculationHelper()
     {
         return new PriceCalculationHelper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Business\Model\TaxDefault
+     */
+    public function createTaxDefault()
+    {
+        return new TaxDefault($this->getStore(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(TaxDependencyProvider::STORE_CONFIG);
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Business\Model\AccruedTaxCalculator
+     */
+    public function createAccruedTaxCalculator()
+    {
+        return new AccruedTaxCalculator($this->createPriceCalculationHelper());
     }
 
 }

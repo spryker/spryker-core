@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface;
-use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridgeInterface;
+use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 
 class Operation implements OperationInterface
 {
@@ -51,14 +51,14 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface $itemGrouperFacade
-     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridgeInterface $messengerFacade
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
         CartToCalculationInterface $calculationFacade,
         CartToItemGrouperInterface $itemGrouperFacade,
-        CartToMessengerBridgeInterface $messengerFacade,
+        CartToMessengerInterface $messengerFacade,
         array $itemExpanderPlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;

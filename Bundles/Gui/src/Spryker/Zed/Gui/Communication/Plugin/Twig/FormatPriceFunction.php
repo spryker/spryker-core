@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Zed\Library\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunction;
 
 class FormatPriceFunction extends TwigFunction
 {

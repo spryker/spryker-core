@@ -1,0 +1,36 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Update tax rate' | trans %}
+
+{% block action %}
+    {{ removeActionButton(url('/tax/rate/delete', {'id-tax-rate': taxRate.idTaxRate}), 'Delete' | trans) }}
+    {{ backActionButton('/tax/rate/list', 'List of task rates' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Update tax rate' | trans } %}
+
+        {% block widget_content %}
+            {{ form_start(form) }}
+
+                {{ form_row(form.name) }}
+                {{ form_row(form.fkCountry) }}
+
+                <div class="form-group {% if form.rate.vars.errors|length > 0 %}has-error{% endif %}">
+                    {{ form_label(form.rate) }}
+                    <div class="input-group">
+                        <div class="input-group-addon">&#37;</div>
+                        {{ form_widget(form.rate) }}
+                    </div>
+                    {{ form_errors(form.rate) }}
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

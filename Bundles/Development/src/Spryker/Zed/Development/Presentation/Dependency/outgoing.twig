@@ -7,12 +7,31 @@
                 <th>{{ 'Dependency' | trans }}</th>
                 <th>{{ 'Count' | trans }}</th>
             </tr>
-            {% for count, dependency in dependencies %}
+            {% for dependency, count in dependencies %}
                 <tr>
-                    <td>{{ count }}</td>
                     <td>{{ dependency }}</td>
+                    <td>{{ count }}</td>
                 </tr>
             {% endfor %}
         </table>
     </div>
+
+    <hr>
+
+    <div class="spy-layout sparse">
+        <h3>{{ "Composer dependencies" | trans }}</h3>
+        <table class="table table-striped spy-grid">
+            <tr class="text-left">
+                <th>{{ 'Found in code' | trans }}</th>
+                <th>{{ 'Declared in composer.json' | trans }}</th>
+            </tr>
+            {% for composerDependency in composerDependencies %}
+                <tr>
+                    <td{% if not composerDependency.composer %} style="color: red"{% endif %}>{{ composerDependency.code }}</td>
+                    <td{% if not composerDependency.code %} style="color: red"{% endif %}>{{ composerDependency.composer }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
 {% endblock %}

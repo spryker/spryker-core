@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
+use Spryker\Zed\Tax\Business\Model\Exception\CalculationException;
+
 class PriceCalculationHelper implements PriceCalculationHelperInterface
 {
 
@@ -23,6 +25,11 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
     public function getTaxValueFromPrice($price, $taxPercentage, $round = true)
     {
         $price = (int)$price;
+
+        if ($price < 0) {
+            throw new CalculationException('Invalid price value given.');
+        }
+
         $amount = ($price * $taxPercentage) / ($taxPercentage + 100);
         if (!$round) {
             return $amount;
@@ -37,13 +44,23 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      *
      * @param int $price Price as integer (e. g 15508 for 155.08)
      * @param float $taxPercentage Tax percentage as float (e. g. 19.6)
+     * @param bool $round
      *
      * @return int
      */
-    public function getNetValueFromPrice($price, $taxPercentage)
+    public function getNetValueFromPrice($price, $taxPercentage, $round = true)
     {
         $price = (int)$price;
+
+        if ($price < 0) {
+            throw new CalculationException('Invalid price value given.');
+        }
+
         $amount = ($price * 100) / ($taxPercentage + 100);
+
+        if (!$round) {
+            return $amount;
+        }
 
         return round($amount);
     }
@@ -52,20 +69,24 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      * Get the real tax rate from a given gross price and given tax amount.
      *
      * @param int $price Price as integer (e.g. 15508 for 155.08)
-     * @param int $taxAmount Tax amount (e.g. 196)
+     * @param float $taxAmount Tax amount (e.g. 19.6)
      *
      * @return float
      */
     public function getTaxRateFromPrice($price, $taxAmount)
     {
         $price = (int)$price;
-        $taxAmount = (int)$taxAmount;
 
-        if ($taxAmount === 0) {
-            return 0;
+        if ($price < 0 || $taxAmount <= 0) {
+            throw new CalculationException('Invalid price or tax amount value given.');
         }
 
-        return $taxAmount / ($price - $taxAmount);
+        $netPrice = $price - $taxAmount;
+        if ($netPrice <= 0) {
+            throw new CalculationException('Division by zero.');
+        }
+
+        return $taxAmount / $netPrice;
     }
 
 }

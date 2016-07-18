@@ -9,6 +9,7 @@ namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Cal
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
 
 class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
@@ -58,7 +59,7 @@ class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGrandTotalWithDiscountsWhenTotalsNotPresentShouldThrowAssertException()
     {
-        $this->setExpectedException('Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException');
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $quoteTransfer = $this->createQuoteTransfer();
 

@@ -27,4 +27,12 @@ interface CheckoutPluginCollectionInterface
      */
     public function get($provider, $pluginType);
 
+    /**
+     * @param string $provider
+     * @param string $pluginType
+     *
+     * @return bool
+     */
+    public function has($provider, $pluginType);
+
 }

@@ -34,4 +34,14 @@ interface ProductOptionQueryContainerInterface
      */
     public function queryProductOptionByValueId($idProductOptionValue);
 
+    /**
+     * @api
+     *
+     * @param int[] $allIdOptionValueUsages
+     * @param string $countryIso2Code
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code);
+
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Tax\Business\Model\OrderAmountAggregator;
+namespace Unit\Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -55,7 +55,7 @@ class OrderItemTaxTest extends \PHPUnit_Framework_TestCase
 
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->setTaxRate(19);
-        $expenseTransfer->setUnitGrossPrice(10);
+        $expenseTransfer->setSumTaxAmount(10);
         $expenseTransfer->setSumGrossPrice(20);
         $orderTransfer->addExpense($expenseTransfer);
 
@@ -69,9 +69,9 @@ class OrderItemTaxTest extends \PHPUnit_Framework_TestCase
     {
         $taxFacadeMock = $this->createTaxFacadeMock();
 
-        $taxFacadeMock->expects($this->exactly(2))->method('getTaxAmountFromGrossPrice')->willReturnCallback(
-            function ($grosPrice, $taxRate) {
-                return round($grosPrice / $taxRate); //not testing calculation. just make sure it was applied
+        $taxFacadeMock->expects($this->exactly(2))->method('getAccruedTaxAmountFromGrossPrice')->willReturnCallback(
+            function ($grossPrice, $taxRate) {
+                return round($grossPrice / $taxRate); //not testing calculation. just make sure it was applied
             }
         );
 

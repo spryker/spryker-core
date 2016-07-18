@@ -137,4 +137,20 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
             ->save($quoteTransfer, $checkoutResponse);
     }
 
+    /**
+     * Specification:
+     *  - Calculate tax rate for current quote
+     *  - Set tax rate perecentage
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateProductOptionTaxRate(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createProductOptionTaxRateCalculator()->recalculate($quoteTransfer);
+    }
+
 }
