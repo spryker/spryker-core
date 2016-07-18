@@ -1,41 +1,5 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% macro localizedTabs(formPrefix, localeCollection, form, currentLocale) %}
-    {# find out which localized tab has errors  #}
-    {% set errorList = [] %}
-    {% for localeCode in localeCollection %}
-        {% set formKey = formPrefix ~ '_' ~ localeCode %}
-        {% for input in form[formKey] %}
-            {%  if input.vars.errors is defined and input.vars.errors|length %}
-                {%  set errorList = errorList|merge([{'code': localeCode, 'field': input.vars.errors.form.config.name }]) %}
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
-
-    <ul class="nav nav-tabs">
-        {% for localeCode in localeCollection %}
-            {% set formKey = formPrefix ~ localeCode %}
-            {% set activeCss = '' %}
-            {% set invalidCss = '' %}
-            {% set invalidCssFound = false %}
-
-            {% if currentLocale == localeCode %}
-                {% set activeCss =  'active' %}
-            {% endif %}
-
-            {% for error in errorList %}
-                {% if error.code == localeCode and not invalidCssFound %}
-                    {% set invalidCss = 'invalid-tab' %}
-                    {% set invalidCssFound = true %}
-                {% endif %}
-            {% endfor %}
-
-            <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_{{ formPrefix }}_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
-        {% endfor %}
-    </ul>
-{% endmacro %}
-
-
 {% if widget_title is not defined %}
     {% set widget_title = 'Product Add' | trans %}
 {% endif %}
@@ -104,40 +68,15 @@
                 <div class="well">
                     {{ form_row(form.sku) }}
 
-                    {# find out which localized tab has errors  #}
-                    {% set generalLocalizedErrors = [] %}
-                    {% for localeCode in localeCollection %}
-                        {% set generalKey = 'general_' ~ localeCode %}
-                            {% for input in form[generalKey] %}
-                                {%  if input.vars.errors is defined and input.vars.errors|length %}
-                                    {%  set generalLocalizedErrors = generalLocalizedErrors|merge([{'code': localeCode, 'field': input.vars.errors.form.config.name }]) %}
-                                {% endif %}
-                            {% endfor %}
-                    {% endfor %}
-
-                    <div class="tabs-container locale">
-                        <div class="tabs-left">
-                        <ul class="nav nav-tabs locale">
-                        {% for localeCode in localeCollection %}
-                            {% set generalKey = 'general_' ~ localeCode %}
-                            {% set activeCss = '' %}
-                            {% set invalidCss = '' %}
-                            {% set invalidCssFound = false %}
-
-                            {% if currentLocale == localeCode %}
-                                {% set activeCss =  'active' %}
-                            {% endif %}
-
-                            {% for error in generalLocalizedErrors %}
-                                {% if error.code == localeCode and not invalidCssFound %}
-                                    {% set invalidCss = 'invalid-tab' %}
-                                    {% set invalidCssFound = true %}
-                                {% endif %}
-                            {% endfor %}
-
-                            <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_general_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
-                        {% endfor %}
-                        </ul>
+                    <div class="tabs-container">
+                        <div class="tabs-top">
+                            {% embed '@ProductManagement/_partials/localized-tabs.twig' with {
+                            formPrefix: 'general',
+                            localeCollection: localeCollection,
+                            currentLocale: currentLocale,
+                            form: form
+                            } %}
+                            {% endembed %}
 
                         <div class="tab-content">
                             {% for localeCode in localeCollection %}
@@ -176,70 +115,24 @@
                         {% set attributeLocaleCollection = localeCollection %}
                         {% set attributeLocaleCollection = attributeLocaleCollection|merge(['default']) %}
 
-                        {# find out which localized tab has errors
-                        {% set generalLocalizedErrors = [] %}
-                        {% for localeCode in attributeLocaleCollection %}
-                            {% set generalKey = 'attribute_abstract_' ~ localeCode %}
-                            {% for input in form[generalKey] %}
-                                {%  if input.vars.errors is defined and input.vars.errors|length %}
-                                    {%  set generalLocalizedErrors = generalLocalizedErrors|merge([{'code': localeCode, 'field': input.vars.errors.form.config.name }]) %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                        #}
-
                         <div class="tabs-container">
                             <div class="tabs-top">
-{#                                <ul class="nav nav-tabs">
-                                    {% for localeCode in attributeLocaleCollection %}
-                                        {% set generalKey = 'attribute_abstract_' ~ localeCode %}
-                                        {% set activeCss = '' %}
-                                        {% set invalidCss = '' %}
-                                        {% set invalidCssFound = false %}
+                                <div class="tabs-top">
+                                    {% embed '@ProductManagement/_partials/localized-tabs.twig' with {
+                                    formPrefix: 'attribute_abstract',
+                                    localeCollection: attributeLocaleCollection,
+                                    currentLocale: currentLocale,
+                                    form: form
+                                    } %}
+                                    {% endembed %}
 
-                                        {% if currentLocale == localeCode %}
-                                            {% set activeCss =  'active' %}
-                                        {% endif %}
-
-                                        {% for error in generalLocalizedErrors %}
-                                            {% if error.code == localeCode and not invalidCssFound %}
-                                                {% set invalidCss = 'invalid-tab' %}
-                                                {% set invalidCssFound = true %}
-                                            {% endif %}
-                                        {% endfor %}
-
-                                        <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_attribute_abstract_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
-                                    {% endfor %}
-                                </ul>#}
-
-                                {{ forms.localizedTabs('attribute_abstract', attributeLocaleCollection, form, currentLocale) }}
-
-                                <div class="tab-content">
-                                    {% for localeCode in attributeLocaleCollection %}
-                                        {% set generalKey = 'attribute_abstract_' ~ localeCode %}
-                                        {% set activeCss = '' %}
-
-                                        {% if currentLocale == localeCode %}
-                                            {% set activeCss =  'active' %}
-                                        {% endif %}
-
-                                        <div id="content_attribute_abstract_{{ localeCode }}" class="tab-pane {{ activeCss }}">
-                                            <div class="panel-body">
-                                                <div class="well">
-                                                    <div class="row" style="padding-right: 20px !important;">
-                                                    {% for input in form[generalKey] %}
-                                                        <div class="col-md-10 col-sm-12 col-lg-6">
-                                                            <div class="row vertical-align attribute_metadata_row">
-                                                                <div class="pull-right"><nobr>{{ form_row(input.name) }} {{ form_row(input.value) }}</nobr></div>
-                                                            </div>
-                                                        </div>
-                                                    {% endfor %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                                {% embed '@ProductManagement/_partials/localized-attributes-form-tabs.twig' with {
+                                    formPrefix: 'attribute_abstract',
+                                    localeCollection: attributeLocaleCollection,
+                                    currentLocale: currentLocale,
+                                    form: form
+                                } %}
+                                {% endembed %}
                             </div>
                         </div>
                     </div>
