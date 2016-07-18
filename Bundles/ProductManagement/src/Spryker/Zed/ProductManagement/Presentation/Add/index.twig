@@ -78,7 +78,7 @@
                             } %}
                             {% endembed %}
 
-                        <div class="tab-content">
+                            <div class="tab-content">
                             {% for localeCode in localeCollection %}
                                 {% set generalKey = 'general_' ~ localeCode %}
                                 {% set activeCss = '' %}
@@ -97,10 +97,10 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
         {# ============================ END ============================ #}
@@ -117,7 +117,6 @@
 
                         <div class="tabs-container">
                             <div class="tabs-top">
-                                <div class="tabs-top">
                                     {% embed '@ProductManagement/_partials/localized-tabs.twig' with {
                                     formPrefix: 'attribute_abstract',
                                     localeCollection: attributeLocaleCollection,
