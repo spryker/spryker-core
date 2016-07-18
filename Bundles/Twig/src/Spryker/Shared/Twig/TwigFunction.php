@@ -5,11 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Library\Twig;
+namespace Spryker\Shared\Twig;
 
-/**
- * @deprecated Use Twig bundle instead.
- */
 abstract class TwigFunction extends \Twig_SimpleFunction
 {
 

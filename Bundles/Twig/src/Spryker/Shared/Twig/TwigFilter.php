@@ -7,5 +7,5 @@
 
 namespace Spryker\Shared\Twig;
 
-class TwigSimpleFilter extends \Twig_SimpleFilter {
+class TwigFilter extends \Twig_SimpleFilter {
 }
