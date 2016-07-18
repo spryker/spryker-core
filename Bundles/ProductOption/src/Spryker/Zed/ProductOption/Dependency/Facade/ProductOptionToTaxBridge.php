@@ -6,7 +6,41 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
-class ProductOptionToTaxBridge
+class ProductOptionToTaxBridge implements ProductOptionToTaxInterface
 {
-
+    /**
+     * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
+     */
+    protected $taxFacade;
+    /**
+     * @param \Spryker\Zed\Tax\Business\TaxFacadeInterface $taxFacade
+     */
+    public function __construct($taxFacade)
+    {
+        $this->taxFacade = $taxFacade;
+    }
+    /**
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
+    {
+        return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+    }
+    /**
+     * @return string
+     */
+    public function getDefaultTaxCountryIso2Code()
+    {
+        return $this->taxFacade->getDefaultTaxCountryIso2Code();
+    }
+    /**
+     * @return float
+     */
+    public function getDefaultTaxRate()
+    {
+        return $this->taxFacade->getDefaultTaxRate();
+    }
 }

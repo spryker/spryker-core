@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchBridge;
 
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
@@ -42,6 +43,10 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new ProductOptionToTouchBridge($container->getLocator()->touch()->facade());
+        };
+
+        $container[self::FACADE_TAX] = function (Container $container) {
+            return new ProductOptionToTaxBridge($container->getLocator()->tax()->facade());
         };
 
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {

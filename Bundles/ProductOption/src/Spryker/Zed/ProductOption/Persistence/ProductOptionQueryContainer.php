@@ -16,6 +16,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 {
 
     const COL_MAX_TAX_RATE = 'MaxTaxRate';
+    const COL_ID_PRODUCT_OPTION_VALUE_USAGE = 'IdProductOptionValueUsage';
 
     /**
      * @param int $idProductOptionGroup
@@ -59,7 +60,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @api
      *
      * @param int[] $allIdOptionValueUsages
      * @param string $countryIso2Code
