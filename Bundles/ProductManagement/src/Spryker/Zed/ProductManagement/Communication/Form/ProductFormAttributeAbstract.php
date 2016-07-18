@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Spryker\Zed\ProductManagement\Communication\Form\Constraints\AttributeFieldNotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Callback;

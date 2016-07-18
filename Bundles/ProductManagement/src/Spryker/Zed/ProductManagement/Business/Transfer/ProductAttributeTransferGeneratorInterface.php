@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Business\Transfer;
 
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeLocalized;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
 use Propel\Runtime\Collection\ObjectCollection;
 

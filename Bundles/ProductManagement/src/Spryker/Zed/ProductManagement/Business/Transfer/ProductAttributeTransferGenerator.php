@@ -7,17 +7,9 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Transfer;
 
-use Generated\Shared\Transfer\ProductManagementAttributeInputTransfer;
-use Generated\Shared\Transfer\ProductManagementAttributeLocalizedTransfer;
-use Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
-use Generated\Shared\Transfer\ProductManagementAttributeTypeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeInput;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeLocalized;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeMetadata;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeType;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
 use Propel\Runtime\Collection\ObjectCollection;
 

@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AttributeForm extends AbstractType
 {
+
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
     const FIELD_KEY = 'key';
     const FIELD_INPUT_TYPE = 'input_type';

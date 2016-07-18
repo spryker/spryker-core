@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;

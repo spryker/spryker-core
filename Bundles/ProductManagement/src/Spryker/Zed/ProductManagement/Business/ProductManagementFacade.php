@@ -108,6 +108,8 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
@@ -120,6 +122,8 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
@@ -132,6 +136,8 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer[] $attributeTranslationFormTransfers
      *
      * @return void

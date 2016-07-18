@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Table;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -105,14 +105,14 @@ class AttributeTable extends AbstractTable
 
         $urls[] = $this->generateViewButton(
             Url::generate('/product-management/attributes/view', [
-                'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE ],
+                'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
             ]),
             'View'
         );
 
         $urls[] = $this->generateEditButton(
             Url::generate('/product-management/attributes/edit', [
-                'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE ],
+                'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
             ]),
             'Edit'
         );

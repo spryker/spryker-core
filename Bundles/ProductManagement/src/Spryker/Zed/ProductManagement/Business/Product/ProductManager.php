@@ -1105,7 +1105,7 @@ class ProductManager implements ProductManagerInterface
         ));
 
         $attributeProcessor->setAbstractLocalizedAttributes(new Collection(
-            (array) $productAbstractTransfer->getLocalizedAttributes()
+            (array)$productAbstractTransfer->getLocalizedAttributes()
         ));
 
         return $attributeProcessor;

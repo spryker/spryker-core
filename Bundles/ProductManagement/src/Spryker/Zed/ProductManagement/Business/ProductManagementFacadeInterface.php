@@ -52,7 +52,7 @@ interface ProductManagementFacadeInterface
      * @return array
      */
     public function getProductAttributeCollection();
-    
+
     /**
      * @api
      *
@@ -74,6 +74,8 @@ interface ProductManagementFacadeInterface
     public function getProductAttributesByAbstractProductId($idProductAbstract);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
@@ -81,6 +83,8 @@ interface ProductManagementFacadeInterface
     public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
@@ -88,6 +92,8 @@ interface ProductManagementFacadeInterface
     public function updateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer[] $attributeTranslationFormTransfers
      *
      * @return void

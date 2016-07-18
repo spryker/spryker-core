@@ -106,7 +106,7 @@ class AttributeTranslator implements AttributeTranslatorInterface
 
             return;
         }
-        
+
         $this->glossaryFacade->createAndTouchTranslation(
             $attributeGlossaryKey,
             $localeTransfer,

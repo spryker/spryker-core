@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AttributeValueTranslationForm extends AbstractType
 {
+
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE = 'id_product_management_attribute_value';
     const FIELD_VALUE = 'value';
     const FIELD_TRANSLATION = 'translation';

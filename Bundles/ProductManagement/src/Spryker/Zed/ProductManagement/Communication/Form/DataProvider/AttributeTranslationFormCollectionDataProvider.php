@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\ProductManagement\Persistence\Base\SpyProductManagementAttribute;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationForm;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationFormCollection;

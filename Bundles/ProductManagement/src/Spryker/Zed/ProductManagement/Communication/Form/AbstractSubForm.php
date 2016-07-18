@@ -15,7 +15,7 @@ class AbstractSubForm extends AbstractType
 {
 
     public static $errorFieldsDisplayed = [];
-    
+
     /**
      * @var string
      */

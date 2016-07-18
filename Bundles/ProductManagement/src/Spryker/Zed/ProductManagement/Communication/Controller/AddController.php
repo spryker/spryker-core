@@ -116,7 +116,7 @@ class AddController extends AbstractController
     {
         $productConcreteTransfer = new ZedProductConcreteTransfer();
         $productConcreteTransfer->setAttributes([]);
-        $productConcreteTransfer->setSku($productAbstractTransfer->getSku() . '-' . rand(1,999));
+        $productConcreteTransfer->setSku($productAbstractTransfer->getSku() . '-' . rand(1, 999));
         $productConcreteTransfer->setIsActive(false);
         $productConcreteTransfer->setAbstractSku($productAbstractTransfer->getSku());
         $productConcreteTransfer->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
@@ -294,7 +294,8 @@ class AddController extends AbstractController
     {
         $r = [];
         foreach ($concreteProductCollection as $t) {
-            $c = $t->toArray(true);;
+            $c = $t->toArray(true);
+            ;
             $c['attributes'] = $this->getFacade()->getProductAttributesByAbstractProductId($idProductAbstract);
             $r[] = $c;
         }

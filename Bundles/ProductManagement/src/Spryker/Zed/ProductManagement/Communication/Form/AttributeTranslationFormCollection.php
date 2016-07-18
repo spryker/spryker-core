@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AttributeTranslationFormCollection extends AbstractType
 {
+
     const FIELD_TRANSLATIONS = 'translations';
 
     /**

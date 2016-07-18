@@ -14,7 +14,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormAdd extends AbstractType
@@ -39,7 +38,6 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
 
     const SUB_FORM_NAME = 'sub_form_name';
-
 
     /**
      * @var array
@@ -388,4 +386,5 @@ class ProductFormAdd extends AbstractType
     {
         return self::getLocalizedPrefixName(self::ATTRIBUTE_ABSTRACT, $localeCode);
     }
+
 }

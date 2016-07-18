@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeValues;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 
@@ -32,8 +31,8 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             unset($formData['product_images_sets']);
             unset($formData['localized_attributes']);
 
-            $formData[ProductFormAdd::GENERAL] = $this->getLocalizedAttributesAsArray((array) $attributeProcessor->getAbstractLocalizedAttributes());
-            $formData[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $this->getLocalizedAttributesAsArray((array) $attributeProcessor->getAbstractAttributes());
+            $formData[ProductFormAdd::GENERAL] = $this->getLocalizedAttributesAsArray((array)$attributeProcessor->getAbstractLocalizedAttributes());
+            $formData[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $this->getLocalizedAttributesAsArray((array)$attributeProcessor->getAbstractAttributes());
 
             $priceTransfer = $this->priceFacade->getProductAbstractPrice($idProductAbstract);
             if ($priceTransfer) {

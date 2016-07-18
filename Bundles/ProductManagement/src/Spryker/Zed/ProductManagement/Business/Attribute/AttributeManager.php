@@ -77,5 +77,4 @@ class AttributeManager implements AttributeManagerInterface
         return $this->getTransferGenerator()->convertProductAttributeValueCollection($collection);
     }
 
-
 }

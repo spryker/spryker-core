@@ -111,4 +111,5 @@ class ProductManagementToGlossaryBridge implements ProductManagementToGlossaryIn
     {
         return $this->glossaryFacade->createKey($keyName);
     }
+
 }
