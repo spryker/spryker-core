@@ -10,7 +10,7 @@ namespace Spryker\Zed\Price\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Price\Communication\Plugin\Twig\PriceTwigExtensions;
+use Spryker\Zed\Price\Communication\Plugin\Twig\PriceTwigExtension;
 
 /**
  * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
@@ -28,7 +28,7 @@ class PriceServiceProvider extends AbstractPlugin implements ServiceProviderInte
     {
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) {
-                $twig->addExtension(new PriceTwigExtensions());
+                $twig->addExtension(new PriceTwigExtension());
 
                 return $twig;
             })

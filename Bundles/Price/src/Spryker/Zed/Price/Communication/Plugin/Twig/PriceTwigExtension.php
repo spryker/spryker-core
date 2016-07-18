@@ -8,12 +8,10 @@
 namespace Spryker\Zed\Price\Communication\Plugin\Twig;
 
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Zed\Price\Communication\Plugin\Twig\Filters\PriceFilter;
 
-/**
- * @deprecated Use PriceTwigExtension class instead.
- */
-class PriceTwigExtensions extends \Twig_Extension
+class PriceTwigExtension extends TwigExtension
 {
 
     /**
