@@ -39,7 +39,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * Remove item(s) from the quote.
+     * Removes item(s) from the quote.
      *
      * Specification:
      * - For each new item run the item expander plugins (requires a SKU for each new item)
