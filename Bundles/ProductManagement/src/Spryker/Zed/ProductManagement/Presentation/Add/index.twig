@@ -70,7 +70,7 @@
 
                     <div class="tabs-container">
                         <div class="tabs-top">
-                            {% embed '@ProductManagement/_partials/localized-tabs.twig' with {
+                            {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs.twig' with {
                             formPrefix: 'general',
                             localeCollection: localeCollection,
                             currentLocale: currentLocale,
@@ -96,7 +96,7 @@
 
                         <div class="tabs-container">
                             <div class="tabs-top">
-                                {% embed '@ProductManagement/_partials/localized-tabs-nav.twig' with {
+                                {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-nav.twig' with {
                                     formPrefix: 'attribute_abstract',
                                     localeCollection: attributeLocaleCollection,
                                     currentLocale: currentLocale,
@@ -104,7 +104,7 @@
                                     } %}
                                 {% endembed %}
 
-                                {% embed '@ProductManagement/_partials/localized-tabs-content.twig' with {
+                                {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-content.twig' with {
                                     formPrefix: 'attribute_abstract',
                                     localeCollection: attributeLocaleCollection,
                                     currentLocale: currentLocale,
@@ -321,7 +321,7 @@
                 <div class="well">
                     <h3>Meta Information</h3>
                     <p>Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.</p>
-                        {% embed '@ProductManagement/_partials/localized-tabs.twig' with {
+                        {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs.twig' with {
                         formPrefix: 'seo',
                         localeCollection: localeCollection,
                         currentLocale: currentLocale,

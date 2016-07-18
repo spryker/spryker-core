@@ -1,6 +1,6 @@
 <div class="tabs-container">
     <div class="tabs-top">
-        {% embed '@ProductManagement/_partials/localized-tabs-nav.twig' with {
+        {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-nav.twig' with {
         formPrefix: formPrefix,
         localeCollection: localeCollection,
         currentLocale: currentLocale,
@@ -8,7 +8,7 @@
         } %}
         {% endembed %}
 
-        {% embed '@ProductManagement/_partials/localized-tabs-content.twig' with {
+        {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-content.twig' with {
         formPrefix: formPrefix,
         localeCollection: localeCollection,
         currentLocale: currentLocale,
