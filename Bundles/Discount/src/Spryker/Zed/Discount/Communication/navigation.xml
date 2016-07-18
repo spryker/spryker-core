@@ -3,26 +3,35 @@
     <discount>
         <label>Discount</label>
         <title>Discount</title>
-        <uri>#</uri>
         <icon>fa-credit-card</icon>
         <bundle>discount</bundle>
+        <controller>index</controller>
+        <action>list</action>
         <pages>
-            <pool>
-                <label>Voucher Codes</label>
-                <title>Voucher Codes</title>
+            <create>
+                <label>Create Discount</label>
+                <title>Create Discount</title>
                 <bundle>discount</bundle>
-                <controller>pool</controller>
-                <action>index</action>
-                <icon>fa-file-code-o</icon>
-            </pool>
-            <cart-rules>
-                <label>Cart Rules</label>
-                <title>Cart Rules</title>
+                <controller>index</controller>
+                <action>create</action>
+                <visible>0</visible>
+            </create>
+            <edit>
+                <label>Edit Discount</label>
+                <title>Edit Discount</title>
                 <bundle>discount</bundle>
-                <controller>cart-rule</controller>
-                <action>index</action>
-                <icon>fa-thumb-tack</icon>
-            </cart-rules>
+                <controller>index</controller>
+                <action>edit</action>
+                <visible>0</visible>
+            </edit>
+            <view>
+                <label>View Discount</label>
+                <title>View Discount</title>
+                <bundle>discount</bundle>
+                <controller>index</controller>
+                <action>view</action>
+                <visible>0</visible>
+            </view>
         </pages>
     </discount>
 </config>

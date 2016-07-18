@@ -9,7 +9,9 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Silex\Application;
 use Silex\Controller;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
+use Spryker\Shared\Config\Config;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
@@ -22,17 +24,17 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     /**
      * @var \Silex\ControllerCollection
      */
-    private $controllerCollection;
+    protected $controllerCollection;
 
     /**
      * @var \Silex\Application
      */
-    private $app;
+    protected $app;
 
     /**
      * @var bool
      */
-    private $sslEnabled;
+    protected $sslEnabled;
 
     /**
      * Set the sslEnabledFlag to
@@ -103,22 +105,10 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
         $actionName = 'index',
         $parseJsonBody = false
     ) {
-        $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);
-        $controllerResolver = new ControllerResolver($bundleControllerAction);
-        $routeResolver = new BundleControllerActionRouteNameResolver($bundleControllerAction);
+        $service = $this->getService($bundle, $controllerName, $actionName);
+        $controller = $this->getController($path, $name, $service);
 
-        $service = (new ControllerServiceBuilder())->createServiceForController(
-            $this->app,
-            $bundleControllerAction,
-            $controllerResolver,
-            $routeResolver
-        );
-
-        $controller = $this->controllerCollection
-            ->match($path, $service)
-            ->bind($name);
-
-        if ($this->sslEnabled === true) {
+        if ($this->sslEnabled === true && !$this->isSslExcluded($name)) {
             $controller->requireHttps();
         } elseif ($this->sslEnabled === false) {
             $controller->requireHttp();
@@ -202,6 +192,60 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
                 $request->request->replace(is_array($data) ? $data : []);
             }
         });
+    }
+
+    /**
+     * @param string $routeName
+     *
+     * @return bool
+     */
+    protected function isSslExcluded($routeName)
+    {
+        $excludedUrls = $this->getExcludedUrls();
+
+        return !empty($excludedUrls[$routeName]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getExcludedUrls()
+    {
+        return Config::get(ApplicationConstants::YVES_SSL_EXCLUDED, []);
+    }
+
+    /**
+     * @param string $bundle
+     * @param string $controllerName
+     * @param string $actionName
+     *
+     * @return string
+     */
+    protected function getService($bundle, $controllerName, $actionName)
+    {
+        $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);
+        $controllerResolver = new ControllerResolver($bundleControllerAction);
+        $routeResolver = new BundleControllerActionRouteNameResolver($bundleControllerAction);
+
+        $service = (new ControllerServiceBuilder())->createServiceForController($this->app, $bundleControllerAction, $controllerResolver, $routeResolver);
+
+        return $service;
+    }
+
+    /**
+     * @param string $path
+     * @param string $name
+     * @param string $service
+     *
+     * @return \Silex\Controller
+     */
+    protected function getController($path, $name, $service)
+    {
+        $controller = $this->controllerCollection
+            ->match($path, $service)
+            ->bind($name);
+
+        return $controller;
     }
 
 }

@@ -18,7 +18,7 @@ use Orm\Zed\Discount\Persistence\Base\SpyDiscount as BaseSpyDiscount;
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  *
- * @method \Orm\Zed\Discount\Persistence\SpyDiscount getUsedVoucherCode()
+ * @method \Orm\Zed\Discount\Persistence\SpyDiscount getVoucherCode()
  */
 abstract class AbstractSpyDiscount extends BaseSpyDiscount
 {

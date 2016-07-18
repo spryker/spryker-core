@@ -15,4 +15,3 @@ settings:
 coverage:
     enabled: true
     whitelist: { include: ['src/*'] }
-    blacklist: { exclude: ['tests/*', '../../../../../vendor/*'] }

@@ -1,0 +1,25 @@
+<h3>{{ 'Fill in the general discount information' | trans }}</h3>
+<hr />
+
+{{ form_row(discountForm.discountGeneral.discount_type) }}
+
+{{ form_row(discountForm.discountGeneral.display_name) }}
+
+{{ form_row(discountForm.discountGeneral.description) }}
+
+{{ form_row(discountForm.discountGeneral.is_exclusive) }}
+
+
+{{ form_label(discountForm.discountGeneral.valid_from) }}
+<div class="row">
+    <div class="col-xs-12">
+        {{ form_widget(discountForm.discountGeneral.valid_from) }}
+    </div>
+</div>
+
+{{ form_label(discountForm.discountGeneral.valid_to) }}
+<div class="row">
+    <div class="col-xs-12">
+        {{ form_widget(discountForm.discountGeneral.valid_to) }}
+    </div>
+</div>

@@ -8,4 +8,4 @@ composer require spryker/item-grouper
 
 ## Documentation
 
-[ItemGrouper Documentation](http://spryker.github.io/core/bundles/item-grouper)
+[Documentation](http://spryker.github.io)

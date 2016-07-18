@@ -1,0 +1,258 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Yves\Ratepay\Form;
+
+use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
+use Spryker\Shared\Ratepay\RatepayConstants;
+use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+class InstallmentSubForm extends SubFormAbstract
+{
+
+    const PAYMENT_METHOD = 'installment';
+
+    const OPTION_DEBIT_PAY_TYPE = 'debit_pay_type';
+    const OPTION_CALCULATION_TYPE = 'installment_calculation_type';
+    const OPTION_MONTH_ALLOWED = 'interest_month';
+
+    const FIELD_INTEREST_RATE = 'interest_rate';
+    const FIELD_BANK_ACCOUNT_HOLDER = 'bank_account_holder';
+    const FIELD_BANK_ACCOUNT_BIC = 'bank_account_bic';
+    const FIELD_BANK_ACCOUNT_IBAN = 'bank_account_iban';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults([
+            'data_class' => RatepayPaymentInstallmentTransfer::class,
+            SubFormInterface::OPTIONS_FIELD_NAME => [],
+        ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPropertyPath()
+    {
+        return RatepayConstants::PAYMENT_METHOD_INSTALLMENT;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return RatepayConstants::PAYMENT_METHOD_INSTALLMENT;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplatePath()
+    {
+        return RatepayConstants::PROVIDER_NAME . '/' . static::PAYMENT_METHOD;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+
+        $this
+            ->addDebitPayType($builder, $options)
+            ->addCalculationType($builder, $options)
+            ->addBankAccountHolder($builder)
+            ->addBankAccountBic($builder)
+            ->addBankAccountIban($builder)
+            ->addAllowedMonth($builder, $options)
+            ->addInterestRate($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addDebitPayType($builder, array $options)
+    {
+        $builder->add(
+            self::OPTION_DEBIT_PAY_TYPE,
+            'choice',
+            [
+                'choices' => $options['select_options'][self::OPTION_DEBIT_PAY_TYPE],
+                'label' => false,
+                'required' => true,
+                'expanded' => false,
+                'multiple' => false,
+                'empty_value' => false,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addCalculationType($builder, array $options)
+    {
+        $builder->add(
+            self::OPTION_CALCULATION_TYPE,
+            'choice',
+            [
+                'choices' => $options['select_options'][self::OPTION_CALCULATION_TYPE],
+                'label' => false,
+                'required' => true,
+                'expanded' => false,
+                'multiple' => false,
+                'empty_value' => false,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addAllowedMonth($builder, array $options)
+    {
+        $builder->add(
+            self::OPTION_MONTH_ALLOWED,
+            'choice',
+            [
+                'choices' => $options['select_options'][self::OPTION_MONTH_ALLOWED],
+                'label' => false,
+                'required' => true,
+                'expanded' => false,
+                'multiple' => false,
+                'empty_value' => false,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    public function addInterestRate($builder)
+    {
+        $builder->add(
+            self::FIELD_INTEREST_RATE,
+            'text',
+            [
+                'label' => false,
+                'required' => true,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    public function addBankAccountHolder($builder)
+    {
+        $builder->add(
+            self::FIELD_BANK_ACCOUNT_HOLDER,
+            'text',
+            [
+                'label' => false,
+                'required' => false,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    public function addBankAccountBic($builder)
+    {
+        $builder->add(
+            self::FIELD_BANK_ACCOUNT_BIC,
+            'text',
+            [
+                'label' => false,
+                'required' => false,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    public function addBankAccountIban($builder)
+    {
+        $builder->add(
+            self::FIELD_BANK_ACCOUNT_IBAN,
+            'text',
+            [
+                'label' => false,
+                'required' => false,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+}

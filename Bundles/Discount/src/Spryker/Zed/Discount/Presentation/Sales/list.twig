@@ -5,23 +5,23 @@
         <div class="row">
             <div class="col-md-6">
                 <table class="table">
-                    <caption>Voucher</caption>
+                    <caption>{{ 'Voucher' | trans }}</caption>
                     {% for calculatedDiscount in order.calculatedDiscounts %}
                         {% if calculatedDiscount.voucherCode  %}
                             <tr>
-                                <th>Name</th>
+                                <th>{{ 'Name' | trans }}</th>
                                 <td class="text-right">{{ calculatedDiscount.displayName }}</td>
                             </tr>
                             <tr>
-                                <th>Value</th>
+                                <th>{{ 'Value' | trans }}</th>
                                 <td class="text-right">{{ calculatedDiscount.sumGrossAmount | currency }}</td>
                             </tr>
                             <tr>
-                                <th>Voucher Code</th>
+                                <th>{{ 'Voucher Code' | trans }}</th>
                                 <td class="text-right">{{ calculatedDiscount.voucherCode }}</td>
                             </tr>
                             <tr>
-                                <th>Description</th>
+                                <th>{{ 'Description' | trans }}</th>
                                 <td class="text-right">{{ calculatedDiscount.description }}</td>
                             </tr>
                         {% endif %}
@@ -30,19 +30,19 @@
             </div>
             <div class="col-md-6">
                 <table class="table">
-                    <caption>Cart Rules</caption>
+                    <caption>{{ 'Cart Rules' | trans }}</caption>
                     {% for calculatedDiscount in order.calculatedDiscounts %}
                         {% if calculatedDiscount.voucherCode is empty  %}
                             <tr>
-                                <th>Name</th>
+                                <th>{{ 'Name' | trans }}</th>
                                 <td class="text-right">{{ calculatedDiscount.displayName }}</td>
                             </tr>
                             <tr>
-                                <th>Value</th>
+                                <th>{{ 'Value' | trans }}</th>
                                 <td class="text-right">{{ calculatedDiscount.sumGrossAmount | currency }}</td>
                             </tr>
                             <tr>
-                                <th>Description</th>
+                                <th>{{ 'Description' | trans }}</th>
                                 <td class="text-right">{{ calculatedDiscount.description }}</td>
                             </tr>
                         {% endif %}

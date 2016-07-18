@@ -14,49 +14,51 @@ class TableConfiguration
     const SORT_DESC = 'desc';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $url;
 
     /**
      * @var array
      */
-    private $header;
+    protected $header = [];
 
     /**
      * @var array
      */
-    private $footer;
+    protected $footer = [];
 
     /**
      * @var int
      */
-    private $pageLength;
+    protected $pageLength = 0;
+
+    /**
+     * If null it will use all fields defined in $header.
+     *
+     * @var array|null
+     */
+    protected $searchableFields = null;
 
     /**
      * @var array
      */
-    private $searchableFields;
-
-    /**
-     * @var array
-     */
-    private $sortableFields;
+    protected $sortableFields = [];
 
     /**
      * @var int
      */
-    private $defaultSortColumnIndex = 0;
+    protected $defaultSortColumnIndex = 0;
 
     /**
      * @var string
      */
-    private $defaultSortDirection = self::SORT_ASC;
+    protected $defaultSortDirection = self::SORT_ASC;
 
     /**
      * @var array
      */
-    private $rawColumns = [];
+    protected $rawColumns = [];
 
     /**
      * @return array
@@ -102,7 +104,7 @@ class TableConfiguration
      * @todo Zed Translation in Template
      *
      * @param array $header Provide php names for table columns
-     *   if you are goin to user Propel Query as data population
+     *   if you are going to user Propel Query as data population
      *
      * @return void
      */
@@ -169,7 +171,7 @@ class TableConfiguration
      */
     public function getSearchable()
     {
-        return !empty($this->searchableFields) ? $this->searchableFields : array_keys($this->header);
+        return $this->searchableFields ?: array_keys($this->header);
     }
 
     /**
@@ -201,7 +203,7 @@ class TableConfiguration
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getUrl()
     {
@@ -259,7 +261,7 @@ class TableConfiguration
      *
      * @return bool
      */
-    private function isAssoc(array $arr)
+    protected function isAssoc(array $arr)
     {
         return (array_values($arr) !== $arr);
     }

@@ -6,8 +6,7 @@
 'use strict';
 
 var SprykerAjax = require('./legacy/SprykerAjax');
-var summernote = require('summernote');
-var editor = require('./editor');
+var editor = require('ZedGuiEditorConfiguration');
 
 $(document).ready(function() {
     // editor

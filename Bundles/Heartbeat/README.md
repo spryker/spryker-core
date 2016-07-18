@@ -8,4 +8,4 @@ composer require spryker/heartbeat
 
 ## Documentation
 
-[Heartbeat Documentation](http://spryker.github.io/core/bundles/heartbeat)
+[Documentation](http://spryker.github.io)
