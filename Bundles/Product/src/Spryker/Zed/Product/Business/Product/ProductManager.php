@@ -289,29 +289,6 @@ class ProductManager implements ProductManagerInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @deprecated Use hasProductAbstractAttributes() instead.
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException
-     *
-     * @return void
-     */
-    protected function checkProductAbstractAttributesDoNotExist($idProductAbstract, $locale)
-    {
-        if ($this->hasProductAbstractAttributes($idProductAbstract, $locale)) {
-            throw new ProductAbstractAttributesExistException(
-                sprintf(
-                    'Tried to create abstract attributes for product abstract %s, locale id %s, but it already exists',
-                    $idProductAbstract,
-                    $locale->getIdLocale()
-                )
-            );
-        }
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
      * @return bool
      */
     protected function hasProductAbstractAttributes($idProductAbstract, LocaleTransfer $locale)
