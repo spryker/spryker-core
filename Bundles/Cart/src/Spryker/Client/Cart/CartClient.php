@@ -118,7 +118,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         $quoteTransfer = $this->getQuote();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() === $sku || ($groupKey !== null && $itemTransfer->getGroupKey() === $groupKey)) {
+            if (($itemTransfer->getSku() === $sku && $groupKey === null) || $itemTransfer->getGroupKey() === $groupKey) {
                 return $itemTransfer;
             }
         }
