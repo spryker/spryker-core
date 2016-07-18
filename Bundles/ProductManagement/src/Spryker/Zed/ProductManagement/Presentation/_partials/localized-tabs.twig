@@ -1,7 +1,7 @@
 <div class="tabs-container">
     <div class="tabs-top">
         {% embed '@ProductManagement/_partials/localized-tabs-nav.twig' with {
-        formPrefix: 'seo',
+        formPrefix: formPrefix,
         localeCollection: localeCollection,
         currentLocale: currentLocale,
         form: form
@@ -9,7 +9,7 @@
         {% endembed %}
 
         {% embed '@ProductManagement/_partials/localized-tabs-content.twig' with {
-        formPrefix: 'seo',
+        formPrefix: formPrefix,
         localeCollection: localeCollection,
         currentLocale: currentLocale,
         form: form

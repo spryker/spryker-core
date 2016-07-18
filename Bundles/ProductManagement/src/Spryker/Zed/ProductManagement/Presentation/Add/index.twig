@@ -70,15 +70,7 @@
 
                     <div class="tabs-container">
                         <div class="tabs-top">
-                            {% embed '@ProductManagement/_partials/localized-tabs-nav.twig' with {
-                            formPrefix: 'general',
-                            localeCollection: localeCollection,
-                            currentLocale: currentLocale,
-                            form: form
-                            } %}
-                            {% endembed %}
-
-                            {% embed '@ProductManagement/_partials/localized-tabs-content.twig' with {
+                            {% embed '@ProductManagement/_partials/localized-tabs.twig' with {
                             formPrefix: 'general',
                             localeCollection: localeCollection,
                             currentLocale: currentLocale,
