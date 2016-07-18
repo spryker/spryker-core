@@ -33,7 +33,7 @@ Def of done (by responsible developer):
 - [ ] If there are new OS components, they must be approved by legal department
 
 ##### Change log
-Add here a highlights of what are the important new things that come with this feature. 
+{Add here highlights of what are the important new things that come with this feature}. 
 - I added this.
 - I added this.
 
@@ -52,7 +52,7 @@ Def of done (by responsible developer):
 - [ ] If there are new OS components, they must be approved by legal department
 
 ##### Change log
-Add here a highlights of what are the important new things that come with this feature. 
+{Add here highlights of what are the important new things that come with this feature.} 
 - I added this.
 - I added this.
 
@@ -70,8 +70,7 @@ Def of done (by responsible developer):
 - [ ] If there are new OS components, they must be approved by legal department
 
 ##### Change log
-
-Some explanation of what has been improved.
+{Some explanation of what has been improved.}
 - I added this.
 
 -----------------------------------------
@@ -89,6 +88,5 @@ Def of done (by responsible developer):
 - [ ] If there are new OS components, they must be approved by legal department
 
 ##### Change log
-
-Some explanation of what was wrong.
+{Some explanation of what was wrong.}
 - I fixed this.
