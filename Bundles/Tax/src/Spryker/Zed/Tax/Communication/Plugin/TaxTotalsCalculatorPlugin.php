@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
+ * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  */
 class TaxTotalsCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {

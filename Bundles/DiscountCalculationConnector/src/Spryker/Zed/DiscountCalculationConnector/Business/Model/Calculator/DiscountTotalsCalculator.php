@@ -62,12 +62,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
      */
     protected function getItemTotalDiscountAmount(ItemTransfer $itemTransfer)
     {
-        $totalItemCalculatedDiscounts = $this->getCalculatedDiscountsSumGrossAmount($itemTransfer->getCalculatedDiscounts());
-        $totalItemCalculatedDiscounts += $this->getSumOfProductOptionCalculatedDiscounts(
-            $itemTransfer->getProductOptions()
-        );
-
-        return $totalItemCalculatedDiscounts;
+        return $this->getCalculatedDiscountsSumGrossAmount($itemTransfer->getCalculatedDiscounts());
     }
 
     /**
@@ -80,21 +75,6 @@ class DiscountTotalsCalculator implements CalculatorInterface
         $totalDiscountSumGrossAmount = 0;
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
             $totalDiscountSumGrossAmount += $calculatedDiscountTransfer->getSumGrossAmount();
-        }
-
-        return $totalDiscountSumGrossAmount;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
-     *
-     * @return int
-     */
-    protected function getSumOfProductOptionCalculatedDiscounts(\ArrayObject $productOptionTransfer)
-    {
-        $totalDiscountSumGrossAmount = 0;
-        foreach ($productOptionTransfer as $optionTransfer) {
-            $totalDiscountSumGrossAmount += $this->getCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
         }
 
         return $totalDiscountSumGrossAmount;

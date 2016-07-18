@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
+use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -45,6 +46,22 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentOrderSaver()
     {
         return new ShipmentOrderSaver($this->getSalesQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator
+     */
+    public function createShipmentTaxCalculator()
+    {
+        return new ShipmentTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
+     */
+    public function getTaxFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_TAX);
     }
 
     /**

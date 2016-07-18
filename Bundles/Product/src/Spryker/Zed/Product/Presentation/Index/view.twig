@@ -35,7 +35,6 @@
                             {{ 'Categories' | trans }}: {% for category in categories %}
                             <button class="btn btn-sm btn-primary">{{ category.category_name }}</button>
                             {% endfor %}
-
                         </div>
                     </div>
 
@@ -73,6 +72,16 @@
                                             <tr>
                                                 <td>Status</td>
                                                 <td>{{ product.isActive }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tax Set</td>
+                                                <td>
+                                                    {% if productAbstract.getSpyTaxSet()  %}
+                                                        {{ productAbstract.getSpyTaxSet().getName() }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                         </table>
                                         <table class="table small m-t-sm">

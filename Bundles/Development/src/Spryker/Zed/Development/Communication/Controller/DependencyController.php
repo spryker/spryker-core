@@ -43,14 +43,11 @@ class DependencyController extends AbstractController
 
         $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($bundleName);
 
-        $incomingDependencies = $this->getFacade()->showIncomingDependenciesForBundle($bundleName);
-
         $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundleName, array_keys($dependencies));
 
         return $this->viewResponse([
             self::QUERY_KEY_BUNDLE => $bundleName,
             'dependencies' => $dependencies,
-            'incomingDependencies' => $incomingDependencies,
             'composerDependencies' => $composerDependencies,
         ]);
     }

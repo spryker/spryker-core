@@ -60,17 +60,6 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return float
-     */
-    public function getEffectiveTaxRateForProductConcrete($sku);
-
-    /**
-     * @api
-     *
      * @param string $attributeName
      *
      * @return bool

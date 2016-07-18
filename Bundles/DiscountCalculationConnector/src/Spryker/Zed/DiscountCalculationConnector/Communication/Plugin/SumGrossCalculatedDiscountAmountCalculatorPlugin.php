@@ -12,10 +12,7 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method DiscountCalculationConnectorFacade getFacade()
- */
-
-/**
+ * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade getFacade()
  * @method \Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory getFactory()
  */
 class SumGrossCalculatedDiscountAmountCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface

@@ -18,4 +18,14 @@ interface ProductOptionToTaxInterface
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
 
+    /**
+     * @return string
+     */
+    public function getDefaultTaxCountryIso2Code();
+
+    /**
+     * @return float
+     */
+    public function getDefaultTaxRate();
+
 }

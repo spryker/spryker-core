@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Application\Business\Model\Twig;
 
+use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\BackActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\CreateActionButtonFunction;
@@ -21,7 +22,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 /**
  * @deprecated All bundles which want to add a function or something else to Twig does it now in a separate ServiceProvider of that bundle
  */
-class ZedExtension extends \Twig_Extension
+class ZedExtension extends TwigExtension
 {
 
     /**

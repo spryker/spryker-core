@@ -26,7 +26,7 @@
     "spryker/sql-criteria-builder": "^1.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/transfer": "^2.0.0",
-    "spryker/twig": "^2.0.0",
+    "spryker/twig": "^2.1.0",
     "spryker/zend": "^2.0.0"
   },
   "description": "Library bundle",

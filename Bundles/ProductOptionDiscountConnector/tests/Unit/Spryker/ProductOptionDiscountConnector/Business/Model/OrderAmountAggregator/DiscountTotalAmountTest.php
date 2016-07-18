@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\DiscountTotalAmount;
 
 class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
 {
@@ -65,7 +65,7 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\DiscountTotalAmount
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\DiscountTotalAmount
      */
     protected function createDiscountTotalAmountAggregator()
     {

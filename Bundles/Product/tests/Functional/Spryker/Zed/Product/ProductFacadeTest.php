@@ -168,37 +168,6 @@ class ProductFacadeTest extends Test
      *
      * @return void
      */
-    public function testGetEffectiveTaxRateReturnsInteger()
-    {
-        $productConcreteQuery = $this->productQueryContainer->queryProductConcreteBySku('AProductConcreteSku');
-
-        $this->assertEquals(0, $productConcreteQuery->count());
-
-        $productAbstract = new ProductAbstractTransfer();
-        $productAbstract->setSku('AnProductAbstractSku');
-        $productAbstract->setAttributes([]);
-        $productAbstract->addLocalizedAttributes($this->createLocalizedAttributesTransfer());
-
-        $idProductAbstract = $this->productFacade->createProductAbstract($productAbstract);
-
-        $productConcrete = new ProductConcreteTransfer();
-        $productConcrete->setSku('AProductConcreteSku');
-        $productConcrete->setAttributes([]);
-        $productConcrete->addLocalizedAttributes($this->createLocalizedAttributesTransfer());
-        $productConcrete->setIsActive(true);
-
-        $this->productFacade->createProductConcrete($productConcrete, $idProductAbstract);
-
-        $effectiveTaxRate = $this->productFacade->getEffectiveTaxRateForProductConcrete('AProductConcreteSku');
-
-        $this->assertInternalType('integer', $effectiveTaxRate);
-    }
-
-    /**
-     * @group Product
-     *
-     * @return void
-     */
     public function testHasProductAbstractReturnsRightValue()
     {
         $this->assertFalse($this->productFacade->hasProductAbstract('AProductSku'));
@@ -363,9 +332,6 @@ class ProductFacadeTest extends Test
         $this->assertEquals($productConcreteEntity->getIdProduct(), $productConcreteTransfer->getIdProductConcrete());
         $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $productConcreteTransfer->getIdProductAbstract());
 
-        $taxRate = $productConcreteTransfer->getTaxRate();
-
-        $this->assertEquals(self::TAX_RATE_PERCENTAGE, $taxRate);
     }
 
     /**

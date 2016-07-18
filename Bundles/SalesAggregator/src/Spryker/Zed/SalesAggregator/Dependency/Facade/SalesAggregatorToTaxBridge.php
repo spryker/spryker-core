@@ -34,4 +34,23 @@ class SalesAggregatorToTaxBridge implements SalesAggregatorToTaxInterface
         return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate);
     }
 
+    /**
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate)
+    {
+        return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
+    }
+
+    /**
+     * @return void
+     */
+    public function resetAccruedTaxCalculatorRoundingErrorDelta()
+    {
+        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
+    }
+
 }

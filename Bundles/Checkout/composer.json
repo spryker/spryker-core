@@ -14,7 +14,7 @@
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
     "spryker/oms": "^2.0.0 || ^3.0.0",
-    "spryker/product": "^2.0.0",
+    "spryker/product": "^2.0.0 || ^3.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/sales": "^2.0.0",
     "spryker/step-engine": "^1.1.0",

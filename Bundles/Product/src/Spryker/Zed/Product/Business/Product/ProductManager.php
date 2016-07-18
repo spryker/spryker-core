@@ -576,38 +576,6 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return float
-     */
-    public function getEffectiveTaxRateForProductConcrete($sku)
-    {
-        $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
-
-        if (!$productConcrete) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $sku
-                )
-            );
-        }
-
-        $productAbstract = $productConcrete->getSpyProductAbstract();
-
-        $taxSetEntity = $productAbstract->getSpyTaxSet();
-        if ($taxSetEntity === null) {
-            return 0;
-        }
-
-        $effectiveTaxRate = $this->getEffectiveTaxRate($taxSetEntity->getSpyTaxRates());
-
-        return $effectiveTaxRate;
-    }
-
-    /**
      * @param string $concreteSku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -648,28 +616,7 @@ class ProductManager implements ProductManagerInterface
             ->setIdProductAbstract($productConcrete[self::COL_ID_PRODUCT_ABSTRACT])
             ->setName($productConcrete[self::COL_NAME]);
 
-        $this->addTaxRate($productConcreteTransfer);
-
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function addTaxRate(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        $taxSetEntity = $this->productQueryContainer
-            ->queryTaxSetForProductAbstract($productConcreteTransfer->getIdProductAbstract())
-            ->findOne();
-
-        if ($taxSetEntity === null) {
-            return;
-        }
-
-        $effectiveTaxRate = $this->getEffectiveTaxRate($taxSetEntity->getSpyTaxRates());
-        $productConcreteTransfer->setTaxRate($effectiveTaxRate);
     }
 
     /**
@@ -726,21 +673,6 @@ class ProductManager implements ProductManagerInterface
     protected function encodeAttributes(array $attributes)
     {
         return json_encode($attributes);
-    }
-
-    /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxRate[] $taxRates
-     *
-     * @return int
-     */
-    protected function getEffectiveTaxRate($taxRates)
-    {
-        $taxRate = 0;
-        foreach ($taxRates as $taxRateEntity) {
-            $taxRate += $taxRateEntity->getRate();
-        }
-
-        return $taxRate;
     }
 
 }

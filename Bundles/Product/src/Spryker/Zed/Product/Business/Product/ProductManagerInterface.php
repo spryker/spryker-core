@@ -139,15 +139,6 @@ interface ProductManagerInterface
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return float
-     */
-    public function getEffectiveTaxRateForProductConcrete($sku);
-
-    /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return int
      */
     public function getProductAbstractIdByConcreteSku($sku);

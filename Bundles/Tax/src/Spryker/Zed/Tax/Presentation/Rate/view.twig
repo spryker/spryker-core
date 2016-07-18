@@ -1,0 +1,51 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title ' View tax rate' | trans %}
+
+{% block action %}
+    {{ editActionButton(url('/tax/rate/edit', {'id-tax-rate': taxRate.idTaxRate}), 'Edit' | trans) }}
+    {{ removeActionButton(url('/tax/rate/delete', {'id-tax-rate': taxRate.idTaxRate}), 'Delete' | trans) }}
+    {{ backActionButton('/tax/rate/list', 'List of tax rates' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View tax rate' | trans } %}
+
+        {% block widget_content %}
+            <table class="table">
+                <tr>
+                    <td>{{ 'Name' | trans }}</td>
+                    <td>{{ taxRate.name }}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'Tax rate ID' | trans  }}</td>
+                    <td>{{ taxRate.idTaxRate }}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'Country' | trans }}</td>
+                    <td>
+                        {% if taxRate.country %}
+                           {{ taxRate.country.name }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ 'Percentage' | trans }}</td>
+                    <td>{{ taxRate.rate }} %</td>
+                </tr>
+                <tr>
+                    <td>{{ 'Created at' | trans }}</td>
+                    <td>{{ taxRate.createdAt | formatDateTime }}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'Updated at' | trans }}</td>
+                    <td>{{ taxRate.updatedAt | formatDateTime }}</td>
+                </tr>
+            </table>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
