@@ -20,7 +20,7 @@
     "spryker/product": "^2.0.0 || ^3.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/touch": "^2.0.0",
-    "spryker/twig": "^2.0.0"
+    "spryker/twig": "^2.0.1"
   },
   "description": "Price bundle",
   "license": "proprietary",
