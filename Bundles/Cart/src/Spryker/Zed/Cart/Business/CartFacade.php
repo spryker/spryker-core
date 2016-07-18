@@ -17,7 +17,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
 {
 
     /**
-     * Adds item(s) to the quote. Each item gets additonal informations (e.g. price).
+     * Adds item(s) to the quote. Each item gets additional information (e.g. price).
      *
      * Specification:
      * - For each new item run the item expander plugins (requires a SKU for each new item)
