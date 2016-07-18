@@ -12,8 +12,6 @@
   },
   "require": {
     "spryker/application": "^2.0.0",
-    "spryker/calculation": "^2.0.0",
-    "spryker/cart": "^2.0.0",
     "spryker/country": "^2.0.0",
     "spryker/customer": "^2.0.0",
     "spryker/gui": "^2.0.0",
