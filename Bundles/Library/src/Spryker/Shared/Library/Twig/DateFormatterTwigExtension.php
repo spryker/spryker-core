@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Library\Twig;
 
 use Spryker\Shared\Library\DateFormatterInterface;
+use Spryker\Shared\Twig\TwigFilter;
 
 class DateFormatterTwigExtension extends \Twig_Extension
 {
@@ -40,7 +41,7 @@ class DateFormatterTwigExtension extends \Twig_Extension
         $filters = [];
 
         foreach (self::$filterFunctions as $dateFormatterFunction) {
-            $filters[] = new \Twig_SimpleFilter(
+            $filters[] = new TwigFilter(
                 $dateFormatterFunction,
                 [$this, $dateFormatterFunction],
                 ['is_safe' => ['html']]
