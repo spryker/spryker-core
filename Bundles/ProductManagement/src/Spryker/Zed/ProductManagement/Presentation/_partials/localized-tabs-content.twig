@@ -1,0 +1,22 @@
+<div class="tab-content">
+    {% for localeCode in localeCollection %}
+        {% set formKey = formPrefix ~ '_' ~ localeCode %}
+        {% set activeCss = '' %}
+
+        {% if currentLocale == localeCode %}
+            {% set activeCss =  'active' %}
+        {% endif %}
+
+        <div id="content_{{ formPrefix }}_{{ localeCode }}" class="tab-pane {{ activeCss }}">
+            {% block tabContentRow %}
+                <div class="panel-body">
+                    <div class="well">
+                        {% for input in form[formKey] %}
+                            {% block formInput %}{{ form_row(input) }}{% endblock %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+    {% endfor %}
+</div>

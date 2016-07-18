@@ -70,7 +70,7 @@
 
                     <div class="tabs-container">
                         <div class="tabs-top">
-                            {% embed '@ProductManagement/_partials/localized-tabs.twig' with {
+                            {% embed '@ProductManagement/_partials/localized-tabs-nav.twig' with {
                             formPrefix: 'general',
                             localeCollection: localeCollection,
                             currentLocale: currentLocale,
@@ -78,26 +78,13 @@
                             } %}
                             {% endembed %}
 
-                            <div class="tab-content">
-                            {% for localeCode in localeCollection %}
-                                {% set generalKey = 'general_' ~ localeCode %}
-                                {% set activeCss = '' %}
-
-                                {% if currentLocale == localeCode %}
-                                    {% set activeCss =  'active' %}
-                                {% endif %}
-
-                                <div id="content_general_{{ localeCode }}" class="tab-pane {{ activeCss }}">
-                                    <div class="panel-body">
-                                        <div class="well">
-                                        {% for input in form[generalKey] %}
-                                            {{ form_row(input) }}
-                                        {% endfor %}
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                            </div>
+                            {% embed '@ProductManagement/_partials/localized-tabs-content.twig' with {
+                            formPrefix: 'general',
+                            localeCollection: localeCollection,
+                            currentLocale: currentLocale,
+                            form: form
+                            } %}
+                            {% endembed %}
                         </div>
                     </div>
                 </div>
@@ -117,20 +104,35 @@
 
                         <div class="tabs-container">
                             <div class="tabs-top">
-                                    {% embed '@ProductManagement/_partials/localized-tabs.twig' with {
+                                {% embed '@ProductManagement/_partials/localized-tabs-nav.twig' with {
                                     formPrefix: 'attribute_abstract',
                                     localeCollection: attributeLocaleCollection,
                                     currentLocale: currentLocale,
                                     form: form
                                     } %}
-                                    {% endembed %}
+                                {% endembed %}
 
-                                {% embed '@ProductManagement/_partials/localized-attributes-form-tabs.twig' with {
+                                {% embed '@ProductManagement/_partials/localized-tabs-content.twig' with {
                                     formPrefix: 'attribute_abstract',
                                     localeCollection: attributeLocaleCollection,
                                     currentLocale: currentLocale,
                                     form: form
                                 } %}
+                                    {% block tabContentRow %}
+                                        <div class="panel-body">
+                                            <div class="well">
+                                                <div class="row" style="padding-right: 20px !important;">
+                                                    {% for input in form[formKey] %}
+                                                        <div class="col-md-10 col-sm-12 col-lg-6">
+                                                            <div class="row vertical-align attribute_metadata_row">
+                                                                <div class="pull-right"><nobr>{{ form_row(input.name) }} {{ form_row(input.value) }}</nobr></div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endblock  %}
                                 {% endembed %}
                             </div>
                         </div>
@@ -327,65 +329,13 @@
                 <div class="well">
                     <h3>Meta Information</h3>
                     <p>Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.</p>
-
-                    {# find out which localized tab has errors  #}
-                    {% set generalLocalizedErrors = [] %}
-                    {% for localeCode in localeCollection %}
-                        {% set generalKey = 'seo_' ~ localeCode %}
-                        {% for input in form[generalKey] %}
-                            {%  if input.vars.errors is defined and input.vars.errors|length %}
-                                {%  set generalLocalizedErrors = generalLocalizedErrors|merge([{'code': localeCode }]) %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-
-                    <div class="tabs-container locale">
-                        <div class="tabs-left">
-                        <ul class="nav nav-tabs locale">
-                            {% for localeCode in localeCollection %}
-                                {% set generalKey = 'seo_' ~ localeCode %}
-                                {% set activeCss = '' %}
-                                {% set invalidCss = '' %}
-                                {% set invalidCssFound = false %}
-
-                                {% if currentLocale == localeCode %}
-                                    {% set activeCss =  'active' %}
-                                {% endif %}
-
-                                {% for error in generalLocalizedErrors %}
-                                    {% if error.code == localeCode and not invalidCssFound %}
-                                        {% set invalidCss = 'invalid-tab' %}
-                                        {% set invalidCssFound = true %}
-                                    {% endif %}
-                                {% endfor %}
-
-                                <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_seo_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
-                            {% endfor %}
-                        </ul>
-
-                        <div class="tab-content">
-                            {% for localeCode in localeCollection %}
-                                {% set generalKey = 'seo_' ~ localeCode %}
-                                {% set activeCss = '' %}
-
-                                {% if currentLocale == localeCode %}
-                                    {% set activeCss =  'active' %}
-                                {% endif %}
-
-                                <div id="content_seo_{{ localeCode }}" class="tab-pane {{ activeCss }}">
-                                    <div class="panel-body">
-                                        <div class="well">
-                                            {% for input in form[generalKey] %}
-                                                {{ form_row(input) }}
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    </div>
-
+                        {% embed '@ProductManagement/_partials/localized-tabs.twig' with {
+                        formPrefix: 'seo',
+                        localeCollection: localeCollection,
+                        currentLocale: currentLocale,
+                        form: form
+                        } %}
+                        {% endembed %}
                 </div>
             </div>
         </div>
