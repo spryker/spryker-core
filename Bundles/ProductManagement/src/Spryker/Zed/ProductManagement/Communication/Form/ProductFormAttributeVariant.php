@@ -32,6 +32,7 @@ class ProductFormAttributeVariant extends ProductFormAttributeAbstract
         ];
         $config['attr']['tags'] = false;
         $config['attr']['class'] .= ' ajax';
+        $config['attr']['style'] .= ' width: 250px';
 
         $builder->add(self::FIELD_VALUE, $input, $config);
 
