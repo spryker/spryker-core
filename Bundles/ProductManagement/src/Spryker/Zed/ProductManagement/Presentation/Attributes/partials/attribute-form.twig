@@ -1,39 +1,22 @@
-{{ form_start(form) }}
-
 <div class="tabs-container">
     <ul class="nav nav-tabs">
-        <li class="active"><a>{{ 'General Information' | trans }}</a></li>
-        <li class="disabled"><a>{{ 'Translations' | trans }}</a></li>
+        <li class="active"><a>{{ '1. General Information' | trans }}</a></li>
+        <li class="disabled"><a>{{ '2. Translations' | trans }}</a></li>
     </ul>
 
     <div class="tab-content">
         <div id="tab_general" class="tab-pane active">
             <div class="panel-body">
+                {{ form_start(form) }}
 
-                <p>{{ 'Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters.' }}</p>
-
-                {{ form_row(form.key) }}
-
-                {{ form_row(form.input_type) }}
-
-                {{ form_row(form.allow_input) }}
-
-                {{ form_row(form.is_multiple) }}
-
-                <hr />
-
-                <div class='form-group'>
-                    <h4>{{ form_label(form.values) }}</h4>
-                    {{ form_widget(form.values) }}
-                    {{ form_errors(form.values) }}
-                    <span class="help-block">{{ 'You can add new values by pressing "Enter" after each element' | trans }}</span>
+                <div class="well">
+                    {% include '@ProductManagement/Attributes/partials/attribute-form-content.twig' %}
                 </div>
 
-                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                <input type="submit" class="btn btn-primary" value="{{ 'Next' | trans }} " />
 
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
 </div>
-
-{{ form_end(form) }}

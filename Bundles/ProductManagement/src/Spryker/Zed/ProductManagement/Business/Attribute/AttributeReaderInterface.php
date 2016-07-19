@@ -11,13 +11,14 @@ interface AttributeReaderInterface
 {
 
     /**
-     * @param int $idAttribute
-     * @param $idLocale
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
      * @param string $searchText
      * @param int $offset
      * @param int $limit
-     * @return array
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer[]
      */
-    public function getAttributeValues($idAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10);
+    public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10);
 
 }

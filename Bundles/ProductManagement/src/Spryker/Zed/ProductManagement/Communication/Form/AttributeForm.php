@@ -11,7 +11,10 @@ use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AttributeForm extends AbstractType
 {
@@ -25,6 +28,9 @@ class AttributeForm extends AbstractType
 
     const OPTION_ATTRIBUTE_TYPE_CHOICES = 'attribute_type_choices';
     const OPTION_VALUES_CHOICES = 'values_choices';
+    const OPTION_IS_UPDATE = 'is_update';
+
+    const GROUP_VALUES = 'values_group';
 
     /**
      * @return string The name of this type
@@ -45,6 +51,20 @@ class AttributeForm extends AbstractType
             self::OPTION_ATTRIBUTE_TYPE_CHOICES,
             self::OPTION_VALUES_CHOICES,
         ]);
+
+        $resolver->setDefaults([
+            self::OPTION_IS_UPDATE => false,
+            'required' => false,
+            'validation_groups' => function (FormInterface $form) {
+                $submittedData = $form->getData();
+
+                if (isset($submittedData[self::FIELD_ALLOW_INPUT]) && $submittedData[self::FIELD_ALLOW_INPUT]) {
+                    return [Constraint::DEFAULT_GROUP];
+                }
+
+                return [Constraint::DEFAULT_GROUP, self::GROUP_VALUES];
+            },
+        ]);
     }
 
     /**
@@ -57,11 +77,11 @@ class AttributeForm extends AbstractType
     {
         $this
             ->addIdProductManagementAttribute($builder)
-            ->addKeyField($builder)
-            ->addInputTypeField($builder, $options[self::OPTION_ATTRIBUTE_TYPE_CHOICES])
-            ->addAllowInputField($builder)
-            ->addIsMultipleField($builder)
-            ->addValuesField($builder, $options[self::OPTION_VALUES_CHOICES]);
+            ->addKeyField($builder, $options)
+            ->addInputTypeField($builder, $options)
+            ->addIsMultipleField($builder, $options)
+            ->addValuesField($builder, $options)
+            ->addAllowInputField($builder, $options);
     }
 
     /**
@@ -78,14 +98,19 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addKeyField(FormBuilderInterface $builder)
+    protected function addKeyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_KEY, new AutosuggestType(), [
             'label' => 'Attribute key',
             'url' => '/product-management/attributes/keys',
+            'constraints' => [
+                new NotBlank(),
+            ],
+            'disabled' => $options[self::OPTION_IS_UPDATE],
         ]);
 
         return $this;
@@ -93,15 +118,19 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array $options
      *
      * @return $this
      */
-    protected function addInputTypeField(FormBuilderInterface $builder, array $choices)
+    protected function addInputTypeField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_INPUT_TYPE, 'choice', [
             'label' => 'Input type',
-            'choices' => $choices,
+            'choices' => $options[self::OPTION_ATTRIBUTE_TYPE_CHOICES],
+            'constraints' => [
+                new NotBlank(),
+            ],
+            'disabled' => $options[self::OPTION_IS_UPDATE],
         ]);
 
         return $this;
@@ -109,29 +138,15 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addAllowInputField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_ALLOW_INPUT, 'checkbox', [
-            'label' => 'Allow input any value other than predefined ones',
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIsMultipleField(FormBuilderInterface $builder)
+    protected function addIsMultipleField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_IS_MULTIPLE, 'checkbox', [
             'label' => 'Allow multi select',
-            'required' => false,
+            'disabled' => $options[self::OPTION_IS_UPDATE],
         ]);
 
         return $this;
@@ -139,19 +154,39 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array $options
      *
      * @return $this
      */
-    protected function addValuesField(FormBuilderInterface $builder, array $choices)
+    protected function addValuesField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_VALUES, new Select2ComboBoxType(), [
             'label' => 'Predefined Values',
-            'choices' => $choices,
+            'choices' => $options[self::OPTION_VALUES_CHOICES],
             'multiple' => true,
+            'constraints' => [
+                new NotBlank([
+                    'groups' => self::GROUP_VALUES,
+                ]),
+            ],
         ]);
 
         $builder->get(self::FIELD_VALUES)->resetViewTransformers();
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addAllowInputField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_ALLOW_INPUT, 'checkbox', [
+            'label' => 'Allow input any value other than predefined ones',
+        ]);
 
         return $this;
     }

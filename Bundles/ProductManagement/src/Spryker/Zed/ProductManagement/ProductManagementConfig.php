@@ -11,4 +11,22 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductManagementConfig extends AbstractBundleConfig
 {
+
+    /**
+     * @return array
+     */
+    public function getAttributeTypeChoices()
+    {
+        return [
+            'text' => 'text',
+            'textarea' => 'textarea',
+            'number' => 'number',
+            'float' => 'float',
+            'date' => 'date',
+            'time' => 'time',
+            'datetime' => 'datetime',
+            'select' => 'select',
+        ];
+    }
+
 }

@@ -45,7 +45,7 @@ class AttributeKeyManager implements AttributeKeyManagerInterface
     /**
      * @param string $key
      *
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
     public function getAttributeKey($key)
     {
@@ -53,6 +53,10 @@ class AttributeKeyManager implements AttributeKeyManagerInterface
             ->queryProductAttributeKey()
             ->filterByKey($key)
             ->findOne();
+
+        if ($productAttributeKeyEntity === null) {
+            return null;
+        }
 
         $productAttributeKeyTransfer = (new ProductAttributeKeyTransfer())
             ->fromArray($productAttributeKeyEntity->toArray(), true);

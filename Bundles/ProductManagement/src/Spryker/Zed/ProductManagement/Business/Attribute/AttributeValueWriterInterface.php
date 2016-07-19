@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
-interface AttributeValueSaverInterface
+interface AttributeValueWriterInterface
 {
 
     /**

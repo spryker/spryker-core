@@ -50,4 +50,12 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
      */
     public function queryProductManagementAttributeValueTranslation();
 
+    /**
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery
+     */
+    public function queryProductManagementAttributeValueTranslationByIdAndLocale($idProductManagementAttribute, $idLocale);
+
 }

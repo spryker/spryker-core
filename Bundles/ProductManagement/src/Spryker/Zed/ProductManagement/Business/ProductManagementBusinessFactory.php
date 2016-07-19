@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductManagement\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManager;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeReader;
-use Spryker\Zed\ProductManagement\Business\Attribute\AttributeSaver;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriter;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
-use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueSaver;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriter;
 use Spryker\Zed\ProductManagement\Business\Product\ProductManager;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -143,24 +143,24 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeSaverInterface
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriterInterface
      */
-    public function createAttributeSaver()
+    public function createAttributeWriter()
     {
-        return new AttributeSaver(
+        return new AttributeWriter(
             $this->getQueryContainer(),
             $this->getProductFacade(),
             $this->getGlossaryFacade(),
-            $this->createAttributeValueSaver()
+            $this->createAttributeValueWriter()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueSaverInterface
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriterInterface
      */
-    protected function createAttributeValueSaver()
+    protected function createAttributeValueWriter()
     {
-        return new AttributeValueSaver(
+        return new AttributeValueWriter(
             $this->getQueryContainer()
         );
     }

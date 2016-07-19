@@ -117,7 +117,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
     {
         return $this->getFactory()
-            ->createAttributeSaver()
+            ->createAttributeWriter()
             ->createProductManagementAttribute($productManagementAttributeTransfer);
     }
 
@@ -131,7 +131,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     public function updateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
     {
         return $this->getFactory()
-            ->createAttributeSaver()
+            ->createAttributeWriter()
             ->updateProductManagementAttribute($productManagementAttributeTransfer);
     }
 
@@ -152,18 +152,19 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     /**
      * @api
      *
-     * @param int $idAttribute
+     * @param int $idProductManagementAttribute
      * @param int $idLocale
      * @param string $searchText
      * @param int $offset
      * @param int $limit
-     * @return array
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer[]
      */
-    public function getAttributeValues($idAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10)
+    public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10)
     {
         return $this->getFactory()
             ->createAttributeReader()
-            ->getAttributeValues($idAttribute, $idLocale, $searchText, $offset, $limit);
+            ->getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText, $offset, $limit);
     }
 
 }

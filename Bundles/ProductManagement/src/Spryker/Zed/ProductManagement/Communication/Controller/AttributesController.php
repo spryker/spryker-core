@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
+use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationForm;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationFormCollection;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -25,8 +25,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AttributesController extends AbstractController
 {
 
-    const ID_PRODUCT_ABSTRACT = 'id-attribute';
-    const SEARCH_TEXT = 'search_text';
+    const PARAM_ID = 'id';
+    const PARAM_SEARCH_TEXT = 'search_text';
 
     /**
      * @return array
@@ -93,11 +93,11 @@ class AttributesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function translateAction(Request $request)
     {
-        $idProductManagementAttribute = $this->castId($request->query->get('id'));
+        $idProductManagementAttribute = $this->castId($request->query->get(self::PARAM_ID));
 
         $dataProvider = $this
             ->getFactory()
@@ -118,7 +118,10 @@ class AttributesController extends AbstractController
 
             $this->getFacade()->translateProductManagementAttribute($attributeTranslationFormTransfers);
 
-            // TODO: redirect to "view attribute"
+            return $this->redirectResponse(sprintf(
+                '/product-management/attributes/view?id=%d',
+                $idProductManagementAttribute
+            ));
         }
 
         return $this->viewResponse([
@@ -152,7 +155,7 @@ class AttributesController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idProductManagementAttribute = $this->castId($request->query->get('id'));
+        $idProductManagementAttribute = $this->castId($request->query->get(self::PARAM_ID));
 
         $dataProvider = $this
             ->getFactory()
@@ -178,6 +181,42 @@ class AttributesController extends AbstractController
 
         return $this->viewResponse([
             'form' => $attributeForm->createView(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    public function viewAction(Request $request)
+    {
+        $idProductManagementAttribute = $this->castId($request->query->get(self::PARAM_ID));
+
+        $generalDataProvider = $this
+            ->getFactory()
+            ->createAttributeFormDataProvider();
+        $attributeForm = $this
+            ->getFactory()
+            ->createReadOnlyAttributeForm(
+                $generalDataProvider->getData($idProductManagementAttribute),
+                $generalDataProvider->getOptions($idProductManagementAttribute)
+            );
+
+        $translationDataProvider = $this
+            ->getFactory()
+            ->createAttributeTranslationFormCollectionDataProvider();
+        $attributeTranslateFormCollection = $this
+            ->getFactory()
+            ->createReadOnlyAttributeTranslationFormCollection(
+                $translationDataProvider->getData($idProductManagementAttribute),
+                $translationDataProvider->getOptions()
+            );
+
+        return $this->viewResponse([
+            'attributeForm' => $attributeForm->createView(),
+            'attributeTranslationFormCollection' => $attributeTranslateFormCollection->createView(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
         ]);
     }
 
@@ -226,6 +265,10 @@ class AttributesController extends AbstractController
     {
         $attributeValueFormTransfer = new ProductManagementAttributeTranslationFormTransfer();
 
+        if (!$attributeTranslateFormData[AttributeTranslationForm::FIELD_TRANSLATE_VALUES]) {
+            unset($attributeTranslateFormData[AttributeTranslationForm::FIELD_VALUE_TRANSLATIONS]);
+        }
+
         $attributeValueFormTransfer
             ->fromArray($attributeTranslateFormData, true)
             ->setLocaleName($locale);
@@ -234,20 +277,26 @@ class AttributesController extends AbstractController
     }
 
     /**
-     * @return array
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function autocompleteAction(Request $request)
     {
-        $idAttribute = $this->castId(
-            $request->get(self::ID_PRODUCT_ABSTRACT)
-        );
-
-        $searchText = trim($request->get(self::SEARCH_TEXT));
+        $idProductManagementAttribute = $this->castId($request->get(self::PARAM_ID));
+        $searchText = trim($request->get(self::PARAM_SEARCH_TEXT));
         $idLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getIdLocale();
-        $values = $this->getFacade()->getAttributeValues($idAttribute, $idLocale, $searchText);
 
-        return new JsonResponse([
-            'id_attribute' => $idAttribute,
+        $attributeValueTranslationTransfers = $this->getFacade()
+            ->getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText);
+
+        $values = [];
+        foreach ($attributeValueTranslationTransfers as $attributeValueTranslationTransfer) {
+            $values[] = $attributeValueTranslationTransfer->toArray();
+        }
+
+        return $this->jsonResponse([
+            'id_attribute' => $idProductManagementAttribute,
             'values' => $values
         ]);
     }

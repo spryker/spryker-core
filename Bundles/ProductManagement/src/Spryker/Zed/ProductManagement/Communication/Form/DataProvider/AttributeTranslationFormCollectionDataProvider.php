@@ -86,6 +86,7 @@ class AttributeTranslationFormCollectionDataProvider
                 ->setLocaleName($localeName);
 
             $fields[$localeName] = [
+                AttributeTranslationForm::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE => $idProductManagementAttribute,
                 AttributeTranslationForm::FIELD_ATTRIBUTE_NAME => $attributeKey,
                 AttributeTranslationForm::FIELD_ATTRIBUTE_NAME_TRANSLATION => $this->getAttributeKeyTranslation($attributeKey, $localeTransfer),
                 AttributeTranslationForm::FIELD_TRANSLATE_VALUES => $this->getTranslateValues($idProductManagementAttribute),

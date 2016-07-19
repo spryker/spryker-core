@@ -9,10 +9,15 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AttributeTranslationForm extends AbstractType
 {
 
+    const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
     const FIELD_ATTRIBUTE_NAME = 'attribute_name';
     const FIELD_ATTRIBUTE_NAME_TRANSLATION = 'attribute_name_translation';
     const FIELD_TRANSLATE_VALUES = 'translate_values';
@@ -27,6 +32,31 @@ class AttributeTranslationForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+            'required' => false,
+        ]);
+
+        $resolver->setDefaults([
+            'required' => false,
+            'validation_groups' => function (FormInterface $form) {
+                $submittedData = $form->getData();
+
+                if (isset($submittedData[self::FIELD_TRANSLATE_VALUES]) && $submittedData[self::FIELD_TRANSLATE_VALUES]) {
+                    return [Constraint::DEFAULT_GROUP, AttributeValueTranslationForm::GROUP_VALUE_TRANSLATIONS];
+                }
+
+                return [Constraint::DEFAULT_GROUP];
+            },
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -35,10 +65,23 @@ class AttributeTranslationForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
+            ->addIdProductManagementAttributeField($builder)
             ->addAttributeNameField($builder)
             ->addAttributeNameTranslationField($builder)
-            ->addValueTranslationFields($builder)
-            ->addTranslateValuesField($builder);
+            ->addTranslateValuesField($builder)
+            ->addValueTranslationFields($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdProductManagementAttributeField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'hidden');
+
+        return $this;
     }
 
     /**
@@ -51,6 +94,7 @@ class AttributeTranslationForm extends AbstractType
         $builder->add(self::FIELD_ATTRIBUTE_NAME, 'text', [
             'label' => 'Attribute name',
             'read_only' => true,
+            'disabled' => true,
         ]);
 
         return $this;
@@ -65,6 +109,9 @@ class AttributeTranslationForm extends AbstractType
     {
         $builder->add(self::FIELD_ATTRIBUTE_NAME_TRANSLATION, 'text', [
             'label' => 'Translation',
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
 
         return $this;
@@ -79,7 +126,6 @@ class AttributeTranslationForm extends AbstractType
     {
         $builder->add(self::FIELD_TRANSLATE_VALUES, 'checkbox', [
             'label' => 'Translate predefined values',
-            'required' => false,
         ]);
 
         return $this;

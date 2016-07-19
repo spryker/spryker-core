@@ -16,6 +16,8 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAdd
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
+use Spryker\Zed\ProductManagement\Communication\Form\ReadOnlyAttributeForm;
+use Spryker\Zed\ProductManagement\Communication\Form\ReadOnlyAttributeTranslationFormCollection;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -214,6 +216,19 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createReadOnlyAttributeForm(array $data = [], array $options = [])
+    {
+        $readOnlyAttributeFormType = $this->createReadOnlyAttributeFormType();
+
+        return $this->getFormFactory()->create($readOnlyAttributeFormType, $data, $options);
+    }
+
+    /**
      * @return \Symfony\Component\Form\AbstractType
      */
     protected function createAttributeFormType()
@@ -222,11 +237,19 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Symfony\Component\Form\AbstractType
+     */
+    protected function createReadOnlyAttributeFormType()
+    {
+        return new ReadOnlyAttributeForm();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider
      */
     public function createAttributeFormDataProvider()
     {
-        return new AttributeFormDataProvider($this->getQueryContainer());
+        return new AttributeFormDataProvider($this->getQueryContainer(), $this->getConfig());
     }
 
     /**
@@ -243,11 +266,32 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createReadOnlyAttributeTranslationFormCollection(array $data = [], array $options = [])
+    {
+        $attributeTranslationFormCollectionType = $this->createReadOnlyAttributeTranslationFormCollectionType();
+
+        return $this->getFormFactory()->create($attributeTranslationFormCollectionType, $data, $options);
+    }
+
+    /**
      * @return \Symfony\Component\Form\AbstractType
      */
     public function createAttributeTranslationFormCollectionType()
     {
         return new AttributeTranslationFormCollection();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\AbstractType
+     */
+    public function createReadOnlyAttributeTranslationFormCollectionType()
+    {
+        return new ReadOnlyAttributeTranslationFormCollection();
     }
 
     /**

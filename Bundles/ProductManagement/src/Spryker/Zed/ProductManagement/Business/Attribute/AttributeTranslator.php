@@ -62,15 +62,16 @@ class AttributeTranslator implements AttributeTranslatorInterface
 
         try {
             foreach ($attributeTranslationFormTransfers as $attributeTranslationFormTransfer) {
+                $attributeTranslationFormTransfer
+                    ->requireIdProductManagementAttribute()
+                    ->requireLocaleName();
+
                 $localeTransfer = $this->localeFacade->getLocale($attributeTranslationFormTransfer->getLocaleName());
 
                 $this->saveAttributeNameToGlossary($attributeTranslationFormTransfer, $localeTransfer);
 
-                if ($attributeTranslationFormTransfer->getTranslateValues()) {
-                    $this->saveAttributeValueTranslations($attributeTranslationFormTransfer, $localeTransfer);
-                } else {
-                    $this->deleteAttributeValueTranslations($attributeTranslationFormTransfer, $localeTransfer);
-                }
+                $this->resetAttributeValueTranslations($attributeTranslationFormTransfer, $localeTransfer);
+                $this->saveAttributeValueTranslations($attributeTranslationFormTransfer, $localeTransfer);
             }
 
             $this->productManagementQueryContainer
@@ -134,18 +135,18 @@ class AttributeTranslator implements AttributeTranslatorInterface
     protected function saveAttributeValueTranslations(ProductManagementAttributeTranslationFormTransfer $attributeTranslationFormTransfer, LocaleTransfer $localeTransfer)
     {
         foreach ($attributeTranslationFormTransfer->getValueTranslations() as $valueTranslationTransfer) {
-            // TODO: move to query container
-            $translationEntity = $this->productManagementQueryContainer
-                ->queryProductManagementAttributeValueTranslation()
-                ->filterByFkProductManagementAttributeValue($valueTranslationTransfer->getIdProductManagementAttributeValue())
-                ->filterByFkLocale($localeTransfer->getIdLocale())
-                ->findOneOrCreate();
-
             $translation = trim($valueTranslationTransfer->getTranslation());
 
             if ($translation === '') {
                 continue;
             }
+
+            $translationEntity = $this->productManagementQueryContainer
+                ->queryProductManagementAttributeValueTranslationByIdAndLocale(
+                    $valueTranslationTransfer->getIdProductManagementAttributeValue(),
+                    $localeTransfer->getIdLocale()
+                )
+                ->findOneOrCreate();
 
             $translationEntity
                 ->setTranslation($valueTranslationTransfer->getTranslation())
@@ -159,16 +160,15 @@ class AttributeTranslator implements AttributeTranslatorInterface
      *
      * @return void
      */
-    protected function deleteAttributeValueTranslations(ProductManagementAttributeTranslationFormTransfer $attributeTranslationFormTransfer, LocaleTransfer $localeTransfer)
+    protected function resetAttributeValueTranslations(ProductManagementAttributeTranslationFormTransfer $attributeTranslationFormTransfer, LocaleTransfer $localeTransfer)
     {
-        foreach ($attributeTranslationFormTransfer->getValueTranslations() as $valueTranslationTransfer) {
-            // TODO: move to query container
-            $this->productManagementQueryContainer
-                ->queryProductManagementAttributeValueTranslation()
-                ->filterByFkProductManagementAttributeValue($valueTranslationTransfer->getIdProductManagementAttributeValue())
-                ->filterByFkLocale($localeTransfer->getIdLocale())
-                ->delete();
-        }
+        $this->productManagementQueryContainer
+            ->queryProductManagementAttributeValueTranslationByIdAndLocale(
+                $attributeTranslationFormTransfer->getIdProductManagementAttribute(),
+                $localeTransfer->getIdLocale()
+            )
+            ->find()
+            ->delete();
     }
 
 }

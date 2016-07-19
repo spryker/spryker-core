@@ -48,7 +48,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     /**
      * @param string $key
      *
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
     public function getProductAttributeKey($key)
     {

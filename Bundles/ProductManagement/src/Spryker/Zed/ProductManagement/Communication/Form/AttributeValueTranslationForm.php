@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AttributeValueTranslationForm extends AbstractType
 {
@@ -16,6 +17,8 @@ class AttributeValueTranslationForm extends AbstractType
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE = 'id_product_management_attribute_value';
     const FIELD_VALUE = 'value';
     const FIELD_TRANSLATION = 'translation';
+
+    const GROUP_VALUE_TRANSLATIONS = 'value_translations_group';
 
     /**
      * @return string The name of this type
@@ -63,6 +66,7 @@ class AttributeValueTranslationForm extends AbstractType
         $builder->add(self::FIELD_VALUE, 'text', [
             'label' => 'Value',
             'read_only' => true,
+            'disabled' => true,
         ]);
 
         return $this;
@@ -77,7 +81,11 @@ class AttributeValueTranslationForm extends AbstractType
     {
         $builder->add(self::FIELD_TRANSLATION, 'text', [
             'label' => 'Translation',
-            'required' => false,
+            'constraints' => [
+                new NotBlank([
+                    'groups' => self::GROUP_VALUE_TRANSLATIONS
+                ]),
+            ],
         ]);
 
         return $this;

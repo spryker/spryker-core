@@ -22,7 +22,7 @@ interface AttributeKeyManagerInterface
     /**
      * @param string $key
      *
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
     public function getAttributeKey($key);
 

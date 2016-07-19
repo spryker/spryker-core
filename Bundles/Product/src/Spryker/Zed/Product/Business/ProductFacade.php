@@ -391,7 +391,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @param string $key
      *
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      *
      * TODO: add tests
      */

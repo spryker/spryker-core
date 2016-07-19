@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 use Orm\Zed\ProductManagement\Persistence\Base\SpyProductManagementAttribute;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\ProductManagement\ProductManagementConfig;
 
 class AttributeFormDataProvider
 {
@@ -20,11 +21,18 @@ class AttributeFormDataProvider
     protected $productManagementQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @var \Spryker\Zed\ProductManagement\ProductManagementConfig
      */
-    public function __construct(ProductManagementQueryContainerInterface $productManagementQueryContainer)
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Spryker\Zed\ProductManagement\ProductManagementConfig $config
+     */
+    public function __construct(ProductManagementQueryContainerInterface $productManagementQueryContainer, ProductManagementConfig $config)
     {
         $this->productManagementQueryContainer = $productManagementQueryContainer;
+        $this->config = $config;
     }
 
     /**
@@ -35,7 +43,9 @@ class AttributeFormDataProvider
     public function getData($idProductManagementAttribute = null)
     {
         if ($idProductManagementAttribute === null) {
-            return [];
+            return [
+                AttributeForm::FIELD_ALLOW_INPUT => true,
+            ];
         }
 
         $productManagementAttributeEntity = $this->getAttributeEntity($idProductManagementAttribute);
@@ -58,7 +68,8 @@ class AttributeFormDataProvider
     public function getOptions($idProductManagementAttribute = null)
     {
         $options = [
-            AttributeForm::OPTION_ATTRIBUTE_TYPE_CHOICES => $this->getAttributeTypeChoices(),
+            AttributeForm::OPTION_ATTRIBUTE_TYPE_CHOICES => $this->config->getAttributeTypeChoices(),
+            AttributeForm::OPTION_VALUES_CHOICES => [],
         ];
 
         if ($idProductManagementAttribute === null) {
@@ -67,6 +78,7 @@ class AttributeFormDataProvider
 
         $productManagementAttributeEntity = $this->getAttributeEntity($idProductManagementAttribute);
 
+        $options[AttributeForm::OPTION_IS_UPDATE] = true;
         $options[AttributeForm::OPTION_VALUES_CHOICES] = $this->getValues($productManagementAttributeEntity);
 
         return $options;
@@ -89,24 +101,6 @@ class AttributeFormDataProvider
     }
 
     /**
-     * @return array
-     */
-    protected function getAttributeTypeChoices()
-    {
-        // TODO: need to come from config
-        return [
-            'text' => 'text',
-            'textarea' => 'textarea',
-            'number' => 'number',
-            'float' => 'float',
-            'date' => 'date',
-            'time' => 'time',
-            'datetime' => 'datetime',
-            'select' => 'select',
-        ];
-    }
-
-    /**
      * @param int $idProductManagementAttribute
      *
      * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute|null
@@ -115,8 +109,7 @@ class AttributeFormDataProvider
     {
         return $this->productManagementQueryContainer
             ->queryProductManagementAttribute()
-            ->filterByIdProductManagementAttribute($idProductManagementAttribute)
-            ->findOne();
+            ->findOneByIdProductManagementAttribute($idProductManagementAttribute);
     }
 
 }

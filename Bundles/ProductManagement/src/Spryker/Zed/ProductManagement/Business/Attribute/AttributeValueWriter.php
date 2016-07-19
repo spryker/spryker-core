@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
-class AttributeValueSaver implements AttributeValueSaverInterface
+class AttributeValueWriter implements AttributeValueWriterInterface
 {
 
     /**
